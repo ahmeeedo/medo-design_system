@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import { DocsLayout } from './docs/DocsLayout'
 
-import ColorsPage      from './pages/ColorsPage'
+import ColorsPage      from './pages/ColorsPage.jsx'
 import TypographyPage  from './pages/TypographyPage'
 import SpacingPage     from './pages/SpacingPage'
 import RadiusPage      from './pages/RadiusPage'

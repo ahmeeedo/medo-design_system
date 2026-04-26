@@ -1,7 +1,6 @@
 import { PageLayout, SubSection, GridContainer, Do, Dont } from '../docs/PageLayout'
 import { TokensTable } from '../docs/TokensTable'
 import { CodeBlock } from '../docs/CodeBlock'
-import { DocSection } from '../docs/DocSection'
 import { Swatch } from '../docs/helpers'
 import styles from '../App.module.css'
 

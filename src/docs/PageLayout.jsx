@@ -41,7 +41,7 @@ export function PageLayout({ title, description, tabs = [] }) {
   )
 }
 
-/* ── Usage Helpers ── */
+/* ── Sektionen & Container ── */
 export function SubSection({ title, children }) {
   return (
     <div className={styles.SubSection}>
