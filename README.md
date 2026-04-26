@@ -37,7 +37,7 @@ src/
 │   └── index.js            # Barrel Export aller Komponenten
 └── docs/
     ├── DocsLayout.jsx      # Sidebar + Main Layout
-    ├── DocSection.jsx      # Section, SubSection, Row, Grid2, TokenChip
+    ├── DocSection.jsx      # SubSection, SubSection, Row, Grid2, TokenChip
     └── *.module.css
 ```
 
