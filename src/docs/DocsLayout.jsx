@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react'
 import styles from './DocsLayout.module.css'
 
 const NAV = [
@@ -37,13 +38,45 @@ const NAV = [
 ]
 
 export function DocsLayout({ children }) {
+  const [mobileOpen, setMobileOpen] = useState(false)
+
+  useEffect(() => {
+    const mq = window.matchMedia('(min-width: 768px)')
+    const handler = (e) => { if (e.matches) setMobileOpen(false) }
+    mq.addEventListener('change', handler)
+    return () => mq.removeEventListener('change', handler)
+  }, [])
+
+  useEffect(() => {
+    document.body.style.overflow = mobileOpen ? 'hidden' : ''
+    return () => { document.body.style.overflow = '' }
+  }, [mobileOpen])
+
   const scrollTo = (id) => {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
+    setMobileOpen(false)
   }
 
   return (
     <div className={styles.layout}>
-      <nav className={styles.nav}>
+
+      <header className={styles.mobileHeader}>
+        <span className={styles.mobileLogo}>Design System</span>
+        <button
+          className={styles.hamburger}
+          onClick={() => setMobileOpen((v) => !v)}
+          aria-label={mobileOpen ? 'Menü schließen' : 'Menü öffnen'}
+          aria-expanded={mobileOpen}
+        >
+          {mobileOpen ? <CloseIcon /> : <MenuIcon />}
+        </button>
+      </header>
+
+      {mobileOpen && (
+        <div className={styles.overlay} onClick={() => setMobileOpen(false)} />
+      )}
+
+      <nav className={[styles.nav, mobileOpen ? styles.navOpen : ''].join(' ')}>
         <div className={styles.navLogo}>Design System</div>
         {NAV.map((group) => (
           <div key={group.section}>
@@ -60,7 +93,24 @@ export function DocsLayout({ children }) {
           </div>
         ))}
       </nav>
+
       <main className={styles.main}>{children}</main>
     </div>
+  )
+}
+
+function MenuIcon() {
+  return (
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+      <path d="M2 5h16M2 10h16M2 15h16" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" />
+    </svg>
+  )
+}
+
+function CloseIcon() {
+  return (
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+      <path d="M4 4l12 12M16 4L4 16" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" />
+    </svg>
   )
 }

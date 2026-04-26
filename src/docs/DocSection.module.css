@@ -3,6 +3,13 @@
   padding-top: var(--space-8);
 }
 
+@media (max-width: 767px) {
+  .section {
+    margin-bottom: var(--space-16);
+    padding-top: var(--space-6);
+  }
+}
+
 .title {
   font-size: var(--text-2xl);
   font-weight: var(--weight-semibold);
@@ -10,6 +17,12 @@
   line-height: var(--leading-snug);
   color: var(--color-text-primary);
   margin-bottom: var(--space-2);
+}
+
+@media (max-width: 767px) {
+  .title {
+    font-size: var(--text-xl);
+  }
 }
 
 .desc {
@@ -20,11 +33,21 @@
   max-width: 56ch;
 }
 
-.content {}
+@media (max-width: 767px) {
+  .desc {
+    font-size: var(--text-sm);
+    margin-bottom: var(--space-6);
+  }
+}
 
-/* SubSection */
 .sub {
   margin-bottom: var(--space-10);
+}
+
+@media (max-width: 767px) {
+  .sub {
+    margin-bottom: var(--space-7);
+  }
 }
 
 .subTitle {
@@ -36,13 +59,11 @@
   border-bottom: 1px solid var(--color-border);
 }
 
-/* Row */
 .row {
   display: flex;
   margin-bottom: var(--space-4);
 }
 
-/* Grid */
 .grid2 {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -50,10 +71,12 @@
 }
 
 @media (max-width: 640px) {
-  .grid2 { grid-template-columns: 1fr; }
+  .grid2 {
+    grid-template-columns: 1fr;
+    gap: var(--space-5);
+  }
 }
 
-/* Token chip */
 .token {
   font-family: var(--font-mono);
   font-size: var(--text-xs);
@@ -61,4 +84,5 @@
   color: var(--color-neutral-700);
   padding: 2px 6px;
   border-radius: var(--radius-sm);
+  white-space: nowrap;
 }

@@ -1,13 +1,15 @@
 .wrap {
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
-  overflow: hidden;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .table {
   width: 100%;
   border-collapse: collapse;
   font-size: var(--text-sm);
+  min-width: 500px;
 }
 
 .table thead {
