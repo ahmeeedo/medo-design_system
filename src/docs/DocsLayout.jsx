@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { NavLink } from 'react-router-dom'
 import styles from './DocsLayout.module.css'
 
 const NAV = [
@@ -52,10 +53,7 @@ export function DocsLayout({ children }) {
     return () => { document.body.style.overflow = '' }
   }, [mobileOpen])
 
-  const scrollTo = (id) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
-    setMobileOpen(false)
-  }
+  const close = () => setMobileOpen(false)
 
   return (
     <div className={styles.layout}>
@@ -66,14 +64,13 @@ export function DocsLayout({ children }) {
           className={styles.hamburger}
           onClick={() => setMobileOpen((v) => !v)}
           aria-label={mobileOpen ? 'Menü schließen' : 'Menü öffnen'}
-          aria-expanded={mobileOpen}
         >
           {mobileOpen ? <CloseIcon /> : <MenuIcon />}
         </button>
       </header>
 
       {mobileOpen && (
-        <div className={styles.overlay} onClick={() => setMobileOpen(false)} />
+        <div className={styles.overlay} onClick={close} />
       )}
 
       <nav className={[styles.nav, mobileOpen ? styles.navOpen : ''].join(' ')}>
@@ -82,13 +79,16 @@ export function DocsLayout({ children }) {
           <div key={group.section}>
             <div className={styles.navSection}>{group.section}</div>
             {group.items.map((item) => (
-              <button
+              <NavLink
                 key={item.id}
-                className={styles.navLink}
-                onClick={() => scrollTo(item.id)}
+                to={`/${item.id}`}
+                onClick={close}
+                className={({ isActive }) =>
+                  [styles.navLink, isActive ? styles.navLinkActive : ''].join(' ')
+                }
               >
                 {item.label}
-              </button>
+              </NavLink>
             ))}
           </div>
         ))}
