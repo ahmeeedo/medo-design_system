@@ -1,6 +1,6 @@
-# Design System — React
+# Design System — med.o
 
-Vollständiges Design System als Vite + React Projekt.
+Vollständiges Design System und Styling Richtlinien von med.o (als Vite + React Projekt)
 
 ## Schnellstart
 
@@ -47,15 +47,10 @@ Alle Design-Entscheidungen sind in `src/styles/tokens.css` als CSS Custom Proper
 definiert. Ändere dort die Werte — alle Komponenten übernehmen die Änderungen
 automatisch.
 
-### Für Figma: Tokens Studio
-
-Die begleitende `tokens.json` kann via [Tokens Studio Plugin](https://tokens.studio/)
-direkt in Figma importiert werden.
-
 ## Komponenten nutzen
 
 ```jsx
-import { Button, Input, Badge, Card, Modal } from './components'
+import { Button, Input, Badge, Card, Modal } from "./components";
 
 function MyPage() {
   return (
@@ -63,13 +58,15 @@ function MyPage() {
       <Card.Header title="Titel" subtitle="Beschreibung" />
       <Card.Body>
         <Input label="Name" placeholder="Dein Name…" />
-        <Badge variant="success" dot>Aktiv</Badge>
+        <Badge variant="success" dot>
+          Aktiv
+        </Badge>
       </Card.Body>
       <Card.Footer>
         <Button variant="primary">Speichern</Button>
       </Card.Footer>
     </Card>
-  )
+  );
 }
 ```
 
