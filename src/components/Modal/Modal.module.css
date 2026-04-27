@@ -16,7 +16,7 @@
 }
 
 .box {
-  background: var(--color-surface);
+  background: var(--surface_100);
   border-radius: var(--radius-2xl);
   box-shadow: var(--shadow-2xl);
   overflow: hidden;

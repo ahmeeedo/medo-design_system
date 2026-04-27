@@ -14,7 +14,7 @@
 }
 
 .table thead {
-  background: var(--color-background-subtle);
+  background: var(--surface_200);
 }
 
 .th {
@@ -34,7 +34,7 @@
 }
 
 .tr:hover .td {
-  background: var(--color-background-subtle);
+  background: var(--surface_200);
 }
 
 .td {

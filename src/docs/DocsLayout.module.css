@@ -19,7 +19,7 @@
     right: 0;
     height: 56px;
     padding: 0 var(--space-5);
-    background: var(--color-background);
+    background: var(--surface_100);
     border-bottom: 1px solid var(--color-border);
     z-index: var(--z-sticky);
   }
@@ -78,7 +78,7 @@
   width: 220px;
   height: 100vh;
   border-right: 1px solid var(--color-border);
-  background: var(--color-background);
+  background: var(--surface_100);
   overflow-y: auto;
   padding: var(--space-6) 0;
   z-index: var(--z-sticky);
@@ -144,7 +144,7 @@
 
 .navLink:hover {
   color: var(--color-text-primary);
-  background: var(--color-background-subtle);
+  background: var(--surface_200);
 }
 
 .navLinkActive {
@@ -157,20 +157,12 @@
 .main {
   margin-left: 220px;
   flex: 1;
-  max-width: 980px;
-  padding: var(--space-16) var(--space-12) var(--space-32);
 }
 
 @media (max-width: 767px) {
   .main {
     margin-left: 0;
-    padding: calc(56px + var(--space-8)) var(--space-5) var(--space-16);
+    padding-top: 56px;
     max-width: 100%;
-  }
-}
-
-@media (min-width: 768px) and (max-width: 1024px) {
-  .main {
-    padding: var(--space-10) var(--space-8) var(--space-24);
   }
 }

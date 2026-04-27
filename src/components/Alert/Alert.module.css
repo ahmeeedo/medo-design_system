@@ -24,10 +24,10 @@
 }
 
 /* Variants */
-.info    { background: var(--color-info-subtle);    border-color: #BAE6FD; color: #0C4A6E; }
-.success { background: var(--color-success-subtle); border-color: #BBF7D0; color: #14532D; }
-.warning { background: var(--color-warning-subtle); border-color: #FDE68A; color: #78350F; }
-.error   { background: var(--color-error-subtle);   border-color: #FECACA; color: #7F1D1D; }
+.info    { background: var(--color-success-container-100);    border-color: #BAE6FD; color: #0C4A6E; }
+.success { background: var(--color-success-container-100); border-color: #BBF7D0; color: #14532D; }
+.warning { background: var(--color-warning-container-100); border-color: #FDE68A; color: #78350F; }
+.error   { background: var(--color-success-container-100);   border-color: #FECACA; color: #7F1D1D; }
 
 /* Toast */
 .toast {

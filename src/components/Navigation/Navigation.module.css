@@ -85,7 +85,7 @@
 
 /* StatCard */
 .stat {
-  background: var(--color-surface);
+  background: var(--surface_100);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-xl);
   padding: var(--space-5) var(--space-6);

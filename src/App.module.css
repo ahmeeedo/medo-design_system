@@ -216,7 +216,7 @@
 .shadowBox {
   width: 80px;
   height: 80px;
-  background: var(--color-surface);
+  background: var(--surface_100);
   border-radius: var(--radius-lg);
 }
 
@@ -261,7 +261,7 @@
 }
 
 .listItem:hover {
-  background: var(--color-background-subtle);
+  background: var(--surface_200);
 }
 
 .listContent {

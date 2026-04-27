@@ -35,19 +35,19 @@
 .accent .dot { background: var(--color-brand-accent); }
 
 .success {
-  background: var(--color-success-subtle);
+  background: var(--color-success-container-100);
   color: var(--color-success);
 }
 .success .dot { background: var(--color-success); }
 
 .warning {
-  background: var(--color-warning-subtle);
+  background: var(--color-warning-container-100);
   color: var(--color-warning);
 }
 .warning .dot { background: var(--color-warning); }
 
 .error {
-  background: var(--color-error-subtle);
+  background: var(--color-success-container-100);
   color: var(--color-error);
 }
 .error .dot { background: var(--color-error); }

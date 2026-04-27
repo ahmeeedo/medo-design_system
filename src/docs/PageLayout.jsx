@@ -1,4 +1,5 @@
 import { useSearchParams } from 'react-router-dom'
+import { Children } from 'react'
 import styles from './PageLayout.module.css'
 
 export function PageLayout({ title, description, tabs = [] }) {
@@ -42,33 +43,60 @@ export function PageLayout({ title, description, tabs = [] }) {
 }
 
 /* ── Sektionen & Container ── */
-export function SubSection({ title, children }) {
+export function Section({ title, children }) {
   return (
-    <div className={styles.SubSection}>
-      {title && <h3 className={styles.usageTitle}>{title}</h3>}
+    <div className={styles.Section}>
+      {title && <h2 className={styles.sectionTitle}>{title}</h2>}
       {children}
     </div>
   )
 }
 
-export function GridContainer({ children }) {
-  return <div className={styles.GridContainer}>{children}</div>
-}
+export function GridWrapper({ children, gap }) {
+  const count = Children.count(children)
+  const colClass = styles[`grid-${count}`] ?? styles['grid-2']
 
-export function Do({ children }) {
   return (
-    <div className={styles.do}>
-      <div className={styles.doHeader}>✓ Do</div>
-      <div className={styles.doBody}>{children}</div>
+    <div
+      className={[styles.gridWrapper, colClass].join(' ')}
+      style={gap ? { gap } : undefined}
+    >
+      {children}
     </div>
   )
 }
 
-export function Dont({ children }) {
+export function Grid({ children, gap }) {
   return (
-    <div className={styles.dont}>
-      <div className={styles.dontHeader}>✕ Don't</div>
-      <div className={styles.dontBody}>{children}</div>
+    <div className={styles.grid} style={gap ? { gap } : undefined}>
+      {children}
+    </div>
+  )
+}
+
+Grid.Header = function GridHeader({ children, className }) {
+  if (!children) return null
+  return (
+    <div className={[styles.gridHeader, className].filter(Boolean).join(' ')}>
+      {children}
+    </div>
+  )
+}
+
+Grid.Body = function GridBody({ children, className }) {
+  if (!children) return null
+  return (
+    <div className={[styles.gridBody, className].filter(Boolean).join(' ')}>
+      {children}
+    </div>
+  )
+}
+
+Grid.Footer = function GridFooter({ children, className }) {
+  if (!children) return null
+  return (
+    <div className={[styles.gridFooter, className].filter(Boolean).join(' ')}>
+      {children}
     </div>
   )
 }

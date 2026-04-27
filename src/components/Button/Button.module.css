@@ -80,7 +80,7 @@
 }
 
 .secondary {
-  background: var(--color-background-subtle);
+  background: var(--surface_200);
   color: var(--color-text-primary);
   border-color: var(--color-border);
 }
@@ -98,7 +98,7 @@
 }
 
 .danger {
-  background: var(--color-error-subtle);
+  background: var(--color-success-container-100);
   color: var(--color-error);
 }
 .danger:hover:not(:disabled) {
