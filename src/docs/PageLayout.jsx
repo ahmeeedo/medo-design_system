@@ -100,3 +100,12 @@ Grid.Footer = function GridFooter({ children, className }) {
     </div>
   )
 }
+
+export function Content({ children, className }) {
+  if (!children) return null
+  return (
+    <div className={[styles.content, className].filter(Boolean).join(' ')}>
+      {children}
+    </div>
+  )
+}

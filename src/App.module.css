@@ -1,52 +1,9 @@
-/* ── Hero ─────────────────────────────────── */
-.hero {
-  margin-bottom: var(--space-16);
-  padding-bottom: var(--space-10);
-  border-bottom: 1px solid var(--color-border);
-}
 
-@media (max-width: 767px) {
-  .hero {
-    margin-bottom: var(--space-10);
-    padding-bottom: var(--space-8);
-  }
-}
-
-.heroEyebrow {
-  font-size: var(--text-xs);
-  font-weight: var(--weight-semibold);
-  letter-spacing: var(--tracking-widest);
-  text-transform: uppercase;
-  color: var(--color-text-secondary);
-  margin-bottom: var(--space-3);
-}
-
-.heroTitle {
-  font-size: var(--text-5xl);
-  font-weight: var(--weight-semibold);
-  letter-spacing: var(--tracking-tight);
-  line-height: var(--leading-tight);
-  color: var(--color-text-primary);
+/* ── Content ─────────────────────────────── */
+.groupTitle {
+  font-size: var(--text-2xl);
   margin-bottom: var(--space-4);
-}
-
-@media (max-width: 767px) {
-  .heroTitle {
-    font-size: var(--text-3xl);
-  }
-}
-
-.heroDesc {
-  font-size: var(--text-lg);
-  color: var(--color-text-secondary);
-  line-height: var(--leading-relaxed);
-  max-width: 52ch;
-}
-
-@media (max-width: 767px) {
-  .heroDesc {
-    font-size: var(--text-md);
-  }
+  color: var(--color-text-tertiary);
 }
 
 /* ── Swatches ─────────────────────────────── */
@@ -54,6 +11,7 @@
   display: flex;
   gap: var(--space-2);
   flex-wrap: wrap;
+  margin-bottom: var(--space-8);
 }
 
 .swatch {
@@ -133,14 +91,13 @@
   align-items: center;
   gap: var(--space-5);
   padding: var(--space-2) 0;
-  border-bottom: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--border-subtle-100);
   flex-wrap: wrap;
 }
 
 .spacingBar {
   height: 20px;
-  background: var(--color-brand-accent);
-  opacity: 0.2;
+  background: var(--color-brand-secondary-700);
   border-radius: var(--radius-xs);
   flex-shrink: 0;
   max-width: 50vw;

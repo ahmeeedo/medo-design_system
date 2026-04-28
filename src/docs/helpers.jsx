@@ -7,8 +7,8 @@ import styles from '../App.module.css'
 export function Swatch({ bg, label, border = false }) {
   return (
     <div className={styles.swatch}>
-      <div className={styles.swatchBox} style={{ background: bg, border: border ? '1px solid #e5e5e5' : undefined }} />
-      <div className={styles.swatchLabel}>{label}</div>
+      <div className={styles.swatchBox} style={{ background: bg, border: border ? '1px solid var(--border-subtle-100)' : undefined }} />
+      {/* {<div className={styles.swatchLabel}>{label}</div>} */}
     </div>
   )
 }

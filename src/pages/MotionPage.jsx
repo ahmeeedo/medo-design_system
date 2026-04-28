@@ -19,8 +19,8 @@ export default function MotionPage() {
       <Table
         columns={[
           { key: 'token', label: 'Token', render: (r) => <TokenChip>{r.token}</TokenChip> },
-          { key: 'value', label: 'Wert' },
-          { key: 'usage', label: 'Einsatz' },
+          { key: 'value', label: 'Value' },
+          { key: 'usage', label: 'Usage' },
         ]}
         rows={ROWS}
       />

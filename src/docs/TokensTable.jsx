@@ -11,8 +11,8 @@ export function TokensTable({ tokens = [] }) {
         <thead>
           <tr>
             <th className={styles.th}>Token</th>
-            <th className={styles.th}>Standard-Wert</th>
-            <th className={styles.th}>Beschreibung</th>
+            <th className={styles.th}>Value</th>
+            <th className={styles.th}>Description</th>
           </tr>
         </thead>
         <tbody>
