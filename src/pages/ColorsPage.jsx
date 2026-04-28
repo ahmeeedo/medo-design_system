@@ -373,25 +373,17 @@ export default function ColorsPage() {
             <Section title="Color tokens">
             <h3 className={styles.groupTitle}>Surface</h3>
             <TokensTable tokens={[
-                { token: '--color-brand-primary-500',       value: '#0F0F0F', description: 'Primäre Markenfarbe' },
-                { token: '--color-brand-accent',         value: '#2563EB', description: 'Interaktiver Akzent' },
-                { token: '--color-brand-accent-hover',   value: '#1D4ED8', description: 'Akzent Hover-State' },
-                { token: '--color-brand-accent-subtle',  value: '#EFF6FF', description: 'Akzent Hintergrundton' },
-                { token: '--surface_100',           value: '#FFFFFF', description: 'Seitenhintergrund' },
-                { token: '--surface_200',    value: '#F9F9F9', description: 'Subtiler Hintergrund' },
-                { token: '--surface_100',              value: '#FFFFFF', description: 'Komponentenfläche' },
-                { token: '--color-border',               value: '#E5E5E5', description: 'Standard-Rahmen' },
-                { token: '--color-border-strong',        value: '#A3A3A3', description: 'Betonter Rahmen' },
-                { token: '--color-text-primary',         value: '#171717', description: 'Primärtext' },
-                { token: '--color-text-secondary',       value: '#737373', description: 'Sekundärtext' },
-                { token: '--color-text-disabled',        value: '#D4D4D4', description: 'Deaktivierter Text' },
-                { token: '--color-success',              value: '#16A34A', description: 'Erfolg' },
-                { token: '--color-warning',              value: '#D97706', description: 'Warnung' },
-                { token: '--color-error',                value: '#DC2626', description: 'Fehler' },
-                { token: '--color-info',                 value: '#0284C7', description: 'Information' },
+                { token: '--surface_100',       value: '#FFFFFF', description: 'Default page background' },
+                { token: '--surface_200',         value: '#F8F9FA', description: 'Secondary page background; Hover color for surface-100; Hover color for transparent backgrounds' },
+                { token: '--surface_active',   value: '#E9ECEF', description: 'Active color for surface-100 & surface-200' },
+                { token: '--surface_selected',  value: '#CED4DA', description: 'Selected color for surface-100 & surface-200' },
+                { token: '--surface_selected-hover',           value: '#adb5bd', description: 'Hover color for surface_selected' },
+                { token: '--surface_inverse',    value: '#212529', description: 'High contrast backgrounds; High contrast elements' },
+                { token: '--surface_inverse-hover',              value: '#343a40', description: 'Hover color for surface_inverse' },
+                { token: '--surface_brand',               value: '#1c2855', description: 'Feature background color' },
             ]} /> 
             
-            <h3 className={styles.groupTitle}>Surface</h3>
+            <h3 className={styles.groupTitle}>Surface container</h3>
             <TokensTable tokens={[
                 { token: '--color-brand-primary-500',       value: '#0F0F0F', description: 'Primäre Markenfarbe' },
                 { token: '--color-brand-accent',         value: '#2563EB', description: 'Interaktiver Akzent' },

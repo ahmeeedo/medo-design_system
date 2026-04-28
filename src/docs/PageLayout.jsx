@@ -44,8 +44,12 @@ export function PageLayout({ title, description, tabs = [] }) {
 
 /* ── Sektionen & Container ── */
 export function Section({ title, children }) {
+  const id = title
+    ? title.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')
+    : undefined
+
   return (
-    <div className={styles.Section}>
+    <div id={id} className={styles.Section}>
       {title && <h2 className={styles.sectionTitle}>{title}</h2>}
       {children}
     </div>

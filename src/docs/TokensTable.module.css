@@ -72,6 +72,7 @@
   font-size: var(--text-xs);
   color: var(--color-neutral-600);
   white-space: nowrap;
+  text-transform: uppercase;
 }
 
 .desc {
