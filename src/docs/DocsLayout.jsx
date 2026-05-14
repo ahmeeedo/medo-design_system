@@ -1,44 +1,47 @@
 import { useState, useEffect } from 'react'
 import { NavLink } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
+import { LanguageSwitcher } from './LanguageSwitcher'
 import styles from './DocsLayout.module.css'
 
 const NAV = [
   {
-    section: 'Foundations',
+    section: 'nav.sections.foundations',
     items: [
-      { id: 'colors',     label: 'Colors' },
-      { id: 'typography', label: 'Typography' },
-      { id: 'spacing',    label: 'Spacing' },
-      { id: 'radius',     label: 'Border Radius' },
-      { id: 'shadows',    label: 'Shadows' },
-      { id: 'motion',     label: 'Motion' },
+      { id: 'colors',     label: 'nav.items.colors' },
+      { id: 'typography', label: 'nav.items.typography' },
+      { id: 'spacing',    label: 'nav.items.spacing' },
+      { id: 'radius',     label: 'nav.items.radius' },
+      { id: 'shadows',    label: 'nav.items.shadows' },
+      { id: 'motion',     label: 'nav.items.motion' },
     ],
   },
   {
-    section: 'Components',
+    section: 'nav.sections.components',
     items: [
-      { id: 'buttons',    label: 'Buttons' },
-      { id: 'inputs',     label: 'Inputs' },
-      { id: 'selects',    label: 'Select & Toggle' },
-      { id: 'badges',     label: 'Badges & Tags' },
-      { id: 'alerts',     label: 'Alerts' },
-      { id: 'cards',      label: 'Cards' },
-      { id: 'tables',     label: 'Tables' },
-      { id: 'tabs',       label: 'Tabs' },
-      { id: 'navigation', label: 'Navigation' },
-      { id: 'overlays',   label: 'Modal' },
-      { id: 'accordion',  label: 'Accordion' },
-      { id: 'menus',      label: 'Menus' },
-      { id: 'lists',      label: 'Lists' },
-      { id: 'stats',      label: 'Stats / KPI' },
-      { id: 'feedback',   label: 'Feedback' },
-      { id: 'avatar',     label: 'Avatar' },
-      { id: 'skeleton',   label: 'Skeleton' },
+      { id: 'buttons',    label: 'nav.items.buttons' },
+      { id: 'inputs',     label: 'nav.items.inputs' },
+      { id: 'selects',    label: 'nav.items.select' },
+      { id: 'badges',     label: 'nav.items.badges' },
+      { id: 'alerts',     label: 'nav.items.alerts' },
+      { id: 'cards',      label: 'nav.items.cards' },
+      { id: 'tables',     label: 'nav.items.tables' },
+      { id: 'tabs',       label: 'nav.items.tabs' },
+      { id: 'navigation', label: 'nav.items.navigation' },
+      { id: 'overlays',   label: 'nav.items.overlays' },
+      { id: 'accordion',  label: 'nav.items.accordion' },
+      { id: 'menus',      label: 'nav.items.menus' },
+      { id: 'lists',      label: 'nav.items.lists' },
+      { id: 'stats',      label: 'nav.items.stats' },
+      { id: 'feedback',   label: 'nav.items.feedback' },
+      { id: 'avatar',     label: 'nav.items.avatar' },
+      { id: 'skeleton',   label: 'nav.items.skeleton' },
     ],
   },
 ]
 
 export function DocsLayout({ children }) {
+  const { t } = useTranslation()
   const [mobileOpen, setMobileOpen] = useState(false)
 
   useEffect(() => {
@@ -59,14 +62,17 @@ export function DocsLayout({ children }) {
     <div className={styles.layout}>
 
       <header className={styles.mobileHeader}>
-        <span className={styles.mobileLogo}>Design System</span>
-        <button
-          className={styles.hamburger}
-          onClick={() => setMobileOpen((v) => !v)}
-          aria-label={mobileOpen ? 'Menü schließen' : 'Menü öffnen'}
-        >
-          {mobileOpen ? <CloseIcon /> : <MenuIcon />}
-        </button>
+        <span className={styles.mobileLogo}>{t('nav.title')}</span>
+        <div className="flex items-center gap-2">
+          <LanguageSwitcher />
+          <button
+            className={styles.hamburger}
+            onClick={() => setMobileOpen((v) => !v)}
+            aria-label={mobileOpen ? t('nav.aria.closeMenu') : t('nav.aria.openMenu')}
+          >
+            {mobileOpen ? <CloseIcon /> : <MenuIcon />}
+          </button>
+        </div>
       </header>
 
       {mobileOpen && (
@@ -74,10 +80,13 @@ export function DocsLayout({ children }) {
       )}
 
       <nav className={[styles.nav, mobileOpen ? styles.navOpen : ''].join(' ')}>
-        <div className={styles.navLogo}>Design System</div>
+        <div className={styles.navLogo}>
+          <span>{t('nav.title')}</span>
+          <LanguageSwitcher />
+        </div>
         {NAV.map((group) => (
           <div key={group.section}>
-            <div className={styles.navSection}>{group.section}</div>
+            <div className={styles.navSection}>{t(group.section)}</div>
             {group.items.map((item) => (
               <NavLink
                 key={item.id}
@@ -87,7 +96,7 @@ export function DocsLayout({ children }) {
                   [styles.navLink, isActive ? styles.navLinkActive : ''].join(' ')
                 }
               >
-                {item.label}
+                {t(item.label)}
               </NavLink>
             ))}
           </div>

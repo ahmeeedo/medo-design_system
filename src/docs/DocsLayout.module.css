@@ -106,6 +106,9 @@
 }
 
 .navLogo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   padding: 0 var(--space-5) var(--space-6);
   font-size: var(--text-sm);
   font-weight: var(--weight-semibold);
