@@ -373,6 +373,9 @@
 --btn-ghost-hover:      var(--color-neutral-200);
 --btn-ghost-active:     var(--color-neutral-300);
 --btn-disabled:         var(--color-disabled);
+--btn-accent:           var(--color-brand-secondary-800);
+--btn-accent-hover:     var(--color-brand-secondary-900);
+--btn-accent-active:    var(--color-brand-secondary-1000);
 --btn-danger:           var(--color-brand-red-500);
 --btn-danger-hover:     var(--color-brand-red-700);
 --btn-danger-active:    var(--color-brand-red-900);
@@ -504,6 +507,8 @@
   --color-btn-primary:        var(--btn-primary);
   --color-btn-primary-hover:  var(--btn-primary-hover);
   --color-btn-secondary:      var(--btn-secondary);
+  --color-btn-accent:         var(--btn-accent);
+  --color-btn-accent-hover:   var(--btn-accent-hover);
   --color-btn-danger:         var(--btn-danger);
   --color-btn-danger-hover:   var(--btn-danger-hover);
   --color-btn-disabled:       var(--btn-disabled);

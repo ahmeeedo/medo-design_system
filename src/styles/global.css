@@ -178,7 +178,15 @@ a {
   --foreground: var(--color-text-primary);
   --primary: var(--color-brand-primary-500);
   --primary-foreground: var(--color-neutral-0);
+  --secondary: var(--color-brand-secondary-900);
+  --secondary-foreground: var(--color-text-on-color);
+  --accent: var(--color-brand-navy-100);
+  --accent-foreground: var(--color-brand-primary-500);
+  --muted: var(--color-neutral-100);
+  --muted-foreground: var(--color-text-secondary);
   --destructive: var(--color-error-500);
+  --border: var(--border-subtle-100);
+  --input: var(--border-subtle-100);
   --ring: var(--color-focus);
   --radius: var(--radius-lg);
 }

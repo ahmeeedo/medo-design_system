@@ -1,10 +1,24 @@
-import styles from './Input.module.css'
+import { Input as ShadcnInput } from '@/components/ui/input'
+import { Textarea as ShadcnTextarea } from '@/components/ui/textarea'
+import {
+  Select as ShadcnSelect,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
+import { cn } from '@/lib/utils'
 
-/**
- * Input
- * @param {'default'|'error'} state
- * @param {'sm'|'md'|'lg'} size
- */
+const sizeClasses = {
+  sm: 'h-8 text-sm',
+  md: 'h-10 text-sm',
+  lg: 'h-12 text-base',
+}
+
+const labelClass = "block text-sm font-medium text-foreground mb-1.5"
+const hintClass  = "mt-1.5 text-sm text-muted-foreground"
+const errorClass = "mt-1.5 text-sm text-destructive"
+
 export function Input({
   label,
   hint,
@@ -13,23 +27,20 @@ export function Input({
   className = '',
   ...props
 }) {
-  const state = error ? 'error' : 'default'
   return (
-    <div className={styles.wrap}>
-      {label && <label className={styles.label}>{label}</label>}
-      <input
-        className={[styles.input, styles[size], styles[state], className].filter(Boolean).join(' ')}
+    <div className="flex flex-col">
+      {label && <label className={labelClass}>{label}</label>}
+      <ShadcnInput
+        aria-invalid={!!error}
+        className={cn(sizeClasses[size], className)}
         {...props}
       />
-      {error && <span className={styles.errorMsg}>{error}</span>}
-      {hint && !error && <span className={styles.hint}>{hint}</span>}
+      {error && <span className={errorClass}>{error}</span>}
+      {hint && !error && <span className={hintClass}>{hint}</span>}
     </div>
   )
 }
 
-/**
- * Textarea
- */
 export function Textarea({
   label,
   hint,
@@ -38,54 +49,62 @@ export function Textarea({
   className = '',
   ...props
 }) {
-  const state = error ? 'error' : 'default'
   return (
-    <div className={styles.wrap}>
-      {label && <label className={styles.label}>{label}</label>}
-      <textarea
+    <div className="flex flex-col">
+      {label && <label className={labelClass}>{label}</label>}
+      <ShadcnTextarea
         rows={rows}
-        className={[styles.input, styles.textarea, styles[state], className].filter(Boolean).join(' ')}
+        aria-invalid={!!error}
+        className={cn(className)}
         {...props}
       />
-      {error && <span className={styles.errorMsg}>{error}</span>}
-      {hint && !error && <span className={styles.hint}>{hint}</span>}
+      {error && <span className={errorClass}>{error}</span>}
+      {hint && !error && <span className={hintClass}>{hint}</span>}
     </div>
   )
 }
 
-/**
- * Select
- */
 export function Select({
   label,
   hint,
   options = [],
   className = '',
+  onChange,
   ...props
 }) {
   return (
-    <div className={styles.wrap}>
-      {label && <label className={styles.label}>{label}</label>}
-      <select className={[styles.select, className].filter(Boolean).join(' ')} {...props}>
-        {options.map((opt) =>
-          typeof opt === 'string'
-            ? <option key={opt} value={opt}>{opt}</option>
-            : <option key={opt.value} value={opt.value}>{opt.label}</option>
-        )}
-      </select>
-      {hint && <span className={styles.hint}>{hint}</span>}
+    <div className="flex flex-col">
+      {label && <label className={labelClass}>{label}</label>}
+      <ShadcnSelect onValueChange={onChange} {...props}>
+        <SelectTrigger className={cn('w-full', className)}>
+          <SelectValue />
+        </SelectTrigger>
+        <SelectContent>
+          {options.map((opt) =>
+            typeof opt === 'string'
+              ? <SelectItem key={opt} value={opt}>{opt}</SelectItem>
+              : <SelectItem key={opt.value} value={opt.value}>{opt.label}</SelectItem>
+          )}
+        </SelectContent>
+      </ShadcnSelect>
+      {hint && <span className={hintClass}>{hint}</span>}
     </div>
   )
 }
 
-/**
- * InputWithAddon — right-side addon (e.g. ".de")
- */
 export function InputWithAddon({ addon, className = '', ...props }) {
   return (
-    <div className={styles.addonWrap}>
-      <input className={[styles.input, styles.addonInput, className].filter(Boolean).join(' ')} {...props} />
-      <div className={styles.addon}>{addon}</div>
+    <div className="flex items-center rounded-lg border border-input focus-within:border-ring focus-within:ring-3 focus-within:ring-ring/50 overflow-hidden">
+      <ShadcnInput
+        className={cn(
+          'h-10 flex-1 rounded-none border-none focus-visible:ring-0 focus-visible:border-transparent',
+          className
+        )}
+        {...props}
+      />
+      <div className="flex h-10 items-center bg-muted px-3 text-sm text-muted-foreground border-l border-input shrink-0">
+        {addon}
+      </div>
     </div>
   )
 }
