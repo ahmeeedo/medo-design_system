@@ -48,5 +48,14 @@
   },
   "toggle": {
     "title": "Toggle"
+  },
+  "codeblock": {
+    "copy":   "Copy",
+    "copied": "✓ Copied"
+  },
+  "tokensTable": {
+    "token":       "Token",
+    "value":       "Value",
+    "description": "Description"
   }
 }
