@@ -337,14 +337,14 @@
 --color-warning-container-200:  var(--color-warning-200);
 
 /* Error */
---color-error:                  var(--color-error-500);
---color-success-container-100:  var(--color-error-100);
---color-success-container-200:  var(--color-error-200);
+--color-error:                var(--color-error-500);
+--color-error-container-100:  var(--color-error-100);
+--color-error-container-200:  var(--color-error-200);
 
 /* Info */
 --color-info:            var(--color-info-1000);
---color-success-container-100:  var(--color-info-100);
---color-success-container-200:  var(--color-info-200);
+--color-info-container-100:  var(--color-info-100);
+--color-info-container-200:  var(--color-info-200);
 
 /* Focus */
 --color-focus:          var(--color-focus-500);
@@ -425,4 +425,91 @@
 --z-modal:     400;
 --z-toast:     500;
 --z-tooltip:   600;
+}
+
+@theme inline {
+
+  /* ── Font families ──────────────────── */
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+
+  /* ── Border radius ──────────────────── */
+  --radius-none: var(--radius-none);
+  --radius-xs:   var(--radius-xs);
+  --radius-sm:   var(--radius-sm);
+  --radius-md:   var(--radius-md);
+  --radius-lg:   var(--radius-lg);
+  --radius-xl:   var(--radius-xl);
+  --radius-2xl:  var(--radius-2xl);
+  --radius-3xl:  var(--radius-3xl);
+  --radius-full: var(--radius-full);
+
+  /* ── Shadows ────────────────────────── */
+  --shadow-xs:    var(--shadow-xs);
+  --shadow-sm:    var(--shadow-sm);
+  --shadow-md:    var(--shadow-md);
+  --shadow-lg:    var(--shadow-lg);
+  --shadow-xl:    var(--shadow-xl);
+  --shadow-2xl:   var(--shadow-2xl);
+  --shadow-inner: var(--shadow-inner);
+
+  /* ── Colors — brand ─────────────────── */
+  --color-primary:         var(--color-brand-primary-500);
+  --color-primary-hover:   var(--color-brand-primary-600);
+  --color-secondary:       var(--color-brand-secondary-900);
+  --color-secondary-hover: var(--color-brand-secondary-1000);
+
+  /* ── Colors — status ────────────────── */
+  --color-success: var(--color-success-700);
+  --color-warning: var(--color-warning-700);
+  --color-error:   var(--color-error-500);
+  --color-info:    var(--color-info-1000);
+
+  --color-success-container:     var(--color-success-container-100);
+  --color-success-container-alt: var(--color-success-container-200);
+  --color-warning-container:     var(--color-warning-container-100);
+  --color-warning-container-alt: var(--color-warning-container-200);
+  --color-error-container:       var(--color-error-container-100);
+  --color-error-container-alt:   var(--color-error-container-200);
+  --color-info-container:        var(--color-info-container-100);
+  --color-info-container-alt:    var(--color-info-container-200);
+
+  /* ── Colors — surface ───────────────── */
+  --color-surface:          var(--surface_100);
+  --color-surface-alt:      var(--surface_200);
+  --color-surface-active:   var(--surface_active);
+  --color-surface-selected: var(--surface_selected);
+  --color-surface-inverse:  var(--surface_inverse);
+  --color-surface-brand:    var(--surface_brand);
+
+  /* ── Colors — text ──────────────────── */
+  --color-content-primary:   var(--color-text-primary);
+  --color-content-secondary: var(--color-text-secondary);
+  --color-content-tertiary:  var(--color-text-tertiary);
+  --color-content-disabled:  var(--color-text-disabled);
+  --color-content-inverse:   var(--color-text-inverse);
+  --color-content-success:   var(--color-text-success);
+  --color-content-warning:   var(--color-text-warning);
+  --color-content-error:     var(--color-text-error);
+  --color-content-info:      var(--color-text-info);
+
+  /* ── Colors — border ────────────────── */
+  --color-border-subtle:    var(--border-subtle-100);
+  --color-border-subtle-alt: var(--border-subtle-200);
+  --color-border-strong:    var(--border-strong-100);
+  --color-border-strong-alt: var(--border-strong-200);
+  --color-border-brand:     var(--border-brand-primary);
+
+  /* ── Colors — button ────────────────── */
+  --color-btn-primary:        var(--btn-primary);
+  --color-btn-primary-hover:  var(--btn-primary-hover);
+  --color-btn-secondary:      var(--btn-secondary);
+  --color-btn-danger:         var(--btn-danger);
+  --color-btn-danger-hover:   var(--btn-danger-hover);
+  --color-btn-disabled:       var(--btn-disabled);
+
+  /* ── Colors — misc ──────────────────── */
+  --color-focus:    var(--color-focus);
+  --color-disabled: var(--color-disabled);
+  --color-overlay:  var(--color-overlay);
 }
