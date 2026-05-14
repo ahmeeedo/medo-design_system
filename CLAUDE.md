@@ -23,8 +23,8 @@ APM_RULES {
 - All styling uses Tailwind CSS utility classes. Do not create new CSS Module files (`.module.css`).
 - Tailwind classes must reference design tokens from `src/styles/tokens.css` via the configured `tailwind.config.js` mappings. Never hardcode color, spacing, radius, or shadow values directly in JSX or CSS.
 - When a required design token does not exist in `src/styles/tokens.css`: stop, document the missing token, and report it to the Manager for User clarification. Do not invent token values.
-- `src/styles/global.css` override order: all med.o token overrides must be placed **after** shadcn/ui's generated `@theme inline` block. shadcn's init overwrites `--color-primary`, `--radius-*`, and `--font-sans` — the med.o override block at the end of `global.css` restores these. Never insert med.o overrides before the shadcn block.
-- `@source` directives are required in `global.css` for Tailwind v4 dev-mode scanning. The directives `@source "../**/*.{jsx,js,tsx,ts,html}";` and `@source "../../index.html";` must appear directly after `@import "tailwindcss";`. Without them, Tailwind v4 does not generate utility-class CSS in dev mode (production build is unaffected). Do not remove or move these directives.
+- `src/styles/global.css` structure: ONE `@theme inline` block (no duplicates), ONE `:root` block. `--font-sans` must be set to a string literal in `@theme inline` — never `var(--font-sans)` (circular). `--radius` must be a concrete pixel value (e.g. `8px`) — never `var(--radius-lg)` (circular). Do not add `@source` directives — `@tailwindcss/vite` scans all project files automatically in both dev and build modes.
+- Do not add `@import "shadcn/tailwind.css"` — its `@custom-variant` and `@utility` content is already inlined in `global.css`. Running `npx shadcn@latest add` only installs component primitives; it must not overwrite or add duplicate blocks to `global.css`.
 
 ## Internationalization
 
