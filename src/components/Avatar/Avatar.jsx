@@ -1,43 +1,49 @@
-import styles from './Avatar.module.css'
+import { cn } from '@/lib/utils'
+import {
+  Avatar as AvatarRoot,
+  AvatarImage,
+  AvatarFallback,
+  AvatarGroup as AvatarGroupRoot,
+  AvatarGroupCount,
+} from '@/components/ui/avatar'
 
-/**
- * Avatar
- * @param {'xs'|'sm'|'md'|'lg'|'xl'} size
- * @param {string} initials
- * @param {string} src — image URL
- * @param {string} color — background color (CSS value)
- * @param {string} textColor
- */
+const sizeMap = {
+  xs: 'size-6',
+  sm: 'size-8',
+  md: 'size-10',
+  lg: 'size-12',
+  xl: 'size-14',
+}
+
 export function Avatar({ size = 'md', initials, src, color, textColor, alt = '' }) {
   return (
-    <div
-      className={[styles.avatar, styles[size]].join(' ')}
-      style={{ background: color, color: textColor }}
-    >
+    <AvatarRoot className={sizeMap[size]}>
       {src
-        ? <img src={src} alt={alt} className={styles.img} />
-        : initials}
-    </div>
+        ? <AvatarImage src={src} alt={alt} />
+        : <AvatarFallback
+            style={color ? { background: color, color: textColor } : undefined}
+          >
+            {initials}
+          </AvatarFallback>
+      }
+    </AvatarRoot>
   )
 }
 
-/**
- * AvatarGroup — overlapping avatars
- */
 export function AvatarGroup({ avatars = [], max = 4, size = 'md' }) {
   const visible = avatars.slice(0, max)
   const overflow = avatars.length - max
 
   return (
-    <div className={styles.group}>
+    <AvatarGroupRoot>
       {visible.map((a, i) => (
         <Avatar key={i} size={size} {...a} />
       ))}
       {overflow > 0 && (
-        <div className={[styles.avatar, styles[size], styles.overflow].join(' ')}>
+        <AvatarGroupCount className={sizeMap[size]}>
           +{overflow}
-        </div>
+        </AvatarGroupCount>
       )}
-    </div>
+    </AvatarGroupRoot>
   )
 }
