@@ -11,6 +11,7 @@ import MotionPage      from './pages/MotionPage'
 import ButtonsPage     from './pages/ButtonsPage'
 import InputsPage      from './pages/InputsPage'
 import SelectsPage     from './pages/SelectsPage'
+import TogglePage      from './pages/TogglePage'
 import BadgesPage      from './pages/BadgesPage'
 import AlertsPage      from './pages/AlertsPage'
 import CardsPage       from './pages/CardsPage'
@@ -47,7 +48,8 @@ function AppContent() {
         <Route path="/motion"     element={<MotionPage />} />
         <Route path="/buttons"    element={<ButtonsPage />} />
         <Route path="/inputs"     element={<InputsPage />} />
-        <Route path="/selects"    element={<SelectsPage />} />
+        <Route path="/select"     element={<SelectsPage />} />
+        <Route path="/toggle"     element={<TogglePage />} />
         <Route path="/badges"     element={<BadgesPage />} />
         <Route path="/alerts"     element={<AlertsPage />} />
         <Route path="/cards"      element={<CardsPage />} />

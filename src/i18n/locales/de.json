@@ -1,0 +1,61 @@
+{
+  "nav": {
+    "title": "Design System",
+    "sections": {
+      "foundations": "Foundations",
+      "components": "Components"
+    },
+    "items": {
+      "colors":     "Colors",
+      "typography": "Typography",
+      "spacing":    "Spacing",
+      "radius":     "Border Radius",
+      "shadows":    "Shadows",
+      "motion":     "Motion",
+      "buttons":    "Buttons",
+      "inputs":     "Inputs",
+      "select":     "Select",
+      "toggle":     "Toggle",
+      "badges":     "Badges & Tags",
+      "alerts":     "Alerts",
+      "cards":      "Cards",
+      "tables":     "Tables",
+      "tabs":       "Tabs",
+      "navigation": "Navigation",
+      "overlays":   "Modal",
+      "accordion":  "Accordion",
+      "menus":      "Menus",
+      "lists":      "Lists",
+      "stats":      "Stats / KPI",
+      "feedback":   "Feedback",
+      "avatar":     "Avatar",
+      "skeleton":   "Skeleton"
+    },
+    "aria": {
+      "closeMenu": "Menü schließen",
+      "openMenu":  "Menü öffnen"
+    }
+  },
+  "lang": {
+    "en": "EN",
+    "de": "DE"
+  },
+  "tabs": {
+    "usage":         "Usage",
+    "style":         "Style",
+    "code":          "Code",
+    "accessibility": "Accessibility"
+  },
+  "toggle": {
+    "title": "Toggle"
+  },
+  "codeblock": {
+    "copy":   "Kopieren",
+    "copied": "✓ Kopiert"
+  },
+  "tokensTable": {
+    "token":       "Token",
+    "value":       "Value",
+    "description": "Description"
+  }
+}
