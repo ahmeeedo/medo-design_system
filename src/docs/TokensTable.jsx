@@ -1,20 +1,20 @@
-import { useTranslation } from 'react-i18next'
+﻿import { useTranslation } from 'react-i18next'
 
 export function TokensTable({ tokens = [] }) {
   const { t } = useTranslation()
 
   return (
     <div className="border border-[var(--border-subtle-100)] rounded-[var(--radius-lg)] overflow-hidden overflow-x-auto [-webkit-overflow-scrolling:touch] mb-[var(--space-8)]">
-      <table className="w-full border-collapse text-[var(--text-sm)] min-w-[480px]">
+      <table className="w-full border-collapse text-sm min-w-[480px]">
         <thead className="bg-[var(--surface_200)]">
           <tr>
-            <th className="text-left px-[var(--space-4)] py-[var(--space-3)] text-[var(--text-xs)] [font-weight:var(--weight-semibold)] text-[var(--color-text-secondary)] tracking-[var(--tracking-wide)] uppercase border-b border-[var(--border-subtle-100)] whitespace-nowrap">
+            <th className="text-left px-[var(--space-4)] py-[var(--space-3)] text-xs [font-weight:var(--weight-semibold)] text-[var(--color-text-secondary)] tracking-[var(--tracking-wide)] uppercase border-b border-[var(--border-subtle-100)] whitespace-nowrap">
               {t('tokensTable.token')}
             </th>
-            <th className="text-left px-[var(--space-4)] py-[var(--space-3)] text-[var(--text-xs)] [font-weight:var(--weight-semibold)] text-[var(--color-text-secondary)] tracking-[var(--tracking-wide)] uppercase border-b border-[var(--border-subtle-100)] whitespace-nowrap">
+            <th className="text-left px-[var(--space-4)] py-[var(--space-3)] text-xs [font-weight:var(--weight-semibold)] text-[var(--color-text-secondary)] tracking-[var(--tracking-wide)] uppercase border-b border-[var(--border-subtle-100)] whitespace-nowrap">
               {t('tokensTable.value')}
             </th>
-            <th className="text-left px-[var(--space-4)] py-[var(--space-3)] text-[var(--text-xs)] [font-weight:var(--weight-semibold)] text-[var(--color-text-secondary)] tracking-[var(--tracking-wide)] uppercase border-b border-[var(--border-subtle-100)] whitespace-nowrap">
+            <th className="text-left px-[var(--space-4)] py-[var(--space-3)] text-xs [font-weight:var(--weight-semibold)] text-[var(--color-text-secondary)] tracking-[var(--tracking-wide)] uppercase border-b border-[var(--border-subtle-100)] whitespace-nowrap">
               {t('tokensTable.description')}
             </th>
           </tr>
@@ -23,7 +23,7 @@ export function TokensTable({ tokens = [] }) {
           {tokens.map((row) => (
             <tr key={row.token} className="hover:[&>td]:bg-[var(--surface_200)]">
               <td className="px-[var(--space-4)] py-[var(--space-3)] align-middle">
-                <code className="[font-family:var(--font-mono)] text-[var(--text-xs)] bg-[var(--color-neutral-100)] text-[var(--color-neutral-800)] px-[6px] py-[2px] rounded-[var(--radius-sm)] whitespace-nowrap">
+                <code className="[font-family:var(--font-mono)] text-xs bg-[var(--color-neutral-100)] text-[var(--color-neutral-800)] px-[6px] py-[2px] rounded-[var(--radius-sm)] whitespace-nowrap">
                   {row.token}
                 </code>
               </td>
@@ -35,13 +35,13 @@ export function TokensTable({ tokens = [] }) {
                       style={{ background: row.value }}
                     />
                   )}
-                  <code className="[font-family:var(--font-mono)] text-[var(--text-xs)] text-[var(--color-neutral-600)] whitespace-nowrap uppercase">
+                  <code className="[font-family:var(--font-mono)] text-xs text-[var(--color-neutral-600)] whitespace-nowrap uppercase">
                     {row.value}
                   </code>
                 </div>
               </td>
               <td className="px-[var(--space-4)] py-[var(--space-3)] align-middle">
-                <span className="text-[var(--text-sm)] text-[var(--color-text-secondary)]">{row.description}</span>
+                <span className="text-sm text-[var(--color-text-secondary)]">{row.description}</span>
               </td>
             </tr>
           ))}

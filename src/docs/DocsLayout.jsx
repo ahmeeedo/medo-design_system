@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+﻿import { useState, useEffect } from 'react'
 import { NavLink } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { LanguageSwitcher } from './LanguageSwitcher'
@@ -62,7 +62,7 @@ export function DocsLayout({ children }) {
     <div className="flex min-h-screen">
 
       <header className="hidden max-md:flex max-md:items-center max-md:justify-between max-md:fixed max-md:top-0 max-md:left-0 max-md:right-0 max-md:h-[56px] max-md:px-[var(--space-5)] max-md:bg-[var(--surface_100)] max-md:border-b max-md:border-[var(--color-border)] max-md:z-[var(--z-sticky)]">
-        <span className="text-[var(--text-sm)] [font-weight:var(--weight-semibold)] tracking-[var(--tracking-wide)] uppercase text-[var(--color-text-primary)]">
+        <span className="text-sm [font-weight:var(--weight-semibold)] tracking-[var(--tracking-wide)] uppercase text-[var(--color-text-primary)]">
           {t('nav.title')}
         </span>
         <div className="flex items-center gap-2">
@@ -88,14 +88,14 @@ export function DocsLayout({ children }) {
         data-mobile-open={mobileOpen}
         className="fixed top-0 left-0 w-[220px] h-screen border-r border-[var(--color-border)] bg-[var(--surface_100)] overflow-y-auto py-[var(--space-6)] z-[var(--z-sticky)] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden max-md:w-[280px] max-md:-translate-x-full max-md:transition-transform max-md:duration-[var(--duration-slow)] max-md:ease-[var(--ease-out)] max-md:[z-index:calc(var(--z-sticky)+2)] max-md:pt-[var(--space-14)] max-md:shadow-[var(--shadow-xl)] max-md:data-[mobile-open=true]:translate-x-0"
       >
-        <div className="flex items-center justify-between px-[var(--space-5)] pb-[var(--space-6)] text-[var(--text-sm)] [font-weight:var(--weight-semibold)] tracking-[var(--tracking-wide)] uppercase text-[var(--color-text-primary)] border-b border-[var(--color-border)] mb-[var(--space-4)] max-md:hidden">
+        <div className="flex items-center justify-between px-[var(--space-5)] pb-[var(--space-6)] text-sm [font-weight:var(--weight-semibold)] tracking-[var(--tracking-wide)] uppercase text-[var(--color-text-primary)] border-b border-[var(--color-border)] mb-[var(--space-4)] max-md:hidden">
           <span>{t('nav.title')}</span>
           <LanguageSwitcher />
         </div>
 
         {NAV.map((group) => (
           <div key={group.section}>
-            <div className="px-[var(--space-5)] pt-[var(--space-3)] pb-[var(--space-1)] text-[var(--text-xs)] [font-weight:var(--weight-semibold)] tracking-[var(--tracking-widest)] uppercase text-[var(--color-text-secondary)]">
+            <div className="px-[var(--space-5)] pt-[var(--space-3)] pb-[var(--space-1)] text-xs [font-weight:var(--weight-semibold)] tracking-[var(--tracking-widest)] uppercase text-[var(--color-text-secondary)]">
               {t(group.section)}
             </div>
             {group.items.map((item) => (
@@ -104,7 +104,7 @@ export function DocsLayout({ children }) {
                 to={`/${item.id}`}
                 onClick={close}
                 className={({ isActive }) =>
-                  `block w-full px-[var(--space-5)] py-[var(--space-2)] [font-family:var(--font-sans)] text-[var(--text-sm)] text-left no-underline cursor-pointer transition-[color,background] duration-[var(--duration-fast)] ease-[var(--ease-out)] border-none bg-transparent ${
+                  `block w-full px-[var(--space-5)] py-[var(--space-2)] [font-family:var(--font-sans)] text-sm text-left no-underline cursor-pointer transition-[color,background] duration-[var(--duration-fast)] ease-[var(--ease-out)] border-none bg-transparent ${
                     isActive
                       ? 'text-[var(--color-text-primary)] [font-weight:var(--weight-medium)] bg-[var(--color-neutral-100)]'
                       : 'text-[var(--color-text-secondary)] [font-weight:var(--weight-regular)] hover:text-[var(--color-text-primary)] hover:bg-[var(--surface_200)]'

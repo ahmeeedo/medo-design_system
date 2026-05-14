@@ -1,4 +1,4 @@
-import { useSearchParams } from 'react-router-dom'
+﻿import { useSearchParams } from 'react-router-dom'
 import { Children } from 'react'
 
 const GRID_CLASSES = {
@@ -26,11 +26,11 @@ export function PageLayout({ title, description, tabs = [] }) {
   return (
     <div>
       <div className="px-[var(--space-8)] py-[var(--space-8)] bg-[var(--surface_brand)]">
-        <h1 className="text-[var(--text-5xl)] [font-weight:var(--weight-semibold)] tracking-[var(--tracking-tight)] leading-[var(--leading-tight)] text-[var(--color-text-on-color)] mb-[var(--space-2)] max-md:text-[var(--text-3xl)]">
+        <h1 className="text-5xl [font-weight:var(--weight-semibold)] tracking-[var(--tracking-tight)] leading-[var(--leading-tight)] text-[var(--color-text-on-color)] mb-[var(--space-2)] max-md:text-3xl">
           {title}
         </h1>
         {description && (
-          <p className="text-[var(--text-lg)] text-[var(--color-text-on-color)] leading-[var(--leading-relaxed)] max-w-[50%] [font-weight:var(--weight-light)]">
+          <p className="text-lg text-[var(--color-text-on-color)] leading-[var(--leading-relaxed)] max-w-[50%] [font-weight:var(--weight-light)]">
             {description}
           </p>
         )}
@@ -41,7 +41,7 @@ export function PageLayout({ title, description, tabs = [] }) {
           <button
             key={tab.id}
             onClick={() => handleTabClick(tab.id)}
-            className={`px-[var(--space-6)] py-[var(--space-3)] text-[var(--text-md)] [font-weight:var(--weight-medium)] bg-transparent border-none border-b-2 -mb-px cursor-pointer transition-[color,border-color] duration-[var(--duration-normal)] ease-[var(--ease-out)] ${
+            className={`px-[var(--space-6)] py-[var(--space-3)] text-md [font-weight:var(--weight-medium)] bg-transparent border-none border-b-2 -mb-px cursor-pointer transition-[color,border-color] duration-[var(--duration-normal)] ease-[var(--ease-out)] ${
               active === tab.id
                 ? 'text-[var(--color-link-primary)] border-b-[var(--border-brand-primary)] bg-[var(--surface-container_hover-100)]'
                 : 'text-[var(--color-text-secondary)] border-b-transparent hover:text-[var(--color-text-primary)] hover:bg-[var(--surface-container_hover-100)]'
@@ -67,7 +67,7 @@ export function Section({ title, children }) {
   return (
     <div id={id} className="mb-[var(--space-10)] px-[var(--space-8)] max-w-[980px]">
       {title && (
-        <h2 className="text-[var(--text-3xl)] [font-weight:var(--weight-semibold)] text-[var(--color-text-tertiary)] mb-[var(--space-4)] pb-[var(--space-2)] border-b border-[var(--border-subtle-100)]">
+        <h2 className="text-3xl [font-weight:var(--weight-semibold)] text-[var(--color-text-tertiary)] mb-[var(--space-4)] pb-[var(--space-2)] border-b border-[var(--border-subtle-100)]">
           {title}
         </h2>
       )}
