@@ -1,442 +1,590 @@
-import { PageLayout, Section, GridWrapper, Grid, Content } from '../docs/PageLayout'
+import { useTranslation } from 'react-i18next'
+import { PageLayout, Section, Content, GridWrapper, Grid } from '../docs/PageLayout'
 import { TokensTable } from '../docs/TokensTable'
 import { CodeBlock } from '../docs/CodeBlock'
 import { Swatch } from '../docs/helpers'
 import styles from '../App.module.css'
 
 export default function ColorsPage() {
+  const { t } = useTranslation()
+
+  const surfaceTokens = [
+    { token: '--surface_100',            value: '#FFFFFF',  description: t('colors.tokens.s100') },
+    { token: '--surface_200',            value: '#F8F9FA',  description: t('colors.tokens.s200') },
+    { token: '--surface_active',         value: '#E9ECEF',  description: t('colors.tokens.sActive') },
+    { token: '--surface_selected',       value: '#CED4DA',  description: t('colors.tokens.sSelected') },
+    { token: '--surface_selected-hover', value: '#ADB5BD',  description: t('colors.tokens.sSelectedHover') },
+    { token: '--surface_inverse',        value: '#212529',  description: t('colors.tokens.sInverse') },
+    { token: '--surface_inverse-hover',  value: '#343A40',  description: t('colors.tokens.sInverseHover') },
+    { token: '--surface_brand',          value: '#1C2855',  description: t('colors.tokens.sBrand') },
+  ]
+
+  const surfaceContTokens = [
+    { token: '--surface-container_100',                value: '#F8F9FA', description: t('colors.tokens.sc100') },
+    { token: '--surface-container_200',                value: '#F1F3F5', description: t('colors.tokens.sc200') },
+    { token: '--surface-container_hover-100',          value: '#F1F3F5', description: t('colors.tokens.scHover100') },
+    { token: '--surface-container_hover-200',          value: '#E9ECEF', description: t('colors.tokens.scHover200') },
+    { token: '--surface-container_active-100',         value: '#DEE2E6', description: t('colors.tokens.scActive100') },
+    { token: '--surface-container_selected-100',       value: '#CED4DA', description: t('colors.tokens.scSelected100') },
+    { token: '--surface-container_selected-hover-100', value: '#ADB5BD', description: t('colors.tokens.scSelectedHover100') },
+  ]
+
+  const accentSurfTokens = [
+    { token: '--accent-surface_100',        value: '#DCE0EB', description: t('colors.tokens.as100') },
+    { token: '--accent-surface_hover-100',  value: '#BDC6D9', description: t('colors.tokens.asHover100') },
+    { token: '--accent-surface_active-100', value: '#9DAAC7', description: t('colors.tokens.asActive100') },
+  ]
+
+  const textTokens = [
+    { token: '--color-text-primary',   value: '#212529', description: t('colors.tokens.tPrimary') },
+    { token: '--color-text-secondary', value: '#343A40', description: t('colors.tokens.tSecondary') },
+    { token: '--color-text-tertiary',  value: '#030711', description: t('colors.tokens.tTertiary') },
+    { token: '--color-text-disabled',  value: '#DEE2E6', description: t('colors.tokens.tDisabled') },
+    { token: '--color-text-inverse',   value: '#FFFFFF', description: t('colors.tokens.tInverse') },
+    { token: '--color-text-on-color',  value: '#FFFFFF', description: t('colors.tokens.tOnColor') },
+    { token: '--color-text-success',   value: '#4CAF50', description: t('colors.tokens.tSuccess') },
+    { token: '--color-text-warning',   value: '#FAB005', description: t('colors.tokens.tWarning') },
+    { token: '--color-text-error',     value: '#B71C1C', description: t('colors.tokens.tError') },
+    { token: '--color-text-info',      value: '#3A4A76', description: t('colors.tokens.tInfo') },
+    { token: '--color-text-helper',    value: '#495057', description: t('colors.tokens.tHelper') },
+  ]
+
+  const borderTokens = [
+    { token: '--border-subtle-100',      value: '#DEE2E6', description: t('colors.tokens.bSubtle100') },
+    { token: '--border-subtle-200',      value: '#CED4DA', description: t('colors.tokens.bSubtle200') },
+    { token: '--border-strong-100',      value: '#343A40', description: t('colors.tokens.bStrong100') },
+    { token: '--border-strong-200',      value: '#212529', description: t('colors.tokens.bStrong200') },
+    { token: '--border-brand-primary',   value: '#1C2855', description: t('colors.tokens.bBrandPrimary') },
+    { token: '--border-brand-secondary', value: '#BF5226', description: t('colors.tokens.bBrandSecondary') },
+  ]
+
+  const buttonTokens = [
+    { token: '--btn-primary',         value: '#0A1E46', description: t('colors.tokens.btnPrimary') },
+    { token: '--btn-primary-hover',   value: '#1C2855', description: t('colors.tokens.btnPrimaryHover') },
+    { token: '--btn-primary-active',  value: '#38548C', description: t('colors.tokens.btnPrimaryActive') },
+    { token: '--btn-secondary',       value: '#212529', description: t('colors.tokens.btnSecondary') },
+    { token: '--btn-secondary-hover', value: '#343A40', description: t('colors.tokens.btnSecHover') },
+    { token: '--btn-secondary-active',value: '#495057', description: t('colors.tokens.btnSecActive') },
+    { token: '--btn-ghost',           value: 'transparent', description: t('colors.tokens.btnGhost') },
+    { token: '--btn-ghost-hover',     value: '#E9ECEF', description: t('colors.tokens.btnGhostHover') },
+    { token: '--btn-accent',          value: '#DE6F43', description: t('colors.tokens.btnAccent') },
+    { token: '--btn-accent-hover',    value: '#CC663D', description: t('colors.tokens.btnAccentHover') },
+    { token: '--btn-danger',          value: '#D32F2F', description: t('colors.tokens.btnDanger') },
+    { token: '--btn-danger-hover',    value: '#B71C1C', description: t('colors.tokens.btnDangerHover') },
+    { token: '--btn-disabled',        value: '#49505725', description: t('colors.tokens.btnDisabled') },
+  ]
+
+  const statusTokens = [
+    { token: '--color-success',               value: '#388E3C', description: t('colors.tokens.success') },
+    { token: '--color-success-container-100', value: '#E8F5E9', description: t('colors.tokens.successContainer') },
+    { token: '--color-warning',               value: '#FAB005', description: t('colors.tokens.warning') },
+    { token: '--color-warning-container-100', value: '#FFF9DB', description: t('colors.tokens.warningContainer') },
+    { token: '--color-error',                 value: '#D32F2F', description: t('colors.tokens.error') },
+    { token: '--color-error-container-100',   value: '#FFEBEE', description: t('colors.tokens.errorContainer') },
+    { token: '--color-info',                  value: '#2A3A66', description: t('colors.tokens.info') },
+    { token: '--color-info-container-100',    value: '#EBEFF7', description: t('colors.tokens.infoContainer') },
+  ]
+
+  const iconTokens = [
+    { token: '--icon_primary',          value: '#212529', description: t('colors.tokens.iconPrimary') },
+    { token: '--icon_secondary',        value: '#343A40', description: t('colors.tokens.iconSecondary') },
+    { token: '--icon_on-color',         value: '#FFFFFF', description: t('colors.tokens.iconOnColor') },
+    { token: '--icon_brand-primary',    value: '#1C2855', description: t('colors.tokens.iconBrandPrimary') },
+    { token: '--icon_brand-secondary',  value: '#CC663D', description: t('colors.tokens.iconBrandSec') },
+  ]
+
+  const linkTokens = [
+    { token: '--color-link-primary',       value: '#1C2855', description: t('colors.tokens.linkPrimary') },
+    { token: '--color-link-primary-hover', value: '#050F23', description: t('colors.tokens.linkHover') },
+  ]
+
+  const focusTokens = [
+    { token: '--color-focus',         value: '#2B5AD9', description: t('colors.tokens.focusRing') },
+    { token: '--color-focus-inset',   value: '#FFFFFF', description: t('colors.tokens.focusInset') },
+    { token: '--color-disabled',      value: '#49505725', description: t('colors.tokens.disabled') },
+    { token: '--color-overlay',       value: '#00000060', description: t('colors.tokens.overlay') },
+  ]
+
+  const btnStateStyle = {
+    padding: 'var(--space-2) var(--space-4)',
+    borderRadius: 'var(--radius-md)',
+    fontSize: 'var(--text-sm)',
+    fontWeight: 500,
+    border: 'none',
+    cursor: 'default',
+    color: 'var(--color-text-on-color)',
+  }
+
   return (
     <PageLayout
-    title="Colors"
-    description="Guidelines for color usage in med.o products and applications"
-    tabs={[
-        { 
-            id: 'overview', 
-            label: 'Overview', 
-            content: 
+      title={t('nav.items.colors')}
+      description={t('colors.page.description')}
+      tabs={[
+        {
+          id: 'overview',
+          label: t('tabs.overview'),
+          content: (
             <>
-                <Section title="About colors">
-                    <Content>
-                        <p>Color is a fundamental element of design that communicates meaning, enhances usability, and helps establish a consistent brand identity. In the med.o design system, colors are thoughtfully chosen to support accessibility, ensure consistency, and align with Salesforce’s visual language.</p>
-                    </Content>
-                    <h3 className={styles.groupTitle}>Principles of Color Usage in med.o products</h3>
-                    <Content>                       
-                        <p><strong>Accessibility first</strong></p>
-                        <p>Colors in med.o design system meet or exceed Web Content Accessibility Guidelines (WCAG) 2.1 AA contrast standards. This ensures content remains readable for all users, including those with visual impairments. Always verify color combinations—especially text against backgrounds—to ensure they meet contrast requirements.</p>
-                    </Content>
-                    <Content>                       
-                        <p><strong>Consistency across experiences</strong></p>
-                        <p>Use styling hooks consistently when applying custom styles. These hooks help maintain a cohesive look across med.o products and custom implementations. Avoid hardcoding colors so your design can adapt to different themes.</p>
-                    </Content>
-                    <Content>                       
-                        <p><strong>Communicating status and meaning</strong></p>
-                        <p>med.o design system assigns specific colors to represent different states, such as success, error, or warning. These styling hooks use semantic naming, making their purpose clear. To stay aligned with med.o standards, use these predefined hooks instead of custom color values.</p>
-                    </Content>              
-                </Section>
+              <Section title={t('colors.overview.aboutTitle')}>
+                <Content>
+                  <p>{t('colors.overview.aboutBody')}</p>
+                </Content>
+                <h3 className={styles.groupTitle}>{t('colors.overview.principlesTitle')}</h3>
+                <Content>
+                  <p><strong>{t('colors.overview.p1Title')}</strong></p>
+                  <p>{t('colors.overview.p1Body')}</p>
+                </Content>
+                <Content>
+                  <p><strong>{t('colors.overview.p2Title')}</strong></p>
+                  <p>{t('colors.overview.p2Body')}</p>
+                </Content>
+                <Content>
+                  <p><strong>{t('colors.overview.p3Title')}</strong></p>
+                  <p>{t('colors.overview.p3Body')}</p>
+                </Content>
+              </Section>
 
-                <Section title="Color theory">
-                    <h3 className={styles.groupTitle}>Color is intentional</h3>
-                    <Content>
-                        <p>Our color palette is built on clean white surfaces, accented with intentional bursts of vibrant color. These highlights draw attention to key information without overwhelming the interface.</p>
-                    </Content>
-                    <h3 className={styles.groupTitle}>Color conveys meaning</h3>
-                    <Content>                       
-                        <p>Consistent use of styling hooks allows users to quickly associate specific colors with their intended meanings.</p>
-                    </Content>
-                    <h3 className={styles.groupTitle}>Color guides the user</h3>
-                    <Content>                       
-                        <p>Thoughtful color choices help direct attention, support navigation, and make it easier for users to complete tasks efficiently.</p>
-                    </Content>
-                    <h3 className={styles.groupTitle}>Color adds delight</h3>
-                    <Content>                       
-                        <p>Vibrant color combinations are used sparingly to create moments of visual interest, while keeping information-dense interfaces clear and easy to understand.</p>
-                    </Content>              
-                </Section>
+              <Section title={t('colors.overview.theoryTitle')}>
+                <h3 className={styles.groupTitle}>{t('colors.overview.t1Title')}</h3>
+                <Content><p>{t('colors.overview.t1Body')}</p></Content>
+                <h3 className={styles.groupTitle}>{t('colors.overview.t2Title')}</h3>
+                <Content><p>{t('colors.overview.t2Body')}</p></Content>
+                <h3 className={styles.groupTitle}>{t('colors.overview.t3Title')}</h3>
+                <Content><p>{t('colors.overview.t3Body')}</p></Content>
+                <h3 className={styles.groupTitle}>{t('colors.overview.t4Title')}</h3>
+                <Content><p>{t('colors.overview.t4Body')}</p></Content>
+              </Section>
 
-                <Section title="Foundational color">
-                    <Content>
-                        <p>Foundational colors give meaning to specific UI elements.</p>
-                        <br></br>
-                        <p>Use foundational colors only for their intended purpose. Customers can use a product more easily if a specific color is associated with a consistent meaning throughout the product.</p>
-                        <br></br>
-                        <p>Foundational colors consist of: </p>
-                        <br></br>
-                        <p>
-                            <ul>
-                                <li><strong>Brand color pallette: </strong>Full spectrum of colors that aren't assigned to specific elements, and can be used for undefined situations.</li>
-                                <li><strong>Alias color pallette: </strong>Colors with no semantic assignment, but are commonly used by semantic hooks for elements throughout the UI.</li>
-                                <li><strong>Mapped color pallette: </strong>Used for building components and UI page elements such as backgrounds, borders, and fills. Use these colors only for their respective locations.</li>
-                            </ul>
-                        </p>
-                    </Content>             
-                </Section>
+              <Section title={t('colors.overview.foundationalTitle')}>
+                <Content>
+                  <p>{t('colors.overview.foundationalBody')}</p>
+                  <p>{t('colors.overview.foundationalNote')}</p>
+                  <ul>
+                    <li><strong>{t('colors.overview.fl1Title')}</strong> {t('colors.overview.fl1Body')}</li>
+                    <li><strong>{t('colors.overview.fl2Title')}</strong> {t('colors.overview.fl2Body')}</li>
+                    <li><strong>{t('colors.overview.fl3Title')}</strong> {t('colors.overview.fl3Body')}</li>
+                  </ul>
+                </Content>
+              </Section>
 
-                <Section title="Brand colors">
-                    <h3 className={styles.groupTitle}>Red</h3>
-                    <div className={styles.swatchGrid}>
-                        <Swatch bg="var(--color-brand-red-100)" label="Red 100" />
-                        <Swatch bg="var(--color-brand-red-200)" label="Red 200" />
-                        <Swatch bg="var(--color-brand-red-300)" label="Red 300" />
-                        <Swatch bg="var(--color-brand-red-400)" label="Red 400" />
-                        <Swatch bg="var(--color-brand-red-500)" label="Red 500" />
-                        <Swatch bg="var(--color-brand-red-600)" label="Red 600" />
-                        <Swatch bg="var(--color-brand-red-700)" label="Red 700" />
-                        <Swatch bg="var(--color-brand-red-800)" label="Red 800" />
-                        <Swatch bg="var(--color-brand-red-900)" label="Red 900" />
-                        <Swatch bg="var(--color-brand-red-1000)" label="Red 1000" />
-                    </div> 
+              <Section title={t('colors.overview.brandColorsTitle')}>
+                <h3 className={styles.groupTitle}>Red</h3>
+                <div className={styles.swatchGrid}>
+                  {[100,200,300,400,500,600,700,800,900,1000].map(n => (
+                    <Swatch key={n} bg={`var(--color-brand-red-${n})`} label={`Red ${n}`} />
+                  ))}
+                </div>
+                <h3 className={styles.groupTitle}>Yellow</h3>
+                <div className={styles.swatchGrid}>
+                  {[100,200,300,400,500,600,700,800,900,1000].map(n => (
+                    <Swatch key={n} bg={`var(--color-brand-yellow-${n})`} label={`Yellow ${n}`} />
+                  ))}
+                </div>
+                <h3 className={styles.groupTitle}>Green</h3>
+                <div className={styles.swatchGrid}>
+                  {[100,200,300,400,500,600,700,800,900,1000].map(n => (
+                    <Swatch key={n} bg={`var(--color-brand-green-${n})`} label={`Green ${n}`} />
+                  ))}
+                </div>
+                <h3 className={styles.groupTitle}>Blue</h3>
+                <div className={styles.swatchGrid}>
+                  {[100,200,300,400,500,600,700,800,900,1000].map(n => (
+                    <Swatch key={n} bg={`var(--color-brand-blue-${n})`} label={`Blue ${n}`} />
+                  ))}
+                </div>
+                <h3 className={styles.groupTitle}>Grey</h3>
+                <div className={styles.swatchGrid}>
+                  {[100,200,300,400,500,600,700,800,900,1000].map(n => (
+                    <Swatch key={n} bg={`var(--color-brand-grey-${n})`} label={`Grey ${n}`} />
+                  ))}
+                </div>
+                <h3 className={styles.groupTitle}>Navy</h3>
+                <div className={styles.swatchGrid}>
+                  {[100,200,300,400,500,600,700,800,900,1000].map(n => (
+                    <Swatch key={n} bg={`var(--color-brand-navy-${n})`} label={`Navy ${n}`} />
+                  ))}
+                </div>
+                <h3 className={styles.groupTitle}>Orange</h3>
+                <div className={styles.swatchGrid}>
+                  {[100,200,300,400,500,600,700,800,900,1000].map(n => (
+                    <Swatch key={n} bg={`var(--color-brand-orange-${n})`} label={`Orange ${n}`} />
+                  ))}
+                </div>
+                <h3 className={styles.groupTitle}>Cobalt</h3>
+                <div className={styles.swatchGrid}>
+                  {[100,200,300,400,500,600,700,800,900,1000].map(n => (
+                    <Swatch key={n} bg={`var(--color-brand-cobalt-${n})`} label={`Cobalt ${n}`} />
+                  ))}
+                </div>
+              </Section>
 
-                    <h3 className={styles.groupTitle}>Yellow</h3>
-                    <div className={styles.swatchGrid}>
-                        <Swatch bg="var(--color-brand-yellow-100)" label="Yellow 100" />
-                        <Swatch bg="var(--color-brand-yellow-200)" label="Yellow 200" />
-                        <Swatch bg="var(--color-brand-yellow-300)" label="Yellow 300" />
-                        <Swatch bg="var(--color-brand-yellow-400)" label="Yellow 400" />
-                        <Swatch bg="var(--color-brand-yellow-500)" label="Yellow 500" />
-                        <Swatch bg="var(--color-brand-yellow-600)" label="Yellow 600" />
-                        <Swatch bg="var(--color-brand-yellow-700)" label="Yellow 700" />
-                        <Swatch bg="var(--color-brand-yellow-800)" label="Yellow 800" />
-                        <Swatch bg="var(--color-brand-yellow-900)" label="Yellow 900" />
-                        <Swatch bg="var(--color-brand-yellow-1000)" label="Yellow 1000" />
-                    </div>
+              <Section title={t('colors.overview.aliasColorsTitle')}>
+                <h3 className={styles.groupTitle}>{t('colors.overview.neutralTitle')}</h3>
+                <div className={styles.swatchGrid}>
+                  {[
+                    ['var(--color-neutral-0)',    '0',    true],
+                    ['var(--color-neutral-50)',   '50',   true],
+                    ['var(--color-neutral-100)',  '100'],
+                    ['var(--color-neutral-200)',  '200'],
+                    ['var(--color-neutral-300)',  '300'],
+                    ['var(--color-neutral-400)',  '400'],
+                    ['var(--color-neutral-500)',  '500'],
+                    ['var(--color-neutral-600)',  '600'],
+                    ['var(--color-neutral-700)',  '700'],
+                    ['var(--color-neutral-800)',  '800'],
+                    ['var(--color-neutral-900)',  '900'],
+                    ['var(--color-neutral-1000)', '1000'],
+                  ].map(([bg, label, border]) => (
+                    <Swatch key={label} bg={bg} label={label} border={!!border} />
+                  ))}
+                </div>
+                <h3 className={styles.groupTitle}>{t('colors.overview.primaryTitle')}</h3>
+                <div className={styles.swatchGrid}>
+                  {[100,200,300,400,500,600,700,800,900,1000].map(n => (
+                    <Swatch key={n} bg={`var(--color-brand-primary-${n})`} label={String(n)} />
+                  ))}
+                </div>
+                <h3 className={styles.groupTitle}>{t('colors.overview.secondaryTitle')}</h3>
+                <div className={styles.swatchGrid}>
+                  {[100,200,300,400,500,600,700,800,900,1000].map(n => (
+                    <Swatch key={n} bg={`var(--color-brand-secondary-${n})`} label={String(n)} />
+                  ))}
+                </div>
+                <h3 className={styles.groupTitle}>{t('colors.overview.successTitle')}</h3>
+                <div className={styles.swatchGrid}>
+                  {[100,200,300,400,500,600,700,800,900,1000].map(n => (
+                    <Swatch key={n} bg={`var(--color-success-${n})`} label={String(n)} />
+                  ))}
+                </div>
+                <h3 className={styles.groupTitle}>{t('colors.overview.warningTitle')}</h3>
+                <div className={styles.swatchGrid}>
+                  {[100,200,300,400,500,600,700,800,900,1000].map(n => (
+                    <Swatch key={n} bg={`var(--color-warning-${n})`} label={String(n)} />
+                  ))}
+                </div>
+                <h3 className={styles.groupTitle}>{t('colors.overview.errorTitle')}</h3>
+                <div className={styles.swatchGrid}>
+                  {[100,200,300,400,500,600,700,800,900,1000].map(n => (
+                    <Swatch key={n} bg={`var(--color-error-${n})`} label={String(n)} />
+                  ))}
+                </div>
+                <h3 className={styles.groupTitle}>{t('colors.overview.infoTitle')}</h3>
+                <div className={styles.swatchGrid}>
+                  {[100,200,300,400,500,600,700,800,900,1000].map(n => (
+                    <Swatch key={n} bg={`var(--color-info-${n})`} label={String(n)} />
+                  ))}
+                </div>
+                <h3 className={styles.groupTitle}>{t('colors.overview.focusTitle')}</h3>
+                <div className={styles.swatchGrid}>
+                  {[100,200,300,400,500,600,700,800,900,1000].map(n => (
+                    <Swatch key={n} bg={`var(--color-focus-${n})`} label={String(n)} />
+                  ))}
+                </div>
+              </Section>
 
-                    <h3 className={styles.groupTitle}>Green</h3>
-                    <div className={styles.swatchGrid}>
-                        <Swatch bg="var(--color-brand-green-100)" label="Green 100" />
-                        <Swatch bg="var(--color-brand-green-200)" label="Green 200" />
-                        <Swatch bg="var(--color-brand-green-300)" label="Green 300" />
-                        <Swatch bg="var(--color-brand-green-400)" label="Green 400" />
-                        <Swatch bg="var(--color-brand-green-500)" label="Green 500" />
-                        <Swatch bg="var(--color-brand-green-600)" label="Green 600" />
-                        <Swatch bg="var(--color-brand-green-700)" label="Green 700" />
-                        <Swatch bg="var(--color-brand-green-800)" label="Green 800" />
-                        <Swatch bg="var(--color-brand-green-900)" label="Green 900" />
-                        <Swatch bg="var(--color-brand-green-1000)" label="Green 1000" />
-                    </div>
-
-                    <h3 className={styles.groupTitle}>Blue</h3>
-                    <div className={styles.swatchGrid}>
-                        <Swatch bg="var(--color-brand-blue-100)" label="Blue 100" />
-                        <Swatch bg="var(--color-brand-blue-200)" label="Blue 200" />
-                        <Swatch bg="var(--color-brand-blue-300)" label="Blue 300" />
-                        <Swatch bg="var(--color-brand-blue-400)" label="Blue 400" />
-                        <Swatch bg="var(--color-brand-blue-500)" label="Blue 500" />
-                        <Swatch bg="var(--color-brand-blue-600)" label="Blue 600" />
-                        <Swatch bg="var(--color-brand-blue-700)" label="Blue 700" />
-                        <Swatch bg="var(--color-brand-blue-800)" label="Blue 800" />
-                        <Swatch bg="var(--color-brand-blue-900)" label="Blue 900" />
-                        <Swatch bg="var(--color-brand-blue-1000)" label="Blue 1000" />
-                    </div>
-
-                    <h3 className={styles.groupTitle}>Grey</h3>
-                    <div className={styles.swatchGrid}>
-                        <Swatch bg="var(--color-brand-grey-100)" label="Grey 100" />
-                        <Swatch bg="var(--color-brand-grey-200)" label="Grey 200" />
-                        <Swatch bg="var(--color-brand-grey-300)" label="Grey 300" />
-                        <Swatch bg="var(--color-brand-grey-400)" label="Grey 400" />
-                        <Swatch bg="var(--color-brand-grey-500)" label="Grey 500" />
-                        <Swatch bg="var(--color-brand-grey-600)" label="Grey 600" />
-                        <Swatch bg="var(--color-brand-grey-700)" label="Grey 700" />
-                        <Swatch bg="var(--color-brand-grey-800)" label="Grey 800" />
-                        <Swatch bg="var(--color-brand-grey-900)" label="Grey 900" />
-                        <Swatch bg="var(--color-brand-grey-1000)" label="Grey 1000" />
-                    </div>
-
-                    <h3 className={styles.groupTitle}>Navy</h3>
-                    <div className={styles.swatchGrid}>
-                        <Swatch bg="var(--color-brand-navy-100)" label="Navy 100" />
-                        <Swatch bg="var(--color-brand-navy-200)" label="Navy 200" />
-                        <Swatch bg="var(--color-brand-navy-300)" label="Navy 300" />
-                        <Swatch bg="var(--color-brand-navy-400)" label="Navy 400" />
-                        <Swatch bg="var(--color-brand-navy-500)" label="Navy 500" />
-                        <Swatch bg="var(--color-brand-navy-600)" label="Navy 600" />
-                        <Swatch bg="var(--color-brand-navy-700)" label="Navy 700" />
-                        <Swatch bg="var(--color-brand-navy-800)" label="Navy 800" />
-                        <Swatch bg="var(--color-brand-navy-900)" label="Navy 900" />
-                        <Swatch bg="var(--color-brand-navy-1000)" label="Navy 1000" />
-                    </div>
-
-                    <h3 className={styles.groupTitle}>Orange</h3>
-                    <div className={styles.swatchGrid}>
-                        <Swatch bg="var(--color-brand-orange-100)" label="Orange 100" />
-                        <Swatch bg="var(--color-brand-orange-200)" label="Orange 200" />
-                        <Swatch bg="var(--color-brand-orange-300)" label="Orange 300" />
-                        <Swatch bg="var(--color-brand-orange-400)" label="Orange 400" />
-                        <Swatch bg="var(--color-brand-orange-500)" label="Orange 500" />
-                        <Swatch bg="var(--color-brand-orange-600)" label="Orange 600" />
-                        <Swatch bg="var(--color-brand-orange-700)" label="Orange 700" />
-                        <Swatch bg="var(--color-brand-orange-800)" label="Orange 800" />
-                        <Swatch bg="var(--color-brand-orange-900)" label="Orange 900" />
-                        <Swatch bg="var(--color-brand-orange-1000)" label="Orange 1000" />
-                    </div>
-
-                    <h3 className={styles.groupTitle}>Cobalt</h3>
-                    <div className={styles.swatchGrid}>
-                        <Swatch bg="var(--color-brand-cobalt-100)" label="Cobalt 100" />
-                        <Swatch bg="var(--color-brand-cobalt-200)" label="Cobalt 200" />
-                        <Swatch bg="var(--color-brand-cobalt-300)" label="Cobalt 300" />
-                        <Swatch bg="var(--color-brand-cobalt-400)" label="Cobalt 400" />
-                        <Swatch bg="var(--color-brand-cobalt-500)" label="Cobalt 500" />
-                        <Swatch bg="var(--color-brand-cobalt-600)" label="Cobalt 600" />
-                        <Swatch bg="var(--color-brand-cobalt-700)" label="Cobalt 700" />
-                        <Swatch bg="var(--color-brand-cobalt-800)" label="Cobalt 800" />
-                        <Swatch bg="var(--color-brand-cobalt-900)" label="Cobalt 900" />
-                        <Swatch bg="var(--color-brand-cobalt-1000)" label="Cobalt 1000" />
-                    </div>                    
-                </Section>
-                
-                
-                <Section title="Alias colors">
-                    <h3 className={styles.groupTitle}>Neutral</h3>
-                    <div className={styles.swatchGrid}>
-                    {[
-                        ['var(--color-neutral-0)','0',true],
-                        ['var(--color-neutral-50)','50',true],
-                        ['var(--color-neutral-100)','100'],
-                        ['var(--color-neutral-200)','200'],
-                        ['var(--color-neutral-300)','300'],
-                        ['var(--color-neutral-400)','400'],
-                        ['var(--color-neutral-500)','500'],
-                        ['var(--color-neutral-600)','600'],
-                        ['var(--color-neutral-700)','700'],
-                        ['var(--color-neutral-800)','800'],
-                        ['var(--color-neutral-900)','900'],
-                        ['var(--color-neutral-1000)','1000']
-                    ].map(([bg, label, border]) => (
-                        <Swatch key={label} bg={bg} label={label} border={!!border} />
-                    ))}
-                    </div>
-
-                    <h3 className={styles.groupTitle}>Primary</h3>
-                    <div className={styles.swatchGrid}>
-                    {[
-                        ['var(--color-brand-primary-100)','100'],
-                        ['var(--color-brand-primary-200)','200'],
-                        ['var(--color-brand-primary-300)','300'],
-                        ['var(--color-brand-primary-400)','400'],
-                        ['var(--color-brand-primary-500)','500'],
-                        ['var(--color-brand-primary-600)','600'],
-                        ['var(--color-brand-primary-700)','700'],
-                        ['var(--color-brand-primary-800)','800'],
-                        ['var(--color-brand-primary-900)','900'],
-                        ['var(--color-brand-primary-1000)','1000']
-                    ].map(([bg, label, border]) => (
-                        <Swatch key={label} bg={bg} label={label} border={!!border} />
-                    ))}
-                    </div>
-
-                    <h3 className={styles.groupTitle}>Secondary</h3>
-                    <div className={styles.swatchGrid}>
-                    {[
-                        ['var(--color-brand-secondary-100)','100'],
-                        ['var(--color-brand-secondary-200)','200'],
-                        ['var(--color-brand-secondary-300)','300'],
-                        ['var(--color-brand-secondary-400)','400'],
-                        ['var(--color-brand-secondary-500)','500'],
-                        ['var(--color-brand-secondary-600)','600'],
-                        ['var(--color-brand-secondary-700)','700'],
-                        ['var(--color-brand-secondary-800)','800'],
-                        ['var(--color-brand-secondary-900)','900'],
-                        ['var(--color-brand-secondary-1000)','1000']
-                    ].map(([bg, label, border]) => (
-                        <Swatch key={label} bg={bg} label={label} border={!!border} />
-                    ))}
-                    </div>
-
-                    <h3 className={styles.groupTitle}>Success</h3>
-                    <div className={styles.swatchGrid}>
-                    {[
-                        ['var(--color-success-100)','100'],
-                        ['var(--color-success-200)','200'],
-                        ['var(--color-success-300)','300'],
-                        ['var(--color-success-400)','400'],
-                        ['var(--color-success-500)','500'],
-                        ['var(--color-success-600)','600'],
-                        ['var(--color-success-700)','700'],
-                        ['var(--color-success-800)','800'],
-                        ['var(--color-success-900)','900'],
-                        ['var(--color-success-1000)','1000']
-                    ].map(([bg, label, border]) => (
-                        <Swatch key={label} bg={bg} label={label} border={!!border} />
-                    ))}
-                    </div>
-
-                    <h3 className={styles.groupTitle}>Warning</h3>
-                    <div className={styles.swatchGrid}>
-                    {[
-                        ['var(--color-warning-100)','100'],
-                        ['var(--color-warning-200)','200'],
-                        ['var(--color-warning-300)','300'],
-                        ['var(--color-warning-400)','400'],
-                        ['var(--color-warning-500)','500'],
-                        ['var(--color-warning-600)','600'],
-                        ['var(--color-warning-700)','700'],
-                        ['var(--color-warning-800)','800'],
-                        ['var(--color-warning-900)','900'],
-                        ['var(--color-warning-1000)','1000']
-                    ].map(([bg, label, border]) => (
-                        <Swatch key={label} bg={bg} label={label} border={!!border} />
-                    ))}
-                    </div>
-
-                    <h3 className={styles.groupTitle}>Error</h3>
-                    <div className={styles.swatchGrid}>
-                    {[
-                        ['var(--color-error-100)','100'],
-                        ['var(--color-error-200)','200'],
-                        ['var(--color-error-300)','300'],
-                        ['var(--color-error-400)','400'],
-                        ['var(--color-error-500)','500'],
-                        ['var(--color-error-600)','600'],
-                        ['var(--color-error-700)','700'],
-                        ['var(--color-error-800)','800'],
-                        ['var(--color-error-900)','900'],
-                        ['var(--color-error-1000)','1000']
-                    ].map(([bg, label, border]) => (
-                        <Swatch key={label} bg={bg} label={label} border={!!border} />
-                    ))}
-                    </div>
-
-                    <h3 className={styles.groupTitle}>Info</h3>
-                    <div className={styles.swatchGrid}>
-                    {[
-                        ['var(--color-info-100)','100'],
-                        ['var(--color-info-200)','200'],
-                        ['var(--color-info-300)','300'],
-                        ['var(--color-info-400)','400'],
-                        ['var(--color-info-500)','500'],
-                        ['var(--color-info-600)','600'],
-                        ['var(--color-info-700)','700'],
-                        ['var(--color-info-800)','800'],
-                        ['var(--color-info-900)','900'],
-                        ['var(--color-info-1000)','1000']
-                    ].map(([bg, label, border]) => (
-                        <Swatch key={label} bg={bg} label={label} border={!!border} />
-                    ))}
-                    </div>
-
-                    <h3 className={styles.groupTitle}>Focus</h3>
-                    <div className={styles.swatchGrid}>
-                    {[
-                        ['var(--color-focus-100)','100'],
-                        ['var(--color-focus-200)','200'],
-                        ['var(--color-focus-300)','300'],
-                        ['var(--color-focus-400)','400'],
-                        ['var(--color-focus-500)','500'],
-                        ['var(--color-focus-600)','600'],
-                        ['var(--color-focus-700)','700'],
-                        ['var(--color-focus-800)','800'],
-                        ['var(--color-focus-900)','900'],
-                        ['var(--color-focus-1000)','1000']
-                    ].map(([bg, label, border]) => (
-                        <Swatch key={label} bg={bg} label={label} border={!!border} />
-                    ))}
-                    </div>
-                </Section>
-
-                <Section title="Mapped colors">
-                    <Content>
-                        <p>More about mapped colors in <a href="/colors?tab=tokens">Tokens tab</a>.</p>
-                    </Content>
-                </Section>
-            </> 
-        },
-
-        { 
-            id: 'usage',    
-            label: 'Usage',    
-            content: 
-            <>
-                <Section title="Farbhierarchie">
-                    <p style={{ fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)', lineHeight: 1.65, marginBottom: 'var(--space-4)' }}>
-                    Verwende immer die semantischen UI-Tokens (<code>--color-text-primary</code>, <code>--color-border</code> etc.) statt der rohen Neutralwerte. So funktionieren zukünftige Theme-Wechsel automatisch.
-                    </p>
-                    <GridWrapper>
-                        <Grid>
-                            <Grid.Header>Brand</Grid.Header>
-                            <Grid.Body>Semantische Tokens verwenden: <code>var(--color-text-secondary)</code></Grid.Body>
-                        </Grid>
-                        <Grid>
-                            <Grid.Header>Brand</Grid.Header>
-                            <Grid.Body>Semantische Tokens verwenden: <code>var(--color-text-secondary)</code></Grid.Body>
-                        </Grid>                    
-                    </GridWrapper>
-                </Section>
+              <Section title={t('colors.overview.mappedColorsTitle')}>
+                <Content>
+                  <p>
+                    <a href="/colors?tab=tokens">{t('colors.overview.mappedColorsLink')}</a>
+                  </p>
+                </Content>
+              </Section>
             </>
- 
+          ),
         },
 
-        { 
-            id: 'tokens',   
-            label: 'Tokens',   
-            content: 
-            <Section title="Color tokens">
-            <h3 className={styles.groupTitle}>Surface</h3>
-            <TokensTable tokens={[
-                { token: '--surface_100',       value: '#FFFFFF', description: 'Default page background' },
-                { token: '--surface_200',         value: '#F8F9FA', description: 'Secondary page background; Hover color for surface-100; Hover color for transparent backgrounds' },
-                { token: '--surface_active',   value: '#E9ECEF', description: 'Active color for surface-100 & surface-200' },
-                { token: '--surface_selected',  value: '#CED4DA', description: 'Selected color for surface-100 & surface-200' },
-                { token: '--surface_selected-hover',           value: '#adb5bd', description: 'Hover color for surface_selected' },
-                { token: '--surface_inverse',    value: '#212529', description: 'High contrast backgrounds; High contrast elements' },
-                { token: '--surface_inverse-hover',              value: '#343a40', description: 'Hover color for surface_inverse' },
-                { token: '--surface_brand',               value: '#1c2855', description: 'Feature background color' },
-            ]} /> 
-            
-            <h3 className={styles.groupTitle}>Surface container</h3>
-            <TokensTable tokens={[
-                { token: '--color-brand-primary-500',       value: '#0F0F0F', description: 'Primäre Markenfarbe' },
-                { token: '--color-brand-accent',         value: '#2563EB', description: 'Interaktiver Akzent' },
-                { token: '--color-brand-accent-hover',   value: '#1D4ED8', description: 'Akzent Hover-State' },
-                { token: '--color-brand-accent-subtle',  value: '#EFF6FF', description: 'Akzent Hintergrundton' },
-                { token: '--surface_100',           value: '#FFFFFF', description: 'Seitenhintergrund' },
-                { token: '--surface_200',    value: '#F9F9F9', description: 'Subtiler Hintergrund' },
-                { token: '--surface_100',              value: '#FFFFFF', description: 'Komponentenfläche' },
-                { token: '--color-border',               value: '#E5E5E5', description: 'Standard-Rahmen' },
-                { token: '--color-border-strong',        value: '#A3A3A3', description: 'Betonter Rahmen' },
-                { token: '--color-text-primary',         value: '#171717', description: 'Primärtext' },
-                { token: '--color-text-secondary',       value: '#737373', description: 'Sekundärtext' },
-                { token: '--color-text-disabled',        value: '#D4D4D4', description: 'Deaktivierter Text' },
-                { token: '--color-success',              value: '#16A34A', description: 'Erfolg' },
-                { token: '--color-warning',              value: '#D97706', description: 'Warnung' },
-                { token: '--color-error',                value: '#DC2626', description: 'Fehler' },
-                { token: '--color-info',                 value: '#0284C7', description: 'Information' },
-            ]} /> 
-        </Section>
+        {
+          id: 'usage',
+          label: t('tabs.usage'),
+          content: (
+            <>
+              <Section title={t('colors.usage.title')}>
+                <Content>
+                  <p>{t('colors.usage.intro')}</p>
+                </Content>
+
+                <h3 className={styles.groupTitle}>{t('colors.usage.semanticTitle')}</h3>
+                <Content>
+                  <p>{t('colors.usage.semanticBody')}</p>
+                </Content>
+
+                <h3 className={styles.groupTitle}>{t('colors.usage.rawTitle')}</h3>
+                <Content>
+                  <p>{t('colors.usage.rawBody')}</p>
+                </Content>
+
+                <GridWrapper>
+                  <Grid>
+                    <Grid.Header className="text-[var(--color-text-success)] [font-weight:var(--weight-semibold)] text-[var(--text-md)] pb-[var(--space-2)] mb-[var(--space-3)] border-b-2 border-[var(--color-success)]">
+                      {t('colors.usage.doTitle')}
+                    </Grid.Header>
+                    <Grid.Body>
+                      <ul className="flex flex-col gap-[var(--space-2)] text-[var(--text-sm)] text-[var(--color-text-primary)] list-none p-0 m-0">
+                        {['do1','do2','do3','do4','do5'].map(k => (
+                          <li key={k} className="p-[var(--space-2)] rounded-[var(--radius-md)] bg-[var(--color-success-container-100)]">
+                            <code className="[font-family:var(--font-mono)]">{t(`colors.usage.${k}`)}</code>
+                          </li>
+                        ))}
+                      </ul>
+                      <p className="mt-[var(--space-3)] text-[var(--text-xs)] text-[var(--color-text-secondary)]">{t('colors.usage.doNote')}</p>
+                    </Grid.Body>
+                  </Grid>
+                  <Grid>
+                    <Grid.Header className="text-[var(--color-text-error)] [font-weight:var(--weight-semibold)] text-[var(--text-md)] pb-[var(--space-2)] mb-[var(--space-3)] border-b-2 border-[var(--color-error)]">
+                      {t('colors.usage.dontTitle')}
+                    </Grid.Header>
+                    <Grid.Body>
+                      <ul className="flex flex-col gap-[var(--space-2)] text-[var(--text-sm)] text-[var(--color-text-primary)] list-none p-0 m-0">
+                        {['dont1','dont2','dont3','dont4','dont5'].map(k => (
+                          <li key={k} className="p-[var(--space-2)] rounded-[var(--radius-md)] bg-[var(--color-error-container-100)]">
+                            <code className="[font-family:var(--font-mono)]">{t(`colors.usage.${k}`)}</code>
+                          </li>
+                        ))}
+                      </ul>
+                      <p className="mt-[var(--space-3)] text-[var(--text-xs)] text-[var(--color-text-secondary)]">{t('colors.usage.dontNote')}</p>
+                    </Grid.Body>
+                  </Grid>
+                </GridWrapper>
+              </Section>
+
+              <Section title={t('colors.usage.statesTitle')}>
+                <Content>
+                  <p>{t('colors.usage.statesBody')}</p>
+                </Content>
+
+                <div className="mb-[var(--space-6)]">
+                  <p className="text-[var(--text-xs)] [font-weight:var(--weight-semibold)] tracking-[var(--tracking-wide)] uppercase text-[var(--color-text-secondary)] mb-[var(--space-3)]">
+                    {t('colors.usage.statesBtnNote')}
+                  </p>
+                  <div className="flex gap-[var(--space-3)] flex-wrap items-center p-[var(--space-5)] bg-[var(--surface_200)] rounded-[var(--radius-lg)] border border-[var(--border-subtle-100)]">
+                    <span style={{ ...btnStateStyle, background: 'var(--btn-primary)' }}>
+                      {t('colors.usage.statesDefault')}
+                    </span>
+                    <span style={{ ...btnStateStyle, background: 'var(--btn-primary-hover)' }}>
+                      {t('colors.usage.statesHover')}
+                    </span>
+                    <span style={{ ...btnStateStyle, background: 'var(--btn-primary-active)' }}>
+                      {t('colors.usage.statesActive')}
+                    </span>
+                    <span style={{ ...btnStateStyle, background: 'var(--btn-disabled)', color: 'var(--color-text-primary)', opacity: 0.6 }}>
+                      {t('colors.usage.statesDisabled')}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="mb-[var(--space-6)]">
+                  <p className="text-[var(--text-xs)] [font-weight:var(--weight-semibold)] tracking-[var(--tracking-wide)] uppercase text-[var(--color-text-secondary)] mb-[var(--space-3)]">
+                    {t('colors.usage.statesGhostNote')}
+                  </p>
+                  <div className="flex gap-[var(--space-3)] flex-wrap items-center p-[var(--space-5)] bg-[var(--surface_200)] rounded-[var(--radius-lg)] border border-[var(--border-subtle-100)]">
+                    <span style={{ ...btnStateStyle, background: 'transparent', color: 'var(--color-text-primary)', border: '1px solid var(--border-subtle-200)' }}>
+                      {t('colors.usage.statesDefault')}
+                    </span>
+                    <span style={{ ...btnStateStyle, background: 'var(--btn-ghost-hover)', color: 'var(--color-text-primary)', border: '1px solid var(--border-subtle-200)' }}>
+                      {t('colors.usage.statesHover')}
+                    </span>
+                    <span style={{ ...btnStateStyle, background: 'var(--btn-ghost-active)', color: 'var(--color-text-primary)', border: '1px solid var(--border-subtle-200)' }}>
+                      {t('colors.usage.statesActive')}
+                    </span>
+                    <span style={{ ...btnStateStyle, background: 'transparent', color: 'var(--color-text-disabled)', border: '1px solid var(--border-subtle-100)', opacity: 0.6 }}>
+                      {t('colors.usage.statesDisabled')}
+                    </span>
+                  </div>
+                </div>
+              </Section>
+
+              <Section title={t('colors.usage.surfaceTitle2')}>
+                <Content>
+                  <p>{t('colors.usage.surfaceBody')}</p>
+                </Content>
+                <div className="mb-[var(--space-8)]">
+                  <div style={{ background: 'var(--surface_100)', border: '1px solid var(--border-subtle-100)', borderRadius: 'var(--radius-lg)', padding: 'var(--space-6)' }}>
+                    <span className="text-[var(--text-xs)] [font-weight:var(--weight-semibold)] tracking-[var(--tracking-wide)] uppercase text-[var(--color-text-secondary)]">
+                      surface_100 — {t('colors.usage.surfaceL1')}
+                    </span>
+                    <div style={{ background: 'var(--surface_200)', borderRadius: 'var(--radius-md)', padding: 'var(--space-5)', marginTop: 'var(--space-4)' }}>
+                      <span className="text-[var(--text-xs)] [font-weight:var(--weight-semibold)] tracking-[var(--tracking-wide)] uppercase text-[var(--color-text-secondary)]">
+                        surface_200 — {t('colors.usage.surfaceL2')}
+                      </span>
+                      <div style={{ background: 'var(--surface-container_100)', borderRadius: 'var(--radius-sm)', padding: 'var(--space-4)', marginTop: 'var(--space-3)', border: '1px solid var(--border-subtle-100)' }}>
+                        <span className="text-[var(--text-xs)] [font-weight:var(--weight-semibold)] tracking-[var(--tracking-wide)] uppercase text-[var(--color-text-secondary)]">
+                          surface-container_100 — {t('colors.usage.surfaceCont')}
+                        </span>
+                      </div>
+                    </div>
+                    <div style={{ background: 'var(--surface_brand)', borderRadius: 'var(--radius-md)', padding: 'var(--space-5)', marginTop: 'var(--space-4)' }}>
+                      <span className="text-[var(--text-xs)] [font-weight:var(--weight-semibold)] tracking-[var(--tracking-wide)] uppercase text-[var(--color-text-on-color)]">
+                        surface_brand — {t('colors.usage.surfaceBrand')}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </Section>
+
+              <Section title={t('colors.usage.a11yTitle')}>
+                <Content>
+                  <p>{t('colors.usage.a11yBody')}</p>
+                </Content>
+              </Section>
+
+              <Section title={t('colors.usage.themeTitle')}>
+                <Content>
+                  <p>{t('colors.usage.themeBody')}</p>
+                </Content>
+              </Section>
+            </>
+          ),
         },
 
-        { 
-            id: 'code',     
-            label: 'Code',     
-            content: 
-            <Section title="Color codes">
-            <CodeBlock language="css">{`
-/* Farben in CSS verwenden */
-.meinElement {
-  color: var(--color-text-primary);
-  background: var(--surface_200);
-  border: 1px solid var(--color-border);
-}
-
-/* Akzentfarbe für interaktive Elemente */
-.meinLink {
-  color: var(--color-brand-accent);
-}
-.meinLink:hover {
-  color: var(--color-brand-accent-hover);
-}
-
-/* Semantic Colors für Feedback */
-.erfolgsMeldung {
-  background: var(--color-success-container-100);
-  color: var(--color-success);
-}
-        `}</CodeBlock>
-        </Section>
- 
+        {
+          id: 'tokens',
+          label: t('tabs.tokens'),
+          content: (
+            <>
+              <Section title={t('colors.tokens.surfaceTitle')}>
+                <TokensTable tokens={surfaceTokens} />
+              </Section>
+              <Section title={t('colors.tokens.surfaceContTitle')}>
+                <TokensTable tokens={surfaceContTokens} />
+              </Section>
+              <Section title={t('colors.tokens.accentSurfTitle')}>
+                <TokensTable tokens={accentSurfTokens} />
+              </Section>
+              <Section title={t('colors.tokens.textTitle')}>
+                <TokensTable tokens={textTokens} />
+              </Section>
+              <Section title={t('colors.tokens.borderTitle')}>
+                <TokensTable tokens={borderTokens} />
+              </Section>
+              <Section title={t('colors.tokens.buttonTitle')}>
+                <TokensTable tokens={buttonTokens} />
+              </Section>
+              <Section title={t('colors.tokens.statusTitle')}>
+                <TokensTable tokens={statusTokens} />
+              </Section>
+              <Section title={t('colors.tokens.iconTitle')}>
+                <TokensTable tokens={iconTokens} />
+              </Section>
+              <Section title={t('colors.tokens.linkTitle')}>
+                <TokensTable tokens={linkTokens} />
+              </Section>
+              <Section title={t('colors.tokens.focusTitle')}>
+                <TokensTable tokens={focusTokens} />
+              </Section>
+            </>
+          ),
         },
-    ]}
+
+        {
+          id: 'code',
+          label: t('tabs.code'),
+          content: (
+            <>
+              <Section title={t('colors.code.title')}>
+                <h3 className={styles.groupTitle}>{t('colors.code.cssTitle')}</h3>
+                <Content>
+                  <p>{t('colors.code.cssDesc')}</p>
+                </Content>
+                <CodeBlock language="css">{`/* Texte und Hintergründe */
+.card {
+  color:       var(--color-text-primary);
+  background:  var(--surface_100);
+  border:      1px solid var(--border-subtle-100);
+  border-radius: var(--radius-lg);
+}
+
+/* Zustands-Farben */
+.alert-success {
+  background:   var(--color-success-container-100);
+  color:        var(--color-text-success);
+  border-left:  3px solid var(--color-success);
+}
+
+.alert-error {
+  background:   var(--color-error-container-100);
+  color:        var(--color-text-error);
+  border-left:  3px solid var(--color-error);
+}
+
+/* Inverse Fläche (dunkel) */
+.hero-dark {
+  background: var(--surface_inverse);
+  color:      var(--color-text-on-color);
+}
+
+/* Fokus-Ring */
+.interactive:focus-visible {
+  outline:        2px solid var(--color-focus);
+  outline-offset: 2px;
+}`}</CodeBlock>
+
+                <h3 className={styles.groupTitle}>{t('colors.code.tailwindTitle')}</h3>
+                <Content>
+                  <p>{t('colors.code.tailwindDesc')}</p>
+                </Content>
+                <CodeBlock language="jsx">{`{/* Karte mit Hintergrund, Text und Rahmen */}
+<div className="bg-[var(--surface_200)] text-[var(--color-text-primary)] border border-[var(--border-subtle-100)] rounded-[var(--radius-lg)] p-[var(--space-4)]">
+  Karteninhalt
+</div>
+
+{/* Primär-Button mit Hover-Übergang */}
+<button className="bg-[var(--btn-primary)] text-[var(--color-text-on-color)] hover:bg-[var(--btn-primary-hover)] active:bg-[var(--btn-primary-active)] px-[var(--space-4)] py-[var(--space-2)] rounded-[var(--radius-md)] transition-colors duration-[var(--duration-fast)]">
+  Primär-Button
+</button>
+
+{/* Semantische Text-Farben */}
+<span className="text-[var(--color-text-secondary)]">Sekundärer Text</span>
+<span className="text-[var(--color-success)]">Erfolgsstatus</span>
+<span className="text-[var(--color-error)]">Fehlerstatus</span>
+<span className="text-[var(--color-text-helper)]">Hilfstext</span>`}</CodeBlock>
+
+                <h3 className={styles.groupTitle}>{t('colors.code.jsxTitle')}</h3>
+                <Content>
+                  <p>{t('colors.code.jsxDesc')}</p>
+                </Content>
+                <CodeBlock language="jsx">{`function StatusBadge({ variant }) {
+  const colorMap = {
+    success: {
+      background: 'var(--color-success-container-100)',
+      color:      'var(--color-text-success)',
+      border:     '1px solid var(--color-success)',
+    },
+    warning: {
+      background: 'var(--color-warning-container-100)',
+      color:      'var(--color-text-warning)',
+      border:     '1px solid var(--color-warning)',
+    },
+    error: {
+      background: 'var(--color-error-container-100)',
+      color:      'var(--color-text-error)',
+      border:     '1px solid var(--color-error)',
+    },
+    info: {
+      background: 'var(--color-info-container-100)',
+      color:      'var(--color-text-info)',
+      border:     '1px solid var(--color-info)',
+    },
+  }
+
+  return (
+    <span
+      style={{
+        ...colorMap[variant],
+        padding:      '2px 8px',
+        borderRadius: 'var(--radius-full)',
+        fontSize:     'var(--text-xs)',
+        fontWeight:   500,
+      }}
+    >
+      {variant}
+    </span>
+  )
+}`}</CodeBlock>
+              </Section>
+            </>
+          ),
+        },
+      ]}
     />
-    
   )
 }
