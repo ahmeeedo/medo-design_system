@@ -1,38 +1,44 @@
-import styles from './Navigation.module.css'
+import { Fragment } from 'react'
+import { cn } from '@/lib/utils'
+import {
+  Breadcrumb as BreadcrumbRoot,
+  BreadcrumbList,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from '@/components/ui/breadcrumb'
 
-/**
- * Breadcrumb
- * @param {Array<{label: string, href?: string}>} items
- */
 export function Breadcrumb({ items = [] }) {
   return (
-    <nav className={styles.breadcrumb} aria-label="Breadcrumb">
-      {items.map((item, i) => (
-        <span key={i} className={styles.crumbGroup}>
-          {i > 0 && <span className={styles.sep} aria-hidden="true">/</span>}
-          {item.href && i < items.length - 1
-            ? <a href={item.href} className={styles.crumbLink}>{item.label}</a>
-            : <span className={i === items.length - 1 ? styles.crumbCurrent : styles.crumbLink}>{item.label}</span>
-          }
-        </span>
-      ))}
-    </nav>
+    <BreadcrumbRoot>
+      <BreadcrumbList className="gap-2 text-sm flex-nowrap">
+        {items.map((item, i) => (
+          <Fragment key={i}>
+            {i > 0 && <BreadcrumbSeparator>/</BreadcrumbSeparator>}
+            <BreadcrumbItem>
+              {item.href && i < items.length - 1
+                ? <BreadcrumbLink href={item.href} className="text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]">{item.label}</BreadcrumbLink>
+                : <BreadcrumbPage className="font-medium text-[var(--color-text-primary)]">{item.label}</BreadcrumbPage>
+              }
+            </BreadcrumbItem>
+          </Fragment>
+        ))}
+      </BreadcrumbList>
+    </BreadcrumbRoot>
   )
 }
 
-/**
- * Pagination
- * @param {number} current — current page (1-indexed)
- * @param {number} total — total pages
- * @param {function} onChange
- */
 export function Pagination({ current = 1, total = 1, onChange }) {
   const pages = buildPages(current, total)
 
   return (
-    <nav className={styles.pagination} aria-label="Pagination">
+    <nav className="flex gap-1 items-center" aria-label="Pagination">
       <button
-        className={[styles.pageBtn, current === 1 ? styles.disabled : ''].join(' ')}
+        className={cn(
+          'flex items-center justify-center w-8 h-8 rounded-md text-sm font-medium text-[var(--color-text-secondary)] hover:bg-[var(--color-neutral-100)] hover:text-[var(--color-text-primary)] transition-all duration-[100ms]',
+          current === 1 && 'opacity-30 cursor-not-allowed pointer-events-none'
+        )}
         onClick={() => onChange?.(current - 1)}
         disabled={current === 1}
         aria-label="Vorherige Seite"
@@ -42,11 +48,21 @@ export function Pagination({ current = 1, total = 1, onChange }) {
 
       {pages.map((p, i) =>
         p === '…' ? (
-          <span key={`ellipsis-${i}`} className={styles.ellipsis}>…</span>
+          <span
+            key={`ellipsis-${i}`}
+            className="flex items-center justify-center w-8 h-8 text-sm text-[var(--color-text-secondary)]"
+          >
+            …
+          </span>
         ) : (
           <button
             key={p}
-            className={[styles.pageBtn, p === current ? styles.active : ''].join(' ')}
+            className={cn(
+              'flex items-center justify-center w-8 h-8 rounded-md text-sm font-medium transition-all duration-[100ms]',
+              p === current
+                ? 'bg-[var(--color-neutral-900)] text-white border border-[var(--color-neutral-900)]'
+                : 'text-[var(--color-text-secondary)] hover:bg-[var(--color-neutral-100)] hover:text-[var(--color-text-primary)]'
+            )}
             onClick={() => onChange?.(p)}
             aria-current={p === current ? 'page' : undefined}
           >
@@ -56,7 +72,10 @@ export function Pagination({ current = 1, total = 1, onChange }) {
       )}
 
       <button
-        className={[styles.pageBtn, current === total ? styles.disabled : ''].join(' ')}
+        className={cn(
+          'flex items-center justify-center w-8 h-8 rounded-md text-sm font-medium text-[var(--color-text-secondary)] hover:bg-[var(--color-neutral-100)] hover:text-[var(--color-text-primary)] transition-all duration-[100ms]',
+          current === total && 'opacity-30 cursor-not-allowed pointer-events-none'
+        )}
         onClick={() => onChange?.(current + 1)}
         disabled={current === total}
         aria-label="Nächste Seite"
@@ -74,17 +93,25 @@ function buildPages(current, total) {
   return [1, '…', current - 1, current, current + 1, '…', total]
 }
 
-/**
- * StatCard — KPI card
- */
+const deltaIcon = { up: '↑', down: '↓', neutral: '→' }
+const deltaClasses = {
+  up:      'text-success',
+  down:    'text-error',
+  neutral: 'text-[var(--color-text-secondary)]',
+}
+
 export function StatCard({ label, value, delta, deltaDir = 'up' }) {
   return (
-    <div className={styles.stat}>
-      <div className={styles.statLabel}>{label}</div>
-      <div className={styles.statValue}>{value}</div>
+    <div className="bg-[var(--surface_100)] border border-border rounded-xl px-6 py-5">
+      <div className="text-xs font-semibold [letter-spacing:var(--tracking-wide)] uppercase text-[var(--color-text-secondary)] mb-2">
+        {label}
+      </div>
+      <div className="text-3xl font-semibold [letter-spacing:var(--tracking-tight)] [line-height:var(--leading-tight)] text-[var(--color-text-primary)]">
+        {value}
+      </div>
       {delta && (
-        <div className={[styles.statDelta, styles[deltaDir]].join(' ')}>
-          {deltaDir === 'up' ? '↑' : '↓'} {delta}
+        <div className={cn('inline-flex items-center gap-1 text-xs font-medium mt-2', deltaClasses[deltaDir])}>
+          {deltaIcon[deltaDir]} {delta}
         </div>
       )}
     </div>
