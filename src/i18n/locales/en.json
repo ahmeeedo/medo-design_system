@@ -326,5 +326,271 @@
       "jsxTitle":      "JSX Examples",
       "jsxDesc":       "Typography tokens in React components:"
     }
+  },
+
+  "spacing": {
+    "page": {
+      "description": "4-px grid system and spacing tokens for consistent layouts in med.o products"
+    },
+    "overview": {
+      "gridTitle":      "The 4-px Grid",
+      "gridBody":       "All spacing in the med.o design system is a multiple of 4 px. The 4-px grid is the foundation for consistent, harmonious layouts — from micro-spacing (4 px) to large section gaps (128 px).",
+      "whyTitle":       "Why Spacing Tokens?",
+      "whyBody":        "Hardcoded pixel values create inconsistent layouts that are hard to maintain. Spacing tokens ensure that spacing stays uniform across the system and changes can be made centrally.",
+      "scaleTitle":     "The Spacing Scale",
+      "scaleBody":      "18 steps from --space-0 (0 px) to --space-32 (128 px). Each step corresponds to the next 4-px increment. The scale skips no multiples — keeping the system complete and predictable.",
+      "p1Title":        "Consistency through the grid",
+      "p1Body":         "Use only values from the spacing scale for margins, paddings, and gaps. Magic numbers like margin: 13px create inconsistency and make system-wide adjustments difficult.",
+      "p2Title":        "Semantic spacing",
+      "p2Body":         "Small spacing (space-1 to space-3) for closely related elements like icon + label. Medium spacing (space-4 to space-8) for component internal padding. Large spacing (space-10+) for section separations.",
+      "p3Title":        "Responsive consistency",
+      "p3Body":         "Spacing tokens are independent of breakpoints — the value does not change with screen size. Responsive layouts adjust the number of columns, not the token values.",
+      "anatomyTitle":   "Spacing anatomy",
+      "anatomyBody":    "Here is how spacing tokens are applied in a typical card component: padding inside, gap between elements, and outer margin all follow the defined scale."
+    },
+    "usage": {
+      "title":          "When to use which spacing",
+      "intro":          "Always use spacing tokens from the defined scale. Hardcoded pixel values are not allowed — they break consistency and make system-wide changes difficult.",
+      "densityTitle":   "Spacing density",
+      "densityBody":    "The choice of spacing depends on information density and context.",
+      "compactLabel":   "Compact",
+      "compactDesc":    "space-1 to space-3 (4–12 px) — Inside tight elements: icon + text gap, badge padding, chip inner spacing.",
+      "defaultLabel":   "Default",
+      "defaultDesc":    "space-4 to space-8 (16–32 px) — Standard padding for buttons, inputs, cards, and lists.",
+      "spaciousLabel":  "Spacious",
+      "spaciousDesc":   "space-10 to space-32 (40–128 px) — Section separations, hero areas, page padding.",
+      "doTitle":        "Do ✓",
+      "dontTitle":      "Don't ✗",
+      "do1":            "padding: var(--space-4) for button padding",
+      "dont1":          "padding: 16px as a raw value",
+      "do2":            "gap: var(--space-2) for icon + label spacing",
+      "dont2":          "gap: 8px hardcoded",
+      "do3":            "margin-bottom: var(--space-8) for sections",
+      "dont3":          "margin-bottom: 30px as an estimate",
+      "doNote":         "Use tokens from the scale",
+      "dontNote":       "Use magic pixel numbers"
+    },
+    "tokens": {
+      "title":  "Spacing Tokens",
+      "sp0":    "0 px — no spacing",
+      "sp1":    "4 px — base unit: icon+text gap, chip padding",
+      "sp2":    "8 px — tight spacing: badge, tag, small padding",
+      "sp3":    "12 px — compact padding: small button, inline",
+      "sp4":    "16 px — default padding: buttons, inputs, labels",
+      "sp5":    "20 px — slightly extended padding",
+      "sp6":    "24 px — card padding, list item spacing",
+      "sp7":    "28 px — extended inner padding",
+      "sp8":    "32 px — large padding unit, section gap",
+      "sp9":    "36 px — section separations (small)",
+      "sp10":   "40 px — component spacing, vertical padding",
+      "sp12":   "48 px — large component spacing",
+      "sp14":   "56 px — outer component spacing (large)",
+      "sp16":   "64 px — section gap, hero padding",
+      "sp20":   "80 px — large section spacing",
+      "sp24":   "96 px — page outer padding, hero area",
+      "sp32":   "128 px — maximum spacing, XXL section gap"
+    },
+    "code": {
+      "title":         "Spacing in Code",
+      "cssTitle":      "CSS Custom Properties",
+      "cssDesc":       "Using spacing tokens directly in CSS:",
+      "tailwindTitle": "Tailwind CSS (Arbitrary Values)",
+      "tailwindDesc":  "Spacing tokens as Tailwind utility classes:",
+      "jsxTitle":      "JSX Examples",
+      "jsxDesc":       "Spacing tokens in React components:"
+    }
+  },
+
+  "radius": {
+    "page": {
+      "description": "Border radius system for brand consistency and component hierarchy in med.o"
+    },
+    "overview": {
+      "principlesTitle": "Radius Principles",
+      "principlesBody":  "Corner radius is a key style trait of any visual language. In the med.o design system, radius tokens define consistent rounding for all components — from sharp corners (none) to fully round pill shapes (full).",
+      "p1Title":         "Consistency",
+      "p1Body":          "All components of a category share the same radius token. Chips and tags always get radius-sm or radius-full. Inputs always radius-md. Cards always radius-lg. This creates visual consistency without manual repetition.",
+      "p2Title":         "Brand personality",
+      "p2Body":          "Radius affects the perceived personality of a UI system. Small radii feel professional and precise; larger radii feel friendlier and more modern. The med.o system favors moderate radii for a professional aesthetic.",
+      "p3Title":         "Hierarchy through radius",
+      "p3Body":          "Larger components like modals and dialogs carry larger radii (xl, 2xl, 3xl) to emphasize their importance. Smaller containers like inputs and buttons carry moderate radii (sm, md, lg).",
+      "scaleTitle":      "The Radius Scale",
+      "scaleBody":       "9 steps from --radius-none (0 px) to --radius-full (9999 px). Each step is intended for specific component categories."
+    },
+    "usage": {
+      "title":          "Which radius for which component",
+      "intro":          "Always use radius tokens. Hardcoded border-radius values break visual consistency. Follow the recommended mappings.",
+      "mappingTitle":   "Component mapping",
+      "noneLabel":      "none (0 px)",
+      "noneDesc":       "Dividers, table cells, table headers",
+      "xsLabel":        "xs (2 px)",
+      "xsDesc":         "Tags, labels, subtle indicators",
+      "smLabel":        "sm (4 px)",
+      "smDesc":         "Chips, badges, small button variants",
+      "mdLabel":        "md (6 px)",
+      "mdDesc":         "Text inputs, selects, textareas",
+      "lgLabel":        "lg (8 px)",
+      "lgDesc":         "Buttons (default), dropdowns, tooltips",
+      "xlLabel":        "xl (12 px)",
+      "xlDesc":         "Cards, panels, info boxes",
+      "2xlLabel":       "2xl (16 px)",
+      "2xlDesc":        "Drawers, sidebar containers, large cards",
+      "3xlLabel":       "3xl (24 px)",
+      "3xlDesc":        "Modals, dialogs, sheets",
+      "fullLabel":      "full (9999 px)",
+      "fullDesc":       "Pill buttons, avatars, progress bars, toggles",
+      "doTitle":        "Do ✓",
+      "dontTitle":      "Don't ✗",
+      "do1":            "border-radius: var(--radius-md) for text inputs",
+      "dont1":          "border-radius: 6px directly",
+      "do2":            "border-radius: var(--radius-lg) for default buttons",
+      "dont2":          "border-radius: 8px hardcoded",
+      "do3":            "border-radius: var(--radius-full) for pill elements",
+      "dont3":          "border-radius: 999px as an approximation",
+      "doNote":         "Use radius tokens",
+      "dontNote":       "Use fixed pixel values"
+    },
+    "tokens": {
+      "title":   "Radius Tokens",
+      "rNone":   "0 px — no radius, sharp corners (dividers, tables)",
+      "rXs":     "2 px — minimal radius (tags, labels)",
+      "rSm":     "4 px — small radius (chips, badges)",
+      "rMd":     "6 px — default radius (inputs, selects)",
+      "rLg":     "8 px — buttons, dropdowns, tooltips",
+      "rXl":     "12 px — cards, panels, info boxes",
+      "r2xl":    "16 px — drawers, sidebar containers",
+      "r3xl":    "24 px — modals, dialogs, sheets",
+      "rFull":   "9999 px — pill shape (pill buttons, avatars, toggles)"
+    },
+    "code": {
+      "title":         "Radius in Code",
+      "cssTitle":      "CSS Custom Properties",
+      "cssDesc":       "Using radius tokens directly in CSS:",
+      "tailwindTitle": "Tailwind CSS",
+      "tailwindDesc":  "Radius tokens as Tailwind utility classes:",
+      "jsxTitle":      "JSX Examples",
+      "jsxDesc":       "Radius tokens in React components:"
+    }
+  },
+
+  "shadows": {
+    "page": {
+      "description": "Elevation and depth perception through box shadows in med.o"
+    },
+    "overview": {
+      "principlesTitle":  "Shadow Principles",
+      "principlesBody":   "Shadows communicate depth and hierarchy in a flat UI. In the med.o design system, shadows follow the physical principle of a light source from above: light surfaces cast gentle shadows downward. Each elevation level is defined for a specific component type.",
+      "p1Title":          "Communicating depth",
+      "p1Body":           "Shadows create the illusion of layers. Elements floating above content — dropdowns, tooltips — carry stronger shadows than flat content cards. This creates clear elevation hierarchies.",
+      "p2Title":          "Guiding focus",
+      "p2Body":           "Stronger shadows draw attention. Use shadow-lg and shadow-xl only for elements that should be deliberately in focus — modals, dialogs, active drawers.",
+      "p3Title":          "Use subtly",
+      "p3Body":           "Do not overload a surface with shadows. Most flat cards and panels work fine with shadow-sm or no shadow at all. Shadows are an accent, not a default.",
+      "elevationTitle":   "Elevation system",
+      "elevationBody":    "The 7 shadow levels form a clear elevation hierarchy from near-invisible (xs) to strongly raised (2xl). shadow-inner is a special form for pressed elements such as depressed buttons or embedded inputs."
+    },
+    "usage": {
+      "title":              "When to use which elevation",
+      "intro":              "Always use shadow tokens. Raw box-shadow values are not allowed. Each elevation level is intended for a specific use case.",
+      "guideTitle":         "Elevation guide",
+      "xsGuide":            "xs — Hover state for cards, subtle elevation",
+      "smGuide":            "sm — Default card, flat list, default component",
+      "mdGuide":            "md — Active cards, focus overlay, dropdown container",
+      "lgGuide":            "lg — Dropdown menus, popovers, context menus",
+      "xlGuide":            "xl — Modals (small), toasts, fixed headers",
+      "2xlGuide":           "2xl — Modals (large), full dialogs, sheets",
+      "innerGuide":         "inner — Pressed state, embedded inputs, inset effects",
+      "doTitle":            "Do ✓",
+      "dontTitle":          "Don't ✗",
+      "do1":                "box-shadow: var(--shadow-sm) for default cards",
+      "dont1":              "box-shadow: 0 1px 3px rgba(0,0,0,0.1) hardcoded",
+      "do2":                "box-shadow: var(--shadow-lg) for dropdown menus",
+      "dont2":              "box-shadow: var(--shadow-xl) for flat list items",
+      "do3":                "No shadow on colored or image backgrounds",
+      "dont3":              "Apply shadows on dark or image backgrounds",
+      "doNote":             "Shadow token and appropriate elevation",
+      "dontNote":           "Raw values or wrong elevation level"
+    },
+    "tokens": {
+      "title":   "Shadow Tokens",
+      "sXs":     "Minimal shadow — hover state, subtle elevation",
+      "sSm":     "Small shadow — default card, flat component",
+      "sMd":     "Medium shadow — active card, dropdown container",
+      "sLg":     "Large shadow — menus, popovers, context menus",
+      "sXl":     "Strong shadow — modal (small), toast, fixed header",
+      "s2xl":    "Maximum shadow — modal (large), full dialog",
+      "sInner":  "Inner shadow — pressed state, embedded input"
+    },
+    "code": {
+      "title":         "Shadows in Code",
+      "cssTitle":      "CSS Custom Properties",
+      "cssDesc":       "Using shadow tokens in CSS:",
+      "tailwindTitle": "Tailwind CSS",
+      "tailwindDesc":  "Shadow tokens as Tailwind utility classes:",
+      "jsxTitle":      "JSX Examples",
+      "jsxDesc":       "Shadow tokens in React components:"
+    }
+  },
+
+  "motion": {
+    "page": {
+      "description": "Duration and easing tokens for consistent, accessible animations in med.o"
+    },
+    "overview": {
+      "principlesTitle": "Motion Principles",
+      "principlesBody":  "Animation and motion in the med.o design system follow a clear purpose: they provide feedback, clarify state changes, and guide attention. Motion tokens ensure that animations are consistent and accessible across the system.",
+      "p1Title":         "Purposeful motion",
+      "p1Body":          "Animate only when there is an informational benefit. Hover reactions, state changes on buttons, and checkbox toggles justify short animations. Decorative motion without content relevance should be avoided.",
+      "p2Title":         "Accessibility",
+      "p2Body":          "All animations must respect prefers-reduced-motion. Use @media (prefers-reduced-motion: reduce) to disable transitions for users who prefer less motion.",
+      "p3Title":         "Consistency through tokens",
+      "p3Body":          "Hardcoded milliseconds or cubic-bezier values are not allowed. Always use --duration-* and --ease-* tokens — this keeps all transitions in the system aligned.",
+      "durationTitle":   "Duration scale",
+      "durationBody":    "5 steps from 50 ms (instant) to 400 ms (slower). Simple state changes use the shorter steps; complex fade-in and slide animations use the longer ones.",
+      "easingTitle":     "Easing curves",
+      "easingBody":      "Three easing curves for different motion characters: ease-out for elements appearing; ease-in-out for position changes; ease-spring for dynamic toggle effects."
+    },
+    "usage": {
+      "title":           "When and what to animate",
+      "intro":           "Not everything needs to be animated. Motion should inform, not distract. Follow the recommendations for duration and easing.",
+      "whenTitle":       "When to animate",
+      "whenBody":        "Animate state changes (button hover/active, toggle, checkbox), appearing and disappearing UI elements (dropdown, tooltip, modal), and guided attention (notification, toast).",
+      "whenNotTitle":    "What not to animate",
+      "whenNotBody":     "Avoid animations on layout reflows (grid changes, size transitions), continuous background motion, and elements that signal no UI function.",
+      "reducedTitle":    "prefers-reduced-motion",
+      "reducedBody":     "Use @media (prefers-reduced-motion: reduce) to disable all non-essential animations. Always operate components with a no-animation fallback.",
+      "doTitle":         "Do ✓",
+      "dontTitle":       "Don't ✗",
+      "do1":             "transition: color var(--duration-fast) var(--ease-out)",
+      "dont1":           "transition: color 100ms ease hardcoded",
+      "do2":             "var(--duration-slower) for modal fade-in",
+      "dont2":           "var(--duration-instant) for large-area animations",
+      "do3":             "Provide @media (prefers-reduced-motion) fallback",
+      "dont3":           "Add animations without reduced-motion checks",
+      "doNote":          "Tokens and accessibility",
+      "dontNote":        "Raw values or unchecked animations"
+    },
+    "tokens": {
+      "title":         "Motion Tokens",
+      "durationTitle": "Duration",
+      "easingTitle":   "Easing",
+      "dInstant":      "50 ms — hover highlights, icon swaps",
+      "dFast":         "100 ms — button states, border transitions",
+      "dNormal":       "150 ms — toggle, checkbox, focus ring",
+      "dSlow":         "250 ms — dropdown, tooltip fade",
+      "dSlower":       "400 ms — modal, drawer, slide-in",
+      "eOut":          "cubic-bezier(0, 0, 0.2, 1) — elements appearing",
+      "eInOut":        "cubic-bezier(0.4, 0, 0.2, 1) — position changes",
+      "eSpring":       "cubic-bezier(0.34, 1.56, 0.64, 1) — bouncy toggle/chip"
+    },
+    "code": {
+      "title":      "Motion in Code",
+      "cssTitle":   "CSS Transition",
+      "cssDesc":    "Using motion tokens in CSS transitions:",
+      "animTitle":  "CSS Animation",
+      "animDesc":   "Keyframe animations with motion tokens:",
+      "jsxTitle":   "JSX Inline Style",
+      "jsxDesc":    "Motion tokens in React components:"
+    }
   }
 }
