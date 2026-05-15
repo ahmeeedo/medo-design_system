@@ -592,5 +592,221 @@
       "jsxTitle":   "JSX Inline Style",
       "jsxDesc":    "Motion tokens in React components:"
     }
+  },
+
+  "buttons": {
+    "page": {
+      "description": "6 variants, 5 sizes and icon support — the core interaction building block of med.o"
+    },
+    "overview": {
+      "anatomyTitle":    "Anatomy",
+      "anatomyBody":     "Every button consists of up to three elements:",
+      "an1":             "Container — defines height, padding, and background color (token-based)",
+      "an2":             "Label — the button text; always present except for icon-only buttons",
+      "an3":             "Icon (optional) — left (leadingIcon), right (trailingIcon), or both",
+      "variantsTitle":   "Variants",
+      "variantsBody":    "Six variants cover all interaction contexts. Each variant has a clearly defined purpose.",
+      "vPrimary":        "Primary — Main action of the page or dialog",
+      "vAccent":         "Accent — Highlighted secondary action",
+      "vSecondary":      "Secondary — Equal alternative to the primary action",
+      "vGhost":          "Ghost — Subtle action in the content area",
+      "vDanger":         "Danger — Irreversible, destructive action",
+      "vLink":           "Link — Navigation styled as a button",
+      "sizesTitle":      "Sizes",
+      "sizesBody":       "Five sizes for different contexts: xs for dense UIs, md as default, xl for prominent CTAs.",
+      "disabledTitle":   "Disabled state",
+      "disabledBody":    "Disabled buttons communicate that an action is currently unavailable. The opacity token --color-disabled is consistent system-wide.",
+      "iconsTitle":      "Icon integration",
+      "iconsBody":       "Icons are placed left (leadingIcon) or right (trailingIcon) of the label. For icon-only buttons, aria-label is required."
+    },
+    "usage": {
+      "title":            "When to use which variant",
+      "intro":            "Each variant has a defined context. Incorrectly used variants confuse users about the importance of an action.",
+      "variantGuideTitle":"Variant guide",
+      "primaryGuide":     "Primary — One main action per view. For the most frequent or important next step.",
+      "accentGuide":      "Accent — Second important action that differs from the primary button (different color palette).",
+      "secondaryGuide":   "Secondary — Equal alternative, e.g. 'Cancel' next to 'Save'.",
+      "ghostGuide":       "Ghost — Actions in the content area that don't need strong visual weight.",
+      "dangerGuide":      "Danger — Only for irreversible actions: delete, reset, remove. Never for normal actions.",
+      "linkGuide":        "Link — Navigation that must be treated as a button (e.g. within forms).",
+      "iconTitle":        "Icon usage",
+      "iconBody":         "Icons reinforce a button's message. Use icons sparingly — they lose impact when all buttons carry icons. Icon-only buttons require aria-label for screen readers.",
+      "groupTitle":       "Button groups",
+      "groupBody":        "Multiple buttons side by side: primary button always on the right or top. Maximum 3 buttons side by side. Use consistent sizes within a group.",
+      "doTitle":          "Do ✓",
+      "dontTitle":        "Don't ✗",
+      "do1":              "One primary action per dialog or page section",
+      "dont1":            "Multiple primary buttons side by side",
+      "do2":              "variant=\"danger\" only for irreversible actions (delete)",
+      "dont2":            "variant=\"danger\" for regular back/cancel actions",
+      "do3":              "aria-label on icon-only buttons: aria-label=\"Add\"",
+      "dont3":            "Icon-only button without label or aria-label",
+      "do4":              "Consistent sizes within a button group",
+      "dont4":            "Mix different sizes in one action row",
+      "doNote":           "Clear hierarchy and accessibility",
+      "dontNote":         "Multiple primaries and missing labels"
+    },
+    "code": {
+      "title":          "Buttons in Code",
+      "variantsTitle":  "All variants",
+      "variantsDesc":   "Six variants — variant prop applied to the button container:",
+      "sizesTitle":     "Sizes",
+      "sizesDesc":      "Five sizes via the size prop:",
+      "iconTitle":      "Icon integration",
+      "iconDesc":       "Leading and trailing icons — SVG components passed as props:",
+      "disabledTitle":  "Disabled",
+      "disabledDesc":   "Disabled state via the disabled prop:"
+    },
+    "a11y": {
+      "title":           "Accessibility",
+      "intro":           "Buttons are semantic interaction elements. Correct ARIA usage and keyboard support are not optional.",
+      "wcagTitle":       "WCAG 2.1 AA",
+      "wcagBody":        "All button variants meet a contrast ratio of at least 4.5:1 for text and 3:1 for UI components. The focus ring is visible system-wide (--color-focus).",
+      "keyboardTitle":   "Keyboard control",
+      "keyboardBody":    "Buttons are fully operable via keyboard:",
+      "k1":              "Tab — move focus to the next button",
+      "k2":              "Shift+Tab — move focus to the previous button",
+      "k3":              "Enter / Space — trigger the button",
+      "k4":              "Disabled buttons do not receive tab focus",
+      "ariaTitle":       "ARIA attributes",
+      "ariaBody":        "Key ARIA rules for buttons:",
+      "aria1":           "Icon-only buttons: aria-label=\"Action\" is required",
+      "aria2":           "Loading state: aria-busy=\"true\" and aria-label=\"Saving…\"",
+      "aria3":           "Expanding content: aria-expanded=\"true/false\" + aria-controls",
+      "focusTitle":      "Focus management",
+      "focusBody":       "After a destructive action (delete), move focus to a relevant element, not the page start. Modal dialogs: keep focus trap active."
+    }
+  },
+
+  "inputs": {
+    "page": {
+      "description": "Text fields, textarea, and InputWithAddon — the form building blocks of med.o"
+    },
+    "overview": {
+      "anatomyTitle":   "Anatomy",
+      "anatomyBody":    "An input field consists of the following elements:",
+      "an1":            "Label (optional) — identifies the content; linked to the input via htmlFor",
+      "an2":            "Input container — border, background, and height (token-based)",
+      "an3":            "Placeholder — hint text shown when no value has been entered",
+      "an4":            "Helper text (hint) — contextual information below the field",
+      "an5":            "Error message — replaces hint on validation error",
+      "an6":            "Addon (InputWithAddon) — suffix or prefix outside the input right/left",
+      "statesTitle":    "States",
+      "statesBody":     "Every input field goes through four states: Default, Focused (focus ring), Error (red border + error text), and Disabled (reduced opacity, not editable).",
+      "sizesTitle":     "Sizes",
+      "sizesBody":      "Three sizes: sm (32 px height) for dense UIs, md (40 px, default), lg (48 px) for prominent fields.",
+      "textareaTitle":  "Textarea",
+      "textareaBody":   "For multi-line text. The rows prop controls initial height. Same label/hint/error props as Input.",
+      "addonTitle":     "InputWithAddon",
+      "addonBody":      "For fields with a fixed suffix (e.g. .de, %, €). The addon is displayed on the right and is not editable."
+    },
+    "usage": {
+      "title":           "Input field guidelines",
+      "intro":           "Input fields are the most common form building block. Follow these rules for consistent, accessible forms.",
+      "vsTitle":         "Input vs. Textarea",
+      "vsBody":          "Use Input for single-line entries (name, email, search). Textarea for multi-line text (description, comment, address). Rule of thumb: more than ~80 characters → Textarea.",
+      "addonTitle":      "InputWithAddon",
+      "addonBody":       "Use InputWithAddon when a fixed suffix contextualizes the value: URL endings (.de, .com), units (%, €, kg), or domain prefixes.",
+      "formTitle":       "Form context",
+      "formBody":        "Every field needs a visible label or aria-label. Error messages appear directly below the affected field. Mark required fields with * and a legend at the top of the form.",
+      "doTitle":         "Do ✓",
+      "dontTitle":       "Don't ✗",
+      "do1":             "Always set the label prop or provide aria-label",
+      "dont1":           "Input without label — screen reader cannot describe the field",
+      "do2":             "Use the error prop for validation errors",
+      "dont2":           "Signal errors only visually (color) without text feedback",
+      "do3":             "placeholder only as an example value, not as a label replacement",
+      "dont3":           "placeholder=\"Email address\" instead of label=\"Email address\"",
+      "do4":             "hint for permanent hints, error for errors",
+      "dont4":           "Display hint and error at the same time",
+      "doNote":          "Labels, error text, and context",
+      "dontNote":        "Missing labels and visual-only errors"
+    },
+    "code": {
+      "title":          "Inputs in Code",
+      "basicTitle":     "Input with label and hint",
+      "basicDesc":      "Default input with label, placeholder, and hint:",
+      "errorTitle":     "Error state",
+      "errorDesc":      "Pass error via the error prop — hint is hidden when error is present:",
+      "textareaTitle":  "Textarea",
+      "textareaDesc":   "For multi-line text — same props as Input:",
+      "addonTitle":     "InputWithAddon",
+      "addonDesc":      "Suffix addon displayed on the right outside the input:",
+      "disabledTitle":  "Disabled",
+      "disabledDesc":   "Disabled field via the disabled prop:"
+    },
+    "a11y": {
+      "title":              "Accessibility",
+      "intro":              "Forms are the most common barrier for users with disabilities. Correct label association and error communication are mandatory.",
+      "labelsTitle":        "Label association",
+      "labelsBody":         "The label prop automatically sets a <label> element. For hidden labels without visible text, use aria-label directly on the input. Multiple inputs in a group: use fieldset + legend.",
+      "errorTitle":         "Error communication",
+      "errorBody":          "The error prop renders an error message as a <span>. For screen readers, explicitly link it with aria-describedby when the input has no built-in association.",
+      "keyboardTitle":      "Keyboard control",
+      "keyboardBody":       "All input fields are navigable via Tab by default. Disabled inputs do not receive focus. Form submission via Enter (type=\"submit\" button or onKeyDown handler).",
+      "autocompleteTitle":  "autocomplete attribute",
+      "autocompleteBody":   "Set autocomplete to semantically correct values: email, name, tel, current-password, new-password, etc. This improves user experience and accessibility on mobile devices."
+    }
+  },
+
+  "selects": {
+    "page": {
+      "description": "Dropdown select for choosing one option from a list — med.o Select component"
+    },
+    "overview": {
+      "anatomyTitle":  "Anatomy",
+      "anatomyBody":   "The Select component consists of:",
+      "an1":           "Label (optional) — identifies the selection; same logic as Input",
+      "an2":           "Trigger — visible button that opens the dropdown",
+      "an3":           "SelectValue — displays the selected value",
+      "an4":           "Dropdown container — the list of options",
+      "an5":           "SelectItem — individual selectable option",
+      "statesTitle":   "States",
+      "statesBody":    "Four states: Closed (trigger visible), Open (dropdown expanded), Selected (value chosen), Disabled (not interactive).",
+      "optionsTitle":  "Option formats",
+      "optionsBody":   "The options prop accepts string arrays or object arrays with value and label. Objects allow different display and data values."
+    },
+    "usage": {
+      "title":          "Select guidelines",
+      "intro":          "Select is suited for choice lists with more than 4 options. Fewer options: prefer a radio group.",
+      "vsTitle":        "Select vs. radio group",
+      "vsBody":         "Up to 4 options → radio group (all visible, faster selection). 5+ options → Select (saves space). Exception: country or timezone selection always uses Select regardless of count.",
+      "placeholderTitle":"Placeholder",
+      "placeholderBody": "Without a selected value the trigger shows an empty state. Use defaultValue for a pre-selection or document the empty state as a valid starting state.",
+      "doTitle":        "Do ✓",
+      "dontTitle":      "Don't ✗",
+      "do1":            "Set the label prop or provide aria-label",
+      "dont1":          "Select without label — screen reader cannot describe the field",
+      "do2":            "{ value, label } objects when display ≠ data value",
+      "dont2":          "String values when display and data value need to differ",
+      "do3":            "Select for 5+ options, radio group for ≤ 4",
+      "dont3":          "Select for 2–3 options that should always be visible",
+      "doNote":         "Choose the right component for the number of options",
+      "dontNote":       "Select for too few options or without label"
+    },
+    "code": {
+      "title":        "Select in Code",
+      "basicTitle":   "String options",
+      "basicDesc":    "Simplest form — string array as options prop:",
+      "objectTitle":  "Object options",
+      "objectDesc":   "value + label separated — recommended for forms with API values:",
+      "formTitle":    "Select in forms",
+      "formDesc":     "State-based management with onChange handler and hint text:"
+    },
+    "a11y": {
+      "title":             "Accessibility",
+      "intro":             "Select components are based on shadcn/ui (Radix UI), which provides full ARIA support out of the box.",
+      "keyboardTitle":     "Keyboard control",
+      "keyboardBody":      "Full keyboard navigation:",
+      "k1":                "Tab — move focus to the Select trigger",
+      "k2":                "Enter / Space — open/close dropdown",
+      "k3":                "Arrow keys ↑ / ↓ — navigate options",
+      "k4":                "Enter — confirm selected option",
+      "k5":                "Escape — close dropdown without selection",
+      "ariaTitle":         "ARIA roles",
+      "ariaBody":          "Radix UI automatically assigns correct ARIA roles: combobox (trigger), listbox (dropdown), option (SelectItem). Screen readers announce: \"Country, combobox, collapsed\".",
+      "screenReaderTitle": "Screen reader behavior",
+      "screenReaderBody":  "The selected value is announced when the dropdown closes. For labels without visible text, set aria-label on the trigger element."
+    }
   }
 }

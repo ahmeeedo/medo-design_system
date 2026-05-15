@@ -592,5 +592,221 @@
       "jsxTitle":   "JSX Inline-Stil",
       "jsxDesc":    "Motion-Tokens in React-Komponenten:"
     }
+  },
+
+  "buttons": {
+    "page": {
+      "description": "6 Varianten, 5 Größen und Icon-Support — der zentrale Interaktionsbaustein von med.o"
+    },
+    "overview": {
+      "anatomyTitle":    "Anatomie",
+      "anatomyBody":     "Jeder Button besteht aus bis zu drei Elementen:",
+      "an1":             "Container — definiert Höhe, Padding und Hintergrundfarbe (Token-basiert)",
+      "an2":             "Label — der Beschriftungstext; immer vorhanden außer bei Icon-only-Buttons",
+      "an3":             "Icon (optional) — links (leadingIcon), rechts (trailingIcon) oder beides",
+      "variantsTitle":   "Varianten",
+      "variantsBody":    "Sechs Varianten decken alle Interaktionskontexte ab. Jede Variante hat einen klar definierten Einsatzzweck.",
+      "vPrimary":        "Primary — Hauptaktion der Seite oder des Dialogs",
+      "vAccent":         "Accent — Hervorgehobene Sekundäraktion",
+      "vSecondary":      "Secondary — Gleichwertige Alternative zur Hauptaktion",
+      "vGhost":          "Ghost — Diskrete Aktion im Inhaltsbereich",
+      "vDanger":         "Danger — Irreversible, destruktive Aktion",
+      "vLink":           "Link — Navigation als Button gestylt",
+      "sizesTitle":      "Größen",
+      "sizesBody":       "Fünf Größen für unterschiedliche Kontexte: xs für dichte UIs, md als Standard, xl für prominente CTAs.",
+      "disabledTitle":   "Disabled-Zustand",
+      "disabledBody":    "Deaktivierte Buttons kommunizieren, dass eine Aktion gerade nicht verfügbar ist. Das Opacity-Token --color-disabled ist systemweit konsistent.",
+      "iconsTitle":      "Icon-Integration",
+      "iconsBody":       "Icons werden links (leadingIcon) oder rechts (trailingIcon) des Labels platziert. Für Icon-only-Buttons ist aria-label Pflicht."
+    },
+    "usage": {
+      "title":            "Wann welche Variante",
+      "intro":            "Jede Variante hat einen definierten Kontext. Falsch eingesetzte Varianten verwirren Nutzer über die Wichtigkeit einer Aktion.",
+      "variantGuideTitle":"Varianten-Leitfaden",
+      "primaryGuide":     "Primary — Eine Hauptaktion pro Ansicht. Für den häufigsten oder wichtigsten nächsten Schritt.",
+      "accentGuide":      "Accent — Zweite wichtige Aktion, die sich vom Primary-Button unterscheidet (andere Farbpalette).",
+      "secondaryGuide":   "Secondary — Gleichrangige Alternative, z. B. 'Abbrechen' neben 'Speichern'.",
+      "ghostGuide":       "Ghost — Aktionen im Inhaltsbereich, die kein starkes visuelles Gewicht brauchen.",
+      "dangerGuide":      "Danger — Nur für irreversible Aktionen: Löschen, Zurücksetzen, Entfernen. Nie für normale Aktionen.",
+      "linkGuide":        "Link — Navigation, die wie ein Button behandelt werden muss (z. B. innerhalb von Formularen).",
+      "iconTitle":        "Icon-Einsatz",
+      "iconBody":         "Icons verstärken die Botschaft eines Buttons. Verwende Icons sparsam — sie verlieren ihre Wirkung, wenn alle Buttons Icons tragen. Icon-only-Buttons erfordern aria-label für Screenreader.",
+      "groupTitle":       "Button-Gruppen",
+      "groupBody":        "Mehrere Buttons nebeneinander: Primary-Button immer rechts oder oben. Maximal 3 Buttons nebeneinander. Verwende konsistente Größen innerhalb einer Gruppe.",
+      "doTitle":          "Richtig ✓",
+      "dontTitle":        "Falsch ✗",
+      "do1":              "Eine Primary-Aktion pro Dialog oder Seitenbereich",
+      "dont1":            "Mehrere Primary-Buttons nebeneinander",
+      "do2":              "variant=\"danger\" nur für irreversible Aktionen (Löschen)",
+      "dont2":            "variant=\"danger\" für normale Zurück-Aktionen",
+      "do3":              "aria-label bei Icon-only-Buttons: aria-label=\"Hinzufügen\"",
+      "dont3":            "Icon-only-Button ohne Beschriftung oder aria-label",
+      "do4":              "Konsistente Größen innerhalb einer Button-Gruppe",
+      "dont4":            "Verschiedene Größen in einer Aktionszeile mischen",
+      "doNote":           "Klare Hierarchie und Barrierefreiheit",
+      "dontNote":         "Mehrfach-Primary und fehlende Labels"
+    },
+    "code": {
+      "title":          "Buttons im Code",
+      "variantsTitle":  "Alle Varianten",
+      "variantsDesc":   "Sechs Varianten — variant-Prop wird auf den Button-Container angewendet:",
+      "sizesTitle":     "Größen",
+      "sizesDesc":      "Fünf Größen über die size-Prop:",
+      "iconTitle":      "Icon-Integration",
+      "iconDesc":       "Leading- und Trailing-Icons — SVG-Komponenten als Props übergeben:",
+      "disabledTitle":  "Disabled",
+      "disabledDesc":   "Deaktivierter Zustand über die disabled-Prop:"
+    },
+    "a11y": {
+      "title":           "Barrierefreiheit",
+      "intro":           "Buttons sind semantische Interaktionselemente. Korrekte ARIA-Verwendung und Keyboard-Unterstützung sind nicht optional.",
+      "wcagTitle":       "WCAG 2.1 AA",
+      "wcagBody":        "Alle Button-Varianten erfüllen das Kontrastverhältnis von mindestens 4.5:1 für Text und 3:1 für UI-Komponenten. Der Fokus-Ring ist systemweit sichtbar (--color-focus).",
+      "keyboardTitle":   "Tastatursteuerung",
+      "keyboardBody":    "Buttons sind vollständig per Tastatur bedienbar:",
+      "k1":              "Tab — Fokus auf den nächsten Button",
+      "k2":              "Shift+Tab — Fokus auf den vorherigen Button",
+      "k3":              "Enter / Space — Button auslösen",
+      "k4":              "Disabled-Buttons erhalten keinen Tab-Fokus",
+      "ariaTitle":       "ARIA-Attribute",
+      "ariaBody":        "Wichtige ARIA-Regeln für Buttons:",
+      "aria1":           "Icon-only-Buttons: aria-label=\"Aktion\" ist Pflicht",
+      "aria2":           "Ladezustand: aria-busy=\"true\" und aria-label=\"Wird gespeichert…\"",
+      "aria3":           "Expandierende Inhalte: aria-expanded=\"true/false\" + aria-controls",
+      "focusTitle":      "Fokus-Management",
+      "focusBody":       "Nach einer destruktiven Aktion (Löschen) den Fokus auf ein relevantes Element setzen, nicht auf die Seite-Startposition. Modale Dialoge: Fokus-Trap aktiv halten."
+    }
+  },
+
+  "inputs": {
+    "page": {
+      "description": "Textfelder, Textarea und InputWithAddon — die Grundbausteine für Formulare in med.o"
+    },
+    "overview": {
+      "anatomyTitle":   "Anatomie",
+      "anatomyBody":    "Ein Input-Feld besteht aus folgenden Elementen:",
+      "an1":            "Label (optional) — kennzeichnet den Inhalt; über htmlFor mit dem Input verknüpft",
+      "an2":            "Input-Container — Rahmen, Hintergrund und Höhe (Token-basiert)",
+      "an3":            "Placeholder — Hinweistext solange kein Wert eingegeben wurde",
+      "an4":            "Helper-Text (hint) — Kontextinformation unterhalb des Feldes",
+      "an5":            "Error-Message — ersetzt den hint bei Validierungsfehler",
+      "an6":            "Addon (InputWithAddon) — Suffix oder Präfix rechts/links außerhalb",
+      "statesTitle":    "Zustände",
+      "statesBody":     "Jedes Input-Feld durchläuft vier Zustände: Default, Focused (Fokus-Ring), Error (rote Rahmenlinie + Error-Text) und Disabled (Opacity reduziert, nicht editierbar).",
+      "sizesTitle":     "Größen",
+      "sizesBody":      "Drei Größen: sm (32 px Höhe) für dichte UIs, md (40 px, Standard), lg (48 px) für prominente Felder.",
+      "textareaTitle":  "Textarea",
+      "textareaBody":   "Für mehrzeiligen Text. rows-Prop kontrolliert die initiale Höhe. Gleiche Label/hint/error-Props wie Input.",
+      "addonTitle":     "InputWithAddon",
+      "addonBody":      "Für Felder mit festem Suffix (z. B. .de, %, €). Das Addon wird rechts angezeigt und ist nicht editierbar."
+    },
+    "usage": {
+      "title":           "Richtlinien für Eingabefelder",
+      "intro":           "Eingabefelder sind der häufigste Formular-Baustein. Folge diesen Regeln für konsistente, barrierefreie Formulare.",
+      "vsTitle":         "Input vs. Textarea",
+      "vsBody":          "Verwende Input für einzeilige Eingaben (Name, E-Mail, Suche). Textarea für mehrzeiligen Text (Beschreibung, Kommentar, Adresse). Faustregel: mehr als ~80 Zeichen → Textarea.",
+      "addonTitle":      "InputWithAddon",
+      "addonBody":       "Verwende InputWithAddon wenn ein fester Suffix den Wert kontextualisiert: URL-Endungen (.de, .com), Einheiten (%, €, kg) oder Domain-Präfixe.",
+      "formTitle":       "Formular-Kontext",
+      "formBody":        "Jedes Feld braucht ein sichtbares Label oder aria-label. Fehlermeldungen erscheinen direkt unter dem betroffenen Feld. Required-Felder mit * und einer Legende am Formularanfang kennzeichnen.",
+      "doTitle":         "Richtig ✓",
+      "dontTitle":       "Falsch ✗",
+      "do1":             "Immer label-Prop setzen oder aria-label angeben",
+      "dont1":           "Input ohne Label — Screen-Reader kann Feld nicht beschreiben",
+      "do2":             "error-Prop für Validierungsfehler verwenden",
+      "dont2":           "Fehler nur visuell (Farbe) ohne Text-Feedback signalisieren",
+      "do3":             "placeholder nur als Beispielwert, nicht als Ersatz für Label",
+      "dont3":           "placeholder=\"E-Mail-Adresse\" statt label=\"E-Mail-Adresse\"",
+      "do4":             "hint für permanente Hinweise, error für Fehler",
+      "dont4":           "hint und error gleichzeitig anzeigen",
+      "doNote":          "Labels, Fehlertexte und Kontext",
+      "dontNote":        "Fehlende Labels und rein visuelle Fehler"
+    },
+    "code": {
+      "title":          "Inputs im Code",
+      "basicTitle":     "Input mit Label und Hilfstext",
+      "basicDesc":      "Standard-Input mit label, placeholder und hint:",
+      "errorTitle":     "Error-Zustand",
+      "errorDesc":      "Fehler über die error-Prop übergeben — hint wird dadurch ausgeblendet:",
+      "textareaTitle":  "Textarea",
+      "textareaDesc":   "Für mehrzeiligen Text — gleiche Props wie Input:",
+      "addonTitle":     "InputWithAddon",
+      "addonDesc":      "Suffix-Addon rechts außerhalb des Eingabefeldes:",
+      "disabledTitle":  "Disabled",
+      "disabledDesc":   "Deaktiviertes Feld über disabled-Prop:"
+    },
+    "a11y": {
+      "title":              "Barrierefreiheit",
+      "intro":              "Formulare sind die häufigste Barriere für Nutzer mit Einschränkungen. Korrekte Label-Verknüpfung und Fehler-Kommunikation sind zwingend erforderlich.",
+      "labelsTitle":        "Label-Verknüpfung",
+      "labelsBody":         "Die label-Prop setzt automatisch ein <label>-Element. Für versteckte Labels ohne sichtbaren Text aria-label direkt am Input verwenden. Mehrere Inputs in einer Gruppe: fieldset + legend verwenden.",
+      "errorTitle":         "Fehler-Kommunikation",
+      "errorBody":          "Error-Prop rendert eine Fehlermeldung als <span>. Für Screen-Reader die Verknüpfung explizit mit aria-describedby herstellen, wenn das Input keine integrierte Verknüpfung hat.",
+      "keyboardTitle":      "Tastatursteuerung",
+      "keyboardBody":       "Alle Input-Felder sind standardmäßig per Tab navigierbar. Disabled-Inputs erhalten keinen Fokus. Formular-Submit per Enter (type=\"submit\"-Button oder onKeyDown-Handler).",
+      "autocompleteTitle":  "autocomplete-Attribut",
+      "autocompleteBody":   "Setze autocomplete auf semantisch korrekte Werte: email, name, tel, current-password, new-password etc. Das verbessert die Nutzererfahrung und Barrierefreiheit auf Mobilgeräten."
+    }
+  },
+
+  "selects": {
+    "page": {
+      "description": "Dropdown-Auswahlfeld für eine Option aus einer Liste — med.o Select-Komponente"
+    },
+    "overview": {
+      "anatomyTitle":  "Anatomie",
+      "anatomyBody":   "Die Select-Komponente besteht aus:",
+      "an1":           "Label (optional) — kennzeichnet die Auswahl; gleiche Logik wie Input",
+      "an2":           "Trigger — sichtbarer Button, der das Dropdown öffnet",
+      "an3":           "SelectValue — zeigt den ausgewählten Wert an",
+      "an4":           "Dropdown-Container — die Liste der Optionen",
+      "an5":           "SelectItem — einzelne auswählbare Option",
+      "statesTitle":   "Zustände",
+      "statesBody":    "Vier Zustände: Closed (Trigger sichtbar), Open (Dropdown geöffnet), Selected (Wert ausgewählt), Disabled (nicht interaktiv).",
+      "optionsTitle":  "Optionen-Formate",
+      "optionsBody":   "options-Prop akzeptiert String-Arrays oder Objekt-Arrays mit value und label. Objekte ermöglichen unterschiedliche Anzeige- und Datenwerte."
+    },
+    "usage": {
+      "title":          "Richtlinien für Select",
+      "intro":          "Select eignet sich für Auswahllisten mit mehr als 4 Optionen. Weniger Optionen: Radio-Gruppe bevorzugen.",
+      "vsTitle":        "Select vs. Radio-Gruppe",
+      "vsBody":         "Bis zu 4 Optionen → Radio-Gruppe (alle sichtbar, schnellere Auswahl). Ab 5 Optionen → Select (spart Platz). Ausnahme: Länder- oder Zeitzonen-Auswahl immer Select, unabhängig von der Anzahl.",
+      "placeholderTitle":"Placeholder",
+      "placeholderBody": "Ohne ausgewählten Wert zeigt der Trigger einen leeren Zustand. Verwende defaultValue zur Vorauswahl oder dokumentiere den leeren Zustand als validen Startzustand.",
+      "doTitle":        "Richtig ✓",
+      "dontTitle":      "Falsch ✗",
+      "do1":            "label-Prop setzen oder aria-label angeben",
+      "dont1":          "Select ohne Label — Screen-Reader kann Feld nicht beschreiben",
+      "do2":            "{ value, label }-Objekte wenn Anzeige ≠ Datenwert",
+      "dont2":          "String-Werte wenn Anzeige und Datenwert unterschiedlich sein müssen",
+      "do3":            "Select ab 5 Optionen, Radio-Gruppe bei ≤ 4",
+      "dont3":          "Select für 2–3 Optionen die immer sichtbar sein sollen",
+      "doNote":         "Korrekte Komponente für die Optionsanzahl wählen",
+      "dontNote":       "Select für zu wenige Optionen oder ohne Label"
+    },
+    "code": {
+      "title":        "Select im Code",
+      "basicTitle":   "String-Optionen",
+      "basicDesc":    "Einfachste Form — String-Array als options-Prop:",
+      "objectTitle":  "Objekt-Optionen",
+      "objectDesc":   "value + label getrennt — empfohlen für Formulare mit API-Werten:",
+      "formTitle":    "Select in Formularen",
+      "formDesc":     "State-basierte Verwaltung mit onChange-Handler und hint-Text:"
+    },
+    "a11y": {
+      "title":             "Barrierefreiheit",
+      "intro":             "Select-Komponenten basieren auf shadcn/ui (Radix UI), das vollständige ARIA-Unterstützung mitbringt.",
+      "keyboardTitle":     "Tastatursteuerung",
+      "keyboardBody":      "Vollständige Tastaturnavigation:",
+      "k1":                "Tab — Fokus auf den Select-Trigger",
+      "k2":                "Enter / Space — Dropdown öffnen/schließen",
+      "k3":                "Pfeiltasten ↑ / ↓ — Optionen navigieren",
+      "k4":                "Enter — Ausgewählte Option bestätigen",
+      "k5":                "Escape — Dropdown schließen ohne Auswahl",
+      "ariaTitle":         "ARIA-Rollen",
+      "ariaBody":          "Radix UI weist automatisch korrekte ARIA-Rollen zu: combobox (Trigger), listbox (Dropdown), option (SelectItem). Screen-Reader lesen: \"Land, Combobox, eingeklappt\".",
+      "screenReaderTitle": "Screen-Reader-Verhalten",
+      "screenReaderBody":  "Der ausgewählte Wert wird beim Schließen des Dropdowns angekündigt. Für Labels ohne sichtbaren Text aria-label am Trigger-Element setzen."
+    }
   }
 }
