@@ -113,7 +113,6 @@ Grid.Footer = function GridFooter({ children, className }) {
   return <div className={className}>{children}</div>
 }
 
-// --color-brand-accent is not yet defined in tokens.css; using --color-link-primary as substitute
 export function Content({ children, className }) {
   if (!children) return null
   return (

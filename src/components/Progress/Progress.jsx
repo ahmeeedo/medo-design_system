@@ -3,7 +3,7 @@ import { cn } from '@/lib/utils'
 
 const variantClasses = {
   neutral: 'bg-[var(--color-neutral-900)]',
-  accent:  'bg-[var(--color-brand-accent)]',
+  accent:  'bg-[var(--color-brand-accent-500)]',
   success: 'bg-success',
   warning: 'bg-warning',
   error:   'bg-error',
