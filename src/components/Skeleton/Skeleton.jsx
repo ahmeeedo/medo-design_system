@@ -1,35 +1,36 @@
-import styles from './Skeleton.module.css'
+import { cn } from '@/lib/utils'
 
-/**
- * Skeleton
- * @param {'text'|'circle'|'rect'} variant
- * @param {string|number} width
- * @param {string|number} height
- */
+const variantClasses = {
+  text:   'rounded-sm',
+  circle: 'rounded-full shrink-0',
+  rect:   'rounded-md',
+}
+
 export function Skeleton({ variant = 'rect', width, height, className = '' }) {
   return (
     <div
-      className={[styles.skeleton, styles[variant], className].filter(Boolean).join(' ')}
+      className={cn(
+        'bg-[var(--color-neutral-200)] animate-pulse',
+        variantClasses[variant],
+        className
+      )}
       style={{ width, height }}
       aria-hidden="true"
     />
   )
 }
 
-/**
- * SkeletonCard — ready-made card skeleton
- */
 export function SkeletonCard() {
   return (
-    <div className={styles.card}>
-      <div className={styles.cardHeader}>
+    <div className="flex flex-col gap-3 max-w-[360px]">
+      <div className="flex items-center gap-4">
         <Skeleton variant="circle" width={40} height={40} />
-        <div className={styles.cardHeaderText}>
+        <div className="flex-1 flex flex-col gap-2">
           <Skeleton variant="text" width="60%" height={14} />
           <Skeleton variant="text" width="40%" height={11} />
         </div>
       </div>
-      <Skeleton variant="rect" height={120} style={{ borderRadius: 'var(--radius-lg)' }} />
+      <Skeleton variant="rect" height={120} className="rounded-lg" />
       <Skeleton variant="text" width="90%" height={14} />
       <Skeleton variant="text" width="75%" height={14} />
       <Skeleton variant="text" width="55%" height={14} />
