@@ -108,7 +108,7 @@ export function DocsLayout({ children }) {
       {/* Sticky full-width header */}
       <header className="sticky top-0 z-[var(--z-sticky)] w-full flex items-center h-[var(--header-height)] px-[var(--space-4)] gap-[var(--space-2)] bg-[var(--surface_100)] border-b border-[var(--color-border)]">
         <button
-          className={ICON_BTN}
+          className={`${ICON_BTN} hidden max-md:flex`}
           onClick={() => setMobileOpen((v) => !v)}
           aria-label={mobileOpen ? t('nav.aria.closeMenu') : t('nav.aria.openMenu')}
         >
