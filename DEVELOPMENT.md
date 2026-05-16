@@ -15,7 +15,9 @@ Dieser Leitfaden beschreibt, wie das Projekt bearbeitet wird: Farben und Tokens 
 7. [Übersetzungen (i18n) pflegen](#7-übersetzungen-i18n-pflegen)
 8. [Docs-Infrastruktur: PageLayout und Hilfskomponenten](#8-docs-infrastruktur-pagelayout-und-hilfskomponenten)
 9. [CSS und Tailwind](#9-css-und-tailwind)
-10. [Qualitätssicherung](#10-qualitätssicherung)
+10. [Responsive Anpassung](#10-responsive-anpassung)
+11. [States: Hover, Active, Focus und mehr](#11-states-hover-active-focus-und-mehr)
+12. [Qualitätssicherung](#12-qualitätssicherung)
 
 ---
 
@@ -573,7 +575,205 @@ Eigene Token-Überschreibungen kommen **nach** dem shadcn/ui-Block im `@theme in
 
 ---
 
-## 10. Qualitätssicherung
+## 10. Responsive Anpassung
+
+Tailwind v4 verwendet Breakpoint-Modifier direkt als Klassen-Präfix. Im Projekt wird ausschließlich der **Mobile-First**-Ansatz gebrochen durch `max-*`-Varianten — d.h. Stile gelten standardmäßig für Desktop und werden bei kleineren Viewports überschrieben.
+
+### Verwendete Breakpoints
+
+| Modifier | Breakpoint | Einsatz im Projekt |
+|---|---|---|
+| `max-md:` | ≤ 767 px | Sidebar → Hamburger-Navigation; Hauptinhalt ohne left margin |
+| `max-[640px]:` | ≤ 640 px | GridWrapper: mehrspaltig → einspaltig |
+| `max-[1024px]:` | ≤ 1024 px | GridWrapper: 3–6-spaltig → 2–3-spaltig |
+
+### Responsive Klassen schreiben
+
+```jsx
+{/* Desktop: 3 Spalten, Tablet: 2 Spalten, Mobil: 1 Spalte */}
+<div className="grid grid-cols-3 max-[1024px]:grid-cols-2 max-[640px]:grid-cols-1 gap-[var(--space-6)]">
+  ...
+</div>
+
+{/* Text größer auf Desktop, kleiner auf Mobil */}
+<h1 className="text-5xl max-md:text-3xl">Überschrift</h1>
+
+{/* Element auf Desktop sichtbar, auf Mobil ausgeblendet */}
+<div className="block max-md:hidden">Nur Desktop</div>
+
+{/* Element nur auf Mobil sichtbar */}
+<div className="hidden max-md:block">Nur Mobil</div>
+```
+
+### GridWrapper — automatisches responsives Grid
+
+`GridWrapper` aus `PageLayout.jsx` übernimmt die Spaltenanzahl automatisch basierend auf der Anzahl der Kinder:
+
+```jsx
+{/* 3 Kinder → 3 Spalten Desktop, 2 Tablet, 1 Mobil — automatisch */}
+<GridWrapper>
+  <KindA />
+  <KindB />
+  <KindC />
+</GridWrapper>
+```
+
+Für manuelle Kontrolle ein eigenes `<div>` mit expliziten Grid-Klassen verwenden.
+
+### Sidebar und Navigation
+
+Die Sidebar (`DocsLayout.jsx`) wechselt bei `max-md` (≤ 767 px) zu einer Hamburger-Navigation. Der Hauptinhalt erhält dann keinen `ml-[220px]` mehr und nutzt den vollen Viewport. Das `pt-[56px]` kompensiert den fixen Mobile-Header.
+
+```jsx
+{/* Aus DocsLayout.jsx — Muster für responsive Layout-Anpassung */}
+<nav className="fixed w-[220px] max-md:w-[280px] max-md:-translate-x-full max-md:data-[mobile-open=true]:translate-x-0" />
+<main className="ml-[220px] max-md:ml-0 max-md:pt-[56px]" />
+```
+
+### Eigene Breakpoints definieren
+
+Für einmalige Sonderfälle kann ein beliebiger Pixel-Wert als Breakpoint angegeben werden:
+
+```jsx
+<div className="grid-cols-4 max-[900px]:grid-cols-2">...</div>
+```
+
+Wiederkehrende Breakpoints besser als Token in `tokens.css` dokumentieren und per `@custom-variant` in `global.css` registrieren:
+
+```css
+/* global.css */
+@custom-variant tablet (&:is([data-viewport="tablet"] *));
+```
+
+---
+
+## 11. States: Hover, Active, Focus und mehr
+
+Tailwind-State-Modifier werden als Klassen-Präfix geschrieben. Alle Farbwerte bleiben Token-Referenzen — auch in State-Klassen.
+
+### Hover
+
+```jsx
+{/* Hintergrundfarbe bei Hover */}
+<button className="hover:bg-[var(--surface_200)]">...</button>
+
+{/* Textfarbe bei Hover */}
+<a className="text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]">Link</a>
+
+{/* Mehrere Eigenschaften kombinieren */}
+<div className="hover:bg-[var(--color-neutral-100)] hover:shadow-[var(--shadow-md)] transition-[background,box-shadow] duration-[var(--duration-fast)]">
+  ...
+</div>
+```
+
+### Active (Gedrückt)
+
+```jsx
+<button className="active:scale-95 active:bg-[var(--color-brand-primary-600)] transition-transform duration-[var(--duration-fast)]">
+  Klick mich
+</button>
+```
+
+### Focus und Focus-Visible
+
+`focus-visible` ist gegenüber `focus` zu bevorzugen — es greift nur bei Tastatur-Navigation, nicht bei Mausklick:
+
+```jsx
+{/* Tastatur-Fokus-Ring (WCAG-konform) */}
+<button className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-focus-500)] focus-visible:ring-offset-2">
+  Barrierefrei
+</button>
+
+{/* Fokus ohne sichtbaren Ring (nur wenn anderer Indikator vorhanden) */}
+<input className="focus:outline-none focus:border-[var(--color-focus-500)] focus:ring-1 focus:ring-[var(--color-focus-500)]" />
+```
+
+**Regel:** Niemals `outline-none` oder `ring-0` setzen ohne gleichwertigen visuellen Fokus-Indikator — das verletzt WCAG 2.4.7.
+
+### Disabled
+
+```jsx
+{/* Visuelle Deaktivierung */}
+<button
+  disabled
+  className="disabled:opacity-40 disabled:cursor-not-allowed disabled:pointer-events-none"
+>
+  Gesperrt
+</button>
+
+{/* Für nicht-native Elemente (div, span) mit aria-disabled */}
+<div
+  aria-disabled="true"
+  className="aria-disabled:opacity-40 aria-disabled:cursor-not-allowed"
+>
+  ...
+</div>
+```
+
+### Checked / Selected (Toggle, Checkbox, Radio)
+
+```jsx
+{/* Zustand über data-Attribut steuern (shadcn/ui-Muster) */}
+<button
+  data-checked={isChecked}
+  className="data-[checked=true]:bg-[var(--color-brand-primary-500)] data-[checked=true]:text-white"
+>
+  ...
+</button>
+```
+
+### Group-Hover (übergeordnetes Element steuert Kind)
+
+```jsx
+{/* Klasse 'group' am Container, 'group-hover:' am Kind */}
+<div className="group flex items-center gap-3 p-[var(--space-3)] rounded-[var(--radius-md)]">
+  <span className="text-[var(--color-text-secondary)] group-hover:text-[var(--color-text-primary)]">
+    Label
+  </span>
+  <button className="opacity-0 group-hover:opacity-100 transition-opacity duration-[var(--duration-fast)]">
+    Aktion
+  </button>
+</div>
+```
+
+Reales Beispiel aus `Table.jsx`: Tabellenzeilen zeigen Hover-Hintergrund, alle Zellen reagieren auf das `group`-Element der Zeile.
+
+```jsx
+<tr className="group">
+  <td className="group-hover:bg-[var(--surface_200)]">...</td>
+</tr>
+```
+
+### Transitions
+
+State-Übergänge immer mit Token-Werten für Dauer und Easing:
+
+```jsx
+{/* Einzelne Eigenschaft */}
+<div className="transition-colors duration-[var(--duration-fast)] ease-[var(--ease-out)]">
+
+{/* Mehrere Eigenschaften */}
+<div className="transition-[color,background,box-shadow] duration-[var(--duration-normal)] ease-[var(--ease-out)]">
+
+{/* Alle Eigenschaften (Performance-Vorsicht bei transform/opacity) */}
+<div className="transition-all duration-[var(--duration-slow)]">
+```
+
+### State-Token-Referenz
+
+| State | Empfohlene Tokens |
+|---|---|
+| Hover Hintergrund | `--surface_200`, `--color-neutral-100` |
+| Hover Text | `--color-text-primary` |
+| Fokus-Ring | `--color-focus-500` |
+| Aktiv / Gedrückt | `--color-brand-primary-600` (dunkler als 500) |
+| Disabled | `opacity-40` + `cursor-not-allowed` |
+| Selected / Checked | `--color-brand-primary-500` als Hintergrund |
+| Danger / Error | `--color-error-500`, `--color-error-container-100` |
+
+---
+
+## 12. Qualitätssicherung
 
 ### Vor jedem Commit
 
