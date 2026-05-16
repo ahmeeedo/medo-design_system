@@ -1,5 +1,8 @@
-﻿import { useSearchParams } from 'react-router-dom'
-import { Children } from 'react'
+import { useSearchParams } from 'react-router-dom'
+import { Children, useRef, useState, useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
+import { TableOfContents } from '../components'
+import { Sheet, SheetContent, SheetClose, SheetTitle } from '../components/ui/sheet'
 
 const GRID_CLASSES = {
   1: 'grid-cols-1',
@@ -10,18 +13,83 @@ const GRID_CLASSES = {
   6: 'grid-cols-6 max-[1024px]:grid-cols-3 max-[640px]:grid-cols-1',
 }
 
+const generateId = (text) =>
+  text.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')
+
 export function PageLayout({ title, description, tabs = [] }) {
   const [searchParams, setSearchParams] = useSearchParams()
+  const { t, i18n } = useTranslation()
+  const contentRef = useRef(null)
+  const tabBarRef = useRef(null)
+  const [headings, setHeadings] = useState([])
+  const [activeId, setActiveId] = useState('')
+  const [sheetOpen, setSheetOpen] = useState(false)
 
   const activeFromUrl = searchParams.get('tab')
-  const validTab = tabs.find(t => t.id === activeFromUrl)
+  const validTab = tabs.find(tab => tab.id === activeFromUrl)
   const active = validTab ? activeFromUrl : tabs[0]?.id
 
   const handleTabClick = (id) => {
     setSearchParams({ tab: id })
   }
 
-  const activeContent = tabs.find(t => t.id === active)?.content
+  const activeContent = tabs.find(tab => tab.id === active)?.content
+
+  useEffect(() => {
+    if (!tabBarRef.current || !active) return
+    const btn = tabBarRef.current.querySelector(`[data-tab-id="${active}"]`)
+    btn?.scrollIntoView({ behavior: 'smooth', inline: 'nearest', block: 'nearest' })
+  }, [active])
+
+  useEffect(() => {
+    setHeadings([])
+    setActiveId('')
+    const timer = setTimeout(() => {
+      if (!contentRef.current) return
+      const elements = contentRef.current.querySelectorAll('h2')
+      const extracted = Array.from(elements).map(el => {
+        // The Section wrapper div has the id; apply scroll offset there so anchor navigation clears sticky header+tabs
+        const section = el.closest('[id]')
+        if (section) {
+          section.style.scrollMarginTop = 'calc(var(--header-height) + var(--tab-bar-height) + 1rem)'
+        }
+        if (!el.id) {
+          el.id = generateId(el.textContent)
+        }
+        return { id: el.closest('[id]')?.id || el.id, text: el.textContent }
+      })
+      setHeadings(extracted)
+    }, 50)
+    return () => clearTimeout(timer)
+  }, [active, i18n.language])
+
+  useEffect(() => {
+    if (headings.length === 0) return
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) setActiveId(entry.target.id)
+        })
+      },
+      { rootMargin: '-10% 0px -80% 0px' }
+    )
+    headings.forEach(({ id }) => {
+      const el = document.getElementById(id)
+      if (el) observer.observe(el)
+    })
+
+    const handleScroll = () => {
+      const nearBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 80
+      if (nearBottom) setActiveId(headings[headings.length - 1].id)
+    }
+    window.addEventListener('scroll', handleScroll, { passive: true })
+
+    return () => {
+      observer.disconnect()
+      window.removeEventListener('scroll', handleScroll)
+    }
+  }, [headings])
 
   return (
     <div>
@@ -36,10 +104,11 @@ export function PageLayout({ title, description, tabs = [] }) {
         )}
       </div>
 
-      <div className="flex border-b border-[var(--color-border)] mb-[var(--space-10)]">
+      <div ref={tabBarRef} className="flex overflow-x-auto border-b border-[var(--color-border)] sticky top-[var(--header-height)] [z-index:calc(var(--z-sticky)-1)] bg-[var(--surface_100)] min-h-[var(--tab-bar-height)] mb-[var(--space-10)]">
         {tabs.map(tab => (
           <button
             key={tab.id}
+            data-tab-id={tab.id}
             onClick={() => handleTabClick(tab.id)}
             className={`px-[var(--space-6)] py-[var(--space-3)] text-md bg-transparent border-0 border-b-2 -mb-px cursor-pointer outline-none transition-[color,border-color,background] duration-[var(--duration-normal)] ease-[var(--ease-out)] focus-visible:ring-2 focus-visible:ring-[var(--color-focus-500)] focus-visible:ring-offset-1 focus-visible:rounded-[var(--radius-xs)] ${
               active === tab.id
@@ -52,9 +121,51 @@ export function PageLayout({ title, description, tabs = [] }) {
         ))}
       </div>
 
-      <div className="mb-[var(--space-8)]">
-        {activeContent}
+      <div className="flex flex-row mb-[var(--space-8)]">
+        <div ref={contentRef} className="flex-1 min-w-0">
+          {activeContent}
+        </div>
+        {headings.length > 0 && (
+          <div className="w-[240px] flex-shrink-0 hidden md:block pr-[var(--space-8)]">
+            <div className="sticky top-[calc(var(--header-height)+var(--tab-bar-height))] max-h-[calc(100vh-var(--header-height)-var(--tab-bar-height))] overflow-y-auto pt-[var(--space-6)] pb-[var(--space-6)]">
+              <TableOfContents headings={headings} activeId={activeId} />
+            </div>
+          </div>
+        )}
       </div>
+
+      {headings.length > 0 && !sheetOpen && (
+        <div className="block md:hidden fixed bottom-0 left-0 right-0 [z-index:var(--z-sticky)] px-[var(--space-4)] pb-[var(--space-4)]">
+          <button
+            onClick={() => setSheetOpen(true)}
+            className="w-full py-[var(--space-3)] bg-[var(--color-brand-primary-500)] text-white rounded-[var(--radius-md)] text-sm [font-weight:var(--weight-semibold)] shadow-[var(--shadow-md)]"
+          >
+            {t('toc.openButton')}
+          </button>
+        </div>
+      )}
+
+      <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
+        <SheetContent side="bottom" showCloseButton={false} className="max-h-[60vh] overflow-y-auto p-[var(--space-6)] rounded-t-[var(--radius-2xl)]">
+          <div className="flex items-center justify-between mb-[var(--space-5)]">
+            <SheetTitle className="text-md [font-weight:var(--weight-semibold)] text-[var(--color-text-primary)]">
+              {t('toc.title')}
+            </SheetTitle>
+            <SheetClose asChild>
+              <button className="text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors duration-[var(--duration-fast)]">
+                <span className="material-symbols-rounded" style={{ fontSize: '1.5rem' }}>close</span>
+                <span className="sr-only">Close</span>
+              </button>
+            </SheetClose>
+          </div>
+          <TableOfContents
+            headings={headings}
+            activeId={activeId}
+            onSelect={() => setSheetOpen(false)}
+            showTitle={false}
+          />
+        </SheetContent>
+      </Sheet>
     </div>
   )
 }

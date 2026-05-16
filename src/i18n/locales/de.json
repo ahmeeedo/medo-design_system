@@ -1805,5 +1805,9 @@
       "title":   "Datenschutz",
       "content": "Hier finden Sie bald die Datenschutzerklärung."
     }
+  },
+  "toc": {
+    "title":      "Auf dieser Seite",
+    "openButton": "Inhaltsverzeichnis"
   }
 }

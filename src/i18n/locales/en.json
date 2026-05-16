@@ -1805,5 +1805,9 @@
       "title":   "Privacy Policy",
       "content": "Privacy policy content coming soon."
     }
+  },
+  "toc": {
+    "title":      "On this page",
+    "openButton": "Table of Contents"
   }
 }
