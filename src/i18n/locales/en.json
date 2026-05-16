@@ -808,5 +808,194 @@
       "screenReaderTitle": "Screen reader behavior",
       "screenReaderBody":  "The selected value is announced when the dropdown closes. For labels without visible text, set aria-label on the trigger element."
     }
+  },
+
+  "toggle": {
+    "page": {
+      "description": "Toggle switch, Checkbox, and Radio button — three controls for binary and single-choice selection."
+    },
+    "overview": {
+      "toggleTitle":   "Toggle (Switch)",
+      "toggleBody":    "A toggle switch immediately flips between two states — no form submit required. Use it for settings that take effect instantly.",
+      "an1":           "Track — the background strip indicating the overall state (on/off)",
+      "an2":           "Knob — the sliding circle showing the current position",
+      "an3":           "Label — optional text to the right of the switch",
+      "checkboxTitle": "Checkbox",
+      "checkboxBody":  "A checkbox enables multiple selections within a form. Each option is independent and can be toggled individually.",
+      "can1":          "Box — the visually outlined selection field",
+      "can2":          "Checkmark — the tick icon in the checked state",
+      "can3":          "Label — describes the individual option",
+      "radioTitle":    "Radio",
+      "radioBody":     "A radio button always belongs to a group (name attribute). Only one option can be selected at a time.",
+      "ran1":          "Circle — the outer ring, visible in all states",
+      "ran2":          "Dot — the inner filled point in the selected state",
+      "ran3":          "Label — describes the individual radio option",
+      "demoTitle":     "Live demo",
+      "demoBody":      "All three components in default, checked, and disabled states."
+    },
+    "usage": {
+      "title":        "When to use which component",
+      "intro":        "Toggle, Checkbox, and Radio overlap in function — the right choice depends on immediate effect, multi-selection, and group context.",
+      "whenTitle":    "Decision guide",
+      "toggleWhen":   "Toggle — when a setting takes immediate effect (e.g. dark mode, notifications on/off)",
+      "checkboxWhen": "Checkbox — when multiple options can be selected simultaneously or a single consent is needed (e.g. accept terms)",
+      "radioWhen":    "Radio — when exactly one option must be chosen from a group (e.g. payment method)",
+      "doTitle":      "Do",
+      "dontTitle":    "Don't",
+      "do1":          "Use Toggle for settings that take immediate effect without a submit",
+      "do2":          "Use Checkbox for multi-selection and consent fields",
+      "do3":          "Always use a shared name attribute for Radio groups",
+      "do4":          "Provide a visible label for every control",
+      "dont1":        "Don't use Toggle for form data that is only sent on submit",
+      "dont2":        "Don't use Radio buttons for multi-selection — use Checkboxes instead",
+      "dont3":        "Don't show more than 6–7 Radio options — prefer Select beyond that",
+      "dont4":        "Don't omit labels — screen reader and mouse users need clickable areas",
+      "doNote":       "Immediate effect and clear semantics improve usability.",
+      "dontNote":     "Wrong component choice leads to confusion about save behavior."
+    },
+    "code": {
+      "title":         "Code",
+      "toggleTitle":   "Toggle — controlled and uncontrolled",
+      "toggleDesc":    "Without a checked prop the Toggle manages its own state internally. With checked and onChange it becomes controlled.",
+      "checkboxTitle": "Checkbox group",
+      "checkboxDesc":  "Multiple checkboxes share no common state — each is independent. Aggregate internal state via onChange handlers.",
+      "radioTitle":    "Radio group",
+      "radioDesc":     "All radios in a group share the same name value. Only the selected radio has checked={true}."
+    },
+    "a11y": {
+      "title":         "Accessibility",
+      "intro":         "Toggle, Checkbox, and Radio are native interactive elements — Radix UI and shadcn/ui provide correct ARIA semantics as long as labels are properly associated.",
+      "keyboardTitle": "Keyboard navigation",
+      "keyboardBody":  "All three components are fully operable via keyboard.",
+      "k1":            "Tab — focuses Toggle or Checkbox; for Radio focuses the entire group",
+      "k2":            "Space — toggles the focused Toggle or Checkbox",
+      "k3":            "Arrow Up / Down — moves selection within a Radio group",
+      "k4":            "Enter — not standard for Toggle/Checkbox (browser-dependent)",
+      "ariaTitle":     "ARIA roles",
+      "ariaBody":      "Toggle → role=\"switch\", Checkbox → role=\"checkbox\", Radio → role=\"radio\". All roles are set automatically by Radix UI and shadcn/ui.",
+      "labelTitle":    "Label requirement",
+      "labelBody":     "Every control needs an associated label. Without a label prop, set aria-label on the element. Never use an icon without a text description."
+    }
+  },
+
+  "badges": {
+    "page": {
+      "description": "Badge — a compact status or category label in five variants and two sizes."
+    },
+    "overview": {
+      "anatomyTitle":  "Anatomy",
+      "anatomyBody":   "A badge consists of a colored container with rounded corners, an optional dot indicator, and a short text label.",
+      "an1":           "Container — the rounded pill with variant background color",
+      "an2":           "Dot — optional colored circle as a status indicator to the left of the label",
+      "an3":           "Label — short text, typically 1–2 words",
+      "variantsTitle": "Variants",
+      "variantsBody":  "Five semantic variants: neutral, accent, success, warning, error.",
+      "sizesTitle":    "Sizes",
+      "sizesBody":     "sm (default, h-5) for compact contexts like tables; md (h-6) for more prominent placement.",
+      "dotTitle":      "Dot variant",
+      "dotBody":       "With dot={true}, a colored dot is shown to the left of the label — useful for status indicators.",
+      "tagTitle":      "Tag (removable)",
+      "tagBody":       "Tag is a related component for removable labels, e.g. in filter fields or multi-select inputs."
+    },
+    "usage": {
+      "title":     "Usage",
+      "intro":     "Badges label status, category, or counts. They are purely informational and trigger no action.",
+      "whenTitle": "Typical use cases",
+      "when1":     "Status labels in tables (e.g. Active / Inactive / Pending)",
+      "when2":     "Category tags in lists or cards",
+      "when3":     "Counters in navigation or tabs (e.g. \"12 open\")",
+      "when4":     "Removable filter tags in search and filter components (→ Tag component)",
+      "doTitle":   "Do",
+      "dontTitle": "Don't",
+      "do1":       "Choose variant semantically: success for success, error for errors, warning for warnings",
+      "do2":       "Use short, precise text — maximum 2–3 words",
+      "do3":       "Use the dot variant for status indicators",
+      "dont1":     "Don't use Badge for clickable actions — use Button instead",
+      "dont2":     "Don't convey meaning through color alone — text is required",
+      "dont3":     "No long text in badges — choose an alternative element for more than 3 words",
+      "doNote":    "Badges are informational, not interactive.",
+      "dontNote":  "Color alone is not sufficient for accessible meaning communication."
+    },
+    "code": {
+      "title":         "Code",
+      "variantsTitle": "All variants",
+      "variantsDesc":  "The variant prop determines color and semantics. Default is neutral.",
+      "sizesTitle":    "Sizes",
+      "sizesDesc":     "size=\"sm\" is the default (h-5). size=\"md\" for larger display (h-6).",
+      "dotTitle":      "Dot badge",
+      "dotDesc":       "dot={true} adds a colored dot to the left of the label.",
+      "tagTitle":      "Tag (removable)",
+      "tagDesc":       "Tag with onRemove callback — the button shows an X icon and triggers removal."
+    },
+    "a11y": {
+      "title":        "Accessibility",
+      "intro":        "Badges are purely visual labels. Meaning must be recognizable without color.",
+      "colorTitle":   "Color is not the only indicator",
+      "colorBody":    "The badge text must carry the meaning itself (e.g. \"Active\" rather than just a green dot). Never rely solely on color.",
+      "ariaTitle":    "aria-label for dot-only badges",
+      "ariaBody":     "If a badge contains only a dot without text, set aria-label on the element: aria-label=\"Status: Active\".",
+      "contextTitle": "Context announcement",
+      "contextBody":  "In table cells or lists, surrounding text should put the badge value in context so screen readers read it correctly."
+    }
+  },
+
+  "alerts": {
+    "page": {
+      "description": "Alert — an inline status message in four semantic variants for information, success, warning, and error."
+    },
+    "overview": {
+      "anatomyTitle":  "Anatomy",
+      "anatomyBody":   "An alert consists of an icon, optional title, and message text — embedded in a colored, semantically styled container.",
+      "an1":           "Icon — represents the variant: ℹ (info), ✓ (success), ⚠ (warning), ✕ (error)",
+      "an2":           "Title — optional, bold; summarizes the message",
+      "an3":           "Message — the actual notification text (children prop)",
+      "an4":           "Container — colored background with matching border color",
+      "variantsTitle": "Variants",
+      "variantsBody":  "Four semantic variants: info (blue), success (green), warning (yellow), error (red). Each has its own icon, background, and border color."
+    },
+    "usage": {
+      "title":          "Usage",
+      "intro":          "Alerts provide directly visible feedback on user actions or system events — inline on the page, not as transient toast messages.",
+      "variantTitle":   "When to use which variant",
+      "infoWhen":       "info — general hints, neutral system messages, explanations",
+      "successWhen":    "success — successful actions (save, send, complete)",
+      "warningWhen":    "warning — reversible risks, stale data, soon-expiring sessions",
+      "errorWhen":      "error — failures, failed actions, validation errors",
+      "placementTitle": "Placement",
+      "placementBody":  "Alerts appear inline in the content area — directly above the affected form section or at the top of a page. For transient notifications, Toast is more appropriate.",
+      "doTitle":        "Do",
+      "dontTitle":      "Don't",
+      "do1":            "Choose variant semantically — error only for real errors, not for hints",
+      "do2":            "Write short, action-oriented text — what happened, what to do?",
+      "do3":            "Use a title when the message spans more than one sentence",
+      "dont1":          "Don't use Alert as a decorative element",
+      "dont2":          "No long body text in alerts — maximum 2–3 sentences",
+      "dont3":          "Don't use Alert for success feedback after form submit — Toast is more visible",
+      "doNote":         "Clear, action-oriented messages help users respond quickly.",
+      "dontNote":       "Too many alerts on one page lead to alert fatigue."
+    },
+    "code": {
+      "title":         "Code",
+      "variantsTitle": "All four variants",
+      "variantsDesc":  "The variant prop automatically determines icon, background color, and border color.",
+      "noTitleTitle":  "Alert without title",
+      "noTitleDesc":   "The title prop is optional. Without a title, only the children text is shown.",
+      "inlineTitle":   "Inline feedback in a form",
+      "inlineDesc":    "Place the Alert above the form or after the submit button for error and success feedback.",
+      "toastTitle":    "Toast (note)",
+      "toastDesc":     "Toast is a separate component for transient messages. It typically appears at the screen edge and disappears after a short time."
+    },
+    "a11y": {
+      "title":      "Accessibility",
+      "intro":      "Alerts are inline and immediately visible. For dynamically inserted alerts, live region support is critical.",
+      "roleTitle":  "role=\"alert\"",
+      "roleBody":   "The Alert component automatically sets role=\"alert\". Screen readers announce the content immediately when it is inserted into the DOM.",
+      "colorTitle": "Color is not the only indicator",
+      "colorBody":  "Each variant combines icon, color, and text — colorblind users recognize the variant by icon and content, not color alone.",
+      "focusTitle": "Focus management",
+      "focusBody":  "Alerts do not receive focus automatically. For critical error messages, programmatically call focus() on the alert container.",
+      "k1":         "Tab — make the alert container focusable via tabIndex={0}",
+      "k2":         "Screen reader — reads role=\"alert\" content immediately upon DOM insertion"
+    }
   }
 }
