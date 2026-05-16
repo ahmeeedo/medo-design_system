@@ -430,6 +430,10 @@
 --height-lg: 48px;
 --height-xl: 56px;
 
+/* Layout */
+--header-height: 56px;
+--tab-bar-height: 48px;
+
 /* Z-Index */
 --z-hide:     -1;
 --z-base:      0;
