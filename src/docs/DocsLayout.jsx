@@ -2,6 +2,7 @@
 import { NavLink } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { LanguageSwitcher } from './LanguageSwitcher'
+import { Icon } from '@/components/Icon/Icon'
 
 const NAV = [
   {
@@ -72,7 +73,7 @@ export function DocsLayout({ children }) {
             onClick={() => setMobileOpen((v) => !v)}
             aria-label={mobileOpen ? t('nav.aria.closeMenu') : t('nav.aria.openMenu')}
           >
-            {mobileOpen ? <CloseIcon /> : <MenuIcon />}
+            {mobileOpen ? <Icon name="close" /> : <Icon name="menu" />}
           </button>
         </div>
       </header>
@@ -125,18 +126,3 @@ export function DocsLayout({ children }) {
   )
 }
 
-function MenuIcon() {
-  return (
-    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-      <path d="M2 5h16M2 10h16M2 15h16" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" />
-    </svg>
-  )
-}
-
-function CloseIcon() {
-  return (
-    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-      <path d="M4 4l12 12M16 4L4 16" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" />
-    </svg>
-  )
-}

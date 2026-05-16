@@ -2,7 +2,7 @@ import * as React from "react"
 import { Accordion as AccordionPrimitive } from "radix-ui"
 
 import { cn } from "@/lib/utils"
-import { ChevronDownIcon, ChevronUpIcon } from "lucide-react"
+import { Icon } from "@/components/Icon/Icon"
 
 function Accordion({
   className,
@@ -43,10 +43,12 @@ function AccordionTrigger({
         )}
         {...props}>
         {children}
-        <ChevronDownIcon
+        <Icon
+          name="expand_more"
           data-slot="accordion-trigger-icon"
           className="pointer-events-none shrink-0 group-aria-expanded/accordion-trigger:hidden" />
-        <ChevronUpIcon
+        <Icon
+          name="expand_less"
           data-slot="accordion-trigger-icon"
           className="pointer-events-none hidden shrink-0 group-aria-expanded/accordion-trigger:inline" />
       </AccordionPrimitive.Trigger>

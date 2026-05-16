@@ -2,22 +2,7 @@ import { useTranslation } from 'react-i18next'
 import { PageLayout, Section, Content } from '../docs/PageLayout'
 import { CodeBlock } from '../docs/CodeBlock'
 import { Button } from '../components'
-
-function PlusIcon() {
-  return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="currentColor" width="100%" height="100%">
-      <path d="M460-460H260q-8.5 0-14.25-5.76T240-480q0-8.5 5.75-14.25T260-500h200v-200q0-8.5 5.76-14.25t14.27-5.75q8.51 0 14.24 5.75T500-700v200h200q8.5 0 14.25 5.76t5.75 14.27q0 8.51-5.75 14.24T700-460H500v200q0 8.5-5.76 14.25T479.97-240q-8.51 0-14.24-5.75T460-260v-200Z"/>
-    </svg>
-  )
-}
-
-function ArrowIcon() {
-  return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="currentColor" width="100%" height="100%">
-      <path d="M686-450H190q-12.75 0-21.37-8.63Q160-467.25 160-480t8.63-21.37Q177.25-510 190-510h496L522-674q-9-9-8.5-21.5T523-717q9-9 21.5-9t21.5 9l199 199q5 5 7 10t2 11q0 6-2 11t-7 10L566-277q-9 9-21 8.5t-21-9.5q-9-9-9-21.5t9-21.5l162-129Z"/>
-    </svg>
-  )
-}
+import { Icon } from '../components/Icon/Icon'
 
 const VARIANTS = ['primary', 'accent', 'secondary', 'ghost', 'danger', 'link']
 const SIZES    = ['xs', 'sm', 'md', 'lg', 'xl']
@@ -46,10 +31,10 @@ const ICONS_CODE = `function SaveIcon() {
 <Button leadingIcon={<SaveIcon />}>Speichern</Button>
 
 {/* Trailing Icon */}
-<Button trailingIcon={<ArrowIcon />} variant="secondary">Weiter</Button>
+<Button trailingIcon={<Icon name="arrow_forward" />} variant="secondary">Weiter</Button>
 
 {/* Icon-only — aria-label ist Pflicht */}
-<Button aria-label="Hinzufügen" leadingIcon={<PlusIcon />} />`
+<Button aria-label="Hinzufügen" leadingIcon={<Icon name="add" />} />`
 
 const DISABLED_CODE = `{/* disabled-Prop deaktiviert den Button */}
 <Button disabled>Speichern</Button>
@@ -155,10 +140,10 @@ export default function ButtonsPage() {
               </p>
             </Content>
             <div className="flex flex-wrap gap-[var(--space-3)] mb-[var(--space-4)]">
-              <Button leadingIcon={<PlusIcon />}>Hinzufügen</Button>
-              <Button variant="secondary" trailingIcon={<ArrowIcon />}>Weiter</Button>
-              <Button variant="ghost" leadingIcon={<PlusIcon />} trailingIcon={<ArrowIcon />}>Beides</Button>
-              <Button variant="accent" aria-label="Hinzufügen" leadingIcon={<PlusIcon />} />
+              <Button leadingIcon={<Icon name="add" />}>Hinzufügen</Button>
+              <Button variant="secondary" trailingIcon={<Icon name="arrow_forward" />}>Weiter</Button>
+              <Button variant="ghost" leadingIcon={<Icon name="add" />} trailingIcon={<Icon name="arrow_forward" />}>Beides</Button>
+              <Button variant="accent" aria-label="Hinzufügen" leadingIcon={<Icon name="add" />} />
             </div>
           </Section>
 
