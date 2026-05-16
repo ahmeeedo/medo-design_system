@@ -1778,5 +1778,17 @@
       "motionTitle":  "prefers-reduced-motion beachten",
       "motionBody":   "animate-pulse animiert den Skeleton. Nutzer mit prefers-reduced-motion haben in ihrem OS Animationen reduziert. Tailwind's animate-pulse respektiert dieses Setting automatisch in modernen Browsern."
     }
+  },
+  "impressum": {
+    "page": {
+      "title":   "Impressum",
+      "content": "Hier finden Sie bald das Impressum."
+    }
+  },
+  "datenschutz": {
+    "page": {
+      "title":   "Datenschutz",
+      "content": "Hier finden Sie bald die Datenschutzerklärung."
+    }
   }
 }

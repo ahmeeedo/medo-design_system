@@ -26,6 +26,8 @@ import StatsPage       from './pages/StatsPage'
 import FeedbackPage    from './pages/FeedbackPage'
 import AvatarPage      from './pages/AvatarPage'
 import SkeletonPage    from './pages/SkeletonPage'
+import ImpressumPage   from './pages/ImpressumPage'
+import DatenschutzPage from './pages/DatenschutzPage'
 
 // Scrollt bei jedem Seitenwechsel nach oben
 function ScrollToTop() {
@@ -63,7 +65,9 @@ function AppContent() {
         <Route path="/stats"      element={<StatsPage />} />
         <Route path="/feedback"   element={<FeedbackPage />} />
         <Route path="/avatar"     element={<AvatarPage />} />
-        <Route path="/skeleton"   element={<SkeletonPage />} />
+        <Route path="/skeleton"    element={<SkeletonPage />} />
+        <Route path="/impressum"   element={<ImpressumPage />} />
+        <Route path="/datenschutz" element={<DatenschutzPage />} />
       </Routes>
     </DocsLayout>
   )
