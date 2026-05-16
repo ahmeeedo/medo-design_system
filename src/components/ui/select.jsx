@@ -45,7 +45,7 @@ function SelectTrigger({
       {...props}>
       {children}
       <SelectPrimitive.Icon asChild>
-        <Icon name="expand_more" className="pointer-events-none size-4 text-muted-foreground" />
+        <Icon name="expand_more" className="pointer-events-none text-muted-foreground" />
       </SelectPrimitive.Icon>
     </SelectPrimitive.Trigger>
   );

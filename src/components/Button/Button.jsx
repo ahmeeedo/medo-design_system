@@ -28,8 +28,6 @@ const buttonVariants = cva(
   }
 )
 
-const iconSizeMap = { xs: 'size-3', sm: 'size-3.5', md: 'size-4', lg: 'size-5', xl: 'size-6' }
-
 export function Button({
   variant = 'primary',
   size = 'md',
@@ -42,8 +40,6 @@ export function Button({
   children,
   ...props
 }) {
-  const iconClass = iconSizeMap[size]
-
   return (
     <button
       type={type}
@@ -52,17 +48,9 @@ export function Button({
       className={cn(buttonVariants({ variant, size }), className)}
       {...props}
     >
-      {leadingIcon && (
-        <span className={cn("shrink-0", iconClass)} aria-hidden="true">
-          {leadingIcon}
-        </span>
-      )}
+      {leadingIcon}
       {children}
-      {trailingIcon && (
-        <span className={cn("shrink-0", iconClass)} aria-hidden="true">
-          {trailingIcon}
-        </span>
-      )}
+      {trailingIcon}
     </button>
   )
 }
