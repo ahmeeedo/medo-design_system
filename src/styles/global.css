@@ -1,5 +1,5 @@
 @import "tailwindcss";
-@import 'material-symbols/outlined';
+@import 'material-symbols/rounded';
 @import "./tokens.css";
 @import "tw-animate-css";
 @import "@fontsource-variable/geist";

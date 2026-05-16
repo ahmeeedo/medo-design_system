@@ -1,10 +1,10 @@
 import { cn } from '@/lib/utils'
 
-export function Icon({ name, size = 24, className }) {
+export function Icon({ name, size = '1.25rem', className }) {
   return (
     <span
-      className={cn('material-symbols-outlined select-none', className)}
-      style={{ fontSize: size }}
+      className={cn('material-symbols-rounded select-none', className)}
+      style={{ fontSize: size, fontVariationSettings: "'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24" }}
       aria-hidden="true"
     >
       {name}
