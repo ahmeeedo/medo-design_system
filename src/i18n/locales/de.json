@@ -997,5 +997,204 @@
       "k1":         "Tab — Alert-Container per tabIndex={0} fokussierbar machen",
       "k2":         "Screen-Reader — liest role=\"alert\" Inhalt sofort bei DOM-Einfügung vor"
     }
+  },
+
+  "cards": {
+    "page": {
+      "description": "Flexibler Container-Baustein mit Compound-API aus Card.Header, Card.Body und Card.Footer."
+    },
+    "overview": {
+      "anatomyTitle":    "Anatomie",
+      "anatomyBody":     "Eine Card besteht aus bis zu drei optionalen Bereichen, die gemeinsam eine strukturierte Inhaltseinheit ergeben.",
+      "an1":             "Card.Header — Titel, optionaler Untertitel und optionale Aktionen rechts",
+      "an2":             "Card.Body — Hauptinhalt: Text, Formulare, Listen oder andere Komponenten",
+      "an3":             "Card.Footer — Aktionszeile, rechtsbündig ausgerichtet (z. B. Buttons)",
+      "an4":             "variant-Prop — flat (Standard, mit Border) oder raised (Schatten, ohne Border)",
+      "variantsTitle":   "Varianten & Aufbau",
+      "variantsBody":    "Die vier häufigsten Konfigurationen: flat mit Footer, raised mit Footer, ohne Footer und Header mit Action-Button.",
+      "flatTitle":       "Projektübersicht",
+      "flatSubtitle":    "Zuletzt aktualisiert: heute",
+      "flatBody":        "Karteninhalt — Text, Daten, Formulare oder andere Komponenten.",
+      "raisedTitle":     "Highlight-Panel",
+      "raisedSubtitle":  "Mit Elevation hervorgehoben",
+      "raisedBody":      "Raised Cards heben sich durch Schatten vom Hintergrund ab. Geeignet für Panels, die optisch im Vordergrund stehen sollen.",
+      "noFooterTitle":   "Info-Karte",
+      "noFooterSubtitle":"Kein Footer nötig",
+      "noFooterBody":    "Wenn keine Aktionen benötigt werden, kann Card.Footer weggelassen werden.",
+      "actionTitle":     "Team-Mitglieder",
+      "actionSubtitle":  "3 aktive Nutzer",
+      "actionBody":      "Card.Header nimmt optional children für Aktionen entgegen — rechtsbündig neben Titel und Untertitel.",
+      "cancel":          "Abbrechen",
+      "confirm":         "Bestätigen",
+      "save":            "Speichern",
+      "invite":          "Einladen"
+    },
+    "usage": {
+      "title":           "Wann Cards verwenden?",
+      "intro":           "Cards eignen sich für abgegrenzte Inhaltseinheiten, die visuell vom Rest der Seite getrennt werden sollen — z. B. Produkte, Nutzerprofile, Dashboard-Panels oder Formular-Container.",
+      "compoundTitle":   "Compound-Aufbau",
+      "compoundBody":    "Alle drei Bereiche sind optional. Kombiniere sie je nach Bedarf:",
+      "partHeader":      "Titel und optionaler Untertitel, rechts optionale Aktionen (z. B. Button, Icon)",
+      "partBody":        "Hauptinhalt — keine Einschränkung, was hier platziert werden darf",
+      "partFooter":      "Aktionszeile, typisch rechts ausgerichtet (Abbrechen / Bestätigen)",
+      "doTitle":         "Do",
+      "dontTitle":       "Don't",
+      "do1":             "Card als Container für zusammengehörige Inhalte verwenden",
+      "do2":             "flat für Standard-Layouts, raised für hervorgehobene Panels nutzen",
+      "do3":             "Card.Footer nur einsetzen, wenn Aktionen vorhanden sind",
+      "dont1":           "Kein onClick direkt auf der Card — interaktive Elemente in Card.Body oder Footer platzieren",
+      "dont2":           "Keine tief verschachtelten Cards (Card in Card) — Layout-Komplexität vermeiden",
+      "dont3":           "Card nicht als rein dekorativer Rahmen ohne Inhalt nutzen",
+      "doNote":          "Cards strukturieren Inhalte — nicht ersetzen.",
+      "dontNote":        "Cards sind Container, keine interaktiven Elemente."
+    },
+    "code": {
+      "title":       "Code-Beispiele",
+      "flatTitle":   "Flat Card mit Footer",
+      "flatDesc":    "Standard-Card mit Header, Body und Footer-Buttons.",
+      "raisedTitle": "Raised Card",
+      "raisedDesc":  "Erhöhte Variante mit Schatten — ohne Border.",
+      "actionTitle": "Header mit Action-Button",
+      "actionDesc":  "Card.Header nimmt optional children für Aktionen rechts vom Titel entgegen.",
+      "formTitle":   "Card als Formular-Container",
+      "formDesc":    "Cards eignen sich gut als strukturierte Formularbehälter mit Submit-Aktionen im Footer."
+    },
+    "a11y": {
+      "title":        "Accessibility",
+      "intro":        "Cards sind semantisch neutrale div-Container. Die Zugänglichkeit hängt vom Inhalt ab — insbesondere von der Heading-Hierarchie und fokussierbaren Elementen.",
+      "headingTitle": "Heading-Hierarchie",
+      "headingBody":  "Card.Header rendert den Titel als div, nicht als heading-Element. Verwende im Card.Body eine passende Heading-Ebene (h2–h4), wenn die Card Teil einer dokumentierten Hierarchie ist.",
+      "focusTitle":   "Fokussierbare Elemente",
+      "focusBody":    "Alle interaktiven Elemente (Buttons, Links, Inputs) innerhalb der Card sind per Tab erreichbar. Die Card selbst erhält keinen Fokus.",
+      "clickTitle":   "Kein onClick auf Card",
+      "clickBody":    "Card ist kein interaktives Element. Ein onClick auf der äußeren Card wäre für Tastatur- und Screen-Reader-Nutzer nicht bedienbar. Aktionen gehören in Card.Footer oder Card.Body."
+    }
+  },
+
+  "tables": {
+    "page": {
+      "description": "Strukturierte Datentabelle mit konfigurierbaren Spalten und optionalen render-Funktionen für Zellen."
+    },
+    "overview": {
+      "anatomyTitle": "Anatomie",
+      "anatomyBody":  "Die Table-Komponente besteht aus einer Header-Zeile und beliebig vielen Datenzeilen. Jede Spalte wird über ein columns-Array definiert.",
+      "an1":          "Header-Row — aus columns[].label generiert, uppercase mit tracking",
+      "an2":          "Data-Row — aus rows[]-Objekten, jede Zelle liest row[col.key]",
+      "an3":          "render-Funktion — optionales col.render(row) für benutzerdefinierte Zell-Inhalte (z. B. Badge, Button)",
+      "an4":          "rowKey — Prop für den React-Key, Standard ist 'id'",
+      "demoTitle":    "Live-Demo",
+      "demoBody":     "5 Zeilen, 4 Spalten — die Statusspalte verwendet eine render-Funktion mit Badge-Komponente.",
+      "hoverTitle":   "Hover-State",
+      "hoverBody":    "Jede Zeile hat einen group-hover-Effekt: beim Überfahren wird der Hintergrund auf surface-alt gesetzt. Dies verbessert die Ablesbarkeit bei langen Tabellen."
+    },
+    "usage": {
+      "title":       "Wann Tables verwenden?",
+      "intro":       "Tables eignen sich für strukturierte Datenlisten, bei denen Nutzer Werte spaltenweise vergleichen oder scannen wollen.",
+      "whenTitle":   "Einsatzszenarien",
+      "when1":       "Nutzerlisten, Produkte, Bestellungen — jede Entität hat identische Attribute",
+      "when2":       "Vergleichsdaten, bei denen Nutzer Werte in einer Spalte scannen",
+      "when3":       "Tabellen mit Aktionen pro Zeile (Bearbeiten, Löschen) via render-Funktion",
+      "renderTitle": "Wann render-Funktionen?",
+      "renderBody":  "Wenn eine Spalte mehr als plain text benötigt — z. B. Badge für Status, Button für Aktionen, Link für Navigation — wird eine render-Funktion übergeben. render erhält das gesamte row-Objekt.",
+      "doTitle":     "Do",
+      "dontTitle":   "Don't",
+      "do1":         "rowKey auf das eindeutige Primärschlüsselfeld der Daten setzen",
+      "do2":         "render-Funktionen für Status-Badges, Aktions-Buttons oder Links nutzen",
+      "do3":         "Spaltenanzahl auf das Wesentliche beschränken — max. 6–7 Spalten",
+      "dont1":       "Keine verschachtelten Tabellen (Table in Table)",
+      "dont2":       "Keine reinen Bild-Zellen ohne Text-Alternative",
+      "dont3":       "rowKey nicht auf einen nicht-eindeutigen Wert setzen (z. B. index)",
+      "doNote":      "Tables für tabellarische Daten — nicht als Layout-Grid.",
+      "dontNote":    "Bilder als einziger Zellinhalt sind für Screen-Reader bedeutungslos."
+    },
+    "code": {
+      "title":        "Code-Beispiele",
+      "baseTitle":    "Basis-Table",
+      "baseDesc":     "Minimale Konfiguration mit columns und rows.",
+      "renderTitle":  "Table mit render-Funktionen",
+      "renderDesc":   "Badge in der Statusspalte und Button in der Aktionsspalte über col.render(row).",
+      "rowKeyTitle":  "Benutzerdefinierter rowKey",
+      "rowKeyDesc":   "Wenn der Primärschlüssel nicht 'id' heißt, explizit über rowKey übergeben."
+    },
+    "a11y": {
+      "title":         "Accessibility",
+      "intro":         "Die Table-Komponente rendert semantisches HTML: table, thead, tbody, th, td. Screen-Reader erkennen die Tabellenstruktur automatisch.",
+      "roleTitle":     "Semantisches HTML",
+      "roleBody":      "table/thead/tbody/th/td-Elemente sind implizit mit role=\"table\", role=\"rowgroup\", role=\"columnheader\" und role=\"cell\" versehen — kein explizites ARIA nötig.",
+      "scopeTitle":    "scope=\"col\" auf th",
+      "scopeBody":     "Alle th-Elemente haben scope=\"col\" — Screen-Reader können damit Zellen korrekt den Spalten-Headern zuordnen.",
+      "keyboardTitle": "Keyboard-Navigation",
+      "keyboardBody":  "Tab navigiert durch alle fokussierbaren Elemente innerhalb der Tabelle (Buttons, Links). Die Zeilen selbst sind nicht fokussierbar.",
+      "srTitle":       "Screen-Reader-Kontext",
+      "srBody":        "Bilder oder Icons als alleinige Zell-Inhalte benötigen ein aria-label oder alt-Attribut, damit der Screen-Reader den Kontext versteht."
+    }
+  },
+
+  "tabsPage": {
+    "page": {
+      "description": "Navigation zwischen verwandten Inhaltsgruppen auf gleicher Hierarchieebene — als Underline oder Pill-Variante."
+    },
+    "overview": {
+      "anatomyTitle":    "Anatomie",
+      "anatomyBody":     "Die Tabs-Komponente besteht aus drei Ebenen: der Tab-Liste, den einzelnen Tab-Triggern und den Tab-Inhalten.",
+      "an1":             "TabsList — horizontale Leiste, die alle TabsTrigger enthält",
+      "an2":             "TabsTrigger — einzelner Tab-Button, der den zugehörigen Inhalt aktiviert",
+      "an3":             "TabsContent — Inhaltsbereich, der bei aktivem Tab eingeblendet wird",
+      "variantsTitle":   "Varianten",
+      "variantsBody":    "Zwei Varianten: underline für Seiten-Navigation, pill für Filter und Kategorien.",
+      "underlineLabel":  "Underline",
+      "pillLabel":       "Pill",
+      "stateTitle":      "Controlled vs. Uncontrolled",
+      "stateBody":       "Tabs können intern (uncontrolled) oder extern (controlled) gesteuert werden:",
+      "stateUncontrolled": "defaultTab setzt den initialen Tab — der interne State wird von der Komponente verwaltet",
+      "stateControlled":   "activeTab + onTabChange — der State liegt außerhalb der Komponente, z. B. in useState"
+    },
+    "usage": {
+      "title":        "Wann Tabs verwenden?",
+      "intro":        "Tabs eignen sich für Inhalte, die thematisch zusammengehören, aber nicht gleichzeitig sichtbar sein müssen — z. B. Profil / Sicherheit / Abrechnung.",
+      "whenTitle":    "Geeignete Einsätze",
+      "when1":        "Verwandte Inhaltsgruppen auf derselben Hierarchieebene (z. B. Profil, Sicherheit, Einstellungen)",
+      "when2":        "Filter-Ansichten, bei denen Nutzer zwischen Teilmengen einer Liste wechseln",
+      "when3":        "Detail-Ansichten mit mehreren Informationskategorien zu einem Objekt",
+      "whenNotTitle": "Wann nicht?",
+      "whenNotBody":  "Tabs nicht für schrittweise Prozesse verwenden (→ Stepper/Wizard). Und nicht für Navigation zwischen grundlegend verschiedenen Kontexten (→ Sidebar-Navigation).",
+      "doTitle":      "Do",
+      "dontTitle":    "Don't",
+      "do1":          "Tab-Labels kurz und aussagekräftig halten (1–2 Wörter)",
+      "do2":          "Unterline-Variante für Seiten-Navigation, Pill für Filter",
+      "do3":          "Controlled Tabs verwenden, wenn externe Logik den aktiven Tab steuern muss",
+      "dont1":        "Keine zu vielen Tabs (max. 5–6) — bei mehr Optionen Dropdown oder Nav erwägen",
+      "dont2":        "Tabs nicht für Wizards oder mehrstufige Formulare nutzen",
+      "dont3":        "Kein tief verschachtelter Tab-in-Tab-Aufbau",
+      "doNote":       "Tabs für gleich-gewichtete Inhalte — nicht für Prozesse.",
+      "dontNote":     "Tabs sind keine Navigation für unterschiedliche Kontexte."
+    },
+    "code": {
+      "title":              "Code-Beispiele",
+      "uncontrolledTitle":  "Uncontrolled Tabs",
+      "uncontrolledDesc":   "defaultTab setzt den initialen Tab — kein externer State nötig.",
+      "controlledTitle":    "Controlled Tabs",
+      "controlledDesc":     "activeTab und onTabChange für externen State-Control — z. B. wenn andere UI-Teile vom aktiven Tab abhängen.",
+      "controlledDemoA":    "Profilinformationen werden hier angezeigt.",
+      "controlledDemoB":    "Passwort, 2FA und Session-Verwaltung.",
+      "controlledDemoC":    "Abrechnungsdetails und Rechnungen.",
+      "pillTitle":          "Pill-Variante",
+      "pillDesc":           "variant=\"pill\" für Filter-Tabs und Kategorien — kompaktere Darstellung."
+    },
+    "a11y": {
+      "title":        "Accessibility",
+      "intro":        "Die Tabs-Komponente basiert auf Radix UI und implementiert das WAI-ARIA Tabs Pattern vollständig.",
+      "keyboardTitle":"Keyboard-Navigation",
+      "k1":           "Tab — Fokus auf das aktive TabsTrigger setzen",
+      "k2":           "ArrowLeft / ArrowRight — zwischen Tabs navigieren",
+      "k3":           "Home / End — zum ersten bzw. letzten Tab springen",
+      "k4":           "Space / Enter — aktiven Tab aktivieren",
+      "rolesTitle":   "ARIA-Rollen",
+      "rolesBody":    "TabsList erhält role=\"tablist\", TabsTrigger role=\"tab\", TabsContent role=\"tabpanel\". Die Zuordnung erfolgt via aria-controls und aria-labelledby.",
+      "ariaTitle":    "aria-selected",
+      "ariaBody":     "Das aktive Tab-Element hat aria-selected=\"true\". Screen-Reader kündigen den aktivierten Tab beim Wechsel an.",
+      "focusTitle":   "Fokus-Management",
+      "focusBody":    "Beim Aktivieren eines Tabs erhält der zugehörige TabsContent keinen automatischen Fokus. Falls der Inhalt fokussierbar sein soll, muss focus() programmatisch aufgerufen werden."
+    }
   }
 }
