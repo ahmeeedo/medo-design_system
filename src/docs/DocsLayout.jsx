@@ -65,12 +65,8 @@ export function DocsLayout({ children }) {
   const { t } = useTranslation()
   const [mobileOpen, setMobileOpen] = useState(false)
   const [linksOpen, setLinksOpen] = useState(false)
-  const [sidebarExpanded, setSidebarExpanded] = useState(DEFAULT_SIDEBAR_STATE)
+  const [sidebarExpanded, setSidebarExpanded] = useState(loadSidebarState)
   const dropdownRef = useRef(null)
-
-  useEffect(() => {
-    setSidebarExpanded(loadSidebarState())
-  }, [])
 
   useEffect(() => {
     const mq = window.matchMedia('(min-width: 768px)')
@@ -179,7 +175,6 @@ export function DocsLayout({ children }) {
                 <span>{t(group.section)}</span>
                 <Icon
                   name="chevron_right"
-                  size="1rem"
                   className={`transition-transform duration-[var(--duration-fast)] ease-[var(--ease-out)] ${sidebarExpanded[group.id] ? 'rotate-90' : ''}`}
                 />
               </button>
