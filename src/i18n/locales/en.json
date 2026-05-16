@@ -51,6 +51,16 @@
   "toggle": {
     "title": "Toggle"
   },
+  "header": {
+    "aria": {
+      "search": "Search",
+      "links":  "External links"
+    }
+  },
+  "footer": {
+    "impressum":   "Legal Notice",
+    "datenschutz": "Privacy Policy"
+  },
   "codeblock": {
     "copy":   "Copy",
     "copied": "✓ Copied"

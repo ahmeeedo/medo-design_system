@@ -51,6 +51,16 @@
   "toggle": {
     "title": "Toggle"
   },
+  "header": {
+    "aria": {
+      "search": "Suche",
+      "links":  "Externe Links"
+    }
+  },
+  "footer": {
+    "impressum":   "Impressum",
+    "datenschutz": "Datenschutz"
+  },
   "codeblock": {
     "copy":   "Kopieren",
     "copied": "✓ Kopiert"
