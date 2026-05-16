@@ -1394,5 +1394,205 @@
       "focusTitle":    "Fokus-Management",
       "focusBody":     "Trigger bleiben nach dem Öffnen oder Schließen fokussiert. Der Content-Bereich selbst ist nicht fokussierbar — Inhalte darin (Links, Buttons) sind es."
     }
+  },
+
+  "menus": {
+    "page": {
+      "description": "Kontextbezogene Aktionsmenüs als Compound-Komponente mit Menu.Item, Menu.Label und Menu.Separator."
+    },
+    "overview": {
+      "anatomyTitle":      "Anatomie",
+      "anatomyBody":       "Menu ist eine Compound-Komponente auf Basis von Radix UI DropdownMenu. Sie besteht aus fünf Bausteinen:",
+      "an1":               "Menu — Root-Container mit Trigger und Content",
+      "an2":               "trigger-Prop — beliebiger ReactNode als Auslöser (Standard: ···-Button)",
+      "an3":               "Menu.Item — einzelne Aktion mit optionalem Icon, Shortcut und danger-Modus",
+      "an4":               "Menu.Label — Abschnitts-Überschrift (uppercase, klein)",
+      "an5":               "Menu.Separator — horizontale Trennlinie zwischen Abschnitten",
+      "demoTitle":         "Live-Demo",
+      "demoBody":          "Klicke auf den Trigger, um das Menu zu öffnen. Beide Varianten (Standard-Trigger und benutzerdefinierter Button) sind interaktiv.",
+      "demoDefault":       "Standard-Trigger (···)",
+      "demoCustomTrigger": "Benutzerdefinierter Trigger",
+      "labelAccount":      "Account",
+      "labelWorkspace":    "Workspace",
+      "itemProfile":       "Profil anzeigen",
+      "itemSettings":      "Einstellungen",
+      "itemNewProject":    "Neues Projekt",
+      "itemDuplicate":     "Duplizieren",
+      "itemDelete":        "Löschen",
+      "itemEdit":          "Bearbeiten",
+      "itemExport":        "Exportieren",
+      "itemCopyLink":      "Link kopieren",
+      "triggerOptions":    "Optionen"
+    },
+    "usage": {
+      "title":        "Wann Menus verwenden?",
+      "intro":        "Menus bündeln mehrere kontextbezogene Aktionen hinter einem einzigen Trigger — ohne den Hauptflow zu unterbrechen.",
+      "whenTitle":    "Geeignete Einsätze",
+      "when1":        "Overflow-Menüs (···) mit 3+ sekundären Aktionen pro Zeile oder Element",
+      "when2":        "Kontextmenüs an Datensätzen (Bearbeiten / Duplizieren / Löschen)",
+      "when3":        "Account-Menüs mit Gruppen (Account, Workspace, Abmelden)",
+      "whenNotTitle": "Wann nicht?",
+      "whenNotBody":  "Primäre Aktionen (wie 'Speichern') gehören als sichtbarer Button, nicht in ein Menu. Formular-Auswahl gehört in eine Select-Komponente.",
+      "doTitle":      "Do",
+      "dontTitle":    "Don't",
+      "do1":          "danger-Prop für irreversible Aktionen (Löschen, Deaktivieren) verwenden",
+      "do2":          "Menu.Label für Gruppen einsetzen, wenn mehr als 3 Items vorhanden sind",
+      "do3":          "Shortcut-Strings als Hinweis anzeigen — sie aktivieren die Aktion nicht automatisch",
+      "dont1":        "Keine primären Aktionen ins Menu — sie müssen direkt sichtbar sein",
+      "dont2":        "Nicht mehr als ~8 Items ohne Gruppierung — kognitive Überlastung vermeiden",
+      "dont3":        "Kein Menu für Formular-Auswahl — Select-Komponente verwenden",
+      "doNote":       "Menus für sekundäre und kontextbezogene Aktionen.",
+      "dontNote":     "Kein Menu als Ersatz für Select oder primäre Buttons."
+    },
+    "code": {
+      "title":        "Code-Beispiele",
+      "baseTitle":    "Basis-Menu",
+      "baseDesc":     "Standard-Trigger (···), Items mit icon und shortcut, danger-Item.",
+      "triggerTitle": "Benutzerdefinierter Trigger",
+      "triggerDesc":  "trigger-Prop nimmt beliebigen ReactNode — z. B. einen Button.",
+      "labelTitle":   "Menu.Label für Gruppen",
+      "labelDesc":    "Menu.Label zeigt einen uppercase-Abschnittstitel — keine eigene Funktion, nur visuell.",
+      "disabledTitle":"Disabled Items",
+      "disabledDesc": "disabled-Prop deaktiviert ein Item — visuell gedimmt, nicht klickbar."
+    },
+    "a11y": {
+      "title":         "Accessibility",
+      "intro":         "Menu basiert auf Radix UI DropdownMenu und implementiert das WAI-ARIA Menu Pattern vollständig.",
+      "keyboardTitle": "Keyboard-Navigation",
+      "k1":            "Enter / Space — Menu über Trigger öffnen",
+      "k2":            "ArrowDown / ArrowUp — zwischen Items navigieren",
+      "k3":            "Enter — fokussiertes Item aktivieren",
+      "k4":            "Escape — Menu schließen, Fokus zurück auf Trigger",
+      "k5":            "Tab — Menu verlassen (schließt das Menu)",
+      "roleTitle":     "role=\"menu\"",
+      "roleBody":      "Der Menü-Container hat role=\"menu\", einzelne Items role=\"menuitem\". Screen-Reader kündigen das Menu beim Öffnen an und lesen Items beim Navigieren vor.",
+      "ariaTitle":     "aria-haspopup + aria-expanded",
+      "ariaBody":      "Der Trigger-Button hat aria-haspopup=\"menu\" und aria-expanded (true/false). Screen-Reader erkennen, dass der Button ein Dropdown öffnet.",
+      "focusTitle":    "Fokus-Management",
+      "focusBody":     "Beim Öffnen springt der Fokus automatisch auf das erste Item. Beim Schließen (Escape / Auswahl) kehrt der Fokus zum Trigger zurück."
+    }
+  },
+
+  "lists": {
+    "page": {
+      "description": "Kompositions-Pattern für strukturierte Listen — Avatar, Badge und Button als Bausteine einer Listenzeile."
+    },
+    "overview": {
+      "patternTitle":   "Listen als Kompositions-Pattern",
+      "patternBody":    "Es gibt keine eigenständige List-Komponente. Stattdessen werden vorhandene Bausteine (Avatar, Badge, Button) zu Listenzeilen kombiniert. Dieses Pattern ist flexibel und anpassbar an jeden Kontext.",
+      "userListTitle":  "User-Liste",
+      "userListBody":   "Avatar + Name/E-Mail + Status-Badge + Aktions-Button — der häufigste Aufbau einer strukturierten Listenzeile.",
+      "statusOnline":   "Online",
+      "statusAway":     "Away",
+      "statusOffline":  "Offline",
+      "editAction":     "Bearbeiten",
+      "iconListTitle":  "Textliste mit Icon-Präfix",
+      "iconListBody":   "Einfache Listen mit Icon (✓, →, •) links vom Text — für Feature-Listen, Checklisten oder Aufzählungen.",
+      "featureTokens":  "Design Tokens — Farben, Abstände und Radius als CSS Custom Properties",
+      "featureA11y":    "Barrierefreiheit — WAI-ARIA Patterns, vollständige Keyboard-Navigation",
+      "featureI18n":    "Internationalisierung — alle Strings in t(), DE + EN out of the box",
+      "featureComponents": "Komponenten — shadcn/ui-basiert, anpassbar über CSS-Tokens"
+    },
+    "usage": {
+      "title":          "Wann Listen-Pattern?",
+      "intro":          "Das Listen-Pattern eignet sich für alle Entitäten, die in einer Zeile dargestellt werden — Nutzer, Dateien, Benachrichtigungen, Aktivitäts-Feeds.",
+      "whenTitle":      "Geeignete Einsätze",
+      "when1":          "Nutzer- und Team-Listen mit Avatar, Name und Status",
+      "when2":          "Aktivitäts-Feeds und Benachrichtigungen mit Zeitstempel",
+      "when3":          "Dateilisten, Tabellenalternativen für wenige Spalten",
+      "structureTitle": "Aufbau einer Listenzeile",
+      "partAvatar":     "Visueller Identifier — Avatar mit Initialen oder Profilbild",
+      "partText":       "Primär- und Sekundärtext — Name (font-semibold) und Subtitle (xs, secondary)",
+      "partBadge":      "Status-Indikator — Badge mit variant für Online/Away/Offline",
+      "partAction":     "Kontextaktion — Ghost-Button mit aria-label für den Screen-Reader",
+      "doTitle":        "Do",
+      "dontTitle":      "Don't",
+      "do1":            "aria-label auf Aktions-Buttons setzen: 'Bearbeiten: Anna Klein' statt nur 'Bearbeiten'",
+      "do2":            "ul/li für reine Textlisten, div-Struktur für komplexe Zeilen mit Komponenten",
+      "do3":            "truncate auf Text-Elementen einsetzen, damit lange Namen den Layout nicht brechen",
+      "dont1":          "Keine zu vielen Aktionen pro Zeile — max. 1–2, Rest ins Menu auslagern",
+      "dont2":          "Kein starres Layout — flex-1 und min-w-0 auf Text-Containern für Responsivität",
+      "dont3":          "Kein reines Bild ohne alt-Attribut oder Initialen-Fallback",
+      "doNote":         "Listenzeilen konsistent halten — gleiche Struktur in allen Zeilen.",
+      "dontNote":       "Kein unterschiedliches Layout je nach Datenzustand innerhalb einer Liste."
+    },
+    "code": {
+      "title":         "Code-Beispiele",
+      "userListTitle": "User-Liste",
+      "userListDesc":  "Avatar + Name/E-Mail + Status-Badge + Aktions-Button mit aria-label.",
+      "cardListTitle": "Liste in Card.Body",
+      "cardListDesc":  "Listenzeilen in Card.Body mit p-0 — die Divider liegen direkt an der Card-Border.",
+      "iconListTitle": "Textliste mit Icon-Präfix",
+      "iconListDesc":  "ul/li-Struktur mit Icon-Symbol links — für Feature-Listen und Aufzählungen."
+    },
+    "a11y": {
+      "title":         "Accessibility",
+      "intro":         "Listen-Pattern sind semantisch flexibel — die richtigen HTML-Elemente hängen vom Inhalt ab.",
+      "semanticTitle": "ul/li vs. div",
+      "semanticBody":  "Reine Textlisten → ul/li (Screen-Reader zählen Einträge vor). Komplexe Zeilen mit mehreren interaktiven Elementen → div-Struktur mit role=\"list\" und role=\"listitem\" wenn semantisch nötig.",
+      "tabTitle":      "Fokus bei klickbaren Zeilen",
+      "tabBody":       "Wenn die gesamte Zeile klickbar ist: tabIndex={0} + role=\"button\" oder role=\"link\" + onKeyDown für Enter/Space. Einzelne Buttons in der Zeile benötigen kein zusätzliches tabIndex.",
+      "ariaTitle":     "aria-label auf Aktions-Buttons",
+      "ariaBody":      "Generische Labels wie 'Bearbeiten' sind für Screen-Reader ohne Kontext. Besser: aria-label='Bearbeiten: Anna Klein' — damit ist jeder Button eindeutig.",
+      "srTitle":       "Screen-Reader-Kontext",
+      "srBody":        "Avatar-Fallback (Initialen) ist kein zugänglicher Text. Das umgebende Listenelement sollte den vollständigen Namen als aria-label oder visiblen Text enthalten."
+    }
+  },
+
+  "stats": {
+    "page": {
+      "description": "KPI-Karten mit Label, vorformatiertem Wert und optionaler Delta-Anzeige (up / down / neutral)."
+    },
+    "overview": {
+      "anatomyTitle":      "Anatomie",
+      "anatomyBody":       "StatCard besteht aus vier Bereichen — Label und Wert sind immer sichtbar, Delta ist optional.",
+      "an1":               "label — Uppercase-Bezeichner der Kennzahl (z. B. 'Aktive Nutzer')",
+      "an2":               "value — vorformatierter Wert als String (z. B. '12.847', '€84.2k')",
+      "an3":               "delta — optionaler Vergleichswert mit Richtungsindikator (↑/↓/→)",
+      "an4":               "deltaDir — Richtung: 'up' (grün), 'down' (rot), 'neutral' (grau)",
+      "demoTitle":         "Live-Demo — alle Delta-Varianten",
+      "demoBody":          "4 StatCards: up (grün), up (grün), down (rot) und ohne delta.",
+      "statsCardRevenue":  "Umsatz",
+      "statsCardUsers":    "Aktive Nutzer",
+      "statsCardConv":     "Conversion Rate",
+      "statsCardTickets":  "Offene Tickets"
+    },
+    "usage": {
+      "title":       "Wann StatCard verwenden?",
+      "intro":       "StatCards eignen sich für KPI-Dashboards und Metriken-Übersichten, bei denen eine Kennzahl schnell erfassbar sein muss.",
+      "formatTitle": "Wert-Formatierung",
+      "formatBody":  "Die Komponente führt keine Zahlenformatierung durch — value und delta werden als String übergeben. Die Formatierung (Währung, Einheit, Tausender-Trenner) erfolgt in der aufrufenden Komponente, z. B. per Intl.NumberFormat.",
+      "doTitle":     "Do",
+      "dontTitle":   "Don't",
+      "do1":         "Werte als vorformatierte Strings übergeben (z. B. '€84.2k', '12.847')",
+      "do2":         "deltaDir korrekt setzen: up = Anstieg positiv, down = Rückgang negativ",
+      "do3":         "StatCards in einem Grid mit konsistenter Breite pro Zeile anordnen (4 Spalten)",
+      "dont1":       "Keine rohen Zahlen ohne Formatierung übergeben",
+      "dont2":       "delta nicht leer lassen, wenn deltaDir gesetzt ist — sonst kein Delta-Bereich angezeigt",
+      "dont3":       "Keine zu langen Labels — max. 2–3 Wörter für die Uppercase-Zeile",
+      "doNote":      "StatCards für schnell erfassbare Einzelkennzahlen.",
+      "dontNote":    "Keine StatCard für komplexe Datensätze — Table verwenden."
+    },
+    "code": {
+      "title":        "Code-Beispiele",
+      "baseTitle":    "Basis-StatCard",
+      "baseDesc":     "label, value, delta und deltaDir — alle vier Props.",
+      "noDeltaTitle": "Ohne delta / neutral",
+      "noDeltaDesc":  "Ohne delta-Prop wird kein Delta-Bereich angezeigt. deltaDir='neutral' zeigt grau mit →.",
+      "gridTitle":    "Grid aus 4 StatCards",
+      "gridDesc":     "4-spaltiges Grid — Standard-Layout für KPI-Dashboards.",
+      "formatTitle":  "Wert-Formatierung",
+      "formatDesc":   "Formatierung findet außerhalb der Komponente statt — vorformatierten String übergeben."
+    },
+    "a11y": {
+      "title":       "Accessibility",
+      "intro":       "StatCards sind statische Anzeigeelemente. Screen-Reader lesen Label, Wert und Delta als normalen Text — keine ARIA-Sonderbehandlung nötig, sofern die Delta-Icons Textalternativen haben.",
+      "iconTitle":   "Delta-Icons als Text",
+      "iconBody":    "↑ / ↓ / → sind Unicode-Zeichen, die Screen-Reader vorlesen. Wenn die Bedeutung unklar ist, ein visuell verborgenes span mit aria-label='Anstieg' / 'Rückgang' ergänzen.",
+      "ariaTitle":   "aria-label für Delta-Richtung",
+      "ariaBody":    "Bei reinen Icon-Deltas (ohne Text) aria-label auf dem Delta-Element setzen: aria-label='Anstieg um 4.2 Prozent'. Bei kombinierten Strings (↑ 4.2%) ist kein weiteres ARIA nötig.",
+      "colorTitle":  "Farbe ist nicht alleiniger Indikator",
+      "colorBody":   "up (grün) / down (rot) / neutral (grau) kommunizieren Richtung farblich. Das Pfeil-Symbol (↑/↓/→) sorgt dafür, dass die Richtung auch ohne Farbe erkennbar ist — WCAG 1.4.1 konform."
+    }
   }
 }

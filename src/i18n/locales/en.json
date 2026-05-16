@@ -1394,5 +1394,205 @@
       "focusTitle":    "Focus Management",
       "focusBody":     "Triggers remain focused after opening or closing. The content area itself is not focusable — elements inside it (links, buttons) are."
     }
+  },
+
+  "menus": {
+    "page": {
+      "description": "Context-sensitive action menus as a compound component with Menu.Item, Menu.Label, and Menu.Separator."
+    },
+    "overview": {
+      "anatomyTitle":      "Anatomy",
+      "anatomyBody":       "Menu is a compound component based on Radix UI DropdownMenu. It consists of five building blocks:",
+      "an1":               "Menu — root container with trigger and content",
+      "an2":               "trigger prop — any ReactNode as the activator (default: ··· button)",
+      "an3":               "Menu.Item — single action with optional icon, shortcut, and danger mode",
+      "an4":               "Menu.Label — section heading (uppercase, small)",
+      "an5":               "Menu.Separator — horizontal divider between sections",
+      "demoTitle":         "Live Demo",
+      "demoBody":          "Click the trigger to open the menu. Both variants (default trigger and custom button) are interactive.",
+      "demoDefault":       "Default trigger (···)",
+      "demoCustomTrigger": "Custom trigger",
+      "labelAccount":      "Account",
+      "labelWorkspace":    "Workspace",
+      "itemProfile":       "View profile",
+      "itemSettings":      "Settings",
+      "itemNewProject":    "New project",
+      "itemDuplicate":     "Duplicate",
+      "itemDelete":        "Delete",
+      "itemEdit":          "Edit",
+      "itemExport":        "Export",
+      "itemCopyLink":      "Copy link",
+      "triggerOptions":    "Options"
+    },
+    "usage": {
+      "title":        "When to use menus?",
+      "intro":        "Menus bundle multiple context-sensitive actions behind a single trigger — without interrupting the main flow.",
+      "whenTitle":    "Good use cases",
+      "when1":        "Overflow menus (···) with 3+ secondary actions per row or element",
+      "when2":        "Context menus on data items (Edit / Duplicate / Delete)",
+      "when3":        "Account menus with groups (Account, Workspace, Sign out)",
+      "whenNotTitle": "When not to use?",
+      "whenNotBody":  "Primary actions (like 'Save') belong as a visible button, not in a menu. Form selection belongs in a Select component.",
+      "doTitle":      "Do",
+      "dontTitle":    "Don't",
+      "do1":          "Use the danger prop for irreversible actions (Delete, Deactivate)",
+      "do2":          "Use Menu.Label for groups when more than 3 items are present",
+      "do3":          "Show shortcut strings as hints — they don't automatically trigger the action",
+      "dont1":        "No primary actions in a menu — they must be directly visible",
+      "dont2":        "No more than ~8 items without grouping — avoid cognitive overload",
+      "dont3":        "No menu for form selection — use the Select component",
+      "doNote":       "Menus for secondary and context-sensitive actions.",
+      "dontNote":     "No menu as a replacement for Select or primary buttons."
+    },
+    "code": {
+      "title":        "Code Examples",
+      "baseTitle":    "Basic Menu",
+      "baseDesc":     "Default trigger (···), items with icon and shortcut, danger item.",
+      "triggerTitle": "Custom Trigger",
+      "triggerDesc":  "The trigger prop accepts any ReactNode — e.g. a Button.",
+      "labelTitle":   "Menu.Label for Groups",
+      "labelDesc":    "Menu.Label shows an uppercase section title — no own function, purely visual.",
+      "disabledTitle":"Disabled Items",
+      "disabledDesc": "The disabled prop deactivates an item — visually dimmed, not clickable."
+    },
+    "a11y": {
+      "title":         "Accessibility",
+      "intro":         "Menu is based on Radix UI DropdownMenu and fully implements the WAI-ARIA Menu Pattern.",
+      "keyboardTitle": "Keyboard Navigation",
+      "k1":            "Enter / Space — open the menu via trigger",
+      "k2":            "ArrowDown / ArrowUp — navigate between items",
+      "k3":            "Enter — activate the focused item",
+      "k4":            "Escape — close the menu, focus returns to trigger",
+      "k5":            "Tab — leave the menu (closes it)",
+      "roleTitle":     "role=\"menu\"",
+      "roleBody":      "The menu container has role=\"menu\", individual items role=\"menuitem\". Screen readers announce the menu on open and read items while navigating.",
+      "ariaTitle":     "aria-haspopup + aria-expanded",
+      "ariaBody":      "The trigger button has aria-haspopup=\"menu\" and aria-expanded (true/false). Screen readers recognize that the button opens a dropdown.",
+      "focusTitle":    "Focus Management",
+      "focusBody":     "When opened, focus automatically jumps to the first item. When closed (Escape / selection), focus returns to the trigger."
+    }
+  },
+
+  "lists": {
+    "page": {
+      "description": "Composition pattern for structured lists — Avatar, Badge, and Button as building blocks of a list row."
+    },
+    "overview": {
+      "patternTitle":   "Lists as Composition Pattern",
+      "patternBody":    "There is no standalone List component. Instead, existing building blocks (Avatar, Badge, Button) are combined into list rows. This pattern is flexible and adaptable to any context.",
+      "userListTitle":  "User List",
+      "userListBody":   "Avatar + name/email + status badge + action button — the most common structure of a structured list row.",
+      "statusOnline":   "Online",
+      "statusAway":     "Away",
+      "statusOffline":  "Offline",
+      "editAction":     "Edit",
+      "iconListTitle":  "Text list with icon prefix",
+      "iconListBody":   "Simple lists with an icon (✓, →, •) to the left of the text — for feature lists, checklists, or enumerations.",
+      "featureTokens":  "Design Tokens — colors, spacing, and radius as CSS custom properties",
+      "featureA11y":    "Accessibility — WAI-ARIA patterns, full keyboard navigation",
+      "featureI18n":    "Internationalization — all strings in t(), DE + EN out of the box",
+      "featureComponents": "Components — shadcn/ui-based, customizable via CSS tokens"
+    },
+    "usage": {
+      "title":          "When to use list patterns?",
+      "intro":          "The list pattern suits any entity displayed in a row — users, files, notifications, activity feeds.",
+      "whenTitle":      "Good use cases",
+      "when1":          "User and team lists with avatar, name, and status",
+      "when2":          "Activity feeds and notifications with timestamps",
+      "when3":          "File lists, table alternatives for a few columns",
+      "structureTitle": "Anatomy of a list row",
+      "partAvatar":     "Visual identifier — Avatar with initials or profile picture",
+      "partText":       "Primary and secondary text — name (font-semibold) and subtitle (xs, secondary)",
+      "partBadge":      "Status indicator — Badge with variant for Online/Away/Offline",
+      "partAction":     "Context action — Ghost button with aria-label for the screen reader",
+      "doTitle":        "Do",
+      "dontTitle":      "Don't",
+      "do1":            "Set aria-label on action buttons: 'Edit: Anna Klein' instead of just 'Edit'",
+      "do2":            "Use ul/li for plain text lists, div structure for complex rows with components",
+      "do3":            "Apply truncate on text elements to prevent long names from breaking layout",
+      "dont1":          "No too many actions per row — max 1–2, put the rest in a Menu",
+      "dont2":          "No rigid layout — use flex-1 and min-w-0 on text containers for responsiveness",
+      "dont3":          "No image-only without alt attribute or initials fallback",
+      "doNote":         "Keep list rows consistent — same structure across all rows.",
+      "dontNote":       "No different layout per data state within the same list."
+    },
+    "code": {
+      "title":         "Code Examples",
+      "userListTitle": "User List",
+      "userListDesc":  "Avatar + name/email + status badge + action button with aria-label.",
+      "cardListTitle": "List inside Card.Body",
+      "cardListDesc":  "List rows in Card.Body with p-0 — dividers sit flush against the card border.",
+      "iconListTitle": "Text list with icon prefix",
+      "iconListDesc":  "ul/li structure with icon symbol on the left — for feature lists and enumerations."
+    },
+    "a11y": {
+      "title":         "Accessibility",
+      "intro":         "List patterns are semantically flexible — the right HTML elements depend on the content.",
+      "semanticTitle": "ul/li vs. div",
+      "semanticBody":  "Plain text lists → ul/li (screen readers count entries). Complex rows with multiple interactive elements → div structure with role=\"list\" and role=\"listitem\" when semantically needed.",
+      "tabTitle":      "Focus on clickable rows",
+      "tabBody":       "When the entire row is clickable: tabIndex={0} + role=\"button\" or role=\"link\" + onKeyDown for Enter/Space. Individual buttons in the row need no additional tabIndex.",
+      "ariaTitle":     "aria-label on action buttons",
+      "ariaBody":      "Generic labels like 'Edit' are contextless for screen readers. Better: aria-label='Edit: Anna Klein' — making every button unambiguous.",
+      "srTitle":       "Screen reader context",
+      "srBody":        "Avatar fallback (initials) is not accessible text. The surrounding list element should contain the full name as aria-label or visible text."
+    }
+  },
+
+  "stats": {
+    "page": {
+      "description": "KPI cards with label, pre-formatted value, and optional delta display (up / down / neutral)."
+    },
+    "overview": {
+      "anatomyTitle":      "Anatomy",
+      "anatomyBody":       "StatCard consists of four sections — label and value are always visible, delta is optional.",
+      "an1":               "label — uppercase identifier for the metric (e.g. 'Active Users')",
+      "an2":               "value — pre-formatted value as string (e.g. '12,847', '€84.2k')",
+      "an3":               "delta — optional comparison value with direction indicator (↑/↓/→)",
+      "an4":               "deltaDir — direction: 'up' (green), 'down' (red), 'neutral' (gray)",
+      "demoTitle":         "Live Demo — all delta variants",
+      "demoBody":          "4 StatCards: up (green), up (green), down (red), and no delta.",
+      "statsCardRevenue":  "Revenue",
+      "statsCardUsers":    "Active Users",
+      "statsCardConv":     "Conversion Rate",
+      "statsCardTickets":  "Open Tickets"
+    },
+    "usage": {
+      "title":       "When to use StatCard?",
+      "intro":       "StatCards suit KPI dashboards and metrics overviews where a single metric needs to be grasped at a glance.",
+      "formatTitle": "Value Formatting",
+      "formatBody":  "The component performs no number formatting — value and delta are passed as strings. Formatting (currency, unit, thousands separator) happens in the calling component, e.g. via Intl.NumberFormat.",
+      "doTitle":     "Do",
+      "dontTitle":   "Don't",
+      "do1":         "Pass values as pre-formatted strings (e.g. '€84.2k', '12,847')",
+      "do2":         "Set deltaDir correctly: up = positive increase, down = negative decline",
+      "do3":         "Arrange StatCards in a grid with consistent width per row (4 columns)",
+      "dont1":       "No raw numbers without formatting",
+      "dont2":       "Don't leave delta empty when deltaDir is set — no delta section will be shown",
+      "dont3":       "No overly long labels — max 2–3 words for the uppercase line",
+      "doNote":      "StatCards for quickly readable single metrics.",
+      "dontNote":    "No StatCard for complex datasets — use Table."
+    },
+    "code": {
+      "title":        "Code Examples",
+      "baseTitle":    "Basic StatCard",
+      "baseDesc":     "label, value, delta, and deltaDir — all four props.",
+      "noDeltaTitle": "Without delta / neutral",
+      "noDeltaDesc":  "Without the delta prop, no delta section is shown. deltaDir='neutral' shows gray with →.",
+      "gridTitle":    "Grid of 4 StatCards",
+      "gridDesc":     "4-column grid — standard layout for KPI dashboards.",
+      "formatTitle":  "Value Formatting",
+      "formatDesc":   "Formatting happens outside the component — pass a pre-formatted string."
+    },
+    "a11y": {
+      "title":       "Accessibility",
+      "intro":       "StatCards are static display elements. Screen readers read label, value, and delta as regular text — no special ARIA handling needed, provided delta icons have text alternatives.",
+      "iconTitle":   "Delta icons as text",
+      "iconBody":    "↑ / ↓ / → are Unicode characters that screen readers read aloud. If meaning is unclear, add a visually hidden span with aria-label='Increase' / 'Decrease'.",
+      "ariaTitle":   "aria-label for delta direction",
+      "ariaBody":    "For icon-only deltas (no text), set aria-label on the delta element: aria-label='Increase of 4.2 percent'. For combined strings (↑ 4.2%) no further ARIA is needed.",
+      "colorTitle":  "Color is not the only indicator",
+      "colorBody":   "up (green) / down (red) / neutral (gray) communicate direction via color. The arrow symbol (↑/↓/→) ensures direction is also recognizable without color — WCAG 1.4.1 compliant."
+    }
   }
 }
