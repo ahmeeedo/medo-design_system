@@ -1594,5 +1594,189 @@
       "colorTitle":  "Color is not the only indicator",
       "colorBody":   "up (green) / down (red) / neutral (gray) communicate direction via color. The arrow symbol (↑/↓/→) ensures direction is also recognizable without color — WCAG 1.4.1 compliant."
     }
+  },
+  "feedback": {
+    "page": {
+      "description": "Progress bar for loading operations, file uploads, and multi-step processes."
+    },
+    "overview": {
+      "anatomyTitle":    "Anatomy",
+      "anatomyBody":     "Progress consists of a track and an indicator showing current progress. Optional label and value elements complement the bar.",
+      "an1":             "Track — gray background bar as full width",
+      "an2":             "Indicator — colored progress bar (translateX animation)",
+      "an3":             "Label — optional description text left above the bar",
+      "an4":             "Value — optional percentage display right above the bar (showValue)",
+      "an5":             "size — bar thickness: sm (4 px), md (6 px), lg (10 px)",
+      "variantsTitle":   "Variants",
+      "variantsBody":    "Five color variants for different contexts: neutral (default), accent (orange), success (green), warning (yellow), error (red).",
+      "variant_neutral": "Neutral",
+      "variant_accent":  "Accent",
+      "variant_success": "Success",
+      "variant_warning": "Warning",
+      "variant_error":   "Error",
+      "sizesTitle":      "Sizes",
+      "sizesBody":       "Three sizes control bar thickness. md is the default for most use cases.",
+      "size_sm":         "Small (sm) — 4 px",
+      "size_md":         "Medium (md) — 6 px",
+      "size_lg":         "Large (lg) — 10 px",
+      "showValueTitle":  "Percentage (showValue)",
+      "showValueBody":   "showValue displays the current percentage right above the bar. Can be combined with label.",
+      "showValueLabel":  "Upload in progress..."
+    },
+    "usage": {
+      "title":        "When to use Progress?",
+      "intro":        "Progress suits operations with a known endpoint: file uploads, form steps, and load progress. The value prop must always hold a concrete 0–100 value.",
+      "whenNotTitle": "When not to use?",
+      "whenNotBody":  "For unknown loading times (indeterminate state), Skeleton is more appropriate. Progress always communicates concrete progress — never use it for general loading states without a percentage value.",
+      "doTitle":      "Do",
+      "dontTitle":    "Don't",
+      "do1":          "Set the label prop to explain the context of the progress",
+      "do2":          "Use variant semantically: success on completion, error on failure",
+      "do3":          "Use showValue in upload dialogs where the exact percentage is helpful",
+      "dont1":        "Don't use Progress for indeterminate states — use Skeleton instead",
+      "dont2":        "Don't animate value upward without real progress behind it",
+      "dont3":        "Don't place multiple progress bars side by side without labels",
+      "doNote":       "Progress for measurable, controlled progress states.",
+      "dontNote":     "No Progress for loading states without a concrete percentage value."
+    },
+    "code": {
+      "title":          "Code Examples",
+      "baseTitle":      "Basic Progress",
+      "baseDesc":       "Minimal usage — value is the only required prop (0–100).",
+      "variantsTitle":  "All Variants",
+      "variantsDesc":   "Five variants with label prop for contextual colors.",
+      "sizesTitle":     "Sizes",
+      "sizesDesc":      "sm / md (default) / lg — control bar thickness.",
+      "showValueTitle": "With label and showValue",
+      "showValueDesc":  "Combines label (left) and percentage (right) above the bar."
+    },
+    "a11y": {
+      "title":      "Accessibility",
+      "intro":      "Radix sets role='progressbar', aria-valuenow, aria-valuemin, and aria-valuemax automatically. A descriptive label is mandatory for screen readers.",
+      "roleTitle":  "role=\"progressbar\"",
+      "roleBody":   "Radix UI sets role='progressbar' automatically on the root element. No manual ARIA attribute needed.",
+      "ariaTitle":  "aria-valuenow / min / max",
+      "ariaBody":   "Radix sets aria-valuenow={value}, aria-valuemin={0}, aria-valuemax={100} automatically. Screen readers announce e.g. '75%'.",
+      "labelTitle": "label or aria-label is required",
+      "labelBody":  "Without the label prop, aria-label must be set on the Progress element so screen readers understand the context: 'Upload in progress: 75%'.",
+      "colorTitle": "Color is not the only indicator",
+      "colorBody":  "The variant color (green/red/yellow) alone is insufficient. The label text must also communicate the state linguistically — WCAG 1.4.1 compliant."
+    }
+  },
+  "avatar": {
+    "page": {
+      "description": "User representation via image or initials — individually or as a group."
+    },
+    "overview": {
+      "anatomyTitle":       "Anatomy",
+      "anatomyBody":        "Avatar shows either an image (src) or an initials fallback. AvatarGroup stacks multiple avatars with an automatic overflow counter.",
+      "an1":                "Image — image variant via src prop with alt text",
+      "an2":                "Fallback — initials variant with optional background color (color/textColor)",
+      "an3":                "Size — xs (24 px) to xl (56 px) via size prop",
+      "sizesTitle":         "Sizes",
+      "sizesBody":          "Five sizes from xs to xl. md (40 px) is the standard for list rows and comments.",
+      "fallbackTitle":      "Fallback Variants",
+      "fallbackBody":       "When no src is provided, Avatar shows initials. With color/textColor the background color is controlled; without color the system fallback color applies.",
+      "fallbackWithColor":  "With color",
+      "fallbackNoColor":    "Without color",
+      "groupTitle":         "AvatarGroup",
+      "groupBody":          "AvatarGroup shows up to max avatars — excess is shown as '+N'. Demo: 6 avatars with max=4 → 4 visible + '+2'."
+    },
+    "usage": {
+      "title":         "When to use Avatar?",
+      "intro":         "Avatar suits user identification in lists, comments, profile headers, and team views. Use the initials fallback when no image is available.",
+      "groupMaxTitle": "AvatarGroup max recommendation",
+      "groupMaxBody":  "max=4 or max=5 is the recommended range for AvatarGroup. With more visible avatars, readability decreases. The '+N' count informs about the total number.",
+      "doTitle":       "Do",
+      "dontTitle":     "Don't",
+      "do1":           "Always set alt text for src avatars (e.g. alt='Alice Jones')",
+      "do2":           "Use initials fallback with color/textColor for consistent brand assignment",
+      "do3":           "Use AvatarGroup for team membership and participant lists",
+      "dont1":         "No src without alt attribute — screen readers cannot describe the image",
+      "dont2":         "Don't show more than 5 avatars without overflow — use AvatarGroup with max",
+      "dont3":         "Don't mix avatar sizes within an AvatarGroup",
+      "doNote":        "Avatar for person identification with a clear fallback strategy.",
+      "dontNote":      "No avatar without a text alternative for screen readers."
+    },
+    "code": {
+      "title":        "Code Examples",
+      "sizesTitle":   "Size Variants",
+      "sizesDesc":    "All five sizes from xs to xl with initials.",
+      "imageTitle":   "Avatar with Image",
+      "imageDesc":    "src variant — alt text is required.",
+      "groupTitle":   "AvatarGroup with Overflow",
+      "groupDesc":    "6 avatars, max=4 — shows 4 avatars + '+2' overflow counter.",
+      "noColorTitle": "Without color Prop",
+      "noColorDesc":  "Without color the system fallback applies. With color/textColor explicit brand assignment."
+    },
+    "a11y": {
+      "title":         "Accessibility",
+      "intro":         "Avatars are visual elements. Screen readers need text alternatives — either via alt (src variant) or aria-label (initials variant in contextless use).",
+      "altTitle":      "alt for src avatars",
+      "altBody":       "For Avatar with src always set alt='Full Name'. Empty alt (alt='') only when the avatar is purely decorative and the name already appears in surrounding text.",
+      "ariaTitle":     "aria-label for initials-only",
+      "ariaBody":      "When Avatar shows only initials and no surrounding context names the person, set aria-label='Alice Jones' on the avatar.",
+      "overflowTitle": "Label AvatarGroup '+N'",
+      "overflowBody":  "The overflow counter '+N' needs aria-label='N more participants' so screen readers understand the meaning."
+    }
+  },
+  "skeleton": {
+    "page": {
+      "description": "Loading placeholder for content that is not yet available."
+    },
+    "overview": {
+      "anatomyTitle":   "Anatomy",
+      "anatomyBody":    "Skeleton is a pulsing placeholder that mimics the shape of the expected content. Three variants cover text, circles (avatar), and rectangles (images/cards).",
+      "an1":            "variant — text (small-rounded), circle (round), rect (medium-rounded)",
+      "an2":            "width / height — width and height as number (px) or CSS string ('60%')",
+      "an3":            "animate-pulse — pulsing animation via Tailwind (always active)",
+      "an4":            "aria-hidden='true' — Skeleton is invisible to screen readers (set in component)",
+      "variantsTitle":  "Variants",
+      "variantsBody":   "text for paragraphs, circle for avatar placeholders, rect for images and card blocks.",
+      "variantText":    "text",
+      "variantCircle":  "circle",
+      "variantRect":    "rect",
+      "cardTitle":      "SkeletonCard",
+      "cardBody":       "SkeletonCard is a pre-configured composition: Avatar + 2 text lines, rect block, and 3 descending text lines — max-w-[360px]."
+    },
+    "usage": {
+      "title":        "When to use Skeleton?",
+      "intro":        "Skeleton suits initial loading of content whose structure is known: lists, cards, profile pages. The placeholder should closely match the shape of the real content.",
+      "whenNotTitle": "When not to use?",
+      "whenNotBody":  "For error and empty states, Alert and EmptyState are more appropriate. Skeleton signals 'loading soon' — not 'nothing found' or 'error occurred'.",
+      "doTitle":      "Do",
+      "dontTitle":    "Don't",
+      "do1":          "Match skeleton shapes to the real content (size, number of lines)",
+      "do2":          "Use SkeletonCard for card layouts — saves composition effort",
+      "do3":          "Set aria-live='polite' outside the skeleton to announce when loading ends",
+      "dont1":        "Don't use Skeleton for known error or empty states",
+      "dont2":        "Don't show Skeleton indefinitely — show an error state after timeout",
+      "dont3":        "Don't ignore skeleton animations for users with prefers-reduced-motion",
+      "doNote":       "Skeleton for loading states with a known content structure.",
+      "dontNote":     "No Skeleton as a permanent state without timeout logic."
+    },
+    "code": {
+      "title":          "Code Examples",
+      "textTitle":      "Text Skeleton",
+      "textDesc":       "Descending text lines simulate a paragraph — decreasing width for a more natural look.",
+      "circleTitle":    "Circle Skeleton",
+      "circleDesc":     "Round placeholders for avatar elements in various sizes.",
+      "rectTitle":      "Rect Skeleton",
+      "rectDesc":       "Rectangular placeholders for images, hero areas, and card blocks.",
+      "cardTitle":      "SkeletonCard",
+      "cardDesc":       "Ready-made composition without props — for standard card layouts.",
+      "compositeTitle": "Composition: List Row",
+      "compositeDesc":  "Combine individual skeleton elements into a list row (circle + 2 text lines)."
+    },
+    "a11y": {
+      "title":        "Accessibility",
+      "intro":        "Skeleton elements are purely visual — aria-hidden='true' is already set in the component. Screen readers automatically skip them. For the loading announcement, aria-live outside the skeleton is needed.",
+      "hiddenTitle":  "aria-hidden='true' (already set)",
+      "hiddenBody":   "The Skeleton component sets aria-hidden='true' internally. No manual ARIA attribute needed — screen readers skip the placeholder.",
+      "liveTitle":    "Announce loading end via aria-live",
+      "liveBody":     "A container with aria-live='polite' outside the skeleton announces the end of loading: e.g. 'Content loaded'. This informs screen reader users.",
+      "motionTitle":  "Respect prefers-reduced-motion",
+      "motionBody":   "animate-pulse animates the skeleton. Users with prefers-reduced-motion have reduced animations in their OS. Tailwind's animate-pulse respects this setting automatically in modern browsers."
+    }
   }
 }

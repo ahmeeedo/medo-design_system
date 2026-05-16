@@ -1594,5 +1594,189 @@
       "colorTitle":  "Farbe ist nicht alleiniger Indikator",
       "colorBody":   "up (grün) / down (rot) / neutral (grau) kommunizieren Richtung farblich. Das Pfeil-Symbol (↑/↓/→) sorgt dafür, dass die Richtung auch ohne Farbe erkennbar ist — WCAG 1.4.1 konform."
     }
+  },
+  "feedback": {
+    "page": {
+      "description": "Fortschrittsanzeige für Ladevorgänge, Datei-Uploads und mehrstufige Prozesse."
+    },
+    "overview": {
+      "anatomyTitle":    "Anatomie",
+      "anatomyBody":     "Progress besteht aus einem Track und einem Indicator, der den aktuellen Fortschritt anzeigt. Optionale Label- und Value-Elemente ergänzen den Balken.",
+      "an1":             "Track — grauer Hintergrundbalken als Gesamtbreite",
+      "an2":             "Indicator — farbiger Fortschrittsbalken (translateX-Animation)",
+      "an3":             "Label — optionaler Beschreibungstext links über dem Balken",
+      "an4":             "Value — optionale Prozentanzeige rechts über dem Balken (showValue)",
+      "an5":             "size — Balkendicke: sm (4 px), md (6 px), lg (10 px)",
+      "variantsTitle":   "Varianten",
+      "variantsBody":    "Fünf Farbvarianten für unterschiedliche Kontexte: neutral (Standard), accent (orange), success (grün), warning (gelb), error (rot).",
+      "variant_neutral": "Neutral",
+      "variant_accent":  "Accent",
+      "variant_success": "Success",
+      "variant_warning": "Warning",
+      "variant_error":   "Error",
+      "sizesTitle":      "Größen",
+      "sizesBody":       "Drei Größen steuern die Balkendicke. md ist der Standard für die meisten Anwendungsfälle.",
+      "size_sm":         "Small (sm) — 4 px",
+      "size_md":         "Medium (md) — 6 px",
+      "size_lg":         "Large (lg) — 10 px",
+      "showValueTitle":  "Prozentzahl (showValue)",
+      "showValueBody":   "showValue zeigt die aktuelle Prozentzahl rechts über dem Balken an. Kann mit label kombiniert werden.",
+      "showValueLabel":  "Upload läuft..."
+    },
+    "usage": {
+      "title":        "Wann Progress verwenden?",
+      "intro":        "Progress eignet sich für Vorgänge mit bekanntem Endpunkt: Datei-Uploads, Formular-Schritte und Ladefortschritte. Der value-Prop muss immer einen konkreten 0–100-Wert haben.",
+      "whenNotTitle": "Wann nicht verwenden?",
+      "whenNotBody":  "Für unbekannte Ladezeiten (Indeterminate-Zustand) ist Skeleton besser geeignet. Progress kommuniziert immer einen konkreten Fortschritt — niemals für allgemeine Ladezustände ohne Prozentwert.",
+      "doTitle":      "Do",
+      "dontTitle":    "Don't",
+      "do1":          "label-Prop setzen, um den Kontext des Fortschritts zu erklären",
+      "do2":          "variant semantisch einsetzen: success nach Abschluss, error bei Fehlern",
+      "do3":          "showValue für Upload-Dialoge verwenden, wo der genaue Prozentsatz hilfreich ist",
+      "dont1":        "Keinen Progress für Indeterminate-Zustände verwenden — Skeleton nutzen",
+      "dont2":        "value nicht animiert erhöhen ohne echten Fortschritt dahinter",
+      "dont3":        "Nicht mehrere Progress-Balken ohne Labels nebeneinander platzieren",
+      "doNote":       "Progress für messbare, kontrollierte Fortschritte.",
+      "dontNote":     "Kein Progress für Ladezustände ohne konkreten Prozentwert."
+    },
+    "code": {
+      "title":          "Code-Beispiele",
+      "baseTitle":      "Basis-Progress",
+      "baseDesc":       "Minimale Verwendung — value ist der einzige Pflicht-Prop (0–100).",
+      "variantsTitle":  "Alle Varianten",
+      "variantsDesc":   "Fünf Varianten mit label-Prop für kontextuelle Farben.",
+      "sizesTitle":     "Größen",
+      "sizesDesc":      "sm / md (Standard) / lg — steuern die Balkendicke.",
+      "showValueTitle": "Mit label und showValue",
+      "showValueDesc":  "Kombiniert Label (links) und Prozentzahl (rechts) über dem Balken."
+    },
+    "a11y": {
+      "title":      "Accessibility",
+      "intro":      "Radix setzt role='progressbar', aria-valuenow, aria-valuemin und aria-valuemax automatisch. Für Screen-Reader ist ein beschreibendes Label zwingend erforderlich.",
+      "roleTitle":  "role=\"progressbar\"",
+      "roleBody":   "Radix UI setzt role='progressbar' automatisch auf dem Root-Element. Kein manuelles ARIA-Attribut nötig.",
+      "ariaTitle":  "aria-valuenow / min / max",
+      "ariaBody":   "Radix setzt aria-valuenow={value}, aria-valuemin={0}, aria-valuemax={100} automatisch. Der Screen-Reader liest z. B. '75 %'.",
+      "labelTitle": "label oder aria-label ist Pflicht",
+      "labelBody":  "Ohne label-Prop muss aria-label auf dem Progress gesetzt werden, damit Screen-Reader den Kontext verstehen: 'Upload läuft: 75 %'.",
+      "colorTitle": "Farbe ist nicht alleiniger Indikator",
+      "colorBody":  "Die Variant-Farbe (grün/rot/gelb) allein reicht nicht aus. Der label-Text muss den Zustand auch sprachlich kommunizieren — WCAG 1.4.1 konform."
+    }
+  },
+  "avatar": {
+    "page": {
+      "description": "Benutzerrepräsentation durch Bild oder Initialen — einzeln oder als Gruppe."
+    },
+    "overview": {
+      "anatomyTitle":       "Anatomie",
+      "anatomyBody":        "Avatar zeigt entweder ein Bild (src) oder einen Fallback mit Initialen. AvatarGroup stapelt mehrere Avatare mit automatischem Overflow-Zähler.",
+      "an1":                "Image — Bild-Variante via src-Prop mit alt-Text",
+      "an2":                "Fallback — Initialen-Variante mit optionaler Hintergrundfarbe (color/textColor)",
+      "an3":                "Größe — xs (24 px) bis xl (56 px) über size-Prop",
+      "sizesTitle":         "Größen",
+      "sizesBody":          "Fünf Größen von xs bis xl. md (40 px) ist der Standard für Listenzeilen und Kommentare.",
+      "fallbackTitle":      "Fallback-Varianten",
+      "fallbackBody":       "Wenn kein src übergeben wird, zeigt Avatar die Initialen. Mit color/textColor wird die Hintergrundfarbe gesteuert; ohne color greift die System-Fallback-Farbe.",
+      "fallbackWithColor":  "Mit color",
+      "fallbackNoColor":    "Ohne color",
+      "groupTitle":         "AvatarGroup",
+      "groupBody":          "AvatarGroup zeigt bis zu max Avatare — Überschuss wird als '+N' dargestellt. Demo: 6 Avatare mit max=4 → 4 sichtbar + '+2'."
+    },
+    "usage": {
+      "title":         "Wann Avatar verwenden?",
+      "intro":         "Avatar eignet sich für Benutzer-Identifikation in Listen, Kommentaren, Profil-Überschriften und Team-Ansichten. Initialen-Fallback verwenden, wenn kein Bild verfügbar ist.",
+      "groupMaxTitle": "AvatarGroup max-Empfehlung",
+      "groupMaxBody":  "max=4 oder max=5 ist der empfohlene Bereich für AvatarGroup. Bei mehr sichtbaren Avataren sinkt die Lesbarkeit. Der '+N'-Count informiert über die Gesamtzahl.",
+      "doTitle":       "Do",
+      "dontTitle":     "Don't",
+      "do1":           "alt-Text bei src-Avataren immer setzen (z. B. alt='Alice Jones')",
+      "do2":           "Initialen-Fallback mit color/textColor für konsistente Markenzuordnung nutzen",
+      "do3":           "AvatarGroup für Team-Zugehörigkeit und Teilnehmer-Listen verwenden",
+      "dont1":         "Kein src ohne alt-Attribut — Screen-Reader können das Bild nicht beschreiben",
+      "dont2":         "Nicht mehr als 5 Avatare ohne Overflow — AvatarGroup mit max nutzen",
+      "dont3":         "Keine Avatar-Größen mischen innerhalb einer AvatarGroup",
+      "doNote":        "Avatar für Personen-Identifikation mit klarer Fallback-Strategie.",
+      "dontNote":      "Kein Avatar ohne Textalternative für Screen-Reader."
+    },
+    "code": {
+      "title":        "Code-Beispiele",
+      "sizesTitle":   "Größen-Varianten",
+      "sizesDesc":    "Alle fünf Größen von xs bis xl mit Initialen.",
+      "imageTitle":   "Avatar mit Bild",
+      "imageDesc":    "src-Variante — alt-Text ist Pflicht.",
+      "groupTitle":   "AvatarGroup mit Overflow",
+      "groupDesc":    "6 Avatare, max=4 — zeigt 4 Avatare + '+2' Overflow-Zähler.",
+      "noColorTitle": "Ohne color-Prop",
+      "noColorDesc":  "Ohne color greift der System-Fallback. Mit color/textColor explizite Markenzuordnung."
+    },
+    "a11y": {
+      "title":         "Accessibility",
+      "intro":         "Avatare sind visuelle Elemente. Screen-Reader brauchen Textalternativen — entweder über alt (src-Variante) oder aria-label (Initialen-Variante im kontextlosen Einsatz).",
+      "altTitle":      "alt für src-Avatare",
+      "altBody":       "Bei Avatar mit src immer alt='Vollständiger Name' setzen. Leeres alt (alt='') nur wenn der Avatar rein dekorativ ist und der Name bereits im umgebenden Text steht.",
+      "ariaTitle":     "aria-label für Initialen-only",
+      "ariaBody":      "Wenn Avatar nur Initialen zeigt und kein umgebender Kontext den Namen nennt, aria-label='Alice Jones' auf dem Avatar setzen.",
+      "overflowTitle": "AvatarGroup '+N' beschriften",
+      "overflowBody":  "Der Overflow-Zähler '+N' braucht aria-label='N weitere Teilnehmer', damit Screen-Reader die Bedeutung verstehen."
+    }
+  },
+  "skeleton": {
+    "page": {
+      "description": "Lade-Platzhalter für Content, der noch nicht verfügbar ist."
+    },
+    "overview": {
+      "anatomyTitle":   "Anatomie",
+      "anatomyBody":    "Skeleton ist ein pulsierender Platzhalter, der die Form des erwarteten Inhalts nachahmt. Drei Varianten decken Text, Kreise (Avatar) und Rechtecke (Bilder/Cards) ab.",
+      "an1":            "variant — text (abgerundet-klein), circle (rund), rect (abgerundet-mittel)",
+      "an2":            "width / height — Breite und Höhe als Zahl (px) oder CSS-String ('60%')",
+      "an3":            "animate-pulse — pulsierende Animation via Tailwind (immer aktiv)",
+      "an4":            "aria-hidden='true' — Skeleton ist für Screen-Reader unsichtbar (in Komponente gesetzt)",
+      "variantsTitle":  "Varianten",
+      "variantsBody":   "text für Absätze, circle für Avatar-Platzhalter, rect für Bilder und Karten-Blöcke.",
+      "variantText":    "text",
+      "variantCircle":  "circle",
+      "variantRect":    "rect",
+      "cardTitle":      "SkeletonCard",
+      "cardBody":       "SkeletonCard ist eine vorkonfigurierte Komposition: Avatar + 2 Textzeilen, Rect-Block und 3 abfallende Textzeilen — max-w-[360px]."
+    },
+    "usage": {
+      "title":        "Wann Skeleton verwenden?",
+      "intro":        "Skeleton eignet sich für initiales Laden von Content, dessen Struktur bekannt ist: Listen, Cards, Profil-Seiten. Der Platzhalter soll der Form des echten Inhalts möglichst nahekommen.",
+      "whenNotTitle": "Wann nicht verwenden?",
+      "whenNotBody":  "Für Fehler- und Leer-Zustände sind Alert und EmptyState besser geeignet. Skeleton signalisiert 'lädt gleich' — nicht 'nichts gefunden' oder 'Fehler aufgetreten'.",
+      "doTitle":      "Do",
+      "dontTitle":    "Don't",
+      "do1":          "Skeleton-Formen an den echten Content anpassen (Größe, Anzahl der Zeilen)",
+      "do2":          "SkeletonCard für Card-Layouts verwenden — spart Kompositions-Aufwand",
+      "do3":          "aria-live='polite' außerhalb des Skeletons setzen, um Ladeende anzukündigen",
+      "dont1":        "Keinen Skeleton für bekannte Fehler- oder Leer-Zustände verwenden",
+      "dont2":        "Skeleton nicht ohne Zeitbegrenzung anzeigen — nach Timeout Fehlerzustand zeigen",
+      "dont3":        "Keine Skeleton-Animationen für Nutzer mit prefers-reduced-motion ignorieren",
+      "doNote":       "Skeleton für Ladevorgänge mit bekannter Content-Struktur.",
+      "dontNote":     "Kein Skeleton als dauerhafter Zustand ohne Timeout-Logik."
+    },
+    "code": {
+      "title":          "Code-Beispiele",
+      "textTitle":      "Text-Skeleton",
+      "textDesc":       "Abfallende Textzeilen simulieren einen Absatz — width absteigend für natürlichere Optik.",
+      "circleTitle":    "Circle-Skeleton",
+      "circleDesc":     "Runde Platzhalter für Avatar-Elemente in verschiedenen Größen.",
+      "rectTitle":      "Rect-Skeleton",
+      "rectDesc":       "Rechteckige Platzhalter für Bilder, Hero-Bereiche und Card-Blöcke.",
+      "cardTitle":      "SkeletonCard",
+      "cardDesc":       "Fertige Komposition ohne Props — für Standard-Card-Layouts.",
+      "compositeTitle": "Komposition: Listenzeile",
+      "compositeDesc":  "Einzelne Skeleton-Elemente zu einer Listenzeile (Circle + 2 Textzeilen) kombinieren."
+    },
+    "a11y": {
+      "title":        "Accessibility",
+      "intro":        "Skeleton-Elemente sind rein visuell — aria-hidden='true' ist bereits in der Komponente gesetzt. Screen-Reader ignorieren sie automatisch. Für die Ladeankündigung ist aria-live außerhalb des Skeletons nötig.",
+      "hiddenTitle":  "aria-hidden='true' (bereits gesetzt)",
+      "hiddenBody":   "Die Skeleton-Komponente setzt aria-hidden='true' intern. Kein manuelles ARIA-Attribut nötig — Screen-Reader überspringen den Platzhalter.",
+      "liveTitle":    "Ladeende via aria-live ankündigen",
+      "liveBody":     "Ein Container mit aria-live='polite' außerhalb des Skeletons kündigt das Ende des Ladevorgangs an: z. B. 'Inhalte geladen'. So werden Screen-Reader-Nutzer informiert.",
+      "motionTitle":  "prefers-reduced-motion beachten",
+      "motionBody":   "animate-pulse animiert den Skeleton. Nutzer mit prefers-reduced-motion haben in ihrem OS Animationen reduziert. Tailwind's animate-pulse respektiert dieses Setting automatisch in modernen Browsern."
+    }
   }
 }
