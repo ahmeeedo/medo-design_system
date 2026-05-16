@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { LanguageSwitcher } from './LanguageSwitcher'
 import { Icon } from '@/components/Icon/Icon'
 import { headerLinks } from '@/config/headerLinks'
+import { Search } from '@/components/Search/Search'
 
 const NAV = [
   {
@@ -66,6 +67,7 @@ export function DocsLayout({ children }) {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [linksOpen, setLinksOpen] = useState(false)
   const [sidebarExpanded, setSidebarExpanded] = useState(loadSidebarState)
+  const [isSearchOpen, setIsSearchOpen] = useState(false)
   const dropdownRef = useRef(null)
 
   useEffect(() => {
@@ -91,6 +93,17 @@ export function DocsLayout({ children }) {
     document.addEventListener('mousedown', handler)
     return () => document.removeEventListener('mousedown', handler)
   }, [linksOpen])
+
+  useEffect(() => {
+    const handler = (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault()
+        setIsSearchOpen(true)
+      }
+    }
+    document.addEventListener('keydown', handler)
+    return () => document.removeEventListener('keydown', handler)
+  }, [])
 
   const close = () => setMobileOpen(false)
 
@@ -119,7 +132,7 @@ export function DocsLayout({ children }) {
         </span>
         <div className="flex-1" />
         <LanguageSwitcher />
-        <button className={ICON_BTN} aria-label={t('header.aria.search')}>
+        <button className={ICON_BTN} aria-label={t('header.aria.search')} onClick={() => setIsSearchOpen(true)}>
           <Icon name="search" />
         </button>
         <div className="relative" ref={dropdownRef}>
@@ -199,6 +212,8 @@ export function DocsLayout({ children }) {
           {children}
         </main>
       </div>
+
+      <Search isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
 
       {/* Full-width footer */}
       <footer className="w-full bg-[var(--surface_200)] border-t border-[var(--color-border)] px-[var(--space-5)] py-[var(--space-4)] flex items-center justify-between flex-wrap gap-[var(--space-3)]">
