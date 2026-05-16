@@ -68,7 +68,7 @@ export function DocsLayout({ children }) {
         <div className="flex items-center gap-2">
           <LanguageSwitcher />
           <button
-            className="flex items-center justify-center w-9 h-9 rounded-[var(--radius-md)] text-[var(--color-text-primary)] cursor-pointer transition-[background] duration-[var(--duration-fast)] ease-[var(--ease-out)] hover:bg-[var(--color-neutral-100)] bg-transparent border-none"
+            className="flex items-center justify-center w-9 h-9 rounded-[var(--radius-md)] text-[var(--color-text-primary)] cursor-pointer transition-[background] duration-[var(--duration-fast)] ease-[var(--ease-out)] hover:bg-[var(--color-neutral-100)] bg-transparent border-0 outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-focus-500)] focus-visible:ring-offset-1"
             onClick={() => setMobileOpen((v) => !v)}
             aria-label={mobileOpen ? t('nav.aria.closeMenu') : t('nav.aria.openMenu')}
           >
@@ -104,10 +104,10 @@ export function DocsLayout({ children }) {
                 to={`/${item.id}`}
                 onClick={close}
                 className={({ isActive }) =>
-                  `block w-full px-[var(--space-5)] py-[var(--space-2)] [font-family:var(--font-sans)] text-sm text-left no-underline cursor-pointer transition-[color,background] duration-[var(--duration-fast)] ease-[var(--ease-out)] border-none bg-transparent ${
+                  `block w-full px-[var(--space-5)] py-[var(--space-2)] [font-family:var(--font-sans)] text-sm text-left no-underline cursor-pointer transition-[color,background,border-color] duration-[var(--duration-fast)] ease-[var(--ease-out)] bg-transparent border-0 border-l-2 outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[var(--color-focus-500)] ${
                     isActive
-                      ? 'text-[var(--color-text-primary)] [font-weight:var(--weight-medium)] bg-[var(--color-neutral-100)]'
-                      : 'text-[var(--color-text-secondary)] [font-weight:var(--weight-regular)] hover:text-[var(--color-text-primary)] hover:bg-[var(--surface_200)]'
+                      ? 'text-[var(--color-text-primary)] [font-weight:var(--weight-semibold)] bg-[var(--accent-surface_100)] border-l-[var(--color-brand-primary-500)]'
+                      : 'text-[var(--color-text-secondary)] [font-weight:var(--weight-regular)] border-l-transparent hover:text-[var(--color-text-primary)] hover:bg-[var(--surface_200)]'
                   }`
                 }
               >

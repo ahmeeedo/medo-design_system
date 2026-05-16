@@ -41,10 +41,10 @@ export function PageLayout({ title, description, tabs = [] }) {
           <button
             key={tab.id}
             onClick={() => handleTabClick(tab.id)}
-            className={`px-[var(--space-6)] py-[var(--space-3)] text-md [font-weight:var(--weight-medium)] bg-transparent border-none border-b-2 -mb-px cursor-pointer transition-[color,border-color] duration-[var(--duration-normal)] ease-[var(--ease-out)] ${
+            className={`px-[var(--space-6)] py-[var(--space-3)] text-md bg-transparent border-0 border-b-2 -mb-px cursor-pointer outline-none transition-[color,border-color,background] duration-[var(--duration-normal)] ease-[var(--ease-out)] focus-visible:ring-2 focus-visible:ring-[var(--color-focus-500)] focus-visible:ring-offset-1 focus-visible:rounded-[var(--radius-xs)] ${
               active === tab.id
-                ? 'text-[var(--color-link-primary)] border-b-[var(--border-brand-primary)] bg-[var(--surface-container_hover-100)]'
-                : 'text-[var(--color-text-secondary)] border-b-transparent hover:text-[var(--color-text-primary)] hover:bg-[var(--surface-container_hover-100)]'
+                ? 'text-[var(--color-link-primary)] [font-weight:var(--weight-semibold)] border-b-[var(--border-brand-primary)] bg-[var(--surface-container_hover-100)]'
+                : '[font-weight:var(--weight-medium)] text-[var(--color-text-secondary)] border-b-transparent hover:text-[var(--color-text-primary)] hover:bg-[var(--surface-container_hover-100)]'
             }`}
           >
             {tab.label}
