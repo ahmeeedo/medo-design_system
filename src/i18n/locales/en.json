@@ -57,6 +57,11 @@
       "links":  "External links"
     }
   },
+  "search": {
+    "placeholder": "Search...",
+    "noResults":   "No results",
+    "open":        "Open search"
+  },
   "footer": {
     "impressum":   "Legal Notice",
     "datenschutz": "Privacy Policy"
