@@ -104,7 +104,7 @@ export function PageLayout({ title, description, tabs = [] }) {
         )}
       </div>
 
-      <div ref={tabBarRef} className="flex overflow-x-auto border-b border-[var(--color-border)] sticky top-[var(--header-height)] [z-index:calc(var(--z-sticky)-1)] bg-[var(--surface_100)] min-h-[var(--tab-bar-height)] mb-[var(--space-10)]">
+      <div ref={tabBarRef} className="flex overflow-x-auto overflow-y-hidden border-b border-[var(--color-border)] sticky top-[var(--header-height)] [z-index:calc(var(--z-sticky)-1)] bg-[var(--surface_100)] min-h-[var(--tab-bar-height)] mb-[var(--space-10)]">
         {tabs.map(tab => (
           <button
             key={tab.id}
