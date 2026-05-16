@@ -1196,5 +1196,203 @@
       "focusTitle":   "Fokus-Management",
       "focusBody":    "Beim Aktivieren eines Tabs erhält der zugehörige TabsContent keinen automatischen Fokus. Falls der Inhalt fokussierbar sein soll, muss focus() programmatisch aufgerufen werden."
     }
+  },
+
+  "navigation": {
+    "page": {
+      "description": "Breadcrumb für hierarchische Pfaddarstellung und Pagination für seitenweise Navigation durch Datenlisten."
+    },
+    "overview": {
+      "breadcrumbTitle": "Breadcrumb",
+      "breadcrumbBody":  "Breadcrumb zeigt den aktuellen Ort in der Seitenhierarchie und ermöglicht die Navigation zu übergeordneten Ebenen.",
+      "ban1":            "Items — Array von { label, href? }, das letzte Item hat kein href (aktuelle Seite)",
+      "ban2":            "Separator — visuelles Trennzeichen zwischen den Ebenen (/ Schrägstrich)",
+      "ban3":            "BreadcrumbLink — klickbarer Link zu übergeordneten Ebenen",
+      "ban4":            "BreadcrumbPage — nicht verlinktes Label der aktuellen Seite (fett)",
+      "paginationTitle": "Pagination",
+      "paginationBody":  "Pagination ermöglicht die seitenweise Navigation durch große Datensätze. Bei mehr als 7 Seiten werden mittlere Seiten durch Ellipsis ersetzt.",
+      "pan1":            "current — aktuelle Seitenzahl (controlled prop)",
+      "pan2":            "total — Gesamtanzahl der Seiten",
+      "pan3":            "onChange — Callback mit der neuen Seitenzahl",
+      "pan4":            "Ellipsis-Logik: ≤ 7 Seiten = alle; > 7 = Ellipsis-Muster je nach current",
+      "paginationDemoLabel": "Aktuelle Seite:"
+    },
+    "usage": {
+      "title":                 "Wann verwenden?",
+      "intro":                 "Breadcrumb und Pagination sind eigenständige Navigations-Hilfsmittel — Breadcrumb für Hierarchien, Pagination für Datenlisten.",
+      "whenBreadcrumbTitle":   "Breadcrumb",
+      "whenBreadcrumbBody":    "Breadcrumb nur einsetzen, wenn die Seite mindestens 3 Hierarchieebenen tief liegt. Auf flachen Strukturen (Home → Seite) ist Breadcrumb überdimensioniert.",
+      "whenPaginationTitle":   "Pagination",
+      "whenPaginationBody":    "Pagination für Listen mit mehr als ~20 Einträgen, die seitenweise geladen werden. Bei kleinen Mengen oder Infinite Scroll ist Pagination nicht geeignet.",
+      "doTitle":               "Do",
+      "dontTitle":             "Don't",
+      "do1":                   "Letztes Breadcrumb-Item ohne href lassen (aktuelle Seite ist nicht verlinkbar)",
+      "do2":                   "Pagination-State mit useState außerhalb der Komponente verwalten",
+      "do3":                   "Breadcrumb und Pagination semantisch im nav-Element platzieren",
+      "dont1":                 "Breadcrumb nicht auf flachen 1-Ebenen-Seiten verwenden",
+      "dont2":                 "Pagination nicht mit Infinite Scroll kombinieren",
+      "dont3":                 "Nicht alle Seitenzahlen bei sehr vielen Seiten anzeigen — Ellipsis-Muster nutzen",
+      "doNote":                "Breadcrumb: Hierarchie sichtbar machen. Pagination: Datenmenge kontrollieren.",
+      "dontNote":              "Keine redundante Navigation einbauen."
+    },
+    "code": {
+      "title":                      "Code-Beispiele",
+      "breadcrumbTitle":            "Breadcrumb mit 3 Items",
+      "breadcrumbDesc":             "items-Array: alle Items außer dem letzten haben href — das letzte Item ist die aktuelle Seite.",
+      "paginationControlledTitle":  "Pagination controlled",
+      "paginationControlledDesc":   "State liegt in der übergeordneten Komponente — onChange aktualisiert current und lädt die Daten für die neue Seite.",
+      "paginationFewTitle":         "Pagination — wenige Seiten",
+      "paginationFewDesc":          "Bei ≤ 7 Seiten werden alle Seitenzahlen angezeigt, kein Ellipsis."
+    },
+    "a11y": {
+      "title":        "Accessibility",
+      "intro":        "Beide Komponenten nutzen semantisches nav-Element mit aria-label, um Screen-Readern den Zweck der Navigation zu kommunizieren.",
+      "keyboardTitle":"Keyboard-Navigation",
+      "k1":           "Tab — nächsten fokussierbaren Link oder Button fokussieren",
+      "k2":           "Enter — Link oder Button aktivieren",
+      "k3":           "Shift+Tab — vorherigen fokussierbaren Element fokussieren",
+      "navTitle":     "nav aria-label",
+      "navBody":      "Die Breadcrumb-Komponente ist in einem nav-Element mit implizitem landmark. Die Pagination hat aria-label=\"Pagination\". Screen-Reader können so zwischen den Navigations-Bereichen unterscheiden.",
+      "currentTitle": "aria-current=\"page\"",
+      "currentBody":  "Der aktive Pagination-Button hat aria-current=\"page\". Das letzte Breadcrumb-Item ist als BreadcrumbPage ausgezeichnet — Screen-Reader erkennen die aktuelle Seite.",
+      "srTitle":      "Prev/Next-Buttons",
+      "srBody":       "Die Prev/Next-Buttons haben aria-label=\"Vorherige Seite\" und aria-label=\"Nächste Seite\" — sinnvoller als nur ← / →."
+    }
+  },
+
+  "overlays": {
+    "page": {
+      "description": "Modaler Dialog für Bestätigungen, Formulare und Detailansichten — sperrt den Hintergrund und verwaltet Fokus automatisch."
+    },
+    "overview": {
+      "anatomyTitle": "Anatomie",
+      "anatomyBody":  "Das Modal basiert auf Radix UI Dialog und besteht aus fünf Bereichen:",
+      "an1":          "Overlay — halbtransparenter Hintergrund, Klick darauf schließt das Modal",
+      "an2":          "DialogContent — weißes Panel, zentriert, mit konfigurierbarer Breite (size)",
+      "an3":          "DialogHeader — Titelzeile oben im Modal",
+      "an4":          "children — Hauptinhalt: Text, Formulare oder andere Komponenten",
+      "an5":          "DialogFooter — optionale Aktionszeile unten (footer-Prop)",
+      "demoTitle":    "Live-Demo — alle 3 Größen",
+      "demoBody":     "Öffne die Modals per Button. Schließen per Escape, Overlay-Klick oder Schließen-Button.",
+      "demoSm":       "Small öffnen",
+      "demoMd":       "Medium öffnen",
+      "demoLg":       "Large öffnen",
+      "demoSmTitle":  "Kleine Bestätigung",
+      "demoSmBody":   "Dieses Modal verwendet size=\"sm\" — maximale Breite 384 px. Geeignet für kurze Bestätigungen.",
+      "demoMdTitle":  "Standard-Dialog",
+      "demoMdBody":   "size=\"md\" ist der Standard — maximale Breite 512 px. Für Formulare und mittellange Inhalte.",
+      "demoLgTitle":  "Große Detailansicht",
+      "demoLgBody":   "size=\"lg\" — maximale Breite 672 px. Für komplexe Inhalte, Tabellen oder umfangreiche Formulare.",
+      "close":        "Schließen",
+      "cancel":       "Abbrechen",
+      "confirm":      "Bestätigen"
+    },
+    "usage": {
+      "title":         "Wann Modal verwenden?",
+      "intro":         "Modals unterbrechen den Arbeitsfluss — nur einsetzen, wenn eine direkte Benutzerantwort erforderlich ist.",
+      "whenTitle":     "Geeignete Einsätze",
+      "when1":         "Bestätigungsdialoge für irreversible Aktionen (Löschen, Veröffentlichen)",
+      "when2":         "Formulare, die einen eigenständigen Kontext erfordern (Einladen, Erstellen)",
+      "when3":         "Detailansichten, die ohne Seitenwechsel zugänglich sein sollen",
+      "whenNotTitle":  "Wann nicht?",
+      "whenNotBody":   "Kein Modal für einfache Statusmeldungen — Alert-Komponente verwenden. Kein Modal für komplexe Navigation oder mehrstufige Workflows — eigene Seite oder Stepper bevorzugen.",
+      "doTitle":       "Do",
+      "dontTitle":     "Don't",
+      "do1":           "Klaren Titel verwenden, der die Aktion benennt (z. B. 'Eintrag löschen?')",
+      "do2":           "Schließen-Möglichkeit immer anbieten: X-Button, Escape, Overlay-Klick",
+      "do3":           "Modal-Größe an den Inhalt anpassen (sm für Bestätigungen, lg für Formulare)",
+      "dont1":         "Keine Modals in Modals öffnen",
+      "dont2":         "Kein Autoclose ohne Benutzeraktion bei kritischen Dialogen",
+      "dont3":         "Keinen langen Fließtext ohne Scroll-Container im Modal",
+      "doNote":        "Modals für Entscheidungen — nicht für Information.",
+      "dontNote":      "Kein Modal für Nachrichten, die der Nutzer nicht bestätigen muss."
+    },
+    "code": {
+      "title":        "Code-Beispiele",
+      "baseTitle":    "Basis-Modal",
+      "baseDesc":     "Minimales Modal: open-State, onClose-Handler, Titel und children.",
+      "confirmTitle": "Bestätigungsdialog mit Footer",
+      "confirmDesc":  "Footer-Prop für Aktions-Buttons — Abbrechen links, destruktive Aktion rechts.",
+      "sizeTitle":    "Modal-Größen",
+      "sizeDesc":     "size-Prop: sm (384px), md (512px, Standard), lg (672px)."
+    },
+    "a11y": {
+      "title":        "Accessibility",
+      "intro":        "Radix UI Dialog implementiert das WAI-ARIA Dialog Pattern vollständig: Fokus-Trapping, Escape, role=\"dialog\", aria-modal.",
+      "keyboardTitle":"Keyboard",
+      "k1":           "Escape — Modal schließen",
+      "k2":           "Tab / Shift+Tab — Fokus innerhalb des Modals kreisen (Focus-Trap)",
+      "k3":           "Klick auf Overlay — Modal schließen",
+      "focusTitle":   "Fokus-Management",
+      "focusBody":    "Beim Öffnen springt der Fokus automatisch in das Modal (erstes fokussierbares Element). Beim Schließen kehrt der Fokus zum auslösenden Button zurück.",
+      "roleTitle":    "role=\"dialog\" + aria-modal",
+      "roleBody":     "DialogContent hat role=\"dialog\" und aria-modal=\"true\". Screen-Reader wissen, dass der Hintergrund inaktiv ist, und lesen nur den Modal-Inhalt vor.",
+      "overlayTitle": "Overlay-Klick",
+      "overlayBody":  "Klick auf den Overlay schließt das Modal via onOpenChange. Das Verhalten kann durch Entfernen des Handlers deaktiviert werden (z. B. für Pflichtdialoge).",
+      "wcagTitle":    "WCAG 2.4.3 Focus Order",
+      "wcagBody":     "Der modale Dialog folgt einer logischen Tab-Reihenfolge: erster fokussierbarer Inhalt → Footer-Buttons → X-Button. Kein Fokus-Verlust außerhalb des Modals."
+    }
+  },
+
+  "accordion": {
+    "page": {
+      "description": "Aufklappbare Inhaltsabschnitte — einzeln (single) oder mehrere gleichzeitig (allowMultiple) geöffnet."
+    },
+    "overview": {
+      "anatomyTitle":  "Anatomie",
+      "anatomyBody":   "Accordion rendert eine Liste von AccordionItems, jedes mit einem Trigger-Button und einem ausklappbaren Content-Bereich.",
+      "an1":           "AccordionItem — Container für ein aufklappbares Element, identifiziert per id",
+      "an2":           "AccordionTrigger — klickbarer Button mit Titel und Chevron-Icon",
+      "an3":           "AccordionContent — ausgeklappter Inhaltsbereich, animiert (height 0 → auto)",
+      "an4":           "allowMultiple — false (Standard): nur ein Item geöffnet; true: mehrere gleichzeitig",
+      "singleTitle":   "Single-Mode (Standard)",
+      "singleBody":    "allowMultiple=false: Öffnen eines Items schließt das vorherige automatisch. Ideal für FAQ oder strukturierte Abschnitte.",
+      "multipleTitle": "Multiple-Mode",
+      "multipleBody":  "allowMultiple=true: Mehrere Items können gleichzeitig geöffnet sein. Geeignet für Feature-Listen oder unabhängige Abschnitte."
+    },
+    "usage": {
+      "title":        "Wann Accordion verwenden?",
+      "intro":        "Accordion eignet sich für optionale Details, die nicht immer sichtbar sein müssen — und die Seite sonst zu lang machen würden.",
+      "whenTitle":    "Geeignete Einsätze",
+      "when1":        "FAQ-Bereiche — Fragen und Antworten übersichtlich strukturiert",
+      "when2":        "Einstellungsseiten mit vielen Kategorien, die selten gleichzeitig benötigt werden",
+      "when3":        "Produktbeschreibungen mit optionalen Zusatzinfos (Technische Daten, Lieferbedingungen)",
+      "whenNotTitle": "Wann nicht?",
+      "whenNotBody":  "Kein Accordion für Inhalte, die immer sichtbar sein sollen. Nicht für schrittweise Prozesse (→ Stepper). Kein Accordion, wenn alle Abschnitte gleichzeitig verglichen werden müssen.",
+      "doTitle":      "Do",
+      "dontTitle":    "Don't",
+      "do1":          "Trigger-Titel klar und aussagekräftig formulieren — der Nutzer entscheidet nach dem Titel, ob er aufklappt",
+      "do2":          "Single-Mode für FAQ und strukturierte Abschnitte, Multiple-Mode für unabhängige Features",
+      "do3":          "JSX als content-Prop übergeben, wenn der Inhalt mehr als plain text ist",
+      "dont1":        "Kein Accordion für Inhalte, die der Nutzer immer braucht — wichtige Inhalte nicht verstecken",
+      "dont2":        "Keine Accordions in Accordions verschachteln",
+      "dont3":        "Trigger-Button nicht mit zusätzlichem onClick für andere Aktionen überladen",
+      "doNote":       "Accordion für optionale Zusatzinfos — nicht für Pflichtinformationen.",
+      "dontNote":     "Kein Accordion als Ersatz für Tabs oder Navigation."
+    },
+    "code": {
+      "title":         "Code-Beispiele",
+      "baseTitle":     "Basis-Accordion (Single)",
+      "baseDesc":      "items-Array mit id, title und content. allowMultiple=false ist der Standard.",
+      "multipleTitle": "Multiple-Mode",
+      "multipleDesc":  "allowMultiple=true erlaubt mehrere gleichzeitig geöffnete Items.",
+      "jsxTitle":      "JSX als Item-Content",
+      "jsxDesc":       "content kann beliebiges JSX enthalten — nicht nur plain text."
+    },
+    "a11y": {
+      "title":         "Accessibility",
+      "intro":         "Accordion basiert auf Radix UI und implementiert das WAI-ARIA Disclosure Pattern: role=\"button\" auf dem Trigger, aria-expanded für den Zustand.",
+      "keyboardTitle": "Keyboard-Navigation",
+      "k1":            "Tab — nächsten AccordionTrigger fokussieren",
+      "k2":            "Enter / Space — fokussierten Trigger öffnen oder schließen",
+      "k3":            "Shift+Tab — vorherigen Trigger fokussieren",
+      "k4":            "ArrowUp / ArrowDown — zwischen Triggern navigieren (Radix-Verhalten)",
+      "roleTitle":     "role=\"button\" auf Trigger",
+      "roleBody":      "AccordionTrigger hat role=\"button\" (nicht role=\"tab\") — Screen-Reader kündigen den Trigger als Button an, nicht als Tab.",
+      "expandedTitle": "aria-expanded",
+      "expandedBody":  "Geöffnete Trigger haben aria-expanded=\"true\", geschlossene aria-expanded=\"false\". Screen-Reader lesen den Zustand beim Fokussieren vor.",
+      "focusTitle":    "Fokus-Management",
+      "focusBody":     "Trigger bleiben nach dem Öffnen oder Schließen fokussiert. Der Content-Bereich selbst ist nicht fokussierbar — Inhalte darin (Links, Buttons) sind es."
+    }
   }
 }

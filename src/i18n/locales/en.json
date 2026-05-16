@@ -1196,5 +1196,203 @@
       "focusTitle":   "Focus Management",
       "focusBody":    "When a tab is activated, the associated TabsContent does not receive focus automatically. If the content should be focusable, call focus() programmatically."
     }
+  },
+
+  "navigation": {
+    "page": {
+      "description": "Breadcrumb for hierarchical path display and Pagination for page-by-page navigation through data lists."
+    },
+    "overview": {
+      "breadcrumbTitle": "Breadcrumb",
+      "breadcrumbBody":  "Breadcrumb shows the current location in the page hierarchy and enables navigation to parent levels.",
+      "ban1":            "Items — array of { label, href? }, the last item has no href (current page)",
+      "ban2":            "Separator — visual divider between levels (/ slash)",
+      "ban3":            "BreadcrumbLink — clickable link to parent levels",
+      "ban4":            "BreadcrumbPage — non-linked label of the current page (bold)",
+      "paginationTitle": "Pagination",
+      "paginationBody":  "Pagination enables page-by-page navigation through large datasets. When more than 7 pages exist, middle pages are replaced with ellipsis.",
+      "pan1":            "current — current page number (controlled prop)",
+      "pan2":            "total — total number of pages",
+      "pan3":            "onChange — callback with the new page number",
+      "pan4":            "Ellipsis logic: ≤ 7 pages = all; > 7 = ellipsis pattern depending on current",
+      "paginationDemoLabel": "Current page:"
+    },
+    "usage": {
+      "title":                 "When to use?",
+      "intro":                 "Breadcrumb and Pagination are independent navigation aids — Breadcrumb for hierarchies, Pagination for data lists.",
+      "whenBreadcrumbTitle":   "Breadcrumb",
+      "whenBreadcrumbBody":    "Use Breadcrumb only when the page is at least 3 hierarchy levels deep. On flat structures (Home → Page) Breadcrumb is overkill.",
+      "whenPaginationTitle":   "Pagination",
+      "whenPaginationBody":    "Pagination for lists with more than ~20 entries loaded page by page. For small amounts or infinite scroll, Pagination is not suitable.",
+      "doTitle":               "Do",
+      "dontTitle":             "Don't",
+      "do1":                   "Leave the last Breadcrumb item without href (current page cannot be linked)",
+      "do2":                   "Manage Pagination state with useState outside the component",
+      "do3":                   "Place Breadcrumb and Pagination semantically inside a nav element",
+      "dont1":                 "Don't use Breadcrumb on flat single-level pages",
+      "dont2":                 "Don't combine Pagination with infinite scroll",
+      "dont3":                 "Don't display all page numbers for very many pages — use the ellipsis pattern",
+      "doNote":                "Breadcrumb: make hierarchy visible. Pagination: control data volume.",
+      "dontNote":              "Don't add redundant navigation."
+    },
+    "code": {
+      "title":                      "Code Examples",
+      "breadcrumbTitle":            "Breadcrumb with 3 items",
+      "breadcrumbDesc":             "items array: all items except the last have href — the last item is the current page.",
+      "paginationControlledTitle":  "Controlled Pagination",
+      "paginationControlledDesc":   "State lives in the parent component — onChange updates current and loads data for the new page.",
+      "paginationFewTitle":         "Pagination — few pages",
+      "paginationFewDesc":          "With ≤ 7 pages all page numbers are displayed, no ellipsis."
+    },
+    "a11y": {
+      "title":        "Accessibility",
+      "intro":        "Both components use a semantic nav element with aria-label to communicate the purpose of the navigation to screen readers.",
+      "keyboardTitle":"Keyboard Navigation",
+      "k1":           "Tab — focus the next focusable link or button",
+      "k2":           "Enter — activate the link or button",
+      "k3":           "Shift+Tab — focus the previous focusable element",
+      "navTitle":     "nav aria-label",
+      "navBody":      "The Breadcrumb component is wrapped in a nav element with an implicit landmark. Pagination has aria-label=\"Pagination\". Screen readers can distinguish between navigation areas.",
+      "currentTitle": "aria-current=\"page\"",
+      "currentBody":  "The active Pagination button has aria-current=\"page\". The last Breadcrumb item is marked as BreadcrumbPage — screen readers recognize the current page.",
+      "srTitle":      "Prev/Next Buttons",
+      "srBody":       "The Prev/Next buttons have aria-label=\"Previous page\" and aria-label=\"Next page\" — more meaningful than just ← / →."
+    }
+  },
+
+  "overlays": {
+    "page": {
+      "description": "Modal dialog for confirmations, forms, and detail views — locks the background and manages focus automatically."
+    },
+    "overview": {
+      "anatomyTitle": "Anatomy",
+      "anatomyBody":  "The Modal is based on Radix UI Dialog and consists of five sections:",
+      "an1":          "Overlay — semi-transparent background; clicking it closes the modal",
+      "an2":          "DialogContent — white panel, centered, with configurable width (size prop)",
+      "an3":          "DialogHeader — title row at the top of the modal",
+      "an4":          "children — main content: text, forms, or other components",
+      "an5":          "DialogFooter — optional action row at the bottom (footer prop)",
+      "demoTitle":    "Live Demo — all 3 sizes",
+      "demoBody":     "Open modals via button. Close via Escape, overlay click, or the close button.",
+      "demoSm":       "Open small",
+      "demoMd":       "Open medium",
+      "demoLg":       "Open large",
+      "demoSmTitle":  "Short Confirmation",
+      "demoSmBody":   "This modal uses size=\"sm\" — max width 384 px. Suitable for brief confirmations.",
+      "demoMdTitle":  "Standard Dialog",
+      "demoMdBody":   "size=\"md\" is the default — max width 512 px. For forms and medium-length content.",
+      "demoLgTitle":  "Large Detail View",
+      "demoLgBody":   "size=\"lg\" — max width 672 px. For complex content, tables, or extensive forms.",
+      "close":        "Close",
+      "cancel":       "Cancel",
+      "confirm":      "Confirm"
+    },
+    "usage": {
+      "title":         "When to use Modal?",
+      "intro":         "Modals interrupt the workflow — only use them when a direct user response is required.",
+      "whenTitle":     "Good use cases",
+      "when1":         "Confirmation dialogs for irreversible actions (Delete, Publish)",
+      "when2":         "Forms that require a standalone context (Invite, Create)",
+      "when3":         "Detail views that should be accessible without a page change",
+      "whenNotTitle":  "When not to use?",
+      "whenNotBody":   "Don't use Modal for simple status messages — use the Alert component. Don't use Modal for complex navigation or multi-step workflows — prefer a dedicated page or Stepper.",
+      "doTitle":       "Do",
+      "dontTitle":     "Don't",
+      "do1":           "Use a clear title that names the action (e.g. 'Delete entry?')",
+      "do2":           "Always offer a way to close: X button, Escape, overlay click",
+      "do3":           "Match modal size to content (sm for confirmations, lg for forms)",
+      "dont1":         "Don't open modals inside modals",
+      "dont2":         "No auto-close without user action for critical dialogs",
+      "dont3":         "Don't put long body text without a scroll container in the modal",
+      "doNote":        "Modals for decisions — not for information.",
+      "dontNote":      "No modal for messages the user doesn't need to confirm."
+    },
+    "code": {
+      "title":        "Code Examples",
+      "baseTitle":    "Basic Modal",
+      "baseDesc":     "Minimal modal: open state, onClose handler, title, and children.",
+      "confirmTitle": "Confirmation Dialog with Footer",
+      "confirmDesc":  "footer prop for action buttons — Cancel on the left, destructive action on the right.",
+      "sizeTitle":    "Modal Sizes",
+      "sizeDesc":     "size prop: sm (384px), md (512px, default), lg (672px)."
+    },
+    "a11y": {
+      "title":        "Accessibility",
+      "intro":        "Radix UI Dialog fully implements the WAI-ARIA Dialog Pattern: focus trapping, Escape, role=\"dialog\", aria-modal.",
+      "keyboardTitle":"Keyboard",
+      "k1":           "Escape — close the modal",
+      "k2":           "Tab / Shift+Tab — cycle focus within the modal (focus trap)",
+      "k3":           "Click on overlay — close the modal",
+      "focusTitle":   "Focus Management",
+      "focusBody":    "When opened, focus jumps automatically into the modal (first focusable element). When closed, focus returns to the triggering button.",
+      "roleTitle":    "role=\"dialog\" + aria-modal",
+      "roleBody":     "DialogContent has role=\"dialog\" and aria-modal=\"true\". Screen readers know the background is inactive and only read the modal content.",
+      "overlayTitle": "Overlay Click",
+      "overlayBody":  "Clicking the overlay closes the modal via onOpenChange. This behavior can be disabled by removing the handler (e.g. for mandatory dialogs).",
+      "wcagTitle":    "WCAG 2.4.3 Focus Order",
+      "wcagBody":     "The modal dialog follows a logical Tab order: first focusable content → footer buttons → X button. No focus escapes outside the modal."
+    }
+  },
+
+  "accordion": {
+    "page": {
+      "description": "Expandable content sections — single or multiple open simultaneously (allowMultiple)."
+    },
+    "overview": {
+      "anatomyTitle":  "Anatomy",
+      "anatomyBody":   "Accordion renders a list of AccordionItems, each with a trigger button and a collapsible content area.",
+      "an1":           "AccordionItem — container for one expandable element, identified by id",
+      "an2":           "AccordionTrigger — clickable button with title and chevron icon",
+      "an3":           "AccordionContent — expanded content area, animated (height 0 → auto)",
+      "an4":           "allowMultiple — false (default): only one item open; true: multiple simultaneously",
+      "singleTitle":   "Single Mode (Default)",
+      "singleBody":    "allowMultiple=false: opening one item automatically closes the previous. Ideal for FAQ or structured sections.",
+      "multipleTitle": "Multiple Mode",
+      "multipleBody":  "allowMultiple=true: multiple items can be open simultaneously. Suitable for feature lists or independent sections."
+    },
+    "usage": {
+      "title":        "When to use Accordion?",
+      "intro":        "Accordion suits optional details that don't always need to be visible — and that would otherwise make the page too long.",
+      "whenTitle":    "Good use cases",
+      "when1":        "FAQ sections — questions and answers structured clearly",
+      "when2":        "Settings pages with many categories rarely needed simultaneously",
+      "when3":        "Product descriptions with optional additional info (technical specs, shipping)",
+      "whenNotTitle": "When not to use?",
+      "whenNotBody":  "Don't use Accordion for content that should always be visible. Not for step-by-step processes (→ Stepper). Don't use Accordion when all sections need to be compared simultaneously.",
+      "doTitle":      "Do",
+      "dontTitle":    "Don't",
+      "do1":          "Write clear, descriptive trigger titles — the user decides to expand based on the title",
+      "do2":          "Single mode for FAQ and structured sections, multiple mode for independent features",
+      "do3":          "Pass JSX as content prop when the content is more than plain text",
+      "dont1":        "Don't use Accordion for content the user always needs — don't hide important information",
+      "dont2":        "Don't nest accordions inside accordions",
+      "dont3":        "Don't overload the trigger button with additional onClick actions",
+      "doNote":       "Accordion for optional additional info — not for required information.",
+      "dontNote":     "No Accordion as a replacement for Tabs or Navigation."
+    },
+    "code": {
+      "title":         "Code Examples",
+      "baseTitle":     "Basic Accordion (Single)",
+      "baseDesc":      "items array with id, title, and content. allowMultiple=false is the default.",
+      "multipleTitle": "Multiple Mode",
+      "multipleDesc":  "allowMultiple=true allows multiple items open simultaneously.",
+      "jsxTitle":      "JSX as Item Content",
+      "jsxDesc":       "content can contain any JSX — not just plain text."
+    },
+    "a11y": {
+      "title":         "Accessibility",
+      "intro":         "Accordion is based on Radix UI and implements the WAI-ARIA Disclosure Pattern: role=\"button\" on the trigger, aria-expanded for state.",
+      "keyboardTitle": "Keyboard Navigation",
+      "k1":            "Tab — focus the next AccordionTrigger",
+      "k2":            "Enter / Space — open or close the focused trigger",
+      "k3":            "Shift+Tab — focus the previous trigger",
+      "k4":            "ArrowUp / ArrowDown — navigate between triggers (Radix behavior)",
+      "roleTitle":     "role=\"button\" on Trigger",
+      "roleBody":      "AccordionTrigger has role=\"button\" (not role=\"tab\") — screen readers announce the trigger as a button, not a tab.",
+      "expandedTitle": "aria-expanded",
+      "expandedBody":  "Open triggers have aria-expanded=\"true\", closed ones aria-expanded=\"false\". Screen readers read out the state when focusing.",
+      "focusTitle":    "Focus Management",
+      "focusBody":     "Triggers remain focused after opening or closing. The content area itself is not focusable — elements inside it (links, buttons) are."
+    }
   }
 }
