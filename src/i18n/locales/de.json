@@ -808,5 +808,194 @@
       "screenReaderTitle": "Screen-Reader-Verhalten",
       "screenReaderBody":  "Der ausgewählte Wert wird beim Schließen des Dropdowns angekündigt. Für Labels ohne sichtbaren Text aria-label am Trigger-Element setzen."
     }
+  },
+
+  "toggle": {
+    "page": {
+      "description": "Toggle-Switch, Checkbox und Radio-Button — drei Steuerelemente für binäre und Einfachauswahl."
+    },
+    "overview": {
+      "toggleTitle":   "Toggle (Switch)",
+      "toggleBody":    "Ein Toggle-Switch schaltet sofort zwischen zwei Zuständen um — ohne Formular-Submit. Er eignet sich für Einstellungen, die unmittelbar wirksam werden.",
+      "an1":           "Track — der Hintergrundstreifen zeigt den Gesamtzustand (ein/aus)",
+      "an2":           "Knob — der gleitende Kreis zeigt die aktuelle Position",
+      "an3":           "Label — optionaler Text rechts neben dem Switch",
+      "checkboxTitle": "Checkbox",
+      "checkboxBody":  "Eine Checkbox ermöglicht Mehrfachauswahl in einem Formular. Jede Option ist unabhängig und kann einzeln aktiviert oder deaktiviert werden.",
+      "can1":          "Box — das visuell umrahmte Auswahlfeld",
+      "can2":          "Checkmark — das Häkchen-Icon im aktivierten Zustand",
+      "can3":          "Label — beschreibt die einzelne Option",
+      "radioTitle":    "Radio",
+      "radioBody":     "Ein Radio-Button gehört immer zu einer Gruppe (name-Attribut). Nur eine Option kann gleichzeitig ausgewählt sein.",
+      "ran1":          "Circle — der äußere Ring, sichtbar in allen Zuständen",
+      "ran2":          "Dot — der innere ausgefüllte Punkt im aktivierten Zustand",
+      "ran3":          "Label — beschreibt die einzelne Radio-Option",
+      "demoTitle":     "Live-Demo",
+      "demoBody":      "Alle drei Komponenten in Default-, Checked- und Disabled-Zustand."
+    },
+    "usage": {
+      "title":       "Wann welche Komponente",
+      "intro":       "Toggle, Checkbox und Radio überschneiden sich in der Funktion — die richtige Wahl hängt von Sofortwirkung, Mehrfachauswahl und Gruppen-Kontext ab.",
+      "whenTitle":   "Entscheidungshilfe",
+      "toggleWhen":  "Toggle — wenn eine Einstellung sofort wirksam wird (z. B. Dark Mode, Benachrichtigungen ein/aus)",
+      "checkboxWhen":"Checkbox — wenn mehrere Optionen gleichzeitig auswählbar sind oder eine Zustimmung nötig ist (z. B. AGB akzeptieren)",
+      "radioWhen":   "Radio — wenn genau eine Option aus einer Gruppe gewählt werden muss (z. B. Zahlungsart)",
+      "doTitle":     "Do",
+      "dontTitle":   "Don't",
+      "do1":         "Toggle für sofort wirksame Einstellungen ohne Submit",
+      "do2":         "Checkbox für Mehrfachauswahl und Zustimmungsfelder",
+      "do3":         "Radio-Gruppe immer mit gemeinsamen name-Attribut verwenden",
+      "do4":         "Jedes Steuerelement mit sichtbarem Label versehen",
+      "dont1":       "Keinen Toggle für Formular-Daten verwenden, die erst bei Submit gesendet werden",
+      "dont2":       "Keine Radio-Buttons für Mehrfachauswahl — dafür Checkboxen",
+      "dont3":       "Nicht mehr als 6–7 Radio-Optionen — ab dann Select bevorzugen",
+      "dont4":       "Keine Labels weglassen — Screen-Reader und Maus-Nutzer brauchen klickbare Bereiche",
+      "doNote":      "Sofortwirkung und klare Semantik verbessern die Bedienbarkeit.",
+      "dontNote":    "Falsche Komponente führt zu Verwirrung über das Speicherverhalten."
+    },
+    "code": {
+      "title":          "Code",
+      "toggleTitle":    "Toggle — controlled und uncontrolled",
+      "toggleDesc":     "Ohne checked-Prop verwaltet der Toggle seinen State intern. Mit checked und onChange wird er controlled.",
+      "checkboxTitle":  "Checkbox-Gruppe",
+      "checkboxDesc":   "Mehrere Checkboxen teilen keinen gemeinsamen State — jede ist eigenständig. Den internen State per onChange-Handler aggregieren.",
+      "radioTitle":     "Radio-Gruppe",
+      "radioDesc":      "Alle Radios einer Gruppe teilen denselben name-Wert. Nur der ausgewählte Radio hat checked={true}."
+    },
+    "a11y": {
+      "title":         "Accessibility",
+      "intro":         "Toggle, Checkbox und Radio sind native Interaktionselemente — Radix UI und shadcn/ui stellen korrekte ARIA-Semantik sicher, solange Labels korrekt verknüpft sind.",
+      "keyboardTitle": "Keyboard-Navigation",
+      "keyboardBody":  "Alle drei Komponenten sind vollständig per Tastatur bedienbar.",
+      "k1":            "Tab — fokussiert Toggle oder Checkbox; bei Radio fokussiert die gesamte Gruppe",
+      "k2":            "Space — aktiviert / deaktiviert fokussierten Toggle oder Checkbox",
+      "k3":            "Arrow Up / Down — wechselt Selection innerhalb einer Radio-Gruppe",
+      "k4":            "Enter — nicht standardmäßig für Toggle/Checkbox (Browser-abhängig)",
+      "ariaTitle":     "ARIA-Rollen",
+      "ariaBody":      "Toggle → role=\"switch\", Checkbox → role=\"checkbox\", Radio → role=\"radio\". Alle Rollen werden von Radix UI und shadcn/ui automatisch gesetzt.",
+      "labelTitle":    "Label-Pflicht",
+      "labelBody":     "Jedes Steuerelement braucht ein verknüpftes Label. Ohne label-Prop aria-label am Element setzen. Nie nur Icon ohne Textbeschreibung verwenden."
+    }
+  },
+
+  "badges": {
+    "page": {
+      "description": "Badge — ein kompaktes Status- oder Kategorie-Label in fünf Varianten und zwei Größen."
+    },
+    "overview": {
+      "anatomyTitle":  "Anatomie",
+      "anatomyBody":   "Ein Badge besteht aus einem farbigen Container mit abgerundeten Ecken, optionalem Dot-Indikator und kurzem Textlabel.",
+      "an1":           "Container — die abgerundete Pille mit Varianten-Hintergrundfarbe",
+      "an2":           "Dot — optionaler farbiger Kreis als Status-Indikator links vom Label",
+      "an3":           "Label — kurzer Text, typischerweise 1–2 Wörter",
+      "variantsTitle": "Varianten",
+      "variantsBody":  "Fünf semantische Varianten: neutral, accent, success, warning, error.",
+      "sizesTitle":    "Größen",
+      "sizesBody":     "sm (Standard, h-5) für kompakte Kontexte wie Tabellen; md (h-6) für prominentere Platzierung.",
+      "dotTitle":      "Dot-Variante",
+      "dotBody":       "Mit dot={true} wird ein farbiger Punkt links vom Label angezeigt — hilfreich für Status-Anzeigen.",
+      "tagTitle":      "Tag (entfernbar)",
+      "tagBody":       "Tag ist eine verwandte Komponente für entfernbare Labels, z. B. in Filter-Feldern oder Multi-Select-Inputs."
+    },
+    "usage": {
+      "title":     "Einsatz",
+      "intro":     "Badges kennzeichnen Status, Kategorie oder Zähler. Sie sind rein informativ und lösen keine Aktion aus.",
+      "whenTitle": "Typische Einsatzbereiche",
+      "when1":     "Status-Labels in Tabellen (z. B. Aktiv / Inaktiv / Ausstehend)",
+      "when2":     "Kategorie-Tags in Listen oder Karten",
+      "when3":     "Zähler in Navigation oder Tabs (z. B. \"12 offen\")",
+      "when4":     "Entfernbare Filter-Tags in Such- und Filterkomponenten (→ Tag-Komponente)",
+      "doTitle":   "Do",
+      "dontTitle": "Don't",
+      "do1":       "Variante semantisch wählen: success für Erfolg, error für Fehler, warning für Warnung",
+      "do2":       "Kurzen, präzisen Text wählen — maximal 2–3 Wörter",
+      "do3":       "Dot-Variante für Status-Anzeigen nutzen",
+      "dont1":     "Badge nicht für anklickbare Aktionen verwenden — dafür Button",
+      "dont2":     "Bedeutung nicht allein durch Farbe übermitteln — Text ist Pflicht",
+      "dont3":     "Kein langer Text in Badges — bei mehr als 3 Wörtern alternatives Element wählen",
+      "doNote":    "Badges sind informativ, nicht interaktiv.",
+      "dontNote":  "Farbe allein reicht nicht für barrierefreie Bedeutungsvermittlung."
+    },
+    "code": {
+      "title":         "Code",
+      "variantsTitle": "Alle Varianten",
+      "variantsDesc":  "Die variant-Prop bestimmt Farbe und Semantik. Standard ist neutral.",
+      "sizesTitle":    "Größen",
+      "sizesDesc":     "size=\"sm\" ist Standard (h-5). size=\"md\" für größere Darstellung (h-6).",
+      "dotTitle":      "Dot-Badge",
+      "dotDesc":       "dot={true} fügt einen farbigen Punkt links vom Label ein.",
+      "tagTitle":      "Tag (entfernbar)",
+      "tagDesc":       "Tag mit onRemove-Callback — der Button zeigt ein X-Icon und löst das Entfernen aus."
+    },
+    "a11y": {
+      "title":        "Accessibility",
+      "intro":        "Badges sind rein visuelle Labels. Die Bedeutung muss auch ohne Farbe erkennbar sein.",
+      "colorTitle":   "Farbe ist nicht alleiniger Indikator",
+      "colorBody":    "Der Text des Badge muss die Bedeutung selbst tragen (z. B. \"Aktiv\" statt nur grüner Punkt). Nie ausschließlich Farbe zur Bedeutungsvermittlung nutzen.",
+      "ariaTitle":    "aria-label für Dot-only Badges",
+      "ariaBody":     "Falls ein Badge nur einen Dot ohne Text enthält, aria-label am Element setzen: aria-label=\"Status: Aktiv\".",
+      "contextTitle": "Kontext-Ankündigung",
+      "contextBody":  "In Tabellenzellen oder Listen sollte der umgebende Text den Badge-Wert in Relation setzen, damit Screen-Reader ihn korrekt vorlesen."
+    }
+  },
+
+  "alerts": {
+    "page": {
+      "description": "Alert — eine inline Statusmeldung in vier semantischen Varianten für Informationen, Erfolg, Warnung und Fehler."
+    },
+    "overview": {
+      "anatomyTitle":  "Anatomie",
+      "anatomyBody":   "Ein Alert besteht aus Icon, optionalem Titel und Nachrichtentext — eingebettet in einen farbigen, semantisch gestalteten Container.",
+      "an1":           "Icon — symbolisiert die Variante: ℹ (info), ✓ (success), ⚠ (warning), ✕ (error)",
+      "an2":           "Titel — optional, fett gesetzt; fasst die Meldung zusammen",
+      "an3":           "Nachricht — der eigentliche Hinweistext (children-Prop)",
+      "an4":           "Container — farbige Hintergrundfläche mit passender Borderfarbe",
+      "variantsTitle": "Varianten",
+      "variantsBody":  "Vier semantische Varianten: info (blau), success (grün), warning (gelb), error (rot). Jede hat eigene Icon-, Hintergrund- und Borderfarbe."
+    },
+    "usage": {
+      "title":          "Einsatz",
+      "intro":          "Alerts geben dem Nutzer direkt sichtbares Feedback auf Aktionen oder systemseitige Ereignisse — inline auf der Seite, nicht als flüchtige Toast-Meldung.",
+      "variantTitle":   "Wann welche Variante",
+      "infoWhen":       "info — allgemeine Hinweise, neutrale Systemmeldungen, Erklärungen",
+      "successWhen":    "success — erfolgreiche Aktionen (Speichern, Senden, Abschließen)",
+      "warningWhen":    "warning — reversible Risiken, veraltete Daten, bald ablaufende Sitzungen",
+      "errorWhen":      "error — Fehler, fehlgeschlagene Aktionen, Validierungsfehler",
+      "placementTitle": "Platzierung",
+      "placementBody":  "Alerts erscheinen inline im Inhaltsbereich — direkt über dem betroffenen Formularbereich oder am Anfang einer Seite. Für flüchtige Benachrichtigungen ist Toast besser geeignet.",
+      "doTitle":        "Do",
+      "dontTitle":      "Don't",
+      "do1":            "Variante semantisch wählen — error nur für echte Fehler, nicht für Hinweise",
+      "do2":            "Kurzen, aktionsorientierten Text schreiben — was ist passiert, was tun?",
+      "do3":            "Titel verwenden, wenn die Meldung mehr als einen Satz umfasst",
+      "dont1":          "Alert nicht als dekoratives Element einsetzen",
+      "dont2":          "Keinen langen Fließtext im Alert — maximal 2–3 Sätze",
+      "dont3":          "Alert nicht für Erfolgs-Feedback nach Form-Submit — Toast ist sichtbarer",
+      "doNote":         "Klare, handlungsorientierte Meldungen helfen Nutzern schnell zu reagieren.",
+      "dontNote":       "Zu viele Alerts auf einer Seite führen zu Alert-Fatigue."
+    },
+    "code": {
+      "title":         "Code",
+      "variantsTitle": "Alle vier Varianten",
+      "variantsDesc":  "Die variant-Prop bestimmt Icon, Hintergrundfarbe und Borderfarbe automatisch.",
+      "noTitleTitle":  "Alert ohne Titel",
+      "noTitleDesc":   "Der title-Prop ist optional. Ohne Titel wird nur der children-Text angezeigt.",
+      "inlineTitle":   "Inline-Feedback im Formular",
+      "inlineDesc":    "Alert direkt über dem Formular oder nach dem Submit-Button für Fehler- und Erfolgs-Feedback.",
+      "toastTitle":    "Toast (Hinweis)",
+      "toastDesc":     "Toast ist eine separate Komponente für flüchtige Meldungen. Sie erscheint typischerweise am Bildschirmrand und verschwindet nach kurzer Zeit."
+    },
+    "a11y": {
+      "title":      "Accessibility",
+      "intro":      "Alerts sind inline und sofort sichtbar. Für dynamisch eingefügte Alerts ist Live-Region-Support entscheidend.",
+      "roleTitle":  "role=\"alert\"",
+      "roleBody":   "Die Alert-Komponente setzt automatisch role=\"alert\". Screen-Reader kündigen den Inhalt sofort an, wenn er ins DOM eingefügt wird.",
+      "colorTitle": "Farbe ist nicht alleiniger Indikator",
+      "colorBody":  "Jede Variante kombiniert Icon, Farbe und Text — Farbenblinde erkennen die Variante am Icon und am Inhalt, nicht allein an der Farbe.",
+      "focusTitle": "Fokus-Management",
+      "focusBody":  "Alerts erhalten keinen Fokus automatisch. Bei kritischen Fehlermeldungen focus() programmatisch auf den Alert-Container setzen.",
+      "k1":         "Tab — Alert-Container per tabIndex={0} fokussierbar machen",
+      "k2":         "Screen-Reader — liest role=\"alert\" Inhalt sofort bei DOM-Einfügung vor"
+    }
   }
 }
