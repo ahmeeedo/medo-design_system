@@ -58,7 +58,7 @@ function loadSidebarState() {
 
 const ICON_BTN = 'flex items-center justify-center w-9 h-9 rounded-[var(--radius-md)] text-[var(--color-text-primary)] cursor-pointer transition-[background] duration-[var(--duration-fast)] ease-[var(--ease-out)] hover:bg-[var(--color-neutral-100)] bg-transparent border-0 outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-focus-500)] focus-visible:ring-offset-1'
 
-const NAV_LINK_BASE = 'block w-full px-[var(--space-5)] py-[var(--space-2)] [font-family:var(--font-sans)] text-sm text-left no-underline cursor-pointer transition-[color,background,border-color] duration-[var(--duration-fast)] ease-[var(--ease-out)] bg-transparent border-0 border-l-2 outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[var(--color-focus-500)]'
+const NAV_LINK_BASE = 'block w-full px-[var(--space-5)] py-[var(--space-2)] [font-family:var(--font-sans)] text-sm text-left no-underline cursor-pointer transition-[color,background,border-color] duration-[var(--duration-fast)] ease-[var(--ease-out)] border-0 border-l-2 outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[var(--color-focus-500)]'
 const NAV_LINK_ACTIVE = 'text-[var(--color-text-primary)] [font-weight:var(--weight-semibold)] bg-[var(--surface_selected)] border-l-[var(--color-brand-primary-500)]'
 const NAV_LINK_INACTIVE = 'text-[var(--color-text-secondary)] [font-weight:var(--weight-regular)] border-l-transparent hover:text-[var(--color-text-primary)] hover:bg-[var(--surface_200)]'
 
