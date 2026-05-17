@@ -3,7 +3,6 @@ import { PageLayout, Section, Content, GridWrapper, Grid } from '../docs/PageLay
 import { TokensTable } from '../docs/TokensTable'
 import { CodeBlock } from '../docs/CodeBlock'
 import { TypeRow } from '../docs/helpers'
-import styles from '../App.module.css'
 
 export default function TypographyPage() {
   const { t } = useTranslation()
@@ -80,11 +79,11 @@ export default function TypographyPage() {
               </Section>
 
               <Section title={t('typography.overview.fontsTitle')}>
-                <h3 className={styles.groupTitle}>DM Sans</h3>
+                <h3 className="text-2xl mb-[var(--space-4)] text-[var(--color-text-tertiary)]">DM Sans</h3>
                 <Content>
                   <p>{t('typography.overview.sansBody')}</p>
                 </Content>
-                <h3 className={styles.groupTitle}>DM Mono</h3>
+                <h3 className="text-2xl mb-[var(--space-4)] text-[var(--color-text-tertiary)]">DM Mono</h3>
                 <Content>
                   <p>{t('typography.overview.monoBody')}</p>
                 </Content>
@@ -127,12 +126,12 @@ export default function TypographyPage() {
                   <p>{t('typography.usage.intro')}</p>
                 </Content>
 
-                <h3 className={styles.groupTitle}>{t('typography.usage.headingTitle')}</h3>
+                <h3 className="text-2xl mb-[var(--space-4)] text-[var(--color-text-tertiary)]">{t('typography.usage.headingTitle')}</h3>
                 <Content>
                   <p>{t('typography.usage.headingBody')}</p>
                 </Content>
 
-                <h3 className={styles.groupTitle}>{t('typography.usage.headingContextTitle')}</h3>
+                <h3 className="text-2xl mb-[var(--space-4)] text-[var(--color-text-tertiary)]">{t('typography.usage.headingContextTitle')}</h3>
                 <Content>
                   <ul>
                     <li>{t('typography.usage.headingH1')}</li>
@@ -142,27 +141,27 @@ export default function TypographyPage() {
                   </ul>
                 </Content>
 
-                <h3 className={styles.groupTitle}>{t('typography.usage.bodyTitle')}</h3>
+                <h3 className="text-2xl mb-[var(--space-4)] text-[var(--color-text-tertiary)]">{t('typography.usage.bodyTitle')}</h3>
                 <Content>
                   <p>{t('typography.usage.bodyBody')}</p>
                 </Content>
 
-                <h3 className={styles.groupTitle}>{t('typography.usage.labelTitle')}</h3>
+                <h3 className="text-2xl mb-[var(--space-4)] text-[var(--color-text-tertiary)]">{t('typography.usage.labelTitle')}</h3>
                 <Content>
                   <p>{t('typography.usage.labelBody')}</p>
                 </Content>
 
-                <h3 className={styles.groupTitle}>{t('typography.usage.codeTitle')}</h3>
+                <h3 className="text-2xl mb-[var(--space-4)] text-[var(--color-text-tertiary)]">{t('typography.usage.codeTitle')}</h3>
                 <Content>
                   <p>{t('typography.usage.codeBody')}</p>
                 </Content>
 
-                <h3 className={styles.groupTitle}>{t('typography.usage.lineLengthTitle')}</h3>
+                <h3 className="text-2xl mb-[var(--space-4)] text-[var(--color-text-tertiary)]">{t('typography.usage.lineLengthTitle')}</h3>
                 <Content>
                   <p>{t('typography.usage.lineLengthBody')}</p>
                 </Content>
 
-                <h3 className={styles.groupTitle}>{t('typography.usage.formattingTitle')}</h3>
+                <h3 className="text-2xl mb-[var(--space-4)] text-[var(--color-text-tertiary)]">{t('typography.usage.formattingTitle')}</h3>
                 <Content>
                   <p>{t('typography.usage.formattingBody')}</p>
                 </Content>
@@ -232,7 +231,7 @@ export default function TypographyPage() {
           content: (
             <>
               <Section title={t('typography.code.title')}>
-                <h3 className={styles.groupTitle}>{t('typography.code.cssTitle')}</h3>
+                <h3 className="text-2xl mb-[var(--space-4)] text-[var(--color-text-tertiary)]">{t('typography.code.cssTitle')}</h3>
                 <Content>
                   <p>{t('typography.code.cssDesc')}</p>
                 </Content>
@@ -273,7 +272,7 @@ code {
   border-radius: var(--radius-sm);
 }`}</CodeBlock>
 
-                <h3 className={styles.groupTitle}>{t('typography.code.tailwindTitle')}</h3>
+                <h3 className="text-2xl mb-[var(--space-4)] text-[var(--color-text-tertiary)]">{t('typography.code.tailwindTitle')}</h3>
                 <Content>
                   <p>{t('typography.code.tailwindDesc')}</p>
                 </Content>
@@ -302,7 +301,7 @@ code {
   npm install
 </code>`}</CodeBlock>
 
-                <h3 className={styles.groupTitle}>{t('typography.code.jsxTitle')}</h3>
+                <h3 className="text-2xl mb-[var(--space-4)] text-[var(--color-text-tertiary)]">{t('typography.code.jsxTitle')}</h3>
                 <Content>
                   <p>{t('typography.code.jsxDesc')}</p>
                 </Content>

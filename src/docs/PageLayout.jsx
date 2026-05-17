@@ -245,7 +245,7 @@ export function Content({ children, className }) {
   return (
     <div
       className={[
-        'mb-[var(--space-8)] [&_ul]:pl-[var(--space-5)] [&_ol]:pl-[var(--space-5)] [&_li]:pl-[var(--space-2)] [&_strong]:[font-weight:var(--weight-semibold)] [&_strong]:text-[var(--color-text-primary)] [&_a]:text-[var(--color-link-primary)] [&_a]:underline [&_a]:[text-underline-offset:3px] [&_a:hover]:text-[var(--color-link-primary-hover)]',
+        'mb-[var(--space-8)] [&_ul]:pl-[var(--space-5)] [&_ol]:pl-[var(--space-5)] [&_li]:pl-[var(--space-2)] [&_ul]:list-disc [&_ol]:list-decimal [&_strong]:[font-weight:var(--weight-semibold)] [&_strong]:text-[var(--color-text-primary)] [&_a]:text-[var(--color-link-primary)] [&_a]:underline [&_a]:[text-underline-offset:3px] [&_a:hover]:text-[var(--color-link-primary-hover)]',
         className,
       ].filter(Boolean).join(' ')}
     >

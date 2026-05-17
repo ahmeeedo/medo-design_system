@@ -129,7 +129,7 @@ export default function ColorsPage() {
                 <Content>
                   <p>{t('colors.overview.aboutBody')}</p>
                 </Content>
-                <h3 className={styles.groupTitle}>{t('colors.overview.principlesTitle')}</h3>
+                <h3 className="text-2xl mb-[var(--space-4)] text-[var(--color-text-tertiary)]">{t('colors.overview.principlesTitle')}</h3>
                 <Content>
                   <p><strong>{t('colors.overview.p1Title')}</strong></p>
                   <p>{t('colors.overview.p1Body')}</p>
@@ -145,13 +145,13 @@ export default function ColorsPage() {
               </Section>
 
               <Section title={t('colors.overview.theoryTitle')}>
-                <h3 className={styles.groupTitle}>{t('colors.overview.t1Title')}</h3>
+                <h3 className="text-2xl mb-[var(--space-4)] text-[var(--color-text-tertiary)]">{t('colors.overview.t1Title')}</h3>
                 <Content><p>{t('colors.overview.t1Body')}</p></Content>
-                <h3 className={styles.groupTitle}>{t('colors.overview.t2Title')}</h3>
+                <h3 className="text-2xl mb-[var(--space-4)] text-[var(--color-text-tertiary)]">{t('colors.overview.t2Title')}</h3>
                 <Content><p>{t('colors.overview.t2Body')}</p></Content>
-                <h3 className={styles.groupTitle}>{t('colors.overview.t3Title')}</h3>
+                <h3 className="text-2xl mb-[var(--space-4)] text-[var(--color-text-tertiary)]">{t('colors.overview.t3Title')}</h3>
                 <Content><p>{t('colors.overview.t3Body')}</p></Content>
-                <h3 className={styles.groupTitle}>{t('colors.overview.t4Title')}</h3>
+                <h3 className="text-2xl mb-[var(--space-4)] text-[var(--color-text-tertiary)]">{t('colors.overview.t4Title')}</h3>
                 <Content><p>{t('colors.overview.t4Body')}</p></Content>
               </Section>
 
@@ -168,49 +168,49 @@ export default function ColorsPage() {
               </Section>
 
               <Section title={t('colors.overview.brandColorsTitle')}>
-                <h3 className={styles.groupTitle}>Red</h3>
+                <h3 className="text-2xl mb-[var(--space-4)] text-[var(--color-text-tertiary)]">Red</h3>
                 <div className={styles.swatchGrid}>
                   {[100,200,300,400,500,600,700,800,900,1000].map(n => (
                     <Swatch key={n} bg={`var(--color-brand-red-${n})`} label={`Red ${n}`} />
                   ))}
                 </div>
-                <h3 className={styles.groupTitle}>Yellow</h3>
+                <h3 className="text-2xl mb-[var(--space-4)] text-[var(--color-text-tertiary)]">Yellow</h3>
                 <div className={styles.swatchGrid}>
                   {[100,200,300,400,500,600,700,800,900,1000].map(n => (
                     <Swatch key={n} bg={`var(--color-brand-yellow-${n})`} label={`Yellow ${n}`} />
                   ))}
                 </div>
-                <h3 className={styles.groupTitle}>Green</h3>
+                <h3 className="text-2xl mb-[var(--space-4)] text-[var(--color-text-tertiary)]">Green</h3>
                 <div className={styles.swatchGrid}>
                   {[100,200,300,400,500,600,700,800,900,1000].map(n => (
                     <Swatch key={n} bg={`var(--color-brand-green-${n})`} label={`Green ${n}`} />
                   ))}
                 </div>
-                <h3 className={styles.groupTitle}>Blue</h3>
+                <h3 className="text-2xl mb-[var(--space-4)] text-[var(--color-text-tertiary)]">Blue</h3>
                 <div className={styles.swatchGrid}>
                   {[100,200,300,400,500,600,700,800,900,1000].map(n => (
                     <Swatch key={n} bg={`var(--color-brand-blue-${n})`} label={`Blue ${n}`} />
                   ))}
                 </div>
-                <h3 className={styles.groupTitle}>Grey</h3>
+                <h3 className="text-2xl mb-[var(--space-4)] text-[var(--color-text-tertiary)]">Grey</h3>
                 <div className={styles.swatchGrid}>
                   {[100,200,300,400,500,600,700,800,900,1000].map(n => (
                     <Swatch key={n} bg={`var(--color-brand-grey-${n})`} label={`Grey ${n}`} />
                   ))}
                 </div>
-                <h3 className={styles.groupTitle}>Navy</h3>
+                <h3 className="text-2xl mb-[var(--space-4)] text-[var(--color-text-tertiary)]">Navy</h3>
                 <div className={styles.swatchGrid}>
                   {[100,200,300,400,500,600,700,800,900,1000].map(n => (
                     <Swatch key={n} bg={`var(--color-brand-navy-${n})`} label={`Navy ${n}`} />
                   ))}
                 </div>
-                <h3 className={styles.groupTitle}>Orange</h3>
+                <h3 className="text-2xl mb-[var(--space-4)] text-[var(--color-text-tertiary)]">Orange</h3>
                 <div className={styles.swatchGrid}>
                   {[100,200,300,400,500,600,700,800,900,1000].map(n => (
                     <Swatch key={n} bg={`var(--color-brand-orange-${n})`} label={`Orange ${n}`} />
                   ))}
                 </div>
-                <h3 className={styles.groupTitle}>Cobalt</h3>
+                <h3 className="text-2xl mb-[var(--space-4)] text-[var(--color-text-tertiary)]">Cobalt</h3>
                 <div className={styles.swatchGrid}>
                   {[100,200,300,400,500,600,700,800,900,1000].map(n => (
                     <Swatch key={n} bg={`var(--color-brand-cobalt-${n})`} label={`Cobalt ${n}`} />
@@ -219,7 +219,7 @@ export default function ColorsPage() {
               </Section>
 
               <Section title={t('colors.overview.aliasColorsTitle')}>
-                <h3 className={styles.groupTitle}>{t('colors.overview.neutralTitle')}</h3>
+                <h3 className="text-2xl mb-[var(--space-4)] text-[var(--color-text-tertiary)]">{t('colors.overview.neutralTitle')}</h3>
                 <div className={styles.swatchGrid}>
                   {[
                     ['var(--color-neutral-0)',    '0',    true],
@@ -238,43 +238,43 @@ export default function ColorsPage() {
                     <Swatch key={label} bg={bg} label={label} border={!!border} />
                   ))}
                 </div>
-                <h3 className={styles.groupTitle}>{t('colors.overview.primaryTitle')}</h3>
+                <h3 className="text-2xl mb-[var(--space-4)] text-[var(--color-text-tertiary)]">{t('colors.overview.primaryTitle')}</h3>
                 <div className={styles.swatchGrid}>
                   {[100,200,300,400,500,600,700,800,900,1000].map(n => (
                     <Swatch key={n} bg={`var(--color-brand-primary-${n})`} label={String(n)} />
                   ))}
                 </div>
-                <h3 className={styles.groupTitle}>{t('colors.overview.secondaryTitle')}</h3>
+                <h3 className="text-2xl mb-[var(--space-4)] text-[var(--color-text-tertiary)]">{t('colors.overview.secondaryTitle')}</h3>
                 <div className={styles.swatchGrid}>
                   {[100,200,300,400,500,600,700,800,900,1000].map(n => (
                     <Swatch key={n} bg={`var(--color-brand-secondary-${n})`} label={String(n)} />
                   ))}
                 </div>
-                <h3 className={styles.groupTitle}>{t('colors.overview.successTitle')}</h3>
+                <h3 className="text-2xl mb-[var(--space-4)] text-[var(--color-text-tertiary)]">{t('colors.overview.successTitle')}</h3>
                 <div className={styles.swatchGrid}>
                   {[100,200,300,400,500,600,700,800,900,1000].map(n => (
                     <Swatch key={n} bg={`var(--color-success-${n})`} label={String(n)} />
                   ))}
                 </div>
-                <h3 className={styles.groupTitle}>{t('colors.overview.warningTitle')}</h3>
+                <h3 className="text-2xl mb-[var(--space-4)] text-[var(--color-text-tertiary)]">{t('colors.overview.warningTitle')}</h3>
                 <div className={styles.swatchGrid}>
                   {[100,200,300,400,500,600,700,800,900,1000].map(n => (
                     <Swatch key={n} bg={`var(--color-warning-${n})`} label={String(n)} />
                   ))}
                 </div>
-                <h3 className={styles.groupTitle}>{t('colors.overview.errorTitle')}</h3>
+                <h3 className="text-2xl mb-[var(--space-4)] text-[var(--color-text-tertiary)]">{t('colors.overview.errorTitle')}</h3>
                 <div className={styles.swatchGrid}>
                   {[100,200,300,400,500,600,700,800,900,1000].map(n => (
                     <Swatch key={n} bg={`var(--color-error-${n})`} label={String(n)} />
                   ))}
                 </div>
-                <h3 className={styles.groupTitle}>{t('colors.overview.infoTitle')}</h3>
+                <h3 className="text-2xl mb-[var(--space-4)] text-[var(--color-text-tertiary)]">{t('colors.overview.infoTitle')}</h3>
                 <div className={styles.swatchGrid}>
                   {[100,200,300,400,500,600,700,800,900,1000].map(n => (
                     <Swatch key={n} bg={`var(--color-info-${n})`} label={String(n)} />
                   ))}
                 </div>
-                <h3 className={styles.groupTitle}>{t('colors.overview.focusTitle')}</h3>
+                <h3 className="text-2xl mb-[var(--space-4)] text-[var(--color-text-tertiary)]">{t('colors.overview.focusTitle')}</h3>
                 <div className={styles.swatchGrid}>
                   {[100,200,300,400,500,600,700,800,900,1000].map(n => (
                     <Swatch key={n} bg={`var(--color-focus-${n})`} label={String(n)} />
@@ -303,12 +303,12 @@ export default function ColorsPage() {
                   <p>{t('colors.usage.intro')}</p>
                 </Content>
 
-                <h3 className={styles.groupTitle}>{t('colors.usage.semanticTitle')}</h3>
+                <h3 className="text-2xl mb-[var(--space-4)] text-[var(--color-text-tertiary)]">{t('colors.usage.semanticTitle')}</h3>
                 <Content>
                   <p>{t('colors.usage.semanticBody')}</p>
                 </Content>
 
-                <h3 className={styles.groupTitle}>{t('colors.usage.rawTitle')}</h3>
+                <h3 className="text-2xl mb-[var(--space-4)] text-[var(--color-text-tertiary)]">{t('colors.usage.rawTitle')}</h3>
                 <Content>
                   <p>{t('colors.usage.rawBody')}</p>
                 </Content>
@@ -481,7 +481,7 @@ export default function ColorsPage() {
           content: (
             <>
               <Section title={t('colors.code.title')}>
-                <h3 className={styles.groupTitle}>{t('colors.code.cssTitle')}</h3>
+                <h3 className="text-2xl mb-[var(--space-4)] text-[var(--color-text-tertiary)]">{t('colors.code.cssTitle')}</h3>
                 <Content>
                   <p>{t('colors.code.cssDesc')}</p>
                 </Content>
@@ -518,7 +518,7 @@ export default function ColorsPage() {
   outline-offset: 2px;
 }`}</CodeBlock>
 
-                <h3 className={styles.groupTitle}>{t('colors.code.tailwindTitle')}</h3>
+                <h3 className="text-2xl mb-[var(--space-4)] text-[var(--color-text-tertiary)]">{t('colors.code.tailwindTitle')}</h3>
                 <Content>
                   <p>{t('colors.code.tailwindDesc')}</p>
                 </Content>
@@ -538,7 +538,7 @@ export default function ColorsPage() {
 <span className="text-[var(--color-error)]">Fehlerstatus</span>
 <span className="text-[var(--color-text-helper)]">Hilfstext</span>`}</CodeBlock>
 
-                <h3 className={styles.groupTitle}>{t('colors.code.jsxTitle')}</h3>
+                <h3 className="text-2xl mb-[var(--space-4)] text-[var(--color-text-tertiary)]">{t('colors.code.jsxTitle')}</h3>
                 <Content>
                   <p>{t('colors.code.jsxDesc')}</p>
                 </Content>
