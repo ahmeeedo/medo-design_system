@@ -3,6 +3,7 @@ import { Children, useRef, useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { TableOfContents } from '../components'
 import { Sheet, SheetContent, SheetClose, SheetTitle } from '../components/ui/sheet'
+import { Tabs as TabsPrimitive, TabsList, TabsTrigger, TabsContent } from '../components/ui/tabs'
 
 const GRID_CLASSES = {
   1: 'grid-cols-1',
@@ -32,8 +33,6 @@ export function PageLayout({ title, description, tabs = [] }) {
   const handleTabClick = (id) => {
     setSearchParams({ tab: id })
   }
-
-  const activeContent = tabs.find(tab => tab.id === active)?.content
 
   useEffect(() => {
     if (!tabBarRef.current || !active) return
@@ -104,35 +103,44 @@ export function PageLayout({ title, description, tabs = [] }) {
         )}
       </div>
 
-      <div ref={tabBarRef} className="flex overflow-x-auto overflow-y-hidden border-b border-[var(--color-border)] sticky top-[var(--header-height)] [z-index:calc(var(--z-sticky)-1)] bg-[var(--surface_100)] min-h-[var(--tab-bar-height)] mb-[var(--space-10)]">
-        {tabs.map(tab => (
-          <button
-            key={tab.id}
-            data-tab-id={tab.id}
-            onClick={() => handleTabClick(tab.id)}
-            className={`px-[var(--space-6)] py-[var(--space-3)] text-md bg-transparent border-0 cursor-pointer outline-none transition-[color,box-shadow,background] duration-[var(--duration-normal)] ease-[var(--ease-out)] focus-visible:ring-2 focus-visible:ring-[var(--color-focus-500)] focus-visible:ring-offset-1 focus-visible:rounded-[var(--radius-xs)] ${
-              active === tab.id
-                ? 'text-[var(--color-link-primary)] [font-weight:var(--weight-semibold)] shadow-[inset_0_-2px_0_var(--border-brand-primary)] bg-[var(--surface-container_hover-100)]'
-                : '[font-weight:var(--weight-medium)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-[var(--surface-container_hover-100)]'
-            }`}
-          >
-            {tab.label}
-          </button>
-        ))}
-      </div>
-
-      <div className="flex flex-row mb-[var(--space-8)]">
-        <div ref={contentRef} className="flex-1 min-w-0">
-          {activeContent}
+      <TabsPrimitive value={active} onValueChange={handleTabClick} className="block">
+        <div
+          ref={tabBarRef}
+          className="sticky top-[var(--header-height)] [z-index:calc(var(--z-sticky)-1)] bg-[var(--surface_100)] border-b border-[var(--color-border)] overflow-x-auto min-h-[var(--tab-bar-height)] mb-[var(--space-10)]"
+        >
+          <TabsList variant="line" className="w-full h-[var(--tab-bar-height)] rounded-none p-0">
+            {tabs.map(tab => (
+              <TabsTrigger
+                key={tab.id}
+                value={tab.id}
+                data-tab-id={tab.id}
+                className="flex-none h-full rounded-none px-[var(--space-6)] text-md text-[var(--color-text-secondary)] data-active:text-[var(--color-link-primary)] data-active:[font-weight:var(--weight-semibold)] after:bg-[var(--border-brand-primary)]"
+              >
+                {tab.label}
+              </TabsTrigger>
+            ))}
+          </TabsList>
         </div>
-        {headings.length > 0 && (
-          <div className="w-[240px] flex-shrink-0 hidden md:block pr-[var(--space-8)]">
-            <div className="sticky top-[calc(var(--header-height)+var(--tab-bar-height))] max-h-[calc(100vh-var(--header-height)-var(--tab-bar-height))] overflow-y-auto pt-[var(--space-6)] pb-[var(--space-6)]">
-              <TableOfContents headings={headings} activeId={activeId} />
-            </div>
+
+        <div className="flex flex-row mb-[var(--space-8)]">
+          <div ref={contentRef} className="flex-1 min-w-0">
+            {tabs.map(tab =>
+              tab.content ? (
+                <TabsContent key={tab.id} value={tab.id}>
+                  {tab.content}
+                </TabsContent>
+              ) : null
+            )}
           </div>
-        )}
-      </div>
+          {headings.length > 0 && (
+            <div className="w-[240px] flex-shrink-0 hidden md:block pr-[var(--space-8)]">
+              <div className="sticky top-[calc(var(--header-height)+var(--tab-bar-height))] max-h-[calc(100vh-var(--header-height)-var(--tab-bar-height))] overflow-y-auto pt-[var(--space-6)] pb-[var(--space-6)]">
+                <TableOfContents headings={headings} activeId={activeId} />
+              </div>
+            </div>
+          )}
+        </div>
+      </TabsPrimitive>
 
       {headings.length > 0 && !sheetOpen && (
         <div className="block md:hidden fixed bottom-0 left-0 right-0 [z-index:var(--z-sticky)] px-[var(--space-4)] pb-[var(--space-4)]">
