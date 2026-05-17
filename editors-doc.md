@@ -258,4 +258,52 @@ Jeder in JSX verwendete `t('...')`-Key muss in **beiden** Dateien vorhanden sein
 
 ## 5. DemoPanel-Konfiguration
 
-_(folgt nach DemoPanel-Implementierung)_
+`DemoPanel` rendert eine interaktive Komponentenvorschau mit Controls und synchronem Code-Snippet. Import über `PageLayout`:
+
+```jsx
+import { DemoPanel } from '../docs/PageLayout'
+```
+
+### Platzierung
+
+DemoPanel ist das **allererste JSX-Element im OverviewTab-Content** — vor dem ersten `<Section>`-Element, ohne eigenen `<Section>`-Wrapper.
+
+### Props
+
+| Prop | Typ | Beschreibung |
+|---|---|---|
+| `component` | `(values) => ReactNode` | Rendert die Komponente live mit den aktuellen Control-Werten |
+| `controls` | `Control[]` | Array von Dropdown- oder Toggle-Definitionen |
+
+**Control-Definitionen:**
+
+```ts
+// Dropdown
+{ id: string, type: 'dropdown', label: string, options: string[], default: string }
+
+// Toggle
+{ id: string, type: 'toggle', label: string, default: boolean }
+```
+
+### Vollständiges Beispiel (ButtonsPage)
+
+```jsx
+<DemoPanel
+  component={(values) => (
+    <Button variant={values.variant} size={values.size} disabled={values.disabled}>
+      Label
+    </Button>
+  )}
+  controls={[
+    { id: 'variant',  type: 'dropdown', label: 'Variant',  options: ['primary', 'accent', 'secondary', 'ghost', 'danger', 'link'], default: 'primary' },
+    { id: 'size',     type: 'dropdown', label: 'Size',     options: ['xs', 'sm', 'md', 'lg', 'xl'], default: 'md' },
+    { id: 'disabled', type: 'toggle',   label: 'Disabled', default: false },
+  ]}
+/>
+```
+
+### Regeln
+
+- DemoPanel nur auf Komponenten-Docs-Seiten — nicht auf Info-Seiten (Impressum, Datenschutz, Releases).
+- `component`-Prop rendert live; alle Control-Werte kommen aus `values`-Objekt.
+- Dropdown-`options` müssen den tatsächlichen Prop-Werten der Komponente entsprechen.

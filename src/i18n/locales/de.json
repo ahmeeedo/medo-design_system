@@ -70,6 +70,10 @@
     "copy":   "Kopieren",
     "copied": "✓ Kopiert"
   },
+  "demoPanel": {
+    "title": "Live-Demo",
+    "hint":  "Diese Live-Demo bietet lediglich einen Überblick über die Funktionen und Designs, die für diese Komponente verfügbar sind."
+  },
   "tokensTable": {
     "token":       "Token",
     "value":       "Value",

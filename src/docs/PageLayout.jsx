@@ -253,3 +253,5 @@ export function Content({ children, className }) {
     </div>
   )
 }
+
+export { DemoPanel } from './DemoPanel'

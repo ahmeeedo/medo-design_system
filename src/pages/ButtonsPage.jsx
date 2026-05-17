@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next'
-import { PageLayout, Section, Content } from '../docs/PageLayout'
+import { PageLayout, Section, Content, DemoPanel } from '../docs/PageLayout'
 import { CodeBlock } from '../docs/CodeBlock'
 import { Button } from '../components'
 import { Icon } from '../components/Icon/Icon'
@@ -80,6 +80,26 @@ export default function ButtonsPage() {
       label: t('tabs.overview'),
       content: (
         <>
+          <DemoPanel
+            component={(values) => (
+              <Button
+                variant={values.variant}
+                size={values.size}
+                disabled={values.disabled}
+                leadingIcon={values.leadingIcon ? <Icon name="star" /> : undefined}
+                trailingIcon={values.trailingIcon ? <Icon name="arrow_forward" /> : undefined}
+              >
+                Label
+              </Button>
+            )}
+            controls={[
+              { id: 'variant',      type: 'dropdown', label: 'Variant',       options: ['primary', 'accent', 'secondary', 'ghost', 'danger', 'link'], default: 'primary' },
+              { id: 'size',         type: 'dropdown', label: 'Size',          options: ['xs', 'sm', 'md', 'lg', 'xl'], default: 'md' },
+              { id: 'leadingIcon',  type: 'toggle',   label: 'Leading Icon',  default: false },
+              { id: 'trailingIcon', type: 'toggle',   label: 'Trailing Icon', default: false },
+              { id: 'disabled',     type: 'toggle',   label: 'Disabled',      default: false },
+            ]}
+          />
           <Section title={t('buttons.overview.anatomyTitle')}>
             <Content>
               <p className="text-md text-[var(--color-text-secondary)] leading-[var(--leading-relaxed)] mb-[var(--space-3)]">
