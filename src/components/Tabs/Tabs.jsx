@@ -11,6 +11,7 @@ export function Tabs({
   defaultTab,
   activeTab,
   onTabChange,
+  listClassName,
 }) {
   return (
     <TabsPrimitive
@@ -18,7 +19,7 @@ export function Tabs({
       value={activeTab}
       onValueChange={onTabChange}
     >
-      <TabsList variant={variant === 'underline' ? 'line' : 'default'}>
+      <TabsList variant={variant === 'underline' ? 'line' : 'default'} className={listClassName}>
         {tabs.map((tab) => (
           <TabsTrigger key={tab.id} value={tab.id}>
             {tab.label}
