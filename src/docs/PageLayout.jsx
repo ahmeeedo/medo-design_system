@@ -108,7 +108,7 @@ export function PageLayout({ title, description, tabs = [] }) {
           ref={tabBarRef}
           className="sticky top-[var(--header-height)] [z-index:calc(var(--z-sticky)-1)] bg-[var(--surface_100)] border-b border-[var(--color-border)] overflow-x-auto min-h-[var(--tab-bar-height)] mb-[var(--space-10)]"
         >
-          <TabsList variant="line" className="w-full h-[var(--tab-bar-height)] rounded-none p-0">
+          <TabsList variant="line" className="w-full h-[var(--tab-bar-height)] rounded-none p-0 justify-start">
             {tabs.map(tab => (
               <TabsTrigger
                 key={tab.id}
