@@ -105,7 +105,7 @@ export function PageLayout({ title, description, tabs = [] }) {
           {title}
         </h1>
         {description && (
-          <p className="text-lg text-[var(--color-text-on-color)] leading-[var(--leading-relaxed)] max-w-[50%] [font-weight:var(--weight-light)]">
+          <p className="text-lg text-[var(--color-text-on-color)] leading-[var(--leading-relaxed)] max-w-[50%] max-[1024px]:max-w-[100%] [font-weight:var(--weight-light)]">
             {description}
           </p>
         )}
