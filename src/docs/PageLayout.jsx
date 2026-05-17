@@ -25,6 +25,14 @@ export function PageLayout({ title, description, tabs = [] }) {
   const [headings, setHeadings] = useState([])
   const [activeId, setActiveId] = useState('')
   const [sheetOpen, setSheetOpen] = useState(false)
+  const [tabBarHeight, setTabBarHeight] = useState(0)
+
+  useEffect(() => {
+    if (!tabBarRef.current) return
+    const observer = new ResizeObserver(([entry]) => setTabBarHeight(entry.contentRect.height))
+    observer.observe(tabBarRef.current)
+    return () => observer.disconnect()
+  }, [])
 
   const activeFromUrl = searchParams.get('tab')
   const validTab = tabs.find(tab => tab.id === activeFromUrl)
@@ -50,7 +58,7 @@ export function PageLayout({ title, description, tabs = [] }) {
         // The Section wrapper div has the id; apply scroll offset there so anchor navigation clears sticky header+tabs
         const section = el.closest('[id]')
         if (section) {
-          section.style.scrollMarginTop = 'calc(var(--header-height) + var(--tab-bar-height) + 1rem)'
+          section.style.scrollMarginTop = `calc(var(--header-height) + ${tabBarHeight}px + 1rem)`
         }
         if (!el.id) {
           el.id = generateId(el.textContent)
@@ -60,7 +68,7 @@ export function PageLayout({ title, description, tabs = [] }) {
       setHeadings(extracted)
     }, 50)
     return () => clearTimeout(timer)
-  }, [active, i18n.language])
+  }, [active, i18n.language, tabBarHeight])
 
   useEffect(() => {
     if (headings.length === 0) return
@@ -134,7 +142,7 @@ export function PageLayout({ title, description, tabs = [] }) {
           </div>
           {headings.length > 0 && (
             <div className="w-[240px] flex-shrink-0 hidden md:block pr-[var(--space-8)]">
-              <div className="sticky top-[calc(var(--header-height)+var(--tab-bar-height))] max-h-[calc(100vh-var(--header-height)-var(--tab-bar-height))] overflow-y-auto pt-[var(--space-6)] pb-[var(--space-6)]">
+              <div className="sticky overflow-y-auto pt-[var(--space-6)] pb-[var(--space-6)]" style={{ top: `calc(var(--header-height) + ${tabBarHeight}px)`, maxHeight: `calc(100vh - var(--header-height) - ${tabBarHeight}px)` }}>
                 <TableOfContents headings={headings} activeId={activeId} />
               </div>
             </div>
