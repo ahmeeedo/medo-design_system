@@ -33,7 +33,8 @@
       "tooltip":           "Tooltip",
       "slider":            "Slider",
       "loadingIndicator":  "Loading Indicator",
-      "uploadField":       "Upload Field"
+      "uploadField":       "Upload Field",
+      "datePicker":        "Date Picker"
     },
     "aria": {
       "closeMenu": "Menü schließen",
@@ -1817,6 +1818,53 @@
   "toc": {
     "title":      "Auf dieser Seite",
     "openButton": "Inhaltsverzeichnis"
+  },
+  "datePicker": {
+    "page": {
+      "title":       "Date Picker",
+      "description": "Datumsauswahl-Komponente mit Kalender-Popover und Lokalisierungsunterstützung"
+    },
+    "placeholder": "Datum auswählen",
+    "range": { "placeholder": "Zeitraum auswählen" },
+    "withTime": { "timeLabel": "Uhrzeit" },
+    "overview": {
+      "anatomyTitle":  "Anatomie",
+      "anatomyBody":   "Der DatePicker besteht aus einem Trigger-Button und einem Kalender-Popover. Das Popover schließt sich automatisch nach der Datumsauswahl.",
+      "variantsTitle": "Varianten",
+      "variantsBody":  "Fünf Varianten stehen zur Verfügung: default (einzelner Tag), range (Zeitraum), withTime (Datum + Uhrzeit), inline (Kalender immer sichtbar) und input (Tastatur-Eingabe mit Kalender-Icon).",
+      "localeTitle":   "Lokalisierung",
+      "localeBody":    "Das angezeigte Datum wird automatisch gemäß der aktiven Sprache formatiert: Deutsch (de-DE) oder Englisch (en-US)."
+    },
+    "usage": {
+      "title":          "Verwendung",
+      "intro":          "Der DatePicker ist eine kontrollierte Komponente — übergib den aktuellen Wert via value und verarbeite Änderungen via onChange.",
+      "rangeTitle":     "Zeitraum (range)",
+      "rangeBody":      "Der range-Variant erwartet ein Objekt { from, to } als value und gibt dasselbe Format zurück.",
+      "withTimeTitle":  "Datum + Uhrzeit (withTime)",
+      "withTimeBody":   "Der withTime-Variant ergänzt den Kalender um ein Uhrzeiteingabefeld. Der onChange-Callback gibt ein vollständiges Date-Objekt inkl. Stunden und Minuten zurück.",
+      "inlineTitle":    "Inline",
+      "inlineBody":     "Der inline-Variant zeigt den Kalender dauerhaft an — ohne Popover-Trigger. Eignet sich für eingebettete Formulare mit prominenter Datumsauswahl.",
+      "inputTitle":     "Tastatureingabe (input)",
+      "inputBody":      "Der input-Variant kombiniert ein Textfeld im Format DD/MM/YYYY mit einem Kalender-Icon-Button. Slashes werden beim Tippen automatisch eingefügt. Das Kalender-Icon öffnet ein Popover zur Auswahl.",
+      "disabledTitle":  "Daten deaktivieren",
+      "disabledBody":   "Über die disabledDates-Prop können einzelne Daten von der Auswahl ausgeschlossen werden, z. B. Feiertage oder bereits belegte Termine."
+    },
+    "code": {
+      "title":         "Code",
+      "basicTitle":    "Default",
+      "basicDesc":     "Kontrollierter DatePicker mit lokalem State.",
+      "rangeTitle":    "Range",
+      "withTimeTitle": "With Time",
+      "inlineTitle":   "Inline",
+      "inputTitle":    "Input",
+      "disabledTitle": "Deaktivierte Daten"
+    },
+    "a11y": {
+      "title":         "Barrierefreiheit",
+      "intro":         "Der DatePicker basiert auf Radix UI Popover und react-day-picker mit vollständiger Tastaturnavigation.",
+      "keyboardTitle": "Tastaturinteraktion",
+      "keyboardBody":  "Enter/Space öffnet das Popover. Im Kalender navigieren Pfeiltasten zwischen den Tagen, Enter wählt ein Datum aus, Escape schließt das Popover."
+    }
   },
   "loadingIndicator": {
     "page": {

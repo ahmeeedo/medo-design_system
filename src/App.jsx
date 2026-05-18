@@ -30,6 +30,7 @@ import TooltipPage            from './pages/TooltipPage'
 import SliderPage             from './pages/SliderPage'
 import LoadingIndicatorPage   from './pages/LoadingIndicatorPage'
 import UploadFieldPage        from './pages/UploadFieldPage'
+import DatePickerPage         from './pages/DatePickerPage'
 import ImpressumPage          from './pages/ImpressumPage'
 import DatenschutzPage from './pages/DatenschutzPage'
 
@@ -74,6 +75,7 @@ function AppContent() {
         <Route path="/slider"             element={<SliderPage />} />
         <Route path="/loading-indicator"  element={<LoadingIndicatorPage />} />
         <Route path="/upload-field"       element={<UploadFieldPage />} />
+        <Route path="/date-picker"        element={<DatePickerPage />} />
         <Route path="/impressum"          element={<ImpressumPage />} />
         <Route path="/datenschutz" element={<DatenschutzPage />} />
       </Routes>

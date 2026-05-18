@@ -41,6 +41,7 @@ const NAV = [
       { id: 'feedback',   label: 'nav.items.feedback' },
       { id: 'avatar',     label: 'nav.items.avatar' },
       { id: 'skeleton',   label: 'nav.items.skeleton' },
+      { id: 'date-picker',       label: 'nav.items.datePicker' },
       { id: 'loading-indicator', label: 'nav.items.loadingIndicator' },
       { id: 'slider',            label: 'nav.items.slider' },
       { id: 'tooltip',           label: 'nav.items.tooltip' },

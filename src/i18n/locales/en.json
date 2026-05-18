@@ -33,7 +33,8 @@
       "tooltip":           "Tooltip",
       "slider":            "Slider",
       "loadingIndicator":  "Loading Indicator",
-      "uploadField":       "Upload Field"
+      "uploadField":       "Upload Field",
+      "datePicker":        "Date Picker"
     },
     "aria": {
       "closeMenu": "Close menu",
@@ -1817,6 +1818,53 @@
   "toc": {
     "title":      "On this page",
     "openButton": "Table of Contents"
+  },
+  "datePicker": {
+    "page": {
+      "title":       "Date Picker",
+      "description": "Date selection component with a calendar popover and localization support"
+    },
+    "placeholder": "Select a date",
+    "range": { "placeholder": "Select a range" },
+    "withTime": { "timeLabel": "Time" },
+    "overview": {
+      "anatomyTitle":  "Anatomy",
+      "anatomyBody":   "The DatePicker consists of a trigger button and a calendar popover. The popover closes automatically after a date is selected.",
+      "variantsTitle": "Variants",
+      "variantsBody":  "Five variants are available: default (single day), range (date range), withTime (date + time), inline (always-visible calendar), and input (keyboard entry with calendar icon).",
+      "localeTitle":   "Localization",
+      "localeBody":    "The displayed date is automatically formatted according to the active language: German (de-DE) or English (en-US)."
+    },
+    "usage": {
+      "title":          "Usage",
+      "intro":          "The DatePicker is a controlled component — pass the current value via value and handle changes via onChange.",
+      "rangeTitle":     "Date range (range)",
+      "rangeBody":      "The range variant expects an object { from, to } as value and returns the same format.",
+      "withTimeTitle":  "Date + time (withTime)",
+      "withTimeBody":   "The withTime variant adds a time input below the calendar. The onChange callback returns a full Date object including hours and minutes.",
+      "inlineTitle":    "Inline",
+      "inlineBody":     "The inline variant renders the calendar directly — without a popover trigger. Use it for embedded forms where prominent date selection is needed.",
+      "inputTitle":     "Keyboard input (input)",
+      "inputBody":      "The input variant combines a DD/MM/YYYY text field with a calendar icon button. Slashes are inserted automatically as the user types. The calendar icon opens a popover for visual date selection.",
+      "disabledTitle":  "Disabling dates",
+      "disabledBody":   "Use the disabledDates prop to exclude specific dates from selection, such as holidays or already booked dates."
+    },
+    "code": {
+      "title":         "Code",
+      "basicTitle":    "Default",
+      "basicDesc":     "Controlled DatePicker with local state.",
+      "rangeTitle":    "Range",
+      "withTimeTitle": "With Time",
+      "inlineTitle":   "Inline",
+      "inputTitle":    "Input",
+      "disabledTitle": "Disabled dates"
+    },
+    "a11y": {
+      "title":         "Accessibility",
+      "intro":         "The DatePicker is built on Radix UI Popover and react-day-picker with full keyboard navigation.",
+      "keyboardTitle": "Keyboard interaction",
+      "keyboardBody":  "Enter/Space opens the popover. Inside the calendar, arrow keys navigate between days, Enter selects a date, and Escape closes the popover."
+    }
   },
   "loadingIndicator": {
     "page": {
