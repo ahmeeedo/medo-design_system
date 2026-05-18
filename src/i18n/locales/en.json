@@ -29,9 +29,11 @@
       "stats":      "Stats / KPI",
       "feedback":   "Feedback",
       "avatar":     "Avatar",
-      "skeleton":   "Skeleton",
-      "tooltip":    "Tooltip",
-      "slider":     "Slider"
+      "skeleton":          "Skeleton",
+      "tooltip":           "Tooltip",
+      "slider":            "Slider",
+      "loadingIndicator":  "Loading Indicator",
+      "uploadField":       "Upload Field"
     },
     "aria": {
       "closeMenu": "Close menu",
@@ -1815,6 +1817,70 @@
   "toc": {
     "title":      "On this page",
     "openButton": "Table of Contents"
+  },
+  "loadingIndicator": {
+    "page": {
+      "title":       "Loading Indicator",
+      "description": "Visual feedback for background operations in three variants"
+    },
+    "overview": {
+      "anatomyTitle":  "Anatomy",
+      "anatomyBody":   "The LoadingIndicator is a purely visual component with no interactive elements. It signals to the user that a background operation is in progress.",
+      "variantsTitle": "Variants",
+      "variantsBody":  "Three variants are available: Spinner (rotating circle border), Bar (pulsing horizontal bar), and Dots (three bouncing dots)."
+    },
+    "usage": {
+      "title":             "Usage",
+      "intro":             "Use a Loading Indicator when an operation takes longer than 300ms. Very short operations do not require an indicator.",
+      "variantGuideTitle": "Which variant to use?",
+      "variantGuideBody":  "Spinner suits general loading states. Bar fits progress feedback in forms. Dots works well for inline loading states inside text or buttons."
+    },
+    "code": {
+      "title":      "Code",
+      "basicTitle": "All variants",
+      "basicDesc":  "Select the variant via the variant prop."
+    },
+    "a11y": {
+      "title":       "Accessibility",
+      "intro":       "Add an aria-label to the LoadingIndicator so screen readers can announce the loading state.",
+      "motionTitle": "Reduced motion",
+      "motionBody":  "Tailwind's animate-* classes automatically respect the operating system's prefers-reduced-motion setting."
+    }
+  },
+  "uploadField": {
+    "page": {
+      "title":       "Upload Field",
+      "description": "File input component in three variants: default, drag-and-drop, and preview"
+    },
+    "overview": {
+      "anatomyTitle":  "Anatomy",
+      "anatomyBody":   "The UploadField consists of a hidden native file input and a visual trigger. The trigger opens the browser's file dialog.",
+      "variantsTitle": "Variants",
+      "variantsBody":  "default: simple button. dropzone: drag-and-drop area with drag-over state. preview: shows the filename after selection."
+    },
+    "usage": {
+      "title":             "Usage",
+      "intro":             "Use UploadField wherever users need to select a file. Choose the variant based on available space and context.",
+      "variantGuideTitle": "Which variant to use?",
+      "variantGuideBody":  "default for compact forms, dropzone for prominent upload areas, preview when the selected filename should remain visible."
+    },
+    "code": {
+      "title":      "Code",
+      "basicTitle": "All variants",
+      "basicDesc":  "Select the variant via the variant prop."
+    },
+    "a11y": {
+      "title":         "Accessibility",
+      "intro":         "The trigger button is keyboard-focusable. The hidden native input is activated by clicking the trigger.",
+      "keyboardTitle": "Keyboard interaction",
+      "keyboardBody":  "Tab focuses the trigger; Enter or Space opens the file dialog."
+    },
+    "button": {
+      "label": "Choose file"
+    },
+    "dropzone": {
+      "hint": "Drag a file here or click to browse"
+    }
   },
   "tooltip": {
     "page": {

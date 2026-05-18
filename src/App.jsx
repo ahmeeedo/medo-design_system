@@ -26,9 +26,11 @@ import StatsPage       from './pages/StatsPage'
 import FeedbackPage    from './pages/FeedbackPage'
 import AvatarPage      from './pages/AvatarPage'
 import SkeletonPage    from './pages/SkeletonPage'
-import TooltipPage     from './pages/TooltipPage'
-import SliderPage      from './pages/SliderPage'
-import ImpressumPage   from './pages/ImpressumPage'
+import TooltipPage            from './pages/TooltipPage'
+import SliderPage             from './pages/SliderPage'
+import LoadingIndicatorPage   from './pages/LoadingIndicatorPage'
+import UploadFieldPage        from './pages/UploadFieldPage'
+import ImpressumPage          from './pages/ImpressumPage'
 import DatenschutzPage from './pages/DatenschutzPage'
 
 // Scrollt bei jedem Seitenwechsel nach oben
@@ -68,9 +70,11 @@ function AppContent() {
         <Route path="/feedback"   element={<FeedbackPage />} />
         <Route path="/avatar"     element={<AvatarPage />} />
         <Route path="/skeleton"    element={<SkeletonPage />} />
-        <Route path="/tooltip"     element={<TooltipPage />} />
-        <Route path="/slider"      element={<SliderPage />} />
-        <Route path="/impressum"   element={<ImpressumPage />} />
+        <Route path="/tooltip"            element={<TooltipPage />} />
+        <Route path="/slider"             element={<SliderPage />} />
+        <Route path="/loading-indicator"  element={<LoadingIndicatorPage />} />
+        <Route path="/upload-field"       element={<UploadFieldPage />} />
+        <Route path="/impressum"          element={<ImpressumPage />} />
         <Route path="/datenschutz" element={<DatenschutzPage />} />
       </Routes>
     </DocsLayout>

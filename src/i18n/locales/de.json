@@ -29,9 +29,11 @@
       "stats":      "Stats / KPI",
       "feedback":   "Feedback",
       "avatar":     "Avatar",
-      "skeleton":   "Skeleton",
-      "tooltip":    "Tooltip",
-      "slider":     "Slider"
+      "skeleton":          "Skeleton",
+      "tooltip":           "Tooltip",
+      "slider":            "Slider",
+      "loadingIndicator":  "Loading Indicator",
+      "uploadField":       "Upload Field"
     },
     "aria": {
       "closeMenu": "Menü schließen",
@@ -1815,6 +1817,70 @@
   "toc": {
     "title":      "Auf dieser Seite",
     "openButton": "Inhaltsverzeichnis"
+  },
+  "loadingIndicator": {
+    "page": {
+      "title":       "Loading Indicator",
+      "description": "Visuelle Anzeige für laufende Hintergrundprozesse in drei Varianten"
+    },
+    "overview": {
+      "anatomyTitle":  "Anatomie",
+      "anatomyBody":   "Der LoadingIndicator ist eine rein visuelle Komponente ohne interaktive Elemente. Er signalisiert dem Nutzer, dass eine Operation im Hintergrund läuft.",
+      "variantsTitle": "Varianten",
+      "variantsBody":  "Drei Varianten stehen zur Verfügung: Spinner (rotierende Kreislinie), Bar (pulsierende horizontale Leiste) und Dots (drei hüpfende Punkte)."
+    },
+    "usage": {
+      "title":            "Verwendung",
+      "intro":            "Verwende einen Loading Indicator, wenn eine Operation länger als 300ms dauert. Bei sehr kurzen Operationen ist kein Indicator nötig.",
+      "variantGuideTitle": "Wann welche Variante?",
+      "variantGuideBody":  "Spinner eignet sich für allgemeine Ladezustände. Bar passt zu Fortschrittsanzeigen in Formularen. Dots eignet sich für Inline-Ladezustände in Text oder Schaltflächen."
+    },
+    "code": {
+      "title":     "Code",
+      "basicTitle": "Alle Varianten",
+      "basicDesc":  "Wähle die Variante über die variant-Prop."
+    },
+    "a11y": {
+      "title":       "Barrierefreiheit",
+      "intro":       "Füge dem Loading Indicator ein aria-label hinzu, damit Screen-Reader den Ladezustand ankündigen können.",
+      "motionTitle": "Reduzierte Bewegung",
+      "motionBody":  "Tailwinds animate-* Klassen respektieren das prefers-reduced-motion-Setting des Betriebssystems automatisch."
+    }
+  },
+  "uploadField": {
+    "page": {
+      "title":       "Upload Field",
+      "description": "Datei-Eingabefeld in drei Varianten: Standard, Drag-and-Drop und Vorschau"
+    },
+    "overview": {
+      "anatomyTitle":  "Anatomie",
+      "anatomyBody":   "Das UploadField besteht aus einem versteckten nativen file-Input und einem visuellen Trigger. Der Trigger öffnet den Datei-Dialog des Browsers.",
+      "variantsTitle": "Varianten",
+      "variantsBody":  "default: einfacher Button. dropzone: Drag-and-Drop-Bereich mit Drag-over-Zustand. preview: zeigt den Dateinamen nach der Auswahl an."
+    },
+    "usage": {
+      "title":             "Verwendung",
+      "intro":             "Nutze UploadField überall dort, wo Nutzer eine Datei auswählen sollen. Die Variante richtet sich nach dem verfügbaren Platz und dem Nutzungskontext.",
+      "variantGuideTitle": "Wann welche Variante?",
+      "variantGuideBody":  "default für kompakte Formulare, dropzone für prominente Upload-Bereiche, preview wenn der gewählte Dateiname sichtbar sein soll."
+    },
+    "code": {
+      "title":     "Code",
+      "basicTitle": "Alle Varianten",
+      "basicDesc":  "Wähle die Variante über die variant-Prop."
+    },
+    "a11y": {
+      "title":         "Barrierefreiheit",
+      "intro":         "Der Trigger-Button ist per Tastatur fokussierbar. Das versteckte native Input wird per Klick ausgelöst.",
+      "keyboardTitle": "Tastaturinteraktion",
+      "keyboardBody":  "Tab fokussiert den Trigger, Enter oder Space öffnet den Datei-Dialog."
+    },
+    "button": {
+      "label": "Datei auswählen"
+    },
+    "dropzone": {
+      "hint": "Datei hierher ziehen oder klicken"
+    }
   },
   "tooltip": {
     "page": {
