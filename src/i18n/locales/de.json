@@ -29,7 +29,9 @@
       "stats":      "Stats / KPI",
       "feedback":   "Feedback",
       "avatar":     "Avatar",
-      "skeleton":   "Skeleton"
+      "skeleton":   "Skeleton",
+      "tooltip":    "Tooltip",
+      "slider":     "Slider"
     },
     "aria": {
       "closeMenu": "Menü schließen",
@@ -1813,5 +1815,67 @@
   "toc": {
     "title":      "Auf dieser Seite",
     "openButton": "Inhaltsverzeichnis"
+  },
+  "tooltip": {
+    "page": {
+      "title":       "Tooltip",
+      "description": "Kontextbezogene Hilfetexte, die beim Hovern oder Fokussieren eines Elements erscheinen"
+    },
+    "overview": {
+      "anatomyTitle": "Anatomie",
+      "anatomyBody":  "Ein Tooltip besteht aus einem Trigger-Element und einem schwebenden Inhaltsfenster, das beim Hovern oder Fokussieren erscheint.",
+      "sidesTitle":   "Positionierung",
+      "sidesBody":    "Der Tooltip kann über vier Seiten des Trigger-Elements positioniert werden: oben, unten, links oder rechts."
+    },
+    "usage": {
+      "title":       "Verwendung",
+      "intro":       "Tooltips eignen sich für kurze, ergänzende Informationen zu UI-Elementen. Sie sollten nicht für wichtige oder kritische Inhalte verwendet werden.",
+      "delayTitle":  "Öffnungsverzögerung",
+      "delayBody":   "Der Standard-Delay von 300ms verhindert unbeabsichtigtes Öffnen beim schnellen Überfahren mit der Maus."
+    },
+    "code": {
+      "title":       "Code",
+      "basicTitle":  "Grundlegend",
+      "basicDesc":   "Wickle das Trigger-Element in die Tooltip-Komponente ein und übergib den Inhalt als content-Prop.",
+      "sidesTitle":  "Positionierung",
+      "delayTitle":  "Verzögerung"
+    },
+    "a11y": {
+      "title":         "Barrierefreiheit",
+      "intro":         "Tooltips basieren auf Radix UI Primitives und unterstützen vollständige Tastaturnavigation und Screen-Reader.",
+      "keyboardTitle": "Tastaturinteraktion",
+      "keyboardBody":  "Tooltips öffnen sich beim Fokussieren des Triggers per Tab und schließen sich beim Drücken von Escape oder Verlassen des Fokus."
+    }
+  },
+  "slider": {
+    "page": {
+      "title":       "Slider",
+      "description": "Eingabekomponente zur Auswahl eines Wertes innerhalb eines definierten Bereichs durch Ziehen"
+    },
+    "overview": {
+      "anatomyTitle": "Anatomie",
+      "anatomyBody":  "Ein Slider besteht aus einer Track-Leiste, einem Range-Bereich und einem Thumb-Handle, das der Nutzer ziehen kann.",
+      "rangeTitle":   "Wertebereich",
+      "rangeBody":    "Min, Max und Step steuern den gültigen Wertebereich und die Schrittgröße."
+    },
+    "usage": {
+      "title":      "Verwendung",
+      "intro":      "Slider eignen sich für kontinuierliche Eingaben wie Lautstärke, Helligkeit oder Preisbereiche.",
+      "stateTitle": "Gesteuerter Zustand",
+      "stateBody":  "Der Slider ist eine kontrollierte Komponente — übergib den aktuellen Wert via value und verarbeite Änderungen via onChange."
+    },
+    "code": {
+      "title":         "Code",
+      "basicTitle":    "Grundlegend",
+      "basicDesc":     "Verwende value und onChange für einen kontrollierten Slider.",
+      "rangeTitle":    "Benutzerdefinierter Bereich",
+      "disabledTitle": "Deaktiviert"
+    },
+    "a11y": {
+      "title":         "Barrierefreiheit",
+      "intro":         "Der Slider basiert auf Radix UI Primitives und folgt dem ARIA Slider-Muster mit vollständiger Tastaturunterstützung.",
+      "keyboardTitle": "Tastaturinteraktion",
+      "keyboardBody":  "Pfeiltasten ändern den Wert schrittweise. Home und End springen zum Minimum bzw. Maximum."
+    }
   }
 }
