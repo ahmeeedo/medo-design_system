@@ -25,6 +25,14 @@ APM_RULES {
 - When a required design token does not exist in `src/styles/tokens.css`: stop, document the missing token, and report it to the Manager for User clarification. Do not invent token values.
 - `src/styles/global.css` structure: ONE `@theme inline` block (no duplicates), ONE `:root` block. `--font-sans` must be set to a string literal in `@theme inline` — never `var(--font-sans)` (circular). `--radius` must be a concrete pixel value (e.g. `8px`) — never `var(--radius-lg)` (circular). Do not add `@source` directives — `@tailwindcss/vite` scans all project files automatically in both dev and build modes.
 - Do not add `@import "shadcn/tailwind.css"` — its `@custom-variant` and `@utility` content is already inlined in `global.css`. Running `npx shadcn@latest add` only installs component primitives; it must not overwrite or add duplicate blocks to `global.css`.
+- After every `npx shadcn@latest add <name>`, immediately inspect all generated files in `src/components/ui/` for lucide-react imports. Replace every lucide-react icon import with the `Icon` component from `src/components/Icon/Icon.jsx` using the equivalent Material Symbols name. Never leave lucide-react imports in the codebase.
+
+## DemoPanel
+
+- Every component docs page must include `<DemoPanel>` as the **first JSX element inside the Overview tab content**, before any `<Section>` elements. This applies when creating new component pages and when retrofitting existing ones.
+- Import: `import { DemoPanel } from '../docs/PageLayout'` (DemoPanel is re-exported from PageLayout alongside Section, GridWrapper, Content).
+- DemoPanel is for component docs pages only. Info pages (WhatIsMedoPage, ReleasesPage, ImpressumPage, DatenschutzPage) do not use DemoPanel.
+- Configure via two props: `component` (function receiving current control values, returns ReactNode), `controls` (array of dropdown/toggle definitions). See `src/docs/DemoPanel.jsx` for the full API.
 
 ## Internationalization
 
