@@ -8,6 +8,14 @@ import { Search } from '@/components/Search/Search'
 
 const NAV = [
   {
+    id: 'about',
+    section: 'nav.sections.about',
+    items: [
+      { id: 'about',    label: 'nav.items.whatIsMedo' },
+      { id: 'releases', label: 'nav.items.releases' },
+    ],
+  },
+  {
     id: 'foundations',
     section: 'nav.sections.foundations',
     items: [
@@ -52,7 +60,7 @@ const NAV = [
   },
 ]
 
-const DEFAULT_SIDEBAR_STATE = { foundations: true, components: true }
+const DEFAULT_SIDEBAR_STATE = { about: true, foundations: true, components: true }
 
 function loadSidebarState() {
   try {

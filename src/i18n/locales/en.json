@@ -2,8 +2,9 @@
   "nav": {
     "title": "Design System",
     "sections": {
+      "about":       "About med.o",
       "foundations": "Foundations",
-      "components": "Components"
+      "components":  "Components"
     },
     "items": {
       "colors":     "Colors",
@@ -36,7 +37,9 @@
       "slider":            "Slider",
       "loadingIndicator":  "Loading Indicator",
       "uploadField":       "Upload Field",
-      "datePicker":        "Date Picker"
+      "datePicker":        "Date Picker",
+      "whatIsMedo":        "What is med.o?",
+      "releases":          "Releases"
     },
     "aria": {
       "closeMenu": "Close menu",
@@ -2076,6 +2079,27 @@
       "intro":         "The Slider is built on Radix UI Primitives and follows the ARIA Slider pattern with full keyboard support.",
       "keyboardTitle": "Keyboard interaction",
       "keyboardBody":  "Arrow keys adjust the value by one step. Home and End jump to the minimum and maximum values."
+    }
+  },
+  "about": {
+    "page": {
+      "title": "What is med.o?",
+      "intro": "med.o specialises in developing software products for the medical sector.",
+      "body1": "The med.o Design System provides a collection of reusable UI components, design decisions, and guidelines that enable consistent and accessible user interfaces.",
+      "body2": "All components are built on Tailwind CSS and Radix UI Primitives and follow a unified token system for colours, spacing, typography, and more."
+    }
+  },
+  "releases": {
+    "page": {
+      "title": "Releases"
+    },
+    "v030": {
+      "version": "Version 0.3.0",
+      "date":    "May 2026",
+      "item1":   "Live demo panel for all component pages",
+      "item2":   "Five new components: Tooltip, Slider, Loading Indicator, Upload Field, Date Picker",
+      "item3":   "Toggle, Checkbox, and Radio documentation as separate pages",
+      "item4":   "About med.o section in the sidebar"
     }
   }
 }

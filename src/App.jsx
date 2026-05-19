@@ -33,6 +33,8 @@ import SliderPage             from './pages/SliderPage'
 import LoadingIndicatorPage   from './pages/LoadingIndicatorPage'
 import UploadFieldPage        from './pages/UploadFieldPage'
 import DatePickerPage         from './pages/DatePickerPage'
+import WhatIsMedoPage   from './pages/WhatIsMedoPage'
+import ReleasesPage     from './pages/ReleasesPage'
 import ImpressumPage          from './pages/ImpressumPage'
 import DatenschutzPage from './pages/DatenschutzPage'
 
@@ -80,6 +82,8 @@ function AppContent() {
         <Route path="/loading-indicator"  element={<LoadingIndicatorPage />} />
         <Route path="/upload-field"       element={<UploadFieldPage />} />
         <Route path="/date-picker"        element={<DatePickerPage />} />
+        <Route path="/about"      element={<WhatIsMedoPage />} />
+        <Route path="/releases"   element={<ReleasesPage />} />
         <Route path="/impressum"          element={<ImpressumPage />} />
         <Route path="/datenschutz" element={<DatenschutzPage />} />
       </Routes>

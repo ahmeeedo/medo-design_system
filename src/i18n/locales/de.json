@@ -2,8 +2,9 @@
   "nav": {
     "title": "Design System",
     "sections": {
+      "about":       "About med.o",
       "foundations": "Foundations",
-      "components": "Components"
+      "components":  "Components"
     },
     "items": {
       "colors":     "Colors",
@@ -36,7 +37,9 @@
       "slider":            "Slider",
       "loadingIndicator":  "Loading Indicator",
       "uploadField":       "Upload Field",
-      "datePicker":        "Date Picker"
+      "datePicker":        "Date Picker",
+      "whatIsMedo":        "Was ist med.o?",
+      "releases":          "Releases"
     },
     "aria": {
       "closeMenu": "Menü schließen",
@@ -2076,6 +2079,27 @@
       "intro":         "Der Slider basiert auf Radix UI Primitives und folgt dem ARIA Slider-Muster mit vollständiger Tastaturunterstützung.",
       "keyboardTitle": "Tastaturinteraktion",
       "keyboardBody":  "Pfeiltasten ändern den Wert schrittweise. Home und End springen zum Minimum bzw. Maximum."
+    }
+  },
+  "about": {
+    "page": {
+      "title": "Was ist med.o?",
+      "intro": "med.o spezialisiert sich in der Entwicklung von Software-Produkten im medizinischen Bereich.",
+      "body1": "Das med.o Design System stellt eine Sammlung wiederverwendbarer UI-Komponenten, Designentscheidungen und Richtlinien bereit, die konsistente und barrierefreie Benutzeroberflächen ermöglichen.",
+      "body2": "Alle Komponenten sind auf Basis von Tailwind CSS und Radix UI Primitives gebaut und folgen einem einheitlichen Token-System für Farben, Abstände, Typografie und mehr."
+    }
+  },
+  "releases": {
+    "page": {
+      "title": "Releases"
+    },
+    "v030": {
+      "version": "Version 0.3.0",
+      "date":    "Mai 2026",
+      "item1":   "Live-Demo-Panel für alle Komponentenseiten",
+      "item2":   "Fünf neue Komponenten: Tooltip, Slider, Loading Indicator, Upload Field, Date Picker",
+      "item3":   "Toggle-, Checkbox- und Radio-Dokumentation als separate Seiten",
+      "item4":   "About med.o-Sektion in der Sidebar"
     }
   }
 }
