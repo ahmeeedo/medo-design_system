@@ -1,7 +1,7 @@
 export { Button } from './Button/Button'
 export { Icon } from './Icon/Icon'
 export { Input, Textarea, Select, InputWithAddon } from './Input/Input'
-export { Toggle, Checkbox, Radio } from './Toggle/Toggle'
+export { Toggle, Checkbox, CheckboxGroup, Radio, RadioGroup } from './Toggle/Toggle'
 export { Badge, Tag } from './Badge/Badge'
 export { Alert, Toast } from './Alert/Alert'
 export { Card } from './Card/Card'

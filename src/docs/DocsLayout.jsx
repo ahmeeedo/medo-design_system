@@ -27,6 +27,8 @@ const NAV = [
       { id: 'inputs',     label: 'nav.items.inputs' },
       { id: 'select',     label: 'nav.items.select' },
       { id: 'toggle',     label: 'nav.items.toggle' },
+      { id: 'checkbox',   label: 'nav.items.checkbox' },
+      { id: 'radio',      label: 'nav.items.radio' },
       { id: 'badges',     label: 'nav.items.badges' },
       { id: 'alerts',     label: 'nav.items.alerts' },
       { id: 'cards',      label: 'nav.items.cards' },

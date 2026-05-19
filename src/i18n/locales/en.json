@@ -16,6 +16,8 @@
       "inputs":     "Inputs",
       "select":     "Select",
       "toggle":     "Toggle",
+      "checkbox":   "Checkbox",
+      "radio":      "Radio",
       "badges":     "Badges & Tags",
       "alerts":     "Alerts",
       "cards":      "Cards",
@@ -52,9 +54,6 @@
     "style":         "Style",
     "code":          "Code",
     "accessibility": "Accessibility"
-  },
-  "toggle": {
-    "title": "Toggle"
   },
   "header": {
     "aria": {
@@ -836,69 +835,156 @@
 
   "toggle": {
     "page": {
-      "description": "Toggle switch, Checkbox, and Radio button — three controls for binary and single-choice selection."
+      "title":       "Toggle",
+      "description": "Toggle switch — a control for settings that take immediate effect."
     },
     "overview": {
-      "toggleTitle":   "Toggle (Switch)",
-      "toggleBody":    "A toggle switch immediately flips between two states — no form submit required. Use it for settings that take effect instantly.",
-      "an1":           "Track — the background strip indicating the overall state (on/off)",
-      "an2":           "Knob — the sliding circle showing the current position",
-      "an3":           "Label — optional text to the right of the switch",
-      "checkboxTitle": "Checkbox",
-      "checkboxBody":  "A checkbox enables multiple selections within a form. Each option is independent and can be toggled individually.",
-      "can1":          "Box — the visually outlined selection field",
-      "can2":          "Checkmark — the tick icon in the checked state",
-      "can3":          "Label — describes the individual option",
-      "radioTitle":    "Radio",
-      "radioBody":     "A radio button always belongs to a group (name attribute). Only one option can be selected at a time.",
-      "ran1":          "Circle — the outer ring, visible in all states",
-      "ran2":          "Dot — the inner filled point in the selected state",
-      "ran3":          "Label — describes the individual radio option",
-      "demoTitle":     "Live demo",
-      "demoBody":      "All three components in default, checked, and disabled states."
+      "toggleTitle": "Toggle (Switch)",
+      "toggleBody":  "A toggle switch immediately flips between two states — no form submit required. Use it for settings that take effect instantly.",
+      "an1":         "Track — the background strip indicating the overall state (on/off)",
+      "an2":         "Knob — the sliding circle showing the current position",
+      "an3":         "Label — optional text to the right of the switch"
     },
     "usage": {
-      "title":        "When to use which component",
-      "intro":        "Toggle, Checkbox, and Radio overlap in function — the right choice depends on immediate effect, multi-selection, and group context.",
-      "whenTitle":    "Decision guide",
-      "toggleWhen":   "Toggle — when a setting takes immediate effect (e.g. dark mode, notifications on/off)",
-      "checkboxWhen": "Checkbox — when multiple options can be selected simultaneously or a single consent is needed (e.g. accept terms)",
-      "radioWhen":    "Radio — when exactly one option must be chosen from a group (e.g. payment method)",
-      "doTitle":      "Do",
-      "dontTitle":    "Don't",
-      "do1":          "Use Toggle for settings that take immediate effect without a submit",
-      "do2":          "Use Checkbox for multi-selection and consent fields",
-      "do3":          "Always use a shared name attribute for Radio groups",
-      "do4":          "Provide a visible label for every control",
-      "dont1":        "Don't use Toggle for form data that is only sent on submit",
-      "dont2":        "Don't use Radio buttons for multi-selection — use Checkboxes instead",
-      "dont3":        "Don't show more than 6–7 Radio options — prefer Select beyond that",
-      "dont4":        "Don't omit labels — screen reader and mouse users need clickable areas",
-      "doNote":       "Immediate effect and clear semantics improve usability.",
-      "dontNote":     "Wrong component choice leads to confusion about save behavior."
+      "title":    "Usage",
+      "intro":    "Toggle switches are ideal for settings that take immediate effect — no form submit required.",
+      "doTitle":  "Do",
+      "dontTitle":"Don't",
+      "do1":      "Use Toggle for settings that take immediate effect without a submit",
+      "do2":      "Use Toggle for binary on/off options in settings menus",
+      "do3":      "Always provide a label text for screen readers",
+      "do4":      "Offer a visible label text for mouse and touch users",
+      "dont1":    "Don't use Toggle for form data that is only sent on submit",
+      "dont2":    "Don't use Toggle for selection actions without immediate effect — use Button instead",
+      "dont3":    "Don't use Toggle for multi-selection — use Checkbox instead",
+      "dont4":    "Don't omit labels — screen readers need accessible names",
+      "doNote":   "Immediate effect and clear semantics improve usability.",
+      "dontNote": "Wrong usage leads to confusion about save behavior."
     },
     "code": {
-      "title":         "Code",
-      "toggleTitle":   "Toggle — controlled and uncontrolled",
-      "toggleDesc":    "Without a checked prop the Toggle manages its own state internally. With checked and onChange it becomes controlled.",
-      "checkboxTitle": "Checkbox group",
-      "checkboxDesc":  "Multiple checkboxes share no common state — each is independent. Aggregate internal state via onChange handlers.",
-      "radioTitle":    "Radio group",
-      "radioDesc":     "All radios in a group share the same name value. Only the selected radio has checked={true}."
+      "title":       "Code",
+      "toggleTitle": "Toggle — controlled and uncontrolled",
+      "toggleDesc":  "Without a checked prop the Toggle manages its own state internally. With checked and onChange it becomes controlled."
     },
     "a11y": {
       "title":         "Accessibility",
-      "intro":         "Toggle, Checkbox, and Radio are native interactive elements — Radix UI and shadcn/ui provide correct ARIA semantics as long as labels are properly associated.",
+      "intro":         "The Toggle switch uses Radix UI Switch Primitive with correct ARIA semantics — as long as labels are properly associated.",
       "keyboardTitle": "Keyboard navigation",
-      "keyboardBody":  "All three components are fully operable via keyboard.",
-      "k1":            "Tab — focuses Toggle or Checkbox; for Radio focuses the entire group",
-      "k2":            "Space — toggles the focused Toggle or Checkbox",
-      "k3":            "Arrow Up / Down — moves selection within a Radio group",
-      "k4":            "Enter — not standard for Toggle/Checkbox (browser-dependent)",
-      "ariaTitle":     "ARIA roles",
-      "ariaBody":      "Toggle → role=\"switch\", Checkbox → role=\"checkbox\", Radio → role=\"radio\". All roles are set automatically by Radix UI and shadcn/ui.",
+      "keyboardBody":  "The Toggle is fully operable via keyboard.",
+      "k1":            "Tab — focuses the Toggle",
+      "k2":            "Space — activates or deactivates the Toggle",
+      "k3":            "Enter — not standard for Toggle (browser-dependent)",
+      "k4":            "Shift+Tab — focuses the previous element",
+      "ariaTitle":     "ARIA role",
+      "ariaBody":      "Toggle → role=\"switch\". The role is automatically set by the Radix UI Switch Primitive.",
       "labelTitle":    "Label requirement",
-      "labelBody":     "Every control needs an associated label. Without a label prop, set aria-label on the element. Never use an icon without a text description."
+      "labelBody":     "Every Toggle needs an associated label. Without a label prop, set aria-label on the element."
+    }
+  },
+
+  "checkbox": {
+    "page": {
+      "title":       "Checkbox",
+      "description": "Checkbox — multi-selection for independent options in forms."
+    },
+    "overview": {
+      "anatomyTitle":    "Anatomy",
+      "anatomyBody":     "A checkbox consists of a selection field and an optional label. Each option is independent.",
+      "an1":             "Box — the visually outlined selection field",
+      "an2":             "Checkmark — the tick icon in the checked state",
+      "an3":             "Label — describes the individual option",
+      "statesTitle":     "States",
+      "stateDefault":    "Default (unchecked)",
+      "stateChecked":    "Checked",
+      "stateDisabled":   "Disabled"
+    },
+    "usage": {
+      "title":    "Usage",
+      "intro":    "Checkboxes enable multi-selection. Each option is independent and can be toggled individually.",
+      "doTitle":  "Do",
+      "dontTitle":"Don't",
+      "do1":      "Use Checkbox for multi-selection and consent fields",
+      "do2":      "Provide a visible label for every Checkbox",
+      "do3":      "Set the disabled state when options are contextually unavailable",
+      "do4":      "Arrange related checkboxes in groups",
+      "dont1":    "Don't use Checkbox for single selection from a group — use Radio instead",
+      "dont2":    "Don't use Toggle instead of Checkbox for form submit data",
+      "dont3":    "Don't use Checkbox without a label — screen readers need visible text",
+      "dont4":    "Don't use long texts as Checkbox labels — keep them short and precise",
+      "doNote":   "Checkboxes are designed for independent, multi-state selection.",
+      "dontNote": "Wrong component creates false expectations for the user."
+    },
+    "code": {
+      "title":        "Code",
+      "checkboxTitle":"Checkbox group",
+      "checkboxDesc": "Multiple checkboxes share no common state — each is independent. Aggregate internal state via onChange handlers."
+    },
+    "a11y": {
+      "title":         "Accessibility",
+      "intro":         "Checkboxes use shadcn/ui primitives with correct ARIA semantics — as long as labels are properly associated.",
+      "keyboardTitle": "Keyboard navigation",
+      "keyboardBody":  "The Checkbox is fully operable via keyboard.",
+      "k1":            "Tab — focuses the Checkbox",
+      "k2":            "Space — checks or unchecks the Checkbox",
+      "k3":            "Enter — submits the form (if available)",
+      "k4":            "Shift+Tab — focuses the previous element",
+      "ariaTitle":     "ARIA role",
+      "ariaBody":      "Checkbox → role=\"checkbox\". The role is automatically set by shadcn/ui.",
+      "labelTitle":    "Label requirement",
+      "labelBody":     "Every Checkbox needs an associated label. Without a label prop, set aria-label on the element."
+    }
+  },
+
+  "radio": {
+    "page": {
+      "title":       "Radio",
+      "description": "Radio — single selection from a group of options."
+    },
+    "overview": {
+      "anatomyTitle":    "Anatomy",
+      "anatomyBody":     "A radio button always belongs to a group (name attribute). Only one option can be selected at a time.",
+      "an1":             "Circle — the outer ring, visible in all states",
+      "an2":             "Dot — the inner filled point in the selected state",
+      "an3":             "Label — describes the individual radio option",
+      "statesTitle":     "States",
+      "stateUnselected": "Unselected",
+      "stateSelected":   "Selected",
+      "stateDisabled":   "Disabled"
+    },
+    "usage": {
+      "title":    "Usage",
+      "intro":    "Radio buttons enforce single selection from a fixed group. All radios in a group share the same name value.",
+      "doTitle":  "Do",
+      "dontTitle":"Don't",
+      "do1":      "Use Radio for exactly one selection from a group",
+      "do2":      "Give all radios in a group the same name attribute",
+      "do3":      "Provide a visible label for every option",
+      "do4":      "Use at most 6–7 options — prefer Select beyond that",
+      "dont1":    "Don't use Radio buttons for multi-selection — use Checkboxes instead",
+      "dont2":    "Don't omit the name attribute — radios become independent without it",
+      "dont3":    "Don't leave a Radio group without a pre-selected option",
+      "dont4":    "Don't use more than 7 options in a Radio group",
+      "doNote":   "Radio enforces single selection and communicates this visually.",
+      "dontNote": "Too many options make the selection confusing."
+    },
+    "code": {
+      "title":      "Code",
+      "radioTitle": "Radio group",
+      "radioDesc":  "All radios in a group share the same name value. Only the selected radio has checked={true}."
+    },
+    "a11y": {
+      "title":         "Accessibility",
+      "intro":         "Radio buttons use native inputs — correct ARIA semantics are ensured by the name attribute and role=\"radio\".",
+      "keyboardTitle": "Keyboard navigation",
+      "keyboardBody":  "Tab focuses the Radio group; arrow keys navigate within:",
+      "k1":            "Tab — focuses the entire Radio group",
+      "k2":            "Arrow Up / Down — moves selection within the group",
+      "k3":            "Space — selects the focused Radio",
+      "k4":            "Enter — submits the form (if available)",
+      "ariaTitle":     "ARIA role",
+      "ariaBody":      "Radio → role=\"radio\". The role is automatically set by the native input type=\"radio\".",
+      "labelTitle":    "Label requirement",
+      "labelBody":     "Every Radio needs an associated label. Without a label prop, set aria-label on the element."
     }
   },
 

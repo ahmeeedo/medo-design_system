@@ -12,6 +12,8 @@ import ButtonsPage     from './pages/ButtonsPage'
 import InputsPage      from './pages/InputsPage'
 import SelectsPage     from './pages/SelectsPage'
 import TogglePage      from './pages/TogglePage'
+import CheckboxPage    from './pages/CheckboxPage'
+import RadioPage       from './pages/RadioPage'
 import BadgesPage      from './pages/BadgesPage'
 import AlertsPage      from './pages/AlertsPage'
 import CardsPage       from './pages/CardsPage'
@@ -57,6 +59,8 @@ function AppContent() {
         <Route path="/inputs"     element={<InputsPage />} />
         <Route path="/select"     element={<SelectsPage />} />
         <Route path="/toggle"     element={<TogglePage />} />
+        <Route path="/checkbox"   element={<CheckboxPage />} />
+        <Route path="/radio"      element={<RadioPage />} />
         <Route path="/badges"     element={<BadgesPage />} />
         <Route path="/alerts"     element={<AlertsPage />} />
         <Route path="/cards"      element={<CardsPage />} />

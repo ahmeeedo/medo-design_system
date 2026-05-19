@@ -16,6 +16,8 @@
       "inputs":     "Inputs",
       "select":     "Select",
       "toggle":     "Toggle",
+      "checkbox":   "Checkbox",
+      "radio":      "Radio",
       "badges":     "Badges & Tags",
       "alerts":     "Alerts",
       "cards":      "Cards",
@@ -52,9 +54,6 @@
     "style":         "Style",
     "code":          "Code",
     "accessibility": "Accessibility"
-  },
-  "toggle": {
-    "title": "Toggle"
   },
   "header": {
     "aria": {
@@ -836,69 +835,156 @@
 
   "toggle": {
     "page": {
-      "description": "Toggle-Switch, Checkbox und Radio-Button — drei Steuerelemente für binäre und Einfachauswahl."
+      "title":       "Toggle",
+      "description": "Toggle-Switch — ein Steuerelement für sofort wirksame binäre Einstellungen."
     },
     "overview": {
-      "toggleTitle":   "Toggle (Switch)",
-      "toggleBody":    "Ein Toggle-Switch schaltet sofort zwischen zwei Zuständen um — ohne Formular-Submit. Er eignet sich für Einstellungen, die unmittelbar wirksam werden.",
-      "an1":           "Track — der Hintergrundstreifen zeigt den Gesamtzustand (ein/aus)",
-      "an2":           "Knob — der gleitende Kreis zeigt die aktuelle Position",
-      "an3":           "Label — optionaler Text rechts neben dem Switch",
-      "checkboxTitle": "Checkbox",
-      "checkboxBody":  "Eine Checkbox ermöglicht Mehrfachauswahl in einem Formular. Jede Option ist unabhängig und kann einzeln aktiviert oder deaktiviert werden.",
-      "can1":          "Box — das visuell umrahmte Auswahlfeld",
-      "can2":          "Checkmark — das Häkchen-Icon im aktivierten Zustand",
-      "can3":          "Label — beschreibt die einzelne Option",
-      "radioTitle":    "Radio",
-      "radioBody":     "Ein Radio-Button gehört immer zu einer Gruppe (name-Attribut). Nur eine Option kann gleichzeitig ausgewählt sein.",
-      "ran1":          "Circle — der äußere Ring, sichtbar in allen Zuständen",
-      "ran2":          "Dot — der innere ausgefüllte Punkt im aktivierten Zustand",
-      "ran3":          "Label — beschreibt die einzelne Radio-Option",
-      "demoTitle":     "Live-Demo",
-      "demoBody":      "Alle drei Komponenten in Default-, Checked- und Disabled-Zustand."
+      "toggleTitle": "Toggle (Switch)",
+      "toggleBody":  "Ein Toggle-Switch schaltet sofort zwischen zwei Zuständen um — ohne Formular-Submit. Er eignet sich für Einstellungen, die unmittelbar wirksam werden.",
+      "an1":         "Track — der Hintergrundstreifen zeigt den Gesamtzustand (ein/aus)",
+      "an2":         "Knob — der gleitende Kreis zeigt die aktuelle Position",
+      "an3":         "Label — optionaler Text rechts neben dem Switch"
     },
     "usage": {
-      "title":       "Wann welche Komponente",
-      "intro":       "Toggle, Checkbox und Radio überschneiden sich in der Funktion — die richtige Wahl hängt von Sofortwirkung, Mehrfachauswahl und Gruppen-Kontext ab.",
-      "whenTitle":   "Entscheidungshilfe",
-      "toggleWhen":  "Toggle — wenn eine Einstellung sofort wirksam wird (z. B. Dark Mode, Benachrichtigungen ein/aus)",
-      "checkboxWhen":"Checkbox — wenn mehrere Optionen gleichzeitig auswählbar sind oder eine Zustimmung nötig ist (z. B. AGB akzeptieren)",
-      "radioWhen":   "Radio — wenn genau eine Option aus einer Gruppe gewählt werden muss (z. B. Zahlungsart)",
-      "doTitle":     "Do",
-      "dontTitle":   "Don't",
-      "do1":         "Toggle für sofort wirksame Einstellungen ohne Submit",
-      "do2":         "Checkbox für Mehrfachauswahl und Zustimmungsfelder",
-      "do3":         "Radio-Gruppe immer mit gemeinsamen name-Attribut verwenden",
-      "do4":         "Jedes Steuerelement mit sichtbarem Label versehen",
-      "dont1":       "Keinen Toggle für Formular-Daten verwenden, die erst bei Submit gesendet werden",
-      "dont2":       "Keine Radio-Buttons für Mehrfachauswahl — dafür Checkboxen",
-      "dont3":       "Nicht mehr als 6–7 Radio-Optionen — ab dann Select bevorzugen",
-      "dont4":       "Keine Labels weglassen — Screen-Reader und Maus-Nutzer brauchen klickbare Bereiche",
-      "doNote":      "Sofortwirkung und klare Semantik verbessern die Bedienbarkeit.",
-      "dontNote":    "Falsche Komponente führt zu Verwirrung über das Speicherverhalten."
+      "title":    "Einsatz",
+      "intro":    "Toggle-Switches eignen sich für Einstellungen, die sofort wirksam werden — ohne Formular-Submit.",
+      "doTitle":  "Do",
+      "dontTitle":"Don't",
+      "do1":      "Toggle für sofort wirksame Einstellungen ohne Submit",
+      "do2":      "Toggle für binäre Ein/Aus-Optionen in Einstellungsmenüs verwenden",
+      "do3":      "Immer einen Label-Text für Screenreader bereitstellen",
+      "do4":      "Sichtbaren Label-Text für Maus- und Touch-Nutzer anbieten",
+      "dont1":    "Keinen Toggle für Formular-Daten verwenden, die erst bei Submit gesendet werden",
+      "dont2":    "Toggle nicht für Auswahl-Aktionen ohne sofortige Wirkung — dafür Button",
+      "dont3":    "Toggle nicht für Mehrfachauswahl — dafür Checkbox",
+      "dont4":    "Keine Labels weglassen — Screen-Reader brauchen klickbare Bereiche",
+      "doNote":   "Sofortwirkung und klare Semantik verbessern die Bedienbarkeit.",
+      "dontNote": "Falscher Einsatz führt zu Verwirrung über das Speicherverhalten."
     },
     "code": {
-      "title":          "Code",
-      "toggleTitle":    "Toggle — controlled und uncontrolled",
-      "toggleDesc":     "Ohne checked-Prop verwaltet der Toggle seinen State intern. Mit checked und onChange wird er controlled.",
-      "checkboxTitle":  "Checkbox-Gruppe",
-      "checkboxDesc":   "Mehrere Checkboxen teilen keinen gemeinsamen State — jede ist eigenständig. Den internen State per onChange-Handler aggregieren.",
-      "radioTitle":     "Radio-Gruppe",
-      "radioDesc":      "Alle Radios einer Gruppe teilen denselben name-Wert. Nur der ausgewählte Radio hat checked={true}."
+      "title":       "Code",
+      "toggleTitle": "Toggle — controlled und uncontrolled",
+      "toggleDesc":  "Ohne checked-Prop verwaltet der Toggle seinen State intern. Mit checked und onChange wird er controlled."
     },
     "a11y": {
       "title":         "Accessibility",
-      "intro":         "Toggle, Checkbox und Radio sind native Interaktionselemente — Radix UI und shadcn/ui stellen korrekte ARIA-Semantik sicher, solange Labels korrekt verknüpft sind.",
+      "intro":         "Der Toggle-Switch nutzt Radix UI Switch Primitive mit korrekter ARIA-Semantik — solange Labels korrekt verknüpft sind.",
       "keyboardTitle": "Keyboard-Navigation",
-      "keyboardBody":  "Alle drei Komponenten sind vollständig per Tastatur bedienbar.",
-      "k1":            "Tab — fokussiert Toggle oder Checkbox; bei Radio fokussiert die gesamte Gruppe",
-      "k2":            "Space — aktiviert / deaktiviert fokussierten Toggle oder Checkbox",
-      "k3":            "Arrow Up / Down — wechselt Selection innerhalb einer Radio-Gruppe",
-      "k4":            "Enter — nicht standardmäßig für Toggle/Checkbox (Browser-abhängig)",
-      "ariaTitle":     "ARIA-Rollen",
-      "ariaBody":      "Toggle → role=\"switch\", Checkbox → role=\"checkbox\", Radio → role=\"radio\". Alle Rollen werden von Radix UI und shadcn/ui automatisch gesetzt.",
+      "keyboardBody":  "Der Toggle ist vollständig per Tastatur bedienbar.",
+      "k1":            "Tab — fokussiert den Toggle",
+      "k2":            "Space — aktiviert oder deaktiviert den Toggle",
+      "k3":            "Enter — nicht standardmäßig für Toggle (Browser-abhängig)",
+      "k4":            "Shift+Tab — fokussiert das vorherige Element",
+      "ariaTitle":     "ARIA-Rolle",
+      "ariaBody":      "Toggle → role=\"switch\". Die Rolle wird von Radix UI Switch Primitive automatisch gesetzt.",
       "labelTitle":    "Label-Pflicht",
-      "labelBody":     "Jedes Steuerelement braucht ein verknüpftes Label. Ohne label-Prop aria-label am Element setzen. Nie nur Icon ohne Textbeschreibung verwenden."
+      "labelBody":     "Jeder Toggle braucht ein verknüpftes Label. Ohne label-Prop aria-label am Element setzen."
+    }
+  },
+
+  "checkbox": {
+    "page": {
+      "title":       "Checkbox",
+      "description": "Checkbox — Mehrfachauswahl für unabhängige Optionen in Formularen."
+    },
+    "overview": {
+      "anatomyTitle":    "Anatomie",
+      "anatomyBody":     "Eine Checkbox besteht aus einem Auswahlfeld und einem optionalen Label. Jede Option ist unabhängig.",
+      "an1":             "Box — das visuell umrahmte Auswahlfeld",
+      "an2":             "Checkmark — das Häkchen im aktivierten Zustand",
+      "an3":             "Label — beschreibt die einzelne Option",
+      "statesTitle":     "Zustände",
+      "stateDefault":    "Default (unchecked)",
+      "stateChecked":    "Checked",
+      "stateDisabled":   "Disabled"
+    },
+    "usage": {
+      "title":    "Einsatz",
+      "intro":    "Checkboxen ermöglichen Mehrfachauswahl. Jede Option ist unabhängig und kann einzeln aktiviert oder deaktiviert werden.",
+      "doTitle":  "Do",
+      "dontTitle":"Don't",
+      "do1":      "Checkbox für Mehrfachauswahl und Zustimmungsfelder verwenden",
+      "do2":      "Jede Checkbox mit sichtbarem Label versehen",
+      "do3":      "Disabled-State setzen, wenn Optionen kontextbedingt nicht verfügbar sind",
+      "do4":      "Zusammengehörige Checkboxen in Gruppen anordnen",
+      "dont1":    "Keine Checkbox für Einzelauswahl aus einer Gruppe — dafür Radio",
+      "dont2":    "Keinen Toggle statt Checkbox für Formular-Submit-Daten",
+      "dont3":    "Keine Checkbox ohne Label — Screen-Reader benötigen sichtbaren Text",
+      "dont4":    "Keine langen Texte als Checkbox-Label — kurz und präzise bleiben",
+      "doNote":   "Checkboxen sind für unabhängige, mehrstufige Auswahl gedacht.",
+      "dontNote": "Falsche Komponente führt zu falschen Erwartungen beim Nutzer."
+    },
+    "code": {
+      "title":        "Code",
+      "checkboxTitle":"Checkbox-Gruppe",
+      "checkboxDesc": "Mehrere Checkboxen teilen keinen gemeinsamen State — jede ist eigenständig. Den internen State per onChange-Handler aggregieren."
+    },
+    "a11y": {
+      "title":         "Accessibility",
+      "intro":         "Checkboxen nutzen shadcn/ui Primitive mit korrekter ARIA-Semantik — solange Labels korrekt verknüpft sind.",
+      "keyboardTitle": "Keyboard-Navigation",
+      "keyboardBody":  "Die Checkbox ist vollständig per Tastatur bedienbar.",
+      "k1":            "Tab — fokussiert die Checkbox",
+      "k2":            "Space — aktiviert oder deaktiviert die Checkbox",
+      "k3":            "Enter — sendet das Formular (falls verfügbar)",
+      "k4":            "Shift+Tab — fokussiert das vorherige Element",
+      "ariaTitle":     "ARIA-Rolle",
+      "ariaBody":      "Checkbox → role=\"checkbox\". Die Rolle wird von shadcn/ui automatisch gesetzt.",
+      "labelTitle":    "Label-Pflicht",
+      "labelBody":     "Jede Checkbox braucht ein verknüpftes Label. Ohne label-Prop aria-label am Element setzen."
+    }
+  },
+
+  "radio": {
+    "page": {
+      "title":       "Radio",
+      "description": "Radio — Einfachauswahl aus einer Gruppe von Optionen."
+    },
+    "overview": {
+      "anatomyTitle":    "Anatomie",
+      "anatomyBody":     "Ein Radio-Button gehört immer zu einer Gruppe (name-Attribut). Nur eine Option kann gleichzeitig ausgewählt sein.",
+      "an1":             "Circle — der äußere Ring, sichtbar in allen Zuständen",
+      "an2":             "Dot — der innere ausgefüllte Punkt im aktivierten Zustand",
+      "an3":             "Label — beschreibt die einzelne Radio-Option",
+      "statesTitle":     "Zustände",
+      "stateUnselected": "Unselected",
+      "stateSelected":   "Selected",
+      "stateDisabled":   "Disabled"
+    },
+    "usage": {
+      "title":    "Einsatz",
+      "intro":    "Radio-Buttons erzwingen Einfachauswahl aus einer festen Gruppe. Alle Radios einer Gruppe teilen denselben name-Wert.",
+      "doTitle":  "Do",
+      "dontTitle":"Don't",
+      "do1":      "Radio für genau eine Auswahl aus einer Gruppe verwenden",
+      "do2":      "Alle Radios einer Gruppe mit gleichem name-Attribut versehen",
+      "do3":      "Jede Option mit sichtbarem Label versehen",
+      "do4":      "Maximal 6–7 Optionen — ab dann Select bevorzugen",
+      "dont1":    "Keine Radio-Buttons für Mehrfachauswahl — dafür Checkboxen",
+      "dont2":    "Kein name-Attribut weglassen — sonst unabhängige Buttons",
+      "dont3":    "Keine Radio-Gruppe ohne vorausgewählte Option lassen",
+      "dont4":    "Nicht mehr als 7 Optionen in einer Radio-Gruppe",
+      "doNote":   "Radio erzwingt Einfachauswahl und kommuniziert das visuell klar.",
+      "dontNote": "Zu viele Optionen machen die Auswahl unübersichtlich."
+    },
+    "code": {
+      "title":      "Code",
+      "radioTitle": "Radio-Gruppe",
+      "radioDesc":  "Alle Radios einer Gruppe teilen denselben name-Wert. Nur der ausgewählte Radio hat checked={true}."
+    },
+    "a11y": {
+      "title":         "Accessibility",
+      "intro":         "Radio-Buttons nutzen native Inputs — korrekte ARIA-Semantik ist durch das name-Attribut und role=\"radio\" sichergestellt.",
+      "keyboardTitle": "Keyboard-Navigation",
+      "keyboardBody":  "Tab fokussiert die Radio-Gruppe, Pfeiltasten navigieren innerhalb:",
+      "k1":            "Tab — fokussiert die gesamte Radio-Gruppe",
+      "k2":            "Arrow Up / Down — wechselt Selection innerhalb der Gruppe",
+      "k3":            "Space — wählt den fokussierten Radio aus",
+      "k4":            "Enter — sendet das Formular (falls verfügbar)",
+      "ariaTitle":     "ARIA-Rolle",
+      "ariaBody":      "Radio → role=\"radio\". Die Rolle wird durch das native input type=\"radio\" automatisch gesetzt.",
+      "labelTitle":    "Label-Pflicht",
+      "labelBody":     "Jeder Radio braucht ein verknüpftes Label. Ohne label-Prop aria-label am Element setzen."
     }
   },
 
