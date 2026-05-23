@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { PageLayout, Section, Content } from '../docs/PageLayout'
+import { PageLayout, Section, Content, DemoPanel } from '../docs/PageLayout'
 import { CodeBlock } from '../docs/CodeBlock'
 import { Badge, Tag } from '../components'
 
@@ -58,6 +58,15 @@ export default function BadgesPage() {
       label: t('tabs.overview'),
       content: (
         <>
+          <DemoPanel
+            component={(values) => (
+              <Badge variant={values.variant} size={values.size}>Badge</Badge>
+            )}
+            controls={[
+              { id: 'variant', type: 'dropdown', label: 'Variant', options: ['neutral', 'accent', 'success', 'warning', 'error'], default: 'neutral' },
+              { id: 'size',    type: 'dropdown', label: 'Size',    options: ['sm', 'md'], default: 'md' },
+            ]}
+          />
           <Section title={t('badges.overview.anatomyTitle')}>
             <Content>
               <p className="text-md text-[var(--color-text-secondary)] leading-[var(--leading-relaxed)] mb-[var(--space-3)]">

@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next'
-import { PageLayout, Section, Content } from '../docs/PageLayout'
+import { PageLayout, Section, Content, DemoPanel } from '../docs/PageLayout'
 import { CodeBlock } from '../docs/CodeBlock'
 import { Input, Textarea, InputWithAddon } from '../components'
 
@@ -83,6 +83,15 @@ export default function InputsPage() {
       label: t('tabs.overview'),
       content: (
         <>
+          <DemoPanel
+            component={(values) => (
+              <Input type={values.type} disabled={values.disabled} placeholder="Placeholder" />
+            )}
+            controls={[
+              { id: 'type',     type: 'dropdown', label: 'Type',     options: ['text', 'email', 'password', 'number'], default: 'text' },
+              { id: 'disabled', type: 'toggle',   label: 'Disabled', default: false },
+            ]}
+          />
           <Section title={t('inputs.overview.anatomyTitle')}>
             <Content>
               <p className="text-md text-[var(--color-text-secondary)] leading-[var(--leading-relaxed)] mb-[var(--space-3)]">

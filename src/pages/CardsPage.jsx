@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next'
-import { PageLayout, Section, Content } from '../docs/PageLayout'
+import { PageLayout, Section, Content, DemoPanel } from '../docs/PageLayout'
 import { CodeBlock } from '../docs/CodeBlock'
 import { Card, Button } from '../components'
 
@@ -60,6 +60,16 @@ export default function CardsPage() {
       label: t('tabs.overview'),
       content: (
         <>
+          <DemoPanel
+            component={(values) => (
+              <Card variant={values.variant} className="w-[280px] p-[var(--space-6)]">
+                <p className="text-sm text-[var(--color-text-secondary)]">Card content</p>
+              </Card>
+            )}
+            controls={[
+              { id: 'variant', type: 'dropdown', label: 'Variant', options: ['flat', 'raised'], default: 'flat' },
+            ]}
+          />
           <Section title={t('cards.overview.anatomyTitle')}>
             <Content>
               <p className="text-md text-[var(--color-text-secondary)] leading-[var(--leading-relaxed)] mb-[var(--space-3)]">

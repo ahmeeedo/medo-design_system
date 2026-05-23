@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next'
-import { PageLayout, Section, Content } from '../docs/PageLayout'
+import { PageLayout, Section, Content, DemoPanel } from '../docs/PageLayout'
 import { CodeBlock } from '../docs/CodeBlock'
 import { Table, Badge } from '../components'
 
@@ -73,6 +73,20 @@ export default function TablesPage() {
       label: t('tabs.overview'),
       content: (
         <>
+          <DemoPanel
+            component={() => (
+              <Table
+                columns={[{ key: 'name', label: 'Name' }, { key: 'status', label: 'Status' }]}
+                rows={[
+                  { id: 1, name: 'Alice', status: 'Active' },
+                  { id: 2, name: 'Bob',   status: 'Inactive' },
+                  { id: 3, name: 'Carol', status: 'Active' },
+                ]}
+                rowKey="id"
+              />
+            )}
+            controls={[]}
+          />
           <Section title={t('tables.overview.anatomyTitle')}>
             <Content>
               <p className="text-md text-[var(--color-text-secondary)] leading-[var(--leading-relaxed)] mb-[var(--space-3)]">

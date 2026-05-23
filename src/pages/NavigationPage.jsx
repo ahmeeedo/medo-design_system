@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { PageLayout, Section, Content } from '../docs/PageLayout'
+import { PageLayout, Section, Content, DemoPanel } from '../docs/PageLayout'
 import { CodeBlock } from '../docs/CodeBlock'
 import { Breadcrumb, Pagination } from '../components'
 
@@ -49,6 +49,18 @@ export default function NavigationPage() {
       label: t('tabs.overview'),
       content: (
         <>
+          <DemoPanel
+            component={(values) => (
+              <Breadcrumb items={[
+                { label: 'Home',    href: '#' },
+                { label: 'Section', href: '#' },
+                { label: 'Page' },
+              ].slice(0, Number(values.depth))} />
+            )}
+            controls={[
+              { id: 'depth', type: 'dropdown', label: 'Depth', options: ['1', '2', '3'], default: '3' },
+            ]}
+          />
           <Section title={t('navigation.overview.breadcrumbTitle')}>
             <Content>
               <p className="text-md text-[var(--color-text-secondary)] leading-[var(--leading-relaxed)] mb-[var(--space-3)]">

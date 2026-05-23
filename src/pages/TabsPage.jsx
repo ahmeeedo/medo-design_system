@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { PageLayout, Section, Content } from '../docs/PageLayout'
+import { PageLayout, Section, Content, DemoPanel } from '../docs/PageLayout'
 import { CodeBlock } from '../docs/CodeBlock'
 import { Tabs } from '../components'
 
@@ -74,6 +74,21 @@ export default function TabsPage() {
       label: t('tabs.overview'),
       content: (
         <>
+          <DemoPanel
+            component={(values) => (
+              <Tabs
+                variant={values.variant}
+                tabs={[
+                  { id: 'tab1', label: 'Tab 1', content: <span className="text-sm text-[var(--color-text-secondary)]">Content 1</span> },
+                  { id: 'tab2', label: 'Tab 2', content: <span className="text-sm text-[var(--color-text-secondary)]">Content 2</span> },
+                  { id: 'tab3', label: 'Tab 3', content: <span className="text-sm text-[var(--color-text-secondary)]">Content 3</span> },
+                ]}
+              />
+            )}
+            controls={[
+              { id: 'variant', type: 'dropdown', label: 'Variant', options: ['underline', 'pill'], default: 'underline' },
+            ]}
+          />
           <Section title={t('tabsPage.overview.anatomyTitle')}>
             <Content>
               <p className="text-md text-[var(--color-text-secondary)] leading-[var(--leading-relaxed)] mb-[var(--space-3)]">

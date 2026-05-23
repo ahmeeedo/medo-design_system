@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next'
-import { PageLayout, Section, Content } from '../docs/PageLayout'
+import { PageLayout, Section, Content, DemoPanel } from '../docs/PageLayout'
 import { CodeBlock } from '../docs/CodeBlock'
 import { Alert, Toast } from '../components'
 
@@ -88,6 +88,14 @@ export default function AlertsPage() {
       label: t('tabs.overview'),
       content: (
         <>
+          <DemoPanel
+            component={(values) => (
+              <Alert variant={values.variant}>Alert message</Alert>
+            )}
+            controls={[
+              { id: 'variant', type: 'dropdown', label: 'Variant', options: ['info', 'success', 'warning', 'error'], default: 'info' },
+            ]}
+          />
           <Section title={t('alerts.overview.anatomyTitle')}>
             <Content>
               <p className="text-md text-[var(--color-text-secondary)] leading-[var(--leading-relaxed)] mb-[var(--space-3)]">
