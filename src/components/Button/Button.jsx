@@ -1,4 +1,4 @@
-import { cloneElement, isValidElement } from 'react'
+import { cloneElement, isValidElement, forwardRef } from 'react'
 import { cva } from 'class-variance-authority'
 import { cn } from '@/lib/utils'
 
@@ -36,7 +36,7 @@ function withSize(icon, size) {
   return cloneElement(icon, { size: ICON_SIZE[size] })
 }
 
-export function Button({
+export const Button = forwardRef(function Button({
   variant = 'primary',
   size = 'md',
   disabled = false,
@@ -47,9 +47,10 @@ export function Button({
   className = '',
   children,
   ...props
-}) {
+}, ref) {
   return (
     <button
+      ref={ref}
       type={type}
       disabled={disabled}
       onClick={onClick}
@@ -64,4 +65,4 @@ export function Button({
       {withSize(trailingIcon, size)}
     </button>
   )
-}
+})
