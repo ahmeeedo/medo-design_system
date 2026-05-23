@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next'
-import { PageLayout, Section, Content } from '../docs/PageLayout'
+import { PageLayout, Section, Content, DemoPanel } from '../docs/PageLayout'
 import { CodeBlock } from '../docs/CodeBlock'
 import { Progress } from '../components'
 
@@ -36,6 +36,17 @@ export default function FeedbackPage() {
       label: t('tabs.overview'),
       content: (
         <>
+          <DemoPanel
+            component={(values) => (
+              <div className="w-full max-w-[400px]">
+                <Progress value={65} variant={values.variant} size={values.size} />
+              </div>
+            )}
+            controls={[
+              { id: 'variant', type: 'dropdown', label: 'Variant', options: ['neutral', 'accent', 'success', 'warning', 'error'], default: 'accent' },
+              { id: 'size', type: 'dropdown', label: 'Size', options: ['sm', 'md', 'lg'], default: 'md' },
+            ]}
+          />
           <Section title={t('feedback.overview.anatomyTitle')}>
             <Content>
               <p className="text-md text-[var(--color-text-secondary)] leading-[var(--leading-relaxed)] mb-[var(--space-3)]">

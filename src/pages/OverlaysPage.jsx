@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { PageLayout, Section, Content } from '../docs/PageLayout'
+import { PageLayout, Section, Content, DemoPanel } from '../docs/PageLayout'
 import { CodeBlock } from '../docs/CodeBlock'
 import { Button, Modal } from '../components'
 
@@ -73,6 +73,18 @@ const SIZE_CODE = `{/* size="sm" — 384px max-width */}
   <DetailView />
 </Modal>`
 
+function ModalDemo({ size }) {
+  const [open, setOpen] = useState(false)
+  return (
+    <>
+      <Button onClick={() => setOpen(true)}>Modal öffnen</Button>
+      <Modal open={open} onClose={() => setOpen(false)} title="Beispiel-Dialog" size={size}>
+        <p className="text-sm text-[var(--color-text-secondary)]">Modalinhalt — Text, Formulare oder andere Komponenten.</p>
+      </Modal>
+    </>
+  )
+}
+
 export default function OverlaysPage() {
   const { t } = useTranslation()
 
@@ -88,6 +100,12 @@ export default function OverlaysPage() {
       label: t('tabs.overview'),
       content: (
         <>
+          <DemoPanel
+            component={(values) => <ModalDemo size={values.size} />}
+            controls={[
+              { id: 'size', type: 'dropdown', label: 'Size', options: ['sm', 'md', 'lg'], default: 'md' },
+            ]}
+          />
           <Section title={t('overlays.overview.anatomyTitle')}>
             <Content>
               <p className="text-md text-[var(--color-text-secondary)] leading-[var(--leading-relaxed)] mb-[var(--space-3)]">

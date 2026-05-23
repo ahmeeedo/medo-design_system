@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next'
-import { PageLayout, Section, Content } from '../docs/PageLayout'
+import { PageLayout, Section, Content, DemoPanel } from '../docs/PageLayout'
 import { CodeBlock } from '../docs/CodeBlock'
 import { Button, Menu } from '../components'
 
@@ -55,6 +55,17 @@ export default function MenusPage() {
       label: t('tabs.overview'),
       content: (
         <>
+          <DemoPanel
+            component={() => (
+              <Menu trigger={<Button variant="secondary" size="sm">Optionen ▾</Button>}>
+                <Menu.Item icon="✏️">Bearbeiten</Menu.Item>
+                <Menu.Item icon="📤">Exportieren</Menu.Item>
+                <Menu.Separator />
+                <Menu.Item icon="🗑️" danger>Löschen</Menu.Item>
+              </Menu>
+            )}
+            controls={[]}
+          />
           <Section title={t('menus.overview.anatomyTitle')}>
             <Content>
               <p className="text-md text-[var(--color-text-secondary)] leading-[var(--leading-relaxed)] mb-[var(--space-3)]">

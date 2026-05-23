@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next'
-import { PageLayout, Section, Content } from '../docs/PageLayout'
+import { PageLayout, Section, Content, DemoPanel } from '../docs/PageLayout'
 import { CodeBlock } from '../docs/CodeBlock'
 import { StatCard } from '../components'
 
@@ -63,6 +63,19 @@ export default function StatsPage() {
       label: t('tabs.overview'),
       content: (
         <>
+          <DemoPanel
+            component={(values) => (
+              <StatCard
+                label="Active Users"
+                value="1,284"
+                delta="12%"
+                deltaDir={values.deltaDir}
+              />
+            )}
+            controls={[
+              { id: 'deltaDir', type: 'dropdown', label: 'Delta Dir', options: ['up', 'down', 'neutral'], default: 'up' },
+            ]}
+          />
           <Section title={t('stats.overview.anatomyTitle')}>
             <Content>
               <p className="text-md text-[var(--color-text-secondary)] leading-[var(--leading-relaxed)] mb-[var(--space-3)]">

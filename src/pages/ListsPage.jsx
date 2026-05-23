@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next'
-import { PageLayout, Section, Content } from '../docs/PageLayout'
+import { PageLayout, Section, Content, DemoPanel } from '../docs/PageLayout'
 import { CodeBlock } from '../docs/CodeBlock'
 import { Avatar, Badge, Button } from '../components'
 
@@ -77,6 +77,27 @@ export default function ListsPage() {
       label: t('tabs.overview'),
       content: (
         <>
+          <DemoPanel
+            component={() => (
+              <div className="border border-[var(--border-subtle-100)] rounded-[var(--radius-lg)] overflow-hidden w-full max-w-[480px]">
+                {[
+                  { initials: 'AK', name: 'Anna Klein', status: 'Online', variant: 'success' },
+                  { initials: 'MB', name: 'Max Bauer', status: 'Away', variant: 'warning' },
+                  { initials: 'LM', name: 'Lena Müller', status: 'Offline', variant: 'neutral' },
+                ].map((user, i, arr) => (
+                  <div
+                    key={user.initials}
+                    className={`flex items-center gap-[var(--space-3)] px-[var(--space-4)] py-[var(--space-3)] ${i < arr.length - 1 ? 'border-b border-[var(--border-subtle-100)]' : ''}`}
+                  >
+                    <Avatar size="sm" initials={user.initials} />
+                    <span className="text-sm [font-weight:var(--weight-semibold)] text-[var(--color-text-primary)] flex-1">{user.name}</span>
+                    <Badge variant={user.variant}>{user.status}</Badge>
+                  </div>
+                ))}
+              </div>
+            )}
+            controls={[]}
+          />
           <Section title={t('lists.overview.patternTitle')}>
             <Content>
               <p className="text-md text-[var(--color-text-secondary)] leading-[var(--leading-relaxed)]">

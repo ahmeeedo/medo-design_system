@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next'
-import { PageLayout, Section, Content } from '../docs/PageLayout'
+import { PageLayout, Section, Content, DemoPanel } from '../docs/PageLayout'
 import { CodeBlock } from '../docs/CodeBlock'
 import { Avatar, AvatarGroup } from '../components'
 
@@ -62,6 +62,14 @@ export default function AvatarPage() {
       label: t('tabs.overview'),
       content: (
         <>
+          <DemoPanel
+            component={(values) => (
+              <Avatar size={values.size} initials="AB" color="#DBEAFE" textColor="#1D4ED8" />
+            )}
+            controls={[
+              { id: 'size', type: 'dropdown', label: 'Size', options: ['xs', 'sm', 'md', 'lg', 'xl'], default: 'md' },
+            ]}
+          />
           <Section title={t('avatar.overview.anatomyTitle')}>
             <Content>
               <p className="text-md text-[var(--color-text-secondary)] leading-[var(--leading-relaxed)] mb-[var(--space-3)]">

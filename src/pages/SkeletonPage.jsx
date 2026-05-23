@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next'
-import { PageLayout, Section, Content } from '../docs/PageLayout'
+import { PageLayout, Section, Content, DemoPanel } from '../docs/PageLayout'
 import { CodeBlock } from '../docs/CodeBlock'
 import { Skeleton, SkeletonCard } from '../components'
 
@@ -44,6 +44,20 @@ export default function SkeletonPage() {
       label: t('tabs.overview'),
       content: (
         <>
+          <DemoPanel
+            component={(values) => (
+              <div className="w-[280px]">
+                <Skeleton
+                  variant={values.variant}
+                  width={values.variant === 'circle' ? 48 : '100%'}
+                  height={values.variant === 'circle' ? 48 : values.variant === 'text' ? 16 : 80}
+                />
+              </div>
+            )}
+            controls={[
+              { id: 'variant', type: 'dropdown', label: 'Variant', options: ['rect', 'text', 'circle'], default: 'rect' },
+            ]}
+          />
           <Section title={t('skeleton.overview.anatomyTitle')}>
             <Content>
               <p className="text-md text-[var(--color-text-secondary)] leading-[var(--leading-relaxed)] mb-[var(--space-3)]">

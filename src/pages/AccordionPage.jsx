@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next'
-import { PageLayout, Section, Content } from '../docs/PageLayout'
+import { PageLayout, Section, Content, DemoPanel } from '../docs/PageLayout'
 import { CodeBlock } from '../docs/CodeBlock'
 import { Accordion } from '../components'
 
@@ -105,6 +105,21 @@ export default function AccordionPage() {
       label: t('tabs.overview'),
       content: (
         <>
+          <DemoPanel
+            component={(values) => (
+              <Accordion
+                allowMultiple={values.allowMultiple}
+                items={[
+                  { id: 'demo1', title: 'Item 1', content: <span className="text-sm text-[var(--color-text-secondary)]">Content for item 1</span> },
+                  { id: 'demo2', title: 'Item 2', content: <span className="text-sm text-[var(--color-text-secondary)]">Content for item 2</span> },
+                  { id: 'demo3', title: 'Item 3', content: <span className="text-sm text-[var(--color-text-secondary)]">Content for item 3</span> },
+                ]}
+              />
+            )}
+            controls={[
+              { id: 'allowMultiple', type: 'toggle', label: 'Allow Multiple', default: false },
+            ]}
+          />
           <Section title={t('accordion.overview.anatomyTitle')}>
             <Content>
               <p className="text-md text-[var(--color-text-secondary)] leading-[var(--leading-relaxed)] mb-[var(--space-3)]">
