@@ -101,11 +101,19 @@ export default function InputsPage() {
         <>
           <DemoPanel
             component={(values) => (
-              <Input type={values.type} disabled={values.disabled} placeholder="Placeholder" />
+              <Input
+                type={values.type}
+                leadingIcon={values.leadingIcon || undefined}
+                trailingIcon={values.trailingIcon || undefined}
+                disabled={values.disabled}
+                placeholder="Placeholder"
+              />
             )}
             controls={[
-              { id: 'type',     type: 'dropdown', label: 'Type',     options: ['text', 'email', 'password', 'number'], default: 'text' },
-              { id: 'disabled', type: 'toggle',   label: 'Disabled', default: false },
+              { id: 'type',         type: 'dropdown', label: 'Type',         options: ['text', 'email', 'password', 'number'], default: 'text' },
+              { id: 'leadingIcon',  type: 'dropdown', label: 'Leading Icon', options: ['', 'mail', 'person', 'search', 'lock'], default: '' },
+              { id: 'trailingIcon', type: 'dropdown', label: 'Trailing Icon', options: ['', 'search', 'calendar_today', 'info', 'close'], default: '' },
+              { id: 'disabled',     type: 'toggle',   label: 'Disabled',     default: false },
             ]}
           />
           <Section title={t('inputs.overview.anatomyTitle')}>

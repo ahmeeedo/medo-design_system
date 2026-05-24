@@ -89,6 +89,16 @@ function TimezoneSelect() {
   )
 }`
 
+function MultiSelectDemo() {
+  const [value, setValue] = useState([])
+  return <MultiSelect options={['Option A', 'Option B', 'Option C', 'Option D']} value={value} onChange={setValue} placeholder="Auswählen…" />
+}
+
+function SearchSelectDemo() {
+  const [value, setValue] = useState('')
+  return <SearchSelect options={['Deutschland', 'Österreich', 'Schweiz', 'Frankreich', 'Italien']} value={value} onChange={setValue} placeholder="Land suchen…" />
+}
+
 export default function SelectsPage() {
   const { t } = useTranslation()
   const [multiValue, setMultiValue] = useState([])
@@ -104,14 +114,14 @@ export default function SelectsPage() {
       content: (
         <>
           <DemoPanel
-            component={(values) => (
-              <Select
-                options={['Option A', 'Option B', 'Option C']}
-                disabled={values.disabled}
-              />
-            )}
+            component={(values) => {
+              if (values.variant === 'multiSelect') return <MultiSelectDemo />
+              if (values.variant === 'searchSelect') return <SearchSelectDemo />
+              return <Select options={['Option A', 'Option B', 'Option C']} disabled={values.disabled} />
+            }}
             controls={[
-              { id: 'disabled', type: 'toggle', label: 'Disabled', default: false },
+              { id: 'variant',  type: 'dropdown', label: 'Variant',  options: ['select', 'multiSelect', 'searchSelect'], default: 'select' },
+              { id: 'disabled', type: 'toggle',   label: 'Disabled', default: false },
             ]}
           />
           <Section title={t('selects.overview.anatomyTitle')}>
