@@ -724,7 +724,11 @@
       "textareaTitle":  "Textarea",
       "textareaBody":   "Für mehrzeiligen Text. rows-Prop kontrolliert die initiale Höhe. Gleiche Label/hint/error-Props wie Input.",
       "addonTitle":     "InputWithAddon",
-      "addonBody":      "Für Felder mit festem Suffix (z. B. .de, %, €). Das Addon wird rechts angezeigt und ist nicht editierbar."
+      "addonBody":      "Für Felder mit festem Suffix (z. B. .de, %, €). Das Addon wird rechts angezeigt und ist nicht editierbar.",
+      "passwordTitle":  "Passwort-Input",
+      "passwordBody":   "Bei type=\"password\" erscheint rechts automatisch ein Toggle-Button zum Ein- und Ausblenden des Klartexts.",
+      "iconTitle":      "Icon-Variante",
+      "iconBody":       "leadingIcon und trailingIcon fügen ein Material-Symbol als Präfix oder Suffix innerhalb des Feldes ein. Der Wert ist der Material-Symbol-Name als String."
     },
     "usage": {
       "title":           "Richtlinien für Eingabefelder",
@@ -758,6 +762,10 @@
       "textareaDesc":   "Für mehrzeiligen Text — gleiche Props wie Input:",
       "addonTitle":     "InputWithAddon",
       "addonDesc":      "Suffix-Addon rechts außerhalb des Eingabefeldes:",
+      "passwordTitle":  "Passwort-Input",
+      "passwordDesc":   "type=\"password\" aktiviert automatisch den Sichtbarkeits-Toggle:",
+      "iconTitle":      "Icon-Variante",
+      "iconDesc":       "leadingIcon / trailingIcon mit Material-Symbol-Name als String:",
       "disabledTitle":  "Disabled",
       "disabledDesc":   "Deaktiviertes Feld über disabled-Prop:"
     },
@@ -790,7 +798,11 @@
       "statesTitle":   "Zustände",
       "statesBody":    "Vier Zustände: Closed (Trigger sichtbar), Open (Dropdown geöffnet), Selected (Wert ausgewählt), Disabled (nicht interaktiv).",
       "optionsTitle":  "Optionen-Formate",
-      "optionsBody":   "options-Prop akzeptiert String-Arrays oder Objekt-Arrays mit value und label. Objekte ermöglichen unterschiedliche Anzeige- und Datenwerte."
+      "optionsBody":   "options-Prop akzeptiert String-Arrays oder Objekt-Arrays mit value und label. Objekte ermöglichen unterschiedliche Anzeige- und Datenwerte.",
+      "multiTitle":    "Multi-Select",
+      "multiBody":     "Ermöglicht die Auswahl mehrerer Optionen. Ausgewählte Werte erscheinen als Pills im Trigger — einzeln über × entfernbar.",
+      "searchTitle":   "Search-Select",
+      "searchBody":    "Durchsuchbares Auswahlfeld mit Echtzeit-Filter. Kombiniert Texteingabe mit Dropdown-Auswahl — ideal für lange Listen."
     },
     "usage": {
       "title":          "Richtlinien für Select",
@@ -816,6 +828,10 @@
       "basicDesc":    "Einfachste Form — String-Array als options-Prop:",
       "objectTitle":  "Objekt-Optionen",
       "objectDesc":   "value + label getrennt — empfohlen für Formulare mit API-Werten:",
+      "multiTitle":   "Multi-Select",
+      "multiDesc":    "value ist ein String-Array — onChange gibt den aktualisierten Array zurück:",
+      "searchTitle":  "Search-Select",
+      "searchDesc":   "Durchsuchbar — value und onChange wie beim Standard-Select:",
       "formTitle":    "Select in Formularen",
       "formDesc":     "State-basierte Verwaltung mit onChange-Handler und hint-Text:"
     },

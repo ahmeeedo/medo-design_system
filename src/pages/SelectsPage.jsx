@@ -1,7 +1,8 @@
 import { useTranslation } from 'react-i18next'
 import { PageLayout, Section, Content, DemoPanel } from '../docs/PageLayout'
 import { CodeBlock } from '../docs/CodeBlock'
-import { Select } from '../components'
+import { useState } from 'react'
+import { Select, MultiSelect, SearchSelect } from '../components'
 
 const COUNTRY_OPTIONS  = ['Deutschland', 'Österreich', 'Schweiz', 'Frankreich', 'Italien']
 const LANGUAGE_OPTIONS = [
@@ -31,6 +32,42 @@ const OBJECT_CODE = `{/* Objekt-Array: value (Datenwert) ≠ label (Anzeige) */}
   onChange={setLanguage}
 />`
 
+const MULTI_CODE = `import { useState } from 'react'
+import { MultiSelect } from '@/components'
+
+function TagSelect() {
+  const [tags, setTags] = useState([])
+  return (
+    <MultiSelect
+      label="Tags"
+      options={['Dringend', 'In Bearbeitung', 'Review', 'Abgeschlossen']}
+      value={tags}
+      onChange={setTags}
+      placeholder="Tags auswählen…"
+    />
+  )
+}`
+
+const SEARCH_CODE = `import { useState } from 'react'
+import { SearchSelect } from '@/components'
+
+function CountrySelect() {
+  const [country, setCountry] = useState('')
+  return (
+    <SearchSelect
+      label="Land"
+      options={[
+        { value: 'de', label: 'Deutschland' },
+        { value: 'at', label: 'Österreich' },
+        { value: 'ch', label: 'Schweiz' },
+      ]}
+      value={country}
+      onChange={setCountry}
+      placeholder="Land suchen…"
+    />
+  )
+}`
+
 const FORM_CODE = `import { useState } from 'react'
 import { Select } from '@/components'
 
@@ -54,6 +91,8 @@ function TimezoneSelect() {
 
 export default function SelectsPage() {
   const { t } = useTranslation()
+  const [multiValue, setMultiValue] = useState([])
+  const [searchValue, setSearchValue] = useState('')
 
   const anatomy = ['an1','an2','an3','an4','an5']
   const doDont  = ['1','2','3'].map(n => ({ do: `do${n}`, dont: `dont${n}` }))
@@ -121,13 +160,41 @@ export default function SelectsPage() {
               </p>
             </Content>
             <div className="grid grid-cols-2 max-[640px]:grid-cols-1 gap-[var(--space-4)] max-w-[560px]">
-              <Select
-                label="String-Array"
-                options={COUNTRY_OPTIONS}
+              <Select label="String-Array" options={COUNTRY_OPTIONS} />
+              <Select label="Objekt-Array" options={LANGUAGE_OPTIONS} />
+            </div>
+          </Section>
+
+          <Section title={t('selects.overview.multiTitle')}>
+            <Content>
+              <p className="text-md text-[var(--color-text-secondary)] leading-[var(--leading-relaxed)] mb-[var(--space-6)]">
+                {t('selects.overview.multiBody')}
+              </p>
+            </Content>
+            <div className="max-w-[360px]">
+              <MultiSelect
+                label="Tags"
+                options={['Dringend', 'In Bearbeitung', 'Review', 'Abgeschlossen']}
+                value={multiValue}
+                onChange={setMultiValue}
+                placeholder="Tags auswählen…"
               />
-              <Select
-                label="Objekt-Array"
-                options={LANGUAGE_OPTIONS}
+            </div>
+          </Section>
+
+          <Section title={t('selects.overview.searchTitle')}>
+            <Content>
+              <p className="text-md text-[var(--color-text-secondary)] leading-[var(--leading-relaxed)] mb-[var(--space-6)]">
+                {t('selects.overview.searchBody')}
+              </p>
+            </Content>
+            <div className="max-w-[360px]">
+              <SearchSelect
+                label="Land"
+                options={COUNTRY_OPTIONS}
+                value={searchValue}
+                onChange={setSearchValue}
+                placeholder="Land suchen…"
               />
             </div>
           </Section>
@@ -222,6 +289,22 @@ export default function SelectsPage() {
                 {t('selects.code.objectDesc')}
               </p>
               <CodeBlock language="jsx">{OBJECT_CODE}</CodeBlock>
+
+              <p className="text-sm [font-weight:var(--weight-semibold)] text-[var(--color-text-primary)] mb-[var(--space-2)] mt-[var(--space-6)]">
+                {t('selects.code.multiTitle')}
+              </p>
+              <p className="text-sm text-[var(--color-text-secondary)] mb-[var(--space-3)]">
+                {t('selects.code.multiDesc')}
+              </p>
+              <CodeBlock language="jsx">{MULTI_CODE}</CodeBlock>
+
+              <p className="text-sm [font-weight:var(--weight-semibold)] text-[var(--color-text-primary)] mb-[var(--space-2)] mt-[var(--space-6)]">
+                {t('selects.code.searchTitle')}
+              </p>
+              <p className="text-sm text-[var(--color-text-secondary)] mb-[var(--space-3)]">
+                {t('selects.code.searchDesc')}
+              </p>
+              <CodeBlock language="jsx">{SEARCH_CODE}</CodeBlock>
 
               <p className="text-sm [font-weight:var(--weight-semibold)] text-[var(--color-text-primary)] mb-[var(--space-2)] mt-[var(--space-6)]">
                 {t('selects.code.formTitle')}

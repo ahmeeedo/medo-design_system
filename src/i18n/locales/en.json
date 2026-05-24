@@ -724,7 +724,11 @@
       "textareaTitle":  "Textarea",
       "textareaBody":   "For multi-line text. The rows prop controls initial height. Same label/hint/error props as Input.",
       "addonTitle":     "InputWithAddon",
-      "addonBody":      "For fields with a fixed suffix (e.g. .de, %, €). The addon is displayed on the right and is not editable."
+      "addonBody":      "For fields with a fixed suffix (e.g. .de, %, €). The addon is displayed on the right and is not editable.",
+      "passwordTitle":  "Password Input",
+      "passwordBody":   "For type=\"password\" a toggle button appears on the right to show or hide the plain-text password.",
+      "iconTitle":      "Icon Variant",
+      "iconBody":       "leadingIcon and trailingIcon add a Material Symbol as prefix or suffix inside the field. The value is the Material Symbol name as a string."
     },
     "usage": {
       "title":           "Input field guidelines",
@@ -758,6 +762,10 @@
       "textareaDesc":   "For multi-line text — same props as Input:",
       "addonTitle":     "InputWithAddon",
       "addonDesc":      "Suffix addon displayed on the right outside the input:",
+      "passwordTitle":  "Password Input",
+      "passwordDesc":   "type=\"password\" automatically enables the visibility toggle:",
+      "iconTitle":      "Icon Variant",
+      "iconDesc":       "leadingIcon / trailingIcon with Material Symbol name as string:",
       "disabledTitle":  "Disabled",
       "disabledDesc":   "Disabled field via the disabled prop:"
     },
@@ -790,7 +798,11 @@
       "statesTitle":   "States",
       "statesBody":    "Four states: Closed (trigger visible), Open (dropdown expanded), Selected (value chosen), Disabled (not interactive).",
       "optionsTitle":  "Option formats",
-      "optionsBody":   "The options prop accepts string arrays or object arrays with value and label. Objects allow different display and data values."
+      "optionsBody":   "The options prop accepts string arrays or object arrays with value and label. Objects allow different display and data values.",
+      "multiTitle":    "Multi-Select",
+      "multiBody":     "Allows selecting multiple options. Selected values appear as removable pills in the trigger.",
+      "searchTitle":   "Search Select",
+      "searchBody":    "Searchable select with real-time filtering. Combines text input with dropdown selection — ideal for long lists."
     },
     "usage": {
       "title":          "Select guidelines",
@@ -816,6 +828,10 @@
       "basicDesc":    "Simplest form — string array as options prop:",
       "objectTitle":  "Object options",
       "objectDesc":   "value + label separated — recommended for forms with API values:",
+      "multiTitle":   "Multi-Select",
+      "multiDesc":    "value is a string array — onChange returns the updated array:",
+      "searchTitle":  "Search Select",
+      "searchDesc":   "Searchable — value and onChange work like standard Select:",
       "formTitle":    "Select in forms",
       "formDesc":     "State-based management with onChange handler and hint text:"
     },

@@ -57,6 +57,22 @@ const ADDON_CODE = `import { InputWithAddon } from '@/components'
 {/* Prozent-Angabe */}
 <InputWithAddon addon="%" placeholder="0" />`
 
+const PASSWORD_CODE = `{/* Passwort-Input — Toggle wird automatisch gerendert */}
+<Input
+  label="Passwort"
+  type="password"
+  placeholder="Mindestens 8 Zeichen"
+/>`
+
+const ICON_CODE = `{/* Führendes Icon — Prop enthält Material-Symbol-Name */}
+<Input leadingIcon="mail" placeholder="name@beispiel.de" />
+
+{/* Nachgestelltes Icon */}
+<Input trailingIcon="calendar_today" placeholder="TT.MM.JJJJ" />
+
+{/* Kombiniert */}
+<Input leadingIcon="person" trailingIcon="badge" placeholder="Benutzername" />`
+
 const DISABLED_CODE = `{/* Nicht editierbares Feld */}
 <Input
   label="Benutzername"
@@ -167,6 +183,30 @@ export default function InputsPage() {
               </div>
             </div>
           </Section>
+
+          <Section title={t('inputs.overview.passwordTitle')}>
+            <Content>
+              <p className="text-md text-[var(--color-text-secondary)] leading-[var(--leading-relaxed)] mb-[var(--space-6)]">
+                {t('inputs.overview.passwordBody')}
+              </p>
+            </Content>
+            <div className="max-w-[360px]">
+              <Input label="Passwort" type="password" placeholder="Mindestens 8 Zeichen" />
+            </div>
+          </Section>
+
+          <Section title={t('inputs.overview.iconTitle')}>
+            <Content>
+              <p className="text-md text-[var(--color-text-secondary)] leading-[var(--leading-relaxed)] mb-[var(--space-6)]">
+                {t('inputs.overview.iconBody')}
+              </p>
+            </Content>
+            <div className="flex flex-col gap-[var(--space-3)] max-w-[360px]">
+              <Input leadingIcon="mail" placeholder="name@beispiel.de" label="E-Mail (Leading)" />
+              <Input trailingIcon="calendar_today" placeholder="TT.MM.JJJJ" label="Datum (Trailing)" />
+              <Input leadingIcon="person" trailingIcon="badge" placeholder="Benutzername" label="Kombiniert" />
+            </div>
+          </Section>
         </>
       ),
     },
@@ -275,6 +315,22 @@ export default function InputsPage() {
                 {t('inputs.code.addonDesc')}
               </p>
               <CodeBlock language="jsx">{ADDON_CODE}</CodeBlock>
+
+              <p className="text-sm [font-weight:var(--weight-semibold)] text-[var(--color-text-primary)] mb-[var(--space-2)] mt-[var(--space-6)]">
+                {t('inputs.code.passwordTitle')}
+              </p>
+              <p className="text-sm text-[var(--color-text-secondary)] mb-[var(--space-3)]">
+                {t('inputs.code.passwordDesc')}
+              </p>
+              <CodeBlock language="jsx">{PASSWORD_CODE}</CodeBlock>
+
+              <p className="text-sm [font-weight:var(--weight-semibold)] text-[var(--color-text-primary)] mb-[var(--space-2)] mt-[var(--space-6)]">
+                {t('inputs.code.iconTitle')}
+              </p>
+              <p className="text-sm text-[var(--color-text-secondary)] mb-[var(--space-3)]">
+                {t('inputs.code.iconDesc')}
+              </p>
+              <CodeBlock language="jsx">{ICON_CODE}</CodeBlock>
 
               <p className="text-sm [font-weight:var(--weight-semibold)] text-[var(--color-text-primary)] mb-[var(--space-2)] mt-[var(--space-6)]">
                 {t('inputs.code.disabledTitle')}
