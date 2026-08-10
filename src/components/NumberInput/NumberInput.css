@@ -1,0 +1,31 @@
+/* Der Feldkasten setzt gap:9px — zwischen den Steppern entstünde dadurch ein Streifen,
+   der die untere Schaltfläche breiter wirken lässt. Hier also kein gap. */
+.medo-num .medo-field__box{ padding-right: 0; overflow: hidden; gap: 0; }
+.medo-num--plusminus .medo-field__box{ padding-left: 0; }
+.medo-num__input{ font-variant-numeric: tabular-nums; }
+.medo-num__unit{ color: var(--medo-text-muted); flex: none; padding-left: 6px; padding-right: 10px; }
+.medo-num__unit--prefix{ padding-left: 0; padding-right: 6px; }
+
+.medo-num__step{
+  box-sizing: border-box;
+  border: none;
+  background: transparent;
+  border-left: var(--medo-border-thin) solid var(--medo-border-subtle);
+  align-self: stretch;
+  flex: none;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--medo-icon);
+  cursor: pointer;
+  padding: 0;
+  transition: background-color 120ms ease-out;
+}
+.medo-num__step:hover:not(:disabled){ background: var(--medo-state-hover); }
+.medo-num__step:active:not(:disabled){ background: var(--medo-state-pressed); }
+.medo-num__step:focus-visible{ outline: none; box-shadow: inset 0 0 0 2px var(--medo-input-border-focus); }
+.medo-num__step:disabled{ color: var(--medo-icon-disabled); cursor: not-allowed; }
+.medo-num__step--first{ border-left: none; border-right: var(--medo-border-thin) solid var(--medo-border-subtle); }
+
+/* Eine Breite je Größe — unabhängig von der Variante. */
+.medo-num__step--sm{ width: 32px; }
+.medo-num__step--md{ width: 36px; }
+.medo-num__step--lg{ width: 42px; }

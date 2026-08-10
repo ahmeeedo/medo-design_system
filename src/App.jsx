@@ -9,8 +9,10 @@ import RadiusPage      from './pages/RadiusPage'
 import ShadowsPage     from './pages/ShadowsPage'
 import MotionPage      from './pages/MotionPage'
 import ButtonsPage     from './pages/ButtonsPage'
-import InputsPage      from './pages/InputsPage'
-import SelectsPage     from './pages/SelectsPage'
+import TextInputPage   from './pages/TextInputPage'
+import NumberInputPage from './pages/NumberInputPage'
+import SelectPage      from './pages/SelectPage'
+import SearchPage      from './pages/SearchPage'
 import TogglePage      from './pages/TogglePage'
 import CheckboxPage    from './pages/CheckboxPage'
 import RadioPage       from './pages/RadioPage'
@@ -58,8 +60,10 @@ function AppContent() {
         <Route path="/shadows"    element={<ShadowsPage />} />
         <Route path="/motion"     element={<MotionPage />} />
         <Route path="/buttons"    element={<ButtonsPage />} />
-        <Route path="/inputs"     element={<InputsPage />} />
-        <Route path="/select"     element={<SelectsPage />} />
+        <Route path="/text-input"   element={<TextInputPage />} />
+        <Route path="/number-input" element={<NumberInputPage />} />
+        <Route path="/select"     element={<SelectPage />} />
+        <Route path="/search"       element={<SearchPage />} />
         <Route path="/toggle"     element={<TogglePage />} />
         <Route path="/checkbox"   element={<CheckboxPage />} />
         <Route path="/radio"      element={<RadioPage />} />

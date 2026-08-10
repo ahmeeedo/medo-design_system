@@ -32,8 +32,10 @@ const NAV = [
     section: 'nav.sections.components',
     items: [
       { id: 'buttons',    label: 'nav.items.buttons' },
-      { id: 'inputs',     label: 'nav.items.inputs' },
+      { id: 'text-input',   label: 'nav.items.textInput' },
+      { id: 'number-input', label: 'nav.items.numberInput' },
       { id: 'select',     label: 'nav.items.select' },
+      { id: 'search',       label: 'nav.items.searchField' },
       { id: 'toggle',     label: 'nav.items.toggle' },
       { id: 'checkbox',   label: 'nav.items.checkbox' },
       { id: 'radio',      label: 'nav.items.radio' },

@@ -14,8 +14,10 @@
       "shadows":    "Shadows",
       "motion":     "Motion",
       "buttons":    "Buttons",
-      "inputs":     "Inputs",
+      "textInput":  "Text Input",
+      "numberInput":"Number Input",
       "select":     "Select",
+      "searchField":"Search",
       "toggle":     "Toggle",
       "checkbox":   "Checkbox",
       "radio":      "Radio",
@@ -705,151 +707,360 @@
     }
   },
 
-  "inputs": {
+  "textInput": {
     "page": {
-      "description": "Text fields, textarea, and InputWithAddon — the form building blocks of med.o"
+      "title":       "Text input",
+      "description": "Captures single-line free text. The basis for Number, Search, Select and Date picker — with a label on top or as a floating label, all states and optional features."
     },
-    "overview": {
-      "anatomyTitle":   "Anatomy",
-      "anatomyBody":    "An input field consists of the following elements:",
-      "an1":            "Label (optional) — identifies the content; linked to the input via htmlFor",
-      "an2":            "Input container — border, background, and height (token-based)",
-      "an3":            "Placeholder — hint text shown when no value has been entered",
-      "an4":            "Helper text (hint) — contextual information below the field",
-      "an5":            "Error message — replaces hint on validation error",
-      "an6":            "Addon (InputWithAddon) — suffix or prefix outside the input right/left",
-      "statesTitle":    "States",
-      "statesBody":     "Every input field goes through four states: Default, Focused (focus ring), Error (red border + error text), and Disabled (reduced opacity, not editable).",
-      "sizesTitle":     "Sizes",
-      "sizesBody":      "Three sizes: sm (32 px height) for dense UIs, md (40 px, default), lg (48 px) for prominent fields.",
-      "textareaTitle":  "Textarea",
-      "textareaBody":   "For multi-line text. The rows prop controls initial height. Same label/hint/error props as Input.",
-      "addonTitle":     "InputWithAddon",
-      "addonBody":      "For fields with a fixed suffix (e.g. .de, %, €). The addon is displayed on the right and is not editable.",
-      "passwordTitle":  "Password Input",
-      "passwordBody":   "For type=\"password\" a toggle button appears on the right to show or hide the plain-text password.",
-      "iconTitle":      "Icon Variant",
-      "iconBody":       "leadingIcon and trailingIcon add a Material Symbol as prefix or suffix inside the field. The value is the Material Symbol name as a string."
-    },
-    "usage": {
-      "title":           "Input field guidelines",
-      "intro":           "Input fields are the most common form building block. Follow these rules for consistent, accessible forms.",
-      "vsTitle":         "Input vs. Textarea",
-      "vsBody":          "Use Input for single-line entries (name, email, search). Textarea for multi-line text (description, comment, address). Rule of thumb: more than ~80 characters → Textarea.",
-      "addonTitle":      "InputWithAddon",
-      "addonBody":       "Use InputWithAddon when a fixed suffix contextualizes the value: URL endings (.de, .com), units (%, €, kg), or domain prefixes.",
-      "formTitle":       "Form context",
-      "formBody":        "Every field needs a visible label or aria-label. Error messages appear directly below the affected field. Mark required fields with * and a legend at the top of the form.",
-      "doTitle":         "Do ✓",
-      "dontTitle":       "Don't ✗",
-      "do1":             "Always set the label prop or provide aria-label",
-      "dont1":           "Input without label — screen reader cannot describe the field",
-      "do2":             "Use the error prop for validation errors",
-      "dont2":           "Signal errors only visually (color) without text feedback",
-      "do3":             "placeholder only as an example value, not as a label replacement",
-      "dont3":           "placeholder=\"Email address\" instead of label=\"Email address\"",
-      "do4":             "hint for permanent hints, error for errors",
-      "dont4":           "Display hint and error at the same time",
-      "doNote":          "Labels, error text, and context",
-      "dontNote":        "Missing labels and visual-only errors"
-    },
-    "code": {
-      "title":          "Inputs in Code",
-      "basicTitle":     "Input with label and hint",
-      "basicDesc":      "Default input with label, placeholder, and hint:",
-      "errorTitle":     "Error state",
-      "errorDesc":      "Pass error via the error prop — hint is hidden when error is present:",
-      "textareaTitle":  "Textarea",
-      "textareaDesc":   "For multi-line text — same props as Input:",
-      "addonTitle":     "InputWithAddon",
-      "addonDesc":      "Suffix addon displayed on the right outside the input:",
-      "passwordTitle":  "Password Input",
-      "passwordDesc":   "type=\"password\" automatically enables the visibility toggle:",
-      "iconTitle":      "Icon Variant",
-      "iconDesc":       "leadingIcon / trailingIcon with Material Symbol name as string:",
-      "disabledTitle":  "Disabled",
-      "disabledDesc":   "Disabled field via the disabled prop:"
-    },
-    "a11y": {
-      "title":              "Accessibility",
-      "intro":              "Forms are the most common barrier for users with disabilities. Correct label association and error communication are mandatory.",
-      "labelsTitle":        "Label association",
-      "labelsBody":         "The label prop automatically sets a <label> element. For hidden labels without visible text, use aria-label directly on the input. Multiple inputs in a group: use fieldset + legend.",
-      "errorTitle":         "Error communication",
-      "errorBody":          "The error prop renders an error message as a <span>. For screen readers, explicitly link it with aria-describedby when the input has no built-in association.",
-      "keyboardTitle":      "Keyboard control",
-      "keyboardBody":       "All input fields are navigable via Tab by default. Disabled inputs do not receive focus. Form submission via Enter (type=\"submit\" button or onKeyDown handler).",
-      "autocompleteTitle":  "autocomplete attribute",
-      "autocompleteBody":   "Set autocomplete to semantically correct values: email, name, tel, current-password, new-password, etc. This improves user experience and accessibility on mobile devices."
-    }
-  },
-
-  "selects": {
-    "page": {
-      "description": "Dropdown select for choosing one option from a list — med.o Select component"
+    "demo": {
+      "label":       "Email address",
+      "placeholder": "name@practice.de",
+      "value":       "anna.berg@praxis.de",
+      "hint":        "We only use the address for appointment confirmations.",
+      "error":       "The address is incomplete. Add the part after the @.",
+      "success":     "Address confirmed."
     },
     "overview": {
       "anatomyTitle":  "Anatomy",
-      "anatomyBody":   "The Select component consists of:",
-      "an1":           "Label (optional) — identifies the selection; same logic as Input",
-      "an2":           "Trigger — visible button that opens the dropdown",
-      "an3":           "SelectValue — displays the selected value",
-      "an4":           "Dropdown container — the list of options",
-      "an5":           "SelectItem — individual selectable option",
+      "anatomyBody":   "A text field is built from five parts. Label and input are always visible:",
+      "an1":           "Label with required marker — always visible, tied to the input via htmlFor",
+      "an2":           "Leading icon — decorative, flat in the field, without its own surface",
+      "an3":           "Input — 1px border, 8px radius, 12px inner spacing",
+      "an4":           "Trailing icon — state indicator or an operable button",
+      "an5":           "Message line — helper text, error or confirmation below the field",
       "statesTitle":   "States",
-      "statesBody":    "Four states: Closed (trigger visible), Open (dropdown expanded), Selected (value chosen), Disabled (not interactive).",
-      "optionsTitle":  "Option formats",
-      "optionsBody":   "The options prop accepts string arrays or object arrays with value and label. Objects allow different display and data values.",
-      "multiTitle":    "Multi-Select",
-      "multiBody":     "Allows selecting multiple options. Selected values appear as removable pills in the trigger.",
-      "searchTitle":   "Search Select",
-      "searchBody":    "Searchable select with real-time filtering. Combines text input with dropdown selection — ideal for long lists."
+      "statesBody":    "Eight states: resting, hover, focus, filled, disabled, read-only, error and success. The border stays 1px in every state — focus is carried by a 3px ring, so nothing shifts when the field is focused.",
+      "statesNote":    "Hover and focus only show on interaction: move over a field or place the cursor inside it.",
+      "sizesTitle":    "Sizes",
+      "sizesBody":     "sm 36px for dense tables and filter bars, md 40px as the normal case, lg 48px on mobile. Font sizes stay on the scale: 14 / 16 / 16.",
+      "floatTitle":    "Floating label",
+      "floatBody":     "The label sits inside the field and floats up into the border on focus or content. The field is 52px tall then. It is the exception for dense forms, not the rule — never mix it with fixed labels.",
+      "featuresTitle": "Optional features",
+      "featuresBody":  "Clear button, password toggle, character counter and fixed prefixes and suffixes. Operable icons carry button styling and an aria-label; decorative ones sit flat in the field."
+    },
+    "anatomy": {
+      "label":       "Email address",
+      "placeholder": "name@practice.de",
+      "hint":        "Address confirmed."
+    },
+    "states": {
+      "default":       "Resting",
+      "filled":        "Filled",
+      "error":         "Error",
+      "success":       "Success",
+      "readonly":      "Read-only",
+      "disabled":      "Disabled",
+      "disabledValue": "Not editable"
+    },
+    "float": {
+      "empty":  "Full name",
+      "filled": "Full name"
+    },
+    "features": {
+      "clear":    "Clear button",
+      "password": "Password toggle",
+      "counter":  "Character counter",
+      "affix":    "Prefix and suffix"
     },
     "usage": {
-      "title":          "Select guidelines",
-      "intro":          "Select is suited for choice lists with more than 4 options. Fewer options: prefer a radio group.",
-      "vsTitle":        "Select vs. radio group",
-      "vsBody":         "Up to 4 options → radio group (all visible, faster selection). 5+ options → Select (saves space). Exception: country or timezone selection always uses Select regardless of count.",
-      "placeholderTitle":"Placeholder",
-      "placeholderBody": "Without a selected value the trigger shows an empty state. Use defaultValue for a pre-selection or document the empty state as a valid starting state.",
-      "doTitle":        "Do ✓",
-      "dontTitle":      "Don't ✗",
-      "do1":            "Set the label prop or provide aria-label",
-      "dont1":          "Select without label — screen reader cannot describe the field",
-      "do2":            "{ value, label } objects when display ≠ data value",
-      "dont2":          "String values when display and data value need to differ",
-      "do3":            "Select for 5+ options, radio group for ≤ 4",
-      "dont3":          "Select for 2–3 options that should always be visible",
-      "doNote":         "Choose the right component for the number of options",
-      "dontNote":       "Select for too few options or without label"
+      "labelTitle":    "Label and placeholder",
+      "labelBody":     "The label is always visible. A placeholder is not a label — it disappears while typing and is then missing for exactly the person who needed it. The placeholder shows an example, not an instruction. Within one form use either required throughout or optional throughout, never both mixed.",
+      "messageTitle":  "Messages",
+      "messageBody":   "At most one line sits below the field: error displaces success, success displaces hint. Error messages name the cause and the next step — “Please enter a valid email address.” instead of “Invalid input.” An error is never signalled by colour alone; there is always an icon and text.",
+      "sizeTitle":     "Choosing a size",
+      "sizeBody":      "md is the normal case. lg belongs on mobile, because the hit target gets too small below it. sm only in dense tables and filter bars.",
+      "widthTitle":    "Width and affixes",
+      "widthBody":     "Field width follows the expected input — a postcode does not get a field spanning the whole column. prefix and suffix take fixed text parts out of the input (“https://”, “.de”, “€”) so nobody has to type them.",
+      "iconTitle":     "Icons in the field",
+      "iconBody":      "icon places a decorative glyph at the front — flat, without a surface. Operable icons look like small buttons instead (resting surface stone-100, hover stone-200) and always carry an aria-label: the clear button via clearable and the password toggle that type=\"password\" brings along automatically. This is a fixed system rule, not a matter of style.",
+      "readonlyTitle": "readOnly versus disabled",
+      "readonlyBody":  "readOnly for values that are shown but not changed — customer number, generated ID. The field stays focusable and copyable and shows a lock. disabled only when the field does not apply under the current conditions. Confusing the two is the most common mistake.",
+      "doDontTitle":   "Do and Don't",
+      "doTitle":       "Do",
+      "do1":           "Keep the label visible; never use the placeholder as a label.",
+      "do2":           "Word the error concretely: what happened and what to do.",
+      "do3":           "Match field width to the expected input.",
+      "dontTitle":     "Don't",
+      "dont1":         "Don't put important information in the placeholder.",
+      "dont2":         "No red alone — errors always with icon and text.",
+      "dont3":         "Don't use disabled fields for read-only values."
     },
     "code": {
-      "title":        "Select in Code",
-      "basicTitle":   "String options",
-      "basicDesc":    "Simplest form — string array as options prop:",
-      "objectTitle":  "Object options",
-      "objectDesc":   "value + label separated — recommended for forms with API values:",
-      "multiTitle":   "Multi-Select",
-      "multiDesc":    "value is a string array — onChange returns the updated array:",
-      "searchTitle":  "Search Select",
-      "searchDesc":   "Searchable — value and onChange work like standard Select:",
-      "formTitle":    "Select in forms",
-      "formDesc":     "State-based management with onChange handler and hint text:"
+      "title":         "Code",
+      "basicTitle":    "Basic form",
+      "statesTitle":   "States",
+      "floatTitle":    "Floating label",
+      "featuresTitle": "Optional features"
     },
     "a11y": {
-      "title":             "Accessibility",
-      "intro":             "Select components are based on shadcn/ui (Radix UI), which provides full ARIA support out of the box.",
-      "keyboardTitle":     "Keyboard control",
-      "keyboardBody":      "Full keyboard navigation:",
-      "k1":                "Tab — move focus to the Select trigger",
-      "k2":                "Enter / Space — open/close dropdown",
-      "k3":                "Arrow keys ↑ / ↓ — navigate options",
-      "k4":                "Enter — confirm selected option",
-      "k5":                "Escape — close dropdown without selection",
-      "ariaTitle":         "ARIA roles",
-      "ariaBody":          "Radix UI automatically assigns correct ARIA roles: combobox (trigger), listbox (dropdown), option (SelectItem). Screen readers announce: \"Country, combobox, collapsed\".",
-      "screenReaderTitle": "Screen reader behavior",
-      "screenReaderBody":  "The selected value is announced when the dropdown closes. For labels without visible text, set aria-label on the trigger element."
+      "labelTitle": "Label association",
+      "labelBody":  "Every field gets an ID and a label with a matching htmlFor, so the screen reader announces the field name. With a floating label the association is kept — only the visual position changes.",
+      "errorTitle": "Announcing errors",
+      "errorBody":  "A set error puts aria-invalid=\"true\" on the input, the message line carries role=\"alert\" and is tied to the field via aria-describedby. Helper text and confirmation are associated the same way.",
+      "iconTitle":  "Operable icons",
+      "iconBody":   "Clear button and password toggle are real buttons with type=\"button\" and an aria-label. They are reachable with the Tab key and show the same 3px ring on focus as the field.",
+      "focusTitle": "Focus and contrast",
+      "focusBody":  "The focus ring is 3px in primary-600; in the error state it switches to error-600. The border stays 1px throughout, so nothing shifts on focus. All combinations are checked against WCAG 2.2 AA."
+    }
+  },
+
+  "numberInput": {
+    "page": {
+      "title":       "Number input",
+      "description": "Captures numbers with stepper controls. Built on the text field: same anatomy, same states — plus up/down buttons, limits and step size."
+    },
+    "demo": {
+      "label":   "Number of packs",
+      "hint":    "Arrow keys and the mouse wheel change the value by one step.",
+      "error":   "The value exceeds the stock. Order at most 10 packs.",
+      "success": "Quantity accepted."
+    },
+    "overview": {
+      "variantsTitle": "Variants",
+      "variantsBody":  "chevrons puts both buttons on the right — the normal case at a desk. plusminus places minus on the left and plus on the right with a centred value; that is the touch variant with a larger hit target.",
+      "sizesTitle":    "Sizes",
+      "sizesBody":     "sm 36px, md 40px, lg 48px — the same heights as the text field. Stepper width follows the size and stays the same in both variants.",
+      "unitsTitle":    "Units and alignment",
+      "unitsBody":     "prefix and suffix show the unit fixed at the field so nobody types it along. align overrides the alignment — right-aligned is right when several numbers are compared below one another.",
+      "statesTitle":   "States",
+      "statesBody":    "The same eight states as the text field. At a limit the matching button goes inactive instead of skipping past the value silently.",
+      "behaviorTitle": "Behaviour"
+    },
+    "variants": {
+      "chevrons":  "chevrons · desk",
+      "plusminus": "plusminus · touch"
+    },
+    "units": {
+      "suffix":  "Suffix unit",
+      "prefix":  "Prefix unit",
+      "percent": "Percent with step size 5",
+      "right":   "Right-aligned"
+    },
+    "states": {
+      "default":   "Resting",
+      "limit":     "At the upper limit",
+      "limitHint": "More than 10 cannot be ordered.",
+      "error":     "Error",
+      "success":   "Success",
+      "readonly":  "Read-only",
+      "disabled":  "Disabled"
+    },
+    "behavior": {
+      "limits": "min, max and step define limits and step size.",
+      "hold":   "Holding a button keeps counting.",
+      "arrows": "Arrow up and down change the value by one step.",
+      "wheel":  "The mouse wheel changes the value while the field has focus."
+    },
+    "usage": {
+      "whenTitle":    "When to use",
+      "whenBody":     "The number field belongs where values are adjusted in small steps — quantities, dosages, percentages. For very large ranges a free-text field is the better choice, because nobody clicks through a thousand steps with a stepper.",
+      "variantTitle": "Choosing a variant",
+      "variantBody":  "chevrons at the desk, plusminus on touch devices. Within one interface, stay with one variant.",
+      "widthTitle":   "Width",
+      "widthBody":    "Number fields do not span the whole column. width sets a fixed width matching the expected number of digits; fullWidth is the exception for narrow forms on mobile.",
+      "doDontTitle":  "Do and Don't",
+      "doTitle":      "Do",
+      "do1":          "Use the stepper for small, frequent adjustments.",
+      "do2":          "Set sensible limits via min and max.",
+      "do3":          "Show the unit visibly at the field (kg, %, €).",
+      "dontTitle":    "Don't",
+      "dont1":        "Not for very large ranges — use free text then.",
+      "dont2":        "No buttons without a keyboard alternative.",
+      "dont3":        "Don't skip past a limit silently."
+    },
+    "code": {
+      "title":        "Code",
+      "basicTitle":   "Basic form",
+      "variantTitle": "Variants",
+      "unitTitle":    "Units and alignment",
+      "stateTitle":   "States"
+    },
+    "a11y": {
+      "roleTitle":     "Role and values",
+      "roleBody":      "The input carries role=\"spinbutton\" and reports the current value and its limits via aria-valuenow, aria-valuemin and aria-valuemax. A set error additionally puts aria-invalid=\"true\" on it.",
+      "keyboardTitle": "Keyboard",
+      "keyboardBody":  "Arrow up and arrow down change the value by one step — the steppers are therefore never the only way to operate the field. The value can also be typed directly; the field accepts both comma and full stop as a decimal separator.",
+      "stepperTitle":  "Stepper buttons",
+      "stepperBody":   "Both buttons carry an aria-label (“Increase”, “Decrease”) and deliberately sit outside the tab order to keep the path through the form short. At a limit they go inactive."
+    }
+  },
+
+  "select": {
+    "page": {
+      "title":       "Select",
+      "description": "Selection from a known, closed list. Built on the text field — with groups, single and multiple selection."
+    },
+    "demo": {
+      "label":   "Specialty",
+      "hint":    "Determines which forms are offered in the next step.",
+      "error":   "Without a specialty the appointment cannot be assigned. Choose an entry.",
+      "success": "Specialty accepted."
+    },
+    "overview": {
+      "singleTitle":  "Single selection",
+      "singleBody":   "The normal case: one value from a list. The dropdown appears in medo styling, is fully keyboard operable and opens upwards when there is no room below.",
+      "multiTitle":   "Multiple selection",
+      "multiBody":    "multiple turns the value into an array. The selection always stays on one line: as many chips are shown as fit into a line, the rest appears as a counter. multipleDisplay=\"count\" replaces the chips entirely with “N selected”, maxChips sets a hard upper bound.",
+      "groupTitle":   "Groups",
+      "groupBody":    "Entries can be bundled under headings. Group titles are not selectable and are skipped by keyboard navigation; individual entries can be inactive.",
+      "sizesTitle":   "Sizes",
+      "sizesBody":    "sm 36px, md 40px, lg 48px — the same heights as the text field.",
+      "statesTitle":  "States",
+      "statesBody":   "Error, success and disabled behave as on the text field. An empty option list shows a note instead of an empty menu.",
+      "nativeTitle":  "Native mode",
+      "nativeBody":   "native switches to the operating system's picker. Right for very long lists and for forms that must work without JavaScript — the dropdown cannot be styled then."
+    },
+    "single": {
+      "empty":  "Without preselection",
+      "chosen": "With preselection",
+      "icons":  "With icons per entry",
+      "open":   "Opened menu"
+    },
+    "multi": {
+      "chips": "Chips",
+      "count": "Counter instead of chips",
+      "max":   "At most two chips",
+      "empty": "Without selection"
+    },
+    "group": {
+      "label": "Specialty"
+    },
+    "states": {
+      "error":    "Error",
+      "success":  "Success",
+      "disabled": "Disabled",
+      "empty":    "Empty list"
+    },
+    "native": {
+      "label": "Country",
+      "hint":  "The operating system provides the dropdown."
+    },
+    "usage": {
+      "whenTitle":   "When to use",
+      "whenBody":    "The select belongs to known, closed lists. Up to about five entries radio buttons are better — they show every option without a click. Above about fifteen entries, or when people should be able to search, the search field is right. For actions instead of values: the menu.",
+      "orderTitle":  "Order and groups",
+      "orderBody":   "Sort by frequency or alphabetically, not randomly. Groups pay off from about ten entries; group titles name what was bundled.",
+      "multiTitle":  "Chips or counter",
+      "multiBody":   "Chips show the selection directly and can be removed one by one — right as long as the labels are short. With long labels or narrow fields the counter is calmer.",
+      "nativeTitle": "Native mode",
+      "nativeBody":  "native is the right choice for very long lists and in forms that must work without JavaScript. The price is the unstylable dropdown — do not mix both modes within one form.",
+      "doDontTitle": "Do and Don't",
+      "doTitle":     "Do",
+      "do1":         "Sort entries by frequency or alphabetically.",
+      "do2":         "Bundle into groups from about ten entries.",
+      "do3":         "Prefer radio buttons for up to five entries.",
+      "dontTitle":   "Don't",
+      "dont1":       "Don't misuse the list as a search field.",
+      "dont2":       "No actions in the list — use the menu for those.",
+      "dont3":       "Don't mix both modes within the same form."
+    },
+    "code": {
+      "title":       "Code",
+      "basicTitle":  "Basic form",
+      "multiTitle":  "Multiple selection",
+      "groupTitle":  "Groups",
+      "nativeTitle": "Native mode"
+    },
+    "a11y": {
+      "roleTitle":     "Roles",
+      "roleBody":      "The field carries role=\"combobox\" with aria-expanded, aria-haspopup=\"listbox\" and aria-controls. The menu is a role=\"listbox\", each entry a role=\"option\" with aria-selected; the active entry is reported via aria-activedescendant without the focus leaving the field. Multiple selection adds aria-multiselectable.",
+      "keyboardTitle": "Keyboard",
+      "key1":          "Arrow up and down open the menu and move the active entry.",
+      "key2":          "Enter and Space select the active entry; with multiple selection they toggle it.",
+      "key3":          "Home and End jump to the first and last selectable entry.",
+      "key4":          "A single letter jumps to the first entry starting with it.",
+      "key5":          "Escape and Tab close the menu.",
+      "chipTitle":     "Removing chips",
+      "chipBody":      "Every remove cross on a chip carries an aria-label naming the entry (“Remove selection: Internal medicine”). The “+N” counter lists the hidden entries in its title attribute."
+    }
+  },
+
+  "searchField": {
+    "page": {
+      "title":       "Search",
+      "description": "Searches live while typing. Built on the field scaffold: leading magnifier, clear button and an optional suggestion panel with recent searches."
+    },
+    "demo": {
+      "label":       "Patient search",
+      "placeholder": "Name or insurance number",
+      "hint":        "The search starts automatically as soon as you pause briefly.",
+      "error":       "The search is currently unreachable. Try again in a few minutes."
+    },
+    "overview": {
+      "anatomyTitle": "Anatomy",
+      "anatomyBody":  "The search field is a text field with a fixed division of roles:",
+      "an1":          "Leading magnifier — decorative, replaced by a spinner while searching",
+      "an2":          "Input — announces itself as a combobox for the suggestion panel",
+      "an3":          "Clear button — appears as soon as something has been entered",
+      "an4":          "Suggestion panel — recent searches and suggestions, keyboard operable",
+      "panelTitle":   "Suggestion panel",
+      "panelBody":    "While the field is empty the panel shows recent searches. As soon as typing starts, suggestions take their place and the typed part is highlighted in the match. With onRemoveRecent, history entries get a remove button.",
+      "emptyTitle":   "Empty state",
+      "emptyBody":    "When the search finds nothing, the panel names the query and says what helps next. emptyText replaces the default text with a more concrete hint.",
+      "sizesTitle":   "Sizes",
+      "sizesBody":    "sm 36px, md 40px, lg 48px — the same heights as the text field.",
+      "compactTitle": "Compact variant",
+      "compactBody":  "compact is the flat variant for toolbars: 34px tall, without a border, on a filled surface. Without a label it stands on its own, with no field scaffold around it.",
+      "statesTitle":  "States",
+      "statesBody":   "Resting, filled, searching, disabled, error and helper text. Focus carries the same 3px ring as every other field."
+    },
+    "anatomy": {
+      "label": "Patient search",
+      "hint":  "Search by name, date of birth or insurance number."
+    },
+    "panel": {
+      "recent":      "Empty field · recent searches",
+      "suggestions": "Typing · suggestions with highlight"
+    },
+    "empty": {
+      "text": "Check the spelling or search by insurance number."
+    },
+    "compact": {
+      "placeholder": "Filter list"
+    },
+    "states": {
+      "default":  "Resting",
+      "filled":   "Filled",
+      "loading":  "Searching",
+      "disabled": "Disabled",
+      "error":    "Error",
+      "hint":     "With helper text"
+    },
+    "usage": {
+      "whenTitle":     "When to use",
+      "whenBody":      "The search field belongs where one entry has to be found among many. For a known, closed list the select is right. As a pure filter field without suggestions, switch the panel off via showPanel.",
+      "debounceTitle": "Debouncing",
+      "debounceBody":  "onSearch only fires after a short pause, 250 ms by default — not on every keystroke. It additionally fires immediately on Enter and when a suggestion is chosen. Adjust debounce when the search is expensive.",
+      "panelTitle":    "Suggestions and history",
+      "panelBody":     "Recent searches only appear in the empty field — they are a starting point, not a result list. Keep the suggestion list short; more than about ten entries force scrolling instead of deciding.",
+      "emptyTitle":    "Wording the empty state",
+      "emptyBody":     "The empty state names the cause and the next step, not just the state. “Check the spelling or search by insurance number.” helps; “No results” does not.",
+      "doDontTitle":   "Do and Don't",
+      "doTitle":       "Do",
+      "do1":           "Debounce the input instead of searching on every keystroke.",
+      "do2":           "In the empty state, say what helps next.",
+      "do3":           "Keep the suggestion list short and highlight the match.",
+      "dontTitle":     "Don't",
+      "dont1":         "Don't style the magnifier as a button — it is decorative.",
+      "dont2":         "Don't show recent searches while typing.",
+      "dont3":         "Don't use the search field for closed lists."
+    },
+    "code": {
+      "title":         "Code",
+      "basicTitle":    "Basic form",
+      "suggestTitle":  "Suggestions and history",
+      "compactTitle":  "Compact variant",
+      "stateTitle":    "States"
+    },
+    "a11y": {
+      "roleTitle":     "Roles",
+      "roleBody":      "The input carries role=\"combobox\" with aria-expanded, aria-autocomplete=\"list\" and aria-controls pointing at the panel. The panel is a role=\"listbox\", each entry a role=\"option\" with aria-selected. Focus stays in the field while the arrow keys move through the entries.",
+      "keyboardTitle": "Keyboard",
+      "key1":          "Arrow up and down open the panel and move the active entry.",
+      "key2":          "Enter accepts the active entry or starts the search immediately.",
+      "key3":          "Escape first clears the field and then closes the panel.",
+      "iconTitle":     "Operable icons",
+      "iconBody":      "The clear button and the remove cross in the history are real buttons with an aria-label (“Clear search”, “Remove from history”). The leading magnifier is decorative and hidden from screen readers; while searching, the spinner is hidden too."
     }
   },
 

@@ -14,8 +14,10 @@
       "shadows":    "Shadows",
       "motion":     "Motion",
       "buttons":    "Buttons",
-      "inputs":     "Inputs",
+      "textInput":  "Text Input",
+      "numberInput":"Number Input",
       "select":     "Select",
+      "searchField":"Search",
       "toggle":     "Toggle",
       "checkbox":   "Checkbox",
       "radio":      "Radio",
@@ -705,151 +707,360 @@
     }
   },
 
-  "inputs": {
+  "textInput": {
     "page": {
-      "description": "Textfelder, Textarea und InputWithAddon — die Grundbausteine für Formulare in med.o"
+      "title":       "Text input",
+      "description": "Erfasst einzeilige Freitexteingaben. Basis für Number, Search, Select und Date picker — mit Label oben oder als Floating Label, allen Zuständen und optionalen Features."
     },
-    "overview": {
-      "anatomyTitle":   "Anatomie",
-      "anatomyBody":    "Ein Input-Feld besteht aus folgenden Elementen:",
-      "an1":            "Label (optional) — kennzeichnet den Inhalt; über htmlFor mit dem Input verknüpft",
-      "an2":            "Input-Container — Rahmen, Hintergrund und Höhe (Token-basiert)",
-      "an3":            "Placeholder — Hinweistext solange kein Wert eingegeben wurde",
-      "an4":            "Helper-Text (hint) — Kontextinformation unterhalb des Feldes",
-      "an5":            "Error-Message — ersetzt den hint bei Validierungsfehler",
-      "an6":            "Addon (InputWithAddon) — Suffix oder Präfix rechts/links außerhalb",
-      "statesTitle":    "Zustände",
-      "statesBody":     "Jedes Input-Feld durchläuft vier Zustände: Default, Focused (Fokus-Ring), Error (rote Rahmenlinie + Error-Text) und Disabled (Opacity reduziert, nicht editierbar).",
-      "sizesTitle":     "Größen",
-      "sizesBody":      "Drei Größen: sm (32 px Höhe) für dichte UIs, md (40 px, Standard), lg (48 px) für prominente Felder.",
-      "textareaTitle":  "Textarea",
-      "textareaBody":   "Für mehrzeiligen Text. rows-Prop kontrolliert die initiale Höhe. Gleiche Label/hint/error-Props wie Input.",
-      "addonTitle":     "InputWithAddon",
-      "addonBody":      "Für Felder mit festem Suffix (z. B. .de, %, €). Das Addon wird rechts angezeigt und ist nicht editierbar.",
-      "passwordTitle":  "Passwort-Input",
-      "passwordBody":   "Bei type=\"password\" erscheint rechts automatisch ein Toggle-Button zum Ein- und Ausblenden des Klartexts.",
-      "iconTitle":      "Icon-Variante",
-      "iconBody":       "leadingIcon und trailingIcon fügen ein Material-Symbol als Präfix oder Suffix innerhalb des Feldes ein. Der Wert ist der Material-Symbol-Name als String."
-    },
-    "usage": {
-      "title":           "Richtlinien für Eingabefelder",
-      "intro":           "Eingabefelder sind der häufigste Formular-Baustein. Folge diesen Regeln für konsistente, barrierefreie Formulare.",
-      "vsTitle":         "Input vs. Textarea",
-      "vsBody":          "Verwende Input für einzeilige Eingaben (Name, E-Mail, Suche). Textarea für mehrzeiligen Text (Beschreibung, Kommentar, Adresse). Faustregel: mehr als ~80 Zeichen → Textarea.",
-      "addonTitle":      "InputWithAddon",
-      "addonBody":       "Verwende InputWithAddon wenn ein fester Suffix den Wert kontextualisiert: URL-Endungen (.de, .com), Einheiten (%, €, kg) oder Domain-Präfixe.",
-      "formTitle":       "Formular-Kontext",
-      "formBody":        "Jedes Feld braucht ein sichtbares Label oder aria-label. Fehlermeldungen erscheinen direkt unter dem betroffenen Feld. Required-Felder mit * und einer Legende am Formularanfang kennzeichnen.",
-      "doTitle":         "Richtig ✓",
-      "dontTitle":       "Falsch ✗",
-      "do1":             "Immer label-Prop setzen oder aria-label angeben",
-      "dont1":           "Input ohne Label — Screen-Reader kann Feld nicht beschreiben",
-      "do2":             "error-Prop für Validierungsfehler verwenden",
-      "dont2":           "Fehler nur visuell (Farbe) ohne Text-Feedback signalisieren",
-      "do3":             "placeholder nur als Beispielwert, nicht als Ersatz für Label",
-      "dont3":           "placeholder=\"E-Mail-Adresse\" statt label=\"E-Mail-Adresse\"",
-      "do4":             "hint für permanente Hinweise, error für Fehler",
-      "dont4":           "hint und error gleichzeitig anzeigen",
-      "doNote":          "Labels, Fehlertexte und Kontext",
-      "dontNote":        "Fehlende Labels und rein visuelle Fehler"
-    },
-    "code": {
-      "title":          "Inputs im Code",
-      "basicTitle":     "Input mit Label und Hilfstext",
-      "basicDesc":      "Standard-Input mit label, placeholder und hint:",
-      "errorTitle":     "Error-Zustand",
-      "errorDesc":      "Fehler über die error-Prop übergeben — hint wird dadurch ausgeblendet:",
-      "textareaTitle":  "Textarea",
-      "textareaDesc":   "Für mehrzeiligen Text — gleiche Props wie Input:",
-      "addonTitle":     "InputWithAddon",
-      "addonDesc":      "Suffix-Addon rechts außerhalb des Eingabefeldes:",
-      "passwordTitle":  "Passwort-Input",
-      "passwordDesc":   "type=\"password\" aktiviert automatisch den Sichtbarkeits-Toggle:",
-      "iconTitle":      "Icon-Variante",
-      "iconDesc":       "leadingIcon / trailingIcon mit Material-Symbol-Name als String:",
-      "disabledTitle":  "Disabled",
-      "disabledDesc":   "Deaktiviertes Feld über disabled-Prop:"
-    },
-    "a11y": {
-      "title":              "Barrierefreiheit",
-      "intro":              "Formulare sind die häufigste Barriere für Nutzer mit Einschränkungen. Korrekte Label-Verknüpfung und Fehler-Kommunikation sind zwingend erforderlich.",
-      "labelsTitle":        "Label-Verknüpfung",
-      "labelsBody":         "Die label-Prop setzt automatisch ein <label>-Element. Für versteckte Labels ohne sichtbaren Text aria-label direkt am Input verwenden. Mehrere Inputs in einer Gruppe: fieldset + legend verwenden.",
-      "errorTitle":         "Fehler-Kommunikation",
-      "errorBody":          "Error-Prop rendert eine Fehlermeldung als <span>. Für Screen-Reader die Verknüpfung explizit mit aria-describedby herstellen, wenn das Input keine integrierte Verknüpfung hat.",
-      "keyboardTitle":      "Tastatursteuerung",
-      "keyboardBody":       "Alle Input-Felder sind standardmäßig per Tab navigierbar. Disabled-Inputs erhalten keinen Fokus. Formular-Submit per Enter (type=\"submit\"-Button oder onKeyDown-Handler).",
-      "autocompleteTitle":  "autocomplete-Attribut",
-      "autocompleteBody":   "Setze autocomplete auf semantisch korrekte Werte: email, name, tel, current-password, new-password etc. Das verbessert die Nutzererfahrung und Barrierefreiheit auf Mobilgeräten."
-    }
-  },
-
-  "selects": {
-    "page": {
-      "description": "Dropdown-Auswahlfeld für eine Option aus einer Liste — med.o Select-Komponente"
+    "demo": {
+      "label":       "E-Mail-Adresse",
+      "placeholder": "name@praxis.de",
+      "value":       "anna.berg@praxis.de",
+      "hint":        "Wir verwenden die Adresse nur für Terminbestätigungen.",
+      "error":       "Die Adresse ist unvollständig. Ergänzen Sie den Teil nach dem @.",
+      "success":     "Adresse bestätigt."
     },
     "overview": {
       "anatomyTitle":  "Anatomie",
-      "anatomyBody":   "Die Select-Komponente besteht aus:",
-      "an1":           "Label (optional) — kennzeichnet die Auswahl; gleiche Logik wie Input",
-      "an2":           "Trigger — sichtbarer Button, der das Dropdown öffnet",
-      "an3":           "SelectValue — zeigt den ausgewählten Wert an",
-      "an4":           "Dropdown-Container — die Liste der Optionen",
-      "an5":           "SelectItem — einzelne auswählbare Option",
+      "anatomyBody":   "Ein Textfeld besteht aus fünf Bausteinen. Sichtbar ist immer mindestens Label und Eingabe:",
+      "an1":           "Label mit Pflichtstern — immer sichtbar, über htmlFor mit der Eingabe verknüpft",
+      "an2":           "Führendes Icon — dekorativ, flach im Feld, ohne eigene Fläche",
+      "an3":           "Eingabe — 1px Rahmen, 8px Radius, 12px Innenabstand",
+      "an4":           "Abschließendes Icon — Zustandsanzeige oder bedienbare Schaltfläche",
+      "an5":           "Meldungszeile — Hilfetext, Fehler oder Bestätigung unter dem Feld",
       "statesTitle":   "Zustände",
-      "statesBody":    "Vier Zustände: Closed (Trigger sichtbar), Open (Dropdown geöffnet), Selected (Wert ausgewählt), Disabled (nicht interaktiv).",
-      "optionsTitle":  "Optionen-Formate",
-      "optionsBody":   "options-Prop akzeptiert String-Arrays oder Objekt-Arrays mit value und label. Objekte ermöglichen unterschiedliche Anzeige- und Datenwerte.",
-      "multiTitle":    "Multi-Select",
-      "multiBody":     "Ermöglicht die Auswahl mehrerer Optionen. Ausgewählte Werte erscheinen als Pills im Trigger — einzeln über × entfernbar.",
-      "searchTitle":   "Search-Select",
-      "searchBody":    "Durchsuchbares Auswahlfeld mit Echtzeit-Filter. Kombiniert Texteingabe mit Dropdown-Auswahl — ideal für lange Listen."
+      "statesBody":    "Acht Zustände: Ruhe, Hover, Fokus, ausgefüllt, gesperrt, schreibgeschützt, Fehler und Erfolg. Der Rahmen bleibt in jedem Zustand 1px stark — den Fokus trägt ein 3px-Ring, damit beim Fokussieren nichts springt.",
+      "statesNote":    "Hover und Fokus zeigen sich erst bei Bedienung: fahren Sie über ein Feld oder setzen Sie den Cursor hinein.",
+      "sizesTitle":    "Größen",
+      "sizesBody":     "sm 36px für dichte Tabellen und Filterleisten, md 40px im Normalfall, lg 48px auf Mobilgeräten. Die Schriftgrößen bleiben auf der Skala: 14 / 16 / 16.",
+      "floatTitle":    "Floating Label",
+      "floatBody":     "Das Label liegt im Feld und schwebt bei Fokus oder Inhalt nach oben in den Rahmen. Das Feld ist dann 52px hoch. Es ist die Ausnahme für dichte Formulare, nicht die Regel — mischen Sie es nie mit festen Labels.",
+      "featuresTitle": "Optionale Features",
+      "featuresBody":  "Leeren-Schaltfläche, Passwort-Umschalter, Zeichenzähler sowie feste Präfixe und Suffixe. Bedienbare Icons tragen Schaltflächen-Optik und ein aria-label, dekorative stehen flach im Feld."
+    },
+    "anatomy": {
+      "label":       "E-Mail-Adresse",
+      "placeholder": "name@praxis.de",
+      "hint":        "Adresse bestätigt."
+    },
+    "states": {
+      "default":       "Ruhe",
+      "filled":        "Ausgefüllt",
+      "error":         "Fehler",
+      "success":       "Erfolg",
+      "readonly":      "Schreibgeschützt",
+      "disabled":      "Gesperrt",
+      "disabledValue": "Nicht bearbeitbar"
+    },
+    "float": {
+      "empty":  "Vollständiger Name",
+      "filled": "Vollständiger Name"
+    },
+    "features": {
+      "clear":    "Leeren-Schaltfläche",
+      "password": "Passwort-Umschalter",
+      "counter":  "Zeichenzähler",
+      "affix":    "Präfix und Suffix"
     },
     "usage": {
-      "title":          "Richtlinien für Select",
-      "intro":          "Select eignet sich für Auswahllisten mit mehr als 4 Optionen. Weniger Optionen: Radio-Gruppe bevorzugen.",
-      "vsTitle":        "Select vs. Radio-Gruppe",
-      "vsBody":         "Bis zu 4 Optionen → Radio-Gruppe (alle sichtbar, schnellere Auswahl). Ab 5 Optionen → Select (spart Platz). Ausnahme: Länder- oder Zeitzonen-Auswahl immer Select, unabhängig von der Anzahl.",
-      "placeholderTitle":"Placeholder",
-      "placeholderBody": "Ohne ausgewählten Wert zeigt der Trigger einen leeren Zustand. Verwende defaultValue zur Vorauswahl oder dokumentiere den leeren Zustand als validen Startzustand.",
-      "doTitle":        "Richtig ✓",
-      "dontTitle":      "Falsch ✗",
-      "do1":            "label-Prop setzen oder aria-label angeben",
-      "dont1":          "Select ohne Label — Screen-Reader kann Feld nicht beschreiben",
-      "do2":            "{ value, label }-Objekte wenn Anzeige ≠ Datenwert",
-      "dont2":          "String-Werte wenn Anzeige und Datenwert unterschiedlich sein müssen",
-      "do3":            "Select ab 5 Optionen, Radio-Gruppe bei ≤ 4",
-      "dont3":          "Select für 2–3 Optionen die immer sichtbar sein sollen",
-      "doNote":         "Korrekte Komponente für die Optionsanzahl wählen",
-      "dontNote":       "Select für zu wenige Optionen oder ohne Label"
+      "labelTitle":    "Label und Platzhalter",
+      "labelBody":     "Das Label ist immer sichtbar. Ein Platzhalter ist kein Label — er verschwindet beim Tippen und fehlt dann genau dem, der ihn braucht. Der Platzhalter zeigt ein Beispiel, keine Anweisung. Verwenden Sie pro Formular entweder durchgehend required oder durchgehend optional, nie beides gemischt.",
+      "messageTitle":  "Meldungen",
+      "messageBody":   "Unter dem Feld steht höchstens eine Zeile: error verdrängt success, success verdrängt hint. Fehlermeldungen nennen Ursache und nächsten Schritt — „Bitte geben Sie eine gültige E-Mail-Adresse ein.“ statt „Ungültige Eingabe.“ Ein Fehler wird nie allein durch Farbe angezeigt, es gibt immer Icon und Text.",
+      "sizeTitle":     "Größe wählen",
+      "sizeBody":      "md ist der Normalfall. lg gehört auf Mobilgeräte, weil die Trefferfläche darunter zu klein wird. sm nur in dichten Tabellen und Filterleisten.",
+      "widthTitle":    "Breite und Zusätze",
+      "widthBody":     "Die Feldbreite folgt der erwarteten Eingabe — eine Postleitzahl bekommt kein Feld über die ganze Spalte. prefix und suffix nehmen feste Textteile aus der Eingabe heraus („https://“, „.de“, „€“), damit der Nutzer sie nicht mittippt.",
+      "iconTitle":     "Icons im Feld",
+      "iconBody":      "icon setzt ein dekoratives Glyph vorn — flach, ohne Fläche. Bedienbare Icons dagegen sehen wie kleine Schaltflächen aus (Ruhefläche stone-100, Hover stone-200) und tragen immer ein aria-label: die Leeren-Schaltfläche über clearable und der Passwort-Umschalter, den type=\"password\" automatisch mitbringt. Das ist eine feste Systemregel, keine Stilfrage.",
+      "readonlyTitle": "readOnly gegen disabled",
+      "readonlyBody":  "readOnly für Werte, die angezeigt aber nicht geändert werden — Kundennummer, generierte ID. Das Feld bleibt fokussierbar und kopierbar und zeigt ein Schloss. disabled nur, wenn das Feld unter den aktuellen Bedingungen gar nicht gilt. Die beiden zu verwechseln ist der häufigste Fehler.",
+      "doDontTitle":   "Do und Don't",
+      "doTitle":       "Do",
+      "do1":           "Label immer sichtbar lassen, nie den Platzhalter als Label benutzen.",
+      "do2":           "Fehlertext konkret formulieren: was ist passiert und was ist zu tun.",
+      "do3":           "Feldbreite an die erwartete Eingabe anpassen.",
+      "dontTitle":     "Don't",
+      "dont1":         "Platzhalter nicht für wichtige Informationen nutzen.",
+      "dont2":         "Kein Rot allein — Fehler immer mit Icon und Text.",
+      "dont3":         "Gesperrte Felder nicht für schreibgeschützte Werte verwenden."
     },
     "code": {
-      "title":        "Select im Code",
-      "basicTitle":   "String-Optionen",
-      "basicDesc":    "Einfachste Form — String-Array als options-Prop:",
-      "objectTitle":  "Objekt-Optionen",
-      "objectDesc":   "value + label getrennt — empfohlen für Formulare mit API-Werten:",
-      "multiTitle":   "Multi-Select",
-      "multiDesc":    "value ist ein String-Array — onChange gibt den aktualisierten Array zurück:",
-      "searchTitle":  "Search-Select",
-      "searchDesc":   "Durchsuchbar — value und onChange wie beim Standard-Select:",
-      "formTitle":    "Select in Formularen",
-      "formDesc":     "State-basierte Verwaltung mit onChange-Handler und hint-Text:"
+      "title":         "Code",
+      "basicTitle":    "Grundform",
+      "statesTitle":   "Zustände",
+      "floatTitle":    "Floating Label",
+      "featuresTitle": "Optionale Features"
     },
     "a11y": {
-      "title":             "Barrierefreiheit",
-      "intro":             "Select-Komponenten basieren auf shadcn/ui (Radix UI), das vollständige ARIA-Unterstützung mitbringt.",
-      "keyboardTitle":     "Tastatursteuerung",
-      "keyboardBody":      "Vollständige Tastaturnavigation:",
-      "k1":                "Tab — Fokus auf den Select-Trigger",
-      "k2":                "Enter / Space — Dropdown öffnen/schließen",
-      "k3":                "Pfeiltasten ↑ / ↓ — Optionen navigieren",
-      "k4":                "Enter — Ausgewählte Option bestätigen",
-      "k5":                "Escape — Dropdown schließen ohne Auswahl",
-      "ariaTitle":         "ARIA-Rollen",
-      "ariaBody":          "Radix UI weist automatisch korrekte ARIA-Rollen zu: combobox (Trigger), listbox (Dropdown), option (SelectItem). Screen-Reader lesen: \"Land, Combobox, eingeklappt\".",
-      "screenReaderTitle": "Screen-Reader-Verhalten",
-      "screenReaderBody":  "Der ausgewählte Wert wird beim Schließen des Dropdowns angekündigt. Für Labels ohne sichtbaren Text aria-label am Trigger-Element setzen."
+      "labelTitle": "Label-Verknüpfung",
+      "labelBody":  "Jedes Feld bekommt eine ID und ein Label mit passendem htmlFor. Fehlt kein Label, liest der Screenreader den Feldnamen mit vor. Beim Floating Label bleibt die Verknüpfung erhalten — das Label wandert nur optisch.",
+      "errorTitle": "Fehler ankündigen",
+      "errorBody":  "Ein gesetztes error setzt aria-invalid=\"true\" auf der Eingabe, die Meldungszeile trägt role=\"alert\" und wird über aria-describedby mit dem Feld verknüpft. Hilfetext und Bestätigung sind auf demselben Weg verknüpft.",
+      "iconTitle":  "Bedienbare Icons",
+      "iconBody":   "Leeren-Schaltfläche und Passwort-Umschalter sind echte Schaltflächen mit type=\"button\" und aria-label. Sie sind mit der Tabulatortaste erreichbar und zeigen im Fokus denselben 3px-Ring wie das Feld.",
+      "focusTitle": "Fokus und Kontrast",
+      "focusBody":  "Der Fokus-Ring ist 3px stark in primary-600; im Fehlerzustand wechselt er auf error-600. Der Rahmen bleibt immer 1px, damit beim Fokussieren nichts springt. Alle Kombinationen sind gegen WCAG 2.2 AA geprüft."
+    }
+  },
+
+  "numberInput": {
+    "page": {
+      "title":       "Number input",
+      "description": "Erfasst Zahlen mit Stepper-Steuerung. Baut auf dem Textfeld auf: gleiche Anatomie, gleiche Zustände — plus Auf/Ab-Schaltflächen, Grenzwerte und Schrittweite."
+    },
+    "demo": {
+      "label":   "Anzahl Packungen",
+      "hint":    "Pfeiltasten und Mausrad ändern den Wert um eine Schrittweite.",
+      "error":   "Der Wert liegt über dem Bestand. Bestellen Sie höchstens 10 Packungen.",
+      "success": "Menge übernommen."
+    },
+    "overview": {
+      "variantsTitle": "Varianten",
+      "variantsBody":  "chevrons setzt beide Schaltflächen rechts — der Normalfall am Schreibtisch. plusminus stellt Minus links und Plus rechts, mit mittig ausgerichtetem Wert; das ist die Touch-Variante mit größerer Trefferfläche.",
+      "sizesTitle":    "Größen",
+      "sizesBody":     "sm 36px, md 40px, lg 48px — dieselben Höhen wie beim Textfeld. Die Stepper-Breite folgt der Größe und bleibt in beiden Varianten gleich.",
+      "unitsTitle":    "Einheiten und Ausrichtung",
+      "unitsBody":     "prefix und suffix zeigen die Einheit fest am Feld, damit sie niemand mittippt. align überschreibt die Ausrichtung — rechtsbündig ist richtig, wenn mehrere Zahlen untereinander verglichen werden.",
+      "statesTitle":   "Zustände",
+      "statesBody":    "Dieselben acht Zustände wie beim Textfeld. Am Grenzwert wird die zugehörige Schaltfläche inaktiv, statt den Wert kommentarlos zu überspringen.",
+      "behaviorTitle": "Verhalten"
+    },
+    "variants": {
+      "chevrons":  "chevrons · Schreibtisch",
+      "plusminus": "plusminus · Touch"
+    },
+    "units": {
+      "suffix":  "Suffix-Einheit",
+      "prefix":  "Präfix-Einheit",
+      "percent": "Prozent mit Schrittweite 5",
+      "right":   "Rechtsbündig"
+    },
+    "states": {
+      "default":   "Ruhe",
+      "limit":     "Am oberen Grenzwert",
+      "limitHint": "Mehr als 10 sind nicht bestellbar.",
+      "error":     "Fehler",
+      "success":   "Erfolg",
+      "readonly":  "Schreibgeschützt",
+      "disabled":  "Gesperrt"
+    },
+    "behavior": {
+      "limits": "min, max und step legen Grenzen und Schrittweite fest.",
+      "hold":   "Gedrückt halten zählt fortlaufend weiter.",
+      "arrows": "Pfeiltasten auf und ab ändern den Wert um eine Schrittweite.",
+      "wheel":  "Das Mausrad ändert den Wert, solange das Feld den Fokus hat."
+    },
+    "usage": {
+      "whenTitle":    "Wann einsetzen",
+      "whenBody":     "Das Zahlenfeld gehört dorthin, wo Werte in kleinen Schritten angepasst werden — Mengen, Dosierungen, Prozentsätze. Für sehr große Wertebereiche ist ein Freitextfeld die bessere Wahl, weil sich niemand mit dem Stepper durch tausend Schritte klickt.",
+      "variantTitle": "Variante wählen",
+      "variantBody":  "chevrons am Schreibtisch, plusminus auf Touch-Geräten. Innerhalb einer Oberfläche bleibt es bei einer Variante.",
+      "widthTitle":   "Breite",
+      "widthBody":    "Zahlenfelder laufen nicht über die ganze Spalte. width setzt eine feste Breite passend zur erwarteten Stellenzahl; fullWidth ist die Ausnahme für schmale Formulare auf Mobilgeräten.",
+      "doDontTitle":  "Do und Don't",
+      "doTitle":      "Do",
+      "do1":          "Stepper für kleine, häufige Anpassungen nutzen.",
+      "do2":          "Sinnvolle Grenzen über min und max setzen.",
+      "do3":          "Einheit sichtbar am Feld zeigen (kg, %, €).",
+      "dontTitle":    "Don't",
+      "dont1":        "Nicht für sehr große Wertebereiche — dann Freitext.",
+      "dont2":        "Keine Schaltflächen ohne Tastatur-Alternative.",
+      "dont3":        "Grenzwert nicht kommentarlos überspringen."
+    },
+    "code": {
+      "title":        "Code",
+      "basicTitle":   "Grundform",
+      "variantTitle": "Varianten",
+      "unitTitle":    "Einheiten und Ausrichtung",
+      "stateTitle":   "Zustände"
+    },
+    "a11y": {
+      "roleTitle":     "Rolle und Werte",
+      "roleBody":      "Die Eingabe trägt role=\"spinbutton\" und meldet über aria-valuenow, aria-valuemin und aria-valuemax den aktuellen Wert samt Grenzen. Ein gesetztes error setzt zusätzlich aria-invalid=\"true\".",
+      "keyboardTitle": "Tastatur",
+      "keyboardBody":  "Pfeil auf und Pfeil ab ändern den Wert um eine Schrittweite — die Stepper sind damit nie die einzige Bedienmöglichkeit. Der Wert lässt sich außerdem direkt eintippen; das Feld nimmt Komma und Punkt als Dezimaltrenner an.",
+      "stepperTitle":  "Stepper-Schaltflächen",
+      "stepperBody":   "Beide Schaltflächen tragen ein aria-label („Erhöhen“, „Verringern“) und stehen bewusst außerhalb der Tabulator-Reihenfolge, damit der Weg durch das Formular kurz bleibt. Am Grenzwert werden sie inaktiv."
+    }
+  },
+
+  "select": {
+    "page": {
+      "title":       "Select",
+      "description": "Auswahl aus einer bekannten, geschlossenen Liste. Baut auf dem Textfeld auf — mit Gruppen, Einzel- und Mehrfachauswahl."
+    },
+    "demo": {
+      "label":   "Fachrichtung",
+      "hint":    "Bestimmt, welche Formulare im nächsten Schritt angeboten werden.",
+      "error":   "Ohne Fachrichtung lässt sich der Termin nicht zuordnen. Wählen Sie einen Eintrag aus.",
+      "success": "Fachrichtung übernommen."
+    },
+    "overview": {
+      "singleTitle":  "Einzelauswahl",
+      "singleBody":   "Der Normalfall: ein Wert aus einer Liste. Das Aufklappmenü erscheint im medo-Stil, ist vollständig per Tastatur bedienbar und klappt nach oben auf, wenn unten kein Platz ist.",
+      "multiTitle":   "Mehrfachauswahl",
+      "multiBody":    "multiple macht aus dem Wert ein Array. Die Auswahl bleibt immer einzeilig: es werden so viele Chips gezeigt, wie in eine Zeile passen, der Rest erscheint als Zähler. multipleDisplay=\"count\" ersetzt die Chips ganz durch „N ausgewählt“, maxChips setzt eine harte Obergrenze.",
+      "groupTitle":   "Gruppen",
+      "groupBody":    "Einträge lassen sich unter Überschriften bündeln. Gruppentitel sind nicht auswählbar und werden von der Tastatursteuerung übersprungen; einzelne Einträge können inaktiv sein.",
+      "sizesTitle":   "Größen",
+      "sizesBody":    "sm 36px, md 40px, lg 48px — dieselben Höhen wie beim Textfeld.",
+      "statesTitle":  "Zustände",
+      "statesBody":   "Fehler, Erfolg und gesperrt verhalten sich wie beim Textfeld. Eine leere Optionsliste zeigt statt eines leeren Menüs einen Hinweis.",
+      "nativeTitle":  "Native Betriebsart",
+      "nativeBody":   "native schaltet auf das Auswahlrad des Betriebssystems um. Richtig für sehr lange Listen und für Formulare, die ohne JavaScript funktionieren müssen — das Aufklappmenü ist dann nicht gestaltbar."
+    },
+    "single": {
+      "empty":  "Ohne Vorauswahl",
+      "chosen": "Mit Vorauswahl",
+      "icons":  "Mit Icons je Eintrag",
+      "open":   "Geöffnetes Menü"
+    },
+    "multi": {
+      "chips": "Chips",
+      "count": "Zähler statt Chips",
+      "max":   "Höchstens zwei Chips",
+      "empty": "Ohne Auswahl"
+    },
+    "group": {
+      "label": "Fachrichtung"
+    },
+    "states": {
+      "error":    "Fehler",
+      "success":  "Erfolg",
+      "disabled": "Gesperrt",
+      "empty":    "Leere Liste"
+    },
+    "native": {
+      "label": "Land",
+      "hint":  "Das Aufklappmenü stellt das Betriebssystem."
+    },
+    "usage": {
+      "whenTitle":   "Wann einsetzen",
+      "whenBody":    "Das Auswahlfeld gehört zu bekannten, geschlossenen Listen. Bei bis zu etwa fünf Einträgen sind Radio-Buttons besser — sie zeigen alle Möglichkeiten ohne Klick. Bei mehr als etwa fünfzehn Einträgen oder wenn gesucht werden soll, ist das Suchfeld richtig. Für Aktionen statt Werte: das Menü.",
+      "orderTitle":  "Reihenfolge und Gruppen",
+      "orderBody":   "Sortieren Sie nach Häufigkeit oder alphabetisch, nicht zufällig. Gruppen lohnen sich ab etwa zehn Einträgen; die Gruppentitel benennen, wonach gebündelt wurde.",
+      "multiTitle":  "Chips oder Zähler",
+      "multiBody":   "Chips zeigen die Auswahl direkt und lassen sich einzeln entfernen — richtig, solange die Bezeichnungen kurz sind. Bei langen Bezeichnungen oder schmalen Feldern ist der Zähler ruhiger.",
+      "nativeTitle": "Native Betriebsart",
+      "nativeBody":  "native ist die richtige Wahl bei sehr langen Listen und in Formularen, die ohne JavaScript funktionieren müssen. Der Preis ist das nicht gestaltbare Aufklappmenü — mischen Sie beide Betriebsarten nicht innerhalb eines Formulars.",
+      "doDontTitle": "Do und Don't",
+      "doTitle":     "Do",
+      "do1":         "Einträge nach Häufigkeit oder alphabetisch sortieren.",
+      "do2":         "Ab etwa zehn Einträgen in Gruppen bündeln.",
+      "do3":         "Bei bis zu fünf Einträgen Radio-Buttons vorziehen.",
+      "dontTitle":   "Don't",
+      "dont1":       "Die Liste nicht als Suchfeld missbrauchen.",
+      "dont2":       "Keine Aktionen in die Liste legen — dafür das Menü.",
+      "dont3":       "Beide Betriebsarten nicht im selben Formular mischen."
+    },
+    "code": {
+      "title":       "Code",
+      "basicTitle":  "Grundform",
+      "multiTitle":  "Mehrfachauswahl",
+      "groupTitle":  "Gruppen",
+      "nativeTitle": "Native Betriebsart"
+    },
+    "a11y": {
+      "roleTitle":     "Rollen",
+      "roleBody":      "Das Feld trägt role=\"combobox\" mit aria-expanded, aria-haspopup=\"listbox\" und aria-controls. Das Menü ist ein role=\"listbox\", jeder Eintrag ein role=\"option\" mit aria-selected; der aktive Eintrag wird über aria-activedescendant gemeldet, ohne dass der Fokus das Feld verlässt. Bei Mehrfachauswahl kommt aria-multiselectable hinzu.",
+      "keyboardTitle": "Tastatur",
+      "key1":          "Pfeil auf und ab öffnen das Menü und wechseln den aktiven Eintrag.",
+      "key2":          "Eingabe- und Leertaste wählen den aktiven Eintrag; bei Mehrfachauswahl schalten sie ihn um.",
+      "key3":          "Pos1 und Ende springen zum ersten und letzten auswählbaren Eintrag.",
+      "key4":          "Ein Buchstabe springt zum ersten Eintrag, der damit beginnt.",
+      "key5":          "Escape und Tabulator schließen das Menü.",
+      "chipTitle":     "Chips entfernen",
+      "chipBody":      "Jedes Entfernen-Kreuz an einem Chip trägt ein aria-label, das den Eintrag beim Namen nennt („Auswahl entfernen: Innere Medizin“). Der Zähler „+N“ führt die verdeckten Einträge im title-Attribut."
+    }
+  },
+
+  "searchField": {
+    "page": {
+      "title":       "Search",
+      "description": "Sucht live während der Eingabe. Baut auf dem Feld-Gerüst auf: führende Lupe, Leeren-Schaltfläche und ein optionales Vorschlags-Panel mit den letzten Suchen."
+    },
+    "demo": {
+      "label":       "Patientensuche",
+      "placeholder": "Name oder Versichertennummer",
+      "hint":        "Die Suche startet automatisch, sobald Sie eine kurze Pause machen.",
+      "error":       "Die Suche ist zurzeit nicht erreichbar. Versuchen Sie es in einigen Minuten erneut."
+    },
+    "overview": {
+      "anatomyTitle": "Anatomie",
+      "anatomyBody":  "Das Suchfeld ist ein Textfeld mit fester Rollenverteilung:",
+      "an1":          "Führende Lupe — dekorativ, wird während der Suche durch einen Spinner ersetzt",
+      "an2":          "Eingabe — meldet sich als combobox an das Vorschlags-Panel",
+      "an3":          "Leeren-Schaltfläche — erscheint, sobald etwas eingegeben ist",
+      "an4":          "Vorschlags-Panel — letzte Suchen und Vorschläge, per Tastatur bedienbar",
+      "panelTitle":   "Vorschlags-Panel",
+      "panelBody":    "Solange das Feld leer ist, zeigt das Panel die letzten Suchen. Sobald getippt wird, treten die Vorschläge an ihre Stelle und der eingegebene Teil wird im Treffer hervorgehoben. Mit onRemoveRecent bekommen Verlaufseinträge eine Entfernen-Schaltfläche.",
+      "emptyTitle":   "Leerzustand",
+      "emptyBody":    "Findet die Suche nichts, nennt das Panel die Suchanfrage und sagt, was als Nächstes hilft. emptyText ersetzt den Standardtext durch einen konkreteren Hinweis.",
+      "sizesTitle":   "Größen",
+      "sizesBody":    "sm 36px, md 40px, lg 48px — dieselben Höhen wie beim Textfeld.",
+      "compactTitle": "Kompakte Variante",
+      "compactBody":  "compact ist die flache Variante für Werkzeugleisten: 34px hoch, ohne Rahmen, auf gefüllter Fläche. Ohne Label steht sie für sich allein, ohne Feld-Gerüst darum.",
+      "statesTitle":  "Zustände",
+      "statesBody":   "Ruhe, ausgefüllt, Suche läuft, gesperrt, Fehler und Hilfetext. Der Fokus trägt denselben 3px-Ring wie jedes andere Feld."
+    },
+    "anatomy": {
+      "label": "Patientensuche",
+      "hint":  "Suchen Sie nach Name, Geburtsdatum oder Versichertennummer."
+    },
+    "panel": {
+      "recent":      "Leeres Feld · letzte Suchen",
+      "suggestions": "Eingabe · Vorschläge mit Hervorhebung"
+    },
+    "empty": {
+      "text": "Prüfen Sie die Schreibweise oder suchen Sie nach der Versichertennummer."
+    },
+    "compact": {
+      "placeholder": "Liste filtern"
+    },
+    "states": {
+      "default":  "Ruhe",
+      "filled":   "Ausgefüllt",
+      "loading":  "Suche läuft",
+      "disabled": "Gesperrt",
+      "error":    "Fehler",
+      "hint":     "Mit Hilfetext"
+    },
+    "usage": {
+      "whenTitle":     "Wann einsetzen",
+      "whenBody":      "Das Suchfeld gehört dorthin, wo aus vielen Einträgen der eine gefunden werden soll. Für eine bekannte, geschlossene Liste ist das Auswahlfeld richtig. Als reines Filterfeld ohne Vorschläge schalten Sie das Panel über showPanel ab.",
+      "debounceTitle": "Entprellung",
+      "debounceBody":  "onSearch feuert erst nach einer kurzen Pause, standardmäßig 250 ms — nicht bei jedem Tastendruck. Bei Eingabetaste und bei Auswahl eines Vorschlags feuert es zusätzlich sofort. Passen Sie debounce an, wenn die Suche teuer ist.",
+      "panelTitle":    "Vorschläge und Verlauf",
+      "panelBody":     "Letzte Suchen erscheinen nur im leeren Feld — sie sind ein Einstieg, keine Trefferliste. Halten Sie die Vorschlagsliste kurz; mehr als etwa zehn Einträge zwingen zum Scrollen statt zum Entscheiden.",
+      "emptyTitle":    "Leerzustand formulieren",
+      "emptyBody":     "Der Leerzustand nennt Ursache und nächsten Schritt, nicht nur den Zustand. „Prüfen Sie die Schreibweise oder suchen Sie nach der Versichertennummer.“ hilft weiter, „Keine Ergebnisse“ nicht.",
+      "doDontTitle":   "Do und Don't",
+      "doTitle":       "Do",
+      "do1":           "Eingabe entprellen, statt bei jedem Tastendruck zu suchen.",
+      "do2":           "Im Leerzustand sagen, was als Nächstes hilft.",
+      "do3":           "Vorschlagsliste kurz halten und den Treffer hervorheben.",
+      "dontTitle":     "Don't",
+      "dont1":         "Die Lupe nicht als Schaltfläche gestalten — sie ist dekorativ.",
+      "dont2":         "Letzte Suchen nicht anzeigen, während getippt wird.",
+      "dont3":         "Das Suchfeld nicht für geschlossene Listen verwenden."
+    },
+    "code": {
+      "title":         "Code",
+      "basicTitle":    "Grundform",
+      "suggestTitle":  "Vorschläge und Verlauf",
+      "compactTitle":  "Kompakte Variante",
+      "stateTitle":    "Zustände"
+    },
+    "a11y": {
+      "roleTitle":     "Rollen",
+      "roleBody":      "Die Eingabe trägt role=\"combobox\" mit aria-expanded, aria-autocomplete=\"list\" und aria-controls auf das Panel. Das Panel ist ein role=\"listbox\", jeder Eintrag ein role=\"option\" mit aria-selected. Der Fokus bleibt im Feld, während die Pfeiltasten die Einträge durchlaufen.",
+      "keyboardTitle": "Tastatur",
+      "key1":          "Pfeil auf und ab öffnen das Panel und wechseln den aktiven Eintrag.",
+      "key2":          "Die Eingabetaste übernimmt den aktiven Eintrag oder startet die Suche sofort.",
+      "key3":          "Escape leert zuerst das Feld und schließt danach das Panel.",
+      "iconTitle":     "Bedienbare Icons",
+      "iconBody":      "Die Leeren-Schaltfläche und das Entfernen-Kreuz im Verlauf sind echte Schaltflächen mit aria-label („Suche leeren“, „Aus dem Verlauf entfernen“). Die führende Lupe ist dekorativ und für Screenreader ausgeblendet; während der Suche ist auch der Spinner ausgeblendet."
     }
   },
 
