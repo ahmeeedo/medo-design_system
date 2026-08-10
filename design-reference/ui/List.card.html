@@ -1,0 +1,89 @@
+<!-- @dsCard group="Komponenten" viewport="700x600" name="List" subtitle="Aufgezählt, nummeriert, Inhalts-Zeilen und Schlüssel-Wert (Spalten und gestapelt)" -->
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  html,body{margin:0}
+  body{padding:24px 22px;font-family:var(--medo-font-sans);background:var(--medo-surface);color:var(--medo-text);min-height:600px;box-sizing:border-box}
+  .lbl{font-family:var(--medo-font-mono);font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:var(--medo-color-stone-500);margin-bottom:10px}
+  .cols{display:grid;grid-template-columns:1fr 1fr;gap:34px}
+  .grp{margin-bottom:26px}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+<script src="../_ds_bundle.js"></script>
+<script>
+  var h = React.createElement;
+  var MedoList = window.MedoUI.List, MedoKV = window.MedoUI.KeyValueList;
+
+  var app = h('div', null,
+    h('div', { className: 'cols' },
+      h('div', null,
+        h('div', { className: 'lbl' }, 'Aufgezählt · mit einer Ebene'),
+        h(MedoList, { variant: 'unordered', items: [
+          'Gewerbeversicherung',
+          { text: 'Betriebliche Vorsorge', items: ['Direktversicherung', 'Unterstützungskasse'] },
+          'Cyberrisiken'
+        ]})
+      ),
+      h('div', null,
+        h('div', { className: 'lbl' }, 'Nummeriert · Reihenfolge zählt'),
+        h(MedoList, { variant: 'ordered', items: [
+          'Profil vervollständigen',
+          'Zulassung nachweisen',
+          'Erste Verbindung anfragen'
+        ]})
+      )
+    ),
+    h('div', { style: { height: '26px' } }),
+    h('div', { className: 'cols' },
+      h('div', null,
+        h('div', { className: 'lbl' }, 'Inhalts-Zeilen · Icon, Titel, Erklärung'),
+        h(MedoList, { variant: 'content', size: 'md', items: [
+          { icon: 'verified', title: 'IHK-Zulassung', description: 'Seit 2014, geprüft am 12.03.2026' },
+          { icon: 'place', title: 'Region', description: 'Karlsruhe und Umkreis 50 km' },
+          { icon: 'schedule', title: 'Erreichbarkeit', description: 'Mo–Fr 09:00–17:00' }
+        ]})
+      ),
+      h('div', null,
+        h('div', { className: 'lbl' }, 'Schlüssel-Wert · Zahlen in Mono'),
+        h(MedoKV, { layout: 'columns', monoValues: true, items: [
+          { key: 'Vertragsnummer', value: 'VN-2026-0184', numeric: true },
+          { key: 'Beitrag', value: '1.234,56 €', numeric: true },
+          { key: 'Beginn', value: '01.04.2026', numeric: true },
+          { key: 'Status', value: 'Aktiv' },
+          { key: 'Vermittler', value: '—' }
+        ]})
+      )
+    ),
+    h('div', { className: 'cols', style: { marginTop: '26px' } },
+      h('div', null,
+        h('div', { className: 'lbl' }, 'Inhalts-Zeilen · ohne Trennlinien, sm'),
+        h(MedoList, { variant: 'content', size: 'sm', flush: true, items: [
+          { icon: 'mail', title: 'E-Mail bestätigt' },
+          { icon: 'lock', title: 'Zwei-Faktor aktiv' },
+          { icon: 'description', title: 'Nachweise vollständig' }
+        ]})
+      ),
+      h('div', null,
+        h('div', { className: 'lbl' }, 'Schlüssel-Wert · gestapelt für schmale Spalten'),
+        h(MedoKV, { layout: 'stacked', items: [
+          { key: 'Vertragsnummer', value: 'VN-2026-0184', numeric: true },
+          { key: 'Zuständig', value: 'Dr. Marie Hoffmann' }
+        ]})
+      )
+    ),
+    h('div', { style: { marginTop: '26px' } },
+      h('div', { className: 'lbl' }, 'Leer · erklärt, was hier entsteht'),
+      h(MedoList, { items: [], emptyText: 'Noch keine Schwerpunkte hinterlegt. Ergänzen Sie bis zu fünf Themen.' })
+    )
+  );
+  ReactDOM.createRoot(document.getElementById('root')).render(app);
+</script>
+</body>
+</html>

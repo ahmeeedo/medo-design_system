@@ -1,0 +1,79 @@
+<!-- @dsCard group="Komponenten" viewport="700x420" name="Radio" subtitle="Einfachauswahl, senkrecht, waagerecht und Card-Radio" -->
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  html,body{margin:0}
+  body{padding:20px 22px;font-family:var(--medo-font-sans);background:var(--medo-surface);color:var(--medo-text);min-height:420px;box-sizing:border-box}
+  .lbl{font-family:var(--medo-font-mono);font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:var(--medo-color-stone-500);margin-bottom:10px}
+  .cols{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+<script src="../_ds_bundle.js"></script>
+<script>
+  var h = React.createElement;
+  var RB = window.MedoUI.Radio, RBG = window.MedoUI.RadioGroup;
+
+  var app = h('div', null,
+    h('div', { className: 'cols' },
+      h('div', null,
+        h('div', { className: 'lbl' }, 'Gruppe senkrecht'),
+        h(RBG, {
+          legend: 'Sichtbarkeit des Profils', variant: 'list', direction: 'vertical', size: 'md',
+          defaultValue: 'netzwerk',
+          options: [
+            { value: 'alle', label: 'Für alle Spezialisten', hint: 'Auch ohne Verbindung' },
+            { value: 'netzwerk', label: 'Nur mein Netzwerk' },
+            { value: 'aus', label: 'Nicht sichtbar', disabled: true }
+          ]
+        })
+      ),
+      h('div', null,
+        h('div', { className: 'lbl' }, 'Zustände'),
+        h('div', { style: { display: 'flex', flexDirection: 'column', gap: '12px' } },
+          h(RB, { key: 1, name: 'd1', label: 'Aus' }),
+          h(RB, { key: 2, name: 'd2', label: 'An', defaultChecked: true }),
+          h(RB, { key: 3, name: 'd3', label: 'Fehler', error: true, hint: 'Bitte eine Option wählen' }),
+          h(RB, { key: 4, name: 'd4', label: 'Gesperrt, aus', disabled: true }),
+          h(RB, { key: 5, name: 'd5', label: 'Gesperrt, an', disabled: true, defaultChecked: true })
+        )
+      )
+    ),
+    h('div', { style: { marginTop: '18px' } },
+      h('div', { className: 'lbl' }, 'Waagerecht · Größen 18 / 20px'),
+      h(RBG, {
+        name: 'groesse',
+        direction: 'horizontal',
+        defaultValue: 'mittel',
+        size: 'sm',
+        options: [
+          { value: 'klein', label: 'Klein' },
+          { value: 'mittel', label: 'Mittel' },
+          { value: 'gross', label: 'Groß' }
+        ]
+      })
+    ),
+    h('div', { style: { marginTop: '18px' } },
+      h('div', { className: 'lbl' }, 'Card-Radio'),
+      h(RBG, {
+        name: 'tarif',
+        variant: 'card',
+        defaultValue: 'pro',
+        options: [
+          { value: 'basis', label: 'Basis', hint: '0 € / Monat' },
+          { value: 'pro', label: 'Pro', hint: '19 € / Monat' },
+          { value: 'team', label: 'Team', hint: '49 € / Monat' }
+        ]
+      })
+    )
+  );
+  ReactDOM.createRoot(document.getElementById('root')).render(app);
+</script>
+</body>
+</html>

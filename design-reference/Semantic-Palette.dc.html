@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  body{margin:0}
+  ::selection{background:#e6e1d8}
+</style>
+</helmet>
+
+<div style="min-height:100%;background:#faf9f7;color:#1f1d1a;font-family:'Hanken Grotesk',system-ui,sans-serif;-webkit-font-smoothing:antialiased;padding:56px 40px 96px">
+  <div style="max-width:1080px;margin:0 auto">
+
+    <!-- HEADER -->
+    <div style="margin-bottom:36px">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:0.16em;color:#a49d92;text-transform:uppercase;margin-bottom:16px">Design System · Ebene 3 · Semantic</div>
+      <h1 style="font-size:38px;line-height:1.08;font-weight:700;letter-spacing:-0.02em;margin:0 0 14px">Farben im Kontext</h1>
+      <p style="font-size:16px;line-height:1.6;color:#6f6a63;margin:0;max-width:680px">Die Tokens, mit denen Komponenten gebaut werden. Jedes verweist auf eine Alias-Stufe. Basis-Neutral ist <strong style="color:#1f1d1a;font-weight:600">stone</strong> (warm), die Grundfläche ist <strong style="color:#1f1d1a;font-weight:600">weiß</strong>. Es umfasst Flächen, Text, Rahmen, Icons, Eingabefelder, Aktionen, Zustände und Status.</p>
+    </div>
+
+    <!-- APPLIED PREVIEW -->
+    <div style="background:{{ ui.pageBg }};border:1px solid #e9e6e1;border-radius:18px;padding:40px;margin-bottom:48px">
+      <div style="max-width:400px;margin:0 auto;background:{{ ui.cardBg }};border:1px solid {{ ui.cardBorder }};border-radius:14px;padding:24px 26px;box-shadow:0 1px 3px rgba(31,29,26,0.06),0 4px 14px rgba(31,29,26,0.04)">
+        <div style="display:flex;align-items:center;gap:11px;margin-bottom:14px">
+          <span style="width:24px;height:24px;border-radius:7px;background:{{ ui.icon }};flex:none"></span>
+          <h3 style="font-size:17px;font-weight:600;color:{{ ui.heading }};margin:0">Kontoübersicht</h3>
+        </div>
+        <p style="font-size:14px;line-height:1.6;color:{{ ui.body }};margin:0 0 18px">Alle Flächen, Texte und Rahmen dieser Karte stammen ausschließlich aus den Semantic-Tokens der Runde 1.</p>
+        <div style="height:1px;background:{{ ui.divider }};margin:0 0 16px"></div>
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <span style="font-size:13px;color:{{ ui.subtle }}">Zuletzt aktualisiert vor 2 Min.</span>
+          <a style="font-size:13px;font-weight:600;color:{{ ui.link }};text-decoration:none;cursor:pointer">Details ansehen</a>
+        </div>
+      </div>
+
+      <div style="max-width:400px;margin:20px auto 0;background:{{ ui.cardBg }};border:1px solid {{ ui.cardBorder }};border-radius:14px;padding:24px 26px;box-shadow:0 1px 3px rgba(31,29,26,0.06),0 4px 14px rgba(31,29,26,0.04)">
+        <label style="display:block;font-size:13px;font-weight:600;color:{{ ui.subtle }};margin-bottom:7px">E-Mail</label>
+        <div style="background:{{ ui.inputBg }};border:2px solid {{ ui.ring }};border-radius:10px;padding:10px 13px;box-shadow:0 0 0 3px {{ ui.ringSoft }};margin-bottom:18px">
+          <span style="color:{{ ui.inputText }};font-size:14px">anna</span><span style="color:{{ ui.inputPlaceholder }};font-size:14px">@beispiel.de</span>
+        </div>
+        <div style="display:flex;gap:10px;margin-bottom:18px">
+          <button style="border:none;background:{{ ui.actionBg }};color:{{ ui.actionText }};font-family:inherit;font-size:14px;font-weight:600;padding:10px 18px;border-radius:9px;cursor:pointer">Speichern</button>
+          <button style="background:{{ ui.neutralBg }};color:{{ ui.neutralText }};border:1px solid {{ ui.neutralBorder }};font-family:inherit;font-size:14px;font-weight:600;padding:10px 18px;border-radius:9px;cursor:pointer">Abbrechen</button>
+        </div>
+        <div style="display:flex;align-items:center;gap:9px;background:{{ ui.successSurface }};border:1px solid {{ ui.successBorder }};border-radius:9px;padding:10px 13px">
+          <span style="width:8px;height:8px;border-radius:50%;background:{{ ui.successSolid }};flex:none"></span>
+          <span style="font-size:13px;font-weight:500;color:{{ ui.successText }}">Änderungen gespeichert</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- TOKEN GROUPS -->
+    <sc-for list="{{ groups }}" as="g" hint-placeholder-count="4">
+      <div style="margin-bottom:34px">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#a49d92;text-transform:uppercase;margin-bottom:12px">{{ g.title }}</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px 32px">
+          <sc-for list="{{ g.items }}" as="tk" hint-placeholder-count="6">
+            <div style="display:flex;align-items:center;gap:14px;padding:9px 0;border-bottom:1px solid #f2efea">
+              <span style="width:40px;height:40px;border-radius:9px;background:{{ tk.css }};border:1px solid rgba(31,29,26,0.10);flex:none"></span>
+              <div style="display:flex;flex-direction:column;gap:3px;min-width:0">
+                <span style="font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:500;color:#1f1d1a">{{ tk.name }}</span>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#a49d92">→ {{ tk.ref }} · {{ tk.hex }}</span>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </sc-for>
+
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{
+  &quot;$preview&quot;: { &quot;width&quot;: 1120, &quot;height&quot;: 900 }
+}">
+class Component extends DCLogic {
+  oklchToLinear(L, C, H) {
+    const h = H * Math.PI / 180, a = C * Math.cos(h), b = C * Math.sin(h);
+    const l_ = L + 0.3963377774 * a + 0.2158037573 * b;
+    const m_ = L - 0.1055613458 * a - 0.0638541728 * b;
+    const s_ = L - 0.0894841775 * a - 1.2914855480 * b;
+    const l = l_ ** 3, m = m_ ** 3, s = s_ ** 3;
+    return {
+      r: 4.0767416621 * l - 3.3077115913 * m + 0.2309699292 * s,
+      g: -1.2684380046 * l + 2.6097574011 * m - 0.3413193965 * s,
+      b: -0.0041960863 * l - 0.7034186147 * m + 1.7076147010 * s
+    };
+  }
+  toHex(rgb) {
+    const g = v => { v = Math.min(1, Math.max(0, v)); return v <= 0.0031308 ? 12.92 * v : 1.055 * Math.pow(v, 1 / 2.4) - 0.055; };
+    const h = v => Math.round(g(v) * 255).toString(16).padStart(2, '0');
+    return '#' + h(rgb.r) + h(rgb.g) + h(rgb.b);
+  }
+  makeScale(hue, chromaPeak, lRamp, cmRamp) {
+    const L = lRamp || [0.976, 0.942, 0.888, 0.822, 0.748, 0.655, 0.470, 0.405, 0.348, 0.300, 0.252, 0.198];
+    const CM = cmRamp || [0.05, 0.10, 0.16, 0.24, 0.34, 0.45, 1.00, 0.95, 0.80, 0.62, 0.45, 0.30];
+    const T = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1100];
+    const out = {};
+    T.forEach((t, i) => {
+      const C = +(chromaPeak * CM[i]).toFixed(4);
+      const Lv = L[i];
+      const rgb = this.oklchToLinear(Lv, C, hue);
+      out[t] = { css: `oklch(${Lv} ${C} ${hue})`, hex: this.toHex(rgb) };
+    });
+    return out;
+  }
+
+  renderVals() {
+    const ci = 1.25;
+    const amberL = [0.978, 0.952, 0.914, 0.872, 0.818, 0.746, 0.665, 0.592, 0.505, 0.418, 0.342, 0.280];
+    const amberCM = [0.12, 0.24, 0.40, 0.58, 0.76, 0.90, 1.00, 0.98, 0.90, 0.75, 0.58, 0.45];
+    const stone = this.makeScale(70, 0.013 * ci);
+    const primary = this.makeScale(185, 0.115 * ci);
+    const error = this.makeScale(27, 0.15 * ci);
+    const warning = this.makeScale(55, 0.128 * ci, amberL, amberCM);
+    const success = this.makeScale(150, 0.14 * ci);
+    const info = this.makeScale(250, 0.15 * ci);
+    const scales = { stone, primary, error, warning, success, info };
+
+    const val = (ref) => {
+      if (ref.includes('@')) {
+        const [base, a] = ref.split('@');
+        const v = val(base);
+        return { css: v.css.replace(/\)\s*$/, ` / ${a})`), hex: v.hex + ' · ' + Math.round(+a * 100) + '%' };
+      }
+      if (ref === 'white') return { css: '#ffffff', hex: '#ffffff' };
+      if (ref === 'black') return { css: '#000000', hex: '#000000' };
+      if (ref === 'scrim') return { css: 'rgba(23,21,19,0.5)', hex: 'black · 50%' };
+      const i = ref.lastIndexOf('-');
+      const name = ref.slice(0, i), step = +ref.slice(i + 1);
+      return scales[name][step];
+    };
+
+    const mk = (name, ref) => { const v = val(ref); return { name, ref, css: v.css, hex: v.hex }; };
+
+    const groups = [
+      { title: 'Flächen', items: [
+        mk('surface', 'white'),
+        mk('surface-container', 'stone-50'),
+        mk('surface-container-high', 'stone-100'),
+        mk('surface-sunken', 'stone-100'),
+        mk('surface-hover', 'stone-100'),
+        mk('surface-selected', 'primary-100'),
+        mk('overlay', 'white')
+      ]},
+      { title: 'Text', items: [
+        mk('text', 'stone-1000'),
+        mk('text-muted', 'stone-1000@0.68'),
+        mk('text-subtle', 'stone-800'),
+        mk('text-on-primary', 'white'),
+        mk('text-disabled', 'stone-500'),
+        mk('text-link', 'primary-600'),
+        mk('text-link-hover', 'primary-800')
+      ]},
+      { title: 'Rahmen', items: [
+        mk('border', 'stone-300'),
+        mk('border-strong', 'stone-500'),
+        mk('border-subtle', 'stone-200'),
+        mk('border-disabled', 'stone-200')
+      ]},
+      { title: 'Icons', items: [
+        mk('icon', 'stone-900'),
+        mk('icon-muted', 'stone-1000@0.55'),
+        mk('icon-on-primary', 'white'),
+        mk('icon-disabled', 'stone-500')
+      ]},
+      { title: 'Eingabefelder', items: [
+        mk('input-bg', 'white'),
+        mk('input-bg-disabled', 'stone-100'),
+        mk('input-text', 'stone-1000'),
+        mk('input-placeholder', 'stone-600'),
+        mk('input-border', 'stone-400'),
+        mk('input-border-hover', 'stone-600'),
+        mk('input-border-focus', 'primary-600'),
+        mk('input-border-error', 'error-600'),
+        mk('input-border-disabled', 'stone-200')
+      ]},
+      { title: 'Aktion – primär', items: [
+        mk('action', 'primary-600'),
+        mk('action-hover', 'primary-700'),
+        mk('action-active', 'primary-800'),
+        mk('action-disabled', 'stone-200'),
+        mk('action-text', 'white'),
+        mk('action-text-disabled', 'stone-500')
+      ]},
+      { title: 'Aktion – neutral / ghost', items: [
+        mk('action-neutral', 'stone-100'),
+        mk('action-neutral-hover', 'stone-200'),
+        mk('action-neutral-active', 'stone-300'),
+        mk('action-neutral-text', 'stone-1000')
+      ]},
+      { title: 'Zustände', items: [
+        mk('focus-ring', 'primary-600'),
+        mk('state-hover', 'stone-100'),
+        mk('state-pressed', 'stone-200'),
+        mk('state-selected', 'primary-100'),
+        mk('selection', 'primary-200')
+      ]},
+      { title: 'Status · Erfolg', items: [
+        mk('success-surface', 'success-50'),
+        mk('success-text', 'success-1000'),
+        mk('success-border', 'success-300'),
+        mk('success-solid', 'success-600'),
+        mk('success-solid-hover', 'success-700'),
+        mk('success-solid-active', 'success-800'),
+        mk('success-on-solid', 'white')
+      ]},
+      { title: 'Status · Warnung', items: [
+        mk('warning-surface', 'warning-50'),
+        mk('warning-text', 'warning-1000'),
+        mk('warning-border', 'warning-300'),
+        mk('warning-solid', 'warning-600'),
+        mk('warning-solid-hover', 'warning-700'),
+        mk('warning-solid-active', 'warning-800'),
+        mk('warning-on-solid', 'stone-1000')
+      ]},
+      { title: 'Status · Fehler', items: [
+        mk('error-surface', 'error-50'),
+        mk('error-text', 'error-1000'),
+        mk('error-border', 'error-300'),
+        mk('error-solid', 'error-600'),
+        mk('error-solid-hover', 'error-700'),
+        mk('error-solid-active', 'error-800'),
+        mk('error-on-solid', 'white')
+      ]},
+      { title: 'Status · Info', items: [
+        mk('info-surface', 'info-50'),
+        mk('info-text', 'info-1000'),
+        mk('info-border', 'info-300'),
+        mk('info-solid', 'info-600'),
+        mk('info-solid-hover', 'info-700'),
+        mk('info-solid-active', 'info-800'),
+        mk('info-on-solid', 'white')
+      ]},
+      { title: 'Sonstiges', items: [
+        mk('divider', 'stone-200'),
+        mk('scrim', 'scrim')
+      ]}
+    ];
+
+    const ui = {
+      pageBg: val('white').css,
+      cardBg: val('stone-50').css,
+      cardBorder: val('stone-200').css,
+      icon: val('stone-900').css,
+      heading: val('stone-1000').css,
+      body: val('stone-1000@0.68').css,
+      subtle: val('stone-800').css,
+      divider: val('stone-300').css,
+      link: val('primary-600').css,
+      actionBg: val('primary-600').css,
+      actionText: '#ffffff',
+      neutralBg: val('stone-100').css,
+      neutralText: val('stone-1000').css,
+      neutralBorder: val('stone-300').css,
+      inputBg: '#ffffff',
+      inputText: val('stone-1000').css,
+      inputPlaceholder: val('stone-600').css,
+      ring: val('primary-600').css,
+      ringSoft: 'oklch(0.470 0.144 185 / 0.2)',
+      successSurface: val('success-50').css,
+      successText: val('success-1000').css,
+      successBorder: val('success-300').css,
+      successSolid: val('success-600').css
+    };
+
+    return { groups, ui };
+  }
+}
+</script>
+</body>
+</html>

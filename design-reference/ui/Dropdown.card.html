@@ -1,0 +1,97 @@
+<!-- @dsCard group="Komponenten" viewport="700x420" name="Dropdown" subtitle="Aktionsmenü mit Chevron oder Kebab, Blöcke, Häkchen, Untermenü" -->
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  html,body{margin:0}
+  body{padding:24px 22px;font-family:var(--medo-font-sans);background:var(--medo-surface);color:var(--medo-text);min-height:420px;box-sizing:border-box}
+  .lbl{font-family:var(--medo-font-mono);font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:var(--medo-color-stone-500);margin-bottom:10px}
+  .grp{margin-bottom:26px}
+  .row{display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+  .card{border:1px solid var(--medo-border);border-radius:var(--medo-radius-lg);padding:14px 16px;display:flex;align-items:center;justify-content:space-between;max-width:380px}
+  .name{font-size:14px;font-weight:600}
+  .sub{font-size:14px;color:var(--medo-text-muted)}
+  .out{font-family:var(--medo-font-mono);font-size:12px;color:var(--medo-text-muted);margin-top:10px}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+<script src="../_ds_bundle.js"></script>
+<script>
+  var h = React.createElement;
+  var DD = window.MedoUI.Dropdown;
+
+  function Demo() {
+    var last = React.useState('—');
+    var sicht = React.useState('netzwerk');
+    var spalten = React.useState(['name', 'region']);
+    return h('div', null,
+      h('div', { className: 'grp' },
+        h('div', { className: 'lbl' }, 'Schaltfläche · Blöcke, Kürzel, Untermenü, destruktiv'),
+        h('div', { className: 'row' },
+          h(DD, {
+            label: 'Aktionen', trigger: 'button', align: 'start', size: 'md', onSelect: function (v) { last[1](v); },
+            items: [
+              { type: 'heading', label: 'Bearbeiten' },
+              { value: 'bearbeiten', icon: 'edit', label: 'Profil bearbeiten', shortcut: 'E' },
+              { value: 'duplizieren', icon: 'content_copy', label: 'Duplizieren' },
+              { value: 'export', icon: 'download', label: 'Exportieren als', items: [
+                { value: 'pdf', label: 'PDF' },
+                { value: 'csv', label: 'CSV' }
+              ]},
+              { type: 'divider' },
+              { value: 'archiv', icon: 'archive', label: 'Archivieren', disabled: true },
+              { value: 'loeschen', icon: 'delete', label: 'Profil löschen', danger: true }
+            ]
+          }),
+          h(DD, {
+            label: 'Sichtbarkeit', size: 'sm', selectionMode: 'single',
+            onSelect: function (v) { sicht[1](v); last[1](v); },
+            items: [
+              { value: 'privat', label: 'Nur ich', checked: sicht[0] === 'privat' },
+              { value: 'netzwerk', label: 'Mein Netzwerk', checked: sicht[0] === 'netzwerk' },
+              { value: 'alle', label: 'Alle Spezialisten', checked: sicht[0] === 'alle' }
+            ]
+          }),
+          h(DD, {
+            label: 'Spalten', size: 'sm', selectionMode: 'multiple', keepOpen: true, autoFocus: true,
+            onSelect: function (v) {
+              spalten[1](spalten[0].indexOf(v) < 0 ? spalten[0].concat(v) : spalten[0].filter(function (x) { return x !== v; }));
+              last[1](v);
+            },
+            items: [
+              { value: 'name', label: 'Name', checked: spalten[0].indexOf('name') >= 0 },
+              { value: 'region', label: 'Region', checked: spalten[0].indexOf('region') >= 0 },
+              { value: 'sparte', label: 'Sparte', checked: spalten[0].indexOf('sparte') >= 0 },
+              { value: 'kontakt', label: 'Letzter Kontakt', checked: spalten[0].indexOf('kontakt') >= 0 }
+            ]
+          })),
+        h('div', { className: 'out' }, 'Zuletzt gewählt: ' + last[0])
+      ),
+      h('div', null,
+        h('div', { className: 'lbl' }, 'Kebab · in einer Karte, rechts ausgerichtet'),
+        h('div', { className: 'card' },
+          h('div', null,
+            h('div', { className: 'name' }, 'Dr. Marie Hoffmann'),
+            h('div', { className: 'sub' }, 'Gewerbe · Karlsruhe')),
+          h(DD, {
+            trigger: 'kebab', align: 'end', ariaLabel: 'Weitere Aktionen',
+            onSelect: function (v) { last[1](v); },
+            items: [
+              { value: 'anschreiben', icon: 'mail', label: 'Anschreiben' },
+              { value: 'merken', icon: 'bookmark', label: 'Merken' },
+              { type: 'divider' },
+              { value: 'trennen', icon: 'link_off', label: 'Verbindung lösen', danger: true }
+            ]
+          }))
+      )
+    );
+  }
+  ReactDOM.createRoot(document.getElementById('root')).render(h(Demo));
+</script>
+</body>
+</html>

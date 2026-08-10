@@ -1,0 +1,70 @@
+<!-- @dsCard group="Komponenten" viewport="700x320" name="Breadcrumb" subtitle="Weg zur Seite, aktuelle Stufe ohne Link, Mitte kollabiert" -->
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  html,body{margin:0}
+  body{padding:24px 22px;font-family:var(--medo-font-sans);background:var(--medo-surface);color:var(--medo-text);min-height:320px;box-sizing:border-box}
+  .lbl{font-family:var(--medo-font-mono);font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:var(--medo-color-stone-500);margin-bottom:10px}
+  .grp{margin-bottom:26px}
+  .page{border:1px solid var(--medo-border);border-radius:var(--medo-radius-lg);padding:18px 20px 22px;max-width:520px}
+  .h{font-size:25px;font-weight:600;letter-spacing:-0.02em;margin:14px 0 0}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+<script src="../_ds_bundle.js"></script>
+<script>
+  var h = React.createElement;
+  var BC = window.MedoUI.Breadcrumb;
+  var stop = function (e) { e.preventDefault(); };
+
+  var app = h('div', null,
+    h('div', { className: 'grp' },
+      h('div', { className: 'lbl' }, 'sm · mit Haus-Icon'),
+      h(BC, {
+        homeIcon: true, size: 'sm',
+        items: [
+          { label: 'Start', href: '#', onClick: stop },
+          { label: 'Netzwerk', href: '#', onClick: stop },
+          { label: 'Spezialisten', href: '#', onClick: stop },
+          { label: 'Dr. Marie Hoffmann' }
+        ]
+      })
+    ),
+    h('div', { className: 'grp' },
+      h('div', { className: 'lbl' }, 'Kollabiert · maxItems 4, … öffnet die Mitte'),
+      h(BC, {
+        homeIcon: true, maxItems: 4,
+        items: [
+          { label: 'Start', href: '#', onClick: stop },
+          { label: 'Netzwerk', href: '#', onClick: stop },
+          { label: 'Spezialisten', href: '#', onClick: stop },
+          { label: 'Baden-Württemberg', href: '#', onClick: stop },
+          { label: 'Bruchsal', href: '#', onClick: stop },
+          { label: 'Dr. Marie Hoffmann' }
+        ]
+      })
+    ),
+    h('div', null,
+      h('div', { className: 'lbl' }, 'md · über dem Seitentitel'),
+      h('div', { className: 'page' },
+        h(BC, {
+          size: 'md',
+          items: [
+            { label: 'Start', href: '#', onClick: stop },
+            { label: 'Verträge', href: '#', onClick: stop },
+            { label: 'VN-2026-0184' }
+          ]
+        }),
+        h('div', { className: 'h' }, 'VN-2026-0184'))
+    )
+  );
+  ReactDOM.createRoot(document.getElementById('root')).render(app);
+</script>
+</body>
+</html>

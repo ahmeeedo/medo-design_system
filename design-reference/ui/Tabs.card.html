@@ -1,0 +1,107 @@
+<!-- @dsCard group="Komponenten" viewport="720x700" name="Tabs" subtitle="Underline, contained, vertikal, volle Breite und scrollbar" -->
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  html,body{margin:0}
+  body{padding:24px 22px;font-family:var(--medo-font-sans);background:var(--medo-surface);color:var(--medo-text);min-height:700px;box-sizing:border-box}
+  .lbl{font-family:var(--medo-font-mono);font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:var(--medo-color-stone-500);margin-bottom:10px}
+  .grp{margin-bottom:26px}
+  .panel{margin-top:20px;background:var(--medo-surface-container);border-radius:var(--medo-radius-lg);padding:20px 22px}
+  .ptitle{font-size:16px;font-weight:600;margin-bottom:6px}
+  .ptext{font-size:14px;line-height:1.6;color:var(--medo-text-muted);max-width:460px}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+<script src="../_ds_bundle.js"></script>
+<script>
+  var h = React.createElement;
+  var MedoTabs = window.MedoUI.Tabs;
+
+  var TEXTE = {
+    profil: ['Fachliches Profil', 'Schwerpunkte, Zulassungen und Regionen. Diese Angaben sind für Ihr Netzwerk sichtbar.'],
+    netz: ['Ihr Netzwerk', '12 bestätigte Verbindungen. Neue Anfragen erscheinen zuerst im Bereich Anfragen.'],
+    anfragen: ['Offene Anfragen', 'Drei Spezialisten möchten sich mit Ihnen verbinden. Anfragen verfallen nach 30 Tagen.']
+  };
+
+  function Demo() {
+    var t = React.useState('profil');
+    var z = React.useState('m');
+    var txt = TEXTE[t[0]] || TEXTE.profil;
+    return h('div', null,
+      h('div', { className: 'grp' },
+        h('div', { className: 'lbl' }, 'Underline · md, mit Panel'),
+        h(MedoTabs, {
+          ariaLabel: 'Profilbereiche', variant: 'underline', size: 'md', orientation: 'horizontal',
+          value: t[0], onChange: t[1],
+          items: [
+            { value: 'profil', label: 'Profil', icon: 'person' },
+            { value: 'netz', label: 'Netzwerk', icon: 'group', badge: 12 },
+            { value: 'anfragen', label: 'Anfragen', icon: 'mail', badge: 3 },
+            { value: 'archiv', label: 'Archiv', disabled: true }
+          ]
+        }, h('div', { className: 'panel' },
+             h('div', { className: 'ptitle' }, txt[0]),
+             h('div', { className: 'ptext' }, txt[1])))
+      ),
+      h('div', { className: 'grp' },
+        h('div', { className: 'lbl' }, 'Contained · sm, in einer Karte'),
+        h(MedoTabs, {
+          variant: 'contained', size: 'sm', ariaLabel: 'Zeitraum',
+          value: z[0], onChange: z[1],
+          items: [
+            { value: 'm', label: 'Monat' },
+            { value: 'q', label: 'Quartal' },
+            { value: 'j', label: 'Jahr' }
+          ]
+        })
+      ),
+      h('div', null,
+        h('div', { className: 'lbl' }, 'Vertikal · viele Bereiche'),
+        h(MedoTabs, {
+          orientation: 'vertical', ariaLabel: 'Einstellungen', defaultValue: 'konto',
+          items: [
+            { value: 'konto', label: 'Konto', icon: 'badge' },
+            { value: 'sicher', label: 'Sicherheit', icon: 'lock' },
+            { value: 'mitteil', label: 'Mitteilungen', icon: 'notifications' }
+          ]
+        }, h('div', { style: { background: 'var(--medo-surface-container)', borderRadius: '12px', padding: '18px 20px' } },
+             h('div', { className: 'ptext' }, 'Der Inhalt des gewählten Bereichs steht rechts neben der Liste.')))
+      ),
+      h('div', { className: 'grp', style: { marginTop: '26px' } },
+        h('div', { className: 'lbl' }, 'Volle Breite · Tabs teilen sich die Zeile'),
+        h('div', { style: { maxWidth: '420px' } },
+          h(MedoTabs, {
+            variant: 'contained', fullWidth: true, ariaLabel: 'Bearbeitungsstand', defaultValue: 'offen',
+            items: [
+              { value: 'offen', label: 'Offen', badge: 3 },
+              { value: 'warten', label: 'Wartet' },
+              { value: 'fertig', label: 'Erledigt' }
+            ]
+          }))
+      ),
+      h('div', null,
+        h('div', { className: 'lbl' }, 'Scrollbar · mehr Tabs als Platz'),
+        h('div', { style: { maxWidth: '340px' } },
+          h(MedoTabs, {
+            scrollable: true, ariaLabel: 'Sparten', defaultValue: 'kranken',
+            items: [
+              { value: 'kranken', label: 'Krankenversicherung' },
+              { value: 'leben', label: 'Lebensversicherung' },
+              { value: 'sach', label: 'Sachversicherung' },
+              { value: 'cyber', label: 'Cyberrisiken' },
+              { value: 'recht', label: 'Rechtsschutz' }
+            ]
+          }))
+      )
+    );
+  }
+  ReactDOM.createRoot(document.getElementById('root')).render(h(Demo));
+</script>
+</body>
+</html>

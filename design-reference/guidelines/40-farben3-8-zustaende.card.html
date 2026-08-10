@@ -1,0 +1,22 @@
+<!-- @dsCard group="Farben · Ebene 3 · Semantic" viewport="700x120" name="Zustände & Fokus" subtitle="Hover legt eine warme Fläche unter, kein Aufhellen" -->
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  html,body{margin:0}
+  body{padding:18px 20px;font-family:var(--medo-font-sans);background:var(--medo-surface);color:var(--medo-text);height:120px;box-sizing:border-box;overflow:hidden}
+  .row{display:flex;gap:6px}
+  .sw{flex:1;display:flex;flex-direction:column;gap:6px}
+  .chip{height:44px;border-radius:var(--medo-radius-md);border:1px solid var(--medo-border-subtle)}
+  .n{font-family:var(--medo-font-mono);font-size:10px;color:var(--medo-text-muted);letter-spacing:0.02em}
+  .tok{font-family:var(--medo-font-mono);font-size:10px;color:var(--medo-text-muted);letter-spacing:0.02em;margin-top:6px;line-height:1.35}
+  .tile{flex:none;height:52px;width:100%;box-sizing:border-box;border-radius:var(--medo-radius-md);border:1px solid var(--medo-border-subtle)}
+  .lbl{font-family:var(--medo-font-mono);font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:var(--medo-color-stone-500)}
+</style>
+</head>
+<body>
+<div class="row" style="gap:10px"><div class="sw" style="gap:0"><div class="tile" style="background:var(--medo-state-hover);border-color:var(--medo-border-subtle)"></div><div class="tok">state-hover<br>stone-100</div></div><div class="sw" style="gap:0"><div class="tile" style="background:var(--medo-state-pressed);border-color:var(--medo-border-subtle)"></div><div class="tok">state-pressed<br>stone-200</div></div><div class="sw" style="gap:0"><div class="tile" style="background:var(--medo-state-selected);border-color:var(--medo-border-subtle)"></div><div class="tok">state-selected<br>teal-100</div></div><div class="sw" style="gap:0"><div class="tile" style="background:var(--medo-selection);border-color:var(--medo-border-subtle)"></div><div class="tok">selection<br>teal-200</div></div><div class="sw" style="gap:0"><div class="tile" style="background:var(--medo-surface);border-color:var(--medo-border);box-shadow:0 0 0 3px var(--medo-focus-ring)"></div><div class="tok">focus-ring<br>teal-600 @35 %</div></div><div class="sw" style="gap:0"><div class="tile" style="background:var(--medo-surface);border-color:var(--medo-border);box-shadow:0 0 0 3px var(--medo-focus-ring-danger)"></div><div class="tok">focus-ring-danger<br>red-600 @35 %</div></div><div class="sw" style="gap:0"><div class="tile" style="background:var(--medo-scrim);border-color:transparent"></div><div class="tok">scrim<br>rgba(23,21,19,.5)</div></div></div>
+</body>
+</html>

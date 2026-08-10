@@ -1,0 +1,80 @@
+<!-- @dsCard group="Komponenten" viewport="620x520" name="Toggle" subtitle="Sofort wirkende Einstellung, drei Größen, mit und ohne Zeichen, Ladezustand" -->
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  html,body{margin:0}
+  body{padding:24px 22px;font-family:var(--medo-font-sans);background:var(--medo-surface);color:var(--medo-text);min-height:520px;box-sizing:border-box}
+  .lbl{font-family:var(--medo-font-mono);font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:var(--medo-color-stone-500);margin-bottom:12px}
+  .grp{margin-bottom:24px}
+  .row{display:flex;gap:32px;align-items:center;flex-wrap:wrap}
+  .list{border:1px solid var(--medo-border);border-radius:var(--medo-radius-lg);overflow:hidden;max-width:420px}
+  .item{padding:14px 16px;border-top:1px solid var(--medo-border-subtle)}
+  .item:first-child{border-top:none}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+<script src="../_ds_bundle.js"></script>
+<script>
+  var h = React.createElement;
+  var MedoToggle = window.MedoUI.Toggle;
+
+  function Demo() {
+    var s1 = React.useState(true), s2 = React.useState(false);
+    return h('div', null,
+      h('div', { className: 'grp' },
+        h('div', { className: 'lbl' }, 'Größen · sm / md / lg'),
+        h('div', { className: 'row' },
+          h(MedoToggle, { size: 'sm', defaultChecked: true, 'aria-label': 'Klein' }),
+          h(MedoToggle, { size: 'md', defaultChecked: true, 'aria-label': 'Mittel' }),
+          h(MedoToggle, { size: 'lg', defaultChecked: true, 'aria-label': 'Groß' }),
+          h(MedoToggle, { size: 'md', 'aria-label': 'Aus' }),
+          h(MedoToggle, { size: 'md', checked: true, loading: true, 'aria-label': 'Speichert' }),
+          h(MedoToggle, { size: 'md', disabled: true, 'aria-label': 'Deaktiviert' }))
+      ),
+      h('div', { className: 'grp' },
+        h('div', { className: 'lbl' }, 'Ohne Zeichen im Griff · icons: false'),
+        h('div', { className: 'row' },
+          h(MedoToggle, { size: 'md', icons: false, defaultChecked: true, 'aria-label': 'An ohne Zeichen' }),
+          h(MedoToggle, { size: 'md', icons: false, 'aria-label': 'Aus ohne Zeichen' }),
+          h(MedoToggle, { size: 'lg', icons: false, defaultChecked: true, 'aria-label': 'Groß ohne Zeichen' }))
+      ),
+      h('div', { className: 'grp' },
+        h('div', { className: 'lbl' }, 'Mit Label und Erklärung'),
+        h(MedoToggle, {
+          label: 'Profil im Netzwerk sichtbar', labelPosition: 'right',
+          description: 'Andere Spezialisten können Sie finden und anfragen.',
+          checked: s1[0], onChange: s1[1]
+        })
+      ),
+      h('div', null,
+        h('div', { className: 'lbl' }, 'Einstellungsliste · Label links'),
+        h('div', { className: 'list' },
+          h('div', { className: 'item' },
+            h(MedoToggle, {
+              labelPosition: 'left', label: 'Benachrichtigungen',
+              description: 'Push-Mitteilungen auf dieses Gerät',
+              checked: s2[0], onChange: s2[1]
+            })),
+          h('div', { className: 'item' },
+            h(MedoToggle, {
+              labelPosition: 'left', label: 'Standort teilen',
+              description: 'Wird gerade gespeichert …', checked: true, loading: true
+            })),
+          h('div', { className: 'item' },
+            h(MedoToggle, {
+              labelPosition: 'left', label: 'Dunkelmodus',
+              description: 'Später verfügbar', disabled: true
+            })))
+      )
+    );
+  }
+  ReactDOM.createRoot(document.getElementById('root')).render(h(Demo));
+</script>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!-- @dsCard group="Komponenten" viewport="640x340" name="Inline loading" subtitle="Punkte, Erfolg, Fehler — in Schaltfläche, Feld und Zeile" -->
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  html,body{margin:0}
+  body{padding:24px 22px;font-family:var(--medo-font-sans);background:var(--medo-surface);color:var(--medo-text);min-height:340px;box-sizing:border-box}
+  .lbl{font-family:var(--medo-font-mono);font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:var(--medo-color-stone-500);margin-bottom:12px}
+  .grp{margin-bottom:26px}
+  .col{display:flex;flex-direction:column;gap:12px;align-items:flex-start}
+  .btn{box-sizing:border-box;height:40px;padding:0 16px;display:inline-flex;align-items:center;gap:10px;font-family:inherit;font-size:14px;font-weight:400;border:none;border-radius:var(--medo-radius-md);background:var(--medo-action);color:var(--medo-action-text);cursor:pointer}
+  .btn:disabled{opacity:1;cursor:progress}
+  .field{display:flex;align-items:center;gap:12px}
+  .field input{box-sizing:border-box;height:40px;width:220px;padding:0 12px;border:1px solid var(--medo-input-border);border-radius:var(--medo-radius-md);font-family:inherit;font-size:14px}
+  .line{display:flex;align-items:center;justify-content:space-between;gap:14px;border:1px solid var(--medo-border);border-radius:var(--medo-radius-lg);padding:12px 14px;max-width:420px;font-size:14px}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+<script src="../_ds_bundle.js"></script>
+<script>
+  var h = React.createElement;
+  var IL = window.MedoUI.InlineLoading;
+
+  function Demo() {
+    var st = React.useState('inactive');
+    var send = function () {
+      st[1]('loading');
+      setTimeout(function () { st[1]('success'); }, 1800);
+      setTimeout(function () { st[1]('inactive'); }, 4200);
+    };
+    return h('div', null,
+      h('div', { className: 'grp' },
+        h('div', { className: 'lbl' }, 'Zustände'),
+        h('div', { className: 'col' },
+          h(IL, { size: 'md', label: 'Wird gespeichert …' }),
+          h(IL, { size: 'md', status: 'success', label: 'Gespeichert' }),
+          h(IL, { size: 'md', status: 'error', label: 'Nicht gespeichert — Verbindung prüfen' }))
+      ),
+      h('div', { className: 'grp' },
+        h('div', { className: 'lbl' }, 'In der Schaltfläche · Klick startet 1,8 s'),
+        h('button', { className: 'btn', onClick: send, disabled: st[0] === 'loading' },
+          'Anfrage senden',
+          st[0] !== 'inactive' ? h(IL, { size: 'sm', inherit: true, status: st[0] === 'loading' ? 'loading' : 'success' }) : null)
+      ),
+      h('div', { className: 'grp' },
+        h('div', { className: 'lbl' }, 'Neben einem Feld · Prüfung läuft'),
+        h('div', { className: 'field' },
+          h('input', { defaultValue: 'IHK-D-1234-5678', 'aria-label': 'Registrierungsnummer' }),
+          h(IL, { size: 'sm', label: 'Wird geprüft …' }))
+      ),
+      h('div', null,
+        h('div', { className: 'lbl' }, 'Am Zeilenende'),
+        h('div', { className: 'line' },
+          h('span', null, 'Gewerbeschein.pdf'),
+          h(IL, { size: 'sm', status: 'success', label: 'Hochgeladen' }))
+      )
+    );
+  }
+  ReactDOM.createRoot(document.getElementById('root')).render(h(Demo));
+</script>
+</body>
+</html>

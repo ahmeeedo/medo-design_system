@@ -1,0 +1,6 @@
+# Reference material is mirrored byte-for-byte from the design project.
+# core.autocrlf must not rewrite line endings on checkout.
+design-reference/** -text
+
+# Font binaries
+*.woff2 binary

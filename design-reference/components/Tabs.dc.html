@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,300,0,0" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  body{margin:0}
+  ::selection{background:#e6e1d8}
+  .msr{font-family:'Material Symbols Rounded';font-weight:300;line-height:1;display:inline-block}
+  [role=tab]:focus-visible{outline:none;box-shadow:0 0 0 3px #0e9d9159;border-radius:6px}
+  .no-sb{scrollbar-width:none;-ms-overflow-style:none}
+  .no-sb::-webkit-scrollbar{display:none;width:0;height:0}
+</style>
+</helmet>
+
+<div style="min-height:100%;background:#faf9f7;color:#1f1d1a;font-family:'DM Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased;padding:56px 40px 120px">
+  <div style="max-width:1000px;margin:0 auto">
+
+    <!-- HEADER -->
+    <div style="margin-bottom:44px">
+      <div style="font-family:'DM Mono',monospace;font-size:12px;letter-spacing:0.16em;color:#a49d92;text-transform:uppercase;margin-bottom:16px">Design System · Komponente · Tabs</div>
+      <h1 style="font-size:49px;line-height:1.1;font-weight:700;letter-spacing:-0.02em;margin:0 0 14px">Tabs</h1>
+      <p style="font-size:20px;line-height:1.5;color:#6f6a63;margin:0;max-width:660px">Wechsel zwischen gleichrangigen Ansichten. Zwei Stile — <strong style="color:#3f3b36;font-weight:600">Underline</strong> und <strong style="color:#3f3b36;font-weight:600">Contained</strong> — jeweils in sm und md, voll per Maus und Tastatur bedienbar.</p>
+    </div>
+
+    <!-- UNDERLINE -->
+    <div style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#a49d92;text-transform:uppercase;margin-bottom:18px">Underline · Indikator ohne Grundlinie</div>
+    <div style="background:#fff;border:1px solid #e9e6e1;border-radius:16px;padding:8px 32px 32px;margin-bottom:48px">
+
+      <div style="font-family:'DM Mono',monospace;font-size:11px;color:#a49d92;margin:22px 0 10px">md · mit Icon, Zähler-Badge & Live-Panel</div>
+      <div role="tablist" aria-orientation="horizontal" style="display:flex;gap:28px">
+        <sc-for list="{{ mainTabs }}" as="tab" hint-placeholder-count="5">
+          <button role="tab" data-idx="{{ tab.idx }}" aria-selected="{{ tab.selected }}" tabindex="{{ tab.tabindex }}" disabled="{{ tab.disabled }}" onClick="{{ tab.onClick }}" onKeyDown="{{ tab.onKey }}" style="position:relative;appearance:none;background:none;border:none;font-family:inherit;font-size:16px;padding:12px 2px 14px;display:inline-flex;align-items:center;gap:8px;color:{{ tab.uColor }};font-weight:{{ tab.uWeight }};opacity:{{ tab.opacity }};cursor:{{ tab.cursor }}">
+            <sc-if value="{{ tab.icon }}" hint-placeholder-val=""><span class="msr" style="font-size:19px">{{ tab.icon }}</span></sc-if>
+            <span>{{ tab.label }}</span>
+            <sc-if value="{{ tab.badge }}" hint-placeholder-val=""><span style="display:inline-flex;align-items:center;justify-content:center;min-width:18px;height:18px;padding:0 5px;border-radius:9999px;font-size:11px;font-weight:600;background:{{ tab.badgeBg }};color:{{ tab.badgeColor }}">{{ tab.badge }}</span></sc-if>
+            <span aria-hidden="true" style="position:absolute;left:0;right:0;bottom:0;height:2px;border-radius:2px 2px 0 0;background:{{ tab.indicator }}"></span>
+          </button>
+        </sc-for>
+      </div>
+
+      <div role="tabpanel" style="margin-top:22px;background:{{ panelBg }};border-radius:12px;padding:24px 26px;min-height:120px">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+          <span class="msr" style="font-size:22px;color:{{ primary }}">{{ panelIcon }}</span>
+          <div style="font-size:18px;font-weight:600;letter-spacing:-0.01em">{{ panelTitle }}</div>
+        </div>
+        <div style="font-size:14px;line-height:1.6;color:#6f6a63;max-width:560px">{{ panelBody }}</div>
+      </div>
+
+      <div style="height:1px;background:#eeece7;margin:32px 0 0"></div>
+
+      <div style="font-family:'DM Mono',monospace;font-size:11px;color:#a49d92;margin:22px 0 10px">sm · kompakt</div>
+      <div role="tablist" aria-orientation="horizontal" style="display:flex;gap:20px">
+        <sc-for list="{{ smTabs }}" as="tab" hint-placeholder-count="4">
+          <button role="tab" data-idx="{{ tab.idx }}" aria-selected="{{ tab.selected }}" tabindex="{{ tab.tabindex }}" disabled="{{ tab.disabled }}" onClick="{{ tab.onClick }}" onKeyDown="{{ tab.onKey }}" style="position:relative;appearance:none;background:none;border:none;font-family:inherit;font-size:14px;padding:8px 2px 10px;display:inline-flex;align-items:center;gap:7px;color:{{ tab.uColor }};font-weight:{{ tab.uWeight }};opacity:{{ tab.opacity }};cursor:{{ tab.cursor }}">
+            <sc-if value="{{ tab.icon }}" hint-placeholder-val=""><span class="msr" style="font-size:17px">{{ tab.icon }}</span></sc-if>
+            <span>{{ tab.label }}</span>
+            <span aria-hidden="true" style="position:absolute;left:0;right:0;bottom:0;height:2px;border-radius:2px 2px 0 0;background:{{ tab.indicator }}"></span>
+          </button>
+        </sc-for>
+      </div>
+    </div>
+
+    <!-- CONTAINED -->
+    <div style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#a49d92;text-transform:uppercase;margin-bottom:18px">Contained · aktive Fläche auf Leiste</div>
+    <div style="background:#fff;border:1px solid #e9e6e1;border-radius:16px;padding:8px 32px 34px;margin-bottom:20px">
+
+      <div style="font-family:'DM Mono',monospace;font-size:11px;color:#a49d92;margin:22px 0 10px">md</div>
+      <div role="tablist" aria-orientation="horizontal" style="display:inline-flex;gap:4px;background:{{ track }};padding:4px;border-radius:12px">
+        <sc-for list="{{ contTabs }}" as="tab" hint-placeholder-count="4">
+          <button role="tab" data-idx="{{ tab.idx }}" aria-selected="{{ tab.selected }}" tabindex="{{ tab.tabindex }}" disabled="{{ tab.disabled }}" onClick="{{ tab.onClick }}" onKeyDown="{{ tab.onKey }}" style="appearance:none;border:none;font-family:inherit;font-size:14px;padding:8px 16px;border-radius:8px;display:inline-flex;align-items:center;gap:8px;background:{{ tab.pillBg }};box-shadow:{{ tab.pillShadow }};color:{{ tab.cColor }};font-weight:{{ tab.cWeight }};opacity:{{ tab.opacity }};cursor:{{ tab.cursor }}">
+            <sc-if value="{{ tab.icon }}" hint-placeholder-val=""><span class="msr" style="font-size:18px">{{ tab.icon }}</span></sc-if>
+            <span>{{ tab.label }}</span>
+            <sc-if value="{{ tab.badge }}" hint-placeholder-val=""><span style="display:inline-flex;align-items:center;justify-content:center;min-width:18px;height:18px;padding:0 5px;border-radius:9999px;font-size:11px;font-weight:600;background:{{ tab.badgeBg }};color:{{ tab.badgeColor }}">{{ tab.badge }}</span></sc-if>
+          </button>
+        </sc-for>
+      </div>
+
+      <div style="font-family:'DM Mono',monospace;font-size:11px;color:#a49d92;margin:28px 0 10px">sm</div>
+      <div role="tablist" aria-orientation="horizontal" style="display:inline-flex;gap:3px;background:{{ track }};padding:3px;border-radius:9px">
+        <sc-for list="{{ contSmTabs }}" as="tab" hint-placeholder-count="3">
+          <button role="tab" data-idx="{{ tab.idx }}" aria-selected="{{ tab.selected }}" tabindex="{{ tab.tabindex }}" disabled="{{ tab.disabled }}" onClick="{{ tab.onClick }}" onKeyDown="{{ tab.onKey }}" style="appearance:none;border:none;font-family:inherit;font-size:14px;padding:6px 13px;border-radius:6px;display:inline-flex;align-items:center;gap:6px;background:{{ tab.pillBg }};box-shadow:{{ tab.pillShadow }};color:{{ tab.cColor }};font-weight:{{ tab.cWeight }};opacity:{{ tab.opacity }};cursor:{{ tab.cursor }}">
+            <span>{{ tab.label }}</span>
+          </button>
+        </sc-for>
+      </div>
+    </div>
+
+    <!-- LAYOUT-VARIANTEN -->
+    <div style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#a49d92;text-transform:uppercase;margin-bottom:18px">Layout-Varianten</div>
+    <div style="background:#fff;border:1px solid #e9e6e1;border-radius:16px;padding:8px 32px 32px;margin-bottom:20px">
+
+      <div style="font-family:'DM Mono',monospace;font-size:11px;color:#a49d92;margin:22px 0 10px">Full-width · Tabs füllen die Breite gleichmäßig</div>
+      <div role="tablist" aria-orientation="horizontal" style="display:flex">
+        <sc-for list="{{ fwTabs }}" as="tab" hint-placeholder-count="4">
+          <button role="tab" data-idx="{{ tab.idx }}" aria-selected="{{ tab.selected }}" tabindex="{{ tab.tabindex }}" disabled="{{ tab.disabled }}" onClick="{{ tab.onClick }}" onKeyDown="{{ tab.onKey }}" style="position:relative;flex:1;appearance:none;background:none;border:none;font-family:inherit;font-size:16px;padding:12px 2px 14px;display:inline-flex;align-items:center;justify-content:center;gap:8px;color:{{ tab.uColor }};font-weight:{{ tab.uWeight }};opacity:{{ tab.opacity }};cursor:{{ tab.cursor }}">
+            <span>{{ tab.label }}</span>
+            <span aria-hidden="true" style="position:absolute;left:0;right:0;bottom:0;height:2px;border-radius:2px 2px 0 0;background:{{ tab.indicator }}"></span>
+          </button>
+        </sc-for>
+      </div>
+
+      <div style="height:1px;background:#eeece7;margin:30px 0 0"></div>
+
+      <div style="font-family:'DM Mono',monospace;font-size:11px;color:#a49d92;margin:22px 0 10px">Overflow · scrollbar bei vielen Tabs</div>
+      <div role="tablist" aria-orientation="horizontal" class="no-sb" style="display:flex;gap:28px;overflow-x:auto;scroll-behavior:smooth;padding-bottom:2px">
+        <sc-for list="{{ scrollTabs }}" as="tab" hint-placeholder-count="10">
+          <button role="tab" data-idx="{{ tab.idx }}" aria-selected="{{ tab.selected }}" tabindex="{{ tab.tabindex }}" disabled="{{ tab.disabled }}" onClick="{{ tab.onClick }}" onKeyDown="{{ tab.onKey }}" style="position:relative;flex:none;appearance:none;background:none;border:none;font-family:inherit;font-size:16px;padding:12px 2px 14px;white-space:nowrap;color:{{ tab.uColor }};font-weight:{{ tab.uWeight }};opacity:{{ tab.opacity }};cursor:{{ tab.cursor }}">
+            {{ tab.label }}
+            <span aria-hidden="true" style="position:absolute;left:0;right:0;bottom:0;height:2px;border-radius:2px 2px 0 0;background:{{ tab.indicator }}"></span>
+          </button>
+        </sc-for>
+      </div>
+    </div>
+
+    <!-- VERTIKAL -->
+    <div style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#a49d92;text-transform:uppercase;margin-bottom:18px">Vertikal · Indikator links, für seitliche Navigation</div>
+    <div style="background:#fff;border:1px solid #e9e6e1;border-radius:16px;padding:26px 28px;margin-bottom:48px">
+      <div style="display:flex;gap:28px;align-items:stretch">
+        <div role="tablist" aria-orientation="vertical" style="display:flex;flex-direction:column;gap:2px;width:230px;flex:none">
+          <sc-for list="{{ vertTabs }}" as="tab" hint-placeholder-count="5">
+            <button role="tab" data-idx="{{ tab.idx }}" aria-selected="{{ tab.selected }}" tabindex="{{ tab.tabindex }}" disabled="{{ tab.disabled }}" onClick="{{ tab.onClick }}" onKeyDown="{{ tab.onKey }}" style="position:relative;text-align:left;appearance:none;background:{{ tab.vBg }};border:none;font-family:inherit;font-size:14px;padding:11px 14px 11px 18px;border-radius:8px;display:flex;align-items:center;gap:11px;width:100%;color:{{ tab.uColor }};font-weight:{{ tab.uWeight }};opacity:{{ tab.opacity }};cursor:{{ tab.cursor }}">
+              <span aria-hidden="true" style="position:absolute;left:0;top:9px;bottom:9px;width:2px;border-radius:0 2px 2px 0;background:{{ tab.indicator }}"></span>
+              <span class="msr" style="font-size:19px">{{ tab.icon }}</span>
+              <span>{{ tab.label }}</span>
+            </button>
+          </sc-for>
+        </div>
+        <div role="tabpanel" style="flex:1;background:{{ panelBg }};border-radius:12px;padding:26px 28px;min-height:150px">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+            <span class="msr" style="font-size:22px;color:{{ primary }}">{{ vertIcon }}</span>
+            <div style="font-size:18px;font-weight:600;letter-spacing:-0.01em">{{ vertTitle }}</div>
+          </div>
+          <div style="font-size:14px;line-height:1.6;color:#6f6a63;max-width:460px">{{ vertBody }}</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ZUSTÄNDE -->
+    <div style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#a49d92;text-transform:uppercase;margin-bottom:18px">Zustände (Underline)</div>
+    <div style="background:#fff;border:1px solid #e9e6e1;border-radius:16px;padding:44px 36px;margin-bottom:48px">
+      <div style="display:flex;gap:40px;flex-wrap:wrap">
+        <!-- Default -->
+        <div style="display:flex;flex-direction:column;align-items:flex-start;gap:14px">
+          <div style="position:relative;font-size:16px;padding:0 2px 12px;color:{{ muted }};font-weight:500">Tab</div>
+          <div style="font-family:'DM Mono',monospace;font-size:11px;color:#a49d92">Default</div>
+        </div>
+        <!-- Hover -->
+        <div style="display:flex;flex-direction:column;align-items:flex-start;gap:14px">
+          <div style="position:relative;font-size:16px;padding:0 2px 12px;color:{{ text }};font-weight:500">Tab</div>
+          <div style="font-family:'DM Mono',monospace;font-size:11px;color:#a49d92">Hover</div>
+        </div>
+        <!-- Aktiv -->
+        <div style="display:flex;flex-direction:column;align-items:flex-start;gap:14px">
+          <div style="position:relative;font-size:16px;padding:0 2px 12px;color:{{ text }};font-weight:600">Tab<span style="position:absolute;left:0;right:0;bottom:0;height:2px;border-radius:2px 2px 0 0;background:{{ primary }}"></span></div>
+          <div style="font-family:'DM Mono',monospace;font-size:11px;color:#a49d92">Aktiv</div>
+        </div>
+        <!-- Fokus -->
+        <div style="display:flex;flex-direction:column;align-items:flex-start;gap:14px">
+          <div style="position:relative;font-size:16px;padding:2px 6px 12px;color:{{ text }};font-weight:600;border-radius:6px;box-shadow:0 0 0 3px {{ focusRing }}">Tab<span style="position:absolute;left:0;right:0;bottom:0;height:2px;border-radius:2px 2px 0 0;background:{{ primary }}"></span></div>
+          <div style="font-family:'DM Mono',monospace;font-size:11px;color:#a49d92">Fokus</div>
+        </div>
+        <!-- Deaktiviert -->
+        <div style="display:flex;flex-direction:column;align-items:flex-start;gap:14px">
+          <div style="position:relative;font-size:16px;padding:0 2px 12px;color:{{ disabled }};font-weight:500;opacity:0.6">Tab</div>
+          <div style="font-family:'DM Mono',monospace;font-size:11px;color:#a49d92">Deaktiviert</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- VERHALTEN -->
+    <div style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#a49d92;text-transform:uppercase;margin-bottom:18px">Verhalten</div>
+    <div style="background:#fff;border:1px solid #e9e6e1;border-radius:16px;padding:30px 34px;margin-bottom:48px">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px 40px">
+        <sc-for list="{{ behavior }}" as="b" hint-placeholder-count="4">
+          <div style="display:flex;gap:11px;align-items:flex-start;padding:6px 0">
+            <span class="msr" style="font-size:20px;color:{{ primary }};flex:none;margin-top:1px">{{ b.icon }}</span>
+            <div>
+              <div style="font-size:14px;font-weight:600;color:{{ text }}">{{ b.name }}</div>
+              <div style="font-size:13px;color:{{ muted }};margin-top:2px">{{ b.desc }}</div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+
+    <!-- NUTZUNG -->
+    <div style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#a49d92;text-transform:uppercase;margin-bottom:18px">Im Einsatz</div>
+    <div style="background:#fff;border:1px solid #e9e6e1;border-radius:16px;padding:28px 30px 30px;margin-bottom:48px;max-width:560px">
+      <div style="font-size:17px;font-weight:600;letter-spacing:-0.01em;margin-bottom:18px">Kontoeinstellungen</div>
+      <div role="tablist" aria-orientation="horizontal" style="display:flex;gap:26px;border-bottom:1px solid #eeece7;margin-bottom:20px">
+        <sc-for list="{{ usageTabs }}" as="tab" hint-placeholder-count="3">
+          <button role="tab" data-idx="{{ tab.idx }}" aria-selected="{{ tab.selected }}" tabindex="{{ tab.tabindex }}" disabled="{{ tab.disabled }}" onClick="{{ tab.onClick }}" onKeyDown="{{ tab.onKey }}" style="position:relative;appearance:none;background:none;border:none;font-family:inherit;font-size:14px;padding:2px 2px 12px;margin-bottom:-1px;display:inline-flex;align-items:center;gap:7px;color:{{ tab.uColor }};font-weight:{{ tab.uWeight }};opacity:{{ tab.opacity }};cursor:{{ tab.cursor }}">
+            <span class="msr" style="font-size:18px">{{ tab.icon }}</span>
+            <span>{{ tab.label }}</span>
+            <span aria-hidden="true" style="position:absolute;left:0;right:0;bottom:0;height:2px;border-radius:2px 2px 0 0;background:{{ tab.indicator }}"></span>
+          </button>
+        </sc-for>
+      </div>
+      <div role="tabpanel">
+        <div style="display:flex;align-items:center;gap:9px;margin-bottom:6px">
+          <span class="msr" style="font-size:20px;color:{{ primary }}">{{ usageIcon }}</span>
+          <div style="font-size:16px;font-weight:600">{{ usageTitle }}</div>
+        </div>
+        <div style="font-size:14px;line-height:1.6;color:#6f6a63">{{ usageBody }}</div>
+      </div>
+    </div>
+
+    <!-- DO / DON'T -->
+    <div style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#a49d92;text-transform:uppercase;margin-bottom:18px">Einsatz</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+      <div style="background:#fff;border:1px solid #e9e6e1;border-radius:14px;border-top:3px solid #1f8a5b;padding:22px 24px">
+        <div style="font-size:13px;font-weight:600;color:#1f8a5b;margin-bottom:10px">Do</div>
+        <ul style="margin:0;padding-left:18px;font-size:14px;line-height:1.7;color:#3f3b36">
+          <li>Für gleichrangige Ansichten desselben Objekts nutzen.</li>
+          <li>Kurze, klare Labels — ein bis zwei Wörter.</li>
+          <li>Immer einen Tab standardmäßig aktiv lassen.</li>
+        </ul>
+      </div>
+      <div style="background:#fff;border:1px solid #e9e6e1;border-radius:14px;border-top:3px solid #c0392b;padding:22px 24px">
+        <div style="font-size:13px;font-weight:600;color:#c0392b;margin-bottom:10px">Don't</div>
+        <ul style="margin:0;padding-left:18px;font-size:14px;line-height:1.7;color:#3f3b36">
+          <li>Keine Abfolge von Schritten abbilden — dafür Stepper/Wizard.</li>
+          <li>Nicht mehr Tabs zeigen, als sinnvoll scannbar sind.</li>
+          <li>Underline und Contained nicht auf einer Fläche mischen.</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: { &quot;width&quot;: 1040, &quot;height&quot;: 900 }}">
+class Component extends DCLogic {
+  state = { active: { main: 0, sm: 1, cont: 0, contSm: 1, fw: 0, scroll: 3, vert: 0, usage: 0 } };
+
+  oklchToLinear(L, C, H) {
+    const h = H * Math.PI / 180, a = C * Math.cos(h), b = C * Math.sin(h);
+    const l_ = L + 0.3963377774 * a + 0.2158037573 * b, m_ = L - 0.1055613458 * a - 0.0638541728 * b, s_ = L - 0.0894841775 * a - 1.2914855480 * b;
+    const l = l_ ** 3, m = m_ ** 3, s = s_ ** 3;
+    return { r: 4.0767416621 * l - 3.3077115913 * m + 0.2309699292 * s, g: -1.2684380046 * l + 2.6097574011 * m - 0.3413193965 * s, b: -0.0041960863 * l - 0.7034186147 * m + 1.7076147010 * s };
+  }
+  toHex(rgb) {
+    const g = v => { v = Math.min(1, Math.max(0, v)); return v <= 0.0031308 ? 12.92 * v : 1.055 * Math.pow(v, 1 / 2.4) - 0.055; };
+    const h = v => Math.round(g(v) * 255).toString(16).padStart(2, '0');
+    return '#' + h(rgb.r) + h(rgb.g) + h(rgb.b);
+  }
+  makeScale(hue, chromaPeak) {
+    const L = [0.976, 0.942, 0.888, 0.822, 0.748, 0.655, 0.470, 0.405, 0.348, 0.300, 0.252, 0.198];
+    const CM = [0.05, 0.10, 0.16, 0.24, 0.34, 0.45, 1.00, 0.95, 0.80, 0.62, 0.45, 0.30];
+    const T = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1100];
+    const o = {};
+    T.forEach((t, i) => { o[t] = this.toHex(this.oklchToLinear(L[i], chromaPeak * CM[i], hue)); });
+    return o;
+  }
+
+  select(group, idx, e) {
+    this.setState(s => ({ active: { ...s.active, [group]: idx } }));
+    if (e && e.currentTarget) this.scrollReveal(e.currentTarget);
+  }
+
+  scrollReveal(btn) {
+    const c = btn.closest('[role=tablist]');
+    if (!c || c.scrollWidth <= c.clientWidth) return;
+    const cr = c.getBoundingClientRect(), br = btn.getBoundingClientRect();
+    const target = c.scrollLeft + (br.left - cr.left) - (c.clientWidth - br.width) / 2;
+    c.scrollTo({ left: target, behavior: 'smooth' });
+  }
+
+  onKey(group, e) {
+    const key = e.key;
+    if (!['ArrowRight', 'ArrowLeft', 'ArrowUp', 'ArrowDown', 'Home', 'End'].includes(key)) return;
+    e.preventDefault();
+    const list = e.currentTarget.closest('[role=tablist]');
+    const btns = [...list.querySelectorAll('[role=tab]')].filter(b => !b.disabled);
+    const cur = btns.indexOf(e.currentTarget);
+    let ni = cur;
+    if (key === 'ArrowRight' || key === 'ArrowDown') ni = (cur + 1) % btns.length;
+    else if (key === 'ArrowLeft' || key === 'ArrowUp') ni = (cur - 1 + btns.length) % btns.length;
+    else if (key === 'Home') ni = 0;
+    else if (key === 'End') ni = btns.length - 1;
+    const target = btns[ni];
+    if (!target) return;
+    const gi = parseInt(target.dataset.idx, 10);
+    this.setState(s => ({ active: { ...s.active, [group]: gi } }));
+    target.focus({ preventScroll: true });
+    this.scrollReveal(target);
+  }
+
+  buildTabs(group, defs, st) {
+    const active = this.state.active[group] ?? 0;
+    return defs.map((d, i) => {
+      const sel = i === active;
+      return {
+        idx: i, label: d.label, icon: d.icon || '', badge: d.badge || '',
+        disabled: !!d.disabled,
+        selected: sel ? 'true' : 'false',
+        tabindex: (sel && !d.disabled) ? 0 : -1,
+        uColor: d.disabled ? st.disabled : (sel ? st.text : st.muted),
+        uWeight: sel ? 600 : 500,
+        indicator: sel ? st.primary : 'transparent',
+        pillBg: sel ? '#ffffff' : 'transparent',
+        pillShadow: sel ? '0 1px 2px rgba(31,29,26,0.06),0 1px 3px rgba(31,29,26,0.04)' : 'none',
+        cColor: d.disabled ? st.disabled : (sel ? st.text : st.muted),
+        cWeight: sel ? 600 : 500,
+        opacity: d.disabled ? 0.5 : 1,
+        cursor: d.disabled ? 'not-allowed' : 'pointer',
+        badgeBg: sel ? st.primary : st.stone200,
+        badgeColor: sel ? '#ffffff' : st.subtle,
+        vBg: sel ? st.stone50 : 'transparent',
+        onClick: d.disabled ? (() => {}) : ((e) => this.select(group, i, e)),
+        onKey: (e) => this.onKey(group, e)
+      };
+    });
+  }
+
+  renderVals() {
+    const ci = 1.25;
+    const stone = this.makeScale(70, 0.013 * ci);
+    const primary = this.makeScale(185, 0.115 * ci);
+    const st = {
+      text: stone[1000], muted: stone[1000] + 'ad', subtle: stone[800], disabled: stone[500],
+      primary: primary[600], stone50: stone[50], stone100: stone[100], stone200: stone[200]
+    };
+
+    const defsMain = [
+      { label: 'Übersicht', icon: 'dashboard' },
+      { label: 'Aktivität', icon: 'bolt', badge: '3' },
+      { label: 'Mitglieder', icon: 'group', badge: '12' },
+      { label: 'Einstellungen', icon: 'settings' },
+      { label: 'Archiv', icon: 'archive', disabled: true }
+    ];
+    const defsSm = [
+      { label: 'Alle', icon: 'list' },
+      { label: 'Aktiv', icon: 'play_circle' },
+      { label: 'Pausiert', icon: 'pause_circle' },
+      { label: 'Fertig', icon: 'check_circle' }
+    ];
+    const defsCont = [
+      { label: 'Alle', badge: '24' },
+      { label: 'Offen', badge: '8' },
+      { label: 'Erledigt' },
+      { label: 'Archiviert', disabled: true }
+    ];
+    const defsContSm = [
+      { label: 'Tag' }, { label: 'Woche' }, { label: 'Monat' }
+    ];
+
+    const panels = [
+      { icon: 'dashboard', title: 'Übersicht', body: 'Zusammenfassung des Projekts — Kennzahlen, letzte Änderungen und offene Aufgaben auf einen Blick.' },
+      { icon: 'bolt', title: 'Aktivität', body: 'Chronologischer Verlauf aller Ereignisse. Drei neue Einträge seit deinem letzten Besuch.' },
+      { icon: 'group', title: 'Mitglieder', body: '12 Personen haben Zugriff. Verwalte Rollen, lade neue Mitglieder ein oder entziehe Berechtigungen.' },
+      { icon: 'settings', title: 'Einstellungen', body: 'Name, Sichtbarkeit, Benachrichtigungen und Integrationen des Projekts anpassen.' },
+      { icon: 'archive', title: 'Archiv', body: 'Archivierte Elemente.' }
+    ];
+    const mainActive = this.state.active.main ?? 0;
+    const panel = panels[mainActive];
+
+    const defsFw = [
+      { label: 'Konto' }, { label: 'Sicherheit' }, { label: 'Benachrichtigungen' }, { label: 'Abrechnung' }
+    ];
+    const defsScroll = [
+      { label: 'Übersicht' }, { label: 'Aktivität' }, { label: 'Dateien' }, { label: 'Aufgaben' },
+      { label: 'Kalender' }, { label: 'Mitglieder' }, { label: 'Berechtigungen' }, { label: 'Integrationen' },
+      { label: 'Verlauf' }, { label: 'Einstellungen' }
+    ];
+    const defsVert = [
+      { label: 'Profil', icon: 'person' },
+      { label: 'Konto', icon: 'manage_accounts' },
+      { label: 'Darstellung', icon: 'palette' },
+      { label: 'Benachrichtigungen', icon: 'notifications' },
+      { label: 'Datenschutz', icon: 'lock' }
+    ];
+    const vertBodies = [
+      'Name, Anzeigebild und öffentliche Angaben deines Profils bearbeiten.',
+      'E-Mail-Adresse, Passwort und verknüpfte Anmeldeverfahren verwalten.',
+      'Farbschema, Textgröße und Dichte der Oberfläche anpassen.',
+      'Lege fest, worüber und auf welchem Weg du benachrichtigt wirst.',
+      'Sichtbarkeit, Datenfreigabe und gespeicherte Aktivitäten steuern.'
+    ];
+    const vertActive = this.state.active.vert ?? 0;
+
+    const defsUsage = [
+      { label: 'Profil', icon: 'person' },
+      { label: 'Sicherheit', icon: 'shield' },
+      { label: 'Abrechnung', icon: 'credit_card' }
+    ];
+    const usagePanels = [
+      { title: 'Profil', body: 'Anzeigename, Kurzbeschreibung und Kontaktangaben. Diese Informationen sind für dein Team sichtbar.' },
+      { title: 'Sicherheit', body: 'Passwort ändern, Zwei-Faktor-Authentifizierung aktivieren und aktive Sitzungen einsehen.' },
+      { title: 'Abrechnung', body: 'Aktueller Tarif „Team", nächste Rechnung am 1. August. Zahlungsart und Rechnungsadresse verwalten.' }
+    ];
+    const usageActive = this.state.active.usage ?? 0;
+    const usagePanel = usagePanels[usageActive];
+
+    const behavior = [
+      { icon: 'ads_click', name: 'Klick', desc: 'Wählt den Tab und zeigt sein Panel.' },
+      { icon: 'keyboard', name: 'Pfeiltasten', desc: 'Wechseln zwischen Tabs; Auswahl folgt dem Fokus.' },
+      { icon: 'first_page', name: 'Home / End', desc: 'Springt zum ersten bzw. letzten Tab.' },
+      { icon: 'skip_next', name: 'Deaktiviert', desc: 'Disabled-Tabs werden bei Tastatur übersprungen.' }
+    ];
+
+    return {
+      primary: primary[600],
+      panelBg: stone[50],
+      track: stone[100],
+      text: st.text, muted: st.muted, subtle: st.subtle, disabled: st.disabled,
+      stone200: stone[200], focusRing: primary[600] + '59',
+      panelIcon: panel.icon, panelTitle: panel.title, panelBody: panel.body,
+      mainTabs: this.buildTabs('main', defsMain, st),
+      smTabs: this.buildTabs('sm', defsSm, st),
+      contTabs: this.buildTabs('cont', defsCont, st),
+      contSmTabs: this.buildTabs('contSm', defsContSm, st),
+      fwTabs: this.buildTabs('fw', defsFw, st),
+      scrollTabs: this.buildTabs('scroll', defsScroll, st),
+      vertTabs: this.buildTabs('vert', defsVert, st),
+      vertTitle: defsVert[vertActive].label, vertIcon: defsVert[vertActive].icon, vertBody: vertBodies[vertActive],
+      usageTabs: this.buildTabs('usage', defsUsage, st),
+      usageIcon: defsUsage[usageActive].icon, usageTitle: usagePanel.title, usageBody: usagePanel.body,
+      behavior
+    };
+  }
+}
+</script>
+</body>
+</html>

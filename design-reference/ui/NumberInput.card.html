@@ -1,0 +1,65 @@
+<!-- @dsCard group="Komponenten" viewport="700x690" name="NumberInput" subtitle="Stepper mit Grenzwerten, Einheiten, Ausrichtung und voller Breite" -->
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  html,body{margin:0}
+  body{padding:20px 22px;font-family:var(--medo-font-sans);background:var(--medo-surface);color:var(--medo-text);min-height:690px;box-sizing:border-box}
+  .lbl{font-family:var(--medo-font-mono);font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:var(--medo-color-stone-500);margin-bottom:10px}
+  .grp{margin-bottom:18px}
+  .row{display:flex;gap:20px;flex-wrap:wrap;align-items:flex-start}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+<script src="../_ds_bundle.js"></script>
+<script>
+  var h = React.createElement;
+  var N = window.MedoUI.NumberInput;
+
+  function grp(label, kids) {
+    return h('div', { className: 'grp' },
+      h('div', { className: 'lbl' }, label),
+      h('div', { className: 'row' }, kids));
+  }
+
+  var app = h('div', null,
+    grp('Varianten', [
+      h(N, { key: 1, label: 'Chevrons · Standard', variant: 'chevrons', defaultValue: 12, width: '180px' }),
+      h(N, { key: 2, label: 'Minus / Plus · Touch', variant: 'plusminus', defaultValue: 3, width: '170px' })
+    ]),
+    grp('Zustände', [
+      h(N, { key: 1, label: 'Grenzwert erreicht', defaultValue: 100, min: 0, max: 100,
+             width: '180px', hint: 'Maximum von 100 erreicht.' }),
+      h(N, { key: 2, label: 'Fehler', defaultValue: 999, min: 0, max: 100, width: '180px',
+             error: 'Wert außerhalb des zulässigen Bereichs.' }),
+      h(N, { key: 3, label: 'Schreibgeschützt', defaultValue: 12, readOnly: true, width: '160px' }),
+      h(N, { key: 4, label: 'Gesperrt', defaultValue: 12, disabled: true, width: '160px' })
+    ]),
+    grp('Einheiten, Ausrichtung, Größen', [
+      h(N, { key: 1, label: 'Gewicht', defaultValue: 72, suffix: 'kg', width: '170px' }),
+      h(N, { key: 2, label: 'Betrag', defaultValue: '49,00', prefix: '€', step: 0.5, width: '180px' }),
+      h(N, { key: 3, label: 'Anteil', defaultValue: 50, suffix: '%', step: 5, min: 0, max: 100, width: '170px' }),
+      h(N, { key: 4, size: 'sm', label: 'Klein', defaultValue: 8, width: '150px' }),
+      h(N, { key: 5, size: 'md', label: 'Mittel', defaultValue: 8, width: '160px' }),
+      h(N, { key: 6, size: 'lg', label: 'Groß', defaultValue: 8, width: '170px' })
+    ]),
+    grp('Ausrichtung des Werts · links / mittig / rechts', [
+      h(N, { key: 1, label: 'Links', align: 'left', defaultValue: 42, width: '160px' }),
+      h(N, { key: 2, label: 'Mittig', align: 'center', defaultValue: 42, width: '160px' }),
+      h(N, { key: 3, label: 'Rechts', align: 'right', defaultValue: 42, width: '160px', optional: true })
+    ]),
+    grp('Volle Breite · Pflichtfeld', [
+      h('div', { key: 1, style: { width: '100%', maxWidth: '420px' } },
+        h(N, { label: 'Anzahl Mitarbeitende', required: true, fullWidth: true, defaultValue: 24, min: 1,
+               hint: 'Stand der letzten Meldung.' }))
+    ])
+  );
+  ReactDOM.createRoot(document.getElementById('root')).render(app);
+</script>
+</body>
+</html>

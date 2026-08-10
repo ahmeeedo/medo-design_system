@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  body{margin:0}
+  ::selection{background:#e6e1d8}
+</style>
+</helmet>
+
+<div style="min-height:100%;background:#faf9f7;color:#1f1d1a;font-family:'DM Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased;padding:56px 40px 96px">
+  <div style="max-width:1080px;margin:0 auto">
+
+    <!-- HEADER -->
+    <div style="margin-bottom:44px">
+      <div style="font-family:'DM Mono',monospace;font-size:12px;letter-spacing:0.16em;color:#a49d92;text-transform:uppercase;margin-bottom:16px">Design System · Schritt 3 · Typografie</div>
+      <h1 style="font-size:49px;line-height:1.1;font-weight:700;letter-spacing:-0.02em;margin:0 0 14px">Schrift &amp; Skala</h1>
+      <p style="font-size:20px;line-height:1.5;color:#6f6a63;margin:0;max-width:640px">DM Sans als Arbeitspferd, DM Mono für Code und Daten. Eine Skala im Verhältnis 1.25 (Major Third), Basis 16 px, mit T-Shirt-Größen von <span style="font-family:'DM Mono',monospace;font-size:18px">xs</span> bis <span style="font-family:'DM Mono',monospace;font-size:18px">4xl</span>.</p>
+    </div>
+
+    <!-- FONT FAMILIES -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:56px">
+      <div style="background:#fff;border:1px solid #e9e6e1;border-radius:16px;padding:28px 30px">
+        <div style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#a49d92;text-transform:uppercase;margin-bottom:16px">font-sans · DM Sans</div>
+        <div style="font-size:44px;font-weight:500;letter-spacing:-0.02em;line-height:1.1;margin-bottom:14px">Aa Bb Cc</div>
+        <div style="font-size:15px;color:#6f6a63">ABCDEFGHIJKLMNOPQRSTUVWXYZ<br>abcdefghijklmnopqrstuvwxyz 0123456789</div>
+      </div>
+      <div style="background:#fff;border:1px solid #e9e6e1;border-radius:16px;padding:28px 30px">
+        <div style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#a49d92;text-transform:uppercase;margin-bottom:16px">font-mono · DM Mono</div>
+        <div style="font-family:'DM Mono',monospace;font-size:44px;font-weight:500;line-height:1.1;margin-bottom:14px">Aa Bb Cc</div>
+        <div style="font-family:'DM Mono',monospace;font-size:14px;color:#6f6a63">ABCDEFGHIJKLMNOPQRSTUVWXYZ<br>abcdefghijklmnopqrstuvwxyz 0123456789</div>
+      </div>
+    </div>
+
+    <!-- TYPE SCALE -->
+    <div style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#a49d92;text-transform:uppercase;margin-bottom:18px">Type Scale · Verhältnis 1.25</div>
+    <div style="display:flex;flex-direction:column;margin-bottom:56px">
+      <sc-for list="{{ sizes }}" as="s" hint-placeholder-count="8">
+        <div style="display:flex;align-items:baseline;gap:24px;padding:16px 0;border-bottom:1px solid #efece7">
+          <div style="flex:1;min-width:0;font-size:{{ s.pxCss }};line-height:1.15;font-weight:{{ s.weight }};letter-spacing:{{ s.tracking }};color:#1f1d1a;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ s.sample }}</div>
+          <div style="flex:none;width:210px;display:flex;flex-direction:column;gap:3px;text-align:right">
+            <span style="font-family:'DM Mono',monospace;font-size:13px;font-weight:500;color:#1f1d1a">{{ s.token }}</span>
+            <span style="font-family:'DM Mono',monospace;font-size:11.5px;color:#a49d92">{{ s.meta }}</span>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+
+    <!-- WEIGHTS -->
+    <div style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#a49d92;text-transform:uppercase;margin-bottom:18px">Gewichte</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px 40px;margin-bottom:56px">
+      <sc-for list="{{ weights }}" as="w" hint-placeholder-count="4">
+        <div style="display:flex;align-items:baseline;justify-content:space-between;padding:12px 0;border-bottom:1px solid #efece7">
+          <span style="font-size:26px;font-weight:{{ w.value }};letter-spacing:-0.01em">{{ w.label }}</span>
+          <span style="font-family:'DM Mono',monospace;font-size:12px;color:#a49d92">{{ w.token }} · {{ w.value }}</span>
+        </div>
+      </sc-for>
+    </div>
+
+    <!-- LEADING & TRACKING -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-bottom:56px">
+      <div>
+        <div style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#a49d92;text-transform:uppercase;margin-bottom:16px">Zeilenhöhe</div>
+        <sc-for list="{{ leadings }}" as="l" hint-placeholder-count="4">
+          <div style="padding:10px 0;border-bottom:1px solid #efece7">
+            <div style="font-family:'DM Mono',monospace;font-size:12px;color:#a49d92;margin-bottom:6px">{{ l.token }} · {{ l.value }}</div>
+            <div style="font-size:14px;color:#3f3b36;line-height:{{ l.value }}">Konsistente Zeilenhöhen halten Absätze ruhig und gut lesbar über alle Textgrößen hinweg.</div>
+          </div>
+        </sc-for>
+      </div>
+      <div>
+        <div style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#a49d92;text-transform:uppercase;margin-bottom:16px">Laufweite</div>
+        <sc-for list="{{ trackings }}" as="t" hint-placeholder-count="3">
+          <div style="padding:10px 0;border-bottom:1px solid #efece7">
+            <div style="font-family:'DM Mono',monospace;font-size:12px;color:#a49d92;margin-bottom:6px">{{ t.token }} · {{ t.value }}</div>
+            <div style="font-size:20px;letter-spacing:{{ t.css }};color:#3f3b36">{{ t.sample }}</div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+
+    <!-- APPLIED SPECIMEN -->
+    <div style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#a49d92;text-transform:uppercase;margin-bottom:18px">In Anwendung</div>
+    <div style="background:#fff;border:1px solid #e9e6e1;border-radius:18px;padding:44px 48px">
+      <div style="font-family:'DM Mono',monospace;font-size:12px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#0f7a7d;margin-bottom:16px">Grundlagen</div>
+      <h2 style="font-size:39px;line-height:1.15;font-weight:700;letter-spacing:-0.02em;margin:0 0 18px;max-width:680px">Ein System, das mit dem Inhalt beginnt</h2>
+      <p style="font-size:20px;line-height:1.5;color:#6f6a63;margin:0 0 24px;max-width:640px">Typografie trägt die Stimme des Produkts. Klare Hierarchie, ruhige Zeilen und verlässliche Größen machen jede Oberfläche sofort lesbar.</p>
+      <p style="font-size:16px;line-height:1.6;color:#3f3b36;margin:0 0 16px;max-width:600px">Die Skala im Verhältnis 1.25 gibt genug Kontrast zwischen den Ebenen, ohne dass die Sprünge hart wirken. Fließtext bei 16 px mit großzügiger Zeilenhöhe bleibt über lange Strecken angenehm. Sekundäre Informationen treten über Größe und Farbe zurück, statt zu verschwinden.</p>
+      <p style="font-size:14px;line-height:1.45;color:#a49d92;margin:0;max-width:600px">Bildunterschrift · 14 px · text-sm — für Metadaten, Hinweise und feine Details.</p>
+    </div>
+
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{
+  &quot;$preview&quot;: { &quot;width&quot;: 1120, &quot;height&quot;: 900 }
+}">
+class Component extends DCLogic {
+  renderVals() {
+    const sizes = [
+      { token: 'text-xs', px: 12, lh: 1.5, weight: 400, use: 'Caption', sample: 'Feine Details und Metadaten' },
+      { token: 'text-sm', px: 14, lh: 1.45, weight: 400, use: 'Label / Sekundär', sample: 'Labels und sekundärer Text' },
+      { token: 'text-base', px: 16, lh: 1.6, weight: 400, use: 'Fließtext', sample: 'Fließtext für längere Absätze' },
+      { token: 'text-lg', px: 20, lh: 1.5, weight: 400, use: 'Lead', sample: 'Lead-Text und Betonung' },
+      { token: 'text-xl', px: 25, lh: 1.35, weight: 500, use: 'Titel', sample: 'Titel und Karten-Überschrift' },
+      { token: 'text-2xl', px: 31, lh: 1.25, weight: 600, use: 'Überschrift', sample: 'Abschnitts-Überschrift' },
+      { token: 'text-3xl', px: 39, lh: 1.15, weight: 700, use: 'Display', sample: 'Display-Überschrift' },
+      { token: 'text-4xl', px: 49, lh: 1.1, weight: 700, use: 'Hero', sample: 'Hero-Titel' }
+    ].map(s => ({
+      ...s,
+      pxCss: s.px + 'px',
+      tracking: s.px >= 25 ? '-0.02em' : '0',
+      meta: s.px + ' / ' + Math.round(s.px * s.lh) + ' px · ' + s.lh + ' · ' + s.use
+    }));
+
+    const weights = [
+      { token: 'weight-regular', value: 400, label: 'Regular' },
+      { token: 'weight-medium', value: 500, label: 'Medium' },
+      { token: 'weight-semibold', value: 600, label: 'Semibold' },
+      { token: 'weight-bold', value: 700, label: 'Bold' }
+    ];
+
+    const leadings = [
+      { token: 'leading-tight', value: 1.1 },
+      { token: 'leading-snug', value: 1.3 },
+      { token: 'leading-normal', value: 1.5 },
+      { token: 'leading-relaxed', value: 1.6 }
+    ];
+
+    const trackings = [
+      { token: 'tracking-tight', value: '−0.02em', css: '-0.02em', sample: 'Große Überschrift' },
+      { token: 'tracking-normal', value: '0', css: '0', sample: 'Normaler Text' },
+      { token: 'tracking-wide', value: '0.04em', css: '0.04em', sample: 'VERSAL-EYEBROW' }
+    ];
+
+    return { sizes, weights, leadings, trackings };
+  }
+}
+</script>
+</body>
+</html>

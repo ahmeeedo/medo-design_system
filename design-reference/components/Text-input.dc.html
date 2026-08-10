@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,300,0,0" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  body{margin:0}
+  ::selection{background:#e6e1d8}
+  .msr{font-family:'Material Symbols Rounded';font-weight:300;line-height:1;display:inline-block}
+  input{font-family:inherit}
+</style>
+</helmet>
+
+<div style="min-height:100%;background:#faf9f7;color:#1f1d1a;font-family:'DM Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased;padding:56px 40px 96px">
+  <div style="max-width:1000px;margin:0 auto">
+
+    <!-- HEADER -->
+    <div style="margin-bottom:48px">
+      <div style="font-family:'DM Mono',monospace;font-size:12px;letter-spacing:0.16em;color:#a49d92;text-transform:uppercase;margin-bottom:16px">Design System · Komponente · Text input</div>
+      <h1 style="font-size:49px;line-height:1.1;font-weight:700;letter-spacing:-0.02em;margin:0 0 14px">Text input</h1>
+      <p style="font-size:20px;line-height:1.5;color:#6f6a63;margin:0;max-width:640px">Erfasst einzeilige Freitexteingaben. Basis für Number, Search, Select und Date picker — mit Label oben oder als Floating Label, allen Zuständen und optionalen Features.</p>
+    </div>
+
+    <!-- ANATOMY -->
+    <div style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#a49d92;text-transform:uppercase;margin-bottom:18px">Anatomie</div>
+    <div style="background:#fff;border:1px solid #e9e6e1;border-radius:16px;padding:36px;margin-bottom:48px">
+      <div style="max-width:420px">
+        <div style="display:flex;align-items:center;gap:6px;margin-bottom:7px">
+          <label style="font-size:14px;font-weight:600;color:{{ text }}">Label</label>
+          <span style="color:{{ errorSolid }};font-size:14px;font-weight:600">*</span>
+          <span class="msr" style="font-size:16px;color:{{ iconMuted }};cursor:help" title="Hilfetext als Tooltip">info</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:9px;height:40px;padding:0 12px;background:#fff;border:1px solid {{ inputBorder }};border-radius:8px">
+          <span class="msr" style="font-size:19px;color:{{ iconMuted }}">mail</span>
+          <input placeholder="Platzhalter" style="flex:1;border:none;outline:none;background:transparent;font-size:16px;color:{{ text }};min-width:0" />
+          <span class="msr" style="font-size:19px;color:{{ iconMuted }}">check_circle</span>
+        </div>
+        <div style="font-size:13px;color:{{ muted }};margin-top:7px">Hilfetext unter dem Feld</div>
+        <div style="display:flex;gap:18px;margin-top:16px;font-family:'DM Mono',monospace;font-size:11px;color:#a49d92;flex-wrap:wrap">
+          <span>1 · Label + Stern + Tooltip</span><span>2 · leading Icon</span><span>3 · Eingabe</span><span>4 · trailing Icon</span><span>5 · Hilfetext</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- STATES -->
+    <div style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#a49d92;text-transform:uppercase;margin-bottom:18px">Zustände</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:22px 32px;background:#fff;border:1px solid #e9e6e1;border-radius:16px;padding:36px;margin-bottom:48px">
+      <sc-for list="{{ states }}" as="s" hint-placeholder-count="8">
+        <div>
+          <div style="display:flex;align-items:center;gap:6px;margin-bottom:7px">
+            <label style="font-size:14px;font-weight:600;color:{{ s.labelColor }}">{{ s.label }}</label>
+            <span style="font-family:'DM Mono',monospace;font-size:11px;color:#a49d92">{{ s.tag }}</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:9px;height:40px;padding:0 12px;border-radius:8px;background:{{ s.bg }};border:{{ s.border }};box-shadow:{{ s.ring }}">
+            <span style="flex:1;font-size:16px;color:{{ s.valueColor }};min-width:0;overflow:hidden;white-space:nowrap;text-overflow:ellipsis">{{ s.value }}</span>
+            <sc-if value="{{ s.trailing }}" hint-placeholder-val="{{ true }}">
+              <span class="msr" style="font-size:19px;color:{{ s.trailingColor }}">{{ s.trailing }}</span>
+            </sc-if>
+          </div>
+          <sc-if value="{{ s.msg }}" hint-placeholder-val="{{ true }}">
+            <div style="display:flex;align-items:center;gap:4px;font-size:13px;color:{{ s.msgColor }};margin-top:7px">
+              <sc-if value="{{ s.msgIcon }}" hint-placeholder-val="{{ true }}"><span class="msr" style="font-size:16px">{{ s.msgIcon }}</span></sc-if>
+              {{ s.msg }}
+            </div>
+          </sc-if>
+        </div>
+      </sc-for>
+    </div>
+
+    <!-- SIZES -->
+    <div style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#a49d92;text-transform:uppercase;margin-bottom:18px">Größen</div>
+    <div style="background:#fff;border:1px solid #e9e6e1;border-radius:16px;padding:36px;margin-bottom:48px">
+      <div style="display:flex;gap:20px;align-items:flex-end;flex-wrap:wrap">
+        <sc-for list="{{ sizes }}" as="s" hint-placeholder-count="3">
+          <div style="flex:1;min-width:180px">
+            <div style="display:flex;align-items:center;gap:9px;padding:0 12px;border-radius:8px;background:#fff;border:1px solid {{ inputBorder }};height:{{ s.h }}">
+              <span class="msr" style="font-size:{{ s.icon }};color:{{ iconMuted }}">person</span>
+              <input placeholder="Name" style="flex:1;border:none;outline:none;background:transparent;color:{{ text }};min-width:0;font-size:{{ s.fs }}" />
+            </div>
+            <div style="font-family:'DM Mono',monospace;font-size:12px;color:#a49d92;margin-top:8px">{{ s.token }} · H {{ s.h }}</div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+
+    <!-- FLOATING LABEL -->
+    <div style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#a49d92;text-transform:uppercase;margin-bottom:18px">Floating Label</div>
+    <div style="background:#fff;border:1px solid #e9e6e1;border-radius:16px;padding:36px;margin-bottom:48px">
+      <div style="display:flex;gap:24px;flex-wrap:wrap">
+        <div style="flex:1;min-width:220px">
+          <div style="position:relative;height:52px;border-radius:8px;background:#fff;border:1px solid {{ inputBorder }}">
+            <span style="position:absolute;left:12px;top:16px;font-size:16px;color:{{ muted }}">Vollständiger Name</span>
+          </div>
+          <div style="font-family:'DM Mono',monospace;font-size:11px;color:#a49d92;margin-top:8px">Leer · Label als Platzhalter</div>
+        </div>
+        <div style="flex:1;min-width:220px">
+          <div style="position:relative;height:52px;border-radius:8px;background:#fff;border:1px solid {{ primary600 }};box-shadow:{{ ring }}">
+            <span style="position:absolute;left:12px;top:-8px;padding:0 5px;background:#fff;font-size:12px;font-weight:500;color:{{ primary600 }}">Vollständiger Name</span>
+            <span style="position:absolute;left:12px;top:17px;font-size:16px;color:{{ text }}">Anna Berg</span>
+          </div>
+          <div style="font-family:'DM Mono',monospace;font-size:11px;color:#a49d92;margin-top:8px">Gefüllt/Fokus · Label schwebt oben</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FEATURES -->
+    <div style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#a49d92;text-transform:uppercase;margin-bottom:18px">Optionale Features</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:22px 32px;background:#fff;border:1px solid #e9e6e1;border-radius:16px;padding:36px;margin-bottom:48px">
+      <sc-for list="{{ features }}" as="f" hint-placeholder-count="6">
+        <div>
+          <div style="font-size:13px;font-weight:600;color:{{ text }};margin-bottom:7px">{{ f.name }}</div>
+          <div style="display:flex;align-items:center;gap:9px;height:40px;padding:0 12px;border-radius:8px;background:{{ f.bg }};border:1px solid {{ inputBorder }}">
+            <sc-if value="{{ f.prefix }}" hint-placeholder-val="{{ true }}"><span style="font-size:14px;color:{{ muted }}">{{ f.prefix }}</span></sc-if>
+            <sc-if value="{{ f.leadIcon }}" hint-placeholder-val="{{ true }}"><span class="msr" style="font-size:19px;color:{{ iconMuted }}">{{ f.leadIcon }}</span></sc-if>
+            <span style="flex:1;font-size:16px;color:{{ f.valueColor }};min-width:0;overflow:hidden;white-space:nowrap">{{ f.value }}</span>
+            <sc-if value="{{ f.suffix }}" hint-placeholder-val="{{ true }}"><span style="font-size:14px;color:{{ muted }}">{{ f.suffix }}</span></sc-if>
+            <sc-if value="{{ f.counter }}" hint-placeholder-val="{{ true }}"><span style="font-family:'DM Mono',monospace;font-size:12px;color:{{ muted }}">{{ f.counter }}</span></sc-if>
+            <sc-if value="{{ f.trailBtn }}" hint-placeholder-val="{{ true }}">
+              <button aria-label="{{ f.trailBtn }}" style="border:none;background:{{ btnBg }};width:28px;height:28px;margin-right:-5px;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;color:{{ iconMuted }}" style-hover="background:{{ btnHoverBg }};color:{{ text }}">
+                <span class="msr" style="font-size:19px">{{ f.trailIcon }}</span>
+              </button>
+            </sc-if>
+            <sc-if value="{{ f.trailIcon2 }}" hint-placeholder-val="{{ true }}"><span class="msr" style="font-size:19px;color:{{ f.trailColor }}">{{ f.trailIcon2 }}</span></sc-if>
+            <sc-if value="{{ f.spinner }}" hint-placeholder-val="{{ true }}"><span style="width:16px;height:16px;border-radius:9999px;border:1px solid {{ primary600 }};border-top-color:transparent;display:inline-block;animation:none"></span></sc-if>
+          </div>
+          <div style="font-family:'DM Mono',monospace;font-size:11px;color:#a49d92;margin-top:7px">{{ f.note }}</div>
+        </div>
+      </sc-for>
+    </div>
+
+    <!-- USAGE -->
+    <div style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#a49d92;text-transform:uppercase;margin-bottom:18px">Nutzung</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+      <div style="background:#fff;border:1px solid #e9e6e1;border-radius:14px;border-top:3px solid {{ successSolid }};padding:22px 24px">
+        <div style="font-size:13px;font-weight:600;color:{{ successSolid }};margin-bottom:10px">Do</div>
+        <ul style="margin:0;padding-left:18px;font-size:14px;line-height:1.7;color:#3f3b36">
+          <li>Label immer sichtbar lassen (kein Platzhalter als Label).</li>
+          <li>Fehlertext konkret formulieren, was zu tun ist.</li>
+          <li>Feldbreite an die erwartete Eingabe anpassen.</li>
+        </ul>
+      </div>
+      <div style="background:#fff;border:1px solid #e9e6e1;border-radius:14px;border-top:3px solid {{ errorSolid }};padding:22px 24px">
+        <div style="font-size:13px;font-weight:600;color:{{ errorSolid }};margin-bottom:10px">Don't</div>
+        <ul style="margin:0;padding-left:18px;font-size:14px;line-height:1.7;color:#3f3b36">
+          <li>Platzhalter nicht für wichtige Infos nutzen.</li>
+          <li>Kein Rot allein — Fehler immer mit Icon + Text.</li>
+          <li>Disabled-Felder nicht für schreibgeschützte Werte (nutze Readonly).</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{
+  &quot;$preview&quot;: { &quot;width&quot;: 1040, &quot;height&quot;: 960 }
+}">
+class Component extends DCLogic {
+  oklchToLinear(L, C, H) {
+    const h = H * Math.PI / 180, a = C * Math.cos(h), b = C * Math.sin(h);
+    const l_ = L + 0.3963377774 * a + 0.2158037573 * b, m_ = L - 0.1055613458 * a - 0.0638541728 * b, s_ = L - 0.0894841775 * a - 1.2914855480 * b;
+    const l = l_ ** 3, m = m_ ** 3, s = s_ ** 3;
+    return { r: 4.0767416621 * l - 3.3077115913 * m + 0.2309699292 * s, g: -1.2684380046 * l + 2.6097574011 * m - 0.3413193965 * s, b: -0.0041960863 * l - 0.7034186147 * m + 1.7076147010 * s };
+  }
+  toHex(rgb) {
+    const g = v => { v = Math.min(1, Math.max(0, v)); return v <= 0.0031308 ? 12.92 * v : 1.055 * Math.pow(v, 1 / 2.4) - 0.055; };
+    const h = v => Math.round(g(v) * 255).toString(16).padStart(2, '0');
+    return '#' + h(rgb.r) + h(rgb.g) + h(rgb.b);
+  }
+  makeScale(hue, chromaPeak) {
+    const L = [0.976, 0.942, 0.888, 0.822, 0.748, 0.655, 0.470, 0.405, 0.348, 0.300, 0.252, 0.198];
+    const CM = [0.05, 0.10, 0.16, 0.24, 0.34, 0.45, 1.00, 0.95, 0.80, 0.62, 0.45, 0.30];
+    const T = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1100];
+    const o = {};
+    T.forEach((t, i) => { o[t] = this.toHex(this.oklchToLinear(L[i], chromaPeak * CM[i], hue)); });
+    return o;
+  }
+
+  renderVals() {
+    const ci = 1.25;
+    const stone = this.makeScale(70, 0.013 * ci);
+    const primary = this.makeScale(185, 0.115 * ci);
+    const error = this.makeScale(27, 0.15 * ci);
+    const success = this.makeScale(150, 0.14 * ci);
+    const text = stone[1000], muted = `${stone[1000]}ad`, iconMuted = `${stone[1000]}8c`;
+    const inputBorder = stone[400];
+    const ring = `0 0 0 3px ${primary[600]}59`;
+
+    const base = { label: '', tag: '', labelColor: text, bg: '#ffffff', border: `1px solid ${inputBorder}`, ring: 'none', value: '', valueColor: text, trailing: '', trailingColor: iconMuted, msg: '', msgIcon: '', msgColor: muted };
+    const ph = `${stone[1000]}99`;
+
+    const states = [
+      { ...base, label: 'Default', tag: 'leer', value: 'Platzhalter', valueColor: ph },
+      { ...base, label: 'Hover', tag: 'stone-600', border: `1px solid ${stone[600]}`, value: 'Platzhalter', valueColor: ph },
+      { ...base, label: 'Focus', tag: 'primary-600', border: `1px solid ${primary[600]}`, ring, value: 'Anna Berg' },
+      { ...base, label: 'Filled', tag: 'ausgefüllt', value: 'Anna Berg' },
+      { ...base, label: 'Disabled', tag: 'nicht aktiv', bg: stone[100], border: `1px solid ${stone[200]}`, value: 'Nicht bearbeitbar', valueColor: stone[500] },
+      { ...base, label: 'Readonly', tag: 'schreibgeschützt', bg: stone[50], border: `1px solid ${stone[200]}`, value: 'anna@beispiel.de', trailing: 'lock', trailingColor: iconMuted },
+      { ...base, label: 'Error', tag: 'error-600', border: `1px solid ${error[600]}`, value: 'anna@', trailing: 'error', trailingColor: error[600], msg: 'Bitte gib eine gültige E-Mail ein.', msgIcon: 'error', msgColor: error[1000] },
+      { ...base, label: 'Success', tag: 'success-600', border: `1px solid ${success[600]}`, value: 'anna@beispiel.de', trailing: 'check_circle', trailingColor: success[600], msg: 'Adresse bestätigt.', msgIcon: 'check_circle', msgColor: success[1000] }
+    ];
+
+    const sizes = [
+      { token: 'size-sm', h: '36px', fs: '14px', icon: '18px' },
+      { token: 'size-md', h: '40px', fs: '16px', icon: '19px' },
+      { token: 'size-lg', h: '48px', fs: '16px', icon: '21px' }
+    ];
+
+    const fb = { name: '', bg: '#ffffff', prefix: '', suffix: '', leadIcon: '', trailIcon: '', trailIcon2: '', trailBtn: '', trailColor: iconMuted, counter: '', spinner: false, value: '', valueColor: text, note: '' };
+    const features = [
+      { ...fb, name: 'Clear-Button', value: 'Suchbegriff', trailIcon: 'cancel', trailBtn: 'Feld leeren', note: 'Schaltfläche · räumt das Feld' },
+      { ...fb, name: 'Passwort-Toggle', value: '••••••••', trailIcon: 'visibility', trailBtn: 'Passwort anzeigen', note: 'Schaltfläche · blendet ein/aus' },
+      { ...fb, name: 'Zeichenzähler', value: 'Kurze Bio', counter: '24/100', note: 'rechts im Feld' },
+      { ...fb, name: 'Präfix / Suffix', prefix: 'https://', value: 'meine-seite', suffix: '.de', note: 'abgesetzte Segmente' },
+      { ...fb, name: 'Validierungs-Spinner', value: 'nutzername', spinner: true, note: 'async-Prüfung läuft' },
+      { ...fb, name: 'Copy-Button', bg: stone[50], value: 'sk_live_9f2a…', trailIcon: 'content_copy', trailBtn: 'Wert kopieren', note: 'Schaltfläche · kopiert Wert' }
+    ];
+
+    return {
+      states, sizes, features,
+      text, muted, iconMuted, inputBorder,
+      btnBg: stone[100], btnHoverBg: stone[200],
+      primary600: primary[600], ring,
+      errorSolid: error[600], successSolid: success[600]
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!-- @dsCard group="Komponenten" viewport="700x360" name="Menu buttons" subtitle="Menü-Button, Split-Button und Icon-Menü-Button" -->
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  html,body{margin:0}
+  body{padding:24px 22px;font-family:var(--medo-font-sans);background:var(--medo-surface);color:var(--medo-text);min-height:360px;box-sizing:border-box}
+  .lbl{font-family:var(--medo-font-mono);font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:var(--medo-color-stone-500);margin-bottom:12px}
+  .grp{margin-bottom:26px}
+  .row{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+  .bar{border:1px solid var(--medo-border);border-radius:var(--medo-radius-lg);padding:12px 14px;display:flex;align-items:center;justify-content:space-between;gap:14px;max-width:520px}
+  .title{font-size:14px;font-weight:600}
+  .out{font-family:var(--medo-font-mono);font-size:12px;color:var(--medo-text-muted);margin-top:10px}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+<script src="../_ds_bundle.js"></script>
+<script>
+  var h = React.createElement;
+  var MB = window.MedoUI.MenuButton, SB = window.MedoUI.SplitButton, IB = window.MedoUI.IconMenuButton;
+
+  function Demo() {
+    var last = React.useState('—');
+    var log = function (v) { last[1](v); };
+    return h('div', null,
+      h('div', { className: 'grp' },
+        h('div', { className: 'lbl' }, 'Menü-Button · primär und neutral'),
+        h('div', { className: 'row' },
+          h(MB, {
+            label: 'Neu anlegen', icon: 'add', variant: 'primary', align: 'start', onSelect: log,
+            items: [
+              { value: 'vertrag', icon: 'description', label: 'Vertrag' },
+              { value: 'termin', icon: 'event', label: 'Termin' },
+              { value: 'notiz', icon: 'edit_note', label: 'Notiz' }
+            ]
+          }),
+          h(MB, {
+            label: 'Exportieren', variant: 'neutral', onSelect: log,
+            items: [
+              { value: 'pdf', label: 'Als PDF' },
+              { value: 'csv', label: 'Als CSV' },
+              { type: 'divider' },
+              { value: 'drucken', icon: 'print', label: 'Drucken' }
+            ]
+          }),
+          h(MB, { label: 'Gesperrt', variant: 'neutral', disabled: true, items: [] }))
+      ),
+      h('div', { className: 'grp' },
+        h('div', { className: 'lbl' }, 'Split-Button · Hauptaktion links, Varianten rechts'),
+        h('div', { className: 'row' },
+          h(SB, {
+            label: 'Speichern', variant: 'primary', align: 'end', onClick: function () { log('speichern'); }, onSelect: log,
+            items: [
+              { value: 'schliessen', label: 'Speichern und schließen' },
+              { value: 'kopie', label: 'Als Kopie speichern' },
+              { value: 'vorlage', label: 'Als Vorlage speichern' }
+            ]
+          }),
+          h(SB, {
+            label: 'Anfrage senden', variant: 'neutral',
+            onClick: function () { log('senden'); }, onSelect: log,
+            items: [
+              { value: 'spaeter', label: 'Später senden' },
+              { value: 'entwurf', label: 'Als Entwurf behalten' }
+            ]
+          }),
+          h(SB, { label: 'Nicht verfügbar', variant: 'neutral', disabled: true, items: [] }))
+      ),
+      h('div', null,
+        h('div', { className: 'lbl' }, 'Icon-Menü-Button · in einer Toolbar'),
+        h('div', { className: 'bar' },
+          h('span', { className: 'title' }, 'Spezialisten · 312 Einträge'),
+          h('div', { className: 'row' },
+            h(IB, {
+              icon: 'tune', ariaLabel: 'Ansicht anpassen', align: 'end', onSelect: log,
+              items: [
+                { value: 'dichte', label: 'Kompakte Zeilen', checked: true, keepOpen: true },
+                { value: 'spalten', label: 'Spalten wählen …' },
+                { type: 'divider' },
+                { value: 'zuruecksetzen', label: 'Ansicht zurücksetzen' }
+              ]
+            }),
+            h(IB, {
+              ariaLabel: 'Weitere Aktionen', onSelect: log,
+              items: [
+                { value: 'import', icon: 'upload', label: 'Importieren' },
+                { value: 'leeren', icon: 'delete_sweep', label: 'Auswahl leeren', danger: true }
+              ]
+            }),
+            h(IB, { ariaLabel: 'Gesperrt', disabled: true, items: [] }))),
+        h('div', { className: 'out' }, 'Zuletzt: ' + last[0])
+      )
+    );
+  }
+  ReactDOM.createRoot(document.getElementById('root')).render(h(Demo));
+</script>
+</body>
+</html>

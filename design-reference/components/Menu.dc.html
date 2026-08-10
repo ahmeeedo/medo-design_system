@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,300,0,0" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  body{margin:0}
+  ::selection{background:#e6e1d8}
+  .msr{font-family:'Material Symbols Rounded';font-weight:300;line-height:1;display:inline-block}
+  .mn-menu{background:#fff;border:1px solid #e2ded7;border-radius:12px;box-shadow:0 4px 8px rgba(31,29,26,0.06),0 14px 32px rgba(31,29,26,0.10);padding:6px;min-width:220px}
+  .mn-item{width:100%;text-align:left;appearance:none;border:none;background:transparent;font-family:'DM Sans',sans-serif;cursor:pointer;display:flex;align-items:center;gap:12px;padding:9px 10px;border-radius:8px;font-size:14px;color:#2c2925}
+  .mn-item:not([disabled]):hover,.mn-item.mn-hl{background:#f2f9f8}
+  .mn-item[disabled]{color:#b8b2a9;cursor:not-allowed}
+  .mn-item.mn-danger{color:#b23b2e}
+  .mn-item.mn-danger:not([disabled]):hover,.mn-item.mn-danger.mn-hl{background:#fbecea}
+  .mn-sh{margin-left:auto;font-family:'DM Mono',monospace;font-size:12px;color:#a49d92}
+  .mn-div{height:1px;background:#ececeb;margin:6px 4px}
+</style>
+</helmet>
+
+<div style="min-height:100%;background:#faf9f7;color:#1f1d1a;font-family:'DM Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased;padding:56px 40px 120px">
+  <div style="max-width:1000px;margin:0 auto">
+
+    <!-- HEADER -->
+    <div style="margin-bottom:44px">
+      <div style="font-family:'DM Mono',monospace;font-size:12px;letter-spacing:0.16em;color:#a49d92;text-transform:uppercase;margin-bottom:16px">Design System · Komponente · Menu</div>
+      <h1 style="font-size:49px;line-height:1.1;font-weight:700;letter-spacing:-0.02em;margin:0 0 14px">Menu</h1>
+      <p style="font-size:20px;line-height:1.5;color:#6f6a63;margin:0;max-width:680px">Ein Kontextmenü, das per Rechtsklick an der Cursorposition erscheint. Aktionen mit Icons und Tastenkürzeln, abgetrennte destruktive Aktion, volle Tastaturbedienung.</p>
+    </div>
+
+    <!-- RECHTSKLICK-DEMO -->
+    <div style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#a49d92;text-transform:uppercase;margin-bottom:18px">Rechtsklick-Bereich · zum Ausprobieren</div>
+    <div data-menuroot onContextMenu="{{ onContext }}" style="position:relative;background:#fff;border:1px dashed #d4cfc7;border-radius:16px;height:280px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;margin-bottom:16px;user-select:none">
+      <span class="msr" style="font-size:34px;color:{{ muted }}">right_click</span>
+      <div style="font-size:16px;color:{{ subtle }}">Rechtsklick (oder langes Tippen) irgendwo in diesem Feld</div>
+      <div style="font-family:'DM Mono',monospace;font-size:12px;color:{{ muted }}">{{ lastAction }}</div>
+      <sc-if value="{{ open }}" hint-placeholder-val="">
+        <div class="mn-menu" role="menu" data-menu style="position:absolute;top:{{ posY }};left:{{ posX }}">
+          <sc-for list="{{ items }}" as="it" hint-placeholder-count="5">
+            <sc-if value="{{ it.isDivider }}" hint-placeholder-val=""><div class="mn-div"></div></sc-if>
+            <sc-if value="{{ it.isItem }}" hint-placeholder-val="{{ true }}">
+              <button class="{{ it.cls }}" role="menuitem" data-mi="{{ it.idx }}" onClick="{{ it.onClick }}" onMouseEnter="{{ it.onHover }}">
+                <span class="msr" style="font-size:19px">{{ it.icon }}</span>{{ it.label }}<span class="mn-sh">{{ it.shortcut }}</span>
+              </button>
+            </sc-if>
+          </sc-for>
+        </div>
+      </sc-if>
+    </div>
+
+    <!-- ZUSTÄNDE -->
+    <div style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#a49d92;text-transform:uppercase;margin:8px 0 18px">Zustände (Eintrag)</div>
+    <div style="background:#fff;border:1px solid #e9e6e1;border-radius:16px;padding:36px;margin-bottom:48px">
+      <div class="mn-menu" style="box-shadow:none;border:1px solid #e2ded7;max-width:280px">
+        <button class="mn-item"><span class="msr" style="font-size:19px">content_copy</span>Default<span class="mn-sh">⌘C</span></button>
+        <button class="mn-item mn-hl"><span class="msr" style="font-size:19px">content_cut</span>Hover / markiert<span class="mn-sh">⌘X</span></button>
+        <button class="mn-item" style="color:#b8b2a9;cursor:not-allowed"><span class="msr" style="font-size:19px;color:#b8b2a9">content_paste</span>Deaktiviert</button>
+        <div class="mn-div"></div>
+        <button class="mn-item mn-danger"><span class="msr" style="font-size:19px">delete</span>Destruktiv<span class="mn-sh">⌫</span></button>
+      </div>
+    </div>
+
+    <!-- VERHALTEN -->
+    <div style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#a49d92;text-transform:uppercase;margin-bottom:18px">Verhalten</div>
+    <div style="background:#fff;border:1px solid #e9e6e1;border-radius:16px;padding:30px 34px;margin-bottom:48px">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px 40px">
+        <div style="display:flex;gap:11px;align-items:flex-start"><span class="msr" style="font-size:20px;color:{{ primary }};margin-top:1px">right_click</span><div><div style="font-size:14px;font-weight:600;color:{{ text }}">Rechtsklick öffnet</div><div style="font-size:13px;color:{{ muted }};margin-top:2px">Erscheint an der Cursorposition; verdrängt das Browser-Menü.</div></div></div>
+        <div style="display:flex;gap:11px;align-items:flex-start"><span class="msr" style="font-size:20px;color:{{ primary }};margin-top:1px">flip_to_front</span><div><div style="font-size:14px;font-weight:600;color:{{ text }}">Rand-Flip</div><div style="font-size:13px;color:{{ muted }};margin-top:2px">Am rechten/unteren Rand rückt das Menü nach innen.</div></div></div>
+        <div style="display:flex;gap:11px;align-items:flex-start"><span class="msr" style="font-size:20px;color:{{ primary }};margin-top:1px">keyboard</span><div><div style="font-size:14px;font-weight:600;color:{{ text }}">Tastatur</div><div style="font-size:13px;color:{{ muted }};margin-top:2px">Pfeile navigieren, Enter aktiviert, Esc schließt, Home/End.</div></div></div>
+        <div style="display:flex;gap:11px;align-items:flex-start"><span class="msr" style="font-size:20px;color:{{ primary }};margin-top:1px">match_case</span><div><div style="font-size:14px;font-weight:600;color:{{ text }}">Typeahead</div><div style="font-size:13px;color:{{ muted }};margin-top:2px">Anfangsbuchstabe springt zum passenden Eintrag.</div></div></div>
+      </div>
+    </div>
+
+    <!-- NUTZUNG -->
+    <div style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#a49d92;text-transform:uppercase;margin-bottom:18px">Im Einsatz · Datei-Kachel (Rechtsklick)</div>
+    <div data-menuroot onContextMenu="{{ onContextU }}" style="position:relative;background:#fff;border:1px solid #e9e6e1;border-radius:16px;padding:28px;margin-bottom:48px;user-select:none">
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px">
+        <sc-for list="{{ tiles }}" as="t" hint-placeholder-count="4">
+          <div style="display:flex;flex-direction:column;align-items:center;gap:10px;padding:18px 10px;border:1px solid #f1efec;border-radius:12px">
+            <span class="msr" style="font-size:32px;color:{{ icon }}">{{ t.icon }}</span>
+            <span style="font-size:13px;color:{{ text }};text-align:center">{{ t.name }}</span>
+          </div>
+        </sc-for>
+      </div>
+      <div style="font-family:'DM Mono',monospace;font-size:11px;color:{{ muted }};margin-top:18px">Rechtsklick auf die Fläche öffnet das Kontextmenü. {{ lastActionU }}</div>
+      <sc-if value="{{ openU }}" hint-placeholder-val="">
+        <div class="mn-menu" role="menu" data-menu style="position:absolute;top:{{ posYU }};left:{{ posXU }}">
+          <sc-for list="{{ itemsU }}" as="it" hint-placeholder-count="5">
+            <sc-if value="{{ it.isDivider }}" hint-placeholder-val=""><div class="mn-div"></div></sc-if>
+            <sc-if value="{{ it.isItem }}" hint-placeholder-val="{{ true }}">
+              <button class="{{ it.cls }}" role="menuitem" onClick="{{ it.onClick }}" onMouseEnter="{{ it.onHover }}"><span class="msr" style="font-size:19px">{{ it.icon }}</span>{{ it.label }}<span class="mn-sh">{{ it.shortcut }}</span></button>
+            </sc-if>
+          </sc-for>
+        </div>
+      </sc-if>
+    </div>
+
+    <!-- DO / DON'T -->
+    <div style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#a49d92;text-transform:uppercase;margin-bottom:18px">Einsatz</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+      <div style="background:#fff;border:1px solid #e9e6e1;border-radius:14px;border-top:3px solid #1f8a5b;padding:22px 24px">
+        <div style="font-size:13px;font-weight:600;color:#1f8a5b;margin-bottom:10px">Do</div>
+        <ul style="margin:0;padding-left:18px;font-size:14px;line-height:1.7;color:#3f3b36">
+          <li>Für kontextbezogene Aktionen zu einem konkreten Objekt.</li>
+          <li>Destruktive Aktion abtrennen und rot markieren.</li>
+          <li>Immer auch einen sichtbaren Weg zu denselben Aktionen anbieten.</li>
+        </ul>
+      </div>
+      <div style="background:#fff;border:1px solid #e9e6e1;border-radius:14px;border-top:3px solid #c0392b;padding:22px 24px">
+        <div style="font-size:13px;font-weight:600;color:#c0392b;margin-bottom:10px">Don't</div>
+        <ul style="margin:0;padding-left:18px;font-size:14px;line-height:1.7;color:#3f3b36">
+          <li>Nicht als einzigen Zugang zu einer Aktion (nicht entdeckbar).</li>
+          <li>Nicht mit Formularwert-Auswahl verwechseln — dafür Select.</li>
+          <li>Nicht überladen — kurze, gruppierte Aktionslisten.</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: { &quot;width&quot;: 1040, &quot;height&quot;: 560 }}">
+class Component extends DCLogic {
+  menuItems = [
+    { icon: 'content_cut', label: 'Ausschneiden', shortcut: '⌘X' },
+    { icon: 'content_copy', label: 'Kopieren', shortcut: '⌘C' },
+    { icon: 'content_paste', label: 'Einfügen', shortcut: '⌘V' },
+    { divider: true },
+    { icon: 'edit', label: 'Umbenennen', shortcut: '' },
+    { icon: 'push_pin', label: 'Anheften', shortcut: '' },
+    { divider: true },
+    { icon: 'delete', label: 'Löschen', shortcut: '⌫', danger: true }
+  ];
+  tiles = [
+    { icon: 'description', name: 'Bericht.pdf' },
+    { icon: 'image', name: 'Foto.jpg' },
+    { icon: 'table_chart', name: 'Daten.xlsx' },
+    { icon: 'folder', name: 'Projekte' }
+  ];
+  usageItems = [
+    { icon: 'open_in_new', label: 'Öffnen', shortcut: '↵' },
+    { icon: 'content_copy', label: 'Kopieren', shortcut: '⌘C' },
+    { icon: 'edit', label: 'Umbenennen', shortcut: '' },
+    { divider: true },
+    { icon: 'delete', label: 'Löschen', shortcut: '⌫', danger: true }
+  ];
+  state = { open: false, x: 0, y: 0, hl: -1, lastAction: 'Noch keine Aktion gewählt.', openU: false, xU: 0, yU: 0, hlU: -1, lastActionU: '' };
+
+  itemIndexes() {
+    const idx = [];
+    this.menuItems.forEach((it, i) => { if (!it.divider) idx.push(i); });
+    return idx;
+  }
+
+  componentDidMount() {
+    this._onDown = (e) => {
+      if (!e.target.closest('[data-menu]')) {
+        if (this.state.open) this.close();
+        if (this.state.openU) this.setState({ openU: false, hlU: -1 });
+      }
+    };
+    this._onKey = (e) => {
+      if (this.state.openU && e.key === 'Escape') { e.preventDefault(); this.setState({ openU: false, hlU: -1 }); return; }
+      if (!this.state.open) return;
+      if (e.key === 'Escape') { e.preventDefault(); this.close(); return; }
+      const order = this.itemIndexes();
+      const pos = order.indexOf(this.state.hl);
+      if (e.key === 'ArrowDown') { e.preventDefault(); const n = order[(pos + 1 + order.length) % order.length] ?? order[0]; this.setState({ hl: n }); }
+      else if (e.key === 'ArrowUp') { e.preventDefault(); const n = order[(pos - 1 + order.length) % order.length] ?? order[order.length - 1]; this.setState({ hl: n }); }
+      else if (e.key === 'Home') { e.preventDefault(); this.setState({ hl: order[0] }); }
+      else if (e.key === 'End') { e.preventDefault(); this.setState({ hl: order[order.length - 1] }); }
+      else if (e.key === 'Enter') { e.preventDefault(); if (this.state.hl >= 0) this.choose(this.menuItems[this.state.hl]); }
+      else if (e.key.length === 1 && /\S/.test(e.key)) {
+        const ch = e.key.toLowerCase();
+        const match = order.find(i => this.menuItems[i].label.toLowerCase().startsWith(ch));
+        if (match != null) this.setState({ hl: match });
+      }
+    };
+    document.addEventListener('mousedown', this._onDown);
+    document.addEventListener('keydown', this._onKey);
+  }
+  componentWillUnmount() {
+    document.removeEventListener('mousedown', this._onDown);
+    document.removeEventListener('keydown', this._onKey);
+  }
+
+  onContext = (e) => {
+    e.preventDefault();
+    const root = e.currentTarget.getBoundingClientRect();
+    const MENU_W = 224, MENU_H = 8 + this.menuItems.length * 40; // rough
+    let x = e.clientX - root.left;
+    let y = e.clientY - root.top;
+    if (x + MENU_W > root.width) x = Math.max(4, root.width - MENU_W - 4);
+    if (y + MENU_H > root.height) y = Math.max(4, root.height - MENU_H - 4);
+    this.setState({ open: true, x, y, hl: -1 });
+  };
+  close = () => this.setState({ open: false, hl: -1 });
+  choose = (it) => { this.setState({ open: false, hl: -1, lastAction: 'Zuletzt: ' + it.label }); };
+
+  onContextU = (e) => {
+    e.preventDefault();
+    const root = e.currentTarget.getBoundingClientRect();
+    const MENU_W = 224, MENU_H = 8 + this.usageItems.length * 40;
+    let x = e.clientX - root.left, y = e.clientY - root.top;
+    if (x + MENU_W > root.width) x = Math.max(4, root.width - MENU_W - 4);
+    if (y + MENU_H > root.height) y = Math.max(4, root.height - MENU_H - 4);
+    this.setState({ openU: true, xU: x, yU: y, hlU: -1, open: false });
+  };
+  chooseU = (it) => this.setState({ openU: false, hlU: -1, lastActionU: 'Zuletzt: ' + it.label });
+
+  oklchToLinear(L, C, H) {
+    const h = H * Math.PI / 180, a = C * Math.cos(h), b = C * Math.sin(h);
+    const l_ = L + 0.3963377774 * a + 0.2158037573 * b, m_ = L - 0.1055613458 * a - 0.0638541728 * b, s_ = L - 0.0894841775 * a - 1.2914855480 * b;
+    const l = l_ ** 3, m = m_ ** 3, s = s_ ** 3;
+    return { r: 4.0767416621 * l - 3.3077115913 * m + 0.2309699292 * s, g: -1.2684380046 * l + 2.6097574011 * m - 0.3413193965 * s, b: -0.0041960863 * l - 0.7034186147 * m + 1.7076147010 * s };
+  }
+  toHex(rgb) {
+    const g = v => { v = Math.min(1, Math.max(0, v)); return v <= 0.0031308 ? 12.92 * v : 1.055 * Math.pow(v, 1 / 2.4) - 0.055; };
+    const h = v => Math.round(g(v) * 255).toString(16).padStart(2, '0');
+    return '#' + h(rgb.r) + h(rgb.g) + h(rgb.b);
+  }
+  makeScale(hue, chromaPeak) {
+    const L = [0.976, 0.942, 0.888, 0.822, 0.748, 0.655, 0.470, 0.405, 0.348, 0.300, 0.252, 0.198];
+    const CM = [0.05, 0.10, 0.16, 0.24, 0.34, 0.45, 1.00, 0.95, 0.80, 0.62, 0.45, 0.30];
+    const T = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1100];
+    const o = {};
+    T.forEach((t, i) => { o[t] = this.toHex(this.oklchToLinear(L[i], chromaPeak * CM[i], hue)); });
+    return o;
+  }
+
+  renderVals() {
+    const ci = 1.25;
+    const stone = this.makeScale(70, 0.013 * ci);
+    const primary = this.makeScale(185, 0.115 * ci);
+    const items = this.menuItems.map((it, i) => {
+      if (it.divider) return { isDivider: true, isItem: false };
+      return {
+        isDivider: false, isItem: true, idx: i,
+        icon: it.icon, label: it.label, shortcut: it.shortcut || '',
+        cls: 'mn-item' + (it.danger ? ' mn-danger' : '') + (this.state.hl === i ? ' mn-hl' : ''),
+        onClick: () => this.choose(it),
+        onHover: () => this.setState({ hl: i })
+      };
+    });
+    const itemsU = this.usageItems.map((it, i) => {
+      if (it.divider) return { isDivider: true, isItem: false };
+      return {
+        isDivider: false, isItem: true,
+        icon: it.icon, label: it.label, shortcut: it.shortcut || '',
+        cls: 'mn-item' + (it.danger ? ' mn-danger' : '') + (this.state.hlU === i ? ' mn-hl' : ''),
+        onClick: () => this.chooseU(it),
+        onHover: () => this.setState({ hlU: i })
+      };
+    });
+
+    return {
+      muted: stone[1000] + 'ad', subtle: stone[800], text: stone[1000], icon: stone[900], primary: primary[600],
+      open: this.state.open, posX: this.state.x + 'px', posY: this.state.y + 'px',
+      items, lastAction: this.state.lastAction, onContext: this.onContext,
+      tiles: this.tiles, itemsU, openU: this.state.openU,
+      posXU: this.state.xU + 'px', posYU: this.state.yU + 'px',
+      lastActionU: this.state.lastActionU, onContextU: this.onContextU
+    };
+  }
+}
+</script>
+</body>
+</html>

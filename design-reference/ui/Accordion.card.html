@@ -1,0 +1,70 @@
+<!-- @dsCard group="Komponenten" viewport="700x680" name="Accordion" subtitle="Karte, abgesetzt und schlicht, Plus/Minus oder Chevron, alle auf/zu" -->
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  html,body{margin:0}
+  body{padding:24px 22px;font-family:var(--medo-font-sans);background:var(--medo-surface);color:var(--medo-text);min-height:680px;box-sizing:border-box}
+  .lbl{font-family:var(--medo-font-mono);font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:var(--medo-color-stone-500);margin-bottom:10px}
+  .grp{margin-bottom:26px;max-width:560px}
+  p{margin:0 0 8px}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+<script src="../_ds_bundle.js"></script>
+<script>
+  var h = React.createElement;
+  var Acc = window.MedoUI.Accordion;
+
+  var app = h('div', null,
+    h('div', { className: 'grp' },
+      h('div', { className: 'lbl' }, 'Karte · Plus/Minus, mehrere offen, alle auf/zu'),
+      h(Acc, {
+        variant: 'card', size: 'md', marker: 'plusminus',
+        showToggleAll: true, defaultValue: ['zulassung'],
+        items: [
+          { value: 'zulassung', icon: 'verified', title: 'Zulassung und Register',
+            subtitle: 'IHK-Registrierung, Vermittlernummer',
+            content: h('p', null, 'Ihre Registrierung wird jährlich gegen das Vermittlerregister geprüft. Änderungen übernehmen wir automatisch, sobald sie dort eingetragen sind.') },
+          { value: 'haftung', icon: 'gavel', title: 'Berufshaftpflicht', meta: '2 Angaben',
+            content: h('p', null, 'Versicherer und Deckungssumme sind für Ihr Netzwerk sichtbar, die Policennummer bleibt privat.') },
+          { value: 'archiv', title: 'Archivierte Nachweise', disabled: true, content: null }
+        ]
+      })
+    ),
+    h('div', { className: 'grp' },
+      h('div', { className: 'lbl' }, 'Abgesetzt · Chevron, nur einer offen'),
+      h(Acc, {
+        variant: 'separated', multiple: false, marker: 'chevron', size: 'sm',
+        items: [
+          { value: 'f1', title: 'Wer sieht mein Profil?',
+            content: h('p', null, 'Standardmäßig nur bestätigte Verbindungen. Sie können das Profil regional oder bundesweit öffnen.') },
+          { value: 'f2', title: 'Kann ich eine Verbindung wieder lösen?',
+            content: h('p', null, 'Ja, jederzeit. Die andere Person wird darüber nicht benachrichtigt.') },
+          { value: 'f3', title: 'Was passiert mit meinen Daten bei Kündigung?',
+            content: h('p', null, 'Ihr Profil wird sofort unsichtbar und nach 30 Tagen vollständig gelöscht.') }
+        ]
+      })
+    ),
+    h('div', { className: 'grp' },
+      h('div', { className: 'lbl' }, 'Schlicht · nur Linien, in bestehende Flächen eingebettet'),
+      h(Acc, {
+        variant: 'plain', marker: 'chevron', size: 'sm', multiple: false,
+        items: [
+          { value: 'p1', title: 'Rechnungsadresse',
+            content: h('p', null, 'Weicht sie von der Betriebsadresse ab, hinterlegen Sie sie hier — sie erscheint auf allen Belegen.') },
+          { value: 'p2', title: 'Zahlungsart',
+            content: h('p', null, 'SEPA-Lastschrift oder Rechnung. Ein Wechsel gilt ab der nächsten Abrechnungsperiode.') }
+        ]
+      })
+    )
+  );
+  ReactDOM.createRoot(document.getElementById('root')).render(app);
+</script>
+</body>
+</html>

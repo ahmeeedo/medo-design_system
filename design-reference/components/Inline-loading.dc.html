@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,300,0,0" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  body{margin:0}
+  ::selection{background:#e6e1d8}
+  .msr{font-family:'Material Symbols Rounded';font-weight:300;line-height:1;display:inline-block}
+  .il-dots{display:inline-flex;align-items:center;gap:3px}
+  .il-dot{border-radius:9999px;background:currentColor;animation:il-pulse 1.2s ease-in-out infinite}
+  .il-dot:nth-child(2){animation-delay:.2s}
+  .il-dot:nth-child(3){animation-delay:.4s}
+  @keyframes il-pulse{0%,80%,100%{opacity:.3;transform:scale(.72)}40%{opacity:1;transform:scale(1)}}
+  .il-btn{height:40px;padding:0 18px;border-radius:8px;border:none;font-family:inherit;font-weight:400;font-size:14px;display:inline-flex;align-items:center;justify-content:center;gap:9px;cursor:pointer}
+</style>
+</helmet>
+
+<div style="min-height:100%;background:#faf9f7;color:#1f1d1a;font-family:'DM Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased;padding:56px 40px 120px">
+  <div style="max-width:1000px;margin:0 auto">
+
+    <!-- HEADER -->
+    <div style="margin-bottom:44px">
+      <div style="font-family:'DM Mono',monospace;font-size:12px;letter-spacing:0.16em;color:#a49d92;text-transform:uppercase;margin-bottom:16px">Design System · Komponente · Inline loading</div>
+      <h1 style="font-size:49px;line-height:1.1;font-weight:700;letter-spacing:-0.02em;margin:0 0 14px">Inline loading</h1>
+      <p style="font-size:20px;line-height:1.5;color:#6f6a63;margin:0;max-width:700px">Ein kompakter Ladehinweis für den Textfluss — drei pulsierende Punkte, die in Erfolg oder Fehler übergehen. Für Buttons, neben Feldern und als eigenständige Statuszeile.</p>
+    </div>
+
+    <!-- ZUSTÄNDE -->
+    <div style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#a49d92;text-transform:uppercase;margin-bottom:18px">Zustände · mit Statustext</div>
+    <div style="background:#fff;border:1px solid #e9e6e1;border-radius:16px;padding:32px 36px;margin-bottom:48px">
+      <div style="display:flex;flex-direction:column;gap:22px">
+        <!-- lädt -->
+        <div style="display:flex;align-items:center;gap:11px">
+          <span class="il-dots" style="color:{{ primary }}"><span class="il-dot" style="width:7px;height:7px"></span><span class="il-dot" style="width:7px;height:7px"></span><span class="il-dot" style="width:7px;height:7px"></span></span>
+          <span style="font-size:14px;color:{{ text }}">Wird geladen …</span>
+        </div>
+        <!-- erfolg -->
+        <div style="display:flex;align-items:center;gap:10px">
+          <span class="msr" style="font-size:20px;color:{{ success }}">check_circle</span>
+          <span style="font-size:14px;color:{{ text }}">Fertig geladen</span>
+        </div>
+        <!-- fehler -->
+        <div style="display:flex;align-items:center;gap:10px">
+          <span class="msr" style="font-size:20px;color:{{ error }}">error</span>
+          <span style="font-size:14px;color:{{ text }}">Laden fehlgeschlagen</span>
+        </div>
+        <!-- inaktiv -->
+        <div style="display:flex;align-items:center;gap:10px">
+          <span class="msr" style="font-size:20px;color:{{ disabled }}">remove</span>
+          <span style="font-size:14px;color:{{ muted }}">Inaktiv</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- NUR SPINNER + GRÖSSEN -->
+    <div style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#a49d92;text-transform:uppercase;margin-bottom:18px">Nur Indikator · Größen sm / md</div>
+    <div style="background:#fff;border:1px solid #e9e6e1;border-radius:16px;padding:36px;margin-bottom:48px;display:flex;gap:48px;align-items:center;flex-wrap:wrap">
+      <div style="display:flex;flex-direction:column;align-items:center;gap:14px">
+        <span class="il-dots" style="color:{{ primary }}"><span class="il-dot" style="width:5px;height:5px"></span><span class="il-dot" style="width:5px;height:5px"></span><span class="il-dot" style="width:5px;height:5px"></span></span>
+        <span style="font-family:'DM Mono',monospace;font-size:11px;color:#a49d92">sm · 16px</span>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:14px">
+        <span class="il-dots" style="color:{{ primary }}"><span class="il-dot" style="width:7px;height:7px"></span><span class="il-dot" style="width:7px;height:7px"></span><span class="il-dot" style="width:7px;height:7px"></span></span>
+        <span style="font-family:'DM Mono',monospace;font-size:11px;color:#a49d92">md · 20px</span>
+      </div>
+    </div>
+
+    <!-- EINSATZORTE -->
+    <div style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#a49d92;text-transform:uppercase;margin-bottom:18px">Einsatzorte</div>
+    <div style="background:#fff;border:1px solid #e9e6e1;border-radius:16px;padding:36px;margin-bottom:16px">
+      <div style="display:flex;flex-direction:column;gap:28px">
+        <!-- im button -->
+        <div>
+          <div style="font-family:'DM Mono',monospace;font-size:11px;color:#a49d92;margin-bottom:12px">Im Button · Ladezustand</div>
+          <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center">
+            <button class="il-btn" onClick="{{ toggleBtn }}" style="background:{{ primary }};color:#fff;min-width:150px">
+              <sc-if value="{{ btnLoading }}" hint-placeholder-val=""><span class="il-dots" style="color:#fff"><span class="il-dot" style="width:6px;height:6px"></span><span class="il-dot" style="width:6px;height:6px"></span><span class="il-dot" style="width:6px;height:6px"></span></span></sc-if>
+              <sc-if value="{{ btnIdle }}" hint-placeholder-val="{{ true }}">Speichern</sc-if>
+            </button>
+            <span style="font-family:'DM Mono',monospace;font-size:12px;color:#a49d92">Klick startet ~2 s Ladezustand</span>
+          </div>
+        </div>
+        <!-- neben feld -->
+        <div>
+          <div style="font-family:'DM Mono',monospace;font-size:11px;color:#a49d92;margin-bottom:12px">Neben einem Feld · Live-Prüfung</div>
+          <div style="max-width:360px">
+            <label style="display:flex;align-items:center;justify-content:space-between;font-size:13px;color:{{ subtle }};margin-bottom:6px">Benutzername<span class="il-dots" style="color:{{ primary }}"><span class="il-dot" style="width:5px;height:5px"></span><span class="il-dot" style="width:5px;height:5px"></span><span class="il-dot" style="width:5px;height:5px"></span></span></label>
+            <div style="height:40px;border:1px solid {{ inputBorder }};border-radius:8px;display:flex;align-items:center;padding:0 12px;font-size:14px;color:{{ text }}">annamueller</div>
+            <div style="font-size:12px;color:{{ muted }};margin-top:6px">Verfügbarkeit wird geprüft …</div>
+          </div>
+        </div>
+        <!-- eigenständige zeile -->
+        <div>
+          <div style="font-family:'DM Mono',monospace;font-size:11px;color:#a49d92;margin-bottom:12px">Eigenständige Zeile</div>
+          <div style="display:flex;align-items:center;gap:11px;padding:14px 16px;background:{{ surface }};border-radius:10px;max-width:360px">
+            <span class="il-dots" style="color:{{ primary }}"><span class="il-dot" style="width:6px;height:6px"></span><span class="il-dot" style="width:6px;height:6px"></span><span class="il-dot" style="width:6px;height:6px"></span></span>
+            <span style="font-size:14px;color:{{ text }}">Daten werden geladen …</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="font-family:'DM Mono',monospace;font-size:11px;color:#a49d92;line-height:1.7;margin-bottom:48px">Der Indikator nutzt currentColor — Farbe wird vom Kontext geerbt (primär, oder weiß im gefüllten Button). role=status kündigt „Wird geladen" für Screenreader an.</div>
+
+    <!-- VERHALTEN -->
+    <div style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#a49d92;text-transform:uppercase;margin-bottom:18px">Verhalten</div>
+    <div style="background:#fff;border:1px solid #e9e6e1;border-radius:16px;padding:30px 34px;margin-bottom:48px">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px 40px">
+        <div style="display:flex;gap:11px;align-items:flex-start"><span class="msr" style="font-size:20px;color:{{ primary }};margin-top:1px">sync</span><div><div style="font-size:14px;font-weight:600;color:{{ text }}">Übergang zum Ergebnis</div><div style="font-size:13px;color:{{ muted }};margin-top:2px">Punkte gehen bei Abschluss in Häkchen bzw. Fehler-Icon über.</div></div></div>
+        <div style="display:flex;gap:11px;align-items:flex-start"><span class="msr" style="font-size:20px;color:{{ primary }};margin-top:1px">format_color_fill</span><div><div style="font-size:14px;font-weight:600;color:{{ text }}">currentColor</div><div style="font-size:13px;color:{{ muted }};margin-top:2px">Indikator erbt die Textfarbe des Kontexts — kein eigenes Farbtoken nötig.</div></div></div>
+        <div style="display:flex;gap:11px;align-items:flex-start"><span class="msr" style="font-size:20px;color:{{ primary }};margin-top:1px">block</span><div><div style="font-size:14px;font-weight:600;color:{{ text }}">Button gesperrt</div><div style="font-size:13px;color:{{ muted }};margin-top:2px">Im Ladezustand ist der Button nicht erneut auslösbar.</div></div></div>
+        <div style="display:flex;gap:11px;align-items:flex-start"><span class="msr" style="font-size:20px;color:{{ primary }};margin-top:1px">accessibility_new</span><div><div style="font-size:14px;font-weight:600;color:{{ text }}">Ansage</div><div style="font-size:13px;color:{{ muted }};margin-top:2px">role=status/aria-live meldet Beginn und Ende an Screenreader.</div></div></div>
+      </div>
+    </div>
+
+    <!-- DO / DON'T -->
+    <div style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#a49d92;text-transform:uppercase;margin-bottom:18px">Einsatz</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+      <div style="background:#fff;border:1px solid #e9e6e1;border-radius:14px;border-top:3px solid #1f8a5b;padding:22px 24px">
+        <div style="font-size:13px;font-weight:600;color:#1f8a5b;margin-bottom:10px">Do</div>
+        <ul style="margin:0;padding-left:18px;font-size:14px;line-height:1.7;color:#3f3b36">
+          <li>Für kurze, lokale Wartezeiten neben der auslösenden Stelle.</li>
+          <li>Ergebnis (Erfolg/Fehler) klar anzeigen, nicht nur ausblenden.</li>
+          <li>Auslösenden Button während des Ladens sperren.</li>
+        </ul>
+      </div>
+      <div style="background:#fff;border:1px solid #e9e6e1;border-radius:14px;border-top:3px solid #c0392b;padding:22px 24px">
+        <div style="font-size:13px;font-weight:600;color:#c0392b;margin-bottom:10px">Don't</div>
+        <ul style="margin:0;padding-left:18px;font-size:14px;line-height:1.7;color:#3f3b36">
+          <li>Nicht für ganzseitige Ladevorgänge — dafür Loading / Skeleton.</li>
+          <li>Nicht für bezifferbaren Fortschritt — dafür Progress bar.</li>
+          <li>Nicht ohne Ergebnisrückmeldung endlos drehen lassen.</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: { &quot;width&quot;: 1040, &quot;height&quot;: 820 }}">
+class Component extends DCLogic {
+  state = { btnLoading: false };
+  toggleBtn = () => {
+    if (this.state.btnLoading) return;
+    this.setState({ btnLoading: true });
+    setTimeout(() => this.setState({ btnLoading: false }), 2000);
+  };
+
+  oklchToLinear(L, C, H) {
+    const h = H * Math.PI / 180, a = C * Math.cos(h), b = C * Math.sin(h);
+    const l_ = L + 0.3963377774 * a + 0.2158037573 * b, m_ = L - 0.1055613458 * a - 0.0638541728 * b, s_ = L - 0.0894841775 * a - 1.2914855480 * b;
+    const l = l_ ** 3, m = m_ ** 3, s = s_ ** 3;
+    return { r: 4.0767416621 * l - 3.3077115913 * m + 0.2309699292 * s, g: -1.2684380046 * l + 2.6097574011 * m - 0.3413193965 * s, b: -0.0041960863 * l - 0.7034186147 * m + 1.7076147010 * s };
+  }
+  toHex(rgb) {
+    const g = v => { v = Math.min(1, Math.max(0, v)); return v <= 0.0031308 ? 12.92 * v : 1.055 * Math.pow(v, 1 / 2.4) - 0.055; };
+    const h = v => Math.round(g(v) * 255).toString(16).padStart(2, '0');
+    return '#' + h(rgb.r) + h(rgb.g) + h(rgb.b);
+  }
+  makeScale(hue, chromaPeak, ll, cc) {
+    const L = ll || [0.976, 0.942, 0.888, 0.822, 0.748, 0.655, 0.470, 0.405, 0.348, 0.300, 0.252, 0.198];
+    const CM = cc || [0.05, 0.10, 0.16, 0.24, 0.34, 0.45, 1.00, 0.95, 0.80, 0.62, 0.45, 0.30];
+    const T = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1100];
+    const o = {};
+    T.forEach((t, i) => { o[t] = this.toHex(this.oklchToLinear(L[i], chromaPeak * CM[i], hue)); });
+    return o;
+  }
+
+  renderVals() {
+    const ci = 1.25;
+    const stone = this.makeScale(70, 0.013 * ci);
+    const primary = this.makeScale(185, 0.115 * ci);
+    const success = this.makeScale(150, 0.14 * ci);
+    const error = this.makeScale(27, 0.15 * ci);
+    return {
+      primary: primary[600], success: success[600], error: error[600],
+      text: stone[1000], subtle: stone[800], muted: stone[1000] + 'ad', disabled: stone[500],
+      inputBorder: stone[400], surface: stone[50],
+      btnLoading: this.state.btnLoading, btnIdle: !this.state.btnLoading,
+      toggleBtn: this.toggleBtn
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!-- @dsCard group="Komponenten" viewport="700x380" name="Modal" subtitle="Bestätigung, Formular, zerstörende Aktion und große Warnung" -->
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  html,body{margin:0}
+  body{padding:24px 22px;font-family:var(--medo-font-sans);background:var(--medo-surface);color:var(--medo-text);min-height:380px;box-sizing:border-box}
+  .lbl{font-family:var(--medo-font-mono);font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:var(--medo-color-stone-500);margin-bottom:12px}
+  .row{display:flex;gap:14px;flex-wrap:wrap}
+  .btn{box-sizing:border-box;height:40px;padding:0 16px;display:inline-flex;align-items:center;gap:8px;font-family:inherit;font-size:14px;font-weight:400;border:1px solid var(--medo-border-strong);border-radius:var(--medo-radius-md);background:var(--medo-surface);color:var(--medo-text);cursor:pointer}
+  .btn:hover{background:var(--medo-state-hover)}
+  .btn:focus-visible{outline:none;box-shadow:0 0 0 3px var(--medo-focus-ring)}
+  .out{font-family:var(--medo-font-mono);font-size:12px;color:var(--medo-text-muted);margin-top:16px}
+  .field{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
+  .field label{font-size:12px;color:var(--medo-text-muted)}
+  .field input,.field textarea{box-sizing:border-box;padding:9px 12px;border:1px solid var(--medo-input-border);border-radius:var(--medo-radius-md);font-family:inherit;font-size:14px;color:var(--medo-text)}
+  .field input:focus-visible,.field textarea:focus-visible{outline:none;border-color:var(--medo-action);box-shadow:0 0 0 3px var(--medo-focus-ring)}
+  p{margin:0 0 10px}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+<script src="../_ds_bundle.js"></script>
+<script>
+  var h = React.createElement;
+  var MedoModal = window.MedoUI.Modal;
+
+  function Demo() {
+    var which = React.useState(null);
+    var last = React.useState('—');
+    var close = function () { which[1](null); };
+    var done = function (t) { return function () { last[1](t); which[1](null); }; };
+
+    return h('div', null,
+      h('div', { className: 'lbl' }, 'Auslöser'),
+      h('div', { className: 'row' },
+        h('button', { className: 'btn', onClick: function () { which[1]('confirm'); } }, 'Bestätigung · sm'),
+        h('button', { className: 'btn', onClick: function () { which[1]('form'); } }, 'Formular · md'),
+        h('button', { className: 'btn', onClick: function () { which[1]('danger'); } }, 'Zerstörend · sm'),
+        h('button', { className: 'btn', onClick: function () { which[1]('lg'); } }, 'Warnung · lg')),
+      h('div', { className: 'out' }, 'Zuletzt: ' + last[0]),
+
+      h(MedoModal, {
+        open: which[0] === 'confirm', onClose: close, size: 'sm',
+        icon: 'send', title: 'Anfrage jetzt senden?',
+        subtitle: 'Die Person wird benachrichtigt und kann Ihr vollständiges Profil sehen.',
+        confirmLabel: 'Anfrage senden', onConfirm: done('gesendet')
+      }),
+
+      h(MedoModal, {
+        open: which[0] === 'form', onClose: close, size: 'md', tone: 'neutral',
+        title: 'Verbindung anfragen',
+        subtitle: 'Ihre Nachricht ist nur für Dr. Marie Hoffmann sichtbar.',
+        confirmLabel: 'Anfrage senden', onConfirm: done('Anfrage mit Nachricht gesendet')
+      },
+        h('div', { className: 'field' },
+          h('label', { htmlFor: 'thema' }, 'Thema'),
+          h('input', { id: 'thema', 'data-autofocus': 'true', defaultValue: 'Betriebliche Altersvorsorge' })),
+        h('div', { className: 'field' },
+          h('label', { htmlFor: 'nachricht' }, 'Nachricht'),
+          h('textarea', { id: 'nachricht', rows: 4, defaultValue: 'Guten Tag, ich betreue einen Betrieb in Ihrer Region und suche fachliche Unterstützung.' }))),
+
+      h(MedoModal, {
+        open: which[0] === 'danger', onClose: close, size: 'sm',
+        tone: 'danger', icon: 'link_off', title: 'Verbindung lösen?',
+        subtitle: 'Der gemeinsame Verlauf bleibt erhalten, die Person verliert aber den Zugang zu Ihrem vollständigen Profil.',
+        confirmLabel: 'Verbindung lösen', onConfirm: done('Verbindung gelöst')
+      }),
+
+      h(MedoModal, {
+        open: which[0] === 'lg', onClose: close, size: 'lg',
+        tone: 'warning', icon: 'warning', title: 'Zulassung läuft in 14 Tagen ab',
+        subtitle: 'Ohne gültigen Nachweis wird Ihr Profil ab dem 22.08. nicht mehr in der Suche angezeigt.',
+        confirmLabel: 'Nachweis hochladen', onConfirm: done('Nachweis hochgeladen')
+      },
+        h('p', null, 'Wir prüfen den Nachweis in der Regel innerhalb eines Werktags. Bis dahin bleibt Ihr Profil unverändert sichtbar.'),
+        h('p', { style: { color: 'var(--medo-text-muted)', fontSize: '14px' } }, 'Zulässig sind PDF, JPG und PNG bis 10 MB.'))
+    );
+  }
+  ReactDOM.createRoot(document.getElementById('root')).render(h(Demo));
+</script>
+</body>
+</html>

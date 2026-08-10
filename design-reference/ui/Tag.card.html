@@ -1,0 +1,92 @@
+<!-- @dsCard group="Komponenten" viewport="700x400" name="Tag" subtitle="Sechs Farbrollen, zwei Stile, anzeigend / entfernbar / auswählbar" -->
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  html,body{margin:0}
+  body{padding:20px 22px;font-family:var(--medo-font-sans);background:var(--medo-surface);color:var(--medo-text);min-height:400px;box-sizing:border-box}
+  .lbl{font-family:var(--medo-font-mono);font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:var(--medo-color-stone-500);margin-bottom:10px}
+  .grp{margin-bottom:18px}
+  .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+  .sub{font-size:12px;font-weight:600;margin-bottom:8px}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+<script src="../_ds_bundle.js"></script>
+<script>
+  var h = React.createElement;
+  var MedoTag = window.MedoUI.Tag;
+
+  var rollen = [
+    ['neutral', 'Neutral'], ['primary', 'Primary'], ['success', 'Erfolg'],
+    ['warning', 'Warnung'], ['error', 'Fehler'], ['info', 'Info']
+  ];
+
+  function App() {
+    var s = React.useState(['design']);
+    var aktiv = s[0], setAktiv = s[1];
+    function toggle(v) {
+      setAktiv(aktiv.indexOf(v) < 0 ? aktiv.concat(v) : aktiv.filter(function (x) { return x !== v; }));
+    }
+    var f = React.useState(['Design', 'Marketing']);
+    var filter = f[0], setFilter = f[1];
+
+    return h('div', null,
+      h('div', { className: 'grp' },
+        h('div', { className: 'lbl' }, 'Farbrollen'),
+        h('div', { className: 'sub' }, 'Soft · Standard'),
+        h('div', { className: 'row', style: { marginBottom: '14px' } },
+          rollen.map(function (r) {
+            return h(MedoTag, { key: r[0], color: r[0], emphasis: 'soft', dot: r[0] !== 'neutral' }, r[1]);
+          })),
+        h('div', { className: 'sub' }, 'Kräftig'),
+        h('div', { className: 'row' },
+          rollen.map(function (r) {
+            return h(MedoTag, { key: r[0], color: r[0], emphasis: 'solid' }, r[1]);
+          }))
+      ),
+      h('div', { className: 'grp' },
+        h('div', { className: 'lbl' }, 'Entfernbar · gewählte Filter'),
+        h('div', { className: 'row' },
+          filter.length
+            ? filter.map(function (t) {
+                return h(MedoTag, {
+                  key: t, color: t === 'Design' ? 'primary' : 'neutral',
+                  removeLabel: t + ' entfernen',
+                  onRemove: function () { setFilter(filter.filter(function (x) { return x !== t; })); }
+                }, t);
+              })
+            : h('span', { style: { fontSize: '13px', color: 'var(--medo-text-muted)' } }, 'Keine Filter gewählt')
+        )
+      ),
+      h('div', { className: 'grp' },
+        h('div', { className: 'lbl' }, 'Auswählbar · Filterleiste'),
+        h('div', { className: 'row' },
+          [['design', 'Design'], ['technik', 'Technik'], ['recht', 'Recht']].map(function (o) {
+            return h(MedoTag, {
+              key: o[0], selectable: true, selected: aktiv.indexOf(o[0]) >= 0,
+              onClick: function () { toggle(o[0]); }
+            }, o[1]);
+          }),
+          h(MedoTag, { selectable: true, disabled: true }, 'Gesperrt')
+        )
+      ),
+      h('div', null,
+        h('div', { className: 'lbl' }, 'Größen · 22 / 28px'),
+        h('div', { className: 'row' },
+          h(MedoTag, { color: 'primary', size: 'sm', dot: true }, 'Kategorie'),
+          h(MedoTag, { color: 'primary', size: 'md', dot: true }, 'Kategorie'),
+          h(MedoTag, { color: 'success', size: 'md', icon: 'check_circle' }, 'Bestätigt')
+        )
+      )
+    );
+  }
+  ReactDOM.createRoot(document.getElementById('root')).render(h(App));
+</script>
+</body>
+</html>

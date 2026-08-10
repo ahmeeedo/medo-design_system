@@ -1,0 +1,57 @@
+<!-- @dsCard group="Komponenten" viewport="700x330" name="Link" subtitle="Standalone und inline, mit Icon, in drei Größen" -->
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  html,body{margin:0}
+  body{padding:20px 22px;font-family:var(--medo-font-sans);background:var(--medo-surface);color:var(--medo-text);min-height:330px;box-sizing:border-box}
+  .lbl{font-family:var(--medo-font-mono);font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:var(--medo-color-stone-500);margin-bottom:10px}
+  .grp{margin-bottom:18px}
+  .row{display:flex;gap:28px;flex-wrap:wrap;align-items:baseline}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+<script src="../_ds_bundle.js"></script>
+<script>
+  var h = React.createElement;
+  var MedoLink = window.MedoUI.Link;
+
+  function grp(label, kids) {
+    return h('div', { className: 'grp' },
+      h('div', { className: 'lbl' }, label),
+      h('div', { className: 'row' }, kids));
+  }
+
+  var app = h('div', null,
+    grp('Standalone · ohne Unterstreichung im Ruhezustand', [
+      h(MedoLink, { key: 1, variant: 'standalone', href: '#' }, 'Mehr erfahren'),
+      h(MedoLink, { key: 2, href: '#', icon: 'arrow_forward', iconPosition: 'trailing' }, 'Weiter'),
+      h(MedoLink, { key: 3, href: '#', icon: 'download', iconPosition: 'leading' }, 'Herunterladen'),
+      h(MedoLink, { key: 4, href: '#', external: true }, 'Extern öffnen'),
+      h(MedoLink, { key: 5, href: '#', disabled: true }, 'Nicht verfügbar')
+    ]),
+    h('div', { className: 'grp' },
+      h('div', { className: 'lbl' }, 'Inline im Fließtext · immer unterstrichen'),
+      h('p', { style: { fontSize: '16px', lineHeight: 1.7, margin: 0, maxWidth: '620px', color: 'var(--medo-text)' } },
+        'Alle Farben und Abstände folgen den ',
+        h(MedoLink, { variant: 'inline', href: '#' }, 'Design-Tokens'),
+        ' des Systems. Weiterführend gelten die ',
+        h(MedoLink, { variant: 'inline', href: '#' }, 'Barrierefreiheits-Richtlinien'),
+        '. Inline-Links sind immer unterstrichen, damit sie sich nicht allein über die Farbe erklären.'
+      )
+    ),
+    grp('Größen · 14 / 16 / 20px', [
+      h(MedoLink, { key: 1, variant: 'inline', size: 'sm', href: '#' }, 'Mehr erfahren'),
+      h(MedoLink, { key: 2, variant: 'inline', size: 'md', href: '#' }, 'Mehr erfahren'),
+      h(MedoLink, { key: 3, variant: 'inline', size: 'lg', href: '#' }, 'Mehr erfahren')
+    ])
+  );
+  ReactDOM.createRoot(document.getElementById('root')).render(app);
+</script>
+</body>
+</html>

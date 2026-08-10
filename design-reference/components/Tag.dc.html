@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,300,0,0" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  body{margin:0}
+  ::selection{background:#e6e1d8}
+  .msr{font-family:'Material Symbols Rounded';font-weight:300;line-height:1;display:inline-block}
+</style>
+</helmet>
+
+<div style="min-height:100%;background:#faf9f7;color:#1f1d1a;font-family:'DM Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased;padding:56px 40px 120px">
+  <div style="max-width:1000px;margin:0 auto">
+
+    <!-- HEADER -->
+    <div style="margin-bottom:48px">
+      <div style="font-family:'DM Mono',monospace;font-size:12px;letter-spacing:0.16em;color:#a49d92;text-transform:uppercase;margin-bottom:16px">Design System · Komponente · Tag</div>
+      <h1 style="font-size:49px;line-height:1.1;font-weight:700;letter-spacing:-0.02em;margin:0 0 14px">Tag</h1>
+      <p style="font-size:20px;line-height:1.5;color:#6f6a63;margin:0;max-width:640px">Kennzeichnet, kategorisiert oder filtert. Drei Typen — anzeigend, entfernbar, auswählbar — in sieben Farbrollen und zwei Stilen. Immer vollrund.</p>
+    </div>
+
+    <!-- COLOR VARIANTS -->
+    <div style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#a49d92;text-transform:uppercase;margin-bottom:18px">Farbvarianten</div>
+    <div style="background:#fff;border:1px solid #e9e6e1;border-radius:16px;padding:36px;margin-bottom:48px">
+      <div style="font-size:13px;font-weight:600;color:{{ text }};margin-bottom:14px">Soft <span style="font-family:'DM Mono',monospace;font-size:11px;color:#a49d92;font-weight:400">· Default</span></div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:26px">
+        <sc-for list="{{ softTags }}" as="t" hint-placeholder-count="7">
+          <span style="display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 12px;border-radius:9999px;font-size:14px;font-weight:500;background:{{ t.bg }};color:{{ t.text }}">
+            <sc-if value="{{ t.dot }}" hint-placeholder-val="{{ true }}"><span style="width:7px;height:7px;border-radius:9999px;background:{{ t.solid }}"></span></sc-if>
+            {{ t.name }}
+          </span>
+        </sc-for>
+      </div>
+      <div style="font-size:13px;font-weight:600;color:{{ text }};margin-bottom:14px">Kräftig</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+        <sc-for list="{{ solidTags }}" as="t" hint-placeholder-count="7">
+          <span style="display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 12px;border-radius:9999px;font-size:14px;font-weight:500;background:{{ t.bg }};color:{{ t.text }}">{{ t.name }}</span>
+        </sc-for>
+      </div>
+    </div>
+
+    <!-- TYPES -->
+    <div style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#a49d92;text-transform:uppercase;margin-bottom:18px">Typen</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:48px">
+      <div style="background:#fff;border:1px solid #e9e6e1;border-radius:16px;padding:26px 24px">
+        <div style="font-size:14px;font-weight:600;color:{{ text }};margin-bottom:4px">Label</div>
+        <div style="font-size:12px;color:{{ muted }};margin-bottom:16px;line-height:1.5">Rein anzeigend — Status, Kategorie.</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <span style="display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 12px;border-radius:9999px;font-size:14px;font-weight:500;background:{{ successBg }};color:{{ successText }}"><span style="width:7px;height:7px;border-radius:9999px;background:{{ successSolid }}"></span>Aktiv</span>
+          <span style="display:inline-flex;align-items:center;height:28px;padding:0 12px;border-radius:9999px;font-size:14px;font-weight:500;background:{{ neutralBg }};color:{{ text }}">Neu</span>
+        </div>
+      </div>
+      <div style="background:#fff;border:1px solid #e9e6e1;border-radius:16px;padding:26px 24px">
+        <div style="font-size:14px;font-weight:600;color:{{ text }};margin-bottom:4px">Removable</div>
+        <div style="font-size:12px;color:{{ muted }};margin-bottom:16px;line-height:1.5">Entfernbar — gewählte Filter.</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <sc-for list="{{ removable }}" as="t" hint-placeholder-count="2">
+            <span style="display:inline-flex;align-items:center;gap:4px;height:28px;padding:0 5px 0 12px;border-radius:9999px;font-size:14px;font-weight:500;background:{{ t.bg }};color:{{ t.text }}">{{ t.name }}<button aria-label="Entfernen" style="border:none;background:transparent;width:20px;height:20px;border-radius:9999px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;color:{{ t.solid }}" style-hover="background:{{ t.hover }}"><span class="msr" style="font-size:16px">close</span></button></span>
+          </sc-for>
+        </div>
+      </div>
+      <div style="background:#fff;border:1px solid #e9e6e1;border-radius:16px;padding:26px 24px">
+        <div style="font-size:14px;font-weight:600;color:{{ text }};margin-bottom:4px">Selectable</div>
+        <div style="font-size:12px;color:{{ muted }};margin-bottom:16px;line-height:1.5">Klickbar an/aus — Filterleiste.</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <span style="display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 12px;border-radius:9999px;font-size:14px;font-weight:500;background:{{ primary600 }};color:#fff;border:1px solid {{ primary600 }}"><span class="msr" style="font-size:16px">check</span>Aktiv</span>
+          <span style="display:inline-flex;align-items:center;height:28px;padding:0 12px;border-radius:9999px;font-size:14px;font-weight:500;background:#fff;color:{{ text }};border:1px solid {{ border }}">Entwurf</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- STATES (selectable) -->
+    <div style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#a49d92;text-transform:uppercase;margin-bottom:18px">Zustände · Selectable</div>
+    <div style="background:#fff;border:1px solid #e9e6e1;border-radius:16px;padding:8px 24px 20px;margin-bottom:48px;overflow-x:auto">
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);align-items:center;min-width:520px">
+        <sc-for list="{{ selStates }}" as="st" hint-placeholder-count="4">
+          <div style="font-family:'DM Mono',monospace;font-size:11px;color:#a49d92;text-align:center;padding:14px 0 6px">{{ st.name }}</div>
+        </sc-for>
+        <sc-for list="{{ selStates }}" as="st" hint-placeholder-count="4">
+          <div style="display:flex;align-items:center;justify-content:center;padding:16px 8px;border-top:1px solid #f4f1ec">
+            <span style="display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 12px;border-radius:9999px;font-size:14px;font-weight:500;background:{{ st.bg }};color:{{ st.text }};border:1px solid {{ st.border }};box-shadow:{{ st.ring }};cursor:{{ st.cursor }}">
+              <sc-if value="{{ st.check }}" hint-placeholder-val="{{ true }}"><span class="msr" style="font-size:16px">check</span></sc-if>
+              Filter
+            </span>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+
+    <!-- SIZES -->
+    <div style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#a49d92;text-transform:uppercase;margin-bottom:18px">Größen</div>
+    <div style="background:#fff;border:1px solid #e9e6e1;border-radius:16px;padding:36px;margin-bottom:48px">
+      <div style="display:flex;gap:28px;align-items:center;flex-wrap:wrap">
+        <sc-for list="{{ sizes }}" as="s" hint-placeholder-count="2">
+          <div style="display:flex;flex-direction:column;gap:10px;align-items:flex-start">
+            <span style="display:inline-flex;align-items:center;gap:6px;border-radius:9999px;font-weight:500;background:{{ primary50 }};color:{{ primary1000 }};height:{{ s.h }};padding:{{ s.pad }};font-size:{{ s.fs }}"><span style="border-radius:9999px;background:{{ primary600 }};width:{{ s.dot }};height:{{ s.dot }}"></span>Kategorie</span>
+            <span style="font-family:'DM Mono',monospace;font-size:12px;color:#a49d92">{{ s.token }} · H {{ s.h }}</span>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+
+    <!-- USAGE -->
+    <div style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#a49d92;text-transform:uppercase;margin-bottom:18px">Nutzung</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+      <div style="background:#fff;border:1px solid #e9e6e1;border-radius:14px;border-top:3px solid {{ successSolid }};padding:22px 24px">
+        <div style="font-size:13px;font-weight:600;color:{{ successSolid }};margin-bottom:10px">Do</div>
+        <ul style="margin:0;padding-left:18px;font-size:14px;line-height:1.7;color:#3f3b36">
+          <li>Kurze, prägnante Labels (1–2 Wörter).</li>
+          <li>Farbe konsistent einer Bedeutung zuordnen.</li>
+          <li>Status-Punkt bei Bedarf für schnelles Scannen.</li>
+        </ul>
+      </div>
+      <div style="background:#fff;border:1px solid #e9e6e1;border-radius:14px;border-top:3px solid {{ errorSolid }};padding:22px 24px">
+        <div style="font-size:13px;font-weight:600;color:{{ errorSolid }};margin-bottom:10px">Don't</div>
+        <ul style="margin:0;padding-left:18px;font-size:14px;line-height:1.7;color:#3f3b36">
+          <li>Tags nicht als Buttons für Aktionen missbrauchen.</li>
+          <li>Nicht zu viele Farben gleichzeitig einsetzen.</li>
+          <li>Bedeutung nie nur über die Farbe tragen.</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{
+  &quot;$preview&quot;: { &quot;width&quot;: 1040, &quot;height&quot;: 940 }
+}">
+class Component extends DCLogic {
+  oklchToLinear(L, C, H) {
+    const h = H * Math.PI / 180, a = C * Math.cos(h), b = C * Math.sin(h);
+    const l_ = L + 0.3963377774 * a + 0.2158037573 * b, m_ = L - 0.1055613458 * a - 0.0638541728 * b, s_ = L - 0.0894841775 * a - 1.2914855480 * b;
+    const l = l_ ** 3, m = m_ ** 3, s = s_ ** 3;
+    return { r: 4.0767416621 * l - 3.3077115913 * m + 0.2309699292 * s, g: -1.2684380046 * l + 2.6097574011 * m - 0.3413193965 * s, b: -0.0041960863 * l - 0.7034186147 * m + 1.7076147010 * s };
+  }
+  toHex(rgb) {
+    const g = v => { v = Math.min(1, Math.max(0, v)); return v <= 0.0031308 ? 12.92 * v : 1.055 * Math.pow(v, 1 / 2.4) - 0.055; };
+    const h = v => Math.round(g(v) * 255).toString(16).padStart(2, '0');
+    return '#' + h(rgb.r) + h(rgb.g) + h(rgb.b);
+  }
+  makeScale(hue, chromaPeak, lRamp, cmRamp) {
+    const L = lRamp || [0.976, 0.942, 0.888, 0.822, 0.748, 0.655, 0.470, 0.405, 0.348, 0.300, 0.252, 0.198];
+    const CM = cmRamp || [0.05, 0.10, 0.16, 0.24, 0.34, 0.45, 1.00, 0.95, 0.80, 0.62, 0.45, 0.30];
+    const T = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1100];
+    const o = {};
+    T.forEach((t, i) => { o[t] = this.toHex(this.oklchToLinear(L[i], chromaPeak * CM[i], hue)); });
+    return o;
+  }
+
+  renderVals() {
+    const ci = 1.25;
+    const stone = this.makeScale(70, 0.013 * ci);
+    const primary = this.makeScale(185, 0.115 * ci);
+    const error = this.makeScale(27, 0.15 * ci);
+    const success = this.makeScale(150, 0.14 * ci);
+    const info = this.makeScale(250, 0.15 * ci);
+    const amberL = [0.978, 0.952, 0.914, 0.872, 0.818, 0.746, 0.665, 0.592, 0.505, 0.418, 0.342, 0.280];
+    const amberCM = [0.12, 0.24, 0.40, 0.58, 0.76, 0.90, 1.00, 0.98, 0.90, 0.75, 0.58, 0.45];
+    const warning = this.makeScale(55, 0.128 * ci, amberL, amberCM);
+    const text = stone[1000], muted = `${stone[1000]}ad`, border = stone[400];
+    const ring = `0 0 0 3px ${primary[600]}59`;
+
+    const soft = (sc, name) => ({ name, bg: sc[50], text: sc[1000], solid: sc[600], hover: sc[100], dot: true });
+    const softTags = [
+      { name: 'Neutral', bg: stone[100], text: stone[1000], solid: stone[600], hover: stone[200], dot: false },
+      soft(primary, 'Primary'), soft(success, 'Erfolg'), soft(warning, 'Warnung'),
+      soft(error, 'Fehler'), soft(info, 'Info')
+    ];
+    const solidTags = [
+      { name: 'Neutral', bg: stone[700], text: '#ffffff' },
+      { name: 'Primary', bg: primary[600], text: '#ffffff' },
+      { name: 'Erfolg', bg: success[600], text: '#ffffff' },
+      { name: 'Warnung', bg: warning[600], text: stone[1000] },
+      { name: 'Fehler', bg: error[600], text: '#ffffff' },
+      { name: 'Info', bg: info[600], text: '#ffffff' }
+    ];
+    const removable = [
+      { name: 'Design', bg: primary[50], text: primary[1000], solid: primary[600], hover: primary[100] },
+      { name: 'Marketing', bg: stone[100], text: stone[1000], solid: stone[600], hover: stone[200] }
+    ];
+
+    const selStates = [
+      { name: 'Default', bg: '#ffffff', text, border, ring: 'none', cursor: 'pointer', check: false },
+      { name: 'Hover', bg: stone[100], text, border: stone[500], ring: 'none', cursor: 'pointer', check: false },
+      { name: 'Selected', bg: primary[600], text: '#ffffff', border: primary[600], ring: 'none', cursor: 'pointer', check: true },
+      { name: 'Disabled', bg: stone[50], text: stone[400], border: stone[200], ring: 'none', cursor: 'not-allowed', check: false }
+    ];
+
+    const sizes = [
+      { token: 'size-sm', h: '22px', pad: '0 10px', fs: '12px', dot: '6px' },
+      { token: 'size-md', h: '28px', pad: '0 12px', fs: '14px', dot: '7px' }
+    ];
+
+    return {
+      softTags, solidTags, removable, selStates, sizes,
+      text, muted, border,
+      neutralBg: stone[100],
+      successBg: success[50], successText: success[1000], successSolid: success[600],
+      primary600: primary[600], primary50: primary[50], primary1000: primary[1000],
+      errorSolid: error[600]
+    };
+  }
+}
+</script>
+</body>
+</html>

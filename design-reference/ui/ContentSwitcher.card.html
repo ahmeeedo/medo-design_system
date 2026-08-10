@@ -1,0 +1,91 @@
+<!-- @dsCard group="Komponenten" viewport="700x560" name="Content switcher" subtitle="Darstellung wechseln — neutral und outline, icon-only, volle Breite" -->
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  html,body{margin:0}
+  body{padding:24px 22px;font-family:var(--medo-font-sans);background:var(--medo-surface);color:var(--medo-text);min-height:560px;box-sizing:border-box}
+  .lbl{font-family:var(--medo-font-mono);font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:var(--medo-color-stone-500);margin-bottom:10px}
+  .grp{margin-bottom:26px}
+  .panel{margin-top:18px;background:var(--medo-surface-container);border-radius:var(--medo-radius-lg);padding:20px}
+  .rows{display:flex;flex-direction:column;gap:8px;max-width:380px}
+  .rows>div{height:16px;border-radius:5px;background:var(--medo-color-stone-200)}
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;max-width:380px}
+  .grid>div{aspect-ratio:1;border-radius:8px;background:var(--medo-color-stone-200)}
+  .kanban{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;max-width:380px}
+  .kanban>div{display:flex;flex-direction:column;gap:8px}
+  .kanban span{display:block;height:32px;border-radius:7px;background:var(--medo-color-stone-200)}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+<script src="../_ds_bundle.js"></script>
+<script>
+  var h = React.createElement;
+  var CS = window.MedoUI.ContentSwitcher;
+
+  function Demo() {
+    var v = React.useState('liste');
+    var z = React.useState('monat');
+    var body;
+    if (v[0] === 'liste') body = h('div', { className: 'rows' }, h('div'), h('div'), h('div'), h('div'));
+    else if (v[0] === 'raster') body = h('div', { className: 'grid' }, h('div'), h('div'), h('div'), h('div'), h('div'), h('div'));
+    else body = h('div', { className: 'kanban' },
+      h('div', null, h('span'), h('span')), h('div', null, h('span')), h('div', null, h('span'), h('span')));
+
+    return h('div', null,
+      h('div', { className: 'grp' },
+        h('div', { className: 'lbl' }, 'Neutral · icon-only, Label als Hinweis'),
+        h(CS, {
+          ariaLabel: 'Ansicht', iconOnly: true, variant: 'neutral', size: 'md', value: v[0], onChange: v[1],
+          items: [
+            { value: 'liste', label: 'Liste', icon: 'view_list' },
+            { value: 'raster', label: 'Raster', icon: 'grid_view' },
+            { value: 'kanban', label: 'Kanban', icon: 'view_kanban' }
+          ]
+        }),
+        h('div', { className: 'panel', role: 'tabpanel' }, body)
+      ),
+      h('div', { className: 'grp' },
+        h('div', { className: 'lbl' }, 'Neutral · mit Text, sm'),
+        h(CS, {
+          ariaLabel: 'Zeitraum', size: 'sm', value: z[0], onChange: z[1],
+          items: [
+            { value: 'monat', label: 'Monat' },
+            { value: 'quartal', label: 'Quartal' },
+            { value: 'jahr', label: 'Jahr' }
+          ]
+        })
+      ),
+      h('div', null,
+        h('div', { className: 'lbl' }, 'Outline · ein Segment deaktiviert'),
+        h(CS, {
+          ariaLabel: 'Diagrammtyp', variant: 'outline', defaultValue: 'balken',
+          items: [
+            { value: 'balken', label: 'Balken', icon: 'bar_chart' },
+            { value: 'linie', label: 'Linie', icon: 'show_chart' },
+            { value: 'kreis', label: 'Kreis', icon: 'donut_small', disabled: true }
+          ]
+        })
+      ),
+      h('div', { style: { marginTop: '26px', maxWidth: '380px' } },
+        h('div', { className: 'lbl' }, 'Volle Breite · gleich breite Segmente'),
+        h(CS, {
+          ariaLabel: 'Bearbeitungsstand', fullWidth: true, equalWidth: true, defaultValue: 'offen',
+          items: [
+            { value: 'offen', label: 'Offen' },
+            { value: 'bearbeitung', label: 'In Bearbeitung' },
+            { value: 'erledigt', label: 'Erledigt' }
+          ]
+        })
+      )
+    );
+  }
+  ReactDOM.createRoot(document.getElementById('root')).render(h(Demo));
+</script>
+</body>
+</html>

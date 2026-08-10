@@ -1,0 +1,73 @@
+<!-- @dsCard group="Komponenten" viewport="740x640" name="Date picker" subtitle="Feld, volle Breite, Bereich mit Schnellauswahl, Termin-Buchung" -->
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  html,body{margin:0}
+  body{padding:24px 22px;font-family:var(--medo-font-sans);background:var(--medo-surface);color:var(--medo-text);min-height:640px;box-sizing:border-box}
+  .lbl{font-family:var(--medo-font-mono);font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:var(--medo-color-stone-500);margin-bottom:12px}
+  .grp{margin-bottom:26px}
+  .row{display:flex;gap:28px;align-items:flex-start;flex-wrap:wrap}
+  .slotcol{display:flex;flex-direction:column;gap:10px;min-width:200px}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+<script src="../_ds_bundle.js"></script>
+<script>
+  var h = React.createElement;
+  var DP = window.MedoUI.DatePicker, TS = window.MedoUI.TimeSlots;
+
+  function tage(n) { var d = new Date(); d.setDate(d.getDate() + n); return d; }
+  function montag() { var d = new Date(); d.setDate(d.getDate() - ((d.getDay() + 6) % 7)); return d; }
+
+  function Demo() {
+    var einzel = React.useState(new Date(2026, 7, 14));
+    var bereich = React.useState({ start: new Date(2026, 7, 3), end: new Date(2026, 7, 12) });
+    var termin = React.useState(new Date(2026, 7, 11));
+    var zeit = React.useState('09:30');
+
+    return h('div', null,
+      h('div', { className: 'grp' },
+        h('div', { className: 'lbl' }, 'Feld · Einzeldatum'),
+        h('div', { className: 'row' },
+          h(DP, { label: 'Vertragsbeginn', mode: 'single', required: true, clearable: true, value: einzel[0], onChange: einzel[1] }),
+          h(DP, { label: 'Kündigung zum', placeholder: 'Datum wählen' }),
+          h(DP, { label: 'Prüfdatum', error: 'Datum liegt vor dem Vertragsbeginn.' }),
+          h(DP, { label: 'Abgeschlossen am', disabled: true, defaultValue: new Date(2025, 10, 2) })),
+        h('div', { style: { maxWidth: '420px', marginTop: '16px' } },
+          h(DP, { label: 'Stichtag', fullWidth: true, clearable: true, defaultValue: new Date(2026, 7, 31),
+                  hint: 'Volle Breite — in Formularspalten.' }))
+      ),
+      h('div', { className: 'grp' },
+        h('div', { className: 'lbl' }, 'Inline · Datumsbereich mit Schnellauswahl'),
+        h(DP, {
+          mode: 'range', inline: true, value: bereich[0], onChange: bereich[1],
+          presets: [
+            { label: 'Diese Woche', value: function () { return { start: montag(), end: tage(6 - ((new Date().getDay() + 6) % 7)) }; } },
+            { label: 'Letzte 30 Tage', value: function () { return { start: tage(-29), end: new Date() }; } },
+            { label: 'Nächste 14 Tage', value: function () { return { start: new Date(), end: tage(13) }; } }
+          ]
+        })
+      ),
+      h('div', null,
+        h('div', { className: 'lbl' }, 'Termin-Buchung · Verfügbarkeit'),
+        h('div', { className: 'row' },
+          h(DP, { inline: true, value: termin[0], onChange: termin[1], min: new Date(2026, 7, 1) }),
+          h('div', { className: 'slotcol' },
+            h('div', { className: 'lbl', style: { marginBottom: 0 } }, 'Uhrzeit am ' + termin[0].toLocaleDateString('de-DE')),
+            h(TS, {
+              value: zeit[0], onChange: zeit[1],
+              slots: ['09:00', '09:30', '10:00', { time: '10:30', disabled: true }, '11:00', { time: '11:30', disabled: true }, '14:00', '14:30', '15:00']
+            })))
+      )
+    );
+  }
+  ReactDOM.createRoot(document.getElementById('root')).render(h(Demo));
+</script>
+</body>
+</html>

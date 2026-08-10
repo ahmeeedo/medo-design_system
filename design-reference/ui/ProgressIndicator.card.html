@@ -1,0 +1,83 @@
+<!-- @dsCard group="Komponenten" viewport="700x420" name="Progress indicator" subtitle="Stepper waagerecht und senkrecht, mit Fehlerschritt" -->
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  html,body{margin:0}
+  body{padding:24px 22px;font-family:var(--medo-font-sans);background:var(--medo-surface);color:var(--medo-text);min-height:420px;box-sizing:border-box}
+  .lbl{font-family:var(--medo-font-mono);font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:var(--medo-color-stone-500);margin-bottom:14px}
+  .grp{margin-bottom:28px}
+  .row{display:flex;gap:12px;margin-top:18px}
+  .btn{box-sizing:border-box;height:36px;padding:0 14px;font-family:inherit;font-size:14px;font-weight:400;border:1px solid var(--medo-border-strong);border-radius:var(--medo-radius-md);background:var(--medo-surface);color:var(--medo-text);cursor:pointer}
+  .btn:disabled{color:var(--medo-text-disabled);cursor:not-allowed}
+  .btn--prim{background:var(--medo-action);color:var(--medo-action-text);border-color:transparent}
+  .cols{display:grid;grid-template-columns:1fr 1fr;gap:34px;align-items:start}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+<script src="../_ds_bundle.js"></script>
+<script>
+  var h = React.createElement;
+  var PI = window.MedoUI.ProgressIndicator;
+
+  var SCHRITTE = [
+    { title: 'Konto', subtitle: 'E-Mail bestätigt' },
+    { title: 'Zulassung', subtitle: 'IHK-Nummer geprüft' },
+    { title: 'Profil', subtitle: 'Schwerpunkte und Region' },
+    { title: 'Netzwerk', subtitle: 'Erste Anfragen', optional: true }
+  ];
+
+  function Demo() {
+    var i = React.useState(2);
+    return h('div', null,
+      h('div', { className: 'grp' },
+        h('div', { className: 'lbl' }, 'Waagerecht · erledigte Schritte sind klickbar'),
+        h(PI, {
+          steps: SCHRITTE, current: i[0], ariaLabel: 'Registrierung', orientation: 'horizontal', clickableDone: true,
+          onStepClick: function (idx) { i[1](idx); }
+        }),
+        h('div', { className: 'row' },
+          h('button', {
+            className: 'btn', disabled: i[0] === 0,
+            onClick: function () { i[1](Math.max(0, i[0] - 1)); }
+          }, 'Zurück'),
+          h('button', {
+            className: 'btn btn--prim', disabled: i[0] === SCHRITTE.length - 1,
+            onClick: function () { i[1](Math.min(SCHRITTE.length - 1, i[0] + 1)); }
+          }, 'Weiter'))
+      ),
+      h('div', { className: 'cols' },
+        h('div', null,
+          h('div', { className: 'lbl' }, 'Senkrecht · mit Unterzeilen'),
+          h(PI, {
+            orientation: 'vertical', current: 1, ariaLabel: 'Antrag',
+            steps: [
+              { title: 'Antrag gestellt', subtitle: '04.08.2026', status: 'done' },
+              { title: 'Prüfung', subtitle: 'Dauert in der Regel zwei Werktage', status: 'active' },
+              { title: 'Freigabe', status: 'pending' }
+            ]
+          })
+        ),
+        h('div', null,
+          h('div', { className: 'lbl' }, 'Senkrecht · mit Fehlerschritt'),
+          h(PI, {
+            orientation: 'vertical', current: 1, ariaLabel: 'Antrag mit Fehler',
+            steps: [
+              { title: 'Antrag gestellt', status: 'done' },
+              { title: 'Prüfung', subtitle: 'Unterlagen unvollständig — Gewerbeschein fehlt', status: 'error' },
+              { title: 'Freigabe' }
+            ]
+          })
+        )
+      )
+    );
+  }
+  ReactDOM.createRoot(document.getElementById('root')).render(h(Demo));
+</script>
+</body>
+</html>

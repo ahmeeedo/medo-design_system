@@ -1,0 +1,88 @@
+<!-- @dsCard group="Komponenten" viewport="700x900" name="Select" subtitle="Aufklappmenü, Mehrfachauswahl, Größen, volle Breite und nativ" -->
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  html,body{margin:0}
+  body{padding:20px 22px;font-family:var(--medo-font-sans);background:var(--medo-surface);color:var(--medo-text);min-height:900px;box-sizing:border-box}
+  .lbl{font-family:var(--medo-font-mono);font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:var(--medo-color-stone-500);margin-bottom:10px}
+  .grp{margin-bottom:18px}
+  .cols{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .cols3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+<script src="../_ds_bundle.js"></script>
+<script>
+  var h = React.createElement;
+  var Sel = window.MedoUI.Select;
+
+  var branchen = [
+    { value: 'kranken', label: 'Krankenversicherung', icon: 'health_and_safety' },
+    { value: 'leben', label: 'Lebensversicherung', icon: 'favorite' },
+    { value: 'sach', label: 'Sachversicherung', icon: 'home' },
+    { value: 'gewerbe', label: 'Gewerbeversicherung', icon: 'storefront', disabled: true }
+  ];
+  var gruppiert = [
+    { label: 'Privat', options: [
+      { value: 'kranken', label: 'Krankenversicherung' },
+      { value: 'leben', label: 'Lebensversicherung' }
+    ]},
+    { label: 'Gewerblich', options: [
+      { value: 'betrieb', label: 'Betriebshaftpflicht' },
+      { value: 'inhalt', label: 'Inhaltsversicherung' }
+    ]}
+  ];
+
+  function grp(label, kids, cls, extra) {
+    var st = { marginBottom: '18px' };
+    if (extra) for (var k in extra) st[k] = extra[k];
+    return h('div', { style: st }, h('div', { className: 'lbl' }, label), h('div', { className: cls }, kids));
+  }
+
+  function App() {
+    return h('div', null,
+      grp('Geöffnet · Auswahl in primary-100, aktive Zeile stone-100', [
+        h(Sel, { key: 1, label: 'Schwerpunkt', icon: 'category',
+                 defaultValue: 'leben', options: branchen, defaultOpen: true })
+      ], 'cols', { marginBottom: '186px' }),
+      grp('Zustände', [
+        h(Sel, { key: 1, label: 'Ohne Auswahl', options: branchen }),
+        h(Sel, { key: 2, label: 'Fehler', options: branchen, error: 'Bitte wählen Sie einen Schwerpunkt.' }),
+        h(Sel, { key: 3, label: 'Gesperrt', options: branchen, defaultValue: 'sach', disabled: true })
+      ], 'cols3'),
+      grp('Größen und native Variante', [
+        h(Sel, { key: 1, size: 'sm', label: 'Klein', options: branchen, defaultValue: 'kranken' }),
+        h(Sel, { key: 2, size: 'md', label: 'Mittel', options: branchen, defaultValue: 'leben', optional: true }),
+        h(Sel, { key: 3, size: 'lg', label: 'Groß', options: branchen, defaultValue: 'sach' }),
+        h(Sel, { key: 4, label: 'Nativ', native: true, options: branchen, defaultValue: 'leben',
+                 hint: 'Betriebssystem-Auswahl' })
+      ], 'cols3'),
+      grp('Mehrfachauswahl · Chips und Zählform', [
+        h(Sel, { key: 1, label: 'Schwerpunkte', multiple: true, multipleDisplay: 'chips', icon: 'category',
+                 defaultValue: ['kranken', 'leben', 'sach'], options: branchen,
+                 hint: 'Bleibt einzeilig — Rest als +N' }),
+        h(Sel, { key: 2, label: 'Schwerpunkte', multiple: true, multipleDisplay: 'count',
+                 defaultValue: ['leben', 'sach', 'kranken'], options: branchen,
+                 hint: 'Zählform bei vielen Werten' })
+      ], 'cols'),
+      grp('Gruppen', [
+        h(Sel, { key: 1, label: 'Bereich', options: gruppiert, hint: 'Mit Gruppenüberschriften' }),
+        h(Sel, { key: 2, label: 'Schwerpunkt', required: true, icon: 'category',
+                 defaultValue: 'leben', options: branchen })
+      ], 'cols'),
+      grp('Volle Breite', [
+        h(Sel, { key: 1, label: 'Zuständige Region', fullWidth: true, options: gruppiert,
+                 hint: 'Füllt die Formularspalte.' })
+      ], '')
+    );
+  }
+  ReactDOM.createRoot(document.getElementById('root')).render(h(App));
+</script>
+</body>
+</html>

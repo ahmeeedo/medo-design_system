@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,300,0,0" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  body{margin:0}
+  ::selection{background:#e6e1d8}
+  .msr{font-family:'Material Symbols Rounded';font-weight:300;line-height:1;display:inline-block}
+  .cl-card{border:1px solid #e9e6e1;border-radius:14px;overflow:hidden;background:#fff}
+  .cl-row{background:transparent}
+  .cl-row:not(:first-child){border-top:1px solid #ececeb}
+  .cl-row:not(.cl-dis){cursor:pointer}
+  .cl-row:not(.cl-dis):hover{background:#f7f7f6}
+  .cl-sel{background:#f2f9f8 !important}
+  .cl-dis{cursor:not-allowed}
+  [data-row]:focus-visible{outline:none;box-shadow:inset 0 0 0 2px #0072658c}
+  .cl-iconbtn:focus-visible{outline:none;box-shadow:0 0 0 3px #0e9d9159}
+</style>
+</helmet>
+
+<div style="min-height:100%;background:#faf9f7;color:#1f1d1a;font-family:'DM Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased;padding:56px 40px 120px">
+  <div style="max-width:1000px;margin:0 auto">
+
+    <!-- HEADER -->
+    <div style="margin-bottom:44px">
+      <div style="font-family:'DM Mono',monospace;font-size:12px;letter-spacing:0.16em;color:#a49d92;text-transform:uppercase;margin-bottom:16px">Design System · Komponente · Contained list</div>
+      <h1 style="font-size:49px;line-height:1.1;font-weight:700;letter-spacing:-0.02em;margin:0 0 14px">Contained list</h1>
+      <p style="font-size:20px;line-height:1.5;color:#6f6a63;margin:0;max-width:680px">Interaktive Zeilen in einer umrandeten Karte — zum Navigieren oder Auswählen. Mit Icon oder Avatar, Titel und Beschreibung, nachgestellter Meta, Chevron oder Aktion.</p>
+    </div>
+
+    <!-- NAVIGATION -->
+    <div style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#a49d92;text-transform:uppercase;margin-bottom:18px">Navigation · Icon + Titel/Beschreibung + Chevron/Aktion</div>
+    <div class="cl-card" style="margin-bottom:48px;max-width:560px">
+      <div role="list" data-list>
+        <sc-for list="{{ navRows }}" as="r" hint-placeholder-count="4">
+          <div role="button" data-row data-idx="{{ r.idx }}" class="{{ r.cls }}" aria-disabled="{{ r.disabled }}" tabindex="{{ r.tabindex }}" onClick="{{ r.onClick }}" onKeyDown="{{ r.onKey }}" style="display:flex;align-items:center;gap:14px;padding:14px 16px;opacity:{{ r.opacity }}">
+            <span style="width:40px;height:40px;border-radius:9px;background:{{ iconBg }};color:{{ icon }};display:inline-flex;align-items:center;justify-content:center;flex:none"><span class="msr" style="font-size:21px">{{ r.icon }}</span></span>
+            <div style="flex:1;min-width:0">
+              <div style="font-size:16px;font-weight:600;color:{{ text }}">{{ r.title }}</div>
+              <div style="font-size:13px;color:{{ muted }};margin-top:2px">{{ r.desc }}</div>
+            </div>
+            <sc-if value="{{ r.isChevron }}" hint-placeholder-val="{{ true }}"><span class="msr" style="font-size:22px;color:{{ chevron }};flex:none">chevron_right</span></sc-if>
+            <sc-if value="{{ r.isAction }}" hint-placeholder-val=""><span class="cl-iconbtn" role="button" tabindex="-1" aria-label="Weitere Aktionen" style="width:32px;height:32px;border-radius:7px;background:{{ iconBg }};color:{{ icon }};display:inline-flex;align-items:center;justify-content:center;flex:none"><span class="msr" style="font-size:20px">more_vert</span></span></sc-if>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+
+    <!-- MEHRFACHAUSWAHL -->
+    <div style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#a49d92;text-transform:uppercase;margin-bottom:18px">Mehrfachauswahl · Checkbox + Avatar + Meta</div>
+    <div class="cl-card" style="margin-bottom:48px;max-width:560px">
+      <div role="listbox" aria-multiselectable="true" aria-label="Mitglieder" data-list>
+        <sc-for list="{{ multiRows }}" as="r" hint-placeholder-count="3">
+          <div role="option" data-row data-idx="{{ r.idx }}" class="{{ r.cls }}" aria-selected="{{ r.selected }}" tabindex="{{ r.tabindex }}" onClick="{{ r.onClick }}" onKeyDown="{{ r.onKey }}" style="display:flex;align-items:center;gap:14px;padding:14px 16px">
+            <span style="width:20px;height:20px;border-radius:4px;border:1px solid {{ r.cbBorder }};background:{{ r.cbBg }};display:inline-flex;align-items:center;justify-content:center;flex:none"><sc-if value="{{ r.checked }}" hint-placeholder-val=""><span class="msr" style="font-size:16px;color:#fff">check</span></sc-if></span>
+            <span style="width:38px;height:38px;border-radius:9999px;background:{{ avatarBg }};color:{{ avatarText }};display:inline-flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;flex:none">{{ r.initials }}</span>
+            <div style="flex:1;min-width:0">
+              <div style="font-size:16px;font-weight:600;color:{{ text }}">{{ r.title }}</div>
+              <div style="font-size:13px;color:{{ muted }};margin-top:2px">{{ r.desc }}</div>
+            </div>
+            <span style="font-family:'DM Mono',monospace;font-size:12px;color:{{ muted }};flex:none">{{ r.meta }}</span>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+
+    <!-- EINFACHAUSWAHL -->
+    <div style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#a49d92;text-transform:uppercase;margin-bottom:18px">Einfachauswahl · Radio + Icon</div>
+    <div class="cl-card" style="margin-bottom:20px;max-width:560px">
+      <div role="listbox" aria-label="Leistungsmodus" data-list>
+        <sc-for list="{{ singleRows }}" as="r" hint-placeholder-count="3">
+          <div role="option" data-row data-idx="{{ r.idx }}" class="{{ r.cls }}" aria-selected="{{ r.selected }}" tabindex="{{ r.tabindex }}" onClick="{{ r.onClick }}" onKeyDown="{{ r.onKey }}" style="display:flex;align-items:center;gap:14px;padding:14px 16px">
+            <span style="width:20px;height:20px;border-radius:9999px;border:1px solid {{ r.rbBorder }};display:inline-flex;align-items:center;justify-content:center;flex:none"><sc-if value="{{ r.selectedBool }}" hint-placeholder-val=""><span style="width:10px;height:10px;border-radius:9999px;background:{{ checkFill }}"></span></sc-if></span>
+            <span style="width:38px;height:38px;border-radius:9px;background:{{ iconBg }};color:{{ icon }};display:inline-flex;align-items:center;justify-content:center;flex:none"><span class="msr" style="font-size:20px">{{ r.icon }}</span></span>
+            <div style="flex:1;min-width:0">
+              <div style="font-size:16px;font-weight:600;color:{{ text }}">{{ r.title }}</div>
+              <div style="font-size:13px;color:{{ muted }};margin-top:2px">{{ r.desc }}</div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+
+    <!-- GRUPPEN + STICKY HEADER -->
+    <div style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#a49d92;text-transform:uppercase;margin-bottom:18px">Gruppen · Sticky-Abschnitts-Header</div>
+    <div class="cl-card" style="margin-bottom:48px;max-width:560px;max-height:280px;overflow-y:auto;position:relative">
+      <sc-for list="{{ groups }}" as="g" hint-placeholder-count="2">
+        <div>
+          <div style="position:sticky;top:0;z-index:1;background:{{ groupBg }};padding:8px 16px;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.1em;color:{{ muted }};text-transform:uppercase;border-bottom:1px solid #ececeb">{{ g.label }}</div>
+          <sc-for list="{{ g.items }}" as="r" hint-placeholder-count="2">
+            <div role="button" class="cl-row" tabindex="0" style="display:flex;align-items:center;gap:14px;padding:14px 16px">
+              <span style="width:38px;height:38px;border-radius:9999px;background:{{ avatarBg }};color:{{ avatarText }};display:inline-flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;flex:none">{{ r.initials }}</span>
+              <div style="flex:1;min-width:0"><div style="font-size:16px;font-weight:600;color:{{ text }}">{{ r.title }}</div></div>
+              <span class="msr" style="font-size:22px;color:{{ chevron }};flex:none">chevron_right</span>
+            </div>
+          </sc-for>
+        </div>
+      </sc-for>
+    </div>
+
+    <!-- DICHTE sm vs md -->
+    <div style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#a49d92;text-transform:uppercase;margin-bottom:18px">Dichte · sm vs. md</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:48px;max-width:820px">
+      <div>
+        <div style="font-family:'DM Mono',monospace;font-size:11px;color:#a49d92;margin-bottom:10px">sm — kompakt</div>
+        <div class="cl-card">
+          <sc-for list="{{ navRows }}" as="r" hint-placeholder-count="4">
+            <div role="button" class="{{ r.cls }}" tabindex="-1" style="display:flex;align-items:center;gap:10px;padding:8px 12px;opacity:{{ r.opacity }}">
+              <span style="width:30px;height:30px;border-radius:7px;background:{{ iconBg }};color:{{ icon }};display:inline-flex;align-items:center;justify-content:center;flex:none"><span class="msr" style="font-size:17px">{{ r.icon }}</span></span>
+              <div style="flex:1;min-width:0;font-size:13px;font-weight:600;color:{{ text }}">{{ r.title }}</div>
+              <span class="msr" style="font-size:19px;color:{{ chevron }};flex:none">chevron_right</span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+      <div>
+        <div style="font-family:'DM Mono',monospace;font-size:11px;color:#a49d92;margin-bottom:10px">md — Standard</div>
+        <div class="cl-card">
+          <sc-for list="{{ navRows }}" as="r" hint-placeholder-count="4">
+            <div role="button" class="{{ r.cls }}" tabindex="-1" style="display:flex;align-items:center;gap:14px;padding:14px 16px;opacity:{{ r.opacity }}">
+              <span style="width:40px;height:40px;border-radius:9px;background:{{ iconBg }};color:{{ icon }};display:inline-flex;align-items:center;justify-content:center;flex:none"><span class="msr" style="font-size:21px">{{ r.icon }}</span></span>
+              <div style="flex:1;min-width:0;font-size:16px;font-weight:600;color:{{ text }}">{{ r.title }}</div>
+              <span class="msr" style="font-size:22px;color:{{ chevron }};flex:none">chevron_right</span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+
+    <!-- ZUSTÄNDE -->
+    <div style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#a49d92;text-transform:uppercase;margin-bottom:18px">Zustände (Zeile)</div>
+    <div class="cl-card" style="margin-bottom:48px;max-width:560px">
+      <div class="cl-row" style="display:flex;align-items:center;gap:14px;padding:14px 16px">
+        <div style="flex:1;font-size:16px;font-weight:600;color:{{ text }}">Default</div>
+      </div>
+      <div class="cl-row" style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:#f7f7f6">
+        <div style="flex:1;font-size:16px;font-weight:600;color:{{ text }}">Hover</div>
+      </div>
+      <div class="cl-row" style="display:flex;align-items:center;gap:14px;padding:14px 16px;box-shadow:inset 0 0 0 2px #0072658c">
+        <div style="flex:1;font-size:16px;font-weight:600;color:{{ text }}">Fokus</div>
+      </div>
+      <div class="cl-row cl-sel" style="display:flex;align-items:center;gap:14px;padding:14px 16px">
+        <div style="flex:1;font-size:16px;font-weight:600;color:{{ text }}">Ausgewählt</div>
+        <span class="msr" style="font-size:20px;color:{{ checkFill }}">check</span>
+      </div>
+      <div class="cl-row cl-dis" style="display:flex;align-items:center;gap:14px;padding:14px 16px;opacity:0.5">
+        <div style="flex:1;font-size:16px;font-weight:600;color:{{ text }}">Deaktiviert</div>
+      </div>
+    </div>
+
+    <!-- LEERZUSTAND -->
+    <div style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#a49d92;text-transform:uppercase;margin-bottom:18px">Leerzustand</div>
+    <div class="cl-card" style="margin-bottom:48px;max-width:560px;padding:48px 32px;text-align:center">
+      <div style="width:52px;height:52px;border-radius:9999px;background:{{ iconBg }};color:{{ muted }};display:inline-flex;align-items:center;justify-content:center;margin-bottom:16px"><span class="msr" style="font-size:26px">inbox</span></div>
+      <div style="font-size:16px;font-weight:600;color:{{ text }}">Keine Einträge</div>
+      <div style="font-size:13px;color:{{ muted }};margin-top:4px">Sobald etwas hinzugefügt wird, erscheint es hier.</div>
+    </div>
+
+    <!-- NUTZUNG -->
+    <div style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#a49d92;text-transform:uppercase;margin-bottom:18px">Im Einsatz · Kontoeinstellungen</div>
+    <div class="cl-card" style="margin-bottom:48px;max-width:560px">
+      <sc-for list="{{ usageRows }}" as="r" hint-placeholder-count="4">
+        <div role="button" class="cl-row" tabindex="0" style="display:flex;align-items:center;gap:14px;padding:14px 16px">
+          <span style="width:40px;height:40px;border-radius:9px;background:{{ iconBg }};color:{{ icon }};display:inline-flex;align-items:center;justify-content:center;flex:none"><span class="msr" style="font-size:21px">{{ r.icon }}</span></span>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:16px;font-weight:600;color:{{ text }}">{{ r.title }}</div>
+            <div style="font-size:13px;color:{{ muted }};margin-top:2px">{{ r.desc }}</div>
+          </div>
+          <span class="msr" style="font-size:22px;color:{{ chevron }};flex:none">chevron_right</span>
+        </div>
+      </sc-for>
+    </div>
+
+    <!-- DO / DON'T -->
+    <div style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#a49d92;text-transform:uppercase;margin-bottom:18px">Einsatz</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+      <div style="background:#fff;border:1px solid #e9e6e1;border-radius:14px;border-top:3px solid #1f8a5b;padding:22px 24px">
+        <div style="font-size:13px;font-weight:600;color:#1f8a5b;margin-bottom:10px">Do</div>
+        <ul style="margin:0;padding-left:18px;font-size:14px;line-height:1.7;color:#3f3b36">
+          <li>Für klickbare oder auswählbare Zeilen in einem klar abgegrenzten Container.</li>
+          <li>Gruppen mit Sticky-Header bei langen, sortierten Listen nutzen.</li>
+          <li>sm-Dichte in datenreichen, kompakten Bereichen.</li>
+        </ul>
+      </div>
+      <div style="background:#fff;border:1px solid #e9e6e1;border-radius:14px;border-top:3px solid #c0392b;padding:22px 24px">
+        <div style="font-size:13px;font-weight:600;color:#c0392b;margin-bottom:10px">Don't</div>
+        <ul style="margin:0;padding-left:18px;font-size:14px;line-height:1.7;color:#3f3b36">
+          <li>Nicht für reine Anzeige ohne Interaktion — dafür List.</li>
+          <li>Nicht Navigation und Mehrfachauswahl in derselben Liste mischen.</li>
+          <li>Nicht mehr als zwei Gruppierungsebenen verwenden.</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: { &quot;width&quot;: 1040, &quot;height&quot;: 900 }}">
+class Component extends DCLogic {
+  navRows = [
+    { icon: 'folder', title: 'Dokumente', desc: '128 Dateien', trailing: 'chevron' },
+    { icon: 'image', title: 'Medien', desc: '32 Bilder', trailing: 'chevron' },
+    { icon: 'group', title: 'Freigaben', desc: 'Von 4 Personen', trailing: 'action' },
+    { icon: 'lock', title: 'Archiv', desc: 'Schreibgeschützt', trailing: 'chevron', disabled: true }
+  ];
+  multiRows = [
+    { id: 'm0', initials: 'AM', title: 'Anna Müller', desc: 'anna@medo.de', meta: 'Admin' },
+    { id: 'm1', initials: 'BK', title: 'Ben Krüger', desc: 'ben@medo.de', meta: 'Bearbeiter' },
+    { id: 'm2', initials: 'CS', title: 'Clara Schmidt', desc: 'clara@medo.de', meta: 'Betrachter' }
+  ];
+  singleRows = [
+    { id: 's0', icon: 'bolt', title: 'Standard', desc: 'Ausgewogene Leistung' },
+    { id: 's1', icon: 'speed', title: 'Leistung', desc: 'Maximale Geschwindigkeit' },
+    { id: 's2', icon: 'eco', title: 'Sparsam', desc: 'Längere Akkulaufzeit' }
+  ];
+  groupsData = [
+    { label: 'A–M', items: [{ initials: 'AM', title: 'Anna Müller' }, { initials: 'BK', title: 'Ben Krüger' }] },
+    { label: 'N–Z', items: [{ initials: 'CS', title: 'Clara Schmidt' }, { initials: 'TW', title: 'Tim Weber' }] }
+  ];
+  usageData = [
+    { icon: 'person', title: 'Profil', desc: 'Name, Foto, Kontaktdaten' },
+    { icon: 'lock', title: 'Passwort & Sicherheit', desc: 'Anmeldedaten verwalten' },
+    { icon: 'notifications', title: 'Benachrichtigungen', desc: 'E-Mail und Push' },
+    { icon: 'credit_card', title: 'Zahlung', desc: 'Karten und Rechnungen' }
+  ];
+  state = { navFocus: 0, multi: { m0: true, m1: false, m2: true }, multiFocus: 0, single: 's1', singleFocus: 1 };
+
+  oklchToLinear(L, C, H) {
+    const h = H * Math.PI / 180, a = C * Math.cos(h), b = C * Math.sin(h);
+    const l_ = L + 0.3963377774 * a + 0.2158037573 * b, m_ = L - 0.1055613458 * a - 0.0638541728 * b, s_ = L - 0.0894841775 * a - 1.2914855480 * b;
+    const l = l_ ** 3, m = m_ ** 3, s = s_ ** 3;
+    return { r: 4.0767416621 * l - 3.3077115913 * m + 0.2309699292 * s, g: -1.2684380046 * l + 2.6097574011 * m - 0.3413193965 * s, b: -0.0041960863 * l - 0.7034186147 * m + 1.7076147010 * s };
+  }
+  toHex(rgb) {
+    const g = v => { v = Math.min(1, Math.max(0, v)); return v <= 0.0031308 ? 12.92 * v : 1.055 * Math.pow(v, 1 / 2.4) - 0.055; };
+    const h = v => Math.round(g(v) * 255).toString(16).padStart(2, '0');
+    return '#' + h(rgb.r) + h(rgb.g) + h(rgb.b);
+  }
+  makeScale(hue, chromaPeak) {
+    const L = [0.976, 0.942, 0.888, 0.822, 0.748, 0.655, 0.470, 0.405, 0.348, 0.300, 0.252, 0.198];
+    const CM = [0.05, 0.10, 0.16, 0.24, 0.34, 0.45, 1.00, 0.95, 0.80, 0.62, 0.45, 0.30];
+    const T = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1100];
+    const o = {};
+    T.forEach((t, i) => { o[t] = this.toHex(this.oklchToLinear(L[i], chromaPeak * CM[i], hue)); });
+    return o;
+  }
+
+  enabledRows(list) {
+    return [...list.querySelectorAll('[data-row]')].filter(r => r.getAttribute('aria-disabled') !== 'true');
+  }
+  move(list, group, e) {
+    const rows = this.enabledRows(list);
+    const cur = rows.indexOf(e.currentTarget);
+    let ni = cur;
+    if (e.key === 'ArrowDown') ni = (cur + 1) % rows.length;
+    else if (e.key === 'ArrowUp') ni = (cur - 1 + rows.length) % rows.length;
+    else if (e.key === 'Home') ni = 0;
+    else if (e.key === 'End') ni = rows.length - 1;
+    else return null;
+    e.preventDefault();
+    const target = rows[ni];
+    const gi = parseInt(target.dataset.idx, 10);
+    this.setState({ [group]: gi });
+    target.focus();
+    return gi;
+  }
+
+  navKey = (e) => {
+    const list = e.currentTarget.closest('[data-list]');
+    if (['ArrowDown', 'ArrowUp', 'Home', 'End'].includes(e.key)) { this.move(list, 'navFocus', e); }
+    else if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); }
+  };
+  multiKey = (id, i, e) => {
+    const list = e.currentTarget.closest('[data-list]');
+    if (['ArrowDown', 'ArrowUp', 'Home', 'End'].includes(e.key)) { this.move(list, 'multiFocus', e); }
+    else if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); this.toggleMulti(id); }
+  };
+  singleKey = (id, i, e) => {
+    const list = e.currentTarget.closest('[data-list]');
+    if (['ArrowDown', 'ArrowUp', 'Home', 'End'].includes(e.key)) { this.move(list, 'singleFocus', e); }
+    else if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); this.setState({ single: id }); }
+  };
+
+  toggleMulti(id) { this.setState(s => ({ multi: { ...s.multi, [id]: !s.multi[id] } })); }
+
+  renderVals() {
+    const ci = 1.25;
+    const stone = this.makeScale(70, 0.013 * ci);
+    const primary = this.makeScale(185, 0.115 * ci);
+    const text = stone[1000], muted = stone[1000] + 'ad', controlBorder = stone[400], checkFill = primary[600];
+
+    const nav = this.navRows.map((r, i) => ({
+      idx: i, icon: r.icon, title: r.title, desc: r.desc,
+      disabled: !!r.disabled,
+      opacity: r.disabled ? 0.5 : 1,
+      cls: ['cl-row', r.disabled ? 'cl-dis' : ''].join(' ').trim(),
+      tabindex: r.disabled ? -1 : (i === this.state.navFocus ? 0 : -1),
+      isChevron: r.trailing === 'chevron' && !r.disabled ? true : (r.trailing === 'chevron' ? true : false),
+      isAction: r.trailing === 'action',
+      onClick: r.disabled ? (() => {}) : (() => this.setState({ navFocus: i })),
+      onKey: this.navKey
+    }));
+
+    const multi = this.multiRows.map((r, i) => {
+      const checked = !!this.state.multi[r.id];
+      return {
+        idx: i, id: r.id, initials: r.initials, title: r.title, desc: r.desc, meta: r.meta,
+        checked, selected: checked ? 'true' : 'false',
+        cbBg: checked ? checkFill : '#ffffff', cbBorder: checked ? checkFill : controlBorder,
+        cls: ['cl-row', checked ? 'cl-sel' : ''].join(' ').trim(),
+        tabindex: i === this.state.multiFocus ? 0 : -1,
+        onClick: () => { this.toggleMulti(r.id); this.setState({ multiFocus: i }); },
+        onKey: (e) => this.multiKey(r.id, i, e)
+      };
+    });
+
+    const single = this.singleRows.map((r, i) => {
+      const sel = this.state.single === r.id;
+      return {
+        idx: i, id: r.id, icon: r.icon, title: r.title, desc: r.desc,
+        selectedBool: sel, selected: sel ? 'true' : 'false',
+        rbBorder: sel ? checkFill : controlBorder,
+        cls: ['cl-row', sel ? 'cl-sel' : ''].join(' ').trim(),
+        tabindex: i === this.state.singleFocus ? 0 : -1,
+        onClick: () => this.setState({ single: r.id, singleFocus: i }),
+        onKey: (e) => this.singleKey(r.id, i, e)
+      };
+    });
+
+    return {
+      text, muted, icon: stone[900], iconBg: stone[100], chevron: stone[500],
+      checkFill, avatarBg: primary[100], avatarText: primary[800],
+      navRows: nav, multiRows: multi, singleRows: single,
+      groups: this.groupsData, groupBg: '#ffffff', usageRows: this.usageData
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!-- @dsCard group="Komponenten" viewport="660x740" name="Code snippet" subtitle="Inline, einzeilig, Block mit und ohne Zeilennummern, Terminal" -->
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  html,body{margin:0}
+  body{padding:24px 22px;font-family:var(--medo-font-sans);background:var(--medo-surface);color:var(--medo-text);min-height:740px;box-sizing:border-box}
+  .lbl{font-family:var(--medo-font-mono);font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:var(--medo-color-stone-500);margin-bottom:12px}
+  .grp{margin-bottom:24px;max-width:540px}
+  p{margin:0;font-size:16px;line-height:1.7;color:var(--medo-text)}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+<script src="../_ds_bundle.js"></script>
+<script>
+  var h = React.createElement;
+  var CS = window.MedoUI.CodeSnippet;
+
+  var BLOCK = [
+    'import { Button } from "@medo/ui";',
+    '',
+    '// Anfrage an einen Spezialisten senden',
+    'export function Anfrage({ empfaenger }) {',
+    '  const [offen, setOffen] = useState(false);',
+    '',
+    '  return (',
+    '    <Button variant="primary" onClick={() => setOffen(true)}>',
+    '      Anfrage senden',
+    '    </Button>',
+    '  );',
+    '}'
+  ].join('\n');
+
+  var TERM = ['$ medo build   # erzeugt dist/', '# Fertig in 2.4s', '$ medo deploy'].join('\n');
+
+  var app = h('div', null,
+    h('div', { className: 'grp' },
+      h('div', { className: 'lbl' }, 'Inline'),
+      h('p', null,
+        'Führe ', h(CS, { variant: 'inline' }, 'npm install'),
+        ' aus und importiere die Komponente mit ', h(CS, { variant: 'inline' }, 'import { Button }'), '.')
+    ),
+    h('div', { className: 'grp' },
+      h('div', { className: 'lbl' }, 'Einzeilig · mit Kopieren'),
+      h(CS, { variant: 'single', code: 'npx medo init --template=app' })
+    ),
+    h('div', { className: 'grp' },
+      h('div', { className: 'lbl' }, 'Block · Zeilennummern, Sprach-Label, Ausklappen'),
+      h(CS, { variant: 'block', language: 'tsx', code: BLOCK })
+    ),
+    h('div', { className: 'grp' },
+      h('div', { className: 'lbl' }, 'Block · ohne Zeilennummern und ohne Syntaxfarben'),
+      h(CS, { variant: 'block', language: 'json', showLineNumbers: false, highlight: false,
+              code: '{\n  "vermittlernummer": "D-1A2B-3C4D-56",\n  "status": "aktiv"\n}' })
+    ),
+    h('div', { className: 'grp' },
+      h('div', { className: 'lbl' }, 'Terminal · $-Prompt'),
+      h(CS, { variant: 'terminal', code: TERM })
+    )
+  );
+  ReactDOM.createRoot(document.getElementById('root')).render(app);
+</script>
+</body>
+</html>

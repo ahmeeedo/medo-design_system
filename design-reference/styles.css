@@ -1,0 +1,17 @@
+/* medo Design System — globaler CSS-Einstiegspunkt.
+   Nur @import-Zeilen. Konsumenten verlinken ausschliesslich diese Datei. */
+
+/* DM Sans und DM Mono liegen lokal in fonts/ — offline-fähig. */
+@import "fonts.css";
+
+/* Material Symbols Rounded liegt nicht lokal vor. Weight 300, FILL 0, GRAD 0. */
+@import url("https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,300,0,0");
+
+@import "tokens/brand-colors.css";
+@import "tokens/alias-colors.css";
+@import "tokens/semantic-colors.css";
+@import "tokens/typography.css";
+@import "tokens/spacing.css";
+@import "tokens/radii.css";
+@import "tokens/elevation.css";
+@import "tokens/layout.css";

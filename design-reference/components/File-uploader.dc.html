@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,300,0,0" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  body{margin:0}
+  ::selection{background:#e6e1d8}
+  .msr{font-family:'Material Symbols Rounded';font-weight:300;line-height:1;display:inline-block}
+  .fu-zone{border:1.5px dashed #c6c2ba;border-radius:14px;background:#faf9f7;padding:36px 24px;text-align:center;cursor:pointer;transition:border-color .15s,background .15s}
+  .fu-zone:hover{border-color:#9a948a;background:#f5f3f0}
+  .fu-zone.drag{border-color:#007265;background:#f2f9f8;border-style:solid}
+  .fu-zone.dis{cursor:not-allowed;opacity:0.55;background:#f3f1ee}
+  .fu-btn{height:40px;padding:0 16px;border-radius:8px;border:1px solid #c6c4c2;background:#fff;color:#24221e;font-family:inherit;font-weight:400;font-size:14px;cursor:pointer;display:inline-flex;align-items:center;gap:8px}
+  .fu-btn:hover{background:#f7f7f6}
+  .fu-item{display:flex;align-items:center;gap:13px;padding:12px 14px;border:1px solid #e9e6e1;border-radius:11px;background:#fff}
+  .fu-item.fu-err{border-color:#e0b8b2;background:#fdf6f5}
+  .fu-thumb{width:40px;height:40px;border-radius:8px;flex:none;display:inline-flex;align-items:center;justify-content:center;overflow:hidden}
+  .fu-bar{height:5px;border-radius:9999px;background:#ececeb;overflow:hidden;margin-top:6px}
+  .fu-fill{height:100%;border-radius:9999px;background:#007265;transition:width .2s}
+  .fu-x{appearance:none;border:none;background:transparent;cursor:pointer;width:30px;height:30px;border-radius:7px;display:inline-flex;align-items:center;justify-content:center;flex:none;color:#5c574f}
+  .fu-x:hover{background:#ececeb}
+</style>
+</helmet>
+
+<div style="min-height:100%;background:#faf9f7;color:#1f1d1a;font-family:'DM Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased;padding:56px 40px 120px">
+  <div style="max-width:1000px;margin:0 auto">
+
+    <!-- HEADER -->
+    <div style="margin-bottom:44px">
+      <div style="font-family:'DM Mono',monospace;font-size:12px;letter-spacing:0.16em;color:#a49d92;text-transform:uppercase;margin-bottom:16px">Design System · Komponente · File uploader</div>
+      <h1 style="font-size:49px;line-height:1.1;font-weight:700;letter-spacing:-0.02em;margin:0 0 14px">File uploader</h1>
+      <p style="font-size:20px;line-height:1.5;color:#6f6a63;margin:0;max-width:700px">Dateien hochladen — per Dropzone zum Hineinziehen oder als kompakter Button. Mit Typ-Icon, Vorschau, Fortschritt, Status und Format-Hinweis.</p>
+    </div>
+
+    <!-- DROPZONE (MEHRFACH) -->
+    <div style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#a49d92;text-transform:uppercase;margin-bottom:18px">Dropzone · mehrere Dateien</div>
+    <div style="background:#fff;border:1px solid #e9e6e1;border-radius:16px;padding:28px;margin-bottom:48px">
+      <div class="fu-zone {{ dragCls }}" onClick="{{ addDemo }}" onDragOver="{{ onDragOver }}" onDragLeave="{{ onDragLeave }}" onDrop="{{ onDrop }}">
+        <sc-if value="{{ isDragging }}" hint-placeholder-val="">
+          <span class="msr" style="font-size:36px;color:{{ accent }}">download</span>
+          <div style="font-size:16px;font-weight:600;margin-top:8px;color:{{ accent }}">Zum Hochladen loslassen</div>
+          <div style="font-size:13px;color:{{ muted }};margin-top:6px">PNG, JPG, PDF · bis 10 MB pro Datei</div>
+        </sc-if>
+        <sc-if value="{{ notDragging }}" hint-placeholder-val="{{ true }}">
+          <span class="msr" style="font-size:36px;color:{{ accent }}">cloud_upload</span>
+          <div style="font-size:16px;font-weight:600;margin-top:8px">Dateien hierher ziehen oder <span style="color:{{ accent }}">durchsuchen</span></div>
+          <div style="font-size:13px;color:{{ muted }};margin-top:6px">PNG, JPG, PDF · bis 10 MB pro Datei</div>
+        </sc-if>
+      </div>
+      <sc-if value="{{ hasFiles }}" hint-placeholder-val="">
+        <div style="display:flex;flex-direction:column;gap:10px;margin-top:16px">
+          <sc-for list="{{ files }}" as="f" hint-placeholder-count="3">
+            <div class="{{ f.itemCls }}">
+              <span class="fu-thumb" style="background:{{ f.thumbBg }}">
+                <sc-if value="{{ f.isImage }}" hint-placeholder-val=""><span style="width:100%;height:100%;background:{{ f.previewGrad }}"></span></sc-if>
+                <sc-if value="{{ f.isDoc }}" hint-placeholder-val="{{ true }}"><span class="msr" style="font-size:21px;color:{{ f.iconColor }}">{{ f.icon }}</span></sc-if>
+              </span>
+              <div style="flex:1;min-width:0">
+                <div style="display:flex;align-items:center;gap:8px">
+                  <span style="font-size:14px;font-weight:600;color:{{ text }};white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ f.name }}</span>
+                  <sc-if value="{{ f.done }}" hint-placeholder-val=""><span class="msr" style="font-size:17px;color:{{ success }};flex:none">check_circle</span></sc-if>
+                  <sc-if value="{{ f.error }}" hint-placeholder-val=""><span class="msr" style="font-size:17px;color:{{ danger }};flex:none">error</span></sc-if>
+                </div>
+                <div style="font-size:12px;color:{{ f.metaColor }};margin-top:1px">{{ f.meta }}</div>
+                <sc-if value="{{ f.uploading }}" hint-placeholder-val="{{ true }}"><div class="fu-bar"><div class="fu-fill" style="width:{{ f.pct }}"></div></div></sc-if>
+              </div>
+              <button class="fu-x" aria-label="Entfernen" onClick="{{ f.onRemove }}"><span class="msr" style="font-size:19px">close</span></button>
+            </div>
+          </sc-for>
+        </div>
+      </sc-if>
+    </div>
+
+    <!-- KOMPAKT (EINZEL) -->
+    <div style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#a49d92;text-transform:uppercase;margin-bottom:18px">Kompakt · einzelne Datei</div>
+    <div style="background:#fff;border:1px solid #e9e6e1;border-radius:16px;padding:28px;margin-bottom:16px">
+      <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+        <button class="fu-btn" onClick="{{ pickSingle }}"><span class="msr" style="font-size:19px">attach_file</span>Datei wählen</button>
+        <sc-if value="{{ noSingle }}" hint-placeholder-val="{{ true }}"><span style="font-size:14px;color:{{ muted }}">Keine Datei ausgewählt · PDF bis 10 MB</span></sc-if>
+        <sc-if value="{{ hasSingle }}" hint-placeholder-val="">
+          <div class="fu-item" style="flex:1;min-width:240px">
+            <span class="fu-thumb" style="background:{{ single.thumbBg }}"><span class="msr" style="font-size:21px;color:{{ single.iconColor }}">{{ single.icon }}</span></span>
+            <div style="flex:1;min-width:0">
+              <div style="font-size:14px;font-weight:600;color:{{ text }}">{{ single.name }}</div>
+              <div style="font-size:12px;color:{{ muted }};margin-top:1px">{{ single.meta }}</div>
+            </div>
+            <button class="fu-x" aria-label="Entfernen" onClick="{{ removeSingle }}"><span class="msr" style="font-size:19px">close</span></button>
+          </div>
+        </sc-if>
+      </div>
+    </div>
+
+    <div style="font-family:'DM Mono',monospace;font-size:11px;color:#a49d92;line-height:1.7;margin-bottom:48px">Klick auf die Dropzone (oder „durchsuchen") fügt Demo-Dateien mit simuliertem Fortschritt hinzu; eine Datei landet absichtlich im Fehlerzustand (zu groß). Ziehen über die Fläche zeigt den Drag-Zustand.</div>
+
+    <!-- ZUSTÄNDE -->
+    <div style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#a49d92;text-transform:uppercase;margin-bottom:18px">Zustände</div>
+    <div style="background:#fff;border:1px solid #e9e6e1;border-radius:16px;padding:36px;margin-bottom:48px">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px 28px;max-width:760px">
+        <!-- Dropzone default -->
+        <div>
+          <div class="fu-zone" style="padding:22px 16px;cursor:default"><span class="msr" style="font-size:26px;color:{{ accent }}">cloud_upload</span><div style="font-size:14px;font-weight:600;margin-top:6px">Ziehen oder durchsuchen</div></div>
+          <div style="font-family:'DM Mono',monospace;font-size:11px;color:#a49d92;margin-top:10px">Dropzone · Default</div>
+        </div>
+        <!-- Dropzone drag -->
+        <div>
+          <div class="fu-zone drag" style="padding:22px 16px;cursor:default"><span class="msr" style="font-size:26px;color:{{ accent }}">download</span><div style="font-size:14px;font-weight:600;margin-top:6px;color:{{ accent }}">Zum Hochladen loslassen</div></div>
+          <div style="font-family:'DM Mono',monospace;font-size:11px;color:#a49d92;margin-top:10px">Dropzone · Drag über Fläche</div>
+        </div>
+        <!-- Lädt -->
+        <div>
+          <div class="fu-item">
+            <span class="fu-thumb" style="background:#c0392b18"><span class="msr" style="font-size:21px;color:#c0392b">picture_as_pdf</span></span>
+            <div style="flex:1;min-width:0"><div style="font-size:14px;font-weight:600;color:{{ text }}">Praesentation.pdf</div><div style="font-size:12px;color:{{ muted }};margin-top:1px">62% · 2,4 MB</div><div class="fu-bar"><div class="fu-fill" style="width:62%"></div></div></div>
+            <button class="fu-x" aria-label="Abbrechen"><span class="msr" style="font-size:19px">close</span></button>
+          </div>
+          <div style="font-family:'DM Mono',monospace;font-size:11px;color:#a49d92;margin-top:10px">Lädt hoch</div>
+        </div>
+        <!-- Erfolg -->
+        <div>
+          <div class="fu-item">
+            <span class="fu-thumb" style="background:#000"><span style="width:100%;height:100%;background:linear-gradient(135deg,#8ec7be,#2a6fdb)"></span></span>
+            <div style="flex:1;min-width:0"><div style="display:flex;align-items:center;gap:8px"><span style="font-size:14px;font-weight:600;color:{{ text }}">Team-Foto.jpg</span><span class="msr" style="font-size:17px;color:{{ success }}">check_circle</span></div><div style="font-size:12px;color:{{ muted }};margin-top:1px">Fertig · 3,1 MB</div></div>
+            <button class="fu-x" aria-label="Entfernen"><span class="msr" style="font-size:19px">close</span></button>
+          </div>
+          <div style="font-family:'DM Mono',monospace;font-size:11px;color:#a49d92;margin-top:10px">Erfolgreich</div>
+        </div>
+        <!-- Fehler -->
+        <div>
+          <div class="fu-item fu-err">
+            <span class="fu-thumb" style="background:#8a6d1f18"><span class="msr" style="font-size:21px;color:#8a6d1f">folder_zip</span></span>
+            <div style="flex:1;min-width:0"><div style="display:flex;align-items:center;gap:8px"><span style="font-size:14px;font-weight:600;color:{{ text }}">Grosse-Datei.zip</span><span class="msr" style="font-size:17px;color:{{ danger }}">error</span></div><div style="font-size:12px;color:{{ danger }};margin-top:1px">Zu groß · max. 10 MB</div></div>
+            <button class="fu-x" aria-label="Entfernen"><span class="msr" style="font-size:19px">close</span></button>
+          </div>
+          <div style="font-family:'DM Mono',monospace;font-size:11px;color:#a49d92;margin-top:10px">Fehler</div>
+        </div>
+        <!-- Deaktiviert -->
+        <div>
+          <div class="fu-zone dis" style="padding:22px 16px"><span class="msr" style="font-size:26px;color:{{ muted }}">block</span><div style="font-size:14px;font-weight:600;margin-top:6px;color:{{ muted }}">Upload deaktiviert</div></div>
+          <div style="font-family:'DM Mono',monospace;font-size:11px;color:#a49d92;margin-top:10px">Deaktiviert</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DO / DON'T -->
+    <div style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#a49d92;text-transform:uppercase;margin-bottom:18px">Einsatz</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+      <div style="background:#fff;border:1px solid #e9e6e1;border-radius:14px;border-top:3px solid #1f8a5b;padding:22px 24px">
+        <div style="font-size:13px;font-weight:600;color:#1f8a5b;margin-bottom:10px">Do</div>
+        <ul style="margin:0;padding-left:18px;font-size:14px;line-height:1.7;color:#3f3b36">
+          <li>Erlaubte Typen und Max-Größe vorab nennen.</li>
+          <li>Dropzone für mehrere/große Dateien, Button für einzelne.</li>
+          <li>Fortschritt zeigen und Abbrechen/Entfernen anbieten.</li>
+        </ul>
+      </div>
+      <div style="background:#fff;border:1px solid #e9e6e1;border-radius:14px;border-top:3px solid #c0392b;padding:22px 24px">
+        <div style="font-size:13px;font-weight:600;color:#c0392b;margin-bottom:10px">Don't</div>
+        <ul style="margin:0;padding-left:18px;font-size:14px;line-height:1.7;color:#3f3b36">
+          <li>Fehler nicht nur per Farbe — Text/Icon ergänzen.</li>
+          <li>Keine stille Zurückweisung ungültiger Dateien.</li>
+          <li>Nicht ohne sichtbaren Weg zum Entfernen zeigen.</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: { &quot;width&quot;: 1040, &quot;height&quot;: 720 }}">
+class Component extends DCLogic {
+  seq = 0;
+  demoPool = [
+    { name: 'Praesentation.pdf', size: 2_400_000, kind: 'pdf' },
+    { name: 'Team-Foto.jpg', size: 3_100_000, kind: 'image' },
+    { name: 'Vertrag.docx', size: 840_000, kind: 'doc' },
+    { name: 'Grosse-Datei.zip', size: 14_000_000, kind: 'zip', tooBig: true }
+  ];
+  state = { drag: false, files: [], single: null };
+
+  fmtSize(b) {
+    if (b >= 1_000_000) return (b / 1_000_000).toFixed(1).replace('.', ',') + ' MB';
+    return Math.round(b / 1000) + ' KB';
+  }
+
+  addDemo = () => {
+    const def = this.demoPool[this.seq % this.demoPool.length];
+    this.seq++;
+    const id = 'f' + this.seq;
+    if (def.tooBig) {
+      this.setState(s => ({ files: [...s.files, { id, name: def.name, size: def.size, kind: def.kind, status: 'error', pct: 0 }] }));
+      return;
+    }
+    this.setState(s => ({ files: [...s.files, { id, name: def.name, size: def.size, kind: def.kind, status: 'uploading', pct: 0 }] }));
+    this.tick(id);
+  };
+  tick(id) {
+    const iv = setInterval(() => {
+      this.setState(s => {
+        const files = s.files.map(f => {
+          if (f.id !== id || f.status !== 'uploading') return f;
+          const pct = Math.min(100, f.pct + 12 + Math.random() * 16);
+          return Object.assign({}, f, { pct, status: pct >= 100 ? 'done' : 'uploading' });
+        });
+        return { files };
+      });
+      const cur = this.state.files.find(f => f.id === id);
+      if (!cur || cur.status !== 'uploading') clearInterval(iv);
+    }, 260);
+  }
+  remove(id) { this.setState(s => ({ files: s.files.filter(f => f.id !== id) })); }
+
+  pickSingle = () => this.setState({ single: { name: 'Rechnung-2026.pdf', size: 620_000, kind: 'pdf' } });
+  removeSingle = () => this.setState({ single: null });
+
+  onDragOver = (e) => { e.preventDefault(); if (!this.state.drag) this.setState({ drag: true }); };
+  onDragLeave = (e) => { e.preventDefault(); this.setState({ drag: false }); };
+  onDrop = (e) => { e.preventDefault(); this.setState({ drag: false }); this.addDemo(); };
+
+  iconFor(kind) {
+    if (kind === 'pdf') return { icon: 'picture_as_pdf', color: '#c0392b' };
+    if (kind === 'doc') return { icon: 'description', color: '#2a6fdb' };
+    if (kind === 'zip') return { icon: 'folder_zip', color: '#8a6d1f' };
+    if (kind === 'image') return { icon: 'image', color: '#1f8a5b' };
+    return { icon: 'draft', color: '#6f6a63' };
+  }
+
+  renderVals() {
+    const text = '#1f1d1a', muted = '#8a847a', success = '#1f8a5b', danger = '#c0392b', accent = '#007265';
+    const imgGrads = ['linear-gradient(135deg,#8ec7be,#2a6fdb)', 'linear-gradient(135deg,#e0a86b,#c0392b)', 'linear-gradient(135deg,#9ad0a0,#1f8a5b)'];
+    let imgN = 0;
+    const files = this.state.files.map(f => {
+      const ic = this.iconFor(f.kind);
+      const isImage = f.kind === 'image' && f.status !== 'error';
+      const grad = imgGrads[(imgN++) % imgGrads.length];
+      const uploading = f.status === 'uploading';
+      const done = f.status === 'done';
+      const error = f.status === 'error';
+      let meta = this.fmtSize(f.size);
+      if (uploading) meta = Math.round(f.pct) + '% · ' + meta;
+      else if (error) meta = 'Zu groß · max. 10 MB';
+      else if (done) meta = 'Fertig · ' + meta;
+      return {
+        id: f.id, name: f.name, meta,
+        itemCls: 'fu-item' + (error ? ' fu-err' : ''),
+        metaColor: error ? danger : muted,
+        isImage, isDoc: !isImage, previewGrad: grad,
+        icon: ic.icon, iconColor: ic.color,
+        thumbBg: isImage ? '#000' : (ic.color + '18'),
+        uploading, done, error, pct: Math.round(f.pct) + '%',
+        onRemove: () => this.remove(f.id)
+      };
+    });
+    const s = this.state.single;
+    const single = s ? Object.assign({ name: s.name, meta: this.fmtSize(s.size), thumbBg: '#c0392b18' }, (() => { const ic = this.iconFor(s.kind); return { icon: ic.icon, iconColor: ic.color }; })()) : null;
+
+    return {
+      text, muted, success, danger, accent,
+      dragCls: this.state.drag ? 'drag' : '', isDragging: this.state.drag, notDragging: !this.state.drag,
+      addDemo: this.addDemo, onDragOver: this.onDragOver, onDragLeave: this.onDragLeave, onDrop: this.onDrop,
+      hasFiles: this.state.files.length > 0, files,
+      pickSingle: this.pickSingle, removeSingle: this.removeSingle,
+      hasSingle: !!s, noSingle: !s, single
+    };
+  }
+}
+</script>
+</body>
+</html>

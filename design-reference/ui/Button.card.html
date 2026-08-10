@@ -1,0 +1,60 @@
+<!-- @dsCard group="Komponenten" viewport="700x340" name="Button" subtitle="Vier Varianten, drei Größen, Icon-, Lade- und Sperrzustand" -->
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  html,body{margin:0}
+  body{padding:20px 22px;font-family:var(--medo-font-sans);background:var(--medo-surface);color:var(--medo-text);min-height:340px;box-sizing:border-box}
+  .lbl{font-family:var(--medo-font-mono);font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:var(--medo-color-stone-500);margin-bottom:9px}
+  .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+  .grp{margin-bottom:18px}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+<script src="../_ds_bundle.js"></script>
+<script>
+  var h = React.createElement;
+  var MedoButton = window.MedoUI.Button;
+
+  function group(label, children) {
+    return h('div', { className: 'grp' },
+      h('div', { className: 'lbl' }, label),
+      h('div', { className: 'row' }, children)
+    );
+  }
+
+  var app = h('div', null,
+    group('Varianten', [
+      h(MedoButton, { key: 'a', type: 'button' }, 'Termin anlegen'),
+      h(MedoButton, { key: 'b', variant: 'secondary' }, 'Abbrechen'),
+      h(MedoButton, { key: 'c', variant: 'ghost' }, 'Details'),
+      h(MedoButton, { key: 'd', variant: 'danger', icon: 'delete' }, 'Konto löschen'),
+    ]),
+    group('Größen', [
+      h(MedoButton, { key: 'a', size: 'sm' }, 'Klein'),
+      h(MedoButton, { key: 'b', size: 'md' }, 'Mittel'),
+      h(MedoButton, { key: 'c', size: 'lg' }, 'Groß'),
+    ]),
+    group('Icon, Laden, gesperrt', [
+      h(MedoButton, { key: 'a', icon: 'add', iconPosition: 'leading' }, 'Führend'),
+      h(MedoButton, { key: 'b', variant: 'secondary', icon: 'arrow_forward', iconPosition: 'trailing' }, 'Weiter'),
+      h(MedoButton, { key: 'c', iconOnly: true, icon: 'add', 'aria-label': 'Hinzufügen' }),
+      h(MedoButton, { key: 'd', variant: 'ghost', iconOnly: true, icon: 'more_vert', 'aria-label': 'Weitere Aktionen' }),
+      h(MedoButton, { key: 'e', loading: true }, 'Wird gespeichert'),
+      h(MedoButton, { key: 'f', disabled: true }, 'Gesperrt'),
+    ]),
+    h('div', null,
+      h('div', { className: 'lbl' }, 'Volle Breite'),
+      h(MedoButton, { size: 'lg', fullWidth: true, icon: 'check' }, 'Angebot annehmen')
+    )
+  );
+
+  ReactDOM.createRoot(document.getElementById('root')).render(app);
+</script>
+</body>
+</html>

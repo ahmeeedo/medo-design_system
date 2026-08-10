@@ -1,0 +1,100 @@
+<!-- @dsCard group="Komponenten" viewport="700x420" name="Popover" subtitle="Klick-ausgelöst, vier Ausrichtungen, interaktiver Inhalt, Titelzeile mit Kreuz" -->
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  html,body{margin:0}
+  body{padding:24px 22px;font-family:var(--medo-font-sans);background:var(--medo-surface);color:var(--medo-text);min-height:420px;box-sizing:border-box}
+  .lbl{font-family:var(--medo-font-mono);font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:var(--medo-color-stone-500);margin-bottom:12px}
+  .grp{margin-bottom:26px}
+  .row{display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+  .btn{box-sizing:border-box;height:40px;padding:0 16px;display:inline-flex;align-items:center;gap:8px;font-family:inherit;font-size:14px;font-weight:400;border:1px solid var(--medo-border-strong);border-radius:var(--medo-radius-md);background:var(--medo-surface);color:var(--medo-text);cursor:pointer}
+  .btn:hover{background:var(--medo-state-hover)}
+  .btn:focus-visible{outline:none;box-shadow:0 0 0 3px var(--medo-focus-ring)}
+  .icb{box-sizing:border-box;width:40px;height:40px;justify-content:center;padding:0}
+  .hintbar{display:flex;align-items:center;gap:8px;font-size:14px;color:var(--medo-text-muted)}
+  .field{display:flex;flex-direction:column;gap:6px;margin-bottom:12px}
+  .field label{font-size:12px;color:var(--medo-text-muted)}
+  .field input{box-sizing:border-box;height:36px;padding:0 12px;border:1px solid var(--medo-input-border);border-radius:var(--medo-radius-md);font-family:inherit;font-size:14px;color:var(--medo-text)}
+  .field input:focus-visible{outline:none;border-color:var(--medo-action);box-shadow:0 0 0 3px var(--medo-focus-ring)}
+  .prim{background:var(--medo-action);color:var(--medo-action-text);border-color:transparent;height:36px}
+  .prim:hover{background:var(--medo-action-hover)}
+  .stats{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .stat b{display:block;font-family:var(--medo-font-mono);font-size:20px;color:var(--medo-text);font-weight:500}
+  .stat span{font-size:12px;color:var(--medo-text-muted)}
+  p{margin:0 0 10px}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+<script src="../_ds_bundle.js"></script>
+<script>
+  var h = React.createElement;
+  var Pop = window.MedoUI.Popover, MedoIcon = window.MedoUI.Icon;
+
+  var app = h('div', null,
+    h('div', { className: 'grp' },
+      h('div', { className: 'lbl' }, 'Erklärung mit Aktion · Ausrichtung unten, rechts, oben, links'),
+      h('div', { className: 'row' },
+        h(Pop, {
+          title: 'Sichtbarkeit', placement: 'bottom',
+          content: function (api) {
+            return h(React.Fragment, null,
+              h('p', null, 'Nur bestätigte Verbindungen sehen Ihr vollständiges Profil. Regionale Suche zeigt Name und Schwerpunkt.'),
+              h('button', { className: 'btn prim', onClick: api.close }, 'Verstanden'));
+          }
+        }, h('button', { className: 'btn' },
+             h(MedoIcon, { name: 'visibility', size: 20 }), 'Sichtbarkeit')),
+        h(Pop, {
+          placement: 'right', width: 300, title: 'Kennzahlen',
+          content: h('div', { className: 'stats' },
+            h('div', { className: 'stat' }, h('b', null, '312'), h('span', null, 'Spezialisten')),
+            h('div', { className: 'stat' }, h('b', null, '12'), h('span', null, 'Verbindungen')),
+            h('div', { className: 'stat' }, h('b', null, '3'), h('span', null, 'Offene Anfragen')),
+            h('div', { className: 'stat' }, h('b', null, '04.08.'), h('span', null, 'Letzter Kontakt')))
+        }, h('button', { className: 'btn' }, 'Kennzahlen')),
+        h(Pop, {
+          placement: 'top', width: 260,
+          content: h('span', null, 'Erscheint über dem Auslöser, wenn darunter kein Platz ist.')
+        }, h('button', { className: 'btn' }, 'Oben')),
+        h(Pop, {
+          placement: 'left', width: 260,
+          content: h('span', null, 'Erscheint links neben dem Auslöser — gut am rechten Bildschirmrand.')
+        }, h('button', { className: 'btn' }, 'Links')))
+    ),
+    h('div', { className: 'grp' },
+      h('div', { className: 'lbl' }, 'Kleines Formular · Titelzeile mit Kreuz'),
+      h(Pop, {
+        title: 'Region eingrenzen', width: 320,
+        content: function (api) {
+          return h(React.Fragment, null,
+            h('div', { className: 'field' },
+              h('label', { htmlFor: 'plz' }, 'Postleitzahl'),
+              h('input', { id: 'plz', defaultValue: '76646' })),
+            h('div', { className: 'field' },
+              h('label', { htmlFor: 'km' }, 'Umkreis in km'),
+              h('input', { id: 'km', defaultValue: '50' })),
+            h('button', { className: 'btn prim', onClick: api.close }, 'Übernehmen'));
+        }
+      }, h('button', { className: 'btn' },
+           h(MedoIcon, { name: 'filter_list', size: 20 }), 'Filter'))
+    ),
+    h('div', null,
+      h('div', { className: 'lbl' }, 'Am erklärungsbedürftigen Begriff'),
+      h('div', { className: 'hintbar' },
+        'Vermittlerregister',
+        h(Pop, {
+          width: 280,
+          content: h('span', null, 'Öffentliches Register der IHK. Ihre Registrierungsnummer wird dort jährlich geprüft.')
+        }, h('button', { className: 'btn icb', 'aria-label': 'Erklärung zum Vermittlerregister' },
+             h(MedoIcon, { name: 'help', size: 20 }))))
+    )
+  );
+  ReactDOM.createRoot(document.getElementById('root')).render(app);
+</script>
+</body>
+</html>

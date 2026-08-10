@@ -1,0 +1,100 @@
+<!-- @dsCard group="Komponenten" viewport="720x520" name="Contained list" subtitle="Navigieren, mehrfach auswählen, Gruppen mit haftender Überschrift" -->
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  html,body{margin:0}
+  body{padding:24px 22px;font-family:var(--medo-font-sans);background:var(--medo-surface);color:var(--medo-text);min-height:520px;box-sizing:border-box}
+  .lbl{font-family:var(--medo-font-mono);font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:var(--medo-color-stone-500);margin-bottom:10px}
+  .cols{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start}
+  .grp{margin-bottom:24px}
+  .scroll{max-height:190px;overflow-y:auto;border:1px solid var(--medo-border);border-radius:var(--medo-radius-lg)}
+  .scroll .medo-clist{border:none;border-radius:0}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+<script src="../_ds_bundle.js"></script>
+<script>
+  var h = React.createElement;
+  var CList = window.MedoUI.ContainedList;
+
+  function Demo() {
+    var sel = React.useState(['mh']);
+    var mode = React.useState('regional');
+    return h('div', null,
+      h('div', { className: 'cols' },
+        h('div', null,
+          h('div', { className: 'lbl' }, 'Navigation · Icon, Meta, Chevron'),
+          h(CList, {
+            title: 'Einstellungen', ariaLabel: 'Einstellungen', mode: 'navigation', chevron: true, size: 'md',
+            items: [
+              { value: 'profil', icon: 'badge', label: 'Profil', description: 'Name, Foto, Schwerpunkte' },
+              { value: 'sicher', icon: 'lock', label: 'Sicherheit', meta: '2FA aktiv' },
+              { value: 'mitteil', icon: 'notifications', label: 'Mitteilungen', action: 'more_vert' },
+              { value: 'export', icon: 'download', label: 'Daten exportieren', disabled: true }
+            ]
+          })
+        ),
+        h('div', null,
+          h('div', { className: 'lbl' }, 'Mehrfachauswahl · Avatar und Anzahl'),
+          h(CList, {
+            mode: 'multiple', ariaLabel: 'Mitglieder', count: '3 von 12',
+            title: 'Mitglieder', value: sel[0], onChange: sel[1],
+            items: [
+              { value: 'mh', avatar: 'MH', label: 'Dr. Marie Hoffmann', description: 'Gewerbe · Karlsruhe', meta: '12' },
+              { value: 'ts', avatar: 'TS', label: 'Tobias Schuster', description: 'Vorsorge · Bruchsal', meta: '8' },
+              { value: 'ak', avatar: 'AK', label: 'Anja Keller', description: 'Cyber · Heidelberg', meta: '5' }
+            ]
+          })
+        )
+      ),
+      h('div', { style: { height: '24px' } }),
+      h('div', { className: 'cols' },
+        h('div', null,
+          h('div', { className: 'lbl' }, 'Einfachauswahl · sm'),
+          h(CList, {
+            mode: 'single', size: 'sm', ariaLabel: 'Sichtbarkeit',
+            value: mode[0], onChange: mode[1],
+            items: [
+              { value: 'regional', label: 'Regional sichtbar', description: 'Nur im Umkreis von 50 km' },
+              { value: 'bundes', label: 'Bundesweit sichtbar', description: 'Für alle Spezialisten' },
+              { value: 'privat', label: 'Nicht sichtbar', description: 'Profil bleibt verborgen' }
+            ]
+          })
+        ),
+        h('div', null,
+          h('div', { className: 'lbl' }, 'Gruppen · haftende Überschrift, scrollt'),
+          h('div', { className: 'scroll' },
+            h(CList, {
+              ariaLabel: 'Spezialisten nach Anfangsbuchstabe',
+              groups: [
+                { label: 'H', items: [
+                  { value: 'mh', avatar: 'MH', label: 'Dr. Marie Hoffmann' },
+                  { value: 'jh', avatar: 'JH', label: 'Jonas Hartmann' }
+                ]},
+                { label: 'K', items: [
+                  { value: 'ak', avatar: 'AK', label: 'Anja Keller' },
+                  { value: 'pk', avatar: 'PK', label: 'Petra Kramer' }
+                ]},
+                { label: 'S', items: [
+                  { value: 'ts', avatar: 'TS', label: 'Tobias Schuster' }
+                ]}
+              ]
+            }))
+        )
+      ),
+      h('div', { style: { marginTop: '24px', maxWidth: '340px' } },
+        h('div', { className: 'lbl' }, 'Leerzustand'),
+        h(CList, { items: [], emptyText: 'Noch keine Verbindungen. Suchen Sie Spezialisten in Ihrer Region und senden Sie eine Anfrage.' })
+      )
+    );
+  }
+  ReactDOM.createRoot(document.getElementById('root')).render(h(Demo));
+</script>
+</body>
+</html>

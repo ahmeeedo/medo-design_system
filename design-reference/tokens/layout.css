@@ -1,0 +1,12 @@
+/* medo Design System · Rahmen, Raster und Breakpoints
+   Quelle der Wahrheit. Änderungen hier, nicht in tokens.css (flacher Export). */
+
+:root {
+  --medo-border-thin: 1px;
+  --medo-border-thick: 2px;
+  --medo-breakpoint-sm: 640px;
+  --medo-breakpoint-md: 768px;
+  --medo-breakpoint-lg: 1024px;
+  --medo-breakpoint-xl: 1280px;
+  --medo-breakpoint-2xl: 1536px;
+}

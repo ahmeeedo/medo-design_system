@@ -1,0 +1,12 @@
+/* medo Design System · Radien
+   Quelle der Wahrheit. Änderungen hier, nicht in tokens.css (flacher Export). */
+
+:root {
+  --medo-radius-none: 0px;
+  --medo-radius-sm: 4px;
+  --medo-radius-md: 8px;
+  --medo-radius-lg: 12px;
+  --medo-radius-xl: 18px;
+  --medo-radius-2xl: 24px;
+  --medo-radius-full: 9999px;
+}

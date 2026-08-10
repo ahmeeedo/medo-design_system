@@ -1,0 +1,22 @@
+<!-- @dsCard group="Farben · Ebene 3 · Semantic" viewport="700x130" name="Eingabefelder" subtitle="Rahmen immer 1px, Fokus trägt der 3px-Ring" -->
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  html,body{margin:0}
+  body{padding:18px 20px;font-family:var(--medo-font-sans);background:var(--medo-surface);color:var(--medo-text);height:130px;box-sizing:border-box;overflow:hidden}
+  .row{display:flex;gap:6px}
+  .sw{flex:1;display:flex;flex-direction:column;gap:6px}
+  .chip{height:44px;border-radius:var(--medo-radius-md);border:1px solid var(--medo-border-subtle)}
+  .n{font-family:var(--medo-font-mono);font-size:10px;color:var(--medo-text-muted);letter-spacing:0.02em}
+  .tok{font-family:var(--medo-font-mono);font-size:10px;color:var(--medo-text-muted);letter-spacing:0.02em;margin-top:6px;line-height:1.35}
+  .tile{flex:1;height:52px;border-radius:var(--medo-radius-md);border:1px solid var(--medo-border-subtle)}
+  .lbl{font-family:var(--medo-font-mono);font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:var(--medo-color-stone-500)}
+</style>
+</head>
+<body>
+<div style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px"><div><div style="height:40px;border-radius:var(--medo-radius-md);border:1px solid var(--medo-input-border);background:var(--medo-input-bg);display:flex;align-items:center;padding:0 12px;font-size:14px;color:var(--medo-input-placeholder);box-sizing:border-box">Platzhalter</div><div class="tok">input-border · stone-400</div></div><div><div style="height:40px;border-radius:var(--medo-radius-md);border:1px solid var(--medo-input-border-hover);background:var(--medo-input-bg);display:flex;align-items:center;padding:0 12px;font-size:14px;color:var(--medo-input-placeholder);box-sizing:border-box">Platzhalter</div><div class="tok">input-border-hover · stone-600</div></div><div><div style="height:40px;border-radius:var(--medo-radius-md);border:1px solid var(--medo-input-border-focus);background:var(--medo-input-bg);box-shadow:0 0 0 3px var(--medo-focus-ring);display:flex;align-items:center;padding:0 12px;font-size:14px;color:var(--medo-input-placeholder);box-sizing:border-box">Platzhalter</div><div class="tok">input-border-focus · teal-600</div></div><div><div style="height:40px;border-radius:var(--medo-radius-md);border:1px solid var(--medo-input-border-error);background:var(--medo-input-bg);box-shadow:0 0 0 3px var(--medo-focus-ring-danger);display:flex;align-items:center;padding:0 12px;font-size:14px;color:var(--medo-input-placeholder);box-sizing:border-box">Platzhalter</div><div class="tok">input-border-error · red-600</div></div><div><div style="height:40px;border-radius:var(--medo-radius-md);border:1px solid var(--medo-input-border-disabled);background:var(--medo-input-bg);background:var(--medo-input-bg-disabled);display:flex;align-items:center;padding:0 12px;font-size:14px;color:var(--medo-input-placeholder);box-sizing:border-box">Gesperrt</div><div class="tok">input-border-disabled · stone-200</div></div></div>
+</body>
+</html>

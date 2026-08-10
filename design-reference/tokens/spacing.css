@@ -1,0 +1,16 @@
+/* medo Design System · Spacing (4px-Basis)
+   Quelle der Wahrheit. Änderungen hier, nicht in tokens.css (flacher Export). */
+
+:root {
+  --medo-space-none: 0px;
+  --medo-space-3xs: 2px;
+  --medo-space-2xs: 4px;
+  --medo-space-xs: 8px;
+  --medo-space-sm: 12px;
+  --medo-space-md: 16px;
+  --medo-space-lg: 24px;
+  --medo-space-xl: 32px;
+  --medo-space-2xl: 48px;
+  --medo-space-3xl: 64px;
+  --medo-space-4xl: 96px;
+}

@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,300,0,0" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  body{margin:0}
+  a{color:#007265;text-decoration:none}
+  a:hover{color:#004b42}
+  ::selection{background:#e6e1d8}
+  .msr{font-family:'Material Symbols Rounded';font-weight:300;line-height:1;display:inline-block}
+  .card{display:flex;flex-direction:column;border:1px solid #e9e6e1;border-radius:14px;background:#fff;overflow:hidden;transition:box-shadow .16s,border-color .16s,transform .16s;color:inherit}
+  .card:hover{border-color:#cdd9d6;box-shadow:0 4px 8px rgba(31,29,26,0.06),0 14px 32px rgba(31,29,26,0.10);transform:translateY(-2px)}
+  .pv{height:92px;display:flex;align-items:center;justify-content:center;background:#f7f6f4;border-bottom:1px solid #efece7;padding:12px;overflow:hidden}
+  .ov-spin{width:26px;height:26px;border-radius:9999px;border:3px solid #d7d3cc;border-top-color:#007265;animation:ov-spin .8s linear infinite}
+  @keyframes ov-spin{to{transform:rotate(360deg)}}
+  @keyframes ov-pulse{0%,80%,100%{opacity:.3}40%{opacity:1}}
+  .ov-dot{width:7px;height:7px;border-radius:9999px;background:#007265;animation:ov-pulse 1.2s infinite}
+  .foundlink{display:inline-flex;align-items:center;gap:5px;font-family:'DM Mono',monospace;font-size:12px;font-weight:500}
+</style>
+</helmet>
+
+<div style="min-height:100%;background:#faf9f7;color:#1f1d1a;font-family:'DM Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased;padding:56px 40px 120px">
+  <div style="max-width:1120px;margin:0 auto">
+
+    <!-- HEADER -->
+    <div style="margin-bottom:40px">
+      <div style="font-family:'DM Mono',monospace;font-size:12px;letter-spacing:0.16em;color:#a49d92;text-transform:uppercase;margin-bottom:16px">medo Design System · Übersicht</div>
+      <h1 style="font-size:49px;line-height:1.08;font-weight:700;letter-spacing:-0.02em;margin:0 0 14px">Komponenten &amp; Foundations</h1>
+      <p style="font-size:20px;line-height:1.5;color:#6f6a63;margin:0;max-width:720px">Der Navigations-Index für medo. Klarheit vor Dekoration, für alle gemacht, einmal entschieden – überall verlässlich. Jede Kachel führt zur vollständigen Komponenten-Seite.</p>
+    </div>
+
+    <!-- PRINZIPIEN -->
+    <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:40px">
+      <span style="display:inline-flex;align-items:center;gap:7px;height:32px;padding:0 14px;border-radius:9999px;background:#fff;border:1px solid #e9e6e1;font-size:13px;font-weight:600"><span class="msr" style="font-size:16px;color:#007265">bolt</span>Klarheit vor Dekoration</span>
+      <span style="display:inline-flex;align-items:center;gap:7px;height:32px;padding:0 14px;border-radius:9999px;background:#fff;border:1px solid #e9e6e1;font-size:13px;font-weight:600"><span class="msr" style="font-size:16px;color:#007265">accessibility_new</span>Für alle gemacht</span>
+      <span style="display:inline-flex;align-items:center;gap:7px;height:32px;padding:0 14px;border-radius:9999px;background:#fff;border:1px solid #e9e6e1;font-size:13px;font-weight:600"><span class="msr" style="font-size:16px;color:#007265">verified</span>Einmal entschieden, überall verlässlich</span>
+      <span style="display:inline-flex;align-items:center;gap:7px;height:32px;padding:0 14px;border-radius:9999px;background:#fff;border:1px solid #e9e6e1;font-size:13px;font-weight:600"><span class="msr" style="font-size:16px;color:#007265">favorite</span>Freundlich und menschlich</span>
+      <span style="display:inline-flex;align-items:center;gap:7px;height:32px;padding:0 14px;border-radius:9999px;background:#fff;border:1px solid #e9e6e1;font-size:13px;font-weight:600"><span class="msr" style="font-size:16px;color:#007265">dashboard</span>Ein System, viele Produkte</span>
+      <span style="display:inline-flex;align-items:center;gap:7px;height:32px;padding:0 14px;border-radius:9999px;background:#fff;border:1px solid #e9e6e1;font-size:13px;font-weight:600"><span class="msr" style="font-size:16px;color:#007265">subject</span>Der Inhalt führt</span>
+    </div>
+
+    <!-- FOUNDATIONS -->
+    <div style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#a49d92;text-transform:uppercase;margin-bottom:18px">Foundations</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-bottom:56px">
+      <!-- Farbe -->
+      <div style="background:#fff;border:1px solid #e9e6e1;border-radius:14px;padding:22px">
+        <div style="font-size:15px;font-weight:600;margin-bottom:14px">Farbe</div>
+        <div style="display:flex;gap:0;border-radius:8px;overflow:hidden;margin-bottom:12px">
+          <sc-for list="{{ primaryRamp }}" as="c" hint-placeholder-count="12"><span style="flex:1;height:26px;background:{{ c }}"></span></sc-for>
+        </div>
+        <div style="display:flex;gap:8px;margin-bottom:16px">
+          <sc-for list="{{ accents }}" as="a" hint-placeholder-count="6"><span style="width:26px;height:26px;border-radius:9999px;background:{{ a }}"></span></sc-for>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:14px">
+          <a class="foundlink" href="Brand-Palette.dc.html">Brand <span class="msr" style="font-size:15px">arrow_forward</span></a>
+          <a class="foundlink" href="Alias-Palette.dc.html">Alias</a>
+          <a class="foundlink" href="Semantic-Palette.dc.html">Semantic</a>
+        </div>
+      </div>
+      <!-- Typografie -->
+      <div style="background:#fff;border:1px solid #e9e6e1;border-radius:14px;padding:22px">
+        <div style="font-size:15px;font-weight:600;margin-bottom:12px">Typografie</div>
+        <div style="font-size:31px;font-weight:700;letter-spacing:-0.02em;line-height:1.1;margin-bottom:2px">DM Sans</div>
+        <div style="font-family:'DM Mono',monospace;font-size:13px;color:#6f6a63;margin-bottom:16px">DM Mono · Scale 1.25</div>
+        <a class="foundlink" href="Typografie.dc.html">Typografie <span class="msr" style="font-size:15px">arrow_forward</span></a>
+      </div>
+      <!-- Grundlagen -->
+      <div style="background:#fff;border:1px solid #e9e6e1;border-radius:14px;padding:22px">
+        <div style="font-size:15px;font-weight:600;margin-bottom:14px">Grundlagen</div>
+        <div style="display:flex;align-items:flex-end;gap:6px;margin-bottom:16px">
+          <span style="width:16px;height:16px;border-radius:4px;background:#e0ddd7"></span>
+          <span style="width:24px;height:24px;border-radius:8px;background:#e0ddd7"></span>
+          <span style="width:32px;height:32px;border-radius:12px;background:#e0ddd7"></span>
+          <span style="width:40px;height:40px;border-radius:18px;background:#e0ddd7"></span>
+        </div>
+        <div style="font-family:'DM Mono',monospace;font-size:12px;color:#6f6a63;margin-bottom:14px">Spacing · Radien · Schatten</div>
+        <a class="foundlink" href="Grundlagen.dc.html">Grundlagen <span class="msr" style="font-size:15px">arrow_forward</span></a>
+      </div>
+    </div>
+
+    <!-- KOMPONENTEN -->
+    <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:18px">
+      <div style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#a49d92;text-transform:uppercase">Komponenten</div>
+      <div style="font-family:'DM Mono',monospace;font-size:12px;color:#a49d92">33 · alphabetisch</div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px">
+
+      <!-- Accordion -->
+      <a class="card" href="components/Accordion.dc.html">
+        <div class="pv"><div style="width:150px;border:1px solid #e5e2dd;border-radius:8px;overflow:hidden;background:#fff"><div style="display:flex;align-items:center;justify-content:space-between;padding:8px 10px;font-size:11px;font-weight:600">Abschnitt<span class="msr" style="font-size:15px;color:#8a847a">remove</span></div><div style="border-top:1px solid #f1efec;display:flex;align-items:center;justify-content:space-between;padding:8px 10px;font-size:11px;font-weight:600;color:#6f6a63">Weiterer<span class="msr" style="font-size:15px;color:#8a847a">add</span></div></div></div>
+        <div style="padding:14px 16px 16px"><div style="display:flex;align-items:center;gap:8px"><span class="msr" style="font-size:18px;color:#007265">expand_more</span><span style="font-size:15px;font-weight:600">Accordion</span></div><div style="font-size:13px;color:#6f6a63;margin-top:4px">Auf-/zuklappbare Abschnitte</div></div>
+      </a>
+
+      <!-- Breadcrumb -->
+      <a class="card" href="components/Breadcrumb.dc.html">
+        <div class="pv"><div style="display:flex;align-items:center;gap:6px;font-size:12px;color:#007265"><span class="msr" style="font-size:16px">home</span><span style="color:#b9b3a9">/</span><span>Ordner</span><span style="color:#b9b3a9">/</span><span style="color:#8a847a">Datei</span></div></div>
+        <div style="padding:14px 16px 16px"><div style="display:flex;align-items:center;gap:8px"><span class="msr" style="font-size:18px;color:#007265">chevron_right</span><span style="font-size:15px;font-weight:600">Breadcrumb</span></div><div style="font-size:13px;color:#6f6a63;margin-top:4px">Pfadnavigation</div></div>
+      </a>
+
+      <!-- Button -->
+      <a class="card" href="components/Button.dc.html">
+        <div class="pv"><span style="height:36px;padding:0 16px;border-radius:8px;background:#007265;color:#fff;font-size:13px;font-weight:600;display:inline-flex;align-items:center;gap:7px"><span class="msr" style="font-size:16px">add</span>Aktion</span></div>
+        <div style="padding:14px 16px 16px"><div style="display:flex;align-items:center;gap:8px"><span class="msr" style="font-size:18px;color:#007265">smart_button</span><span style="font-size:15px;font-weight:600">Button</span></div><div style="font-size:13px;color:#6f6a63;margin-top:4px">Aktionen auslösen</div></div>
+      </a>
+
+      <!-- Checkbox -->
+      <a class="card" href="components/Checkbox.dc.html">
+        <div class="pv"><div style="display:flex;align-items:center;gap:9px"><span style="width:20px;height:20px;border-radius:5px;background:#007265;display:inline-flex;align-items:center;justify-content:center"><span class="msr" style="font-size:15px;color:#fff">check</span></span><span style="font-size:13px;font-weight:500">Option</span></div></div>
+        <div style="padding:14px 16px 16px"><div style="display:flex;align-items:center;gap:8px"><span class="msr" style="font-size:18px;color:#007265">check_box</span><span style="font-size:15px;font-weight:600">Checkbox</span></div><div style="font-size:13px;color:#6f6a63;margin-top:4px">Mehrfachauswahl</div></div>
+      </a>
+
+      <!-- Code snippet -->
+      <a class="card" href="components/Code-snippet.dc.html">
+        <div class="pv"><div style="width:160px;background:#211f1c;border-radius:8px;padding:10px 12px;font-family:'DM Mono',monospace;font-size:11px;color:#e4e0d8"><span style="color:#57b7c9">npx</span> medo <span style="color:#c99a5b">init</span></div></div>
+        <div style="padding:14px 16px 16px"><div style="display:flex;align-items:center;gap:8px"><span class="msr" style="font-size:18px;color:#007265">code</span><span style="font-size:15px;font-weight:600">Code snippet</span></div><div style="font-size:13px;color:#6f6a63;margin-top:4px">Code darstellen &amp; kopieren</div></div>
+      </a>
+
+      <!-- Contained list -->
+      <a class="card" href="components/Contained-list.dc.html">
+        <div class="pv"><div style="width:150px;border:1px solid #e5e2dd;border-radius:8px;overflow:hidden;background:#fff;font-size:11px"><div style="padding:7px 10px;font-weight:600">Dokumente</div><div style="padding:7px 10px;border-top:1px solid #f1efec;background:#f2f9f8;font-weight:600;color:#007265">Medien</div><div style="padding:7px 10px;border-top:1px solid #f1efec;color:#6f6a63">Freigaben</div></div></div>
+        <div style="padding:14px 16px 16px"><div style="display:flex;align-items:center;gap:8px"><span class="msr" style="font-size:18px;color:#007265">list_alt</span><span style="font-size:15px;font-weight:600">Contained list</span></div><div style="font-size:13px;color:#6f6a63;margin-top:4px">Interaktive Listenzeilen</div></div>
+      </a>
+
+      <!-- Content switcher -->
+      <a class="card" href="components/Content-switcher.dc.html">
+        <div class="pv"><div style="display:inline-flex;gap:3px;background:#ececeb;padding:3px;border-radius:9px"><span style="width:34px;height:28px;border-radius:6px;background:#fff;box-shadow:0 1px 2px rgba(31,29,26,.1);display:inline-flex;align-items:center;justify-content:center"><span class="msr" style="font-size:17px">list</span></span><span style="width:34px;height:28px;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;color:#8a847a"><span class="msr" style="font-size:17px">grid_view</span></span></div></div>
+        <div style="padding:14px 16px 16px"><div style="display:flex;align-items:center;gap:8px"><span class="msr" style="font-size:18px;color:#007265">swap_horiz</span><span style="font-size:15px;font-weight:600">Content switcher</span></div><div style="font-size:13px;color:#6f6a63;margin-top:4px">Ansicht umschalten</div></div>
+      </a>
+
+      <!-- Data table -->
+      <a class="card" href="components/Data-table.dc.html">
+        <div class="pv"><div style="width:160px;border:1px solid #e5e2dd;border-radius:8px;overflow:hidden;background:#fff;font-size:10.5px"><div style="display:flex;background:#f7f6f4;font-weight:600;color:#4f4a43;padding:6px 8px;gap:8px"><span style="flex:1">Name</span><span>Status</span></div><div style="display:flex;padding:6px 8px;gap:8px;border-top:1px solid #f1efec"><span style="flex:1">Anna</span><span style="color:#1f8a5b">Aktiv</span></div><div style="display:flex;padding:6px 8px;gap:8px;border-top:1px solid #f1efec;background:#faf9f7"><span style="flex:1">Ben</span><span style="color:#8a847a">Offen</span></div></div></div>
+        <div style="padding:14px 16px 16px"><div style="display:flex;align-items:center;gap:8px"><span class="msr" style="font-size:18px;color:#007265">table</span><span style="font-size:15px;font-weight:600">Data table</span></div><div style="font-size:13px;color:#6f6a63;margin-top:4px">Tabellen mit Sortierung</div></div>
+      </a>
+
+      <!-- Date picker -->
+      <a class="card" href="components/Date-picker.dc.html">
+        <div class="pv"><div style="display:grid;grid-template-columns:repeat(7,10px);gap:3px">
+          <sc-for list="{{ calDays }}" as="d" hint-placeholder-count="21"><span style="width:10px;height:10px;border-radius:3px;background:{{ d }}"></span></sc-for>
+        </div></div>
+        <div style="padding:14px 16px 16px"><div style="display:flex;align-items:center;gap:8px"><span class="msr" style="font-size:18px;color:#007265">calendar_month</span><span style="font-size:15px;font-weight:600">Date picker</span></div><div style="font-size:13px;color:#6f6a63;margin-top:4px">Datum &amp; Bereich wählen</div></div>
+      </a>
+
+      <!-- Dropdown -->
+      <a class="card" href="components/Dropdown.dc.html">
+        <div class="pv"><div style="width:120px;border:1px solid #e2ded7;border-radius:8px;background:#fff;box-shadow:0 6px 16px rgba(31,29,26,.08);padding:5px;font-size:11px"><div style="padding:6px 8px;border-radius:6px;background:#f2f9f8;display:flex;align-items:center;gap:7px"><span class="msr" style="font-size:15px">edit</span>Bearbeiten</div><div style="padding:6px 8px;display:flex;align-items:center;gap:7px;color:#6f6a63"><span class="msr" style="font-size:15px">content_copy</span>Kopieren</div></div></div>
+        <div style="padding:14px 16px 16px"><div style="display:flex;align-items:center;gap:8px"><span class="msr" style="font-size:18px;color:#007265">arrow_drop_down</span><span style="font-size:15px;font-weight:600">Dropdown</span></div><div style="font-size:13px;color:#6f6a63;margin-top:4px">Aktionsmenü</div></div>
+      </a>
+
+      <!-- File uploader -->
+      <a class="card" href="components/File-uploader.dc.html">
+        <div class="pv"><div style="width:150px;border:1.5px dashed #c6c2ba;border-radius:9px;background:#fff;padding:12px;text-align:center"><span class="msr" style="font-size:22px;color:#007265">cloud_upload</span><div style="font-size:10.5px;font-weight:600;margin-top:3px">Ziehen oder wählen</div></div></div>
+        <div style="padding:14px 16px 16px"><div style="display:flex;align-items:center;gap:8px"><span class="msr" style="font-size:18px;color:#007265">upload</span><span style="font-size:15px;font-weight:600">File uploader</span></div><div style="font-size:13px;color:#6f6a63;margin-top:4px">Dateien hochladen</div></div>
+      </a>
+
+      <!-- Inline loading -->
+      <a class="card" href="components/Inline-loading.dc.html">
+        <div class="pv"><div style="display:flex;align-items:center;gap:8px"><span style="display:inline-flex;gap:4px"><span class="ov-dot"></span><span class="ov-dot" style="animation-delay:.2s"></span><span class="ov-dot" style="animation-delay:.4s"></span></span><span style="font-size:12px;color:#6f6a63">Wird geladen</span></div></div>
+        <div style="padding:14px 16px 16px"><div style="display:flex;align-items:center;gap:8px"><span class="msr" style="font-size:18px;color:#007265">pending</span><span style="font-size:15px;font-weight:600">Inline loading</span></div><div style="font-size:13px;color:#6f6a63;margin-top:4px">Kompakter Ladezustand</div></div>
+      </a>
+
+      <!-- Link -->
+      <a class="card" href="components/Link.dc.html">
+        <div class="pv"><span style="font-size:15px;color:#007265;text-decoration:underline;text-underline-offset:3px;font-weight:500">Mehr erfahren</span></div>
+        <div style="padding:14px 16px 16px"><div style="display:flex;align-items:center;gap:8px"><span class="msr" style="font-size:18px;color:#007265">link</span><span style="font-size:15px;font-weight:600">Link</span></div><div style="font-size:13px;color:#6f6a63;margin-top:4px">Textlinks</div></div>
+      </a>
+
+      <!-- List -->
+      <a class="card" href="components/List.dc.html">
+        <div class="pv"><div style="font-size:12px;color:#3f3b36;line-height:1.9"><div style="display:flex;align-items:center;gap:8px"><span style="width:5px;height:5px;border-radius:9999px;background:#8a847a"></span>Erster Punkt</div><div style="display:flex;align-items:center;gap:8px"><span style="width:5px;height:5px;border-radius:9999px;background:#8a847a"></span>Zweiter Punkt</div></div></div>
+        <div style="padding:14px 16px 16px"><div style="display:flex;align-items:center;gap:8px"><span class="msr" style="font-size:18px;color:#007265">format_list_bulleted</span><span style="font-size:15px;font-weight:600">List</span></div><div style="font-size:13px;color:#6f6a63;margin-top:4px">Anzeige-Listen</div></div>
+      </a>
+
+      <!-- Loading -->
+      <a class="card" href="components/Loading.dc.html">
+        <div class="pv"><span class="ov-spin"></span></div>
+        <div style="padding:14px 16px 16px"><div style="display:flex;align-items:center;gap:8px"><span class="msr" style="font-size:18px;color:#007265">progress_activity</span><span style="font-size:15px;font-weight:600">Loading</span></div><div style="font-size:13px;color:#6f6a63;margin-top:4px">Spinner &amp; Skeleton</div></div>
+      </a>
+
+      <!-- Menu -->
+      <a class="card" href="components/Menu.dc.html">
+        <div class="pv"><div style="width:120px;border:1px solid #e2ded7;border-radius:8px;background:#fff;box-shadow:0 6px 16px rgba(31,29,26,.08);padding:5px;font-size:11px"><div style="padding:6px 8px;display:flex;align-items:center;gap:7px">Ausschneiden</div><div style="padding:6px 8px;display:flex;align-items:center;gap:7px;color:#b23b2e">Löschen</div></div></div>
+        <div style="padding:14px 16px 16px"><div style="display:flex;align-items:center;gap:8px"><span class="msr" style="font-size:18px;color:#007265">menu_open</span><span style="font-size:15px;font-weight:600">Menu</span></div><div style="font-size:13px;color:#6f6a63;margin-top:4px">Kontextmenü (Rechtsklick)</div></div>
+      </a>
+
+      <!-- Menu buttons -->
+      <a class="card" href="components/Menu-buttons.dc.html">
+        <div class="pv"><span style="display:inline-flex;height:34px;border-radius:8px;overflow:hidden"><span style="padding:0 12px;background:#007265;color:#fff;font-size:12px;font-weight:600;display:inline-flex;align-items:center;gap:6px">Erstellen</span><span style="width:30px;background:#007265;color:#fff;display:inline-flex;align-items:center;justify-content:center;border-left:1px solid rgba(255,255,255,.25)"><span class="msr" style="font-size:16px">expand_more</span></span></span></div>
+        <div style="padding:14px 16px 16px"><div style="display:flex;align-items:center;gap:8px"><span class="msr" style="font-size:18px;color:#007265">menu</span><span style="font-size:15px;font-weight:600">Menu buttons</span></div><div style="font-size:13px;color:#6f6a63;margin-top:4px">Button öffnet Menü</div></div>
+      </a>
+
+      <!-- Modal -->
+      <a class="card" href="components/Modal.dc.html">
+        <div class="pv"><div style="width:140px;border:1px solid #e5e2dd;border-radius:9px;background:#fff;box-shadow:0 8px 18px rgba(31,29,26,.1);overflow:hidden"><div style="display:flex;align-items:center;justify-content:space-between;padding:8px 10px;font-size:11px;font-weight:600">Bestätigen<span class="msr" style="font-size:14px;color:#8a847a">close</span></div><div style="display:flex;justify-content:flex-end;gap:5px;padding:8px 10px;border-top:1px solid #f1efec"><span style="height:18px;padding:0 8px;border-radius:5px;background:#ececeb;font-size:10px;display:inline-flex;align-items:center">Abbr.</span><span style="height:18px;padding:0 8px;border-radius:5px;background:#007265;color:#fff;font-size:10px;display:inline-flex;align-items:center">OK</span></div></div></div>
+        <div style="padding:14px 16px 16px"><div style="display:flex;align-items:center;gap:8px"><span class="msr" style="font-size:18px;color:#007265">web_asset</span><span style="font-size:15px;font-weight:600">Modal</span></div><div style="font-size:13px;color:#6f6a63;margin-top:4px">Blockierender Dialog</div></div>
+      </a>
+
+      <!-- Notification -->
+      <a class="card" href="components/Notification.dc.html">
+        <div class="pv"><div style="width:160px;display:flex;align-items:center;gap:9px;background:#e2eefb;border:1px solid #b9d5f5;border-radius:9px;padding:9px 11px"><span class="msr" style="font-size:17px;color:#2a6fdb">info</span><span style="font-size:11.5px;color:#1c4a8a;font-weight:500">Gespeichert.</span></div></div>
+        <div style="padding:14px 16px 16px"><div style="display:flex;align-items:center;gap:8px"><span class="msr" style="font-size:18px;color:#007265">notifications</span><span style="font-size:15px;font-weight:600">Notification</span></div><div style="font-size:13px;color:#6f6a63;margin-top:4px">Banner &amp; Toasts</div></div>
+      </a>
+
+      <!-- Number input -->
+      <a class="card" href="components/Number-input.dc.html">
+        <div class="pv"><div style="display:inline-flex;align-items:center;height:36px;border:1px solid #b6b2ab;border-radius:8px;overflow:hidden;background:#fff"><span style="width:32px;height:100%;display:inline-flex;align-items:center;justify-content:center;color:#5c574f;border-right:1px solid #e5e2dd"><span class="msr" style="font-size:16px">remove</span></span><span style="width:44px;text-align:center;font-family:'DM Mono',monospace;font-size:13px">12</span><span style="width:32px;height:100%;display:inline-flex;align-items:center;justify-content:center;color:#5c574f;border-left:1px solid #e5e2dd"><span class="msr" style="font-size:16px">add</span></span></div></div>
+        <div style="padding:14px 16px 16px"><div style="display:flex;align-items:center;gap:8px"><span class="msr" style="font-size:18px;color:#007265">123</span><span style="font-size:15px;font-weight:600">Number input</span></div><div style="font-size:13px;color:#6f6a63;margin-top:4px">Zahlen mit Stepper</div></div>
+      </a>
+
+      <!-- Pagination -->
+      <a class="card" href="components/Pagination.dc.html">
+        <div class="pv"><div style="display:flex;align-items:center;gap:4px;font-size:12px"><span class="msr" style="font-size:18px;color:#8a847a">chevron_left</span><span style="width:26px;height:26px;border-radius:7px;background:#007265;color:#fff;display:inline-flex;align-items:center;justify-content:center;font-weight:600">1</span><span style="width:26px;height:26px;display:inline-flex;align-items:center;justify-content:center;color:#3f3b36">2</span><span style="width:26px;height:26px;display:inline-flex;align-items:center;justify-content:center;color:#3f3b36">3</span><span class="msr" style="font-size:18px;color:#8a847a">chevron_right</span></div></div>
+        <div style="padding:14px 16px 16px"><div style="display:flex;align-items:center;gap:8px"><span class="msr" style="font-size:18px;color:#007265">more_horiz</span><span style="font-size:15px;font-weight:600">Pagination</span></div><div style="font-size:13px;color:#6f6a63;margin-top:4px">Seitennavigation</div></div>
+      </a>
+
+      <!-- Popover -->
+      <a class="card" href="components/Popover.dc.html">
+        <div class="pv"><div style="position:relative;width:130px;background:#fff;border:1px solid #e2ded7;border-radius:9px;box-shadow:0 8px 18px rgba(31,29,26,.1);padding:10px 12px"><div style="position:absolute;top:-5px;left:16px;width:9px;height:9px;background:#fff;border-left:1px solid #e2ded7;border-top:1px solid #e2ded7;transform:rotate(45deg)"></div><div style="font-size:11px;font-weight:600;margin-bottom:3px">Hinweis</div><div style="font-size:10.5px;color:#6f6a63;line-height:1.4">Interaktiver Inhalt</div></div></div>
+        <div style="padding:14px 16px 16px"><div style="display:flex;align-items:center;gap:8px"><span class="msr" style="font-size:18px;color:#007265">chat_bubble</span><span style="font-size:15px;font-weight:600">Popover</span></div><div style="font-size:13px;color:#6f6a63;margin-top:4px">Schwebender Inhalt</div></div>
+      </a>
+
+      <!-- Progress bar -->
+      <a class="card" href="components/Progress-bar.dc.html">
+        <div class="pv"><div style="width:150px"><div style="height:8px;border-radius:9999px;background:#ececeb;overflow:hidden"><div style="width:64%;height:100%;background:#007265;border-radius:9999px"></div></div><div style="font-family:'DM Mono',monospace;font-size:11px;color:#6f6a63;margin-top:6px;text-align:right">64 %</div></div></div>
+        <div style="padding:14px 16px 16px"><div style="display:flex;align-items:center;gap:8px"><span class="msr" style="font-size:18px;color:#007265">linear_scale</span><span style="font-size:15px;font-weight:600">Progress bar</span></div><div style="font-size:13px;color:#6f6a63;margin-top:4px">Fortschrittsbalken</div></div>
+      </a>
+
+      <!-- Progress indicator -->
+      <a class="card" href="components/Progress-indicator.dc.html">
+        <div class="pv"><div style="display:flex;align-items:center"><span style="width:22px;height:22px;border-radius:9999px;background:#007265;color:#fff;display:inline-flex;align-items:center;justify-content:center"><span class="msr" style="font-size:14px">check</span></span><span style="width:24px;height:2px;background:#007265"></span><span style="width:22px;height:22px;border-radius:9999px;background:#fff;border:2px solid #007265;color:#007265;display:inline-flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;font-size:11px">2</span><span style="width:24px;height:2px;background:#dfddd8"></span><span style="width:22px;height:22px;border-radius:9999px;background:#fff;border:2px solid #dfddd8;color:#8a847a;display:inline-flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;font-size:11px">3</span></div></div>
+        <div style="padding:14px 16px 16px"><div style="display:flex;align-items:center;gap:8px"><span class="msr" style="font-size:18px;color:#007265">conversion_path</span><span style="font-size:15px;font-weight:600">Progress indicator</span></div><div style="font-size:13px;color:#6f6a63;margin-top:4px">Schritt-Stepper</div></div>
+      </a>
+
+      <!-- Radio button -->
+      <a class="card" href="components/Radio-button.dc.html">
+        <div class="pv"><div style="display:flex;align-items:center;gap:9px"><span style="width:20px;height:20px;border-radius:9999px;border:2px solid #007265;display:inline-flex;align-items:center;justify-content:center"><span style="width:10px;height:10px;border-radius:9999px;background:#007265"></span></span><span style="font-size:13px;font-weight:500">Option</span></div></div>
+        <div style="padding:14px 16px 16px"><div style="display:flex;align-items:center;gap:8px"><span class="msr" style="font-size:18px;color:#007265">radio_button_checked</span><span style="font-size:15px;font-weight:600">Radio button</span></div><div style="font-size:13px;color:#6f6a63;margin-top:4px">Einfachauswahl</div></div>
+      </a>
+
+      <!-- Search -->
+      <a class="card" href="components/Search.dc.html">
+        <div class="pv"><div style="width:150px;display:flex;align-items:center;gap:8px;height:36px;padding:0 12px;border:1px solid #b6b2ab;border-radius:8px;background:#fff"><span class="msr" style="font-size:17px;color:#8a847a">search</span><span style="font-size:12.5px;color:#8a847a">Suchen …</span></div></div>
+        <div style="padding:14px 16px 16px"><div style="display:flex;align-items:center;gap:8px"><span class="msr" style="font-size:18px;color:#007265">search</span><span style="font-size:15px;font-weight:600">Search</span></div><div style="font-size:13px;color:#6f6a63;margin-top:4px">Suchfeld</div></div>
+      </a>
+
+      <!-- Select -->
+      <a class="card" href="components/Select.dc.html">
+        <div class="pv"><div style="width:150px;display:flex;align-items:center;justify-content:space-between;height:36px;padding:0 12px;border:1px solid #b6b2ab;border-radius:8px;background:#fff"><span style="font-size:12.5px;color:#24221e">Auswählen</span><span class="msr" style="font-size:18px;color:#8a847a">expand_more</span></div></div>
+        <div style="padding:14px 16px 16px"><div style="display:flex;align-items:center;gap:8px"><span class="msr" style="font-size:18px;color:#007265">expand_circle_down</span><span style="font-size:15px;font-weight:600">Select</span></div><div style="font-size:13px;color:#6f6a63;margin-top:4px">Auswahlfeld</div></div>
+      </a>
+
+      <!-- Slider -->
+      <a class="card" href="components/Slider.dc.html">
+        <div class="pv"><div style="width:150px;position:relative;height:20px;display:flex;align-items:center"><div style="width:100%;height:6px;border-radius:9999px;background:#ececeb"></div><div style="position:absolute;left:0;width:55%;height:6px;border-radius:9999px;background:#007265"></div><span style="position:absolute;left:55%;transform:translateX(-50%);width:18px;height:18px;border-radius:9999px;background:#fff;border:1px solid #b6b2ab;box-shadow:0 1px 2px rgba(31,29,26,.14)"></span></div></div>
+        <div style="padding:14px 16px 16px"><div style="display:flex;align-items:center;gap:8px"><span class="msr" style="font-size:18px;color:#007265">tune</span><span style="font-size:15px;font-weight:600">Slider</span></div><div style="font-size:13px;color:#6f6a63;margin-top:4px">Wertebereich</div></div>
+      </a>
+
+      <!-- Tabs -->
+      <a class="card" href="components/Tabs.dc.html">
+        <div class="pv"><div style="display:flex;gap:18px;border-bottom:1px solid #e5e2dd;font-size:12px;padding-bottom:0"><span style="padding-bottom:7px;font-weight:600;color:#007265;border-bottom:2px solid #007265">Übersicht</span><span style="padding-bottom:7px;color:#8a847a">Details</span><span style="padding-bottom:7px;color:#8a847a">Verlauf</span></div></div>
+        <div style="padding:14px 16px 16px"><div style="display:flex;align-items:center;gap:8px"><span class="msr" style="font-size:18px;color:#007265">tab</span><span style="font-size:15px;font-weight:600">Tabs</span></div><div style="font-size:13px;color:#6f6a63;margin-top:4px">Reiter-Navigation</div></div>
+      </a>
+
+      <!-- Tag -->
+      <a class="card" href="components/Tag.dc.html">
+        <div class="pv"><div style="display:flex;gap:7px"><span style="height:24px;padding:0 11px;border-radius:9999px;background:#e2efed;color:#004b42;font-size:11.5px;font-weight:600;display:inline-flex;align-items:center">Aktiv</span><span style="height:24px;padding:0 11px;border-radius:9999px;background:#ececeb;color:#3f3b36;font-size:11.5px;font-weight:600;display:inline-flex;align-items:center">Entwurf</span></div></div>
+        <div style="padding:14px 16px 16px"><div style="display:flex;align-items:center;gap:8px"><span class="msr" style="font-size:18px;color:#007265">sell</span><span style="font-size:15px;font-weight:600">Tag</span></div><div style="font-size:13px;color:#6f6a63;margin-top:4px">Chips &amp; Tags</div></div>
+      </a>
+
+      <!-- Text input -->
+      <a class="card" href="components/Text-input.dc.html">
+        <div class="pv"><div style="width:150px;display:flex;align-items:center;height:36px;padding:0 12px;border:1px solid #007265;border-radius:8px;background:#fff;box-shadow:0 0 0 3px #0e9d9126"><span style="font-size:12.5px;color:#24221e">Text …</span><span style="width:1px;height:16px;background:#007265;margin-left:1px"></span></div></div>
+        <div style="padding:14px 16px 16px"><div style="display:flex;align-items:center;gap:8px"><span class="msr" style="font-size:18px;color:#007265">text_fields</span><span style="font-size:15px;font-weight:600">Text input</span></div><div style="font-size:13px;color:#6f6a63;margin-top:4px">Texteingabe</div></div>
+      </a>
+
+      <!-- Toggle -->
+      <a class="card" href="components/Toggle.dc.html">
+        <div class="pv"><span style="width:44px;height:26px;border-radius:9999px;background:#007265;position:relative;display:inline-block"><span style="position:absolute;top:3px;left:21px;width:20px;height:20px;border-radius:9999px;background:#fff;box-shadow:0 1px 2px rgba(31,29,26,.2)"></span></span></div>
+        <div style="padding:14px 16px 16px"><div style="display:flex;align-items:center;gap:8px"><span class="msr" style="font-size:18px;color:#007265">toggle_on</span><span style="font-size:15px;font-weight:600">Toggle</span></div><div style="font-size:13px;color:#6f6a63;margin-top:4px">An/Aus-Schalter</div></div>
+      </a>
+
+      <!-- Tooltip -->
+      <a class="card" href="components/Tooltip.dc.html">
+        <div class="pv"><div style="position:relative;background:#211f1c;color:#fff;font-size:11.5px;padding:7px 11px;border-radius:7px">Kurzinfo<span style="position:absolute;bottom:-4px;left:50%;transform:translateX(-50%) rotate(45deg);width:8px;height:8px;background:#211f1c;border-radius:1px"></span></div></div>
+        <div style="padding:14px 16px 16px"><div style="display:flex;align-items:center;gap:8px"><span class="msr" style="font-size:18px;color:#007265">info</span><span style="font-size:15px;font-weight:600">Tooltip</span></div><div style="font-size:13px;color:#6f6a63;margin-top:4px">Kurzinfo bei Hover</div></div>
+      </a>
+
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: { &quot;width&quot;: 1200, &quot;height&quot;: 900 }}">
+class Component extends DCLogic {
+  oklchToLinear(L, C, H) {
+    const h = H * Math.PI / 180, a = C * Math.cos(h), b = C * Math.sin(h);
+    const l_ = L + 0.3963377774 * a + 0.2158037573 * b, m_ = L - 0.1055613458 * a - 0.0638541728 * b, s_ = L - 0.0894841775 * a - 1.2914855480 * b;
+    const l = l_ ** 3, m = m_ ** 3, s = s_ ** 3;
+    return { r: 4.0767416621 * l - 3.3077115913 * m + 0.2309699292 * s, g: -1.2684380046 * l + 2.6097574011 * m - 0.3413193965 * s, b: -0.0041960863 * l - 0.7034186147 * m + 1.7076147010 * s };
+  }
+  toHex(rgb) {
+    const g = v => { v = Math.min(1, Math.max(0, v)); return v <= 0.0031308 ? 12.92 * v : 1.055 * Math.pow(v, 1 / 2.4) - 0.055; };
+    const h = v => Math.round(g(v) * 255).toString(16).padStart(2, '0');
+    return '#' + h(rgb.r) + h(rgb.g) + h(rgb.b);
+  }
+  makeScale(hue, chromaPeak) {
+    const L = [0.976, 0.942, 0.888, 0.822, 0.748, 0.655, 0.470, 0.405, 0.348, 0.300, 0.252, 0.198];
+    const CM = [0.05, 0.10, 0.16, 0.24, 0.34, 0.45, 1.00, 0.95, 0.80, 0.62, 0.45, 0.30];
+    const T = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1100];
+    const o = {};
+    T.forEach((t, i) => { o[t] = this.toHex(this.oklchToLinear(L[i], chromaPeak * CM[i], hue)); });
+    return o;
+  }
+
+  renderVals() {
+    const ci = 1.25;
+    const primary = this.makeScale(185, 0.115 * ci);
+    const primaryRamp = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1100].map(t => primary[t]);
+    const accents = [
+      this.makeScale(185, 0.115 * ci)[600],
+      this.makeScale(250, 0.15 * ci)[600],
+      this.makeScale(150, 0.14 * ci)[600],
+      this.makeScale(55, 0.128 * ci)[600],
+      this.makeScale(27, 0.15 * ci)[600],
+      this.makeScale(300, 0.13 * ci)[600]
+    ];
+    // Mini-Kalender: 21 Zellen, ein getönter Bereich (Bereichsauswahl-Andeutung)
+    const p100 = primary[100], p600 = primary[600], blank = '#eae7e1';
+    const calDays = [];
+    for (let i = 0; i < 21; i++) {
+      if (i === 9 || i === 13) calDays.push(p600);
+      else if (i > 9 && i < 13) calDays.push(p100);
+      else calDays.push(blank);
+    }
+    return { primaryRamp, accents, calDays };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,300,0,0" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  body{margin:0}
+  ::selection{background:#e6e1d8}
+  .msr{font-family:'Material Symbols Rounded';font-weight:300;line-height:1;display:inline-block}
+  .dp-field{display:inline-flex;align-items:center;gap:10px;height:44px;min-width:230px;padding:0 14px;border:1px solid #b6b2ab;border-radius:8px;background:#fff;cursor:pointer;font-size:14px;color:#24221e}
+  .dp-field:hover{border-color:#7c766c}
+  .dp-field.on{border-color:#007265;box-shadow:0 0 0 3px #0e9d9159}
+  .dp-clear{border-radius:6px;padding:1px;cursor:pointer}
+  .dp-clear:hover{background:#ececeb}
+  .dp-day:focus-visible,.dp-slot:focus-visible{outline:none;box-shadow:0 0 0 3px #0e9d9159;z-index:2}
+  .dp-cal{background:#fff;border:1px solid #e2ded7;border-radius:14px;box-shadow:0 8px 18px rgba(31,29,26,0.08),0 28px 60px rgba(31,29,26,0.16);padding:16px;width:300px}
+  .dp-nav{width:34px;height:34px;border-radius:8px;border:none;background:transparent;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;color:#4f4a43}
+  .dp-nav:hover{background:#ececeb}
+  .dp-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px}
+  .dp-dow{text-align:center;font-family:'DM Mono',monospace;font-size:11px;color:#a49d92;padding:6px 0}
+  .dp-day{height:36px;border:none;background:transparent;cursor:pointer;font-family:inherit;font-size:14px;color:#2c2925;display:inline-flex;align-items:center;justify-content:center;border-radius:8px;position:relative}
+  .dp-day:hover:not(:disabled):not(.sel){background:#ececeb}
+  .dp-day:disabled{color:#cfcac2;cursor:not-allowed}
+  .dp-day.bk-off{color:#c4bfb6;text-decoration:line-through;text-decoration-thickness:1px}
+  .dp-slot{border:1px solid #c6c4c2;background:#fff;color:#24221e}
+  .dp-slot:hover:not(:disabled){background:#f2f9f8;border-color:#9fd0c8}
+  .dp-slot:disabled{color:#c4bfb6;background:#f7f6f4;border-color:#eceae5;cursor:not-allowed;text-decoration:line-through}
+  .dp-slot.on{background:#007265;border-color:#007265;color:#fff;font-weight:600}
+  .dp-day.today{font-weight:700;box-shadow:inset 0 0 0 1.5px #b7d8d3}
+  .dp-day.sel{background:#007265;color:#fff;font-weight:600}
+  .dp-day.inrange{background:#e2efed;border-radius:0}
+  .dp-day.rstart{background:#007265;color:#fff;font-weight:600;border-radius:8px 0 0 8px}
+  .dp-day.rend{background:#007265;color:#fff;font-weight:600;border-radius:0 8px 8px 0}
+  .dp-monthbtn{display:inline-flex;align-items:center;gap:4px;border:none;background:transparent;font-family:inherit;font-size:14px;font-weight:400;color:#1f1d1a;cursor:pointer;padding:5px 8px;border-radius:8px}
+  .dp-monthbtn:hover{background:#ececeb}
+  .dp-mo{height:38px;border:none;background:transparent;border-radius:8px;font-family:inherit;font-size:13px;font-weight:500;color:#2c2925;cursor:pointer}
+  .dp-mo:hover:not(.on){background:#ececeb}
+  .dp-mo.on{background:#007265;color:#fff}
+  .dp-monthbtn:focus-visible,.dp-mo:focus-visible{outline:none;box-shadow:0 0 0 3px #0e9d9159}
+  .dp-chip{height:30px;padding:0 12px;border-radius:9999px;border:1px solid #d9d5ce;background:#fff;font-family:inherit;font-size:12px;font-weight:400;color:#3f3b36;cursor:pointer}
+  .dp-chip:hover{background:#f2f9f8;border-color:#9fd0c8}
+  .dp-reset{height:30px;padding:0 12px;border-radius:9999px;border:1px solid #e3c4bf;background:#fff;font-family:inherit;font-size:12px;font-weight:400;color:#b23b2e;cursor:pointer}
+  .dp-reset:hover{background:#fbecea;border-color:#d9a9a2}
+  .dp-confirm{background:#007265;color:#fff}
+  .dp-confirm:hover:not(:disabled){background:#005e53}
+  .dp-confirm:disabled{background:#dfe4e3;color:#9aa8a5;cursor:not-allowed}
+</style>
+</helmet>
+
+<div style="min-height:100%;background:#faf9f7;color:#1f1d1a;font-family:'DM Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased;padding:56px 40px 120px">
+  <div style="max-width:1000px;margin:0 auto">
+
+    <!-- HEADER -->
+    <div style="margin-bottom:44px">
+      <div style="font-family:'DM Mono',monospace;font-size:12px;letter-spacing:0.16em;color:#a49d92;text-transform:uppercase;margin-bottom:16px">Design System · Komponente · Date picker</div>
+      <h1 style="font-size:49px;line-height:1.1;font-weight:700;letter-spacing:-0.02em;margin:0 0 14px">Date picker</h1>
+      <p style="font-size:20px;line-height:1.5;color:#6f6a63;margin:0;max-width:700px">Datum wählen — ein einzelner Tag oder ein Bereich. Als Eingabefeld mit aufklappendem Kalender oder inline. Mit Monatsnavigation, „heute", deaktivierten Tagen und Schnellauswahl.</p>
+    </div>
+
+    <!-- FELD (EINZEL) -->
+    <div style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#a49d92;text-transform:uppercase;margin-bottom:18px">Feld · Einzeldatum</div>
+    <div style="background:#fff;border:1px solid #e9e6e1;border-radius:16px;padding:36px;margin-bottom:48px">
+      <div style="position:relative;display:inline-block">
+        <div class="dp-field {{ singleFieldCls }}" onClick="{{ toggleSingle }}">
+          <span class="msr" style="font-size:19px;color:{{ muted }}">calendar_month</span>
+          <span style="flex:1">{{ singleLabel }}</span>
+          <sc-if value="{{ hasSingle }}" hint-placeholder-val=""><span class="msr dp-clear" role="button" aria-label="Datum zurücksetzen" onClick="{{ clearSingle }}" style="font-size:18px;color:{{ muted }}">close</span></sc-if>
+          <sc-if value="{{ noSingle }}" hint-placeholder-val="{{ true }}"><span class="msr" style="font-size:19px;color:{{ muted }}">expand_more</span></sc-if>
+        </div>
+        <sc-if value="{{ singleOpen }}" hint-placeholder-val="">
+          <div class="dp-cal" data-cal style="position:absolute;top:calc(100% + 8px);left:0;z-index:20">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+              <button class="dp-nav" onClick="{{ sPrev }}" aria-label="Vorheriger Monat"><span class="msr" style="font-size:20px">chevron_left</span></button>
+              <button class="dp-monthbtn" onClick="{{ toggleSPick }}" aria-label="Monat und Jahr wählen">{{ sMonthLabel }} <span class="msr" style="font-size:18px">{{ sPickIcon }}</span></button>
+              <button class="dp-nav" onClick="{{ sNext }}" aria-label="Nächster Monat"><span class="msr" style="font-size:20px">chevron_right</span></button>
+            </div>
+            <sc-if value="{{ sPickOpen }}" hint-placeholder-val="">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin:2px 0 10px">
+                <button class="dp-nav" onClick="{{ sPick.prevYear }}" aria-label="Vorheriges Jahr"><span class="msr" style="font-size:20px">chevron_left</span></button>
+                <div style="font-size:14px;font-weight:700;font-family:'DM Mono',monospace">{{ sPick.year }}</div>
+                <button class="dp-nav" onClick="{{ sPick.nextYear }}" aria-label="Nächstes Jahr"><span class="msr" style="font-size:20px">chevron_right</span></button>
+              </div>
+              <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px">
+                <sc-for list="{{ sPick.months }}" as="m" hint-placeholder-count="12"><button class="{{ m.cls }}" onClick="{{ m.onClick }}">{{ m.label }}</button></sc-for>
+              </div>
+            </sc-if>
+            <sc-if value="{{ sDayOpen }}" hint-placeholder-val="{{ true }}">
+              <div class="dp-grid">
+                <div class="dp-dow">Mo</div><div class="dp-dow">Di</div><div class="dp-dow">Mi</div><div class="dp-dow">Do</div><div class="dp-dow">Fr</div><div class="dp-dow">Sa</div><div class="dp-dow">So</div>
+                <sc-for list="{{ sDays }}" as="d" hint-placeholder-count="35">
+                  <button class="{{ d.cls }}" disabled="{{ d.disabled }}" aria-label="{{ d.aria }}" aria-pressed="{{ d.pressed }}" onClick="{{ d.onClick }}" onKeyDown="{{ d.onKey }}">{{ d.label }}</button>
+                </sc-for>
+              </div>
+            </sc-if>
+          </div>
+        </sc-if>
+      </div>
+    </div>
+
+    <!-- INLINE (BEREICH) -->
+    <div style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#a49d92;text-transform:uppercase;margin-bottom:18px">Inline · Datumsbereich mit Schnellauswahl</div>
+    <div style="background:#fff;border:1px solid #e9e6e1;border-radius:16px;padding:36px;margin-bottom:16px;display:flex;gap:28px;flex-wrap:wrap;align-items:flex-start">
+      <div class="dp-cal" style="box-shadow:none;border-color:#e5e2dd">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+          <button class="dp-nav" onClick="{{ rPrev }}" aria-label="Vorheriger Monat"><span class="msr" style="font-size:20px">chevron_left</span></button>
+          <button class="dp-monthbtn" onClick="{{ toggleRPick }}" aria-label="Monat und Jahr wählen">{{ rMonthLabel }} <span class="msr" style="font-size:18px">{{ rPickIcon }}</span></button>
+          <button class="dp-nav" onClick="{{ rNext }}" aria-label="Nächster Monat"><span class="msr" style="font-size:20px">chevron_right</span></button>
+        </div>
+        <sc-if value="{{ rPickOpen }}" hint-placeholder-val="">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin:2px 0 10px">
+            <button class="dp-nav" onClick="{{ rPick.prevYear }}" aria-label="Vorheriges Jahr"><span class="msr" style="font-size:20px">chevron_left</span></button>
+            <div style="font-size:14px;font-weight:700;font-family:'DM Mono',monospace">{{ rPick.year }}</div>
+            <button class="dp-nav" onClick="{{ rPick.nextYear }}" aria-label="Nächstes Jahr"><span class="msr" style="font-size:20px">chevron_right</span></button>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px">
+            <sc-for list="{{ rPick.months }}" as="m" hint-placeholder-count="12"><button class="{{ m.cls }}" onClick="{{ m.onClick }}">{{ m.label }}</button></sc-for>
+          </div>
+        </sc-if>
+        <sc-if value="{{ rDayOpen }}" hint-placeholder-val="{{ true }}">
+          <div class="dp-grid">
+            <div class="dp-dow">Mo</div><div class="dp-dow">Di</div><div class="dp-dow">Mi</div><div class="dp-dow">Do</div><div class="dp-dow">Fr</div><div class="dp-dow">Sa</div><div class="dp-dow">So</div>
+            <sc-for list="{{ rDays }}" as="d" hint-placeholder-count="35">
+              <button class="{{ d.cls }}" disabled="{{ d.disabled }}" aria-label="{{ d.aria }}" aria-pressed="{{ d.pressed }}" onClick="{{ d.onClick }}" onKeyDown="{{ d.onKey }}">{{ d.label }}</button>
+            </sc-for>
+          </div>
+        </sc-if>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:10px;min-width:150px">
+        <div style="font-family:'DM Mono',monospace;font-size:11px;color:#a49d92;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:2px">Schnellauswahl</div>
+        <sc-for list="{{ presets }}" as="p" hint-placeholder-count="3">
+          <button class="dp-chip" style="text-align:left" onClick="{{ p.onClick }}">{{ p.label }}</button>
+        </sc-for>
+        <sc-if value="{{ hasRangeSel }}" hint-placeholder-val=""><button class="dp-reset" style="text-align:left" onClick="{{ clearRange }}">Zurücksetzen</button></sc-if>
+        <div style="margin-top:16px">
+          <div style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:{{ muted }};margin-bottom:6px">Ausgewählt</div>
+          <div style="padding:12px 14px;border-radius:10px;background:#f7f6f4;border:1px solid #e5e2dd">
+            <div style="font-size:16px;font-weight:700;color:{{ sumColor }};line-height:1.35">{{ rangeSummary }}</div>
+            <sc-if value="{{ hasRange }}" hint-placeholder-val="{{ true }}"><div style="font-size:12px;color:{{ muted }};margin-top:3px">{{ rangeDays }}</div></sc-if>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="font-family:'DM Mono',monospace;font-size:11px;color:#a49d92;line-height:1.7;margin-bottom:48px">Vergangene Tage sind deaktiviert. Klick wählt direkt (kein Bestätigen). Beim Bereich wählt der erste Klick den Start, der zweite das Ende; ein neuer Klick startet neu.</div>
+
+    <!-- TERMIN-BUCHUNG -->
+    <div style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#a49d92;text-transform:uppercase;margin-bottom:18px">Termin-Buchung · Verfügbarkeit</div>
+    <div style="background:#fff;border:1px solid #e9e6e1;border-radius:16px;padding:36px;margin-bottom:16px;display:flex;gap:28px;flex-wrap:wrap;align-items:flex-start">
+      <div class="dp-cal" style="box-shadow:none;border-color:#e5e2dd">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+          <button class="dp-nav" onClick="{{ bPrev }}" aria-label="Vorheriger Monat"><span class="msr" style="font-size:20px">chevron_left</span></button>
+          <button class="dp-monthbtn" onClick="{{ toggleBPick }}" aria-label="Monat und Jahr wählen">{{ bMonthLabel }} <span class="msr" style="font-size:18px">{{ bPickIcon }}</span></button>
+          <button class="dp-nav" onClick="{{ bNext }}" aria-label="Nächster Monat"><span class="msr" style="font-size:20px">chevron_right</span></button>
+        </div>
+        <sc-if value="{{ bPickOpen }}" hint-placeholder-val="">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin:2px 0 10px">
+            <button class="dp-nav" onClick="{{ bPick.prevYear }}" aria-label="Vorheriges Jahr"><span class="msr" style="font-size:20px">chevron_left</span></button>
+            <div style="font-size:14px;font-weight:700;font-family:'DM Mono',monospace">{{ bPick.year }}</div>
+            <button class="dp-nav" onClick="{{ bPick.nextYear }}" aria-label="Nächstes Jahr"><span class="msr" style="font-size:20px">chevron_right</span></button>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px">
+            <sc-for list="{{ bPick.months }}" as="m" hint-placeholder-count="12"><button class="{{ m.cls }}" onClick="{{ m.onClick }}">{{ m.label }}</button></sc-for>
+          </div>
+        </sc-if>
+        <sc-if value="{{ bDayOpen }}" hint-placeholder-val="{{ true }}">
+          <div class="dp-grid">
+            <div class="dp-dow">Mo</div><div class="dp-dow">Di</div><div class="dp-dow">Mi</div><div class="dp-dow">Do</div><div class="dp-dow">Fr</div><div class="dp-dow">Sa</div><div class="dp-dow">So</div>
+            <sc-for list="{{ bDays }}" as="d" hint-placeholder-count="35">
+              <button class="{{ d.cls }}" disabled="{{ d.disabled }}" aria-label="{{ d.aria }}" aria-pressed="{{ d.pressed }}" onClick="{{ d.onClick }}" onKeyDown="{{ d.onKey }}" title="{{ d.title }}">{{ d.label }}<sc-if value="{{ d.dot }}" hint-placeholder-val=""><span style="position:absolute;bottom:5px;left:50%;transform:translateX(-50%);width:5px;height:5px;border-radius:9999px;background:{{ d.dotColor }}"></span></sc-if></button>
+            </sc-for>
+          </div>
+        </sc-if>
+        <!-- LEGENDE -->
+        <div style="display:flex;gap:16px;margin-top:14px;padding-top:12px;border-top:1px solid #f1efec">
+          <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:{{ muted }}"><span style="width:7px;height:7px;border-radius:9999px;background:#1f8a5b"></span>verfügbar</div>
+          <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:{{ muted }}"><span style="width:7px;height:7px;border-radius:9999px;background:#007265"></span>gewählt</div>
+          <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:{{ muted }}"><span style="width:9px;height:2px;border-radius:2px;background:#cfcac2"></span>ausgebucht</div>
+        </div>
+      </div>
+      <!-- ZEIT-SLOTS -->
+      <div style="flex:1;min-width:200px">
+        <div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:4px">
+          <div style="font-family:'DM Mono',monospace;font-size:11px;color:#a49d92;text-transform:uppercase;letter-spacing:0.08em">{{ slotHeading }}</div>
+          <sc-if value="{{ hasSlots }}" hint-placeholder-val=""><div style="font-family:'DM Mono',monospace;font-size:11px;color:{{ freeColor }}">{{ freeLabel }}</div></sc-if>
+        </div>
+        <sc-if value="{{ hasSlots }}" hint-placeholder-val="">
+          <div style="font-size:12px;color:{{ muted }};margin-bottom:12px">30 Min · Zeitzone MEZ (Europe/Berlin)</div>
+        </sc-if>
+        <sc-if value="{{ hasSlots }}" hint-placeholder-val="{{ true }}">
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">
+            <sc-for list="{{ slots }}" as="t" hint-placeholder-count="6">
+              <button class="{{ t.cls }}" disabled="{{ t.disabled }}" aria-disabled="{{ t.disabled }}" aria-pressed="{{ t.pressed }}" aria-label="{{ t.aria }}" onClick="{{ t.onClick }}" style="height:38px;border-radius:8px;font-family:'DM Mono',monospace;font-size:13px;cursor:pointer">{{ t.label }}</button>
+            </sc-for>
+          </div>
+        </sc-if>
+        <sc-if value="{{ noSlots }}" hint-placeholder-val="">
+          <div style="display:flex;flex-direction:column;align-items:center;gap:6px;padding:30px 12px;text-align:center;border:1px dashed #e0ddd6;border-radius:12px">
+            <span class="msr" style="font-size:28px;color:#c8c2b8">event_available</span>
+            <div style="font-size:13px;color:{{ muted }};max-width:180px">Wähle einen verfügbaren Tag, um freie Uhrzeiten zu sehen.</div>
+          </div>
+        </sc-if>
+        <sc-if value="{{ slotChosen }}" hint-placeholder-val=""><div style="margin-top:14px;padding:11px 13px;border-radius:10px;background:#f2f9f8;border:1px solid #c5e1dc;font-size:14px;font-weight:600;color:#004b42">{{ bookingSummary }}</div></sc-if>
+        <sc-if value="{{ hasSlots }}" hint-placeholder-val="">
+          <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:18px;padding-top:16px;border-top:1px solid #f1efec">
+            <button class="dp-chip" style="height:40px;padding:0 16px;border-radius:8px" onClick="{{ cancelBooking }}">Abbrechen</button>
+            <button class="{{ confirmCls }}" disabled="{{ confirmDisabled }}" onClick="{{ confirmBooking }}" style="height:40px;padding:0 18px;border-radius:8px;border:none;font-family:inherit;font-weight:400;font-size:14px;cursor:pointer;display:inline-flex;align-items:center;gap:7px"><span class="msr" style="font-size:18px">event_available</span>Termin bestätigen</button>
+          </div>
+        </sc-if>
+      </div>
+    </div>
+
+    <div style="font-family:'DM Mono',monospace;font-size:11px;color:#a49d92;line-height:1.7;margin-bottom:48px">Verfügbare Tage tragen einen grünen Punkt und sind klickbar; ausgebuchte/vergangene Tage sind deaktiviert (durchgestrichen-blass). Nach der Tagwahl erscheinen die freien Uhrzeiten.</div>
+
+    <!-- FELD-ZUSTÄNDE -->
+    <div style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#a49d92;text-transform:uppercase;margin-bottom:18px">Feld-Zustände</div>
+    <div style="background:#fff;border:1px solid #e9e6e1;border-radius:16px;padding:36px;margin-bottom:48px">
+      <div style="display:flex;gap:28px;flex-wrap:wrap">
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div class="dp-field" style="cursor:default"><span class="msr" style="font-size:19px;color:{{ muted }}">calendar_month</span><span style="flex:1;color:{{ muted }}">Datum wählen</span><span class="msr" style="font-size:19px;color:{{ muted }}">expand_more</span></div>
+          <span style="font-family:'DM Mono',monospace;font-size:11px;color:#a49d92">Leer</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div class="dp-field" style="cursor:default;border-color:#7c766c"><span class="msr" style="font-size:19px;color:{{ muted }}">calendar_month</span><span style="flex:1">14.07.2026</span><span class="msr" style="font-size:19px;color:{{ muted }}">close</span></div>
+          <span style="font-family:'DM Mono',monospace;font-size:11px;color:#a49d92">Gefüllt · Hover</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div class="dp-field on" style="cursor:default"><span class="msr" style="font-size:19px;color:{{ accent }}">calendar_month</span><span style="flex:1">14.07.2026</span><span class="msr" style="font-size:19px;color:{{ muted }}">expand_less</span></div>
+          <span style="font-family:'DM Mono',monospace;font-size:11px;color:#a49d92">Fokus · offen</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div class="dp-field" style="cursor:not-allowed;background:#f3f1ee;border-color:#e5e2dd"><span class="msr" style="font-size:19px;color:#c4bfb6">calendar_month</span><span style="flex:1;color:#b8b2a9">Datum wählen</span><span class="msr" style="font-size:19px;color:#c4bfb6">expand_more</span></div>
+          <span style="font-family:'DM Mono',monospace;font-size:11px;color:#a49d92">Deaktiviert</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div class="dp-field" style="cursor:default;border-color:#c0392b;box-shadow:0 0 0 3px #c0392b26"><span class="msr" style="font-size:19px;color:#c0392b">calendar_month</span><span style="flex:1">Datum wählen</span><span class="msr" style="font-size:19px;color:{{ muted }}">expand_more</span></div>
+          <span style="font-family:'DM Mono',monospace;font-size:11px;color:#a49d92">Fehler</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- DO / DON'T -->
+    <div style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#a49d92;text-transform:uppercase;margin-bottom:18px">Einsatz</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+      <div style="background:#fff;border:1px solid #e9e6e1;border-radius:14px;border-top:3px solid #1f8a5b;padding:22px 24px">
+        <div style="font-size:13px;font-weight:600;color:#1f8a5b;margin-bottom:10px">Do</div>
+        <ul style="margin:0;padding-left:18px;font-size:14px;line-height:1.7;color:#3f3b36">
+          <li>Feld+Popover für einzelne Daten, inline für Bereiche/Buchung.</li>
+          <li>Ungültige/ausgebuchte Tage deutlich deaktivieren.</li>
+          <li>Monat/Jahr direkt wählbar machen (weit entfernte Daten).</li>
+        </ul>
+      </div>
+      <div style="background:#fff;border:1px solid #e9e6e1;border-radius:14px;border-top:3px solid #c0392b;padding:22px 24px">
+        <div style="font-size:13px;font-weight:600;color:#c0392b;margin-bottom:10px">Don't</div>
+        <ul style="margin:0;padding-left:18px;font-size:14px;line-height:1.7;color:#3f3b36">
+          <li>Kein freies Textfeld ohne Format-Hilfe für Datumseingabe.</li>
+          <li>Buchung nicht ohne Bestätigen/Abbrechen abschließen.</li>
+          <li>Verfügbarkeit nicht nur per Farbe — Form/Label ergänzen.</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: { &quot;width&quot;: 1040, &quot;height&quot;: 720 }}">
+class Component extends DCLogic {
+  today = new Date(2026, 6, 11);
+  monthNames = ['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
+  monthShort = ['Jan','Feb','Mär','Apr','Mai','Jun','Jul','Aug','Sep','Okt','Nov','Dez'];
+  state = {
+    singleOpen: false,
+    sPick: false, rPick: false, bPick: false,
+    sView: { y: 2026, m: 6 },
+    single: null,
+    rView: { y: 2026, m: 6 },
+    rStart: new Date(2026, 6, 14),
+    rEnd: new Date(2026, 6, 20),
+    bView: { y: 2026, m: 6 },
+    bDay: new Date(2026, 6, 13),
+    bSlot: null
+  };
+  // Verfügbarkeit Juli 2026: ausgebuchte Tage (voll belegt)
+  bookedDays = { '20260614': true, '20260617': true, '20260622': true, '20260628': true };
+  slotDefs = ['09:00', '09:45', '10:30', '11:15', '13:00', '13:45', '14:30', '15:15', '16:00'];
+  takenSlots = { '2': true, '5': true }; // Indizes belegter Slots (Demo)
+
+  ymd(d) { return d ? d.getFullYear() * 10000 + d.getMonth() * 100 + d.getDate() : null; }
+  ymd0(d) { return Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()); }
+  longDate(d) { return d.getDate() + '. ' + this.monthNames[d.getMonth()] + ' ' + d.getFullYear(); }
+
+  // Pfeiltasten-Navigation im Tagesraster (roving focus, überspringt deaktivierte)
+  gridKey = (e) => {
+    const map = { ArrowRight: 1, ArrowLeft: -1, ArrowDown: 7, ArrowUp: -7 };
+    if (!(e.key in map)) return;
+    e.preventDefault();
+    const grid = e.currentTarget.closest('.dp-grid');
+    if (!grid) return;
+    const btns = [...grid.querySelectorAll('button')];
+    let i = btns.indexOf(e.currentTarget);
+    const step = map[e.key];
+    for (let n = 0; n < btns.length; n++) {
+      i += step;
+      if (i < 0 || i >= btns.length) return;
+      if (!btns[i].disabled) { btns[i].focus(); return; }
+    }
+  };
+  sameDay(a, b) { return a && b && this.ymd(a) === this.ymd(b); }
+
+  toggleSingle = () => this.setState(s => ({ singleOpen: !s.singleOpen }));
+  componentDidMount() {
+    this._down = (e) => { if (this.state.singleOpen && !e.target.closest('[data-cal]') && !e.target.closest('.dp-field')) this.setState({ singleOpen: false }); };
+    document.addEventListener('mousedown', this._down);
+  }
+  componentWillUnmount() { document.removeEventListener('mousedown', this._down); }
+
+  pickFlagFor(which) { return which === 'sView' ? 'sPick' : (which === 'rView' ? 'rPick' : 'bPick'); }
+  togglePick(which) { const f = this.pickFlagFor(which); this.setState(s => ({ [f]: !s[f] })); }
+  monthPicker(which) {
+    const v = this.state[which];
+    const flag = this.pickFlagFor(which);
+    return {
+      year: String(v.y),
+      prevYear: () => this.setState(s => ({ [which]: Object.assign({}, s[which], { y: s[which].y - 1 }) })),
+      nextYear: () => this.setState(s => ({ [which]: Object.assign({}, s[which], { y: s[which].y + 1 }) })),
+      months: this.monthShort.map((m, i) => ({
+        label: m,
+        cls: 'dp-mo' + (i === v.m ? ' on' : ''),
+        onClick: () => this.setState(s => ({ [which]: Object.assign({}, s[which], { m: i }), [flag]: false }))
+      }))
+    };
+  }
+
+  shiftMonth(which, delta) {
+    this.setState(s => {
+      const v = Object.assign({}, s[which]);
+      v.m += delta;
+      if (v.m < 0) { v.m = 11; v.y--; } else if (v.m > 11) { v.m = 0; v.y++; }
+      return { [which]: v };
+    });
+  }
+  pickSingle(d) { this.setState({ single: d, singleOpen: false }); }
+  pickRange(d) {
+    this.setState(s => {
+      if (!s.rStart || (s.rStart && s.rEnd)) return { rStart: d, rEnd: null };
+      if (this.ymd(d) < this.ymd(s.rStart)) return { rStart: d, rEnd: s.rStart };
+      return { rEnd: d };
+    });
+  }
+  setPreset(kind) {
+    const t = this.today;
+    if (kind === 'today') this.setState({ rStart: new Date(t), rEnd: new Date(t), rView: { y: t.getFullYear(), m: t.getMonth() } });
+    else if (kind === 'yesterday') { const y = new Date(t); y.setDate(t.getDate() - 1); this.setState({ rStart: y, rEnd: new Date(y), rView: { y: y.getFullYear(), m: y.getMonth() } }); }
+    else if (kind === '7') { const s = new Date(t); s.setDate(t.getDate() - 6); this.setState({ rStart: s, rEnd: new Date(t), rView: { y: s.getFullYear(), m: s.getMonth() } }); }
+  }
+
+  fmt(d) { return d ? (String(d.getDate()).padStart(2, '0') + '.' + String(d.getMonth() + 1).padStart(2, '0') + '.' + d.getFullYear()) : ''; }
+
+  isAvailable(date) {
+    const yv = this.ymd(date);
+    if (yv < this.ymd(this.today)) return false;
+    if (this.bookedDays[String(yv)]) return false;
+    if (date.getDay() === 0 || date.getDay() === 6) return false;
+    return true;
+  }
+  firstAvailableDay(view) {
+    const days = new Date(view.y, view.m + 1, 0).getDate();
+    for (let d = 1; d <= days; d++) {
+      const date = new Date(view.y, view.m, d);
+      if (this.isAvailable(date)) return date;
+    }
+    return null;
+  }
+
+  buildBookingDays(view, displayDay) {
+    const { y, m } = view;
+    const first = new Date(y, m, 1);
+    let lead = (first.getDay() + 6) % 7;
+    const daysInMonth = new Date(y, m + 1, 0).getDate();
+    const cells = [];
+    for (let i = 0; i < lead; i++) cells.push(null);
+    for (let d = 1; d <= daysInMonth; d++) cells.push(new Date(y, m, d));
+    while (cells.length % 7 !== 0) cells.push(null);
+    const todayY = this.ymd(this.today);
+    return cells.map((date) => {
+      if (!date) return { label: '', cls: 'dp-day', disabled: true, onClick: () => {}, onKey: () => {}, dot: false, title: '', aria: '', pressed: 'false' };
+      const yv = this.ymd(date);
+      const key = String(yv);
+      const past = yv < todayY;
+      const booked = !!this.bookedDays[key];
+      const isWeekend = date.getDay() === 0 || date.getDay() === 6;
+      const unavailable = past || booked || isWeekend;
+      const selected = this.sameDay(date, displayDay);
+      let cls = 'dp-day';
+      if (yv === todayY) cls += ' today';
+      if (selected) cls = 'dp-day sel';
+      if (unavailable && !selected) cls += ' bk-off';
+      const reason = past ? 'vergangen' : (isWeekend ? 'geschlossen' : (booked ? 'ausgebucht' : 'verfügbar'));
+      return {
+        label: String(date.getDate()), cls, disabled: unavailable,
+        dot: !unavailable && !selected, dotColor: '#1f8a5b',
+        title: reason,
+        aria: this.longDate(date) + ', ' + (selected ? 'ausgewählt' : reason),
+        pressed: selected ? 'true' : 'false', onKey: this.gridKey,
+        onClick: unavailable ? (() => {}) : (() => this.setState({ bDay: date, bSlot: null }))
+      };
+    });
+  }
+
+  buildDays(view, mode) {
+    const { y, m } = view;
+    const first = new Date(y, m, 1);
+    let lead = (first.getDay() + 6) % 7; // Montag=0
+    const daysInMonth = new Date(y, m + 1, 0).getDate();
+    const cells = [];
+    for (let i = 0; i < lead; i++) cells.push(null);
+    for (let d = 1; d <= daysInMonth; d++) cells.push(new Date(y, m, d));
+    while (cells.length % 7 !== 0) cells.push(null);
+    const todayY = this.ymd(this.today);
+    return cells.map((date, i) => {
+      if (!date) return { label: '', cls: 'dp-day', disabled: true, onClick: () => {}, onKey: () => {}, aria: '', pressed: 'false' };
+      const yv = this.ymd(date);
+      const disabled = yv < todayY;
+      let cls = 'dp-day';
+      let selected = false;
+      if (yv === todayY) cls += ' today';
+      if (mode === 'single') {
+        if (this.sameDay(date, this.state.single)) { cls = 'dp-day sel'; selected = true; }
+      } else {
+        const { rStart, rEnd } = this.state;
+        if (rStart && rEnd) {
+          if (this.sameDay(date, rStart) && this.sameDay(date, rEnd)) { cls += ' sel'; selected = true; }
+          else if (this.sameDay(date, rStart)) { cls += ' rstart'; selected = true; }
+          else if (this.sameDay(date, rEnd)) { cls += ' rend'; selected = true; }
+          else if (yv > this.ymd(rStart) && yv < this.ymd(rEnd)) cls += ' inrange';
+        } else if (this.sameDay(date, rStart)) { cls += ' sel'; selected = true; }
+      }
+      const aria = this.longDate(date) + (disabled ? ', vergangen' : '') + (yv === todayY ? ', heute' : '') + (selected ? ', ausgewählt' : '');
+      return {
+        label: String(date.getDate()), cls, disabled, aria, pressed: selected ? 'true' : 'false',
+        onKey: this.gridKey,
+        onClick: disabled ? (() => {}) : (mode === 'single' ? (() => this.pickSingle(date)) : (() => this.pickRange(date)))
+      };
+    });
+  }
+
+  renderVals() {
+    const sv = this.state.sView, rv = this.state.rView;
+    const rs = this.state.rStart, re = this.state.rEnd;
+    let summary = 'Kein Zeitraum';
+    let complete = false;
+    if (rs && re) { summary = this.fmt(rs) + ' – ' + this.fmt(re); complete = true; }
+    else if (rs) summary = this.fmt(rs) + ' – …';
+    let dayCount = '';
+    if (rs && re) {
+      const n = Math.round((this.ymd0(re) - this.ymd0(rs)) / 86400000) + 1;
+      dayCount = n + (n === 1 ? ' Tag' : ' Tage');
+    }
+    return {
+      muted: '#a49d92', accent: '#007265',
+      sumColor: complete ? '#1f1d1a' : '#8a847a',
+      hasRange: complete, rangeDays: dayCount,
+      singleOpen: this.state.singleOpen, toggleSingle: this.toggleSingle,
+      singleFieldCls: this.state.singleOpen ? 'on' : '',
+      singleLabel: this.state.single ? this.fmt(this.state.single) : 'Datum wählen',
+      hasSingle: !!this.state.single, noSingle: !this.state.single,
+      clearSingle: (e) => { if (e && e.stopPropagation) e.stopPropagation(); this.setState({ single: null, singleOpen: false }); },
+      hasRangeSel: !!this.state.rStart,
+      clearRange: () => this.setState({ rStart: null, rEnd: null }),
+      sMonthLabel: this.monthNames[sv.m] + ' ' + sv.y,
+      sDays: this.buildDays(sv, 'single'),
+      sPrev: () => this.shiftMonth('sView', -1), sNext: () => this.shiftMonth('sView', 1),
+      sPickOpen: this.state.sPick, sDayOpen: !this.state.sPick,
+      toggleSPick: () => this.togglePick('sView'), sPickIcon: this.state.sPick ? 'expand_less' : 'expand_more',
+      sPick: this.monthPicker('sView'),
+      rMonthLabel: this.monthNames[rv.m] + ' ' + rv.y,
+      rDays: this.buildDays(rv, 'range'),
+      rPrev: () => this.shiftMonth('rView', -1), rNext: () => this.shiftMonth('rView', 1),
+      rPickOpen: this.state.rPick, rDayOpen: !this.state.rPick,
+      toggleRPick: () => this.togglePick('rView'), rPickIcon: this.state.rPick ? 'expand_less' : 'expand_more',
+      rPick: this.monthPicker('rView'),
+      presets: [
+        { label: 'Heute', onClick: () => this.setPreset('today') },
+        { label: 'Gestern', onClick: () => this.setPreset('yesterday') },
+        { label: 'Letzte 7 Tage', onClick: () => this.setPreset('7') }
+      ],
+      rangeSummary: summary,
+      // Buchung
+      bMonthLabel: this.monthNames[this.state.bView.m] + ' ' + this.state.bView.y,
+      bDays: this.buildBookingDays(this.state.bView, this.state.bDay),
+      bPrev: () => this.shiftMonth('bView', -1), bNext: () => this.shiftMonth('bView', 1),
+      bPickOpen: this.state.bPick, bDayOpen: !this.state.bPick,
+      toggleBPick: () => this.togglePick('bView'), bPickIcon: this.state.bPick ? 'expand_less' : 'expand_more',
+      bPick: this.monthPicker('bView'),
+      slotHeading: this.state.bDay ? ('Datum & Uhrzeit · ' + this.fmt(this.state.bDay)) : 'Datum & Uhrzeit',
+      hasSlots: !!this.state.bDay, noSlots: !this.state.bDay,
+      freeLabel: (this.slotDefs.length - Object.keys(this.takenSlots).length) + ' von ' + this.slotDefs.length + ' frei',
+      freeColor: '#1f8a5b',
+      slots: this.slotDefs.map((t, i) => {
+        const taken = !!this.takenSlots[String(i)];
+        const on = this.state.bSlot === i;
+        return {
+          label: t, disabled: taken, pressed: on ? 'true' : 'false',
+          aria: t + ' Uhr' + (taken ? ', belegt' : (on ? ', ausgewählt' : ', frei')),
+          cls: 'dp-slot' + (on ? ' on' : ''),
+          onClick: taken ? (() => {}) : (() => this.setState({ bSlot: i }))
+        };
+      }),
+      slotChosen: this.state.bDay && this.state.bSlot != null,
+      bookingSummary: (this.state.bDay && this.state.bSlot != null) ? ('Termin: ' + this.fmt(this.state.bDay) + ' um ' + this.slotDefs[this.state.bSlot] + ' Uhr') : '',
+      cancelBooking: () => this.setState({ bDay: null, bSlot: null }),
+      confirmBooking: () => this.setState({ bSlot: this.state.bSlot }),
+      confirmDisabled: this.state.bSlot == null,
+      confirmCls: 'dp-confirm'
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,85 @@
+<!-- @dsCard group="Komponenten" viewport="760x600" name="Notification" subtitle="Inline-Banner getönt und gefüllt, dazu schwebende Toasts" -->
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  html,body{margin:0}
+  body{padding:20px 22px;font-family:var(--medo-font-sans);background:var(--medo-surface);color:var(--medo-text);min-height:600px;box-sizing:border-box}
+  .lbl{font-family:var(--medo-font-mono);font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:var(--medo-color-stone-500);margin-bottom:10px}
+  .grp{margin-bottom:18px}
+  .stack{display:flex;flex-direction:column;gap:10px}
+  .row{display:flex;gap:10px;flex-wrap:wrap}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+<script src="../_ds_bundle.js"></script>
+<script>
+  var h = React.createElement;
+  var MedoNt = window.MedoUI.Notification,
+      MedoToastHost = window.MedoUI.ToastHost,
+      medoToast = window.MedoUI.toast,
+      MedoButton = window.MedoUI.Button;
+
+  var arten = [
+    ['info', 'Neue Version verfügbar', 'Laden Sie die Seite neu, um die neueste Version zu verwenden.', 'Neu laden'],
+    ['success', 'Erfolgreich gespeichert', 'Ihre Änderungen wurden übernommen.', 'Rückgängig'],
+    ['warning', 'Speicher fast voll', 'Sie haben 90 % Ihres Kontingents genutzt.', 'Verwalten'],
+    ['error', 'Hochladen fehlgeschlagen', 'Die Datei konnte nicht übertragen werden.', 'Erneut versuchen'],
+    ['neutral', 'Wartungshinweis', 'Am Sonntag von 2 bis 4 Uhr sind Wartungsarbeiten geplant.', 'Details']
+  ];
+
+  function App() {
+    return h('div', null,
+      h('div', { className: 'grp' },
+        h('div', { className: 'lbl' }, 'Inline · getönt'),
+        h('div', { className: 'stack' },
+          arten.map(function (a) {
+            return h(MedoNt, {
+              key: a[0], kind: a[0], emphasis: 'soft', title: a[1],
+              action: { label: a[3], onClick: function () {} },
+              onClose: function () {}
+            }, a[2]);
+          }))
+      ),
+      h('div', { className: 'grp' },
+        h('div', { className: 'lbl' }, 'Inline · gefüllt'),
+        h('div', { className: 'stack' },
+          arten.slice(0, 3).map(function (a) {
+            return h(MedoNt, {
+              key: a[0], kind: a[0], emphasis: 'solid', title: a[1],
+              action: { label: a[3], onClick: function () {} },
+              onClose: function () {}
+            });
+          }))
+      ),
+      h('div', { className: 'grp' },
+        h('div', { className: 'lbl' }, 'Einzeilig · nur Text'),
+        h('div', { style: { maxWidth: '520px' } },
+          h(MedoNt, { kind: 'success', title: 'Änderungen wurden gespeichert.', onClose: function () {} }))
+      ),
+      h('div', null,
+        h('div', { className: 'lbl' }, 'Toast · oben rechts, blendet nach 5 s aus'),
+        h('div', { className: 'row' },
+          ['info', 'success', 'warning', 'error'].map(function (k, i) {
+            return h(MedoButton, {
+              key: k, variant: 'secondary', size: 'sm',
+              onClick: function () {
+                medoToast({ kind: k, title: arten[i][1], description: arten[i][2] });
+              }
+            }, arten[i][1]);
+          })),
+        h('div', { style: { fontFamily: 'var(--medo-font-mono)', fontSize: '11px', color: 'var(--medo-color-stone-500)', marginTop: '10px', lineHeight: 1.6 } },
+          'Fehler-Toasts bleiben stehen, bis sie geschlossen werden.')
+      ),
+      h(MedoToastHost)
+    );
+  }
+  ReactDOM.createRoot(document.getElementById('root')).render(h(App));
+</script>
+</body>
+</html>

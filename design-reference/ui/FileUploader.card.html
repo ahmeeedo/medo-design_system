@@ -1,0 +1,62 @@
+<!-- @dsCard group="Komponenten" viewport="640x700" name="File uploader" subtitle="Ablagefläche mit Fortschritt, kompakte Zeile und gesperrter Zustand" -->
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  html,body{margin:0}
+  body{padding:24px 22px;font-family:var(--medo-font-sans);background:var(--medo-surface);color:var(--medo-text);min-height:700px;box-sizing:border-box}
+  .lbl{font-family:var(--medo-font-mono);font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:var(--medo-color-stone-500);margin-bottom:12px}
+  .wrap{max-width:470px}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+<script src="../_ds_bundle.js"></script>
+<script>
+  var h = React.createElement;
+  var FU = window.MedoUI.FileUploader;
+
+  function Demo() {
+    var files = React.useState([
+      { id: 1, name: 'Gewerbeschein.pdf', size: 284000, status: 'done' },
+      { id: 2, name: 'Registerauszug-2026-08.pdf', size: 1830000, status: 'uploading', progress: 62 },
+      { id: 3, name: 'Bürofoto-hochauflösend.tiff', size: 18400000, status: 'error', error: 'Datei ist größer als 5 MB.' }
+    ]);
+    return h('div', { className: 'wrap' },
+      h('div', { className: 'lbl' }, 'Nachweise hochladen'),
+      h(FU, {
+        label: 'Gewerbeschein und Nachweise',
+        helper: 'Wir prüfen die Unterlagen in der Regel innerhalb von zwei Werktagen.',
+        accept: '.pdf,.jpg,.png',
+        multiple: true,
+        maxSize: 5 * 1024 * 1024,
+        files: files[0],
+        onFilesAdded: function (neu) {
+          files[1](files[0].concat(neu.map(function (f, i) {
+            f.id = Date.now() + i; return f;
+          })));
+        },
+        onRemove: function (f) {
+          files[1](files[0].filter(function (x) { return x !== f; }));
+        }
+      }),
+      h('div', { className: 'lbl', style: { marginTop: '26px' } }, 'Kompakt · genau eine Datei'),
+      h(FU, {
+        compact: true, label: 'Profilfoto', accept: '.jpg,.png', buttonText: 'Foto wählen',
+        helper: 'Quadratisch, mindestens 400 × 400 px.', files: []
+      }),
+      h('div', { className: 'lbl', style: { marginTop: '26px' } }, 'Gesperrt · solange die Prüfung läuft'),
+      h(FU, {
+        disabled: true, compact: true, label: 'Weitere Nachweise',
+        helper: 'Erst nach Abschluss der laufenden Prüfung wieder möglich.', files: []
+      })
+    );
+  }
+  ReactDOM.createRoot(document.getElementById('root')).render(h(Demo));
+</script>
+</body>
+</html>

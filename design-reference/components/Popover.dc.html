@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,300,0,0" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  body{margin:0}
+  ::selection{background:#e6e1d8}
+  .msr{font-family:'Material Symbols Rounded';font-weight:300;line-height:1;display:inline-block}
+  .po-trigger{height:40px;padding:0 16px;border-radius:8px;border:1px solid #c6c4c2;background:#fff;color:#24221e;font-family:inherit;font-weight:400;font-size:14px;cursor:pointer;display:inline-flex;align-items:center;gap:8px}
+  .po-trigger:hover{background:#f7f7f6}
+  .po-x{appearance:none;border:none;background:transparent;cursor:pointer;width:30px;height:30px;border-radius:7px;display:inline-flex;align-items:center;justify-content:center;flex:none}
+  .po-x:hover{background:#ececeb}
+  .po-card{position:absolute;z-index:30;width:280px;background:#fff;border:1px solid #e2ded7;border-radius:12px;box-shadow:0 8px 18px rgba(31,29,26,0.08),0 28px 60px rgba(31,29,26,0.16)}
+  .po-arrow{position:absolute;width:11px;height:11px;background:#fff;border:1px solid #e2ded7;transform:rotate(45deg)}
+  .po-btn{height:36px;padding:0 14px;border-radius:8px;border:none;font-family:inherit;font-weight:400;font-size:14px;cursor:pointer}
+  .po-pri{background:#007265;color:#fff}
+  .po-pri:hover{background:#005e53}
+  .po-neu{background:#ececeb;color:#24221e}
+  .po-neu:hover{background:#e0dedb}
+  .po-input{width:100%;height:38px;border:1px solid #b6b2ab;border-radius:8px;padding:0 11px;font-family:inherit;font-size:14px;color:#24221e;background:#fff}
+  .po-input:focus{outline:none;border-color:#007265;box-shadow:0 0 0 3px #0e9d9159}
+</style>
+</helmet>
+
+<div style="min-height:100%;background:#faf9f7;color:#1f1d1a;font-family:'DM Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased;padding:56px 40px 120px">
+  <div style="max-width:1000px;margin:0 auto">
+
+    <!-- HEADER -->
+    <div style="margin-bottom:44px">
+      <div style="font-family:'DM Mono',monospace;font-size:12px;letter-spacing:0.16em;color:#a49d92;text-transform:uppercase;margin-bottom:16px">Design System · Komponente · Popover</div>
+      <h1 style="font-size:49px;line-height:1.1;font-weight:700;letter-spacing:-0.02em;margin:0 0 14px">Popover</h1>
+      <p style="font-size:20px;line-height:1.5;color:#6f6a63;margin:0;max-width:700px">Eine schwebende Fläche mit interaktivem Inhalt, die an einen Auslöser andockt — für Erklärungen, kleine Formulare oder Aktionen. Anders als der Tooltip bleibt sie offen und bedienbar.</p>
+    </div>
+
+    <!-- BEISPIELE -->
+    <div style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#a49d92;text-transform:uppercase;margin-bottom:18px">Inhaltstypen · Klick zum Öffnen</div>
+    <div style="background:#fff;border:1px solid #e9e6e1;border-radius:16px;padding:48px 36px;margin-bottom:16px">
+      <div style="display:flex;gap:22px;flex-wrap:wrap;align-items:flex-start">
+
+        <!-- INFO -->
+        <div style="position:relative">
+          <button class="po-trigger" aria-haspopup="dialog" aria-expanded="{{ infoOpen }}" onClick="{{ toggleInfo }}"><span class="msr" style="font-size:18px">help</span>Was ist das?</button>
+          <sc-if value="{{ infoOpen }}" hint-placeholder-val="">
+            <div class="po-card" data-pop role="dialog" style="top:calc(100% + 12px);left:0">
+              <div class="po-arrow" style="top:-6px;left:20px;border-right:none;border-bottom:none"></div>
+              <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 12px 6px 16px">
+                <div style="font-size:14px;font-weight:600;color:{{ text }}">Automatische Sicherung</div>
+                <button class="po-x" aria-label="Schließen" onClick="{{ closeAll }}"><span class="msr" style="font-size:18px;color:{{ muted }}">close</span></button>
+              </div>
+              <div style="padding:0 16px 16px;font-size:14px;line-height:1.6;color:{{ subtle }}">Deine Änderungen werden alle 30 Sekunden gesichert. Du kannst frühere Stände jederzeit wiederherstellen.</div>
+            </div>
+          </sc-if>
+        </div>
+
+        <!-- FORMULAR -->
+        <div style="position:relative">
+          <button class="po-trigger" aria-haspopup="dialog" aria-expanded="{{ formOpen }}" onClick="{{ toggleForm }}"><span class="msr" style="font-size:18px">edit</span>Umbenennen</button>
+          <sc-if value="{{ formOpen }}" hint-placeholder-val="">
+            <div class="po-card" data-pop role="dialog" style="top:calc(100% + 12px);left:0">
+              <div class="po-arrow" style="top:-6px;left:20px;border-right:none;border-bottom:none"></div>
+              <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 12px 6px 16px">
+                <div style="font-size:14px;font-weight:600;color:{{ text }}">Datei umbenennen</div>
+                <button class="po-x" aria-label="Schließen" onClick="{{ closeAll }}"><span class="msr" style="font-size:18px;color:{{ muted }}">close</span></button>
+              </div>
+              <div style="padding:4px 16px 16px">
+                <input class="po-input" value="Quartalsbericht.pdf" aria-label="Neuer Name">
+                <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:14px">
+                  <button class="po-btn po-neu" onClick="{{ closeAll }}">Abbrechen</button>
+                  <button class="po-btn po-pri" onClick="{{ closeAll }}">Speichern</button>
+                </div>
+              </div>
+            </div>
+          </sc-if>
+        </div>
+
+        <!-- RICH -->
+        <div style="position:relative">
+          <button class="po-trigger" aria-haspopup="dialog" aria-expanded="{{ richOpen }}" onClick="{{ toggleRich }}"><span class="msr" style="font-size:18px">insights</span>Statistik</button>
+          <sc-if value="{{ richOpen }}" hint-placeholder-val="">
+            <div class="po-card" data-pop role="dialog" style="top:calc(100% + 12px);left:0;width:300px">
+              <div class="po-arrow" style="top:-6px;left:20px;border-right:none;border-bottom:none"></div>
+              <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 12px 6px 16px">
+                <div style="font-size:14px;font-weight:600;color:{{ text }}">Diese Woche</div>
+                <button class="po-x" aria-label="Schließen" onClick="{{ closeAll }}"><span class="msr" style="font-size:18px;color:{{ muted }}">close</span></button>
+              </div>
+              <div style="padding:2px 16px 16px">
+                <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:12px"><span style="font-size:28px;font-weight:700;letter-spacing:-0.02em;color:{{ text }}">1.284</span><span style="font-size:13px;color:{{ success }};font-weight:600">+12 %</span></div>
+                <div style="display:flex;align-items:flex-end;gap:6px;height:56px">
+                  <sc-for list="{{ bars }}" as="b" hint-placeholder-count="7"><div style="flex:1;height:{{ b.h }};background:{{ b.color }};border-radius:4px 4px 0 0"></div></sc-for>
+                </div>
+              </div>
+            </div>
+          </sc-if>
+        </div>
+
+      </div>
+    </div>
+
+    <div style="font-family:'DM Mono',monospace;font-size:11px;color:#a49d92;line-height:1.7;margin-bottom:48px">Nur ein Popover ist gleichzeitig offen. Außenklick und Esc schließen. role=dialog; der Fokus wandert beim Öffnen in die Fläche.</div>
+
+    <!-- POSITIONIERUNG -->
+    <div style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#a49d92;text-transform:uppercase;margin-bottom:18px">Positionierung · unten (Standard), Auto-Flip nach oben</div>
+    <div style="background:#fff;border:1px solid #e9e6e1;border-radius:16px;padding:44px 36px;margin-bottom:48px">
+      <div style="display:flex;gap:64px;flex-wrap:wrap;align-items:center">
+        <!-- unten -->
+        <div style="position:relative">
+          <div class="po-trigger" style="cursor:default">Auslöser</div>
+          <div class="po-card" style="position:relative;margin-top:12px;width:220px;box-shadow:none;display:block">
+            <div class="po-arrow" style="top:-6px;left:20px;border-right:none;border-bottom:none"></div>
+            <div style="padding:14px 16px;font-size:14px;line-height:1.55;color:{{ subtle }}">Standard: unter dem Auslöser, Pfeil zeigt nach oben.</div>
+          </div>
+          <div style="font-family:'DM Mono',monospace;font-size:11px;color:#a49d92;margin-top:14px">unten</div>
+        </div>
+        <!-- oben -->
+        <div style="position:relative">
+          <div class="po-card" style="position:relative;margin-bottom:12px;width:220px;box-shadow:none;display:block">
+            <div style="padding:14px 16px;font-size:14px;line-height:1.55;color:{{ subtle }}">Bei wenig Platz unten klappt es nach oben, Pfeil zeigt nach unten.</div>
+            <div class="po-arrow" style="bottom:-6px;left:20px;border-left:none;border-top:none"></div>
+          </div>
+          <div class="po-trigger" style="cursor:default">Auslöser</div>
+          <div style="font-family:'DM Mono',monospace;font-size:11px;color:#a49d92;margin-top:14px">oben (Auto-Flip)</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- VERHALTEN -->
+    <div style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#a49d92;text-transform:uppercase;margin-bottom:18px">Verhalten</div>
+    <div style="background:#fff;border:1px solid #e9e6e1;border-radius:16px;padding:30px 34px;margin-bottom:48px">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px 40px">
+        <div style="display:flex;gap:11px;align-items:flex-start"><span class="msr" style="font-size:20px;color:{{ accent }};margin-top:1px">ads_click</span><div><div style="font-size:14px;font-weight:600;color:{{ text }}">Klick öffnet & schließt</div><div style="font-size:13px;color:{{ muted }};margin-top:2px">Bleibt offen und bedienbar, bis bewusst geschlossen.</div></div></div>
+        <div style="display:flex;gap:11px;align-items:flex-start"><span class="msr" style="font-size:20px;color:{{ accent }};margin-top:1px">close_fullscreen</span><div><div style="font-size:14px;font-weight:600;color:{{ text }}">Außenklick & Esc</div><div style="font-size:13px;color:{{ muted }};margin-top:2px">Klick außerhalb oder Esc schließt; nur eines gleichzeitig offen.</div></div></div>
+        <div style="display:flex;gap:11px;align-items:flex-start"><span class="msr" style="font-size:20px;color:{{ accent }};margin-top:1px">flip_to_front</span><div><div style="font-size:14px;font-weight:600;color:{{ text }}">Auto-Flip</div><div style="font-size:13px;color:{{ muted }};margin-top:2px">Positioniert sich in den verfügbaren Platz, Pfeil folgt.</div></div></div>
+        <div style="display:flex;gap:11px;align-items:flex-start"><span class="msr" style="font-size:20px;color:{{ accent }};margin-top:1px">tab</span><div><div style="font-size:14px;font-weight:600;color:{{ text }}">Fokus</div><div style="font-size:13px;color:{{ muted }};margin-top:2px">role=dialog; der Fokus wandert beim Öffnen in die Fläche.</div></div></div>
+      </div>
+    </div>
+
+    <!-- DO / DON'T -->
+    <div style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#a49d92;text-transform:uppercase;margin-bottom:18px">Einsatz</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+      <div style="background:#fff;border:1px solid #e9e6e1;border-radius:14px;border-top:3px solid #1f8a5b;padding:22px 24px">
+        <div style="font-size:13px;font-weight:600;color:#1f8a5b;margin-bottom:10px">Do</div>
+        <ul style="margin:0;padding-left:18px;font-size:14px;line-height:1.7;color:#3f3b36">
+          <li>Für kurzen interaktiven Inhalt neben dem Auslöser.</li>
+          <li>Titelzeile + Schließen anbieten, wenn Inhalt bedienbar ist.</li>
+          <li>An den Auslöser andocken (Pfeil), damit der Bezug klar ist.</li>
+        </ul>
+      </div>
+      <div style="background:#fff;border:1px solid #e9e6e1;border-radius:14px;border-top:3px solid #c0392b;padding:22px 24px">
+        <div style="font-size:13px;font-weight:600;color:#c0392b;margin-bottom:10px">Don't</div>
+        <ul style="margin:0;padding-left:18px;font-size:14px;line-height:1.7;color:#3f3b36">
+          <li>Nicht für reine Kurzinfos ohne Interaktion — dafür Tooltip.</li>
+          <li>Nicht für umfangreiche/blockierende Aufgaben — dafür Modal.</li>
+          <li>Nicht mehrere gleichzeitig offen halten.</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: { &quot;width&quot;: 1040, &quot;height&quot;: 620 }}">
+class Component extends DCLogic {
+  state = { open: null };
+  toggle(id) { this.setState(s => ({ open: s.open === id ? null : id })); }
+  closeAll = () => this.setState({ open: null });
+
+  componentDidMount() {
+    this._down = (e) => { if (this.state.open && !e.target.closest('[data-pop]') && !e.target.closest('[aria-haspopup=dialog]')) this.closeAll(); };
+    this._key = (e) => { if (e.key === 'Escape' && this.state.open) { e.preventDefault(); this.closeAll(); } };
+    document.addEventListener('mousedown', this._down);
+    document.addEventListener('keydown', this._key);
+  }
+  componentWillUnmount() {
+    document.removeEventListener('mousedown', this._down);
+    document.removeEventListener('keydown', this._key);
+  }
+
+  oklchToLinear(L, C, H) {
+    const h = H * Math.PI / 180, a = C * Math.cos(h), b = C * Math.sin(h);
+    const l_ = L + 0.3963377774 * a + 0.2158037573 * b, m_ = L - 0.1055613458 * a - 0.0638541728 * b, s_ = L - 0.0894841775 * a - 1.2914855480 * b;
+    const l = l_ ** 3, m = m_ ** 3, s = s_ ** 3;
+    return { r: 4.0767416621 * l - 3.3077115913 * m + 0.2309699292 * s, g: -1.2684380046 * l + 2.6097574011 * m - 0.3413193965 * s, b: -0.0041960863 * l - 0.7034186147 * m + 1.7076147010 * s };
+  }
+  toHex(rgb) {
+    const g = v => { v = Math.min(1, Math.max(0, v)); return v <= 0.0031308 ? 12.92 * v : 1.055 * Math.pow(v, 1 / 2.4) - 0.055; };
+    const h = v => Math.round(g(v) * 255).toString(16).padStart(2, '0');
+    return '#' + h(rgb.r) + h(rgb.g) + h(rgb.b);
+  }
+  makeScale(hue, chromaPeak) {
+    const L = [0.976, 0.942, 0.888, 0.822, 0.748, 0.655, 0.470, 0.405, 0.348, 0.300, 0.252, 0.198];
+    const CM = [0.05, 0.10, 0.16, 0.24, 0.34, 0.45, 1.00, 0.95, 0.80, 0.62, 0.45, 0.30];
+    const T = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1100];
+    const o = {};
+    T.forEach((t, i) => { o[t] = this.toHex(this.oklchToLinear(L[i], chromaPeak * CM[i], hue)); });
+    return o;
+  }
+
+  renderVals() {
+    const ci = 1.25;
+    const stone = this.makeScale(70, 0.013 * ci);
+    const primary = this.makeScale(185, 0.115 * ci);
+    const success = this.makeScale(150, 0.14 * ci);
+    const heights = [40, 55, 48, 70, 62, 85, 78];
+    const bars = heights.map((h, i) => ({ h: h + '%', color: i === heights.length - 1 ? primary[600] : primary[200] }));
+    return {
+      text: stone[1000], muted: stone[1000] + 'ad', subtle: stone[800], success: success[700], accent: primary[600],
+      infoOpen: this.state.open === 'info', formOpen: this.state.open === 'form', richOpen: this.state.open === 'rich',
+      toggleInfo: () => this.toggle('info'), toggleForm: () => this.toggle('form'), toggleRich: () => this.toggle('rich'),
+      closeAll: this.closeAll, bars
+    };
+  }
+}
+</script>
+</body>
+</html>

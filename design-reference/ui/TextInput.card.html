@@ -1,0 +1,70 @@
+<!-- @dsCard group="Komponenten" viewport="700x780" name="TextInput" subtitle="Zustände, Floating Label, Icons, Zähler und volle Breite" -->
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  html,body{margin:0}
+  body{padding:20px 22px;font-family:var(--medo-font-sans);background:var(--medo-surface);color:var(--medo-text);min-height:780px;box-sizing:border-box}
+  .lbl{font-family:var(--medo-font-mono);font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:var(--medo-color-stone-500);margin-bottom:10px}
+  .grp{margin-bottom:18px}
+  .cols{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .cols3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+<script src="../_ds_bundle.js"></script>
+<script>
+  var h = React.createElement;
+  var TI = window.MedoUI.TextInput;
+  function grp(label, kids, cls) {
+    return h('div', { className: 'grp' }, h('div', { className: 'lbl' }, label), h('div', { className: cls }, kids));
+  }
+  function App() {
+    var st = React.useState('Anna Berg');
+    return h('div', null,
+      grp('Zustände', [
+        h(TI, { key: 1, label: 'Name', required: true, value: st[0],
+                onChange: function (e) { st[1](e.target.value); },
+                clearable: true, onClear: function () { st[1](''); },
+                hint: 'Wie im Ausweis geschrieben' }),
+        h(TI, { key: 2, label: 'E-Mail', type: 'email', icon: 'mail', defaultValue: 'anna@',
+                error: 'Bitte geben Sie eine gültige E-Mail-Adresse ein.' }),
+        h(TI, { key: 3, label: 'Telefon', defaultValue: '0176 36334724',
+                success: 'Nummer bestätigt' }),
+        h(TI, { key: 4, label: 'Ohne Eingabe', placeholder: 'z. B. Karlsruhe' })
+      ], 'cols'),
+      grp('Floating Label · leer und gefüllt', [
+        h(TI, { key: 1, floatingLabel: true, label: 'Vollständiger Name' }),
+        h(TI, { key: 2, floatingLabel: true, label: 'Vollständiger Name', required: true,
+                defaultValue: 'Anna Berg' })
+      ], 'cols'),
+      grp('Gesperrt, schreibgeschützt, Passwort', [
+        h(TI, { key: 1, label: 'Kundennummer', defaultValue: 'K-0002', readOnly: true }),
+        h(TI, { key: 2, label: 'Vertragsstatus', defaultValue: 'Nicht bearbeitbar', disabled: true }),
+        h(TI, { key: 3, label: 'Passwort', type: 'password', defaultValue: 'geheim123' })
+      ], 'cols3'),
+      grp('Präfix, Suffix, Zeichenzähler', [
+        h(TI, { key: 1, label: 'Website', prefix: 'https://', suffix: '.de', defaultValue: 'meine-seite' }),
+        h(TI, { key: 2, label: 'Kurzprofil', optional: true, maxLength: 100, showCounter: true,
+                defaultValue: 'Spezialist für Gewerbe' })
+      ], 'cols'),
+      grp('Größen · 36 / 40 / 48px', [
+        h(TI, { key: 1, size: 'sm', label: 'Klein', defaultValue: 'In Tabellen' }),
+        h(TI, { key: 2, size: 'md', label: 'Mittel', defaultValue: 'Normalfall' }),
+        h(TI, { key: 3, size: 'lg', label: 'Groß', defaultValue: 'Auf Mobilgeräten' })
+      ], 'cols3'),
+      grp('Volle Breite · Textbereich über die ganze Spalte', [
+        h(TI, { key: 1, label: 'Nachricht an den Spezialisten', fullWidth: true,
+                placeholder: 'Worum geht es?', hint: 'Maximal 500 Zeichen.' })
+      ], '')
+    );
+  }
+  ReactDOM.createRoot(document.getElementById('root')).render(h(App));
+</script>
+</body>
+</html>

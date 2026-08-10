@@ -1,0 +1,127 @@
+<!-- @dsCard group="Komponenten" viewport="760x760" name="Data table" subtitle="Interaktiv, simpel, Ladezustand und Leerzustand" -->
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  html,body{margin:0}
+  body{padding:24px 22px;font-family:var(--medo-font-sans);background:var(--medo-surface);color:var(--medo-text);min-height:760px;box-sizing:border-box}
+  .lbl{font-family:var(--medo-font-mono);font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:var(--medo-color-stone-500);margin-bottom:12px}
+  .tag{display:inline-flex;align-items:center;height:24px;padding:0 10px;border-radius:9999px;font-size:12px;font-weight:600}
+  .tag--ok{background:var(--medo-success-surface);color:var(--medo-success-text)}
+  .tag--warn{background:var(--medo-warning-surface);color:var(--medo-warning-text)}
+  .tag--off{background:var(--medo-surface-sunken);color:var(--medo-text-muted)}
+  .tbtn{box-sizing:border-box;height:38px;padding:0 12px;font-family:inherit;font-size:14px;font-weight:400;border:1px solid var(--medo-border-strong);border-radius:8px;background:var(--medo-surface);color:var(--medo-text);cursor:pointer;display:inline-flex;align-items:center;gap:7px}
+  .tbtn:hover{background:#f7f7f6}
+  .tbtn--danger{border-color:#e3c4bf;color:var(--medo-error-solid)}
+  .tbtn--danger:hover{background:#fbecea}
+  .search{display:flex;align-items:center;gap:8px;height:38px;padding:0 12px;border:1px solid var(--medo-input-border);border-radius:8px;background:var(--medo-surface);min-width:220px}
+  .search input{border:none;outline:none;font-family:inherit;font-size:14px;color:var(--medo-input-text);background:transparent;width:100%}
+  .msr{font-family:'Material Symbols Rounded';font-weight:300;line-height:1;font-size:20px;color:var(--medo-icon-muted)}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+<script src="../_ds_bundle.js"></script>
+<script>
+  var h = React.createElement;
+  var DT = window.MedoUI.DataTable;
+
+  var ALLE = [
+    { nr: 'VN-2026-0184', kunde: 'Bäckerei Kern GmbH', sparte: 'Gewerbe', beitrag: 1234.56, status: 'Aktiv' },
+    { nr: 'VN-2026-0177', kunde: 'Schreinerei Lorenz', sparte: 'Vorsorge', beitrag: 380.00, status: 'Prüfung' },
+    { nr: 'VN-2025-0912', kunde: 'Praxis Dr. Bauer', sparte: 'Cyber', beitrag: 2140.90, status: 'Aktiv' },
+    { nr: 'VN-2025-0844', kunde: 'Autohaus Weiss KG', sparte: 'Gewerbe', beitrag: 5620.00, status: 'Gekündigt' },
+    { nr: 'VN-2025-0731', kunde: 'Hofladen Sander', sparte: 'Gewerbe', beitrag: 640.20, status: 'Aktiv' }
+  ];
+  var euro = function (n) { return n.toLocaleString('de-DE', { minimumFractionDigits: 2 }) + ' €'; };
+  var TONE = { 'Aktiv': 'ok', 'Prüfung': 'warn', 'Gekündigt': 'off' };
+
+  function Demo() {
+    var rows = React.useState(ALLE);
+    var sel = React.useState([]);
+    var q = React.useState('');
+    var laden = React.useState(false);
+
+    var sichtbar = rows[0].filter(function (r) {
+      var t = q[0].toLowerCase();
+      return !t || r.kunde.toLowerCase().indexOf(t) > -1 || r.nr.toLowerCase().indexOf(t) > -1;
+    });
+
+    var neuLaden = function () {
+      laden[1](true);
+      setTimeout(function () { laden[1](false); }, 1600);
+    };
+    var entfernen = function () {
+      rows[1](rows[0].filter(function (r) { return sel[0].indexOf(r.nr) === -1; }));
+      sel[1]([]);
+    };
+
+    return h('div', null,
+      h('div', { className: 'lbl' }, 'Suche filtert · Auswahl öffnet die Bulk-Leiste · Neu laden zeigt Skeleton'),
+      h(DT, {
+        title: 'Verträge', rowKey: 'nr', selectable: true, size: 'md',
+        selected: sel[0], onSelectionChange: sel[1],
+        defaultSort: { key: 'beitrag', direction: 'desc' },
+        loading: laden[0], loadingRows: 4, maxHeight: 320,
+        toolbar: h(React.Fragment, null,
+          h('div', { className: 'search' },
+            h('span', { className: 'msr' }, 'search'),
+            h('input', {
+              placeholder: 'Kunde oder Nummer', value: q[0],
+              aria: 'Suchen', 'aria-label': 'Suchen',
+              onChange: function (e) { q[1](e.target.value); }
+            })),
+          h('button', { className: 'tbtn', onClick: neuLaden },
+            h('span', { className: 'msr', style: { fontSize: '18px' } }, 'refresh'), 'Neu laden')),
+        bulkActions: h(React.Fragment, null,
+          h('button', { className: 'tbtn', onClick: function () { sel[1]([]); } }, 'Auswahl aufheben'),
+          h('button', { className: 'tbtn tbtn--danger', onClick: entfernen },
+            h('span', { className: 'msr', style: { fontSize: '18px', color: 'inherit' } }, 'delete'), 'Entfernen')),
+        columns: [
+          { key: 'nr', label: 'Nummer', numeric: true, sortable: true },
+          { key: 'kunde', label: 'Kunde', sortable: true },
+          { key: 'sparte', label: 'Sparte', muted: true },
+          { key: 'status', label: 'Status', render: function (v) {
+              return h('span', { className: 'tag tag--' + TONE[v] }, v);
+            } },
+          { key: 'beitrag', label: 'Beitrag / Jahr', numeric: true, sortable: true,
+            render: function (v) { return euro(v); } }
+        ],
+        rows: sichtbar,
+        emptyText: q[0] ? 'Kein Vertrag passt zu „' + q[0] + '". Suche zurücksetzen?' : 'Keine Verträge vorhanden.',
+        footer: h('span', { style: { fontFamily: 'var(--medo-font-mono)', fontSize: '12px', color: 'var(--medo-text-muted)' } },
+          sichtbar.length + ' von ' + rows[0].length + ' Einträgen')
+      }),
+
+      h('div', { className: 'lbl', style: { marginTop: '28px' } }, 'Simpel · sm, ohne Toolbar, mit ausgerichteten Spalten'),
+      h(DT, {
+        rowKey: 'nr', ariaLabel: 'Beiträge', size: 'sm',
+        columns: [
+          { key: 'kunde', label: 'Kunde', align: 'left' },
+          { key: 'sparte', label: 'Sparte', muted: true, align: 'center' },
+          { key: 'beitrag', label: 'Beitrag / Jahr', numeric: true, align: 'right', render: function (v) { return euro(v); } }
+        ],
+        rows: ALLE.slice(0, 3)
+      }),
+
+      h('div', { className: 'lbl', style: { marginTop: '28px' } }, 'Leerzustand'),
+      h(DT, {
+        rowKey: 'nr', title: 'Verträge', ariaLabel: 'Verträge leer',
+        columns: [
+          { key: 'nr', label: 'Nummer', numeric: true },
+          { key: 'kunde', label: 'Kunde' },
+          { key: 'beitrag', label: 'Beitrag / Jahr', numeric: true }
+        ],
+        rows: [],
+        emptyText: 'Noch keine Verträge angelegt. Neue Verträge erscheinen hier, sobald sie übertragen wurden.'
+      })
+    );
+  }
+  ReactDOM.createRoot(document.getElementById('root')).render(h(Demo));
+</script>
+</body>
+</html>

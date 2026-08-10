@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  body{margin:0}
+  ::selection{background:#e6e1d8}
+</style>
+</helmet>
+
+<div style="min-height:100%;background:#faf9f7;color:#1f1d1a;font-family:'DM Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased;padding:56px 40px 96px">
+  <div style="max-width:1080px;margin:0 auto">
+
+    <!-- HEADER -->
+    <div style="margin-bottom:48px">
+      <div style="font-family:'DM Mono',monospace;font-size:12px;letter-spacing:0.16em;color:#a49d92;text-transform:uppercase;margin-bottom:16px">Design System · Schritt 4 · Grundlagen</div>
+      <h1 style="font-size:49px;line-height:1.1;font-weight:700;letter-spacing:-0.02em;margin:0 0 14px">Abstände, Radien &amp; Elevation</h1>
+      <p style="font-size:20px;line-height:1.5;color:#6f6a63;margin:0;max-width:640px">Das unsichtbare Gerüst: ein 4-px-Abstandsraster, weiche Radien, bewusste Schatten und ein 12-Spalten-Layout. Diese Tokens geben jeder Komponente Rhythmus und Ruhe.</p>
+    </div>
+
+    <!-- SPACING -->
+    <div style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#a49d92;text-transform:uppercase;margin-bottom:18px">Abstände · Basis 4 px</div>
+    <div style="display:flex;flex-direction:column;margin-bottom:56px">
+      <sc-for list="{{ spacing }}" as="s" hint-placeholder-count="11">
+        <div style="display:flex;align-items:center;gap:20px;padding:9px 0;border-bottom:1px solid #efece7">
+          <span style="font-family:'DM Mono',monospace;font-size:13px;font-weight:500;width:120px;flex:none">{{ s.token }}</span>
+          <span style="font-family:'DM Mono',monospace;font-size:12px;color:#a49d92;width:48px;flex:none;text-align:right">{{ s.px }}px</span>
+          <div style="height:20px;border-radius:5px;background:#0f7a7d;width:{{ s.barCss }};flex:none"></div>
+        </div>
+      </sc-for>
+    </div>
+
+    <!-- RADII -->
+    <div style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#a49d92;text-transform:uppercase;margin-bottom:18px">Radien</div>
+    <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:14px;margin-bottom:56px">
+      <sc-for list="{{ radii }}" as="r" hint-placeholder-count="7">
+        <div>
+          <div style="height:84px;background:#fff;border:1px solid #e9e6e1;border-bottom:3px solid #0f7a7d;border-radius:{{ r.css }}"></div>
+          <div style="font-family:'DM Mono',monospace;font-size:12px;font-weight:500;margin-top:10px">{{ r.token }}</div>
+          <div style="font-family:'DM Mono',monospace;font-size:11px;color:#a49d92;margin-top:2px">{{ r.label }}</div>
+        </div>
+      </sc-for>
+    </div>
+
+    <!-- ELEVATION -->
+    <div style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#a49d92;text-transform:uppercase;margin-bottom:18px">Elevation · warme, weiche Schatten</div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:28px;margin-bottom:60px;padding:8px 0">
+      <sc-for list="{{ shadows }}" as="sh" hint-placeholder-count="4">
+        <div>
+          <div style="height:104px;background:#fff;border-radius:14px;box-shadow:{{ sh.css }}"></div>
+          <div style="font-family:'DM Mono',monospace;font-size:12px;font-weight:500;margin-top:16px">{{ sh.token }}</div>
+          <div style="font-size:12.5px;color:#a49d92;margin-top:3px">{{ sh.use }}</div>
+        </div>
+      </sc-for>
+    </div>
+
+    <!-- BORDERS -->
+    <div style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#a49d92;text-transform:uppercase;margin-bottom:18px">Rahmenbreiten</div>
+    <div style="display:flex;gap:16px;margin-bottom:56px">
+      <sc-for list="{{ borders }}" as="b" hint-placeholder-count="2">
+        <div style="flex:1;background:#fff;border-radius:12px;padding:24px;border-style:solid;border-color:#0f7a7d;border-width:{{ b.wCss }}">
+          <div style="font-family:'DM Mono',monospace;font-size:13px;font-weight:500">{{ b.token }}</div>
+          <div style="font-family:'DM Mono',monospace;font-size:11.5px;color:#a49d92;margin-top:4px">{{ b.px }}px · {{ b.use }}</div>
+        </div>
+      </sc-for>
+    </div>
+
+    <!-- GRID -->
+    <div style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#a49d92;text-transform:uppercase;margin-bottom:18px">Raster · 12 Spalten · Gutter 24 · max 1200</div>
+    <div style="background:#fff;border:1px solid #e9e6e1;border-radius:16px;padding:24px;margin-bottom:28px">
+      <div style="display:grid;grid-template-columns:repeat(12,1fr);gap:12px">
+        <sc-for list="{{ cols }}" as="c" hint-placeholder-count="12">
+          <div style="height:64px;background:#e4efee;border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;font-size:11px;color:#0f7a7d">{{ c }}</div>
+        </sc-for>
+      </div>
+    </div>
+
+    <!-- BREAKPOINTS -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px 40px;margin-bottom:8px">
+      <sc-for list="{{ breakpoints }}" as="bp" hint-placeholder-count="5">
+        <div style="display:flex;align-items:baseline;justify-content:space-between;padding:11px 0;border-bottom:1px solid #efece7">
+          <span style="font-family:'DM Mono',monospace;font-size:13px;font-weight:500">breakpoint-{{ bp.token }}</span>
+          <span style="font-size:13px;color:#6f6a63">{{ bp.px }}px · {{ bp.use }}</span>
+        </div>
+      </sc-for>
+    </div>
+
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{
+  &quot;$preview&quot;: { &quot;width&quot;: 1120, &quot;height&quot;: 900 }
+}">
+class Component extends DCLogic {
+  renderVals() {
+    const spacing = [
+      { token: 'space-none', px: 0 },
+      { token: 'space-3xs', px: 2 },
+      { token: 'space-2xs', px: 4 },
+      { token: 'space-xs', px: 8 },
+      { token: 'space-sm', px: 12 },
+      { token: 'space-md', px: 16 },
+      { token: 'space-lg', px: 24 },
+      { token: 'space-xl', px: 32 },
+      { token: 'space-2xl', px: 48 },
+      { token: 'space-3xl', px: 64 },
+      { token: 'space-4xl', px: 96 }
+    ].map(s => ({ ...s, barCss: (s.px === 0 ? 0 : Math.max(s.px, 2)) + 'px' }));
+
+    const radii = [
+      { token: 'radius-none', css: '0px', label: '0' },
+      { token: 'radius-sm', css: '4px', label: '4px' },
+      { token: 'radius-md', css: '8px', label: '8px' },
+      { token: 'radius-lg', css: '12px', label: '12px' },
+      { token: 'radius-xl', css: '18px', label: '18px' },
+      { token: 'radius-2xl', css: '24px', label: '24px' },
+      { token: 'radius-full', css: '9999px', label: 'full' }
+    ];
+
+    const shadows = [
+      { token: 'shadow-sm', css: '0 1px 2px rgba(31,29,26,0.06), 0 1px 3px rgba(31,29,26,0.04)', use: 'Karten, ruhende Flächen' },
+      { token: 'shadow-md', css: '0 2px 4px rgba(31,29,26,0.06), 0 6px 16px rgba(31,29,26,0.07)', use: 'Angehobene Elemente' },
+      { token: 'shadow-lg', css: '0 4px 8px rgba(31,29,26,0.06), 0 14px 32px rgba(31,29,26,0.10)', use: 'Popover, Menü, Dropdown' },
+      { token: 'shadow-xl', css: '0 8px 18px rgba(31,29,26,0.08), 0 28px 60px rgba(31,29,26,0.16)', use: 'Dialog, Modal' }
+    ];
+
+    const borders = [
+      { token: 'border-thin', px: 1, wCss: '1px', use: 'Standard-Rahmen, Trennlinien' },
+      { token: 'border-thick', px: 2, wCss: '2px', use: 'Fokus, aktiv, Betonung' }
+    ];
+
+    const breakpoints = [
+      { token: 'sm', px: 640, use: 'große Phones' },
+      { token: 'md', px: 768, use: 'Tablets' },
+      { token: 'lg', px: 1024, use: 'kleine Laptops' },
+      { token: 'xl', px: 1280, use: 'Desktop' },
+      { token: '2xl', px: 1536, use: 'große Screens' }
+    ];
+
+    const cols = Array.from({ length: 12 }, (_, i) => i + 1);
+
+    return { spacing, radii, shadows, borders, breakpoints, cols };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,300,0,0" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  body{margin:0}
+  a{color:#007265;text-decoration:none}
+  a:hover{color:#004b42;text-decoration:underline}
+  ::selection{background:#e6e1d8}
+  .msr{font-family:'Material Symbols Rounded';font-weight:300;line-height:1;display:inline-block}
+  code{font-family:'DM Mono',monospace;font-size:0.88em;background:#ececeb;padding:1.5px 6px;border-radius:5px;color:#004b42}
+</style>
+</helmet>
+
+<div style="min-height:100%;background:#faf9f7;color:#1f1d1a;font-family:'DM Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased;padding:56px 40px 120px">
+  <div style="max-width:940px;margin:0 auto">
+
+    <!-- HEADER -->
+    <div style="margin-bottom:40px">
+      <div style="font-family:'DM Mono',monospace;font-size:12px;letter-spacing:0.16em;color:#a49d92;text-transform:uppercase;margin-bottom:16px">medo Design System · Entwickler-Handoff</div>
+      <h1 style="font-size:49px;line-height:1.08;font-weight:700;letter-spacing:-0.02em;margin:0 0 14px">Handoff-Dokument</h1>
+      <p style="font-size:20px;line-height:1.5;color:#6f6a63;margin:0;max-width:720px">Der Umsetzungs-Vertrag pro Komponente — Varianten, Zustände, Größen und Barrierefreiheit. Verbindlich ist stets die jeweilige Komponenten-Seite; dieses Dokument fasst zusammen.</p>
+    </div>
+
+    <!-- SETUP -->
+    <div style="background:#fff;border:1px solid #e9e6e1;border-radius:14px;padding:26px 28px;margin-bottom:20px">
+      <div style="font-size:17px;font-weight:700;margin-bottom:12px;letter-spacing:-0.01em">1 · Tokens einbinden</div>
+      <p style="font-size:14px;line-height:1.65;color:#3f3b36;margin:0 0 12px">Single source of truth sind <code>tokens.css</code> (CSS-Variablen, dark-mode-fähig via <code>var()</code>) und <code>tokens.json</code> (aufgelöst, für Style Dictionary / Tailwind / Figma). Alles ist mit Präfix <code>--medo-</code> benannt, in drei Ebenen: <strong>Brand</strong> (rohe Skalen) → <strong>Alias</strong> (Rolle→Brand) → <strong>Semantic</strong> (Material-Stil, in UI-Code bevorzugt nutzen).</p>
+      <div style="font-family:'DM Mono',monospace;font-size:12.5px;background:#211f1c;color:#e4e0d8;border-radius:9px;padding:12px 14px;line-height:1.7"><span style="color:#6f6960">/* Semantic-Tokens im UI-Code verwenden */</span><br>background: <span style="color:#8ec7be">var(--medo-action)</span>;         <span style="color:#6f6960">/* Primäraktion */</span><br>color: <span style="color:#8ec7be">var(--medo-action-text)</span>;<br>border-radius: <span style="color:#8ec7be">var(--medo-radius-md)</span>;</div>
+    </div>
+
+    <!-- KONVENTIONEN -->
+    <div style="background:#fff;border:1px solid #e9e6e1;border-radius:14px;padding:26px 28px;margin-bottom:20px">
+      <div style="font-size:17px;font-weight:700;margin-bottom:12px;letter-spacing:-0.01em">2 · Verbindliche Konventionen</div>
+      <ul style="margin:0;padding-left:20px;font-size:14px;line-height:1.8;color:#3f3b36">
+        <li><strong>Icons:</strong> ausschließlich Material Symbols Rounded (weight 300, FILL 0). Keine Inline-SVG-Icons.</li>
+        <li><strong>Schrift:</strong> DM Sans (UI/Text), DM Mono (Code/Daten/Labels). Skala 1.25, Basis 16px.</li>
+        <li><strong>Radien:</strong> Chips/Tags immer <code>--medo-radius-full</code>; Flächen i.d.R. <code>md</code>/<code>lg</code>.</li>
+        <li><strong>Interaktive Feld-Icons</strong> (Clear/Passwort/Kopieren) = Icon-Button-Look (Ruhe stone-100, Hover stone-200, <code>aria-label</code>). Dekorative Icons flach.</li>
+        <li><strong>Nur Light Mode</strong> umgesetzt; Token-Architektur ist auf Dark Mode vorbereitet (Semantic-Ebene umdefinieren).</li>
+      </ul>
+    </div>
+
+    <!-- A11Y BASELINE -->
+    <div style="background:#fff;border:1px solid #e9e6e1;border-radius:14px;border-top:3px solid #1f8a5b;padding:26px 28px;margin-bottom:44px">
+      <div style="font-size:17px;font-weight:700;margin-bottom:12px;letter-spacing:-0.01em">3 · Barrierefreiheit — Baseline (gilt für alle)</div>
+      <ul style="margin:0;padding-left:20px;font-size:14px;line-height:1.8;color:#3f3b36">
+        <li>WCAG 2.2 AA Kontraste (Token-Paare sind darauf abgestimmt).</li>
+        <li>Sichtbarer Fokus: 3px Ring <code>--medo-focus-ring</code> (primary @35%).</li>
+        <li>Voll per Tastatur bedienbar; Trefferflächen ≥ 44px wo sinnvoll.</li>
+        <li>Status nie nur über Farbe — immer Icon/Text ergänzen.</li>
+        <li>Korrekte Rollen/Namen (<code>aria-*</code>), sichtbare Labels bevorzugt.</li>
+      </ul>
+    </div>
+
+    <!-- KOMPONENTEN -->
+    <sc-for list="{{ categories }}" as="cat" hint-placeholder-count="7">
+      <div style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#a49d92;text-transform:uppercase;margin:0 0 16px">{{ cat.name }}</div>
+      <div style="display:flex;flex-direction:column;gap:14px;margin-bottom:40px">
+        <sc-for list="{{ cat.items }}" as="c" hint-placeholder-count="5">
+          <div style="background:#fff;border:1px solid #e9e6e1;border-radius:13px;padding:20px 22px">
+            <div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:12px">
+              <div style="display:flex;align-items:center;gap:9px">
+                <span class="msr" style="font-size:19px;color:#007265">{{ c.icon }}</span>
+                <span style="font-size:16px;font-weight:700;letter-spacing:-0.01em">{{ c.name }}</span>
+              </div>
+              <a href="{{ c.href }}" style="font-family:'DM Mono',monospace;font-size:12px;display:inline-flex;align-items:center;gap:4px;flex:none">Doku <span class="msr" style="font-size:14px">arrow_forward</span></a>
+            </div>
+            <div style="font-size:13.5px;color:#6f6a63;margin-bottom:14px">{{ c.desc }}</div>
+            <div style="display:grid;grid-template-columns:120px 1fr;gap:7px 16px;font-size:13.5px">
+              <div style="color:#a49d92;font-family:'DM Mono',monospace;font-size:11.5px;text-transform:uppercase;letter-spacing:0.06em;padding-top:1px">Varianten</div><div style="color:#2c2925">{{ c.variants }}</div>
+              <div style="color:#a49d92;font-family:'DM Mono',monospace;font-size:11.5px;text-transform:uppercase;letter-spacing:0.06em;padding-top:1px">Zustände</div><div style="color:#2c2925">{{ c.states }}</div>
+              <div style="color:#a49d92;font-family:'DM Mono',monospace;font-size:11.5px;text-transform:uppercase;letter-spacing:0.06em;padding-top:1px">Größen</div><div style="color:#2c2925">{{ c.sizes }}</div>
+              <div style="color:#a49d92;font-family:'DM Mono',monospace;font-size:11.5px;text-transform:uppercase;letter-spacing:0.06em;padding-top:1px">a11y</div><div style="color:#2c2925">{{ c.a11y }}</div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </sc-for>
+
+    <div style="font-family:'DM Mono',monospace;font-size:11px;color:#a49d92;line-height:1.7;border-top:1px solid #e9e6e1;padding-top:20px">Erzeugt aus dem umgesetzten Stand der Komponenten. Bei Abweichung gilt die Komponenten-Seite. · <a href="Übersicht.dc.html">Zur Übersicht</a></div>
+
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: { &quot;width&quot;: 1000, &quot;height&quot;: 900 }}">
+class Component extends DCLogic {
+  renderVals() {
+    const C = (icon, name, file, desc, variants, states, sizes, a11y) => ({
+      icon, name, href: 'components/' + file + '.dc.html', desc,
+      variants: variants.join(' · '), states: states.join(' · '), sizes, a11y: a11y.join(' · ')
+    });
+    const categories = [
+      { name: 'Aktionen', items: [
+        C('smart_button','Button','Button','Aktionen auslösen.',['Primär (solid)','Neutral','Ghost/Outline','Danger','Icon-only'],['Default','Hover','Active','Focus','Disabled','Loading (Spinner)'],'sm · md · lg',['Icon-only braucht aria-label','≥44px Trefferfläche','Fokusring 3px']),
+        C('link','Link','Link','Textlinks im Fließtext.',['Standalone','Inline','Mit Icon'],['Default','Hover (unterstrichen, primary-800)','Focus','Visited'],'erbt Textgröße',['Fokusring','Unterscheidbar ohne reine Farbe (Unterstrich bei Hover)']),
+        C('menu','Menu buttons','Menu-buttons','Button, der ein Menü öffnet.',['Einfach (Label+Chevron)','Split (Primär + Menü)','Icon-only'],['Zu','Offen','Hover','Focus','Disabled'],'md',['aria-haspopup=menu','aria-expanded','Enter/Space/↓ öffnet','Esc/Außenklick schließt']),
+        C('arrow_drop_down','Dropdown','Dropdown','Aktions-/Optionsmenü per Trigger.',['Button-Trigger','Kebab-Trigger','mit Untermenü'],['Zu','Offen','Item Hover/Focus','Disabled-Item','Checked-Item'],'—',['role=menu / menuitem(radio)','Pfeile navigieren','Esc/Außenklick schließt','destruktiv rot']),
+        C('menu_open','Menu','Menu','Kontextmenü per Rechtsklick.',['Text','Icon+Text','mit Tastenkürzel','destruktiv'],['Offen','Item Hover/markiert','Disabled'],'—',['Rechtsklick öffnet an Cursor','Pfeile/Enter/Esc/Home/End','Typeahead','Rand-Flip']),
+      ]},
+      { name: 'Formular-Eingabe', items: [
+        C('text_fields','Text input','Text-input','Einzeiliger Text.',['Standard','mit Label/Hilfetext','mit Icon','Clear-Button'],['Default','Hover','Focus','Filled','Disabled','Error'],'sm · md',['Label/for verknüpft','aria-invalid + Fehlertext','Clear = Icon-Button mit aria-label']),
+        C('123','Number input','Number-input','Zahl mit Stepper.',['Standard','mit Einheit'],['Default','Hover','Focus','Disabled','Error','Min/Max erreicht'],'sm · md',['− / + als aria-Buttons','Pfeiltasten ändern Wert','role/spinbutton-Semantik']),
+        C('search','Search','Search','Suchfeld.',['Standard','mit Clear','mit Vorschlägen'],['Default','Focus','Filled','Leeres Ergebnis','Disabled'],'sm · md',['type=search / aria-label','Clear mit aria-label','Enter sucht']),
+        C('expand_circle_down','Select','Select','Auswahlfeld (Formularwert).',['Single','mit Icons','gruppiert'],['Zu','Offen','Option Hover/Focus','Selected','Disabled','Error'],'sm · md',['role=listbox/option','Pfeile/Enter/Esc','Typeahead','aria-selected']),
+        C('tune','Slider','Slider','Wert in einem Bereich.',['Single','Diskret (Ticks)','vertikal'],['Default','Hover','Focus','Active (gezogen)','Disabled','Error/Warnung'],'sm · md',['role=slider','aria-valuemin/max/now','Pfeile/PageUp-Down/Home/End']),
+        C('calendar_month','Date picker','Date-picker','Datum, Bereich, Termin.',['Einzel (Feld+Popover)','Bereich (inline)','Termin-Buchung'],['Zu','Offen','Tag Hover/Focus','Ausgewählt','Heute','Deaktiviert/ausgebucht'],'Feld sm · md',['Tag-aria-label (volles Datum)','aria-pressed','Pfeiltasten-Raster','Monat/Jahr-Schnellwähler']),
+        C('upload','File uploader','File-uploader','Dateien hochladen.',['Dropzone (mehrfach)','Kompakter Button (einzel)'],['Leer','Drag über Fläche','Lädt (Fortschritt)','Erfolg','Fehler','Disabled'],'—',['Typen + Max-Größe nennen','Fehler mit Icon+Text','Entfernen mit aria-label']),
+      ]},
+      { name: 'Auswahl & Schalter', items: [
+        C('check_box','Checkbox','Checkbox','Mehrfachauswahl.',['Standard','mit Beschreibung','indeterminate'],['Off','On','Hover','Focus','Disabled','Error'],'sm · md',['role=checkbox','aria-checked (auch mixed)','Label klickbar']),
+        C('radio_button_checked','Radio button','Radio-button','Einfachauswahl in Gruppe.',['Standard','mit Beschreibung'],['Off','On','Hover','Focus','Disabled'],'sm · md',['radiogroup + Pfeiltasten','aria-checked','Label klickbar']),
+        C('toggle_on','Toggle','Toggle','An/Aus-Schalter (Sofortwirkung).',['Standard','mit Label'],['Off','On','Hover','Focus','Disabled'],'sm · md',['role=switch','aria-checked','Enter/Space schaltet']),
+        C('swap_horiz','Content switcher','Content-switcher','Dieselben Daten, andere Ansicht.',['Neutral (segmented)','Outline','icon-only'],['Default','Hover','Active','Focus','Segment disabled'],'sm · md',['role=tablist/tab','Pfeiltasten (Radiogruppe)','icon-only + Tooltip/aria-label']),
+        C('sell','Tag','Tag','Chips, Status, Labels.',['Status (5 Farben)','entfernbar','auswählbar'],['Default','Hover','Selected','Disabled','mit Remove-X'],'sm · md',['immer radius-full','Remove-X mit aria-label','Status nicht nur Farbe']),
+      ]},
+      { name: 'Navigation', items: [
+        C('tab','Tabs','Tabs','Reiter-Navigation.',['Underline','Contained','Full-width','Overflow-Scroll','vertikal','mit Icon/Badge'],['Default','Hover','Active','Focus','Disabled'],'sm · md',['role=tablist/tab/tabpanel','roving tabindex','Pfeile/Home/End','aria-selected']),
+        C('chevron_right','Breadcrumb','Breadcrumb','Pfadnavigation.',['Standard','Home-Icon-Start','kollabiert (…)'],['Default','Link Hover/Focus','Aktuell (aria-current)'],'sm · md',['nav + aria-current=page','… -Menü per Tastatur','Trenner dekorativ']),
+        C('more_horiz','Pagination','Pagination','Seitennavigation.',['Nummern+Ellipsis','kompakt (Seite X/Y)','mit Eintr./Seite'],['Default','Hover','Active','Focus','Grenzen deaktiviert'],'sm · md',['nav/aria-label','Erste/Letzte/Vor/Zurück als Buttons','aria-current']),
+        C('conversion_path','Progress indicator','Progress-indicator','Schritt-Stepper.',['Horizontal','vertikal'],['Erledigt (✓)','Aktiv','Ausstehend','Fehler'],'—',['aria-current=step','Erledigte klickbar','Status je Schritt lesbar']),
+      ]},
+      { name: 'Feedback & Status', items: [
+        C('notifications','Notification','Notification','Banner & Toasts.',['Inline low/high','Toast','5 Status'],['Info','Erfolg','Warnung','Fehler','Neutral'],'—',['role=status/alert + aria-live','Toast auto-dismiss + manuell','Schließen mit aria-label','warning-on-solid dunkler Text']),
+        C('info','Tooltip','Tooltip','Kurzinfo bei Hover/Focus.',['Text','Rich (Titel+Text)','4 Positionen'],['Versteckt','Sichtbar (Hover ~400ms / Focus sofort)','Auto-Flip'],'—',['role=tooltip','per Tastatur (Focus) erreichbar','nicht für interaktiven Inhalt']),
+        C('pending','Inline loading','Inline-loading','Kompakter Ladezustand.',['im Button','neben Feld','eigene Zeile'],['Lädt (3 Punkte)','Erfolg','Fehler','Inaktiv'],'sm · md',['aria-live für Statuswechsel','nutzt currentColor']),
+        C('progress_activity','Loading','Loading','Größere Ladezustände.',['Spinner (Teilring)','Overlay','Vollseite','Skeleton'],['Lädt','Overlay sperrt'],'sm · md · lg',['aria-busy=true am Bereich','Abschluss ansagen','Skeleton spiegelt Struktur']),
+        C('linear_scale','Progress bar','Progress-bar','Fortschrittsbalken.',['Determiniert','Indeterminiert','ohne/mit %/Label'],['Normal','Erfolg (100%)','Fehler (abgebrochen)'],'schmal · standard',['role=progressbar','aria-valuenow/min/max','vollrund']),
+      ]},
+      { name: 'Overlays', items: [
+        C('chat_bubble','Popover','Popover','Schwebender interaktiver Inhalt.',['Info','Formular','Rich','mit Pfeil'],['Zu','Offen','Auto-Flip'],'—',['role=dialog','Klick öffnet/schließt','Außenklick + Esc','Fokus in Fläche']),
+        C('web_asset','Modal','Modal','Blockierender Dialog.',['Standard','Bestätigung','Destruktiv'],['Offen','Fokus-Falle aktiv'],'sm · md · lg',['role=dialog aria-modal','Fokus-Falle + Rückgabe','Esc/X/Buttons (kein Scrim-Klick)','Primäraktion rechts']),
+      ]},
+      { name: 'Daten & Inhalt', items: [
+        C('format_list_bulleted','List','List','Statische Anzeige-Listen.',['Ungeordnet','Geordnet','verschachtelt','Schlüssel-Wert'],['Standard','Leerzustand'],'sm · md',['semantisches ul/ol/dl','nicht klickbar (→ Contained list)']),
+        C('list_alt','Contained list','Contained-list','Interaktive Listenzeilen.',['Navigation','Mehrfachauswahl','Einfachauswahl','Gruppen/Sticky-Header'],['Default','Hover','Selected','Disabled','Leerzustand'],'sm · md',['role=list/listbox/option','Pfeile/Enter/Space','aria-selected']),
+        C('expand_more','Accordion','Accordion','Auf-/zuklappbare Abschnitte.',['Mehrere offen','Nur eines offen','Karte / abgesetzt','Alle auf/zu'],['Zu','Offen','Hover','Focus','Disabled'],'sm · md',['button + aria-expanded','Enter/Space','Pfeile/Home/End zwischen Köpfen']),
+        C('table','Data table','Data-table','Tabellen mit Sortierung/Auswahl.',['Interaktiv (Sortieren+Auswahl)','Simpel','mit Bulk-Leiste'],['Default','Row Hover','Selected','Sortiert','Skeleton (Laden)','Leerzustand'],'Standard',['thead/th scope','aria-sort','Kopf-Checkbox (mixed)','Sticky Kopfzeile']),
+        C('code','Code snippet','Code-snippet','Code darstellen & kopieren.',['Inline','einzeilig','Block','Terminal'],['Default','Kopieren Hover','Kopiert (~1,5s)'],'—',['Kopieren-Button mit aria-label','Bestätigung sichtbar','dezente Syntaxfarben']),
+      ]},
+    ];
+    return { categories };
+  }
+}
+</script>
+</body>
+</html>

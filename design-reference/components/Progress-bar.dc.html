@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,300,0,0" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  body{margin:0}
+  ::selection{background:#e6e1d8}
+  .msr{font-family:'Material Symbols Rounded';font-weight:300;line-height:1;display:inline-block}
+  .pb-fill{height:100%;border-radius:9999px;transition:width .3s ease}
+  .pb-indet{position:relative;overflow:hidden}
+  .pb-indet::after{content:'';position:absolute;top:0;bottom:0;width:40%;border-radius:9999px;background:#007265;animation:pb-run 1.4s ease-in-out infinite}
+  @keyframes pb-run{0%{left:-42%}100%{left:100%}}
+  .pb-btn{height:38px;padding:0 15px;border-radius:8px;border:1px solid #c6c4c2;background:#fff;color:#24221e;font-family:inherit;font-weight:400;font-size:14px;cursor:pointer}
+  .pb-btn:hover{background:#f7f7f6}
+</style>
+</helmet>
+
+<div style="min-height:100%;background:#faf9f7;color:#1f1d1a;font-family:'DM Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased;padding:56px 40px 120px">
+  <div style="max-width:1000px;margin:0 auto">
+
+    <!-- HEADER -->
+    <div style="margin-bottom:44px">
+      <div style="font-family:'DM Mono',monospace;font-size:12px;letter-spacing:0.16em;color:#a49d92;text-transform:uppercase;margin-bottom:16px">Design System · Komponente · Progress bar</div>
+      <h1 style="font-size:49px;line-height:1.1;font-weight:700;letter-spacing:-0.02em;margin:0 0 14px">Progress bar</h1>
+      <p style="font-size:20px;line-height:1.5;color:#6f6a63;margin:0;max-width:700px">Zeigt den Fortschritt eines Vorgangs — mit bekanntem Wert (determiniert) oder als laufende Animation bei unbekannter Dauer (indeterminiert). Vollrunde Enden, optional beschriftet.</p>
+    </div>
+
+    <!-- DETERMINIERT / BESCHRIFTUNG -->
+    <div style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#a49d92;text-transform:uppercase;margin-bottom:18px">Determiniert · Beschriftungsvarianten</div>
+    <div style="background:#fff;border:1px solid #e9e6e1;border-radius:16px;padding:32px 36px;margin-bottom:48px">
+      <div style="display:flex;flex-direction:column;gap:28px;max-width:560px">
+        <!-- ohne label -->
+        <div>
+          <div style="font-family:'DM Mono',monospace;font-size:11px;color:#a49d92;margin-bottom:10px">Ohne Label</div>
+          <div style="height:8px;border-radius:9999px;background:{{ track }}"><div class="pb-fill" style="width:64%;background:{{ primary }}"></div></div>
+        </div>
+        <!-- prozent rechts -->
+        <div>
+          <div style="font-family:'DM Mono',monospace;font-size:11px;color:#a49d92;margin-bottom:10px">Prozent rechts</div>
+          <div style="display:flex;align-items:center;gap:14px">
+            <div style="flex:1;height:8px;border-radius:9999px;background:{{ track }}"><div class="pb-fill" style="width:64%;background:{{ primary }}"></div></div>
+            <span style="font-family:'DM Mono',monospace;font-size:13px;color:{{ text }};min-width:38px;text-align:right">64 %</span>
+          </div>
+        </div>
+        <!-- text label oben -->
+        <div>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px"><span style="font-size:14px;color:{{ subtle }}">Hochladen …</span><span style="font-family:'DM Mono',monospace;font-size:13px;color:{{ muted }}">64 %</span></div>
+          <div style="height:8px;border-radius:9999px;background:{{ track }}"><div class="pb-fill" style="width:64%;background:{{ primary }}"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ZUSTÄNDE -->
+    <div style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#a49d92;text-transform:uppercase;margin-bottom:18px">Statusfarben</div>
+    <div style="background:#fff;border:1px solid #e9e6e1;border-radius:16px;padding:32px 36px;margin-bottom:48px">
+      <div style="display:flex;flex-direction:column;gap:24px;max-width:560px">
+        <div style="display:flex;align-items:center;gap:14px"><div style="flex:1;height:8px;border-radius:9999px;background:{{ track }}"><div class="pb-fill" style="width:64%;background:{{ primary }}"></div></div><span style="display:flex;align-items:center;gap:5px;font-size:13px;color:{{ muted }};min-width:96px">Normal · 64 %</span></div>
+        <div style="display:flex;align-items:center;gap:14px"><div style="flex:1;height:8px;border-radius:9999px;background:{{ track }}"><div class="pb-fill" style="width:100%;background:{{ success }}"></div></div><span style="display:flex;align-items:center;gap:5px;font-size:13px;color:{{ successText }};min-width:96px"><span class="msr" style="font-size:17px">check_circle</span>Fertig</span></div>
+        <div style="display:flex;align-items:center;gap:14px"><div style="flex:1;height:8px;border-radius:9999px;background:{{ track }}"><div class="pb-fill" style="width:42%;background:{{ error }}"></div></div><span style="display:flex;align-items:center;gap:5px;font-size:13px;color:{{ errorText }};min-width:96px"><span class="msr" style="font-size:17px">error</span>Abgebrochen</span></div>
+      </div>
+    </div>
+
+    <!-- GRÖSSEN -->
+    <div style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#a49d92;text-transform:uppercase;margin-bottom:18px">Höhen · schmal / standard</div>
+    <div style="background:#fff;border:1px solid #e9e6e1;border-radius:16px;padding:32px 36px;margin-bottom:48px">
+      <div style="display:flex;flex-direction:column;gap:24px;max-width:560px">
+        <div><div style="font-family:'DM Mono',monospace;font-size:11px;color:#a49d92;margin-bottom:10px">schmal · 4px</div><div style="height:4px;border-radius:9999px;background:{{ track }}"><div class="pb-fill" style="width:64%;background:{{ primary }}"></div></div></div>
+        <div><div style="font-family:'DM Mono',monospace;font-size:11px;color:#a49d92;margin-bottom:10px">standard · 8px</div><div style="height:8px;border-radius:9999px;background:{{ track }}"><div class="pb-fill" style="width:64%;background:{{ primary }}"></div></div></div>
+      </div>
+    </div>
+
+    <!-- INDETERMINIERT -->
+    <div style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#a49d92;text-transform:uppercase;margin-bottom:18px">Indeterminiert · unbekannte Dauer</div>
+    <div style="background:#fff;border:1px solid #e9e6e1;border-radius:16px;padding:32px 36px;margin-bottom:48px">
+      <div class="pb-indet" style="height:8px;border-radius:9999px;background:{{ track }};max-width:560px"></div>
+    </div>
+
+    <!-- DEMO -->
+    <div style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#a49d92;text-transform:uppercase;margin-bottom:18px">Live · 0 → 100 %</div>
+    <div style="background:#fff;border:1px solid #e9e6e1;border-radius:16px;padding:32px 36px;margin-bottom:16px">
+      <div style="max-width:560px">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px"><span style="font-size:14px;color:{{ subtle }}">{{ demoLabel }}</span><span style="font-family:'DM Mono',monospace;font-size:13px;color:{{ muted }}">{{ demoPct }} %</span></div>
+        <div style="height:8px;border-radius:9999px;background:{{ track }}"><div class="pb-fill" style="width:{{ demoWidth }};background:{{ demoColor }}"></div></div>
+        <div style="display:flex;gap:10px;margin-top:18px"><button class="pb-btn" onClick="{{ startDemo }}">Starten</button><button class="pb-btn" onClick="{{ resetDemo }}">Zurücksetzen</button></div>
+      </div>
+    </div>
+
+    <div style="font-family:'DM Mono',monospace;font-size:11px;color:#a49d92;line-height:1.7;margin-bottom:48px">role=progressbar mit aria-valuenow/min/max; indeterminiert ohne valuenow. Der Füllbalken animiert die Breite weich.</div>
+
+    <!-- VERHALTEN -->
+    <div style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#a49d92;text-transform:uppercase;margin-bottom:18px">Verhalten</div>
+    <div style="background:#fff;border:1px solid #e9e6e1;border-radius:16px;padding:30px 34px;margin-bottom:48px">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px 40px">
+        <div style="display:flex;gap:11px;align-items:flex-start"><span class="msr" style="font-size:20px;color:{{ primary }};margin-top:1px">percent</span><div><div style="font-size:14px;font-weight:600;color:{{ text }}">Determiniert vs. indeterminiert</div><div style="font-size:13px;color:{{ muted }};margin-top:2px">Bekannter Wert → Balken füllt; unbekannt → laufende Animation.</div></div></div>
+        <div style="display:flex;gap:11px;align-items:flex-start"><span class="msr" style="font-size:20px;color:{{ primary }};margin-top:1px">animation</span><div><div style="font-size:14px;font-weight:600;color:{{ text }}">Weicher Übergang</div><div style="font-size:13px;color:{{ muted }};margin-top:2px">Breite animiert (0,3 s), damit Sprünge nicht ruckeln.</div></div></div>
+        <div style="display:flex;gap:11px;align-items:flex-start"><span class="msr" style="font-size:20px;color:{{ primary }};margin-top:1px">check_circle</span><div><div style="font-size:14px;font-weight:600;color:{{ text }}">Abschluss & Fehler</div><div style="font-size:13px;color:{{ muted }};margin-top:2px">Bei 100 % grün; bei Abbruch rot mit stehendem Wert.</div></div></div>
+        <div style="display:flex;gap:11px;align-items:flex-start"><span class="msr" style="font-size:20px;color:{{ primary }};margin-top:1px">accessibility_new</span><div><div style="font-size:14px;font-weight:600;color:{{ text }}">Ansage</div><div style="font-size:13px;color:{{ muted }};margin-top:2px">role=progressbar mit aria-valuenow/min/max für Screenreader.</div></div></div>
+      </div>
+    </div>
+
+    <!-- NUTZUNG -->
+    <div style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#a49d92;text-transform:uppercase;margin-bottom:18px">Im Einsatz · Datei-Upload</div>
+    <div style="background:#fff;border:1px solid #e9e6e1;border-radius:16px;padding:24px 28px;margin-bottom:48px;max-width:520px">
+      <div style="display:flex;align-items:center;gap:14px;margin-bottom:14px">
+        <span style="width:40px;height:40px;border-radius:9px;background:{{ track }};color:{{ text }};display:inline-flex;align-items:center;justify-content:center;flex:none"><span class="msr" style="font-size:21px">description</span></span>
+        <div style="flex:1;min-width:0"><div style="font-size:14px;font-weight:600;color:{{ text }}">Quartalsbericht.pdf</div><div style="font-size:12px;color:{{ muted }}">8,4 MB</div></div>
+        <span style="font-family:'DM Mono',monospace;font-size:13px;color:{{ muted }}">78 %</span>
+      </div>
+      <div style="height:6px;border-radius:9999px;background:{{ track }}"><div class="pb-fill" style="width:78%;background:{{ primary }}"></div></div>
+    </div>
+
+    <!-- DO / DON'T -->
+    <div style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#a49d92;text-transform:uppercase;margin-bottom:18px">Einsatz</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+      <div style="background:#fff;border:1px solid #e9e6e1;border-radius:14px;border-top:3px solid #1f8a5b;padding:22px 24px">
+        <div style="font-size:13px;font-weight:600;color:#1f8a5b;margin-bottom:10px">Do</div>
+        <ul style="margin:0;padding-left:18px;font-size:14px;line-height:1.7;color:#3f3b36">
+          <li>Determiniert nutzen, sobald der Fortschritt bezifferbar ist.</li>
+          <li>Prozent oder Label zeigen, wenn der Wert relevant ist.</li>
+          <li>Bei Abschluss grün, bei Abbruch rot einfärben.</li>
+        </ul>
+      </div>
+      <div style="background:#fff;border:1px solid #e9e6e1;border-radius:14px;border-top:3px solid #c0392b;padding:22px 24px">
+        <div style="font-size:13px;font-weight:600;color:#c0392b;margin-bottom:10px">Don't</div>
+        <ul style="margin:0;padding-left:18px;font-size:14px;line-height:1.7;color:#3f3b36">
+          <li>Nicht für unbestimmtes Warten ohne Fortschritt — dafür Loading.</li>
+          <li>Determinierten Wert nicht rückwärts springen lassen.</li>
+          <li>Nicht als Slider missbrauchen — Progress bar ist nicht bedienbar.</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: { &quot;width&quot;: 1040, &quot;height&quot;: 940 }}">
+class Component extends DCLogic {
+  state = { pct: 0, running: false };
+  startDemo = () => {
+    if (this.state.running) return;
+    this.setState({ running: true, pct: this.state.pct >= 100 ? 0 : this.state.pct });
+    this._t = setInterval(() => {
+      this.setState(s => {
+        const next = Math.min(100, s.pct + Math.random() * 12 + 4);
+        if (next >= 100) { clearInterval(this._t); return { pct: 100, running: false }; }
+        return { pct: next };
+      });
+    }, 350);
+  };
+  resetDemo = () => { clearInterval(this._t); this.setState({ pct: 0, running: false }); };
+  componentWillUnmount() { clearInterval(this._t); }
+
+  oklchToLinear(L, C, H) {
+    const h = H * Math.PI / 180, a = C * Math.cos(h), b = C * Math.sin(h);
+    const l_ = L + 0.3963377774 * a + 0.2158037573 * b, m_ = L - 0.1055613458 * a - 0.0638541728 * b, s_ = L - 0.0894841775 * a - 1.2914855480 * b;
+    const l = l_ ** 3, m = m_ ** 3, s = s_ ** 3;
+    return { r: 4.0767416621 * l - 3.3077115913 * m + 0.2309699292 * s, g: -1.2684380046 * l + 2.6097574011 * m - 0.3413193965 * s, b: -0.0041960863 * l - 0.7034186147 * m + 1.7076147010 * s };
+  }
+  toHex(rgb) {
+    const g = v => { v = Math.min(1, Math.max(0, v)); return v <= 0.0031308 ? 12.92 * v : 1.055 * Math.pow(v, 1 / 2.4) - 0.055; };
+    const h = v => Math.round(g(v) * 255).toString(16).padStart(2, '0');
+    return '#' + h(rgb.r) + h(rgb.g) + h(rgb.b);
+  }
+  makeScale(hue, chromaPeak) {
+    const L = [0.976, 0.942, 0.888, 0.822, 0.748, 0.655, 0.470, 0.405, 0.348, 0.300, 0.252, 0.198];
+    const CM = [0.05, 0.10, 0.16, 0.24, 0.34, 0.45, 1.00, 0.95, 0.80, 0.62, 0.45, 0.30];
+    const T = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1100];
+    const o = {};
+    T.forEach((t, i) => { o[t] = this.toHex(this.oklchToLinear(L[i], chromaPeak * CM[i], hue)); });
+    return o;
+  }
+
+  renderVals() {
+    const ci = 1.25;
+    const stone = this.makeScale(70, 0.013 * ci);
+    const primary = this.makeScale(185, 0.115 * ci);
+    const success = this.makeScale(150, 0.14 * ci);
+    const error = this.makeScale(27, 0.15 * ci);
+    const pct = Math.round(this.state.pct);
+    const done = pct >= 100;
+    return {
+      track: stone[200], primary: primary[600], success: success[600], error: error[600],
+      text: stone[1000], subtle: stone[800], muted: stone[1000] + 'ad',
+      successText: success[700], errorText: error[700],
+      demoPct: pct, demoWidth: pct + '%',
+      demoColor: done ? success[600] : primary[600],
+      demoLabel: done ? 'Abgeschlossen' : (this.state.running ? 'Wird verarbeitet …' : 'Bereit'),
+      startDemo: this.startDemo, resetDemo: this.resetDemo
+    };
+  }
+}
+</script>
+</body>
+</html>

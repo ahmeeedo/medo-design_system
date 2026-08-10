@@ -1,0 +1,78 @@
+<!-- @dsCard group="Komponenten" viewport="700x380" name="Tooltip" subtitle="Vier Positionen, kurz oder mit Titel, Hover und Fokus" -->
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  html,body{margin:0}
+  body{padding:24px 22px;font-family:var(--medo-font-sans);background:var(--medo-surface);color:var(--medo-text);min-height:380px;box-sizing:border-box}
+  .lbl{font-family:var(--medo-font-mono);font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:var(--medo-color-stone-500);margin-bottom:10px}
+  .grp{margin-bottom:22px}
+  .row{display:flex;gap:40px;flex-wrap:wrap;align-items:center}
+  .cell{display:flex;flex-direction:column;align-items:center;gap:10px}
+  .cap{font-family:var(--medo-font-mono);font-size:11px;color:var(--medo-color-stone-500)}
+  .ib{box-sizing:border-box;width:40px;height:40px;border-radius:var(--medo-radius-md);border:1px solid var(--medo-border);background:var(--medo-surface);color:var(--medo-icon);display:inline-flex;align-items:center;justify-content:center;cursor:pointer}
+  .ib:hover{background:var(--medo-state-hover)}
+  .ib:focus-visible{outline:none;box-shadow:0 0 0 3px var(--medo-focus-ring)}
+  .hintbar{display:flex;align-items:center;gap:8px;font-size:14px;color:var(--medo-text-muted)}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+<script src="../_ds_bundle.js"></script>
+<script>
+  var h = React.createElement;
+  var MedoTip = window.MedoUI.Tooltip, MedoIcon = window.MedoUI.Icon;
+
+  function iconBtn(glyph, label) {
+    return h('button', { className: 'ib', 'aria-label': label }, h(MedoIcon, { name: glyph, size: 20 }));
+  }
+  function cell(seite, glyph, label, text) {
+    return h('div', { className: 'cell' },
+      h(MedoTip, { content: text, placement: seite }, iconBtn(glyph, label)),
+      h('span', { className: 'cap' }, seite));
+  }
+
+  var app = h('div', null,
+    h('div', { className: 'grp' },
+      h('div', { className: 'lbl' }, 'Positionen · zeigen oder mit Tab fokussieren'),
+      h('div', { className: 'row' },
+        cell('top', 'settings', 'Einstellungen', 'Einstellungen öffnen'),
+        cell('bottom', 'info', 'Hinweis', 'Weitere Angaben zum Vertrag'),
+        cell('left', 'content_copy', 'Kopieren', 'In die Zwischenablage kopieren'),
+        cell('right', 'delete', 'Löschen', 'Eintrag endgültig löschen'))
+    ),
+    h('div', { className: 'grp' },
+      h('div', { className: 'lbl' }, 'Mit Titel · zwei Zeilen'),
+      h('div', { className: 'row' },
+        h(MedoTip, {
+          placement: 'bottom',
+          title: 'Tastenkürzel',
+          content: 'Öffnet die Suche von überall — auch aus Untermenüs.'
+        }, iconBtn('search', 'Suche')),
+        h(MedoTip, {
+          placement: 'right',
+          title: 'Sichtbarkeit',
+          content: 'Nur Ihr Netzwerk sieht dieses Profil.'
+        }, iconBtn('visibility', 'Sichtbarkeit')),
+        h(MedoTip, {
+          content: 'Erscheint nicht — der Tooltip ist deaktiviert.', disabled: true
+        }, iconBtn('block', 'Ohne Tooltip')))
+    ),
+    h('div', null,
+      h('div', { className: 'lbl' }, 'An erklärungsbedürftigem Text'),
+      h('div', { className: 'hintbar' },
+        'Kleinunternehmerregelung',
+        h(MedoTip, {
+          content: 'Nach § 19 UStG wird keine Umsatzsteuer ausgewiesen.'
+        }, h('span', { tabIndex: 0, style: { display: 'inline-flex', cursor: 'help', color: 'var(--medo-icon-muted)' } },
+          h(MedoIcon, { name: 'help', size: 18 }))))
+    )
+  );
+  ReactDOM.createRoot(document.getElementById('root')).render(app);
+</script>
+</body>
+</html>
