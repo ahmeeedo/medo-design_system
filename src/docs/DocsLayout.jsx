@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { LanguageSwitcher } from './LanguageSwitcher'
 import { Icon } from '@/components/Icon/Icon'
 import { headerLinks } from '@/config/headerLinks'
-import { Search } from '@/components/Search/Search'
+import { DocsSearch } from './DocsSearch'
 
 const NAV = [
   {
@@ -238,7 +238,7 @@ export function DocsLayout({ children }) {
         </main>
       </div>
 
-      <Search isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
+      <DocsSearch isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
 
       {/* Full-width footer */}
       <footer className="w-full bg-[var(--medo-surface-container)] border-t border-[var(--medo-border)] px-[var(--medo-space-lg)] py-[var(--medo-space-md)] flex items-center justify-between flex-wrap gap-[var(--medo-space-sm)]">

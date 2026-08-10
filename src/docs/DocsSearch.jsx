@@ -11,7 +11,7 @@ const TAB_LABELS = {
   code: 'Code', accessibility: 'Accessibility',
 }
 
-export function Search({ isOpen, onClose }) {
+export function DocsSearch({ isOpen, onClose }) {
   const { t, i18n } = useTranslation()
   const navigate = useNavigate()
   const [query, setQuery] = useState('')

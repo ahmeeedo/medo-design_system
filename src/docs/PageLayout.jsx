@@ -1,7 +1,7 @@
 import { useSearchParams } from 'react-router-dom'
 import { Children, useRef, useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { TableOfContents } from '../components'
+import { TableOfContents } from './TableOfContents'
 import { Sheet, SheetContent, SheetClose, SheetTitle } from '../components/ui/sheet'
 import { Tabs as TabsPrimitive, TabsList, TabsTrigger, TabsContent } from '../components/ui/tabs'
 
