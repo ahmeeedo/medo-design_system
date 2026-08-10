@@ -1,0 +1,13 @@
+/* medo Design System · Token-Einstiegspunkt
+   Die Dateien in medo/ sind byte-identische Kopien von design-reference/tokens/.
+   Reihenfolge wie in design-reference/styles.css: Brand → Alias → Semantic.
+   Werte werden nie hier geändert — Änderungen kommen aus dem Design-Projekt. */
+
+@import "./medo/brand-colors.css";
+@import "./medo/alias-colors.css";
+@import "./medo/semantic-colors.css";
+@import "./medo/typography.css";
+@import "./medo/spacing.css";
+@import "./medo/radii.css";
+@import "./medo/elevation.css";
+@import "./medo/layout.css";

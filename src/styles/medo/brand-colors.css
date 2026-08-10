@@ -1,0 +1,202 @@
+/* medo Design System · Ebene 1 — Brand-Farbskalen
+   Quelle der Wahrheit. Änderungen hier, nicht in tokens.css (flacher Export). */
+
+:root {
+  --medo-color-red-50: #fdf5f4;
+  --medo-color-red-100: #f8e7e5;
+  --medo-color-red-200: #edd3cf;
+  --medo-color-red-300: #e1bab5;
+  --medo-color-red-400: #d39e98;
+  --medo-color-red-500: #bf7d75;
+  --medo-color-red-600: #ab0913;
+  --medo-color-red-700: #920000;
+  --medo-color-red-800: #750002;
+  --medo-color-red-900: #5b0507;
+  --medo-color-red-1000: #420b09;
+  --medo-color-red-1100: #2a0907;
+
+  --medo-color-crimson-50: #fef5f5;
+  --medo-color-crimson-100: #f9e7e7;
+  --medo-color-crimson-200: #efd2d3;
+  --medo-color-crimson-300: #e2b9bb;
+  --medo-color-crimson-400: #d59c9f;
+  --medo-color-crimson-500: #c17a7f;
+  --medo-color-crimson-600: #af0034;
+  --medo-color-crimson-700: #940025;
+  --medo-color-crimson-800: #77001d;
+  --medo-color-crimson-900: #5c0019;
+  --medo-color-crimson-1000: #430614;
+  --medo-color-crimson-1100: #2b070d;
+
+  --medo-color-rose-50: #fef4f6;
+  --medo-color-rose-100: #f9e7ea;
+  --medo-color-rose-200: #eed2d7;
+  --medo-color-rose-300: #e1b8c0;
+  --medo-color-rose-400: #d39ca7;
+  --medo-color-rose-500: #c07989;
+  --medo-color-rose-600: #ab004c;
+  --medo-color-rose-700: #91003b;
+  --medo-color-rose-800: #75002f;
+  --medo-color-rose-900: #5b0025;
+  --medo-color-rose-1000: #42061c;
+  --medo-color-rose-1100: #2a0712;
+
+  --medo-color-orange-50: #fff4ef;
+  --medo-color-orange-100: #ffe7dc;
+  --medo-color-orange-200: #ffd3c1;
+  --medo-color-orange-300: #ffbda3;
+  --medo-color-orange-400: #ffa381;
+  --medo-color-orange-500: #f6835a;
+  --medo-color-orange-600: #de5d2b;
+  --medo-color-orange-700: #c2460e;
+  --medo-color-orange-800: #a13200;
+  --medo-color-orange-900: #7e2400;
+  --medo-color-orange-1000: #5d1a00;
+  --medo-color-orange-1100: #441402;
+
+  --medo-color-amber-50: #fff5ec;
+  --medo-color-amber-100: #ffe9d7;
+  --medo-color-amber-200: #ffd8bb;
+  --medo-color-amber-300: #ffc59a;
+  --medo-color-amber-400: #ffae74;
+  --medo-color-amber-500: #f1924a;
+  --medo-color-amber-600: #dc7411;
+  --medo-color-amber-700: #c25e00;
+  --medo-color-amber-800: #a04800;
+  --medo-color-amber-900: #7c3500;
+  --medo-color-amber-1000: #5b2800;
+  --medo-color-amber-1100: #431d00;
+
+  --medo-color-yellow-50: #fff9f0;
+  --medo-color-yellow-100: #fff0dd;
+  --medo-color-yellow-200: #fee3c3;
+  --medo-color-yellow-300: #fed5a1;
+  --medo-color-yellow-400: #fac37a;
+  --medo-color-yellow-500: #eaa94c;
+  --medo-color-yellow-600: #d48d09;
+  --medo-color-yellow-700: #bd7800;
+  --medo-color-yellow-800: #9c5f00;
+  --medo-color-yellow-900: #794900;
+  --medo-color-yellow-1000: #5a3700;
+  --medo-color-yellow-1100: #412700;
+
+  --medo-color-green-50: #f3f9f4;
+  --medo-color-green-100: #e4efe6;
+  --medo-color-green-200: #cee0d1;
+  --medo-color-green-300: #b2cdb7;
+  --medo-color-green-400: #93b89a;
+  --medo-color-green-500: #6d9f77;
+  --medo-color-green-600: #007317;
+  --medo-color-green-700: #005f02;
+  --medo-color-green-800: #004c04;
+  --medo-color-green-900: #003b09;
+  --medo-color-green-1000: #002c0b;
+  --medo-color-green-1100: #011c08;
+
+  --medo-color-teal-50: #f2f9f8;
+  --medo-color-teal-100: #e2efed;
+  --medo-color-teal-200: #cadfdc;
+  --medo-color-teal-300: #adccc8;
+  --medo-color-teal-400: #8bb8b1;
+  --medo-color-teal-500: #619e96;
+  --medo-color-teal-600: #007265;
+  --medo-color-teal-700: #005e53;
+  --medo-color-teal-800: #004b42;
+  --medo-color-teal-900: #003b34;
+  --medo-color-teal-1000: #002b26;
+  --medo-color-teal-1100: #001c18;
+
+  --medo-color-cyan-50: #f2f8fa;
+  --medo-color-cyan-100: #e1eff1;
+  --medo-color-cyan-200: #cadfe2;
+  --medo-color-cyan-300: #accbd1;
+  --medo-color-cyan-400: #8ab6be;
+  --medo-color-cyan-500: #5f9ca7;
+  --medo-color-cyan-600: #006d87;
+  --medo-color-cyan-700: #005971;
+  --medo-color-cyan-800: #00475a;
+  --medo-color-cyan-900: #003846;
+  --medo-color-cyan-1000: #002a33;
+  --medo-color-cyan-1100: #001a20;
+
+  --medo-color-blue-50: #f2f8fd;
+  --medo-color-blue-100: #e3edf8;
+  --medo-color-blue-200: #ccdcee;
+  --medo-color-blue-300: #afc8e1;
+  --medo-color-blue-400: #8fb1d5;
+  --medo-color-blue-500: #6895c3;
+  --medo-color-blue-600: #0059be;
+  --medo-color-blue-700: #0045a3;
+  --medo-color-blue-800: #003783;
+  --medo-color-blue-900: #002d64;
+  --medo-color-blue-1000: #002248;
+  --medo-color-blue-1100: #00162e;
+
+  --medo-color-indigo-50: #f4f7fe;
+  --medo-color-indigo-100: #e6ecfa;
+  --medo-color-indigo-200: #d2daf0;
+  --medo-color-indigo-300: #b8c4e5;
+  --medo-color-indigo-400: #9cacd9;
+  --medo-color-indigo-500: #7b8ec8;
+  --medo-color-indigo-600: #3447c8;
+  --medo-color-indigo-700: #2734ad;
+  --medo-color-indigo-800: #1e298b;
+  --medo-color-indigo-900: #18236b;
+  --medo-color-indigo-1000: #121c4c;
+  --medo-color-indigo-1100: #0b1330;
+
+  --medo-color-violet-50: #f7f6fe;
+  --medo-color-violet-100: #eceaf9;
+  --medo-color-violet-200: #dad7ee;
+  --medo-color-violet-300: #c5c0e2;
+  --medo-color-violet-400: #aea6d5;
+  --medo-color-violet-500: #9287c3;
+  --medo-color-violet-600: #6335be;
+  --medo-color-violet-700: #5122a4;
+  --medo-color-violet-800: #401b84;
+  --medo-color-violet-900: #321a65;
+  --medo-color-violet-1000: #251649;
+  --medo-color-violet-1100: #170f2e;
+
+  --medo-color-purple-50: #faf5fb;
+  --medo-color-purple-100: #f2e8f4;
+  --medo-color-purple-200: #e4d4e8;
+  --medo-color-purple-300: #d3bbd9;
+  --medo-color-purple-400: #c1a0c8;
+  --medo-color-purple-500: #a97fb3;
+  --medo-color-purple-600: #881f9e;
+  --medo-color-purple-700: #720686;
+  --medo-color-purple-800: #5c076c;
+  --medo-color-purple-900: #470e53;
+  --medo-color-purple-1000: #340f3c;
+  --medo-color-purple-1100: #210b26;
+
+  --medo-color-grey-50: #f7f7f7;
+  --medo-color-grey-100: #ebecec;
+  --medo-color-grey-200: #dadada;
+  --medo-color-grey-300: #c4c5c5;
+  --medo-color-grey-400: #acadae;
+  --medo-color-grey-500: #909192;
+  --medo-color-grey-600: #595b5e;
+  --medo-color-grey-700: #47494b;
+  --medo-color-grey-800: #383a3c;
+  --medo-color-grey-900: #2d2e2f;
+  --medo-color-grey-1000: #212223;
+  --medo-color-grey-1100: #151616;
+
+  --medo-color-stone-50: #f7f7f6;
+  --medo-color-stone-100: #ececeb;
+  --medo-color-stone-200: #dbdad8;
+  --medo-color-stone-300: #c6c4c2;
+  --medo-color-stone-400: #b0adaa;
+  --medo-color-stone-500: #94908c;
+  --medo-color-stone-600: #615951;
+  --medo-color-stone-700: #4f4840;
+  --medo-color-stone-800: #3f3933;
+  --medo-color-stone-900: #312d28;
+  --medo-color-stone-1000: #24221e;
+  --medo-color-stone-1100: #171513;
+
+  --medo-color-white: #ffffff;
+  --medo-color-black: #000000;
+}

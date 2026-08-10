@@ -1,3 +1,8 @@
+/* medo foundation: local DM Sans/DM Mono and the --medo-* tokens load before
+   the Tailwind layers. The legacy tokens below coexist until the cleanup. */
+@import "./fonts.css";
+@import "./medo-tokens.css";
+
 @import "tailwindcss";
 @import 'material-symbols/rounded';
 @import "./tokens.css";
@@ -130,6 +135,14 @@
   --input:               var(--border-subtle-100);
   --ring:                var(--color-focus);
   --radius:              8px;
+}
+
+/* Material Symbols Rounded axes. Unlayered on purpose: the material-symbols
+   package ships an unlayered `.material-symbols-rounded { font-weight: normal }`
+   that a @layer base rule would lose against. */
+.material-symbols-rounded {
+  font-weight: 300;
+  font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0;
 }
 
 .dark {

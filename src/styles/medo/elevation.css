@@ -1,0 +1,9 @@
+/* medo Design System · Elevation — warme Schatten
+   Quelle der Wahrheit. Änderungen hier, nicht in tokens.css (flacher Export). */
+
+:root {
+  --medo-shadow-sm: 0 1px 2px rgba(31,29,26,0.06), 0 1px 3px rgba(31,29,26,0.04);
+  --medo-shadow-md: 0 2px 4px rgba(31,29,26,0.06), 0 6px 16px rgba(31,29,26,0.07);
+  --medo-shadow-lg: 0 4px 8px rgba(31,29,26,0.06), 0 14px 32px rgba(31,29,26,0.10);
+  --medo-shadow-xl: 0 8px 18px rgba(31,29,26,0.08), 0 28px 60px rgba(31,29,26,0.16);
+}
