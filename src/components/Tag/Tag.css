@@ -1,0 +1,63 @@
+.medo-tag{
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--medo-font-sans);
+  font-weight: 500;
+  border-radius: var(--medo-radius-full);
+  border: var(--medo-border-thin) solid transparent;
+  white-space: nowrap;
+  max-width: 100%;
+}
+.medo-tag__label{ overflow: hidden; text-overflow: ellipsis; }
+.medo-tag--sm{ height: 22px; padding: 0 10px; font-size: var(--medo-text-xs); }
+.medo-tag--md{ height: 28px; padding: 0 12px; font-size: var(--medo-text-sm); }
+.medo-tag--sm.medo-tag--removable{ padding-right: 3px; }
+.medo-tag--md.medo-tag--removable{ padding-right: 5px; }
+
+.medo-tag__dot{ flex: none; border-radius: var(--medo-radius-full); }
+.medo-tag--sm .medo-tag__dot{ width: 6px; height: 6px; }
+.medo-tag--md .medo-tag__dot{ width: 7px; height: 7px; }
+
+.medo-tag__x{
+  box-sizing: border-box;
+  border: none; background: transparent;
+  width: 20px; height: 20px; flex: none;
+  border-radius: var(--medo-radius-full);
+  display: inline-flex; align-items: center; justify-content: center;
+  cursor: pointer; color: inherit;
+  transition: background-color 120ms ease-out;
+}
+.medo-tag--sm .medo-tag__x{ width: 18px; height: 18px; }
+.medo-tag__x:hover{ background: rgba(31,29,26,0.10); }
+.medo-tag__x:focus-visible{ outline: none; box-shadow: 0 0 0 3px var(--medo-focus-ring); }
+
+/* Auswählbar — als Schaltfläche gerendert */
+.medo-tag--selectable{
+  background: var(--medo-surface);
+  color: var(--medo-text);
+  border-color: var(--medo-border);
+  cursor: pointer;
+  transition: background-color 120ms ease-out, border-color 120ms ease-out, color 120ms ease-out;
+}
+.medo-tag--selectable:hover:not(:disabled){
+  background: var(--medo-state-hover);
+  border-color: var(--medo-border-strong);
+}
+.medo-tag--selectable:focus-visible{ outline: none; box-shadow: 0 0 0 3px var(--medo-focus-ring); }
+.medo-tag--selected{
+  background: var(--medo-action);
+  color: var(--medo-action-text);
+  border-color: var(--medo-action);
+}
+.medo-tag--selected:hover:not(:disabled){
+  background: var(--medo-action-hover);
+  border-color: var(--medo-action-hover);
+}
+.medo-tag--selectable:disabled{
+  background: var(--medo-surface-container);
+  color: var(--medo-text-disabled);
+  border-color: var(--medo-border-subtle);
+  cursor: not-allowed;
+}

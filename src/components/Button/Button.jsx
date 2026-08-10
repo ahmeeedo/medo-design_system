@@ -1,68 +1,92 @@
-import { cloneElement, isValidElement, forwardRef } from 'react'
-import { cva } from 'class-variance-authority'
-import { cn } from '@/lib/utils'
+import { forwardRef } from 'react'
+import { Icon } from '../Icon/Icon'
+import './Button.css'
 
-const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 font-medium whitespace-nowrap rounded-md border border-transparent transition-all outline-none select-none focus-visible:ring-2 focus-visible:ring-ring/50 focus-visible:border-ring disabled:pointer-events-none disabled:opacity-40 [&_svg]:pointer-events-none [&_svg]:shrink-0",
-  {
-    variants: {
-      variant: {
-        primary:   "bg-btn-primary text-primary-foreground hover:bg-btn-primary-hover",
-        accent:    "bg-btn-accent text-primary-foreground hover:bg-btn-accent-hover",
-        secondary: "bg-background text-foreground border-border hover:bg-muted",
-        ghost:     "bg-transparent text-foreground hover:bg-muted",
-        danger:    "bg-destructive/10 text-destructive hover:bg-destructive/20 focus-visible:border-destructive/40 focus-visible:ring-destructive/20",
-        link:      "bg-transparent text-primary group",
-      },
-      size: {
-        xs: "h-6 px-3 text-xs rounded-sm",
-        sm: "h-8 px-4 text-sm",
-        md: "h-10 px-5 text-sm",
-        lg: "h-12 px-6 text-base",
-        xl: "h-14 px-7 text-lg",
-      },
-    },
-    defaultVariants: {
-      variant: 'primary',
-      size: 'md',
-    },
-  }
-)
+/* medo Design System · Button
+   Löst eine Aktion aus. Vier Varianten, drei Größen, alle Zustände aus Semantic-Tokens.
+   Hover, Aktiv und Fokus laufen über das Stylesheet der Komponente,
+   weil Inline-Styles keine Pseudoklassen abbilden können. */
 
-const ICON_SIZE = { xs: '18px', sm: '20px', md: '20px', lg: '22px', xl: '24px' }
+const ICON_SIZE_FOR = { sm: 16, md: 18, lg: 20 }
 
-function withSize(icon, size) {
-  if (!isValidElement(icon)) return icon
-  return cloneElement(icon, { size: ICON_SIZE[size] })
-}
-
+/* forwardRef, damit der Button als Tooltip-Auslöser und als Radix-`asChild`-Kind taugt —
+   beide reichen eine ref an das Kind durch. */
 export const Button = forwardRef(function Button({
+  children,
   variant = 'primary',
   size = 'md',
+  icon,
+  iconPosition = 'leading',
+  iconOnly = false,
+  loading = false,
   disabled = false,
-  leadingIcon,
-  trailingIcon,
-  onClick,
+  fullWidth = false,
   type = 'button',
-  className = '',
-  children,
-  ...props
+  href,
+  onClick,
+  className,
+  style,
+  ...rest
 }, ref) {
+  const isDisabled = disabled || loading
+  const iconSize = ICON_SIZE_FOR[size] || 18
+
+  const glyph = icon ? <Icon name={icon} size={iconOnly ? iconSize + 2 : iconSize} /> : null
+  const spinner = loading ? <span className="medo-btn__spinner" /> : null
+
+  const content = iconOnly ? (
+    spinner || glyph
+  ) : (
+    <>
+      {spinner}
+      {iconPosition === 'leading' ? glyph : null}
+      {children != null ? <span>{children}</span> : null}
+      {iconPosition === 'trailing' ? glyph : null}
+    </>
+  )
+
+  const classes = [
+    'medo-btn',
+    'medo-btn--' + variant,
+    'medo-btn--' + size,
+    iconOnly ? 'medo-btn--iconOnly' : null,
+    fullWidth ? 'medo-btn--fullWidth' : null,
+    className,
+  ]
+    .filter(Boolean)
+    .join(' ')
+
+  const shared = {
+    className: classes,
+    style,
+    'aria-disabled': isDisabled ? 'true' : undefined,
+    'aria-busy': loading ? 'true' : undefined,
+    onClick: isDisabled
+      ? e => {
+          e.preventDefault()
+          e.stopPropagation()
+        }
+      : onClick,
+    ...rest,
+  }
+
+  if (href) {
+    return (
+      <a
+        {...shared}
+        ref={ref}
+        href={isDisabled ? undefined : href}
+        role="button"
+        tabIndex={isDisabled ? -1 : 0}
+      >
+        {content}
+      </a>
+    )
+  }
+
   return (
-    <button
-      ref={ref}
-      type={type}
-      disabled={disabled}
-      onClick={onClick}
-      className={cn(buttonVariants({ variant, size }), className)}
-      {...props}
-    >
-      {withSize(leadingIcon, size)}
-      {variant === 'link'
-        ? <span className="underline-offset-4 group-hover:underline">{children}</span>
-        : children
-      }
-      {withSize(trailingIcon, size)}
+    <button {...shared} ref={ref} type={type} disabled={isDisabled}>
+      {content}
     </button>
   )
 })

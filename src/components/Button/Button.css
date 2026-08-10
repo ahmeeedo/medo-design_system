@@ -1,0 +1,96 @@
+.medo-btn{
+  box-sizing: border-box;
+  font-family: var(--medo-font-sans);
+  font-weight: 400;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--medo-space-xs);
+  white-space: nowrap;
+  border-radius: var(--medo-radius-md);
+  border: var(--medo-border-thin) solid transparent;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 140ms ease-out, border-color 140ms ease-out, color 140ms ease-out;
+  -webkit-font-smoothing: antialiased;
+}
+.medo-btn:focus-visible{
+  outline: none;
+  box-shadow: 0 0 0 3px var(--medo-focus-ring);
+}
+.medo-btn[aria-disabled="true"]{ cursor: not-allowed; }
+
+.medo-btn--sm{ height: 32px; padding: 0 12px; font-size: var(--medo-text-xs); }
+.medo-btn--md{ height: 40px; padding: 0 16px; font-size: var(--medo-text-sm); }
+.medo-btn--lg{ height: 48px; padding: 0 22px; font-size: var(--medo-text-base); }
+
+.medo-btn--iconOnly.medo-btn--sm{ width: 32px; padding: 0; }
+.medo-btn--iconOnly.medo-btn--md{ width: 40px; padding: 0; }
+.medo-btn--iconOnly.medo-btn--lg{ width: 48px; padding: 0; }
+
+.medo-btn--fullWidth{ width: 100%; }
+
+/* primary */
+.medo-btn--primary{ background: var(--medo-action); color: var(--medo-action-text); }
+.medo-btn--primary:hover:not([aria-disabled="true"]){ background: var(--medo-action-hover); }
+.medo-btn--primary:active:not([aria-disabled="true"]){ background: var(--medo-action-active); }
+
+/* secondary */
+.medo-btn--secondary{
+  background: var(--medo-action-neutral);
+  color: var(--medo-action-neutral-text);
+  border-color: var(--medo-border);
+}
+.medo-btn--secondary:hover:not([aria-disabled="true"]){ background: var(--medo-action-neutral-hover); }
+.medo-btn--secondary:active:not([aria-disabled="true"]){ background: var(--medo-action-neutral-active); }
+
+/* ghost */
+.medo-btn--ghost{ background: transparent; color: var(--medo-action-neutral-text); }
+.medo-btn--ghost:hover:not([aria-disabled="true"]){ background: var(--medo-state-hover); }
+.medo-btn--ghost:active:not([aria-disabled="true"]){ background: var(--medo-state-pressed); }
+
+/* danger */
+.medo-btn--danger{ background: var(--medo-error-solid); color: var(--medo-error-on-solid); }
+.medo-btn--danger:hover:not([aria-disabled="true"]){ background: var(--medo-error-solid-hover); }
+.medo-btn--danger:active:not([aria-disabled="true"]){ background: var(--medo-error-solid-active); }
+.medo-btn--danger:focus-visible{ box-shadow: 0 0 0 3px var(--medo-focus-ring-danger); }
+
+/* deaktiviert — je Variante, wie in components/Button.dc.html festgelegt */
+.medo-btn--primary[aria-disabled="true"],
+.medo-btn--danger[aria-disabled="true"]{
+  background: var(--medo-action-disabled);
+  color: var(--medo-action-text-disabled);
+  border-color: transparent;
+}
+.medo-btn--secondary[aria-disabled="true"]{
+  background: var(--medo-color-stone-100);
+  color: var(--medo-color-stone-400);
+  border-color: var(--medo-color-stone-200);
+}
+.medo-btn--ghost[aria-disabled="true"]{
+  background: transparent;
+  color: var(--medo-color-stone-400);
+  border-color: transparent;
+}
+
+/* Laden — behält die Variantenfarbe, nur der Spinner kommt hinzu.
+   Steht nach den Disabled-Regeln, damit es sie überschreibt. */
+.medo-btn--primary[aria-busy="true"]{ background: var(--medo-action); color: var(--medo-action-text); }
+.medo-btn--secondary[aria-busy="true"]{
+  background: var(--medo-action-neutral);
+  color: var(--medo-action-neutral-text);
+  border-color: var(--medo-border);
+}
+.medo-btn--ghost[aria-busy="true"]{ background: transparent; color: var(--medo-action-neutral-text); }
+.medo-btn--danger[aria-busy="true"]{ background: var(--medo-error-solid); color: var(--medo-error-on-solid); }
+
+@keyframes medo-spin{ to{ transform: rotate(360deg); } }
+.medo-btn__spinner{
+  width: 1em; height: 1em;
+  border-radius: var(--medo-radius-full);
+  border: 2px solid currentColor;
+  border-top-color: transparent;
+  animation: medo-spin 700ms linear infinite;
+  flex: none;
+}
