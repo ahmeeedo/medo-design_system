@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import { PageLayout, Section, Content, DemoPanel } from '../docs/PageLayout'
 import { CodeBlock } from '../docs/CodeBlock'
-import { Card, Button } from '../components'
+import { Card, LegacyButton as Button } from '../components'
 
 const FLAT_CODE = `import { Card, Button } from '@/components'
 

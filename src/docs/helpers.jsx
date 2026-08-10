@@ -1,6 +1,6 @@
 import { Avatar } from '../components/Avatar/Avatar'
 import { Badge }  from '../components/Badge/Badge'
-import { Button } from '../components/Button/Button'
+import { LegacyButton as Button } from '../components/Button/LegacyButton'
 import { TokenChip } from './DocSection'
 import styles from '../App.module.css'
 

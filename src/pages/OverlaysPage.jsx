@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { PageLayout, Section, Content, DemoPanel } from '../docs/PageLayout'
 import { CodeBlock } from '../docs/CodeBlock'
-import { Button, Modal } from '../components'
+import { LegacyButton as Button, Modal } from '../components'
 
 const BASE_CODE = `import { useState } from 'react'
 import { Modal, Button } from '@/components'

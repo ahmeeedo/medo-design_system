@@ -13,13 +13,14 @@
       "radius":     "Border Radius",
       "shadows":    "Shadows",
       "motion":     "Motion",
-      "buttons":    "Buttons",
+      "button":     "Button",
+      "link":       "Link",
       "inputs":     "Inputs",
       "select":     "Select",
       "toggle":     "Toggle",
       "checkbox":   "Checkbox",
       "radio":      "Radio",
-      "badges":     "Badges & Tags",
+      "tag":        "Tag",
       "alerts":     "Alerts",
       "cards":      "Cards",
       "tables":     "Tables",
@@ -621,87 +622,166 @@
     }
   },
 
-  "buttons": {
+  "button": {
     "page": {
-      "description": "6 Varianten, 5 Größen und Icon-Support — der zentrale Interaktionsbaustein von med.o"
+      "title":       "Button",
+      "description": "Löst eine Aktion aus. Vier Varianten, drei Größen, alle Zustände aus Semantic-Tokens."
+    },
+    "controls": {
+      "variant":      "Variante",
+      "size":         "Größe",
+      "iconPosition": "Icon-Position",
+      "icon":         "Icon",
+      "iconOnly":     "Nur Icon",
+      "loading":      "Lädt",
+      "disabled":     "Deaktiviert",
+      "fullWidth":    "Volle Breite"
+    },
+    "demo": {
+      "create":      "Termin anlegen",
+      "createLabel": "Termin anlegen",
+      "cancel":      "Abbrechen",
+      "details":     "Details anzeigen",
+      "delete":      "Konto löschen",
+      "save":        "Profil speichern",
+      "next":        "Weiter",
+      "moreLabel":   "Weitere Aktionen",
+      "saving":      "Wird gespeichert",
+      "unavailable": "Nicht verfügbar",
+      "finish":      "Anmeldung abschließen",
+      "toLink":      "Zur Link-Komponente"
     },
     "overview": {
-      "anatomyTitle":    "Anatomie",
-      "anatomyBody":     "Jeder Button besteht aus bis zu drei Elementen:",
-      "an1":             "Container — definiert Höhe, Padding und Hintergrundfarbe (Token-basiert)",
-      "an2":             "Label — der Beschriftungstext; immer vorhanden außer bei Icon-only-Buttons",
-      "an3":             "Icon (optional) — links (leadingIcon), rechts (trailingIcon) oder beides",
-      "variantsTitle":   "Varianten",
-      "variantsBody":    "Sechs Varianten decken alle Interaktionskontexte ab. Jede Variante hat einen klar definierten Einsatzzweck.",
-      "vPrimary":        "Primary — Hauptaktion der Seite oder des Dialogs",
-      "vAccent":         "Accent — Hervorgehobene Sekundäraktion",
-      "vSecondary":      "Secondary — Gleichwertige Alternative zur Hauptaktion",
-      "vGhost":          "Ghost — Diskrete Aktion im Inhaltsbereich",
-      "vDanger":         "Danger — Irreversible, destruktive Aktion",
-      "vLink":           "Link — Navigation als Button gestylt",
-      "sizesTitle":      "Größen",
-      "sizesBody":       "Fünf Größen für unterschiedliche Kontexte: xs für dichte UIs, md als Standard, xl für prominente CTAs.",
-      "disabledTitle":   "Disabled-Zustand",
-      "disabledBody":    "Deaktivierte Buttons kommunizieren, dass eine Aktion gerade nicht verfügbar ist. Das Opacity-Token --color-disabled ist systemweit konsistent.",
-      "iconsTitle":      "Icon-Integration",
-      "iconsBody":       "Icons werden links (leadingIcon) oder rechts (trailingIcon) des Labels platziert. Für Icon-only-Buttons ist aria-label Pflicht."
+      "variantsTitle":  "Varianten",
+      "variantsBody":   "Vier Varianten bilden die Wichtigkeit einer Aktion ab. Pro Ansicht steht genau eine primäre Aktion.",
+      "vPrimary":       "primary — die eine wichtigste Aktion einer Ansicht. Nie zwei gleichzeitig.",
+      "vSecondary":     "secondary — gleichrangige Nebenaktionen, etwa Abbrechen neben einem primären Absenden.",
+      "vGhost":         "ghost — Aktionen in dichten Bereichen: Werkzeugleisten, Tabellenzeilen, Kartenköpfe.",
+      "vDanger":        "danger — nur destruktive, nicht umkehrbare Aktionen, immer mit Bestätigungsdialog.",
+      "sizesTitle":     "Größen",
+      "sizesBody":      "Die Schriftgrößen bleiben auf der Typo-Skala: sm entspricht text-xs (12px), md entspricht text-sm (14px), lg entspricht text-base (16px). Zwischenwerte gibt es im System nicht.",
+      "iconsTitle":     "Mit Icon",
+      "iconsBody":      "Icons kommen ausschließlich über die icon-Prop als Material Symbols Rounded. Ein führendes Icon beschreibt die Aktion, ein nachgestelltes die Richtung.",
+      "iconsCaption":   "Leading · Trailing · Icon-only",
+      "statesTitle":    "Zustände",
+      "statesBody":     "Der Ladezustand behält die Farbe der Variante und ergänzt den Spinner. Deaktivierte Schaltflächen haben je Variante eine eigene Ruhefläche.",
+      "fullWidthTitle": "Volle Breite",
+      "fullWidthBody":  "fullWidth streckt die Schaltfläche über die volle Breite des Containers — der Normalfall beim Abschluss von Formularen auf Mobilgeräten.",
+      "hrefTitle":      "Als Verweis",
+      "hrefBody":       "Mit href entsteht ein a-Element mit role=\"button\". Das ist für Ziele gedacht, die wie eine Aktion aussehen sollen; für Navigation im Textfluss ist Link die richtige Wahl."
     },
     "usage": {
-      "title":            "Wann welche Variante",
-      "intro":            "Jede Variante hat einen definierten Kontext. Falsch eingesetzte Varianten verwirren Nutzer über die Wichtigkeit einer Aktion.",
-      "variantGuideTitle":"Varianten-Leitfaden",
-      "primaryGuide":     "Primary — Eine Hauptaktion pro Ansicht. Für den häufigsten oder wichtigsten nächsten Schritt.",
-      "accentGuide":      "Accent — Zweite wichtige Aktion, die sich vom Primary-Button unterscheidet (andere Farbpalette).",
-      "secondaryGuide":   "Secondary — Gleichrangige Alternative, z. B. 'Abbrechen' neben 'Speichern'.",
-      "ghostGuide":       "Ghost — Aktionen im Inhaltsbereich, die kein starkes visuelles Gewicht brauchen.",
-      "dangerGuide":      "Danger — Nur für irreversible Aktionen: Löschen, Zurücksetzen, Entfernen. Nie für normale Aktionen.",
-      "linkGuide":        "Link — Navigation, die wie ein Button behandelt werden muss (z. B. innerhalb von Formularen).",
-      "iconTitle":        "Icon-Einsatz",
-      "iconBody":         "Icons verstärken die Botschaft eines Buttons. Verwende Icons sparsam — sie verlieren ihre Wirkung, wenn alle Buttons Icons tragen. Icon-only-Buttons erfordern aria-label für Screenreader.",
-      "groupTitle":       "Button-Gruppen",
-      "groupBody":        "Mehrere Buttons nebeneinander: Primary-Button immer rechts oder oben. Maximal 3 Buttons nebeneinander. Verwende konsistente Größen innerhalb einer Gruppe.",
-      "doTitle":          "Richtig ✓",
-      "dontTitle":        "Falsch ✗",
-      "do1":              "Eine Primary-Aktion pro Dialog oder Seitenbereich",
-      "dont1":            "Mehrere Primary-Buttons nebeneinander",
-      "do2":              "variant=\"danger\" nur für irreversible Aktionen (Löschen)",
-      "dont2":            "variant=\"danger\" für normale Zurück-Aktionen",
-      "do3":              "aria-label bei Icon-only-Buttons: aria-label=\"Hinzufügen\"",
-      "dont3":            "Icon-only-Button ohne Beschriftung oder aria-label",
-      "do4":              "Konsistente Größen innerhalb einer Button-Gruppe",
-      "dont4":            "Verschiedene Größen in einer Aktionszeile mischen",
-      "doNote":           "Klare Hierarchie und Barrierefreiheit",
-      "dontNote":         "Mehrfach-Primary und fehlende Labels"
+      "whenTitle":       "Wann",
+      "whenBody":        "Für jede Handlung, die etwas verändert, absendet, öffnet oder abbricht. Für reine Navigation innerhalb eines Textflusses nehmen Sie Link, nicht Button.",
+      "guideTitle":      "Varianten-Leitfaden",
+      "gPrimary":        "primary für den häufigsten oder wichtigsten nächsten Schritt — genau einmal pro Ansicht.",
+      "gSecondary":      "secondary für die gleichrangige Alternative, etwa Abbrechen neben Speichern.",
+      "gGhost":          "ghost für Aktionen, die kein visuelles Gewicht brauchen: Werkzeugleisten und Tabellenzeilen.",
+      "gDanger":         "danger nur für Löschen, Entfernen und andere nicht umkehrbare Schritte.",
+      "labelTitle":      "Beschriftung",
+      "labelBody":       "Verb im Infinitiv plus Objekt: Termin anlegen, Profil speichern, Konto löschen. Nicht OK, nicht Weiter ohne Kontext, nicht Absenden. Deutsch, Sie-Anrede, kein Title Case, keine Emoji.",
+      "sizeChoiceTitle": "Größe wählen",
+      "sizeChoiceBody":  "md mit 40px ist der Normalfall. lg mit 48px schließt Formulare ab und ist die richtige Wahl auf Mobilgeräten. sm mit 32px gehört in Tabellen und Werkzeugleisten — dort aber nie als einzige Trefferfläche auf Touch-Geräten, weil 32px unter der 44px-Grenze liegt.",
+      "doDontTitle":     "Richtig und falsch",
+      "doTitle":         "Richtig",
+      "dontTitle":       "Falsch",
+      "do1":             "Pro Ansicht genau eine primäre Aktion.",
+      "do2":             "Verb und Objekt als Beschriftung, etwa Konto anlegen.",
+      "do3":             "danger nur für destruktive, nicht umkehrbare Aktionen.",
+      "dont1":           "Mehrere primäre Schaltflächen nebeneinander.",
+      "dont2":           "Vage Beschriftungen wie OK oder Hier klicken.",
+      "dont3":           "ghost für die Hauptaktion einer Seite."
     },
     "code": {
-      "title":          "Buttons im Code",
-      "variantsTitle":  "Alle Varianten",
-      "variantsDesc":   "Sechs Varianten — variant-Prop wird auf den Button-Container angewendet:",
-      "sizesTitle":     "Größen",
-      "sizesDesc":      "Fünf Größen über die size-Prop:",
-      "iconTitle":      "Icon-Integration",
-      "iconDesc":       "Leading- und Trailing-Icons — SVG-Komponenten als Props übergeben:",
-      "disabledTitle":  "Disabled",
-      "disabledDesc":   "Deaktivierter Zustand über die disabled-Prop:"
+      "title":        "Button im Code",
+      "variantsDesc": "Die vier Varianten über die variant-Prop:",
+      "sizesDesc":    "Drei Größen über die size-Prop:",
+      "iconDesc":     "Icons als Ligaturname über icon; iconPosition steuert die Seite, iconOnly lässt die Beschriftung weg:",
+      "stateDesc":    "Laden, Deaktivierung und volle Breite:",
+      "hrefDesc":     "Mit href wird ein Verweis mit Schaltflächen-Rolle gerendert:"
     },
     "a11y": {
-      "title":           "Barrierefreiheit",
-      "intro":           "Buttons sind semantische Interaktionselemente. Korrekte ARIA-Verwendung und Keyboard-Unterstützung sind nicht optional.",
-      "wcagTitle":       "WCAG 2.1 AA",
-      "wcagBody":        "Alle Button-Varianten erfüllen das Kontrastverhältnis von mindestens 4.5:1 für Text und 3:1 für UI-Komponenten. Der Fokus-Ring ist systemweit sichtbar (--color-focus).",
-      "keyboardTitle":   "Tastatursteuerung",
-      "keyboardBody":    "Buttons sind vollständig per Tastatur bedienbar:",
-      "k1":              "Tab — Fokus auf den nächsten Button",
-      "k2":              "Shift+Tab — Fokus auf den vorherigen Button",
-      "k3":              "Enter / Space — Button auslösen",
-      "k4":              "Disabled-Buttons erhalten keinen Tab-Fokus",
-      "ariaTitle":       "ARIA-Attribute",
-      "ariaBody":        "Wichtige ARIA-Regeln für Buttons:",
-      "aria1":           "Icon-only-Buttons: aria-label=\"Aktion\" ist Pflicht",
-      "aria2":           "Ladezustand: aria-busy=\"true\" und aria-label=\"Wird gespeichert…\"",
-      "aria3":           "Expandierende Inhalte: aria-expanded=\"true/false\" + aria-controls",
-      "focusTitle":      "Fokus-Management",
-      "focusBody":       "Nach einer destruktiven Aktion (Löschen) den Fokus auf ein relevantes Element setzen, nicht auf die Seite-Startposition. Modale Dialoge: Fokus-Trap aktiv halten."
+      "focusTitle":    "Fokus",
+      "focusBody":     "Der Fokusring ist 3px stark und wird nie entfernt. Die Variante danger nutzt stattdessen den roten Fokusring, damit der Ring nicht gegen die rote Fläche arbeitet — eine freigegebene Ausnahme.",
+      "keyboardTitle": "Tastatur",
+      "k1":            "Tab und Shift+Tab bewegen den Fokus zur nächsten oder vorherigen Schaltfläche.",
+      "k2":            "Enter und Leertaste lösen die Schaltfläche aus.",
+      "k3":            "Der Ladezustand sperrt die Schaltfläche, sodass ein zweites Auslösen ins Leere läuft.",
+      "ariaTitle":     "ARIA",
+      "aria1":         "Bei iconOnly ist aria-label Pflicht — ohne Beschriftung ist die Schaltfläche unbenannt.",
+      "aria2":         "Der Ladezustand setzt aria-busy=\"true\" und behält die Beschriftung der Variante.",
+      "aria3":         "Deaktivierte Schaltflächen tragen aria-disabled=\"true\", damit Screenreader den Zustand ankündigen.",
+      "targetTitle":   "Trefferfläche",
+      "targetBody":    "Auf Touch-Geräten braucht jede Schaltfläche eine Umgebung von mindestens 44 mal 44 Pixeln. Die Größe sm liegt darunter und gehört deshalb nur in Kontexte mit Zeigegerät."
+    }
+  },
+
+  "link": {
+    "page": {
+      "title":       "Link",
+      "description": "Führt zu einem anderen Ort. Zwei Muster: standalone ohne Unterstreichung, inline im Fließtext."
+    },
+    "controls": {
+      "variant":      "Muster",
+      "size":         "Größe",
+      "iconPosition": "Icon-Position",
+      "icon":         "Icon",
+      "external":     "Extern",
+      "disabled":     "Deaktiviert"
+    },
+    "demo": {
+      "label":        "Alle Farben ansehen",
+      "standalone":   "Alle Farben ansehen",
+      "inlineBefore": "Alle Farben folgen den",
+      "inlineLink":   "Design-Tokens",
+      "inlineAfter":  "des Systems.",
+      "next":         "Zu den Rechnungen",
+      "export":       "Export starten",
+      "external":     "WCAG 2.2 öffnen"
+    },
+    "overview": {
+      "variantsTitle": "Zwei Muster",
+      "variantsBody":  "standalone steht für sich — am Ende eines Absatzes, in einer Kartenfußzeile, neben einer Überschrift. Ohne Unterstreichung im Ruhezustand, weil er dort durch seine Position erkennbar ist. inline steht mitten im Fließtext und ist immer unterstrichen.",
+      "sizesTitle":    "Größen",
+      "sizesBody":     "Drei Größen auf der Typo-Skala: sm mit 14px, md mit 16px, lg mit 20px. Die Größe folgt dem Text, in dem der Link steht.",
+      "iconsTitle":    "Mit Icon",
+      "iconsBody":     "Ein Icon nach dem Text zeigt die Richtung, ein Icon davor die Art des Ziels. Nachgestellt ist die Standardposition.",
+      "externalTitle": "Externe Ziele",
+      "externalBody":  "external setzt das Glyph open_in_new, target=\"_blank\" und rel=\"noopener noreferrer\". Kennzeichnen Sie externe Ziele immer — ein Sprung aus der Anwendung heraus soll nicht überraschen.",
+      "statesTitle":   "Zustände",
+      "statesBody":    "Hover und Aktiv wechseln nur die Farbe. Die Unterstreichung bleibt, wie sie ist, und ihre Strichstärke ändert sich in keinem Zustand."
+    },
+    "usage": {
+      "vsButtonTitle":  "Link oder Button",
+      "vsButtonBody":   "Ein Link navigiert, ein Button handelt. Führt das Element zu einer anderen Seite oder Ansicht, ist es ein Link. Ändert es etwas, sendet ab oder öffnet einen Dialog, ist es ein Button — auch wenn es aussieht wie ein Link. Diese Unterscheidung ist keine Stilfrage: Screenreader kündigen beide unterschiedlich an, und ein Link lässt sich in einem neuen Tab öffnen.",
+      "patternsTitle":  "Muster wählen",
+      "pStandalone":    "standalone am Ende eines Absatzes, in Kartenfußzeilen und neben Überschriften.",
+      "pInline":        "inline im Fließtext — ein Link im Text, der sich nur über seine Farbe erklärt, ist für farbfehlsichtige Leser unsichtbar.",
+      "textTitle":      "Linktext",
+      "textBody":       "Der Text benennt das Ziel: Barrierefreiheits-Richtlinien, nicht hier klicken, nicht mehr. Verlinken Sie gezielte Begriffe, keine ganzen Sätze — der unterstrichene Bereich ist die Trefferfläche und sollte so groß sein wie nötig, nicht wie möglich.",
+      "disabledTitle":  "Deaktivierte Links",
+      "disabledBody":   "Ein deaktivierter Link ist ein Widerspruch in sich. Ist ein Ziel nicht erreichbar, zeigen Sie stattdessen Text ohne Link. disabled gibt es nur für Übergangszustände.",
+      "dontTitle":      "Nicht tun",
+      "dont1":          "Links nur über die Farbe erkennbar machen.",
+      "dont2":          "Hier klicken oder mehr als Linktext verwenden.",
+      "dont3":          "Ganze Sätze verlinken.",
+      "dont4":          "Einen Link verwenden, wo eine Aktion ausgelöst wird."
+    },
+    "code": {
+      "title":         "Link im Code",
+      "variantsDesc":  "Die beiden Muster über die variant-Prop:",
+      "iconDesc":      "Icons als Ligaturname über icon, Position über iconPosition:",
+      "externalDesc":  "Externe Ziele über die external-Prop:"
+    },
+    "a11y": {
+      "colorTitle":     "Nicht nur Farbe",
+      "colorBody":      "Im Fließtext trägt die Unterstreichung die Erkennbarkeit, nicht die Farbe. Deshalb bleibt sie in jedem Zustand bestehen und wechselt nie ihre Stärke.",
+      "focusTitle":     "Fokus",
+      "focusBody":      "Der Fokusring ist der übliche 3px-Ring in der Primärfarbe. Er wird nie entfernt, auch nicht bei Links in dichten Listen.",
+      "semanticsTitle": "Semantik",
+      "s1":             "Ein Link ohne href ist für Screenreader kein Link — für Aktionen gehört dorthin ein Button.",
+      "s2":             "Externe Ziele tragen rel=\"noopener noreferrer\" und ein sichtbares Glyph als Vorwarnung.",
+      "s3":             "Der Linktext funktioniert auch außerhalb des Satzes, weil Screenreader Linklisten ohne Kontext vorlesen."
     }
   },
 
@@ -1008,64 +1088,92 @@
     }
   },
 
-  "badges": {
+  "tag": {
     "page": {
-      "description": "Badge — ein kompaktes Status- oder Kategorie-Label in fünf Varianten und zwei Größen."
+      "title":       "Tag",
+      "description": "Kennzeichnet, kategorisiert oder filtert. Sechs Farbrollen, zwei Stile, immer vollrund."
+    },
+    "controls": {
+      "color":      "Farbrolle",
+      "emphasis":   "Stil",
+      "size":       "Größe",
+      "dot":        "Punkt",
+      "icon":       "Icon",
+      "removable":  "Entfernbar",
+      "selectable": "Auswählbar",
+      "selected":   "Ausgewählt",
+      "disabled":   "Deaktiviert"
+    },
+    "roles": {
+      "neutral": "Neutral",
+      "primary": "Primär",
+      "success": "Erfolg",
+      "warning": "Warnung",
+      "error":   "Fehler",
+      "info":    "Hinweis"
+    },
+    "demo": {
+      "filters": {
+        "radiology":  "Radiologie",
+        "cardiology": "Kardiologie",
+        "surgery":    "Chirurgie",
+        "archive":    "Archiv"
+      },
+      "removeLabel":  "Filter {{name}} entfernen",
+      "emptyFilters": "Keine Filter gewählt",
+      "resetFilters": "Filter zurücksetzen",
+      "active":       "Aktiv",
+      "pending":      "In Prüfung",
+      "appointment":  "Termin",
+      "expired":      "Abgelaufen"
     },
     "overview": {
-      "anatomyTitle":  "Anatomie",
-      "anatomyBody":   "Ein Badge besteht aus einem farbigen Container mit abgerundeten Ecken, optionalem Dot-Indikator und kurzem Textlabel.",
-      "an1":           "Container — die abgerundete Pille mit Varianten-Hintergrundfarbe",
-      "an2":           "Dot — optionaler farbiger Kreis als Status-Indikator links vom Label",
-      "an3":           "Label — kurzer Text, typischerweise 1–2 Wörter",
-      "variantsTitle": "Varianten",
-      "variantsBody":  "Fünf semantische Varianten: neutral, accent, success, warning, error.",
-      "sizesTitle":    "Größen",
-      "sizesBody":     "sm (Standard, h-5) für kompakte Kontexte wie Tabellen; md (h-6) für prominentere Platzierung.",
-      "dotTitle":      "Dot-Variante",
-      "dotBody":       "Mit dot={true} wird ein farbiger Punkt links vom Label angezeigt — hilfreich für Status-Anzeigen.",
-      "tagTitle":      "Tag (entfernbar)",
-      "tagBody":       "Tag ist eine verwandte Komponente für entfernbare Labels, z. B. in Filter-Feldern oder Multi-Select-Inputs."
+      "colorsTitle":     "Farbrollen",
+      "colorsBody":      "Sechs Rollen: neutral, primary, success, warning, error und info. Eine Farbe steht im ganzen Produkt für dieselbe Bedeutung — grün nicht einmal für aktiv und einmal für bezahlt.",
+      "colorsCaption":   "Oben soft (Fläche 50) · unten solid (Volltonfarbe 600)",
+      "sizesTitle":      "Größen",
+      "sizesBody":       "22px (sm) gehört in Tabellenzeilen und dichte Listen, 28px (md) überall sonst. Der Radius ist immer voll — das unterscheidet Tags auf einen Blick von Schaltflächen.",
+      "dotIconTitle":    "Punkt und Icon",
+      "dotIconBody":     "Punkt und Icon helfen beim Überfliegen, ersetzen aber keine Beschriftung. Die Bedeutung trägt immer der Text.",
+      "removableTitle":  "Entfernbar",
+      "removableBody":   "onRemove ergänzt eine Entfernen-Schaltfläche — gedacht für gewählte Filter, die einzeln weggenommen werden können. removeLabel benennt, was entfernt wird.",
+      "selectableTitle": "Auswählbar",
+      "selectableBody":  "selectable rendert eine Schaltfläche mit aria-pressed — für Filterleisten, in denen Tags an- und abgeschaltet werden. Der gewählte Zustand zeigt zusätzlich ein Häkchen."
     },
     "usage": {
-      "title":     "Einsatz",
-      "intro":     "Badges kennzeichnen Status, Kategorie oder Zähler. Sie sind rein informativ und lösen keine Aktion aus.",
-      "whenTitle": "Typische Einsatzbereiche",
-      "when1":     "Status-Labels in Tabellen (z. B. Aktiv / Inaktiv / Ausstehend)",
-      "when2":     "Kategorie-Tags in Listen oder Karten",
-      "when3":     "Zähler in Navigation oder Tabs (z. B. \"12 offen\")",
-      "when4":     "Entfernbare Filter-Tags in Such- und Filterkomponenten (→ Tag-Komponente)",
-      "doTitle":   "Do",
-      "dontTitle": "Don't",
-      "do1":       "Variante semantisch wählen: success für Erfolg, error für Fehler, warning für Warnung",
-      "do2":       "Kurzen, präzisen Text wählen — maximal 2–3 Wörter",
-      "do3":       "Dot-Variante für Status-Anzeigen nutzen",
-      "dont1":     "Badge nicht für anklickbare Aktionen verwenden — dafür Button",
-      "dont2":     "Bedeutung nicht allein durch Farbe übermitteln — Text ist Pflicht",
-      "dont3":     "Kein langer Text in Badges — bei mehr als 3 Wörtern alternatives Element wählen",
-      "doNote":    "Badges sind informativ, nicht interaktiv.",
-      "dontNote":  "Farbe allein reicht nicht für barrierefreie Bedeutungsvermittlung."
+      "typesTitle":   "Drei Typen",
+      "tDisplay":     "Anzeigend ist der Normalfall: nicht bedienbar, trägt Status oder Kategorie.",
+      "tRemovable":   "Entfernbar entsteht durch onRemove — für gewählte Filter.",
+      "tSelectable":  "Auswählbar entsteht durch selectable — für Filterleisten mit An- und Abschalten.",
+      "typesNote":    "Ein Tag ist keine Schaltfläche. Löst das Element eine Aktion aus, die über gewählt und nicht gewählt hinausgeht, gehört dorthin ein Button.",
+      "colorTitle":   "Farbe",
+      "colorBody":    "soft (Fläche 50) ist der Standard und funktioniert auch in Mengen. solid (Volltonfarbe 600) ist laut und gehört sparsam eingesetzt — höchstens ein oder zwei pro Ansicht. Neutral ist die richtige Wahl, wenn ein Tag nur benennt und nichts bewertet.",
+      "textTitle":    "Text",
+      "textBody":     "Ein bis zwei Wörter. Längere Texte werden abgeschnitten, weil ein Tag nicht umbricht — wenn der Text nicht kurz zu fassen ist, ist es kein Tag.",
+      "sizeTitle":    "Maße",
+      "sizeBody":     "Auf Touch-Geräten brauchen entfernbare und auswählbare Tags eine Umgebung von mindestens 44px Höhe.",
+      "dontTitle":    "Nicht tun",
+      "dont1":        "Tags als Schaltflächen für Aktionen missbrauchen.",
+      "dont2":        "Mehr als zwei bis drei Farbrollen gleichzeitig auf einer Fläche zeigen.",
+      "dont3":        "Bedeutung nur über die Farbe tragen.",
+      "dont4":        "Ganze Sätze in ein Tag setzen.",
+      "dont5":        "Den Radius überschreiben."
     },
     "code": {
-      "title":         "Code",
-      "variantsTitle": "Alle Varianten",
-      "variantsDesc":  "Die variant-Prop bestimmt Farbe und Semantik. Standard ist neutral.",
-      "sizesTitle":    "Größen",
-      "sizesDesc":     "size=\"sm\" ist Standard (h-5). size=\"md\" für größere Darstellung (h-6).",
-      "dotTitle":      "Dot-Badge",
-      "dotDesc":       "dot={true} fügt einen farbigen Punkt links vom Label ein.",
-      "tagTitle":      "Tag (entfernbar)",
-      "tagDesc":       "Tag mit onRemove-Callback — der Button zeigt ein X-Icon und löst das Entfernen aus."
+      "title":      "Tag im Code",
+      "basicDesc":  "Farbrolle über color, Stil über emphasis, Statuspunkt über dot:",
+      "removeDesc": "Entfernbar über onRemove; removeLabel benennt die Schaltfläche:",
+      "selectDesc": "Auswählbar über selectable und selected:"
     },
     "a11y": {
-      "title":        "Accessibility",
-      "intro":        "Badges sind rein visuelle Labels. Die Bedeutung muss auch ohne Farbe erkennbar sein.",
-      "colorTitle":   "Farbe ist nicht alleiniger Indikator",
-      "colorBody":    "Der Text des Badge muss die Bedeutung selbst tragen (z. B. \"Aktiv\" statt nur grüner Punkt). Nie ausschließlich Farbe zur Bedeutungsvermittlung nutzen.",
-      "ariaTitle":    "aria-label für Dot-only Badges",
-      "ariaBody":     "Falls ein Badge nur einen Dot ohne Text enthält, aria-label am Element setzen: aria-label=\"Status: Aktiv\".",
-      "contextTitle": "Kontext-Ankündigung",
-      "contextBody":  "In Tabellenzellen oder Listen sollte der umgebende Text den Badge-Wert in Relation setzen, damit Screen-Reader ihn korrekt vorlesen."
+      "meaningTitle":  "Bedeutung",
+      "meaningBody":   "Die Bedeutung darf nie allein an der Farbe hängen. Der Text trägt sie; Punkt und Icon sind Ergänzung, nicht Ersatz.",
+      "controlsTitle": "Bedienbare Tags",
+      "c1":            "Die Entfernen-Schaltfläche trägt immer ein aria-label, das benennt, was entfernt wird.",
+      "c2":            "Auswählbare Tags sind Schaltflächen mit aria-pressed und per Tab, Enter und Leertaste bedienbar.",
+      "c3":            "Deaktivierte auswählbare Tags bleiben sichtbar, nehmen aber keine Eingaben an.",
+      "targetTitle":   "Trefferfläche",
+      "targetBody":    "Die Entfernen-Schaltfläche ist 18px (sm) oder 20px groß. Auf Touch-Geräten braucht ihre Umgebung mindestens 44px Höhe, sonst ist sie nicht sicher zu treffen."
     }
   },
 
@@ -2039,32 +2147,73 @@
   "tooltip": {
     "page": {
       "title":       "Tooltip",
-      "description": "Kontextbezogene Hilfetexte, die beim Hovern oder Fokussieren eines Elements erscheinen"
+      "description": "Kurze Erklärung bei Hover oder Fokus. Rein informativ, nicht interaktiv."
+    },
+    "controls": {
+      "placement": "Position",
+      "title":     "Mit Titel",
+      "instant":   "Ohne Verzögerung",
+      "disabled":  "Deaktiviert"
+    },
+    "demo": {
+      "content":     "In die Zwischenablage kopieren",
+      "title":       "Tastenkürzel",
+      "richContent": "Öffnet die Suche von überall — auch aus Untermenüs.",
+      "copyLabel":   "Kopieren",
+      "searchLabel": "Suche",
+      "taxContent":  "Nach § 19 UStG wird keine Umsatzsteuer ausgewiesen.",
+      "placements": {
+        "top":    "Oben",
+        "bottom": "Unten",
+        "left":   "Links",
+        "right":  "Rechts"
+      }
     },
     "overview": {
-      "anatomyTitle": "Anatomie",
-      "anatomyBody":  "Ein Tooltip besteht aus einem Trigger-Element und einem schwebenden Inhaltsfenster, das beim Hovern oder Fokussieren erscheint.",
-      "sidesTitle":   "Positionierung",
-      "sidesBody":    "Der Tooltip kann über vier Seiten des Trigger-Elements positioniert werden: oben, unten, links oder rechts."
+      "placementTitle":  "Positionen",
+      "placementBody":   "Vier Positionen. Reicht der Platz auf der gewünschten Seite nicht, kippt der Tooltip auf die Gegenseite; der Pfeil bleibt dabei auf die Mitte des Auslösers ausgerichtet.",
+      "variantsTitle":   "Zwei Varianten",
+      "variantsBody":    "Ohne title entsteht die einzeilige Erklärung. Mit title entsteht die zweizeilige Variante für die Fälle, in denen ein Stichwort und ein Satz zusammengehören.",
+      "captionText":     "Text · Standard",
+      "captionRich":     "Titel und Text",
+      "triggerTitle":    "Auslöser",
+      "triggerBody":     "Genau ein Kind, das eine ref annehmen kann und fokussierbar ist. Ein span als Auslöser braucht tabIndex={0}, sonst ist der Tooltip für Tastaturnutzer unerreichbar.",
+      "triggerCaption":  "span mit tabIndex={0}",
+      "behaviourTitle":  "Verhalten",
+      "b1":              "Bei Maus öffnet der Tooltip nach etwa 400ms, damit er beim Überfahren nicht aufblitzt.",
+      "b2":              "Bei Tastaturfokus öffnet er sofort, weil dort keine Beiläufigkeit im Spiel ist.",
+      "b3":              "Geschlossen wird immer sofort.",
+      "b4":              "Er hängt an body, damit kein Container mit overflow: hidden ihn abschneidet."
     },
     "usage": {
-      "title":       "Verwendung",
-      "intro":       "Tooltips eignen sich für kurze, ergänzende Informationen zu UI-Elementen. Sie sollten nicht für wichtige oder kritische Inhalte verwendet werden.",
-      "delayTitle":  "Öffnungsverzögerung",
-      "delayBody":   "Der Standard-Delay von 300ms verhindert unbeabsichtigtes Öffnen beim schnellen Überfahren mit der Maus."
+      "whenTitle":    "Wann",
+      "whenBody":     "Für Schaltflächen, die nur ein Icon tragen, und für Begriffe, die eine Zeile Erklärung brauchen. Sobald etwas im Inhalt anklickbar wäre — ein Link, eine Schaltfläche, ein Formularfeld — ist es ein Popover, kein Tooltip: der Tooltip nimmt keine Maus an und verschwindet, sobald man ihn ansteuert.",
+      "contentTitle": "Was hineingehört",
+      "contentBody":  "Ein Hinweis, kein Absatz. Was die Person zum Arbeiten braucht, gehört sichtbar auf die Seite — nie ausschließlich in einen Tooltip.",
+      "touchTitle":   "Touch-Geräte",
+      "touchBody":    "Auf Touch-Geräten gibt es kein Hover. Ein Tooltip darf dort nie die einzige Quelle einer Information sein.",
+      "dontTitle":    "Nicht tun",
+      "dont1":        "Links oder Schaltflächen in den Tooltip legen.",
+      "dont2":        "Wichtige Informationen nur dort zeigen.",
+      "dont3":        "Auf Touch-Geräten als einzige Erklärungsquelle verwenden.",
+      "dont4":        "Einen Auslöser ohne Fokusmöglichkeit verwenden.",
+      "dont5":        "Den Tooltip als Ersatz für ein aria-label benutzen."
     },
     "code": {
-      "title":       "Code",
-      "basicTitle":  "Grundlegend",
-      "basicDesc":   "Wickle das Trigger-Element in die Tooltip-Komponente ein und übergib den Inhalt als content-Prop.",
-      "sidesTitle":  "Positionierung",
-      "delayTitle":  "Verzögerung"
+      "title":     "Tooltip im Code",
+      "basicDesc": "Ein Auslöser, ein Erklärungstext:",
+      "richDesc":  "Mit title entsteht die zweizeilige Variante:",
+      "spanDesc":  "Ein nicht fokussierbarer Auslöser braucht tabIndex:"
     },
     "a11y": {
-      "title":         "Barrierefreiheit",
-      "intro":         "Tooltips basieren auf Radix UI Primitives und unterstützen vollständige Tastaturnavigation und Screen-Reader.",
-      "keyboardTitle": "Tastaturinteraktion",
-      "keyboardBody":  "Tooltips öffnen sich beim Fokussieren des Triggers per Tab und schließen sich beim Drücken von Escape oder Verlassen des Fokus."
+      "focusTitle":  "Fokus",
+      "focusBody":   "Der Tooltip öffnet bei Tastaturfokus ohne Verzögerung und schließt beim Verlassen des Fokus. Der Auslöser muss fokussierbar sein, sonst ist die Erklärung per Tastatur nicht erreichbar.",
+      "ariaTitle":   "ARIA",
+      "a1":          "Der Tooltip trägt role=\"tooltip\" und ist über aria-describedby mit dem Auslöser verbunden.",
+      "a2":          "Ein Icon-Button mit aria-label behält sein Label — der Tooltip ist die sichtbare Ergänzung, nicht der Ersatz.",
+      "a3":          "Der Tooltip nimmt keine Maus an, damit er beim Ansteuern nicht die Erklärung wegnimmt.",
+      "limitsTitle": "Grenzen",
+      "limitsBody":  "Der Tooltip ist nicht interaktiv. Inhalte, die angeklickt, kopiert oder gelesen werden sollen, gehören in ein Popover oder auf die Seite."
     }
   },
   "slider": {

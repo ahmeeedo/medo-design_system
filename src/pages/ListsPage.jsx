@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import { PageLayout, Section, Content, DemoPanel } from '../docs/PageLayout'
 import { CodeBlock } from '../docs/CodeBlock'
-import { Avatar, Badge, Button } from '../components'
+import { Avatar, Badge, LegacyButton as Button } from '../components'
 
 const USER_LIST_CODE = `import { Avatar, Badge, Button } from '@/components'
 

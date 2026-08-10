@@ -13,13 +13,14 @@
       "radius":     "Border Radius",
       "shadows":    "Shadows",
       "motion":     "Motion",
-      "buttons":    "Buttons",
+      "button":     "Button",
+      "link":       "Link",
       "inputs":     "Inputs",
       "select":     "Select",
       "toggle":     "Toggle",
       "checkbox":   "Checkbox",
       "radio":      "Radio",
-      "badges":     "Badges & Tags",
+      "tag":        "Tag",
       "alerts":     "Alerts",
       "cards":      "Cards",
       "tables":     "Tables",
@@ -621,87 +622,166 @@
     }
   },
 
-  "buttons": {
+  "button": {
     "page": {
-      "description": "6 variants, 5 sizes and icon support — the core interaction building block of med.o"
+      "title":       "Button",
+      "description": "Triggers an action. Four variants, three sizes, every state built from semantic tokens."
+    },
+    "controls": {
+      "variant":      "Variant",
+      "size":         "Size",
+      "iconPosition": "Icon position",
+      "icon":         "Icon",
+      "iconOnly":     "Icon only",
+      "loading":      "Loading",
+      "disabled":     "Disabled",
+      "fullWidth":    "Full width"
+    },
+    "demo": {
+      "create":      "Termin anlegen",
+      "createLabel": "Termin anlegen",
+      "cancel":      "Abbrechen",
+      "details":     "Details anzeigen",
+      "delete":      "Konto löschen",
+      "save":        "Profil speichern",
+      "next":        "Weiter",
+      "moreLabel":   "Weitere Aktionen",
+      "saving":      "Wird gespeichert",
+      "unavailable": "Nicht verfügbar",
+      "finish":      "Anmeldung abschließen",
+      "toLink":      "Zur Link-Komponente"
     },
     "overview": {
-      "anatomyTitle":    "Anatomy",
-      "anatomyBody":     "Every button consists of up to three elements:",
-      "an1":             "Container — defines height, padding, and background color (token-based)",
-      "an2":             "Label — the button text; always present except for icon-only buttons",
-      "an3":             "Icon (optional) — left (leadingIcon), right (trailingIcon), or both",
-      "variantsTitle":   "Variants",
-      "variantsBody":    "Six variants cover all interaction contexts. Each variant has a clearly defined purpose.",
-      "vPrimary":        "Primary — Main action of the page or dialog",
-      "vAccent":         "Accent — Highlighted secondary action",
-      "vSecondary":      "Secondary — Equal alternative to the primary action",
-      "vGhost":          "Ghost — Subtle action in the content area",
-      "vDanger":         "Danger — Irreversible, destructive action",
-      "vLink":           "Link — Navigation styled as a button",
-      "sizesTitle":      "Sizes",
-      "sizesBody":       "Five sizes for different contexts: xs for dense UIs, md as default, xl for prominent CTAs.",
-      "disabledTitle":   "Disabled state",
-      "disabledBody":    "Disabled buttons communicate that an action is currently unavailable. The opacity token --color-disabled is consistent system-wide.",
-      "iconsTitle":      "Icon integration",
-      "iconsBody":       "Icons are placed left (leadingIcon) or right (trailingIcon) of the label. For icon-only buttons, aria-label is required."
+      "variantsTitle":  "Variants",
+      "variantsBody":   "Four variants express how important an action is. Exactly one primary action per view.",
+      "vPrimary":       "primary — the single most important action in a view. Never two at once.",
+      "vSecondary":     "secondary — equally ranked side actions, such as Cancel next to a primary submit.",
+      "vGhost":         "ghost — actions in dense areas: toolbars, table rows, card headers.",
+      "vDanger":        "danger — destructive, irreversible actions only, always with a confirmation dialog.",
+      "sizesTitle":     "Sizes",
+      "sizesBody":      "Type sizes stay on the scale: sm is text-xs (12px), md is text-sm (14px), lg is text-base (16px). The system has no in-between values.",
+      "iconsTitle":     "With icon",
+      "iconsBody":      "Icons come exclusively through the icon prop as Material Symbols Rounded. A leading icon describes the action, a trailing icon the direction.",
+      "iconsCaption":   "Leading · Trailing · Icon-only",
+      "statesTitle":    "States",
+      "statesBody":     "The loading state keeps the variant colour and adds the spinner. Disabled buttons have their own resting surface per variant.",
+      "fullWidthTitle": "Full width",
+      "fullWidthBody":  "fullWidth stretches the button across the container — the normal case for completing forms on mobile.",
+      "hrefTitle":      "As a link",
+      "hrefBody":       "With href an a element with role=\"button\" is rendered. Use it for targets that should look like an action; for navigation within text, Link is the right choice."
     },
     "usage": {
-      "title":            "When to use which variant",
-      "intro":            "Each variant has a defined context. Incorrectly used variants confuse users about the importance of an action.",
-      "variantGuideTitle":"Variant guide",
-      "primaryGuide":     "Primary — One main action per view. For the most frequent or important next step.",
-      "accentGuide":      "Accent — Second important action that differs from the primary button (different color palette).",
-      "secondaryGuide":   "Secondary — Equal alternative, e.g. 'Cancel' next to 'Save'.",
-      "ghostGuide":       "Ghost — Actions in the content area that don't need strong visual weight.",
-      "dangerGuide":      "Danger — Only for irreversible actions: delete, reset, remove. Never for normal actions.",
-      "linkGuide":        "Link — Navigation that must be treated as a button (e.g. within forms).",
-      "iconTitle":        "Icon usage",
-      "iconBody":         "Icons reinforce a button's message. Use icons sparingly — they lose impact when all buttons carry icons. Icon-only buttons require aria-label for screen readers.",
-      "groupTitle":       "Button groups",
-      "groupBody":        "Multiple buttons side by side: primary button always on the right or top. Maximum 3 buttons side by side. Use consistent sizes within a group.",
-      "doTitle":          "Do ✓",
-      "dontTitle":        "Don't ✗",
-      "do1":              "One primary action per dialog or page section",
-      "dont1":            "Multiple primary buttons side by side",
-      "do2":              "variant=\"danger\" only for irreversible actions (delete)",
-      "dont2":            "variant=\"danger\" for regular back/cancel actions",
-      "do3":              "aria-label on icon-only buttons: aria-label=\"Add\"",
-      "dont3":            "Icon-only button without label or aria-label",
-      "do4":              "Consistent sizes within a button group",
-      "dont4":            "Mix different sizes in one action row",
-      "doNote":           "Clear hierarchy and accessibility",
-      "dontNote":         "Multiple primaries and missing labels"
+      "whenTitle":       "When",
+      "whenBody":        "For every action that changes, submits, opens or cancels something. For plain navigation within a text flow use Link, not Button.",
+      "guideTitle":      "Variant guide",
+      "gPrimary":        "primary for the most common or most important next step — exactly once per view.",
+      "gSecondary":      "secondary for the equally ranked alternative, such as Cancel next to Save.",
+      "gGhost":          "ghost for actions that need no visual weight: toolbars and table rows.",
+      "gDanger":         "danger only for deleting, removing and other irreversible steps.",
+      "labelTitle":      "Label",
+      "labelBody":       "Infinitive verb plus object: Termin anlegen, Profil speichern, Konto löschen. Not OK, not Weiter without context, not Absenden. German, formal address, no title case, no emoji.",
+      "sizeChoiceTitle": "Choosing a size",
+      "sizeChoiceBody":  "md at 40px is the normal case. lg at 48px completes forms and is the right choice on mobile. sm at 32px belongs in tables and toolbars — but never as the only hit target on touch devices, because 32px is below the 44px threshold.",
+      "doDontTitle":     "Do and don't",
+      "doTitle":         "Do",
+      "dontTitle":       "Don't",
+      "do1":             "Exactly one primary action per view.",
+      "do2":             "Verb and object as the label, such as Konto anlegen.",
+      "do3":             "danger only for destructive, irreversible actions.",
+      "dont1":           "Several primary buttons side by side.",
+      "dont2":           "Vague labels such as OK or Click here.",
+      "dont3":           "ghost for the main action of a page."
     },
     "code": {
-      "title":          "Buttons in Code",
-      "variantsTitle":  "All variants",
-      "variantsDesc":   "Six variants — variant prop applied to the button container:",
-      "sizesTitle":     "Sizes",
-      "sizesDesc":      "Five sizes via the size prop:",
-      "iconTitle":      "Icon integration",
-      "iconDesc":       "Leading and trailing icons — SVG components passed as props:",
-      "disabledTitle":  "Disabled",
-      "disabledDesc":   "Disabled state via the disabled prop:"
+      "title":        "Button in code",
+      "variantsDesc": "The four variants through the variant prop:",
+      "sizesDesc":    "Three sizes through the size prop:",
+      "iconDesc":     "Icons as a ligature name through icon; iconPosition controls the side, iconOnly drops the label:",
+      "stateDesc":    "Loading, disabling and full width:",
+      "hrefDesc":     "With href a link with button role is rendered:"
     },
     "a11y": {
-      "title":           "Accessibility",
-      "intro":           "Buttons are semantic interaction elements. Correct ARIA usage and keyboard support are not optional.",
-      "wcagTitle":       "WCAG 2.1 AA",
-      "wcagBody":        "All button variants meet a contrast ratio of at least 4.5:1 for text and 3:1 for UI components. The focus ring is visible system-wide (--color-focus).",
-      "keyboardTitle":   "Keyboard control",
-      "keyboardBody":    "Buttons are fully operable via keyboard:",
-      "k1":              "Tab — move focus to the next button",
-      "k2":              "Shift+Tab — move focus to the previous button",
-      "k3":              "Enter / Space — trigger the button",
-      "k4":              "Disabled buttons do not receive tab focus",
-      "ariaTitle":       "ARIA attributes",
-      "ariaBody":        "Key ARIA rules for buttons:",
-      "aria1":           "Icon-only buttons: aria-label=\"Action\" is required",
-      "aria2":           "Loading state: aria-busy=\"true\" and aria-label=\"Saving…\"",
-      "aria3":           "Expanding content: aria-expanded=\"true/false\" + aria-controls",
-      "focusTitle":      "Focus management",
-      "focusBody":       "After a destructive action (delete), move focus to a relevant element, not the page start. Modal dialogs: keep focus trap active."
+      "focusTitle":    "Focus",
+      "focusBody":     "The focus ring is 3px and is never removed. The danger variant uses the red focus ring instead, so the ring does not fight the red surface — an approved exception.",
+      "keyboardTitle": "Keyboard",
+      "k1":            "Tab and Shift+Tab move focus to the next or previous button.",
+      "k2":            "Enter and Space trigger the button.",
+      "k3":            "The loading state locks the button, so a second trigger goes nowhere.",
+      "ariaTitle":     "ARIA",
+      "aria1":         "With iconOnly an aria-label is mandatory — without a label the button is unnamed.",
+      "aria2":         "The loading state sets aria-busy=\"true\" and keeps the variant colour.",
+      "aria3":         "Disabled buttons carry aria-disabled=\"true\" so screen readers announce the state.",
+      "targetTitle":   "Hit target",
+      "targetBody":    "On touch devices every button needs a surrounding area of at least 44 by 44 pixels. The sm size is below that and therefore belongs only in pointer contexts."
+    }
+  },
+
+  "link": {
+    "page": {
+      "title":       "Link",
+      "description": "Leads somewhere else. Two patterns: standalone without an underline, inline within body text."
+    },
+    "controls": {
+      "variant":      "Pattern",
+      "size":         "Size",
+      "iconPosition": "Icon position",
+      "icon":         "Icon",
+      "external":     "External",
+      "disabled":     "Disabled"
+    },
+    "demo": {
+      "label":        "Alle Farben ansehen",
+      "standalone":   "Alle Farben ansehen",
+      "inlineBefore": "Alle Farben folgen den",
+      "inlineLink":   "Design-Tokens",
+      "inlineAfter":  "des Systems.",
+      "next":         "Zu den Rechnungen",
+      "export":       "Export starten",
+      "external":     "WCAG 2.2 öffnen"
+    },
+    "overview": {
+      "variantsTitle": "Two patterns",
+      "variantsBody":  "standalone stands on its own — at the end of a paragraph, in a card footer, next to a heading. Without an underline at rest, because its position makes it recognisable. inline sits within body text and is always underlined.",
+      "sizesTitle":    "Sizes",
+      "sizesBody":     "Three sizes on the type scale: sm at 14px, md at 16px, lg at 20px. The size follows the text the link sits in.",
+      "iconsTitle":    "With icon",
+      "iconsBody":     "An icon after the text shows direction, an icon before it shows the kind of target. Trailing is the default position.",
+      "externalTitle": "External targets",
+      "externalBody":  "external sets the open_in_new glyph, target=\"_blank\" and rel=\"noopener noreferrer\". Always mark external targets — leaving the application should not come as a surprise.",
+      "statesTitle":   "States",
+      "statesBody":    "Hover and active change the colour only. The underline stays as it is, and its thickness never changes in any state."
+    },
+    "usage": {
+      "vsButtonTitle":  "Link or button",
+      "vsButtonBody":   "A link navigates, a button acts. If the element leads to another page or view, it is a link. If it changes something, submits or opens a dialog, it is a button — even when it looks like a link. This distinction is not a matter of style: screen readers announce them differently, and a link can be opened in a new tab.",
+      "patternsTitle":  "Choosing a pattern",
+      "pStandalone":    "standalone at the end of a paragraph, in card footers and next to headings.",
+      "pInline":        "inline within body text — a link in text explained by colour alone is invisible to colour-blind readers.",
+      "textTitle":      "Link text",
+      "textBody":       "The text names the target: Barrierefreiheits-Richtlinien, not click here, not more. Link specific terms, not whole sentences — the underlined area is the hit target and should be as large as necessary, not as large as possible.",
+      "disabledTitle":  "Disabled links",
+      "disabledBody":   "A disabled link is a contradiction in itself. If a target is unreachable, show text without a link instead. disabled exists only for transitional states.",
+      "dontTitle":      "Don't",
+      "dont1":          "Make links recognisable by colour alone.",
+      "dont2":          "Use click here or more as link text.",
+      "dont3":          "Link whole sentences.",
+      "dont4":          "Use a link where an action is triggered."
+    },
+    "code": {
+      "title":         "Link in code",
+      "variantsDesc":  "The two patterns through the variant prop:",
+      "iconDesc":      "Icons as a ligature name through icon, position through iconPosition:",
+      "externalDesc":  "External targets through the external prop:"
+    },
+    "a11y": {
+      "colorTitle":     "Not colour alone",
+      "colorBody":      "Within body text the underline carries recognisability, not the colour. That is why it stays in every state and never changes thickness.",
+      "focusTitle":     "Focus",
+      "focusBody":      "The focus ring is the usual 3px ring in the primary colour. It is never removed, not even for links in dense lists.",
+      "semanticsTitle": "Semantics",
+      "s1":             "A link without href is not a link to screen readers — actions belong in a button.",
+      "s2":             "External targets carry rel=\"noopener noreferrer\" and a visible glyph as a warning.",
+      "s3":             "The link text works outside the sentence too, because screen readers read link lists without context."
     }
   },
 
@@ -1008,64 +1088,92 @@
     }
   },
 
-  "badges": {
+  "tag": {
     "page": {
-      "description": "Badge — a compact status or category label in five variants and two sizes."
+      "title":       "Tag",
+      "description": "Marks, categorises or filters. Six colour roles, two styles, always fully rounded."
+    },
+    "controls": {
+      "color":      "Colour role",
+      "emphasis":   "Style",
+      "size":       "Size",
+      "dot":        "Dot",
+      "icon":       "Icon",
+      "removable":  "Removable",
+      "selectable": "Selectable",
+      "selected":   "Selected",
+      "disabled":   "Disabled"
+    },
+    "roles": {
+      "neutral": "Neutral",
+      "primary": "Primär",
+      "success": "Erfolg",
+      "warning": "Warnung",
+      "error":   "Fehler",
+      "info":    "Hinweis"
+    },
+    "demo": {
+      "filters": {
+        "radiology":  "Radiologie",
+        "cardiology": "Kardiologie",
+        "surgery":    "Chirurgie",
+        "archive":    "Archiv"
+      },
+      "removeLabel":  "Filter {{name}} entfernen",
+      "emptyFilters": "Keine Filter gewählt",
+      "resetFilters": "Filter zurücksetzen",
+      "active":       "Aktiv",
+      "pending":      "In Prüfung",
+      "appointment":  "Termin",
+      "expired":      "Abgelaufen"
     },
     "overview": {
-      "anatomyTitle":  "Anatomy",
-      "anatomyBody":   "A badge consists of a colored container with rounded corners, an optional dot indicator, and a short text label.",
-      "an1":           "Container — the rounded pill with variant background color",
-      "an2":           "Dot — optional colored circle as a status indicator to the left of the label",
-      "an3":           "Label — short text, typically 1–2 words",
-      "variantsTitle": "Variants",
-      "variantsBody":  "Five semantic variants: neutral, accent, success, warning, error.",
-      "sizesTitle":    "Sizes",
-      "sizesBody":     "sm (default, h-5) for compact contexts like tables; md (h-6) for more prominent placement.",
-      "dotTitle":      "Dot variant",
-      "dotBody":       "With dot={true}, a colored dot is shown to the left of the label — useful for status indicators.",
-      "tagTitle":      "Tag (removable)",
-      "tagBody":       "Tag is a related component for removable labels, e.g. in filter fields or multi-select inputs."
+      "colorsTitle":     "Colour roles",
+      "colorsBody":      "Six roles: neutral, primary, success, warning, error and info. A colour means the same thing across the whole product — green not once for active and once for paid.",
+      "colorsCaption":   "Top soft (surface 50) · bottom solid (solid colour 600)",
+      "sizesTitle":      "Sizes",
+      "sizesBody":       "22px (sm) belongs in table rows and dense lists, 28px (md) everywhere else. The radius is always full — that tells tags apart from buttons at a glance.",
+      "dotIconTitle":    "Dot and icon",
+      "dotIconBody":     "Dot and icon help with scanning but never replace a label. The text always carries the meaning.",
+      "removableTitle":  "Removable",
+      "removableBody":   "onRemove adds a remove button — meant for selected filters that can be taken off one by one. removeLabel names what is being removed.",
+      "selectableTitle": "Selectable",
+      "selectableBody":  "selectable renders a button with aria-pressed — for filter bars where tags are switched on and off. The selected state additionally shows a check mark."
     },
     "usage": {
-      "title":     "Usage",
-      "intro":     "Badges label status, category, or counts. They are purely informational and trigger no action.",
-      "whenTitle": "Typical use cases",
-      "when1":     "Status labels in tables (e.g. Active / Inactive / Pending)",
-      "when2":     "Category tags in lists or cards",
-      "when3":     "Counters in navigation or tabs (e.g. \"12 open\")",
-      "when4":     "Removable filter tags in search and filter components (→ Tag component)",
-      "doTitle":   "Do",
-      "dontTitle": "Don't",
-      "do1":       "Choose variant semantically: success for success, error for errors, warning for warnings",
-      "do2":       "Use short, precise text — maximum 2–3 words",
-      "do3":       "Use the dot variant for status indicators",
-      "dont1":     "Don't use Badge for clickable actions — use Button instead",
-      "dont2":     "Don't convey meaning through color alone — text is required",
-      "dont3":     "No long text in badges — choose an alternative element for more than 3 words",
-      "doNote":    "Badges are informational, not interactive.",
-      "dontNote":  "Color alone is not sufficient for accessible meaning communication."
+      "typesTitle":   "Three types",
+      "tDisplay":     "Display is the normal case: not operable, carries status or category.",
+      "tRemovable":   "Removable comes from onRemove — for selected filters.",
+      "tSelectable":  "Selectable comes from selectable — for filter bars with on and off.",
+      "typesNote":    "A tag is not a button. If the element triggers an action beyond selected and not selected, a button belongs there.",
+      "colorTitle":   "Colour",
+      "colorBody":    "soft (surface 50) is the default and works in quantity. solid (solid colour 600) is loud and belongs used sparingly — at most one or two per view. Neutral is the right choice when a tag only names and does not judge.",
+      "textTitle":    "Text",
+      "textBody":     "One or two words. Longer text is truncated because a tag does not wrap — if the text cannot be kept short, it is not a tag.",
+      "sizeTitle":    "Measurements",
+      "sizeBody":     "On touch devices removable and selectable tags need a surrounding area at least 44px high.",
+      "dontTitle":    "Don't",
+      "dont1":        "Misuse tags as buttons for actions.",
+      "dont2":        "Show more than two or three colour roles at once on one surface.",
+      "dont3":        "Carry meaning through colour alone.",
+      "dont4":        "Put whole sentences into a tag.",
+      "dont5":        "Override the radius."
     },
     "code": {
-      "title":         "Code",
-      "variantsTitle": "All variants",
-      "variantsDesc":  "The variant prop determines color and semantics. Default is neutral.",
-      "sizesTitle":    "Sizes",
-      "sizesDesc":     "size=\"sm\" is the default (h-5). size=\"md\" for larger display (h-6).",
-      "dotTitle":      "Dot badge",
-      "dotDesc":       "dot={true} adds a colored dot to the left of the label.",
-      "tagTitle":      "Tag (removable)",
-      "tagDesc":       "Tag with onRemove callback — the button shows an X icon and triggers removal."
+      "title":      "Tag in code",
+      "basicDesc":  "Colour role through color, style through emphasis, status dot through dot:",
+      "removeDesc": "Removable through onRemove; removeLabel names the button:",
+      "selectDesc": "Selectable through selectable and selected:"
     },
     "a11y": {
-      "title":        "Accessibility",
-      "intro":        "Badges are purely visual labels. Meaning must be recognizable without color.",
-      "colorTitle":   "Color is not the only indicator",
-      "colorBody":    "The badge text must carry the meaning itself (e.g. \"Active\" rather than just a green dot). Never rely solely on color.",
-      "ariaTitle":    "aria-label for dot-only badges",
-      "ariaBody":     "If a badge contains only a dot without text, set aria-label on the element: aria-label=\"Status: Active\".",
-      "contextTitle": "Context announcement",
-      "contextBody":  "In table cells or lists, surrounding text should put the badge value in context so screen readers read it correctly."
+      "meaningTitle":  "Meaning",
+      "meaningBody":   "Meaning must never hang on colour alone. The text carries it; dot and icon are an addition, not a replacement.",
+      "controlsTitle": "Operable tags",
+      "c1":            "The remove button always carries an aria-label naming what is removed.",
+      "c2":            "Selectable tags are buttons with aria-pressed, operable via Tab, Enter and Space.",
+      "c3":            "Disabled selectable tags stay visible but accept no input.",
+      "targetTitle":   "Hit target",
+      "targetBody":    "The remove button is 18px (sm) or 20px. On touch devices its surrounding area needs at least 44px of height, otherwise it cannot be hit reliably."
     }
   },
 
@@ -2039,32 +2147,73 @@
   "tooltip": {
     "page": {
       "title":       "Tooltip",
-      "description": "Contextual help text that appears when hovering or focusing an element"
+      "description": "A short explanation on hover or focus. Purely informative, never interactive."
+    },
+    "controls": {
+      "placement": "Placement",
+      "title":     "With title",
+      "instant":   "No delay",
+      "disabled":  "Disabled"
+    },
+    "demo": {
+      "content":     "In die Zwischenablage kopieren",
+      "title":       "Tastenkürzel",
+      "richContent": "Öffnet die Suche von überall — auch aus Untermenüs.",
+      "copyLabel":   "Kopieren",
+      "searchLabel": "Suche",
+      "taxContent":  "Nach § 19 UStG wird keine Umsatzsteuer ausgewiesen.",
+      "placements": {
+        "top":    "Oben",
+        "bottom": "Unten",
+        "left":   "Links",
+        "right":  "Rechts"
+      }
     },
     "overview": {
-      "anatomyTitle": "Anatomy",
-      "anatomyBody":  "A tooltip consists of a trigger element and a floating content panel that appears on hover or focus.",
-      "sidesTitle":   "Positioning",
-      "sidesBody":    "The tooltip can be positioned on four sides of the trigger element: top, bottom, left, or right."
+      "placementTitle":  "Placements",
+      "placementBody":   "Four placements. If there is not enough room on the requested side, the tooltip flips to the opposite side; the arrow stays aligned to the centre of the trigger.",
+      "variantsTitle":   "Two variants",
+      "variantsBody":    "Without title you get the one-line explanation. With title you get the two-line variant for cases where a keyword and a sentence belong together.",
+      "captionText":     "Text · Default",
+      "captionRich":     "Title and text",
+      "triggerTitle":    "Trigger",
+      "triggerBody":     "Exactly one child that can take a ref and is focusable. A span as a trigger needs tabIndex={0}, otherwise the tooltip is unreachable for keyboard users.",
+      "triggerCaption":  "span with tabIndex={0}",
+      "behaviourTitle":  "Behaviour",
+      "b1":              "With a mouse the tooltip opens after about 400ms so it does not flash while passing over.",
+      "b2":              "On keyboard focus it opens immediately, because nothing there is incidental.",
+      "b3":              "Closing always happens immediately.",
+      "b4":              "It is attached to body so no container with overflow: hidden can clip it."
     },
     "usage": {
-      "title":       "Usage",
-      "intro":       "Tooltips are best suited for short, supplementary information about UI elements. They should not be used for important or critical content.",
-      "delayTitle":  "Open delay",
-      "delayBody":   "The default delay of 300ms prevents accidental opening when quickly moving the cursor across elements."
+      "whenTitle":    "When",
+      "whenBody":     "For buttons that carry only an icon, and for terms that need one line of explanation. As soon as something inside would be clickable — a link, a button, a form field — it is a popover, not a tooltip: the tooltip accepts no mouse and disappears as soon as you move towards it.",
+      "contentTitle": "What belongs inside",
+      "contentBody":  "A hint, not a paragraph. What a person needs in order to work belongs visibly on the page — never in a tooltip alone.",
+      "touchTitle":   "Touch devices",
+      "touchBody":    "There is no hover on touch devices. A tooltip must never be the only source of information there.",
+      "dontTitle":    "Don't",
+      "dont1":        "Put links or buttons inside the tooltip.",
+      "dont2":        "Show important information only there.",
+      "dont3":        "Use it as the only source of explanation on touch devices.",
+      "dont4":        "Use a trigger that cannot receive focus.",
+      "dont5":        "Use the tooltip as a replacement for an aria-label."
     },
     "code": {
-      "title":       "Code",
-      "basicTitle":  "Basic",
-      "basicDesc":   "Wrap the trigger element with the Tooltip component and pass the content via the content prop.",
-      "sidesTitle":  "Positioning",
-      "delayTitle":  "Delay"
+      "title":     "Tooltip in code",
+      "basicDesc": "One trigger, one explanation:",
+      "richDesc":  "With title you get the two-line variant:",
+      "spanDesc":  "A trigger that is not focusable needs tabIndex:"
     },
     "a11y": {
-      "title":         "Accessibility",
-      "intro":         "Tooltips are built on Radix UI Primitives and support full keyboard navigation and screen readers.",
-      "keyboardTitle": "Keyboard interaction",
-      "keyboardBody":  "Tooltips open when the trigger receives focus via Tab and close on Escape or when focus leaves."
+      "focusTitle":  "Focus",
+      "focusBody":   "The tooltip opens on keyboard focus without delay and closes when focus leaves. The trigger must be focusable, otherwise the explanation cannot be reached by keyboard.",
+      "ariaTitle":   "ARIA",
+      "a1":          "The tooltip carries role=\"tooltip\" and is tied to the trigger through aria-describedby.",
+      "a2":          "An icon button with aria-label keeps its label — the tooltip is the visible addition, not the replacement.",
+      "a3":          "The tooltip accepts no mouse, so moving towards it does not take the explanation away.",
+      "limitsTitle": "Limits",
+      "limitsBody":  "The tooltip is not interactive. Content meant to be clicked, copied or read belongs in a popover or on the page."
     }
   },
   "slider": {

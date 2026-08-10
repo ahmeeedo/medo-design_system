@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import { PageLayout, Section, Content, DemoPanel } from '../docs/PageLayout'
 import { CodeBlock } from '../docs/CodeBlock'
-import { Button, Menu } from '../components'
+import { LegacyButton as Button, Menu } from '../components'
 
 const BASE_CODE = `import { Menu } from '@/components'
 

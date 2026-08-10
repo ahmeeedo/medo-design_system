@@ -8,13 +8,14 @@ import SpacingPage     from './pages/SpacingPage'
 import RadiusPage      from './pages/RadiusPage'
 import ShadowsPage     from './pages/ShadowsPage'
 import MotionPage      from './pages/MotionPage'
-import ButtonsPage     from './pages/ButtonsPage'
+import ButtonPage      from './pages/ButtonPage'
+import LinkPage        from './pages/LinkPage'
 import InputsPage      from './pages/InputsPage'
 import SelectsPage     from './pages/SelectsPage'
 import TogglePage      from './pages/TogglePage'
 import CheckboxPage    from './pages/CheckboxPage'
 import RadioPage       from './pages/RadioPage'
-import BadgesPage      from './pages/BadgesPage'
+import TagPage         from './pages/TagPage'
 import AlertsPage      from './pages/AlertsPage'
 import CardsPage       from './pages/CardsPage'
 import TablesPage      from './pages/TablesPage'
@@ -57,13 +58,14 @@ function AppContent() {
         <Route path="/radius"     element={<RadiusPage />} />
         <Route path="/shadows"    element={<ShadowsPage />} />
         <Route path="/motion"     element={<MotionPage />} />
-        <Route path="/buttons"    element={<ButtonsPage />} />
+        <Route path="/button"     element={<ButtonPage />} />
+        <Route path="/link"       element={<LinkPage />} />
         <Route path="/inputs"     element={<InputsPage />} />
         <Route path="/select"     element={<SelectsPage />} />
         <Route path="/toggle"     element={<TogglePage />} />
         <Route path="/checkbox"   element={<CheckboxPage />} />
         <Route path="/radio"      element={<RadioPage />} />
-        <Route path="/badges"     element={<BadgesPage />} />
+        <Route path="/tag"        element={<TagPage />} />
         <Route path="/alerts"     element={<AlertsPage />} />
         <Route path="/cards"      element={<CardsPage />} />
         <Route path="/tables"     element={<TablesPage />} />
