@@ -67,7 +67,8 @@
   "search": {
     "placeholder": "Search...",
     "noResults":   "No results",
-    "open":        "Open search"
+    "open":        "Open search",
+    "clear":       "Clear input"
   },
   "footer": {
     "impressum":   "Legal Notice",

@@ -71,11 +71,15 @@ function loadSidebarState() {
   }
 }
 
-const ICON_BTN = 'flex items-center justify-center w-9 h-9 rounded-[var(--radius-md)] text-[var(--color-text-primary)] cursor-pointer transition-[background] duration-[var(--duration-fast)] ease-[var(--ease-out)] hover:bg-[var(--color-neutral-100)] bg-transparent border-0 outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-focus-500)] focus-visible:ring-offset-1'
+/* Defined once in global.css as calc() over medo tokens; sticky offsets below
+   refer back to it. */
+const HEADER_H = 'var(--docs-header-height)'
 
-const NAV_LINK_BASE = 'block w-full px-[var(--space-5)] py-[var(--space-2)] [font-family:var(--font-sans)] text-sm text-left no-underline cursor-pointer transition-[color,background,border-color] duration-[var(--duration-fast)] ease-[var(--ease-out)] border-0 border-l-2 outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[var(--color-focus-500)]'
-const NAV_LINK_ACTIVE = 'text-[var(--color-text-primary)] [font-weight:var(--weight-semibold)] bg-[var(--surface_selected)] border-l-[var(--color-brand-primary-500)]'
-const NAV_LINK_INACTIVE = 'text-[var(--color-text-secondary)] [font-weight:var(--weight-regular)] border-l-transparent hover:text-[var(--color-text-primary)] hover:bg-[var(--surface_200)]'
+const ICON_BTN = 'flex items-center justify-center w-[var(--docs-hit-target)] h-[var(--docs-hit-target)] rounded-[var(--medo-radius-md)] text-[var(--medo-icon)] cursor-pointer bg-transparent border-0 transition-colors duration-150 ease-out hover:bg-[var(--medo-state-hover)] active:bg-[var(--medo-state-pressed)] outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--medo-focus-ring)]'
+
+const NAV_LINK_BASE = 'block w-full px-[var(--medo-space-lg)] py-[var(--medo-space-xs)] [font-family:var(--medo-font-sans)] text-sm text-left no-underline cursor-pointer transition-colors duration-150 ease-out border-0 border-l-2 outline-none focus-visible:ring-[3px] focus-visible:ring-inset focus-visible:ring-[var(--medo-focus-ring)]'
+const NAV_LINK_ACTIVE = 'text-[var(--medo-text)] [font-weight:var(--medo-weight-semibold)] bg-[var(--medo-state-selected)] border-l-[var(--medo-action)]'
+const NAV_LINK_INACTIVE = 'text-[var(--medo-text-muted)] [font-weight:var(--medo-weight-regular)] border-l-transparent hover:text-[var(--medo-text)] hover:bg-[var(--medo-state-hover)]'
 
 export function DocsLayout({ children }) {
   const { t } = useTranslation()
@@ -131,24 +135,27 @@ export function DocsLayout({ children }) {
   }
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-[var(--medo-surface-container)] [font-family:var(--medo-font-sans)] text-[var(--medo-text)]">
 
       {/* Sticky full-width header */}
-      <header className="sticky top-0 z-[var(--z-sticky)] w-full flex items-center h-[var(--header-height)] px-[var(--space-4)] gap-[var(--space-2)] bg-[var(--surface_100)] border-b border-[var(--color-border)]">
+      <header
+        className="sticky top-0 z-30 w-full flex items-center px-[var(--medo-space-md)] gap-[var(--medo-space-2xs)] bg-[var(--medo-surface)] border-b border-[var(--medo-border)]"
+        style={{ height: HEADER_H }}
+      >
         <button
           className={`${ICON_BTN} hidden max-md:flex`}
           onClick={() => setMobileOpen((v) => !v)}
           aria-label={mobileOpen ? t('nav.aria.closeMenu') : t('nav.aria.openMenu')}
         >
-          {mobileOpen ? <Icon name="close" /> : <Icon name="menu" />}
+          {mobileOpen ? <Icon name="close" size={24} /> : <Icon name="menu" size={24} />}
         </button>
-        <span className="text-sm [font-weight:var(--weight-semibold)] tracking-[var(--tracking-wide)] text-[var(--color-text-primary)]">
-          med.o
-        </span>
+        <Link to="/" className="flex items-center ml-[var(--medo-space-2xs)] outline-none rounded-[var(--medo-radius-sm)] focus-visible:ring-[3px] focus-visible:ring-[var(--medo-focus-ring)]">
+          <img src="/logo-medo.svg" alt="medo" className="h-[var(--medo-space-lg)] w-auto" />
+        </Link>
         <div className="flex-1" />
         <LanguageSwitcher />
         <button className={ICON_BTN} aria-label={t('header.aria.search')} onClick={() => setIsSearchOpen(true)}>
-          <Icon name="search" />
+          <Icon name="search" size={24} />
         </button>
         <div className="relative" ref={dropdownRef}>
           <button
@@ -156,19 +163,19 @@ export function DocsLayout({ children }) {
             onClick={() => setLinksOpen((v) => !v)}
             aria-label={t('header.aria.links')}
           >
-            <Icon name="open_in_new" />
+            <Icon name="open_in_new" size={24} />
           </button>
           {linksOpen && (
-            <div className="absolute right-0 top-full mt-1 min-w-[160px] bg-[var(--surface_100)] border border-[var(--color-border)] rounded-[var(--radius-md)] shadow-[var(--shadow-md)] overflow-hidden z-[var(--z-dropdown)]">
+            <div className="absolute right-0 top-full mt-[var(--medo-space-2xs)] min-w-[180px] bg-[var(--medo-overlay)] border border-[var(--medo-border)] rounded-[var(--medo-radius-md)] shadow-[var(--medo-shadow-md)] overflow-hidden z-40">
               {headerLinks.map((link) => (
                 <a
                   key={link.href}
                   href={link.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-[var(--space-2)] px-[var(--space-3)] py-[var(--space-2)] text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-[var(--surface_200)] transition-[color,background] duration-[var(--duration-fast)] no-underline"
+                  className="flex items-center gap-[var(--medo-space-xs)] px-[var(--medo-space-sm)] py-[var(--medo-space-xs)] text-sm text-[var(--medo-text-subtle)] no-underline transition-colors duration-150 ease-out hover:text-[var(--medo-text)] hover:bg-[var(--medo-state-hover)] outline-none focus-visible:ring-[3px] focus-visible:ring-inset focus-visible:ring-[var(--medo-focus-ring)]"
                 >
-                  <Icon name={link.icon} />
+                  <Icon name={link.icon} size={18} />
                   <span>{link.label}</span>
                 </a>
               ))}
@@ -180,7 +187,8 @@ export function DocsLayout({ children }) {
       {/* Mobile backdrop — hidden on desktop */}
       {mobileOpen && (
         <div
-          className="hidden max-md:block fixed left-0 right-0 bottom-0 top-[var(--header-height)] bg-black/40 [z-index:calc(var(--z-sticky)+1)] animate-[fadeIn_var(--duration-normal)_var(--ease-out)]"
+          className="hidden max-md:block fixed left-0 right-0 bottom-0 z-40 bg-[var(--medo-scrim)] animate-[fadeIn_200ms_ease-out]"
+          style={{ top: HEADER_H }}
           onClick={close}
         />
       )}
@@ -191,19 +199,21 @@ export function DocsLayout({ children }) {
         {/* Sidebar — sticky on desktop, overlay on mobile */}
         <nav
           data-mobile-open={mobileOpen}
-          className="w-[220px] shrink-0 sticky top-[var(--header-height)] h-[calc(100vh-var(--header-height))] border-r border-[var(--color-border)] bg-[var(--surface_100)] overflow-y-auto py-[var(--space-4)] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden max-md:fixed max-md:top-[var(--header-height)] max-md:left-0 max-md:h-[calc(100vh-var(--header-height))] max-md:w-[280px] max-md:-translate-x-full max-md:transition-transform max-md:duration-[var(--duration-slow)] max-md:ease-[var(--ease-out)] max-md:[z-index:calc(var(--z-sticky)+2)] max-md:shadow-[var(--shadow-xl)] max-md:data-[mobile-open=true]:translate-x-0"
+          className="w-[220px] shrink-0 sticky border-r border-[var(--medo-border)] bg-[var(--medo-surface)] overflow-y-auto py-[var(--medo-space-md)] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden max-md:fixed max-md:left-0 max-md:w-[280px] max-md:-translate-x-full max-md:transition-transform max-md:duration-200 max-md:ease-out max-md:z-50 max-md:shadow-[var(--medo-shadow-xl)] max-md:data-[mobile-open=true]:translate-x-0"
+          style={{ top: HEADER_H, height: `calc(100vh - ${HEADER_H})` }}
         >
           {NAV.map((group) => (
             <div key={group.id}>
               <button
-                className="flex items-center justify-between w-full px-[var(--space-5)] pt-[var(--space-3)] pb-[var(--space-1)] text-xs [font-weight:var(--weight-semibold)] tracking-[var(--tracking-widest)] uppercase text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors duration-[var(--duration-fast)] cursor-pointer bg-transparent border-0 outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[var(--color-focus-500)]"
+                className="flex items-center justify-between w-full px-[var(--medo-space-lg)] pt-[var(--medo-space-sm)] pb-[var(--medo-space-2xs)] [font-family:var(--medo-font-mono)] [font-size:var(--medo-text-xs)] uppercase tracking-[0.12em] text-[var(--medo-text-muted)] cursor-pointer bg-transparent border-0 transition-colors duration-150 ease-out hover:text-[var(--medo-text)] outline-none focus-visible:ring-[3px] focus-visible:ring-inset focus-visible:ring-[var(--medo-focus-ring)]"
                 onClick={() => toggleSection(group.id)}
                 aria-expanded={sidebarExpanded[group.id]}
               >
                 <span>{t(group.section)}</span>
                 <Icon
                   name="chevron_right"
-                  className={`transition-transform duration-[var(--duration-fast)] ease-[var(--ease-out)] ${sidebarExpanded[group.id] ? 'rotate-90' : ''}`}
+                  size={18}
+                  className={`transition-transform duration-150 ease-out ${sidebarExpanded[group.id] ? 'rotate-90' : ''}`}
                 />
               </button>
               {sidebarExpanded[group.id] && group.items.map((item) => (
@@ -231,20 +241,20 @@ export function DocsLayout({ children }) {
       <Search isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
 
       {/* Full-width footer */}
-      <footer className="w-full bg-[var(--surface_200)] border-t border-[var(--color-border)] px-[var(--space-5)] py-[var(--space-4)] flex items-center justify-between flex-wrap gap-[var(--space-3)]">
-        <span className="text-sm text-[var(--color-text-secondary)]">
-          © {new Date().getFullYear()} med.o
+      <footer className="w-full bg-[var(--medo-surface-container)] border-t border-[var(--medo-border)] px-[var(--medo-space-lg)] py-[var(--medo-space-md)] flex items-center justify-between flex-wrap gap-[var(--medo-space-sm)]">
+        <span className="text-sm text-[var(--medo-text-muted)]">
+          © {new Date().getFullYear()} medo
         </span>
-        <div className="flex gap-[var(--space-4)]">
+        <div className="flex gap-[var(--medo-space-md)]">
           <Link
             to="/impressum"
-            className="text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] no-underline transition-colors duration-[var(--duration-fast)]"
+            className="text-sm text-[var(--medo-text-muted)] no-underline transition-colors duration-150 ease-out hover:text-[var(--medo-text)] outline-none rounded-[var(--medo-radius-sm)] focus-visible:ring-[3px] focus-visible:ring-[var(--medo-focus-ring)]"
           >
             {t('footer.impressum')}
           </Link>
           <Link
             to="/datenschutz"
-            className="text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] no-underline transition-colors duration-[var(--duration-fast)]"
+            className="text-sm text-[var(--medo-text-muted)] no-underline transition-colors duration-150 ease-out hover:text-[var(--medo-text)] outline-none rounded-[var(--medo-radius-sm)] focus-visible:ring-[3px] focus-visible:ring-[var(--medo-focus-ring)]"
           >
             {t('footer.datenschutz')}
           </Link>

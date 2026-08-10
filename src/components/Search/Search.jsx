@@ -70,37 +70,38 @@ export function Search({ isOpen, onClose }) {
   return (
     <DialogPrimitive.Root open={isOpen} onOpenChange={(open) => { if (!open) onClose() }}>
       <DialogPrimitive.Portal>
-        <DialogPrimitive.Overlay className="fixed inset-0 bg-black/40 [z-index:var(--z-overlay)]" />
+        <DialogPrimitive.Overlay className="fixed inset-0 z-50 bg-[var(--medo-scrim)]" />
         <DialogPrimitive.Content
           aria-label={t('search.open')}
           onKeyDown={handleKeyDown}
-          className="fixed top-[10%] left-1/2 -translate-x-1/2 w-[calc(100vw-2rem)] max-w-xl [z-index:var(--z-modal)] bg-[var(--surface_100)] border border-[var(--color-border)] rounded-[var(--radius-lg)] shadow-[var(--shadow-xl)] overflow-hidden outline-none"
+          className="fixed top-[10%] left-1/2 -translate-x-1/2 w-[calc(100vw-2rem)] max-w-xl z-50 bg-[var(--medo-overlay)] border border-[var(--medo-border)] rounded-[var(--medo-radius-lg)] shadow-[var(--medo-shadow-xl)] overflow-hidden outline-none [font-family:var(--medo-font-sans)]"
         >
-          <div className="flex items-center gap-[var(--space-2)] px-[var(--space-3)] border-b border-[var(--color-border)]">
-            <Icon name="search" className="text-[var(--color-text-secondary)] shrink-0" />
+          <div className="flex items-center gap-[var(--medo-space-xs)] px-[var(--medo-space-sm)] border-b border-[var(--medo-border-subtle)]">
+            <Icon name="search" size={20} color="var(--medo-icon-muted)" />
             <input
               ref={inputRef}
               type="text"
               value={query}
               onChange={(e) => { setQuery(e.target.value); setActiveIndex(-1) }}
               placeholder={t('search.placeholder')}
-              className="flex-1 h-12 bg-transparent border-0 outline-none text-sm text-[var(--color-text-primary)] placeholder:text-[var(--color-text-secondary)] [font-family:var(--font-sans)]"
+              className="flex-1 h-[var(--medo-space-2xl)] bg-transparent border-0 outline-none [font-size:var(--medo-text-base)] text-[var(--medo-input-text)] placeholder:text-[var(--medo-input-placeholder)] [font-family:var(--medo-font-sans)]"
             />
             {query && (
               <button
                 onClick={() => setQuery('')}
-                className="flex items-center justify-center text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] cursor-pointer bg-transparent border-0 outline-none"
+                aria-label={t('search.clear')}
+                className="flex items-center justify-center w-[calc(var(--medo-space-lg)+var(--medo-space-2xs))] h-[calc(var(--medo-space-lg)+var(--medo-space-2xs))] shrink-0 rounded-[var(--medo-radius-sm)] bg-[var(--medo-action-neutral)] text-[var(--medo-icon-muted)] cursor-pointer border-0 transition-colors duration-150 ease-out hover:bg-[var(--medo-action-neutral-hover)] hover:text-[var(--medo-text)] outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--medo-focus-ring)]"
                 tabIndex={-1}
               >
-                <Icon name="close" />
+                <Icon name="close" size={18} />
               </button>
             )}
           </div>
 
           {query && (
-            <div className="max-h-[400px] overflow-y-auto py-[var(--space-1)]">
+            <div className="max-h-[400px] overflow-y-auto py-[var(--medo-space-2xs)]">
               {results.length === 0 ? (
-                <p className="px-[var(--space-4)] py-[var(--space-3)] text-sm text-[var(--color-text-secondary)]">
+                <p className="px-[var(--medo-space-md)] py-[var(--medo-space-sm)] text-sm text-[var(--medo-text-muted)]">
                   {t('search.noResults')}
                 </p>
               ) : (
@@ -110,22 +111,23 @@ export function Search({ isOpen, onClose }) {
                     ref={(el) => { resultRefs.current[index] = el }}
                     onClick={() => handleSelect(result)}
                     onMouseEnter={() => setActiveIndex(index)}
-                    className={`w-full text-left flex items-center gap-[var(--space-3)] px-[var(--space-4)] py-[var(--space-2)] cursor-pointer border-0 outline-none transition-colors duration-[var(--duration-fast)] focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[var(--color-focus-500)] ${activeIndex === index ? 'bg-[var(--surface_200)]' : 'bg-transparent hover:bg-[var(--surface_200)]'}`}
+                    className={`w-full text-left flex items-center gap-[var(--medo-space-sm)] px-[var(--medo-space-md)] py-[var(--medo-space-xs)] cursor-pointer border-0 outline-none transition-colors duration-150 ease-out focus-visible:ring-[3px] focus-visible:ring-inset focus-visible:ring-[var(--medo-focus-ring)] ${activeIndex === index ? 'bg-[var(--medo-state-hover)]' : 'bg-transparent hover:bg-[var(--medo-state-hover)]'}`}
                   >
                     <Icon
                       name={result.type === 'section' ? 'format_h2' : 'web_asset'}
-                      className="text-[var(--color-text-secondary)] shrink-0"
+                      size={20}
+                      color="var(--medo-icon-muted)"
                     />
                     <div className="flex-1 min-w-0">
-                      <div className="text-sm text-[var(--color-text-primary)] [font-weight:var(--weight-medium)] truncate">
+                      <div className="text-sm text-[var(--medo-text)] [font-weight:var(--medo-weight-medium)] truncate">
                         {result.section}
                       </div>
-                      <div className="flex items-center gap-[var(--space-1)] mt-px">
-                        <span className="text-xs text-[var(--color-text-secondary)]">{result.pageTitle}</span>
+                      <div className="flex items-center gap-[var(--medo-space-3xs)] mt-px">
+                        <span className="[font-size:var(--medo-text-xs)] text-[var(--medo-text-muted)]">{result.pageTitle}</span>
                         {result.type === 'section' && (
                           <>
-                            <Icon name="chevron_right" className="text-[var(--color-text-secondary)] [font-size:0.75rem]" />
-                            <span className="text-xs text-[var(--color-text-secondary)]">{TAB_LABELS[result.tab] ?? result.tab}</span>
+                            <Icon name="chevron_right" size={18} color="var(--medo-icon-muted)" />
+                            <span className="[font-size:var(--medo-text-xs)] text-[var(--medo-text-muted)]">{TAB_LABELS[result.tab] ?? result.tab}</span>
                           </>
                         )}
                       </div>

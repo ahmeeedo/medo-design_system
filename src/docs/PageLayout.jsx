@@ -14,6 +14,9 @@ const GRID_CLASSES = {
   6: 'grid-cols-6 max-[1024px]:grid-cols-3 max-[640px]:grid-cols-1',
 }
 
+/* Same global definition the header in DocsLayout uses. */
+const HEADER_H = 'var(--docs-header-height)'
+
 const generateId = (text) =>
   text.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')
 
@@ -58,7 +61,7 @@ export function PageLayout({ title, description, tabs = [] }) {
         // The Section wrapper div has the id; apply scroll offset there so anchor navigation clears sticky header+tabs
         const section = el.closest('[id]')
         if (section) {
-          section.style.scrollMarginTop = `calc(var(--header-height) + ${tabBarHeight}px + 1rem)`
+          section.style.scrollMarginTop = `calc(${HEADER_H} + ${tabBarHeight}px + 1rem)`
         }
         if (!el.id) {
           el.id = generateId(el.textContent)
@@ -100,12 +103,12 @@ export function PageLayout({ title, description, tabs = [] }) {
 
   return (
     <div>
-      <div className="px-[var(--space-8)] py-[var(--space-8)] bg-[var(--surface_brand)]">
-        <h1 className="text-5xl [font-weight:var(--weight-semibold)] tracking-[var(--tracking-tight)] leading-[var(--leading-tight)] text-[var(--color-text-on-color)] mb-[var(--space-2)] max-md:text-3xl">
+      <div className="px-[var(--medo-space-xl)] pt-[var(--medo-space-2xl)] pb-[var(--medo-space-xl)] bg-[var(--medo-surface)] border-b border-[var(--medo-border-subtle)]">
+        <h1 className="[font-size:var(--medo-text-4xl)] [font-weight:var(--medo-weight-bold)] tracking-[var(--medo-tracking-tight)] [line-height:var(--medo-leading-tight)] text-[var(--medo-text)] mb-[var(--medo-space-xs)] max-md:[font-size:var(--medo-text-2xl)]">
           {title}
         </h1>
         {description && (
-          <p className="text-lg text-[var(--color-text-on-color)] leading-[var(--leading-relaxed)] max-w-[50%] max-[1024px]:max-w-[100%] [font-weight:var(--weight-light)]">
+          <p className="[font-size:var(--medo-text-lg)] text-[var(--medo-text-muted)] [line-height:var(--medo-leading-relaxed)] max-w-[60ch] max-[1024px]:max-w-[100%]">
             {description}
           </p>
         )}
@@ -114,15 +117,16 @@ export function PageLayout({ title, description, tabs = [] }) {
       <TabsPrimitive value={active} onValueChange={handleTabClick} className="block">
         <div
           ref={tabBarRef}
-          className="sticky top-[var(--header-height)] [z-index:calc(var(--z-sticky)-1)] bg-[var(--surface_100)] border-b border-[var(--color-border)] overflow-x-auto mb-[var(--space-10)]"
+          className="sticky z-20 bg-[var(--medo-surface)] border-b border-[var(--medo-border)] overflow-x-auto mb-[var(--medo-space-2xl)]"
+          style={{ top: HEADER_H }}
         >
-          <TabsList variant="line" className="w-full h-[var(--tab-bar-height)] rounded-none p-0 justify-start">
+          <TabsList variant="line" className="w-full h-[var(--medo-space-2xl)] rounded-none p-0 justify-start">
             {tabs.map(tab => (
               <TabsTrigger
                 key={tab.id}
                 value={tab.id}
                 data-tab-id={tab.id}
-                className="flex-none h-full rounded-none px-[var(--space-6)] text-md text-[var(--color-text-secondary)] data-active:text-[var(--color-link-primary)] data-active:[font-weight:var(--weight-semibold)] after:bg-[var(--border-brand-primary)]"
+                className="flex-none h-full rounded-none px-[var(--medo-space-lg)] text-sm [font-family:var(--medo-font-sans)] text-[var(--medo-text-muted)] transition-colors duration-150 ease-out hover:text-[var(--medo-text)] data-active:text-[var(--medo-action)] data-active:[font-weight:var(--medo-weight-semibold)] after:bg-[var(--medo-action)]"
               >
                 {tab.label}
               </TabsTrigger>
@@ -130,7 +134,7 @@ export function PageLayout({ title, description, tabs = [] }) {
           </TabsList>
         </div>
 
-        <div className="flex flex-row mb-[var(--space-8)]">
+        <div className="flex flex-row mb-[var(--medo-space-xl)]">
           <div ref={contentRef} className="flex-1 min-w-0">
             {tabs.map(tab =>
               tab.content ? (
@@ -141,8 +145,11 @@ export function PageLayout({ title, description, tabs = [] }) {
             )}
           </div>
           {headings.length > 0 && (
-            <div className="w-[240px] flex-shrink-0 hidden md:block pr-[var(--space-8)]">
-              <div className="sticky overflow-y-auto pt-[var(--space-6)] pb-[var(--space-6)]" style={{ top: `calc(var(--header-height) + ${tabBarHeight}px)`, maxHeight: `calc(100vh - var(--header-height) - ${tabBarHeight}px)` }}>
+            <div className="w-[240px] flex-shrink-0 hidden md:block pr-[var(--medo-space-xl)]">
+              <div
+                className="sticky overflow-y-auto pt-[var(--medo-space-lg)] pb-[var(--medo-space-lg)]"
+                style={{ top: `calc(${HEADER_H} + ${tabBarHeight}px)`, maxHeight: `calc(100vh - ${HEADER_H} - ${tabBarHeight}px)` }}
+              >
                 <TableOfContents headings={headings} activeId={activeId} />
               </div>
             </div>
@@ -151,10 +158,10 @@ export function PageLayout({ title, description, tabs = [] }) {
       </TabsPrimitive>
 
       {headings.length > 0 && !sheetOpen && (
-        <div className="block md:hidden fixed bottom-0 left-0 right-0 [z-index:var(--z-sticky)] px-[var(--space-4)] pb-[var(--space-4)]">
+        <div className="block md:hidden fixed bottom-0 left-0 right-0 z-30 px-[var(--medo-space-md)] pb-[var(--medo-space-md)]">
           <button
             onClick={() => setSheetOpen(true)}
-            className="w-full py-[var(--space-3)] bg-[var(--color-brand-primary-500)] text-white rounded-[var(--radius-md)] text-sm [font-weight:var(--weight-semibold)] shadow-[var(--shadow-md)]"
+            className="w-full min-h-[var(--docs-hit-target)] py-[var(--medo-space-sm)] bg-[var(--medo-action)] text-[var(--medo-action-text)] rounded-[var(--medo-radius-md)] text-sm [font-family:var(--medo-font-sans)] [font-weight:var(--medo-weight-medium)] shadow-[var(--medo-shadow-md)] cursor-pointer transition-colors duration-150 ease-out hover:bg-[var(--medo-action-hover)] active:bg-[var(--medo-action-active)] outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--medo-focus-ring)]"
           >
             {t('toc.openButton')}
           </button>
@@ -162,15 +169,15 @@ export function PageLayout({ title, description, tabs = [] }) {
       )}
 
       <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
-        <SheetContent side="bottom" showCloseButton={false} className="max-h-[60vh] overflow-y-auto p-[var(--space-6)] rounded-t-[var(--radius-2xl)]">
-          <div className="flex items-center justify-between mb-[var(--space-5)]">
-            <SheetTitle className="text-md [font-weight:var(--weight-semibold)] text-[var(--color-text-primary)]">
+        <SheetContent side="bottom" showCloseButton={false} className="max-h-[60vh] overflow-y-auto p-[var(--medo-space-lg)] rounded-t-[var(--medo-radius-2xl)] bg-[var(--medo-overlay)] border-[var(--medo-border)]">
+          <div className="flex items-center justify-between mb-[var(--medo-space-lg)]">
+            <SheetTitle className="[font-size:var(--medo-text-base)] [font-family:var(--medo-font-sans)] [font-weight:var(--medo-weight-semibold)] text-[var(--medo-text)]">
               {t('toc.title')}
             </SheetTitle>
             <SheetClose asChild>
-              <button className="text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors duration-[var(--duration-fast)]">
-                <span className="material-symbols-rounded" style={{ fontSize: '1.5rem' }}>close</span>
-                <span className="sr-only">Close</span>
+              <button className="flex items-center justify-center w-[var(--docs-hit-target)] h-[var(--docs-hit-target)] -mr-[var(--medo-space-xs)] rounded-[var(--medo-radius-md)] text-[var(--medo-icon)] cursor-pointer transition-colors duration-150 ease-out hover:bg-[var(--medo-state-hover)] outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--medo-focus-ring)]">
+                <span className="material-symbols-rounded" style={{ fontSize: '24px', lineHeight: 1 }}>close</span>
+                <span className="sr-only">{t('toc.title')}</span>
               </button>
             </SheetClose>
           </div>
@@ -192,9 +199,9 @@ export function Section({ title, children }) {
     : undefined
 
   return (
-    <div id={id} className="mb-[var(--space-10)] px-[var(--space-8)] max-w-[980px]">
+    <div id={id} className="mb-[var(--medo-space-2xl)] px-[var(--medo-space-xl)] max-w-[980px]">
       {title && (
-        <h2 className="text-3xl [font-weight:var(--weight-semibold)] text-[var(--color-text-tertiary)] mb-[var(--space-4)] pb-[var(--space-2)] border-b border-[var(--border-subtle-100)]">
+        <h2 className="[font-size:var(--medo-text-2xl)] [font-family:var(--medo-font-sans)] [font-weight:var(--medo-weight-semibold)] tracking-[var(--medo-tracking-tight)] text-[var(--medo-text)] mb-[var(--medo-space-md)] pb-[var(--medo-space-xs)] border-b border-[var(--medo-divider)]">
           {title}
         </h2>
       )}
@@ -209,7 +216,7 @@ export function GridWrapper({ children, gap }) {
 
   return (
     <div
-      className={`grid gap-[var(--space-6)] ${colClass}`}
+      className={`grid gap-[var(--medo-space-lg)] ${colClass}`}
       style={gap ? { gap } : undefined}
     >
       {children}
@@ -245,7 +252,7 @@ export function Content({ children, className }) {
   return (
     <div
       className={[
-        'mb-[var(--space-8)] [&_ul]:pl-[var(--space-5)] [&_ol]:pl-[var(--space-5)] [&_li]:pl-[var(--space-2)] [&_ul]:list-disc [&_ol]:list-decimal [&_strong]:[font-weight:var(--weight-semibold)] [&_strong]:text-[var(--color-text-primary)] [&_a]:text-[var(--color-link-primary)] [&_a]:underline [&_a]:[text-underline-offset:3px] [&_a:hover]:text-[var(--color-link-primary-hover)]',
+        'mb-[var(--medo-space-xl)] text-[var(--medo-text)] [&_ul]:pl-[var(--medo-space-lg)] [&_ol]:pl-[var(--medo-space-lg)] [&_li]:pl-[var(--medo-space-xs)] [&_ul]:list-disc [&_ol]:list-decimal [&_strong]:[font-weight:var(--medo-weight-semibold)] [&_strong]:text-[var(--medo-text)] [&_a]:text-[var(--medo-text-link)] [&_a]:underline [&_a]:[text-underline-offset:3px] [&_a:hover]:text-[var(--medo-text-link-hover)]',
         className,
       ].filter(Boolean).join(' ')}
     >

@@ -67,7 +67,8 @@
   "search": {
     "placeholder": "Suchen...",
     "noResults":   "Keine Ergebnisse",
-    "open":        "Suche öffnen"
+    "open":        "Suche öffnen",
+    "clear":       "Eingabe leeren"
   },
   "footer": {
     "impressum":   "Impressum",

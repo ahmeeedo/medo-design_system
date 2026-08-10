@@ -135,6 +135,11 @@
   --input:               var(--border-subtle-100);
   --ring:                var(--color-focus);
   --radius:              8px;
+
+  /* Docs chrome. In-between values are computed from medo tokens, never
+     hardcoded: 48 + 8 = 56, 32 + 12 = 44 (minimum touch target). */
+  --docs-header-height: calc(var(--medo-space-2xl) + var(--medo-space-xs));
+  --docs-hit-target:    calc(var(--medo-space-xl) + var(--medo-space-sm));
 }
 
 /* Material Symbols Rounded axes. Unlayered on purpose: the material-symbols

@@ -12,21 +12,21 @@ export function TableOfContents({ headings, activeId, onSelect, showTitle = true
   return (
     <nav>
       {showTitle && (
-        <p className="text-xs [font-weight:var(--weight-semibold)] uppercase tracking-[var(--tracking-wide)] text-[var(--color-text-tertiary)] mb-[var(--space-3)]">
+        <p className="[font-family:var(--medo-font-mono)] [font-size:var(--medo-text-xs)] uppercase tracking-[0.12em] text-[var(--medo-text-muted)] mb-[var(--medo-space-sm)]">
           {t('toc.title')}
         </p>
       )}
-      <ul className="flex flex-col gap-[var(--space-1)]">
+      <ul className="flex flex-col gap-[var(--medo-space-3xs)] border-l border-[var(--medo-border-subtle)]">
         {headings.map(({ id, text }) => (
           <li key={id}>
             <a
               href={`#${id}`}
               onClick={(e) => scrollTo(e, id)}
               className={[
-                'block text-md leading-[var(--leading-normal)] py-[var(--space-1)] transition-colors duration-[var(--duration-fast)]',
+                'block [font-family:var(--medo-font-sans)] text-sm [line-height:var(--medo-leading-normal)] pl-[var(--medo-space-sm)] py-[var(--medo-space-2xs)] -ml-px border-l-2 no-underline transition-colors duration-150 ease-out outline-none focus-visible:ring-[3px] focus-visible:ring-inset focus-visible:ring-[var(--medo-focus-ring)]',
                 activeId === id
-                  ? 'text-[var(--color-link-primary)] [font-weight:var(--weight-semibold)]'
-                  : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]',
+                  ? 'text-[var(--medo-action)] [font-weight:var(--medo-weight-medium)] border-l-[var(--medo-action)]'
+                  : 'text-[var(--medo-text-muted)] border-l-transparent hover:text-[var(--medo-text)]',
               ].join(' ')}
             >
               {text}

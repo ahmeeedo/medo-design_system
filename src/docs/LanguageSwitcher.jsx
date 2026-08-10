@@ -7,7 +7,7 @@ export function LanguageSwitcher() {
   return (
     <button
       onClick={toggle}
-      className="px-3 py-1 text-sm font-medium rounded-sm border border-[var(--border-subtle-100)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-[var(--surface_200)] transition-colors cursor-pointer"
+      className="px-[var(--medo-space-sm)] h-[var(--docs-hit-target)] text-sm [font-weight:var(--medo-weight-medium)] [font-family:var(--medo-font-sans)] rounded-[var(--medo-radius-md)] border border-[var(--medo-border)] bg-[var(--medo-surface)] text-[var(--medo-text-subtle)] cursor-pointer transition-colors duration-150 ease-out hover:bg-[var(--medo-state-hover)] hover:text-[var(--medo-text)] outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--medo-focus-ring)]"
     >
       {i18n.language === 'de' ? t('lang.en') : t('lang.de')}
     </button>
