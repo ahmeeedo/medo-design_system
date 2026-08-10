@@ -1,5 +1,6 @@
 export { Button } from './Button/Button'
 export { Icon } from './Icon/Icon'
+export { Field } from './Field/Field'
 export { Input, Textarea, Select, InputWithAddon, MultiSelect, SearchSelect } from './Input/Input'
 export { Toggle, Checkbox, CheckboxGroup, Radio, RadioGroup } from './Toggle/Toggle'
 export { Badge, Tag } from './Badge/Badge'
