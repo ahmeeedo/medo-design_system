@@ -6,7 +6,7 @@ import './Link.css'
    Führt zu einem anderen Ort. Zwei Muster: standalone (eigenständig, ohne Unterstreichung im
    Ruhezustand) und inline (im Fließtext, immer unterstrichen). */
 
-const LINK_ICON_SIZE = { sm: 16, md: 18, lg: 20 }
+const LINK_ICON_SIZE = { sm: 20, md: 22, lg: 24 }
 
 export const Link = forwardRef(function Link({
   children,
@@ -25,7 +25,7 @@ export const Link = forwardRef(function Link({
   ...rest
 }, ref) {
   const glyphName = icon || (external ? 'open_in_new' : null)
-  const glyph = glyphName ? <Icon name={glyphName} size={LINK_ICON_SIZE[size] || 18} /> : null
+  const glyph = glyphName ? <Icon name={glyphName} size={LINK_ICON_SIZE[size] || LINK_ICON_SIZE.md} /> : null
 
   const classes = ['medo-link', 'medo-link--' + variant, 'medo-link--' + size, className]
     .filter(Boolean)

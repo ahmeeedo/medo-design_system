@@ -7,7 +7,7 @@ import './Button.css'
    Hover, Aktiv und Fokus laufen über das Stylesheet der Komponente,
    weil Inline-Styles keine Pseudoklassen abbilden können. */
 
-const ICON_SIZE_FOR = { sm: 16, md: 18, lg: 20 }
+const ICON_SIZE_FOR = { sm: 20, md: 22, lg: 24 }
 
 /* forwardRef, damit der Button als Tooltip-Auslöser und als Radix-`asChild`-Kind taugt —
    beide reichen eine ref an das Kind durch. */
@@ -29,9 +29,9 @@ export const Button = forwardRef(function Button({
   ...rest
 }, ref) {
   const isDisabled = disabled || loading
-  const iconSize = ICON_SIZE_FOR[size] || 18
+  const iconSize = ICON_SIZE_FOR[size] || ICON_SIZE_FOR.md
 
-  const glyph = icon ? <Icon name={icon} size={iconOnly ? iconSize + 2 : iconSize} /> : null
+  const glyph = icon ? <Icon name={icon} size={iconSize} /> : null
   const spinner = loading ? <span className="medo-btn__spinner" /> : null
 
   const content = iconOnly ? (

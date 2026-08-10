@@ -5,7 +5,7 @@
   background: var(--medo-color-stone-1000);
   color: var(--medo-color-white);
   font-family: var(--medo-font-sans);
-  font-size: 13px;
+  font-size: var(--medo-text-sm);
   line-height: 1.45;
   padding: 7px 11px;
   border-radius: 7px;
@@ -16,7 +16,7 @@
 }
 @keyframes medo-tt-in{ from{ opacity: 0; } to{ opacity: 1; } }
 .medo-tt--rich{ padding: 11px 13px; }
-.medo-tt__title{ font-size: 13px; font-weight: 600; margin-bottom: 3px; }
+.medo-tt__title{ font-size: var(--medo-text-sm); font-weight: 600; margin-bottom: 3px; }
 .medo-tt__text{ font-size: var(--medo-text-xs); line-height: 1.5; color: rgba(255,255,255,0.80); }
 .medo-tt__arrow{
   position: absolute;
