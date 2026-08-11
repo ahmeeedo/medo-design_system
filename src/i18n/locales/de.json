@@ -31,7 +31,9 @@
       "overlays":   "Modal",
       "accordion":  "Accordion",
       "menus":      "Menus",
-      "lists":      "Lists",
+      "list":          "List",
+      "containedList": "Contained List",
+      "pagination":    "Pagination",
       "stats":      "Stats / KPI",
       "feedback":   "Feedback",
       "avatar":     "Avatar",
@@ -1806,63 +1808,86 @@
 
   "accordion": {
     "page": {
-      "description": "Aufklappbare Inhaltsabschnitte — einzeln (single) oder mehrere gleichzeitig (allowMultiple) geöffnet."
+      "title":       "Accordion",
+      "description": "Faltet Abschnitte auf und zu. Es spart Fläche für Inhalte, die nicht alle gleichzeitig gebraucht werden — kein Mittel, um eine überfüllte Seite zu ordnen."
+    },
+    "demo": {
+      "i1Title":   "Zulassung und Register",
+      "i1Sub":     "IHK-Registrierung, Vermittlernummer",
+      "i1Content": "Die Registrierung wurde am 12.03.2026 geprüft. Die Vermittlernummer lautet D-4F2K-9TQ8L-24 und gilt bis zum 31.12.2027.",
+      "i2Title":   "Berufshaftpflicht",
+      "i2Meta":    "2 Angaben",
+      "i2Content": "Versicherungssumme 1.500.000,00 € je Schadensfall. Der Nachweis liegt bis zum 30.06.2027 vor.",
+      "i3Title":   "Beitrag und Zahlweise",
+      "i3Sub":     "Halbjährlich, per Lastschrift",
+      "i3Content": "Der nächste Beitrag von 1.234,56 € wird am 04.08.2026 eingezogen. Eine Änderung der Zahlweise wirkt ab der folgenden Fälligkeit.",
+      "i4Title":   "Archivierte Nachweise"
+    },
+    "faq": {
+      "q1": "Wie ändere ich meine Zahlweise?",
+      "a1": "Öffnen Sie den Vertrag und wählen Sie „Zahlweise ändern“. Die Änderung wirkt ab der nächsten Fälligkeit.",
+      "q2": "Wann erhalte ich meinen Nachweis?",
+      "a2": "Der Nachweis steht spätestens zwei Werktage nach Abschluss im Postfach bereit.",
+      "q3": "Kann ich mehrere Standorte hinterlegen?",
+      "a3": "Ja. Ergänzen Sie weitere Standorte in den Praxisdaten; jeder Standort erhält eine eigene Nummer."
     },
     "overview": {
-      "anatomyTitle":  "Anatomie",
-      "anatomyBody":   "Accordion rendert eine Liste von AccordionItems, jedes mit einem Trigger-Button und einem ausklappbaren Content-Bereich.",
-      "an1":           "AccordionItem — Container für ein aufklappbares Element, identifiziert per id",
-      "an2":           "AccordionTrigger — klickbarer Button mit Titel und Chevron-Icon",
-      "an3":           "AccordionContent — ausgeklappter Inhaltsbereich, animiert (height 0 → auto)",
-      "an4":           "allowMultiple — false (Standard): nur ein Item geöffnet; true: mehrere gleichzeitig",
-      "singleTitle":   "Single-Mode (Standard)",
-      "singleBody":    "allowMultiple=false: Öffnen eines Items schließt das vorherige automatisch. Ideal für FAQ oder strukturierte Abschnitte.",
-      "multipleTitle": "Multiple-Mode",
-      "multipleBody":  "allowMultiple=true: Mehrere Items können gleichzeitig geöffnet sein. Geeignet für Feature-Listen oder unabhängige Abschnitte."
+      "anatomyTitle":   "Anatomie",
+      "anatomyBody":    "Jeder Abschnitt besteht aus einer Kopfzeile als Schaltfläche und einem Inhaltsbereich, der über grid-template-rows von 0fr auf 1fr wächst — ohne feste Höhe und ohne Sprung.",
+      "an1":            "title — Aussage, keine Frage außer bei echten FAQ",
+      "an2":            "subtitle — zweite Zeile in der Kopfzeile, kurz und erklärend",
+      "an3":            "meta — Kurzangabe rechts vor dem Zeichen, etwa „3 Angaben“",
+      "an4":            "icon — Ligaturname eines Material Symbols Rounded links in der Kopfzeile",
+      "variantsTitle":  "Varianten",
+      "variantsBody":   "card legt alle Abschnitte in eine Karte mit Trennlinien, separated setzt jeden Abschnitt als eigene Karte ab, plain zeigt nur Linien ohne Rahmen.",
+      "behaviourTitle": "Mehrere offen oder nur einer",
+      "behaviourBody":  "Standard ist multiple: Aufklappen schließt nichts, was gerade gelesen wird. multiple={false} nur, wenn die Abschnitte einander ausschließen. showToggleAll blendet „Alle aufklappen / Alle zuklappen“ ein — bei langen Listen sinnvoll, bei drei Abschnitten überflüssig.",
+      "markerTitle":    "Zeichen rechts",
+      "markerBody":     "Plus und Minus sind der Standard. Der drehende Chevron ist die Alternative, wenn Plus und Minus im Umfeld mit anderer Bedeutung belegt sind. Beides wird nie auf einer Seite gemischt.",
+      "sizesTitle":     "Dichte",
+      "sizesBody":      "md ist der Standard, sm verdichtet Kopfzeile und Inhalt für datenreiche Bereiche.",
+      "faqTitle":       "Im Einsatz: häufige Fragen",
+      "faqBody":        "Für Fragen und Antworten eignen sich abgesetzte Karten mit Chevron und nur einem offenen Abschnitt."
+    },
+    "behaviour": {
+      "multiple": "multiple mit „Alle aufklappen“",
+      "single":   "multiple={false}"
     },
     "usage": {
-      "title":        "Wann Accordion verwenden?",
-      "intro":        "Accordion eignet sich für optionale Details, die nicht immer sichtbar sein müssen — und die Seite sonst zu lang machen würden.",
-      "whenTitle":    "Geeignete Einsätze",
-      "when1":        "FAQ-Bereiche — Fragen und Antworten übersichtlich strukturiert",
-      "when2":        "Einstellungsseiten mit vielen Kategorien, die selten gleichzeitig benötigt werden",
-      "when3":        "Produktbeschreibungen mit optionalen Zusatzinfos (Technische Daten, Lieferbedingungen)",
-      "whenNotTitle": "Wann nicht?",
-      "whenNotBody":  "Kein Accordion für Inhalte, die immer sichtbar sein sollen. Nicht für schrittweise Prozesse (→ Stepper). Kein Accordion, wenn alle Abschnitte gleichzeitig verglichen werden müssen.",
-      "doTitle":      "Do",
-      "dontTitle":    "Don't",
-      "do1":          "Trigger-Titel klar und aussagekräftig formulieren — der Nutzer entscheidet nach dem Titel, ob er aufklappt",
-      "do2":          "Single-Mode für FAQ und strukturierte Abschnitte, Multiple-Mode für unabhängige Features",
-      "do3":          "JSX als content-Prop übergeben, wenn der Inhalt mehr als plain text ist",
-      "dont1":        "Kein Accordion für Inhalte, die der Nutzer immer braucht — wichtige Inhalte nicht verstecken",
-      "dont2":        "Keine Accordions in Accordions verschachteln",
-      "dont3":        "Trigger-Button nicht mit zusätzlichem onClick für andere Aktionen überladen",
-      "doNote":       "Accordion für optionale Zusatzinfos — nicht für Pflichtinformationen.",
-      "dontNote":     "Kein Accordion als Ersatz für Tabs oder Navigation."
+      "whenTitle":     "Wann Accordion",
+      "whenBody":      "Für Nebeninhalte, die einzeln nachgelesen werden: Fragen und Antworten, Detailblöcke eines Formulars, optionale Angaben. Was zum Arbeiten gebraucht wird, steht offen.",
+      "whenNotTitle":  "Wann nicht",
+      "whenNotBody":   "Nicht für Inhalte, die verglichen werden müssen — dann alles offen zeigen. Nicht für Navigation (dafür ContainedList oder Tabs) und nicht für Schritte einer Abfolge (dafür ProgressIndicator). Ein Accordion, in dem alles aufgeklappt werden muss, war die falsche Wahl.",
+      "headerTitle":   "Kopfzeile",
+      "headerBody":    "Der Titel ist eine Aussage, keine Handlung: „Berufshaftpflicht“ statt „Details anzeigen“. subtitle erklärt, meta zählt.",
+      "toggleAllTitle":"Alle aufklappen",
+      "toggleAllBody": "showToggleAll erscheint nur bei multiple. Setzen Sie es bei langen Listen; bei drei Abschnitten kostet es mehr Aufmerksamkeit, als es spart.",
+      "doDontTitle":   "Einsatz",
+      "doTitle":       "Do",
+      "dontTitle":     "Don't",
+      "do1":           "Für sekundären, gruppierbaren Inhalt einsetzen, der Fläche sparen soll",
+      "do2":           "multiple={false} für Abschnitte, die einander ausschließen",
+      "do3":           "Kopfzeilen kurz und eindeutig halten",
+      "dont1":         "Pflichtangaben oder Fehlermeldungen zuklappen",
+      "dont2":         "Ein Accordion in ein Accordion legen",
+      "dont3":         "Einen einzelnen Abschnitt als Accordion setzen — das ist ein Absatz mit Überschrift"
     },
     "code": {
-      "title":         "Code-Beispiele",
-      "baseTitle":     "Basis-Accordion (Single)",
-      "baseDesc":      "items-Array mit id, title und content. allowMultiple=false ist der Standard.",
-      "multipleTitle": "Multiple-Mode",
-      "multipleDesc":  "allowMultiple=true erlaubt mehrere gleichzeitig geöffnete Items.",
-      "jsxTitle":      "JSX als Item-Content",
-      "jsxDesc":       "content kann beliebiges JSX enthalten — nicht nur plain text."
+      "title":            "Code-Beispiele",
+      "basicTitle":       "Basis",
+      "singleTitle":      "Nur ein Abschnitt offen",
+      "controlledTitle":  "Gesteuert",
+      "variantTitle":     "Varianten"
     },
     "a11y": {
-      "title":         "Accessibility",
-      "intro":         "Accordion basiert auf Radix UI und implementiert das WAI-ARIA Disclosure Pattern: role=\"button\" auf dem Trigger, aria-expanded für den Zustand.",
-      "keyboardTitle": "Keyboard-Navigation",
-      "k1":            "Tab — nächsten AccordionTrigger fokussieren",
-      "k2":            "Enter / Space — fokussierten Trigger öffnen oder schließen",
-      "k3":            "Shift+Tab — vorherigen Trigger fokussieren",
-      "k4":            "ArrowUp / ArrowDown — zwischen Triggern navigieren (Radix-Verhalten)",
-      "roleTitle":     "role=\"button\" auf Trigger",
-      "roleBody":      "AccordionTrigger hat role=\"button\" (nicht role=\"tab\") — Screen-Reader kündigen den Trigger als Button an, nicht als Tab.",
-      "expandedTitle": "aria-expanded",
-      "expandedBody":  "Geöffnete Trigger haben aria-expanded=\"true\", geschlossene aria-expanded=\"false\". Screen-Reader lesen den Zustand beim Fokussieren vor.",
-      "focusTitle":    "Fokus-Management",
-      "focusBody":     "Trigger bleiben nach dem Öffnen oder Schließen fokussiert. Der Content-Bereich selbst ist nicht fokussierbar — Inhalte darin (Links, Buttons) sind es."
+      "rolesTitle":    "Rollen",
+      "rolesBody":     "Die Kopfzeile ist eine Schaltfläche mit aria-expanded und aria-controls, der Inhalt eine role=\"region\" mit aria-labelledby. Deaktivierte Abschnitte sind echte disabled-Schaltflächen.",
+      "keyboardTitle": "Tastatur",
+      "key1":          "Enter oder Leertaste — Abschnitt auf- oder zuklappen",
+      "key2":          "Pfeil hoch und runter — zwischen den Kopfzeilen wechseln, deaktivierte werden übersprungen",
+      "key3":          "Pos1 und Ende — zur ersten oder letzten Kopfzeile springen",
+      "domTitle":      "Inhalt bleibt im DOM",
+      "domBody":       "Zugeklappte Abschnitte bleiben im Dokument. Die Browsersuche findet ihren Inhalt auch dann, wenn er nicht sichtbar ist."
     }
   },
 
@@ -1943,69 +1968,246 @@
     }
   },
 
-  "lists": {
+  "list": {
     "page": {
-      "description": "Kompositions-Pattern für strukturierte Listen — Avatar, Badge und Button als Bausteine einer Listenzeile."
+      "title":       "List",
+      "description": "Inhalte strukturiert anzeigen — aufgezählt, nummeriert oder als Inhalts-Zeilen mit Icon. Rein zur Anzeige: nichts darin ist anklickbar."
+    },
+    "demo": {
+      "u1":       "Klarheit vor Dekoration",
+      "u2":       "Für alle gemacht",
+      "u3":       "Einmal entschieden, überall verlässlich",
+      "c1Title":  "IHK-Zulassung",
+      "c1Desc":   "Seit 2014, geprüft am 12.03.2026",
+      "c2Title":  "Region",
+      "c2Desc":   "Karlsruhe und Umkreis 50 km",
+      "c3Title":  "Erreichbarkeit",
+      "c3Desc":   "Montag bis Freitag, 08:00 bis 17:00",
+      "kv1Key":   "Vertragsnummer",
+      "kv2Key":   "Beitrag",
+      "kv3Key":   "Nächste Fälligkeit",
+      "kv4Key":   "Status",
+      "kv4Value": "Aktiv",
+      "empty":    "Noch keine Schwerpunkte hinterlegt."
+    },
+    "variants": {
+      "unordered": "unordered",
+      "ordered":   "ordered",
+      "content":   "content"
+    },
+    "flush": {
+      "withLines":   "Mit Trennlinien",
+      "flushInCard": "flush in einer Karte"
+    },
+    "keyValue": {
+      "columns": "columns",
+      "stacked": "stacked"
     },
     "overview": {
-      "patternTitle":   "Listen als Kompositions-Pattern",
-      "patternBody":    "Es gibt keine eigenständige List-Komponente. Stattdessen werden vorhandene Bausteine (Avatar, Badge, Button) zu Listenzeilen kombiniert. Dieses Pattern ist flexibel und anpassbar an jeden Kontext.",
-      "userListTitle":  "User-Liste",
-      "userListBody":   "Avatar + Name/E-Mail + Status-Badge + Aktions-Button — der häufigste Aufbau einer strukturierten Listenzeile.",
-      "statusOnline":   "Online",
-      "statusAway":     "Away",
-      "statusOffline":  "Offline",
-      "editAction":     "Bearbeiten",
-      "iconListTitle":  "Textliste mit Icon-Präfix",
-      "iconListBody":   "Einfache Listen mit Icon (✓, →, •) links vom Text — für Feature-Listen, Checklisten oder Aufzählungen.",
-      "featureTokens":  "Design Tokens — Farben, Abstände und Radius als CSS Custom Properties",
-      "featureA11y":    "Barrierefreiheit — WAI-ARIA Patterns, vollständige Keyboard-Navigation",
-      "featureI18n":    "Internationalisierung — alle Strings in t(), DE + EN out of the box",
-      "featureComponents": "Komponenten — shadcn/ui-basiert, anpassbar über CSS-Tokens"
+      "variantsTitle":  "Varianten",
+      "variantsBody":   "unordered für Sammlungen ohne Reihenfolge, ordered nur wenn die Reihenfolge etwas bedeutet — die Ziffern stehen dann in DM Mono. content ist die Zeilenform mit Titel, Erklärung und optionalem Icon.",
+      "nestedTitle":    "Verschachtelung",
+      "nestedBody":     "Eine Ebene ist möglich, tiefer nicht. Was weiter gliedern müsste, braucht Überschriften oder ein Accordion.",
+      "flushTitle":     "Trennlinien und flush",
+      "flushBody":      "Inhalts-Zeilen sind durch dünne Linien getrennt. Steht die Liste bereits in einer umrandeten Karte, nimmt flush die Linien weg.",
+      "sizesTitle":     "Dichte",
+      "sizesBody":      "md ist der Standard mit 16 px, sm setzt den Text auf 14 px und verringert die Abstände — für datenreiche Bereiche.",
+      "keyValueTitle":  "Schlüssel-Wert-Liste",
+      "keyValueBody":   "KeyValueList zeigt Detailangaben zu einem Objekt: links das Label, rechts der Wert. Mit numeric stehen Zahlen, Beträge, IDs und Daten in DM Mono mit Tabellenziffern. In schmalen Spalten setzt layout=\"stacked\" beides untereinander.",
+      "emptyTitle":     "Leere Liste",
+      "emptyBody":      "emptyText erklärt, was hier entstehen wird — nie nur „Keine Daten“. Die anlegende Aktion steht daneben, nicht im Text."
     },
     "usage": {
-      "title":          "Wann Listen-Pattern?",
-      "intro":          "Das Listen-Pattern eignet sich für alle Entitäten, die in einer Zeile dargestellt werden — Nutzer, Dateien, Benachrichtigungen, Aktivitäts-Feeds.",
-      "whenTitle":      "Geeignete Einsätze",
-      "when1":          "Nutzer- und Team-Listen mit Avatar, Name und Status",
-      "when2":          "Aktivitäts-Feeds und Benachrichtigungen mit Zeitstempel",
-      "when3":          "Dateilisten, Tabellenalternativen für wenige Spalten",
-      "structureTitle": "Aufbau einer Listenzeile",
-      "partAvatar":     "Visueller Identifier — Avatar mit Initialen oder Profilbild",
-      "partText":       "Primär- und Sekundärtext — Name (font-semibold) und Subtitle (xs, secondary)",
-      "partBadge":      "Status-Indikator — Badge mit variant für Online/Away/Offline",
-      "partAction":     "Kontextaktion — Ghost-Button mit aria-label für den Screen-Reader",
-      "doTitle":        "Do",
-      "dontTitle":      "Don't",
-      "do1":            "aria-label auf Aktions-Buttons setzen: 'Bearbeiten: Anna Klein' statt nur 'Bearbeiten'",
-      "do2":            "ul/li für reine Textlisten, div-Struktur für komplexe Zeilen mit Komponenten",
-      "do3":            "truncate auf Text-Elementen einsetzen, damit lange Namen den Layout nicht brechen",
-      "dont1":          "Keine zu vielen Aktionen pro Zeile — max. 1–2, Rest ins Menu auslagern",
-      "dont2":          "Kein starres Layout — flex-1 und min-w-0 auf Text-Containern für Responsivität",
-      "dont3":          "Kein reines Bild ohne alt-Attribut oder Initialen-Fallback",
-      "doNote":         "Listenzeilen konsistent halten — gleiche Struktur in allen Zeilen.",
-      "dontNote":       "Kein unterschiedliches Layout je nach Datenzustand innerhalb einer Liste."
+      "whenTitle":    "Wann List",
+      "whenBody":     "Für strukturierte, gleichartige Inhalte, die nur gelesen werden. Sobald Zeilen navigieren oder auswählen, ist es eine ContainedList; für Datenzeilen mit Spalten eine Tabelle.",
+      "orderTitle":   "Reihenfolge",
+      "orderBody":    "ordered nur, wenn die Reihenfolge etwas bedeutet — Schritte oder eine Rangfolge. Bei zufälliger Reihenfolge führen Nummern in die Irre.",
+      "nestingTitle": "Verschachtelung",
+      "nestingBody":  "Höchstens eine Ebene. Wer tiefer gliedert, verliert die Übersicht, die die Liste herstellen sollte.",
+      "numbersTitle": "Zahlen und Beträge",
+      "numbersBody":  "Beträge, IDs und Datumsangaben mit numeric markieren, damit sie in DM Mono untereinander stehen. Fehlt ein Wert, steht dort ein Gedankenstrich, nie eine leere Zelle.",
+      "doDontTitle":  "Einsatz",
+      "doTitle":      "Do",
+      "dontTitle":    "Don't",
+      "do1":          "Für strukturierte, gleichartige Inhalte einsetzen",
+      "do2":          "Nur bei echter Hierarchie verschachteln, höchstens eine Ebene",
+      "do3":          "sm für datenreiche Bereiche nutzen",
+      "dont1":        "Anklickbare Zeilen in eine List legen — dafür ContainedList",
+      "dont2":        "Eine Tabelle mit vielen Spalten durch eine Liste ersetzen",
+      "dont3":        "Beträge oder IDs in DM Sans setzen"
     },
     "code": {
       "title":         "Code-Beispiele",
-      "userListTitle": "User-Liste",
-      "userListDesc":  "Avatar + Name/E-Mail + Status-Badge + Aktions-Button mit aria-label.",
-      "cardListTitle": "Liste in Card.Body",
-      "cardListDesc":  "Listenzeilen in Card.Body mit p-0 — die Divider liegen direkt an der Card-Border.",
-      "iconListTitle": "Textliste mit Icon-Präfix",
-      "iconListDesc":  "ul/li-Struktur mit Icon-Symbol links — für Feature-Listen und Aufzählungen."
+      "basicTitle":    "Basis",
+      "contentTitle":  "Inhalts-Zeilen",
+      "keyValueTitle": "KeyValueList",
+      "emptyTitle":    "Leere Liste"
     },
     "a11y": {
-      "title":         "Accessibility",
-      "intro":         "Listen-Pattern sind semantisch flexibel — die richtigen HTML-Elemente hängen vom Inhalt ab.",
-      "semanticTitle": "ul/li vs. div",
-      "semanticBody":  "Reine Textlisten → ul/li (Screen-Reader zählen Einträge vor). Komplexe Zeilen mit mehreren interaktiven Elementen → div-Struktur mit role=\"list\" und role=\"listitem\" wenn semantisch nötig.",
-      "tabTitle":      "Fokus bei klickbaren Zeilen",
-      "tabBody":       "Wenn die gesamte Zeile klickbar ist: tabIndex={0} + role=\"button\" oder role=\"link\" + onKeyDown für Enter/Space. Einzelne Buttons in der Zeile benötigen kein zusätzliches tabIndex.",
-      "ariaTitle":     "aria-label auf Aktions-Buttons",
-      "ariaBody":      "Generische Labels wie 'Bearbeiten' sind für Screen-Reader ohne Kontext. Besser: aria-label='Bearbeiten: Anna Klein' — damit ist jeder Button eindeutig.",
-      "srTitle":       "Screen-Reader-Kontext",
-      "srBody":        "Avatar-Fallback (Initialen) ist kein zugänglicher Text. Das umgebende Listenelement sollte den vollständigen Namen als aria-label oder visiblen Text enthalten."
+      "semanticTitle": "Semantik",
+      "semanticBody":  "unordered rendert ein ul, ordered ein ol, KeyValueList ein dl mit dt und dd. Screenreader kündigen dadurch die Anzahl der Einträge und die Beziehung von Label und Wert an.",
+      "staticTitle":   "Nichts ist anklickbar",
+      "staticBody":    "Die Liste enthält keine Schaltflächen und keinen Fokuspunkt. Wird eine Zeile klickbar gebraucht, ist ContainedList die richtige Komponente — eine List nachträglich fokussierbar zu machen, bricht die Semantik.",
+      "iconTitle":     "Icons in Inhalts-Zeilen",
+      "iconBody":      "Das Icon einer Inhalts-Zeile ist dekorativ und wiederholt den Titel. Es trägt keine eigene Beschriftung; die Aussage steht im Text."
+    }
+  },
+
+  "containedList": {
+    "page": {
+      "title":       "Contained list",
+      "description": "Interaktive Zeilen in einer umrandeten Karte — zum Navigieren oder Auswählen, mit Icon oder Avatar, Beschreibung, Meta und Zeilenaktion."
+    },
+    "demo": {
+      "title":         "Einstellungen",
+      "n1":            "Profil",
+      "n1Desc":        "Name, Foto, Schwerpunkte",
+      "n2":            "Sicherheit",
+      "n2Desc":        "Anmeldung und Zwei-Faktor-Bestätigung",
+      "n3":            "Benachrichtigungen",
+      "n3Desc":        "E-Mail und Postfach",
+      "n4":            "Daten exportieren",
+      "n4Desc":        "Derzeit nicht verfügbar",
+      "p1Desc":        "Gewerbe · Karlsruhe",
+      "p2Desc":        "Vorsorge · Bruchsal",
+      "p3Desc":        "Gewerbe · Ettlingen",
+      "m1":            "Standardversand",
+      "m1Desc":        "Zustellung in 3 bis 5 Werktagen",
+      "m2":            "Expressversand",
+      "m2Desc":        "Zustellung am nächsten Werktag",
+      "m3":            "Wunschtermin",
+      "m3Desc":        "Zustellung an einem gewählten Tag",
+      "d1":            "Quartalsbericht.pdf",
+      "d2":            "Titelbild.png",
+      "d3":            "Umsatz.xlsx",
+      "docsTitle":     "Dokumente",
+      "actionLabel":   "Weitere Aktionen",
+      "modeLabel":     "Versandart",
+      "membersLabel":  "Mitglieder",
+      "contactsLabel": "Kontakte",
+      "empty":         "Noch keine Dokumente abgelegt."
+    },
+    "modes": {
+      "navigation": "navigation",
+      "single":     "single",
+      "multiple":   "multiple"
+    },
+    "overview": {
+      "modesTitle":  "Modi",
+      "modesBody":   "navigation führt weiter: jede Zeile öffnet ein Ziel, rechts steht ein Chevron. single und multiple wählen aus — links steht ein Radio- oder Kontrollkästchen, die gewählte Zeile liegt auf der Auswahlfläche. Ein Modus pro Liste.",
+      "rowTitle":    "Aufbau einer Zeile",
+      "rowBody":     "Der Titel ist Pflicht, alles andere optional:",
+      "row1":        "description erklärt die Zeile, sie wiederholt sie nicht",
+      "row2":        "meta steht rechts in DM Mono für Datum, Anzahl oder Betrag",
+      "row3":        "avatar trägt zwei Buchstaben, icon liegt in einer getönten Fläche",
+      "row4":        "action ersetzt das Chevron und öffnet die Zeile nicht",
+      "groupsTitle": "Gruppen",
+      "groupsBody":  "groups statt items setzt Überschriften in Mono-Versalien, die beim Scrollen oben stehen bleiben — nach Alphabet, Datum oder Kategorie. Die Überschrift selbst ist nie anklickbar.",
+      "sizesTitle":  "Dichte",
+      "sizesBody":   "md ist der Standard, sm verdichtet Zeilenhöhe, Icon und Text für kompakte Bereiche.",
+      "emptyTitle":  "Leerzustand",
+      "emptyBody":   "emptyText erklärt, was hier entstehen wird, und entschuldigt sich nicht. Die anlegende Aktion steht neben oder unter der Karte, nicht als leere Zeile darin."
+    },
+    "usage": {
+      "whenTitle":    "Wann Contained list",
+      "whenBody":     "Für klickbare oder auswählbare Zeilen in einem klar abgegrenzten Container. Braucht die Liste Spalten, Sortierung oder Massenaktionen, ist es eine Tabelle. Ist nichts anklickbar, ist es eine List.",
+      "oneModeTitle": "Ein Modus pro Liste",
+      "oneModeBody":  "Navigieren und Auswählen werden nie gemischt. Wer beides braucht, trennt die Liste oder stellt die Auswahl in eine eigene Ansicht.",
+      "actionTitle":  "Zeilenaktion",
+      "actionBody":   "Höchstens eine Aktion pro Zeile. Sie stoppt den Klick, öffnet die Zeile also nicht, und braucht ein eigenes aria-label. Mehrere Aktionen gehören in ein Menü.",
+      "emptyTitle":   "Leere Liste",
+      "emptyBody":    "Der Text nennt, was hier entstehen wird. „Keine Daten“ sagt nichts über den nächsten Schritt.",
+      "doDontTitle":  "Einsatz",
+      "doTitle":      "Do",
+      "dontTitle":    "Don't",
+      "do1":          "Für klickbare oder auswählbare Zeilen in einem abgegrenzten Container",
+      "do2":          "Gruppen mit haftenden Überschriften bei langen, sortierten Listen",
+      "do3":          "sm in dichten, datenreichen Bereichen",
+      "dont1":        "Navigieren und Mehrfachauswahl in derselben Liste mischen",
+      "dont2":        "Die Zeile anklickbar machen und darin mehrere Links anbieten",
+      "dont3":        "Die Auswahl allein über die Hintergrundfarbe anzeigen"
+    },
+    "code": {
+      "title":       "Code-Beispiele",
+      "navTitle":    "Navigation",
+      "selectTitle": "Auswahl",
+      "groupsTitle": "Gruppen",
+      "actionTitle": "Zeilenaktion und Leerzustand"
+    },
+    "a11y": {
+      "rolesTitle":    "Rollen",
+      "rolesBody":     "navigation rendert role=\"list\", die Auswahlmodi role=\"listbox\" mit role=\"option\" und aria-selected je Zeile. Bei multiple trägt die Liste zusätzlich aria-multiselectable. ariaLabel benennt, worum es in der Liste geht.",
+      "keyboardTitle": "Tastatur",
+      "key1":          "Pfeil hoch und runter — bewegen nur den Fokus, sie wählen nicht aus",
+      "key2":          "Enter oder Leertaste — löst die fokussierte Zeile aus",
+      "key3":          "Pos1 und Ende — springen an den Anfang und ans Ende",
+      "key4":          "Deaktivierte Zeilen werden übersprungen",
+      "actionTitle":   "Zeilenaktion",
+      "actionBody":    "Die Aktion trägt ein eigenes aria-label und liegt außerhalb der Tabulator-Reihenfolge der Zeile. Ohne actionLabel steht dort „Weitere Aktionen“."
+    }
+  },
+
+  "pagination": {
+    "page": {
+      "title":       "Pagination",
+      "description": "Blättert durch eine Menge, die nicht auf eine Seite passt. Sie ist Ortsangabe und Steuerung zugleich: man muss ihr ansehen, wo man ist und wie viel noch kommt."
+    },
+    "demo": {
+      "ariaLabel": "Seitennummerierung"
+    },
+    "window": {
+      "few":      "Wenige Seiten — alle sichtbar",
+      "start":    "Am Anfang",
+      "middle":   "In der Mitte",
+      "siblings": "siblings={2}"
+    },
+    "states": {
+      "first": "Erste Seite — Zurück deaktiviert",
+      "last":  "Letzte Seite — Weiter deaktiviert"
+    },
+    "overview": {
+      "variantsTitle": "Varianten",
+      "variantsBody":  "numbers ist der Normalfall unter einer Liste oder Kartenmenge. bar gehört unter eine Tabelle: links Einträge pro Seite und die Bereichsangabe, rechts die Nummern und bei vielen Seiten der Direktsprung. compact ist für schmale Spalten und Mobil.",
+      "windowTitle":   "Fensterlogik",
+      "windowBody":    "Erste und letzte Seite sind immer sichtbar, um die aktuelle stehen so viele Nachbarn, wie siblings angibt, dazwischen steht eine Auslassung. Die Leiste ändert dadurch beim Blättern kaum ihre Breite.",
+      "statesTitle":   "Ränder",
+      "statesBody":    "An den Rändern sind Zurück und Weiter deaktiviert, nicht ausgeblendet — die Leiste behält ihre Form. Die aktive Seite ist gefüllt und trägt aria-current.",
+      "sizesTitle":    "Dichte",
+      "sizesBody":     "Trefferflächen sind 40 px bei md und 32 px bei sm. Auf Touch-Oberflächen md verwenden."
+    },
+    "usage": {
+      "whenTitle":     "Wann Pagination",
+      "whenBody":      "Für lange, klar geteilte Ergebnismengen: Tabellen, Suchtreffer, Kartenmengen. Lädt die Liste beim Scrollen nach, gibt es keine Pagination — beides zusammen geht nicht.",
+      "positionTitle": "Platzierung",
+      "positionBody":  "Die Leiste steht unter der Menge, auf die sie sich bezieht. Nach einem Seitenwechsel bleibt die Ansicht am Anfang der Liste; die Seite springt nicht in die Mitte.",
+      "pageSizeTitle": "Einträge pro Seite",
+      "pageSizeBody":  "Ändert sich die Anzahl pro Seite, geht die Ansicht auf Seite 1 zurück. Das gehört in den Aufruf: onPageSizeChange setzt Größe und Seite.",
+      "numeralsTitle": "Tabellenziffern",
+      "numeralsBody":  "Alle Zahlen stehen in DM Mono mit Tabellenziffern, damit sie beim Wechsel nicht wandern. Ist die Gesamtzahl bekannt, wird sie gezeigt.",
+      "doDontTitle":   "Einsatz",
+      "doTitle":       "Do",
+      "dontTitle":     "Don't",
+      "do1":           "Die aktuelle Seite deutlich markieren und den Bereich „X–Y von Z“ zeigen",
+      "do2":           "Bei vielen Seiten mit Auslassung arbeiten statt alle Nummern zu zeigen",
+      "do3":           "Auf schmalen Layouts die kompakte Form nutzen",
+      "dont1":         "Die aktive Seite nur durch Fettung markieren",
+      "dont2":         "Zurück und Weiter an den Rändern ausblenden statt zu deaktivieren",
+      "dont3":         "Pagination und nachladendes Scrollen kombinieren"
+    },
+    "code": {
+      "title":              "Code-Beispiele",
+      "numbersTitle":       "Nummern",
+      "barTitle":           "Volle Leiste",
+      "compactTitle":       "Kompakt",
+      "uncontrolledTitle":  "Ungesteuert"
+    },
+    "a11y": {
+      "navTitle":     "Navigationsbereich",
+      "navBody":      "Die Leiste ist ein nav mit aria-label. Jede Nummer ist eine Schaltfläche mit einer Beschriftung wie „Seite 4“, die Auslassung ist aria-hidden und nicht fokussierbar.",
+      "currentTitle": "Aktuelle Seite",
+      "currentBody":  "Die aktive Seite trägt aria-current=\"page\" und ist gefüllt. Die Kennzeichnung liegt damit nicht allein in der Farbe.",
+      "targetTitle":  "Trefferflächen",
+      "targetBody":   "Die Schaltflächen messen 40 px bei md und 32 px bei sm. Auf Touch-Oberflächen ist md die richtige Wahl."
     }
   },
 

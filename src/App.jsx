@@ -26,7 +26,9 @@ import NavigationPage  from './pages/NavigationPage'
 import OverlaysPage    from './pages/OverlaysPage'
 import AccordionPage   from './pages/AccordionPage'
 import MenusPage       from './pages/MenusPage'
-import ListsPage       from './pages/ListsPage'
+import ListPage          from './pages/ListPage'
+import ContainedListPage from './pages/ContainedListPage'
+import PaginationPage    from './pages/PaginationPage'
 import StatsPage       from './pages/StatsPage'
 import FeedbackPage    from './pages/FeedbackPage'
 import AvatarPage      from './pages/AvatarPage'
@@ -78,7 +80,9 @@ function AppContent() {
         <Route path="/overlays"   element={<OverlaysPage />} />
         <Route path="/accordion"  element={<AccordionPage />} />
         <Route path="/menus"      element={<MenusPage />} />
-        <Route path="/lists"      element={<ListsPage />} />
+        <Route path="/list"           element={<ListPage />} />
+        <Route path="/contained-list" element={<ContainedListPage />} />
+        <Route path="/pagination"     element={<PaginationPage />} />
         <Route path="/stats"      element={<StatsPage />} />
         <Route path="/feedback"   element={<FeedbackPage />} />
         <Route path="/avatar"     element={<AvatarPage />} />
