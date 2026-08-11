@@ -149,6 +149,11 @@ export function Select({
     if (onChange) onChange({ target: { value: next, name } })
   }
 
+  const reset = () => {
+    if (!isControlled) setInternal([])
+    if (onChange) onChange({ target: { value: [], name } })
+  }
+
   const commit = (val) => {
     if (!isControlled) setInternal(val)
     if (onChange) onChange({ target: { value: val, name } })
@@ -372,22 +377,43 @@ export function Select({
       id={fieldId + '-list'}
       aria-labelledby={fieldId}
     >
-      {searchable ? (
-        <div className="medo-select__search">
-          <Icon name="search" size={18} color="var(--medo-icon-muted)" />
-          <input
-            ref={searchRef}
-            type="text"
-            className="medo-select__searchctl"
-            value={query}
-            placeholder={searchPlaceholder}
-            aria-label={searchPlaceholder}
-            aria-controls={fieldId + '-list'}
-            aria-autocomplete="list"
-            aria-activedescendant={activeIndex >= 0 ? fieldId + '-opt-' + activeIndex : undefined}
-            onChange={(e) => setQuery(e.target.value)}
-            onKeyDown={onKeyDown}
-          />
+      {multiple || searchable ? (
+        <div className="medo-select__top">
+          {multiple ? (
+            <div className="medo-select__head">
+              <span className="medo-select__count">{chosen.length + ' ausgewählt'}</span>
+              {chosen.length ? (
+                <button
+                  type="button"
+                  className="medo-select__reset"
+                  onMouseDown={(e) => e.preventDefault()}
+                  onClick={reset}
+                >
+                  Zurücksetzen
+                </button>
+              ) : null}
+            </div>
+          ) : null}
+          {searchable ? (
+            <div className="medo-select__search">
+              <Icon name="search" size={18} color="var(--medo-icon-muted)" />
+              <input
+                ref={searchRef}
+                type="text"
+                className="medo-select__searchctl"
+                value={query}
+                placeholder={searchPlaceholder}
+                aria-label={searchPlaceholder}
+                aria-controls={fieldId + '-list'}
+                aria-autocomplete="list"
+                aria-activedescendant={
+                  activeIndex >= 0 ? fieldId + '-opt-' + activeIndex : undefined
+                }
+                onChange={(e) => setQuery(e.target.value)}
+                onKeyDown={onKeyDown}
+              />
+            </div>
+          ) : null}
         </div>
       ) : null}
       {flat.length === 0 ? (
@@ -435,6 +461,17 @@ export function Select({
                   style={{ background: o.flag }}
                 />
               ) : null}
+              {multiple ? (
+                <span
+                  className={
+                    'medo-select__check' +
+                    (isOn(o.value) ? ' medo-select__check--on' : '')
+                  }
+                  aria-hidden="true"
+                >
+                  {isOn(o.value) ? <Icon name="check" size={16} color="var(--medo-action-text)" /> : null}
+                </span>
+              ) : null}
               {o.icon ? <Icon name={o.icon} size={18} color="var(--medo-icon-muted)" /> : null}
               <span className="medo-select__opt-label">
                 {o.label}
@@ -442,7 +479,9 @@ export function Select({
                   <span className="medo-select__opt-desc">{o.description}</span>
                 ) : null}
               </span>
-              {isOn(o.value) ? <Icon name="check" size={18} color="var(--medo-action)" /> : null}
+              {!multiple && isOn(o.value) ? (
+                <Icon name="check" size={18} color="var(--medo-action)" />
+              ) : null}
             </div>
           )
         )

@@ -984,6 +984,7 @@
       "searchTitle":  "Search within the list",
       "searchBody":   "`searchable` shows a search field at the top of the panel and filters the list while typing, matching label and description. Group headings only remain while an entry below them survives; when nothing matches, the panel reports “No matches”. From about ten entries the search belongs there.",
       "flagNote":     "`flag` takes any CSS background value — a colour, a gradient, or `url(…)` for a real flag graphic. The swatch is 20 × 14 px. `description` sits as a second line below the label, for a country code, dialling code or postcode.",
+      "headBody":     "With multiple selection the opened panel carries a header: the selection counter on the left, “Reset” on the right, which clears the whole selection in one step. Entries then show their state as a checkbox on the left instead of a check mark on the right — single selection keeps the check mark.",
       "groupTitle":   "Groups",
       "groupBody":    "Entries can be bundled under headings. Group titles are not selectable and are skipped by keyboard navigation; individual entries can be inactive.",
       "sizesTitle":   "Sizes",
@@ -1013,7 +1014,8 @@
       "chips": "Chips",
       "count": "Counter instead of chips",
       "max":   "At most two chips",
-      "empty": "Without selection"
+      "empty": "Without selection",
+      "head":  "Header with counter and checkboxes"
     },
     "group": {
       "label": "Specialty"
@@ -1068,6 +1070,7 @@
       "key4":          "A single letter jumps to the first entry starting with it.",
       "key5":          "Escape and Tab close the menu.",
       "key6":          "With `searchable` the focus sits in the search field; the arrow keys drive the list from there.",
+      "key7":          "“Reset” in the header is a button of its own and reachable with the Tab key.",
       "chipTitle":     "Removing chips",
       "chipBody":      "Every remove cross on a chip carries an aria-label naming the entry (“Remove selection: Internal medicine”). The “+N” counter lists the hidden entries in its title attribute."
     }

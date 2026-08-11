@@ -122,22 +122,67 @@
 }
 .medo-select__empty{ padding: 12px 10px; font-size: var(--medo-text-sm); color: var(--medo-text-muted); }
 
-/* Bleibt beim Scrollen oben stehen. Der Ring in Panel-Farbe deckt die 6px
-   Panel-Innenabstand links, rechts und oben ab, unter denen sonst Einträge durchlaufen. */
-.medo-select__search{
+/* Kopfzeile und Suchfeld sitzen in einem gemeinsamen Band, das beim Scrollen oben
+   stehen bleibt. Die negativen Ränder heben den 6px-Innenabstand des Panels auf,
+   damit das Band randlos aufliegt; das Padding stellt den Abstand innen wieder her. */
+.medo-select__top{
   position: sticky;
   top: 0;
   z-index: 1;
+  margin: calc(var(--medo-space-xs) * -0.75) calc(var(--medo-space-xs) * -0.75) 0;
+  padding: calc(var(--medo-space-xs) * 0.75);
+  background: var(--medo-overlay);
+}
+
+.medo-select__head{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--medo-space-xs);
+  padding: calc(var(--medo-space-xs) * 0.75) var(--medo-space-xs);
+  border-bottom: var(--medo-border-thin) solid var(--medo-border-subtle);
+}
+.medo-select__count{ font-size: var(--medo-text-sm); color: var(--medo-text-muted); }
+.medo-select__reset{
+  border: none;
+  background: transparent;
+  padding: 0;
+  font-family: var(--medo-font-sans);
+  font-size: var(--medo-text-sm);
+  font-weight: 600;
+  color: var(--medo-action);
+  cursor: pointer;
+  border-radius: var(--medo-radius-sm);
+}
+.medo-select__reset:hover{ color: var(--medo-action-hover); }
+.medo-select__reset:focus-visible{ outline: none; box-shadow: 0 0 0 3px var(--medo-focus-ring); }
+
+/* Kontrollkästchen je Eintrag bei Mehrfachauswahl. */
+.medo-select__check{
+  box-sizing: border-box;
+  flex: none;
+  width: calc(var(--medo-space-md) + var(--medo-space-2xs));
+  height: calc(var(--medo-space-md) + var(--medo-space-2xs));
+  border-radius: var(--medo-radius-sm);
+  background: var(--medo-input-bg);
+  border: var(--medo-border-thin) solid var(--medo-input-border);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 120ms ease-out, border-color 120ms ease-out;
+}
+.medo-select__check--on{ background: var(--medo-action); border-color: var(--medo-action); }
+
+.medo-select__search{
   display: flex;
   align-items: center;
   gap: var(--medo-space-xs);
   height: calc(var(--medo-space-xl) + var(--medo-space-3xs));
   padding: 0 calc(var(--medo-space-xs) + var(--medo-space-3xs));
-  margin-bottom: calc(var(--medo-space-xs) * 0.75);
   background: var(--medo-surface-container);
   border-radius: var(--medo-radius-md);
-  box-shadow: 0 0 0 calc(var(--medo-space-xs) * 0.75) var(--medo-overlay);
 }
+.medo-select__head + .medo-select__search{ margin-top: calc(var(--medo-space-xs) * 0.75); }
 .medo-select__searchctl{
   flex: 1;
   min-width: 0;

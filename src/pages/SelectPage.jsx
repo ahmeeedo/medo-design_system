@@ -207,6 +207,18 @@ export default function SelectPage() {
                 <Select label={t('select.multi.max')} multiple maxChips={2} options={OPTIONS} defaultValue={['allgemein', 'innere', 'derma', 'neuro']} />
                 <Select label={t('select.multi.empty')} multiple options={OPTIONS} />
               </GridWrapper>
+              <p className="[font-size:var(--medo-text-base)] text-[var(--medo-text-muted)] [line-height:var(--medo-leading-relaxed)] mt-[var(--medo-space-lg)] mb-[var(--medo-space-lg)]">
+                {t('select.overview.headBody')}
+              </p>
+              <div className="max-w-[320px] pb-[280px]">
+                <Select
+                  label={t('select.multi.head')}
+                  multiple
+                  options={OPTIONS}
+                  defaultValue={['allgemein', 'innere']}
+                  defaultOpen
+                />
+              </div>
             </Content>
           </Section>
 
@@ -422,6 +434,7 @@ export default function SelectPage() {
                 <li>{t('select.a11y.key4')}</li>
                 <li>{t('select.a11y.key5')}</li>
                 <li>{t('select.a11y.key6')}</li>
+                <li>{t('select.a11y.key7')}</li>
               </ul>
             </Content>
           </Section>
