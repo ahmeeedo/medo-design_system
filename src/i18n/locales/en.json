@@ -28,21 +28,23 @@
       "tables": "Tables",
       "tabs": "Tabs",
       "navigation": "Navigation",
-      "overlays": "Modal",
-      "accordion": "Accordion",
-      "menus": "Menus",
-      "lists": "Lists",
-      "stats": "Stats / KPI",
-      "feedback": "Feedback",
-      "avatar": "Avatar",
-      "skeleton": "Skeleton",
-      "tooltip": "Tooltip",
-      "slider": "Slider",
-      "loadingIndicator": "Loading Indicator",
-      "uploadField": "Upload Field",
-      "datePicker": "Date Picker",
-      "whatIsMedo": "What is med.o?",
-      "releases": "Releases"
+      "overlays":   "Modal",
+      "accordion":  "Accordion",
+      "menus":      "Menus",
+      "list":          "List",
+      "containedList": "Contained List",
+      "pagination":    "Pagination",
+      "stats":      "Stats / KPI",
+      "feedback":   "Feedback",
+      "avatar":     "Avatar",
+      "skeleton":          "Skeleton",
+      "tooltip":           "Tooltip",
+      "slider":            "Slider",
+      "loadingIndicator":  "Loading Indicator",
+      "uploadField":       "Upload Field",
+      "datePicker":        "Date Picker",
+      "whatIsMedo":        "What is med.o?",
+      "releases":          "Releases"
     },
     "aria": {
       "closeMenu": "Close menu",
@@ -440,21 +442,22 @@
       "success": "Specialty accepted."
     },
     "overview": {
-      "singleTitle": "Single selection",
-      "singleBody": "The normal case: one value from a list. The dropdown appears in medo styling, is fully keyboard operable and opens upwards when there is no room below.",
-      "multiTitle": "Multiple selection",
-      "multiBody": "multiple turns the value into an array. The selection always stays on one line: as many chips are shown as fit into a line, the rest appears as a counter. multipleDisplay=\"count\" replaces the chips entirely with “N selected”, maxChips sets a hard upper bound.",
-      "searchTitle": "Search within the list",
-      "searchBody": "`searchable` shows a search field at the top of the panel and filters the list while typing, matching label and description. Group headings only remain while an entry below them survives; when nothing matches, the panel reports “No matches”. From about ten entries the search belongs there.",
-      "flagNote": "`flag` takes any CSS background value — a colour, a gradient, or `url(…)` for a real flag graphic. The swatch is 20 × 14 px. `description` sits as a second line below the label, for a country code, dialling code or postcode.",
-      "groupTitle": "Groups",
-      "groupBody": "Entries can be bundled under headings. Group titles are not selectable and are skipped by keyboard navigation; individual entries can be inactive.",
-      "sizesTitle": "Sizes",
-      "sizesBody": "sm 36px, md 40px, lg 48px — the same heights as the text field.",
-      "statesTitle": "States",
-      "statesBody": "Error, success and disabled behave as on the text field. An empty option list shows a note instead of an empty menu.",
-      "nativeTitle": "Native mode",
-      "nativeBody": "native switches to the operating system's picker. Right for very long lists and for forms that must work without JavaScript — the dropdown cannot be styled then."
+      "singleTitle":  "Single selection",
+      "singleBody":   "The normal case: one value from a list. The dropdown appears in medo styling, is fully keyboard operable and opens upwards when there is no room below.",
+      "multiTitle":   "Multiple selection",
+      "multiBody":    "multiple turns the value into an array. The selection always stays on one line: as many chips are shown as fit into a line, the rest appears as a counter. multipleDisplay=\"count\" replaces the chips entirely with “N selected”, maxChips sets a hard upper bound.",
+      "searchTitle":  "Search within the list",
+      "searchBody":   "`searchable` shows a search field at the top of the panel and filters the list while typing, matching label and description. Group headings only remain while an entry below them survives; when nothing matches, the panel reports “No matches”. From about ten entries the search belongs there.",
+      "flagNote":     "`flag` takes any CSS background value — a colour, a gradient, or `url(…)` for a real flag graphic. The swatch is 20 × 14 px. `description` sits as a second line below the label, for a country code, dialling code or postcode.",
+      "headBody":     "With multiple selection the opened panel carries a header: the selection counter on the left, “Reset” on the right, which clears the whole selection in one step. Entries then show their state as a checkbox on the left instead of a check mark on the right — single selection keeps the check mark.",
+      "groupTitle":   "Groups",
+      "groupBody":    "Entries can be bundled under headings. Group titles are not selectable and are skipped by keyboard navigation; individual entries can be inactive.",
+      "sizesTitle":   "Sizes",
+      "sizesBody":    "sm 36px, md 40px, lg 48px — the same heights as the text field.",
+      "statesTitle":  "States",
+      "statesBody":   "Error, success and disabled behave as on the text field. An empty option list shows a note instead of an empty menu.",
+      "nativeTitle":  "Native mode",
+      "nativeBody":   "native switches to the operating system's picker. Right for very long lists and for forms that must work without JavaScript — the dropdown cannot be styled then."
     },
     "search": {
       "countries": "Countries with flags and description",
@@ -475,8 +478,9 @@
     "multi": {
       "chips": "Chips",
       "count": "Counter instead of chips",
-      "max": "At most two chips",
-      "empty": "Without selection"
+      "max":   "At most two chips",
+      "empty": "Without selection",
+      "head":  "Header with counter and checkboxes"
     },
     "group": {
       "label": "Specialty"
@@ -524,14 +528,15 @@
       "roleTitle": "Roles",
       "roleBody": "The field carries role=\"combobox\" with aria-expanded, aria-haspopup=\"listbox\" and aria-controls. The menu is a role=\"listbox\", each entry a role=\"option\" with aria-selected; the active entry is reported via aria-activedescendant without the focus leaving the field. Multiple selection adds aria-multiselectable.",
       "keyboardTitle": "Keyboard",
-      "key1": "Arrow up and down open the menu and move the active entry.",
-      "key2": "Enter and Space select the active entry; with multiple selection they toggle it.",
-      "key3": "Home and End jump to the first and last selectable entry.",
-      "key4": "A single letter jumps to the first entry starting with it.",
-      "key5": "Escape and Tab close the menu.",
-      "key6": "With `searchable` the focus sits in the search field; the arrow keys drive the list from there.",
-      "chipTitle": "Removing chips",
-      "chipBody": "Every remove cross on a chip carries an aria-label naming the entry (“Remove selection: Internal medicine”). The “+N” counter lists the hidden entries in its title attribute."
+      "key1":          "Arrow up and down open the menu and move the active entry.",
+      "key2":          "Enter and Space select the active entry; with multiple selection they toggle it.",
+      "key3":          "Home and End jump to the first and last selectable entry.",
+      "key4":          "A single letter jumps to the first entry starting with it.",
+      "key5":          "Escape and Tab close the menu.",
+      "key6":          "With `searchable` the focus sits in the search field; the arrow keys drive the list from there.",
+      "key7":          "“Reset” in the header is a button of its own and reachable with the Tab key.",
+      "chipTitle":     "Removing chips",
+      "chipBody":      "Every remove cross on a chip carries an aria-label naming the entry (“Remove selection: Internal medicine”). The “+N” counter lists the hidden entries in its title attribute."
     }
   },
   "searchField": {
@@ -1353,63 +1358,86 @@
   },
   "accordion": {
     "page": {
-      "description": "Expandable content sections — single or multiple open simultaneously (allowMultiple)."
+      "title":       "Accordion",
+      "description": "Folds sections open and closed. It saves space for content that is not all needed at once — not a way to tidy up an overcrowded page."
+    },
+    "demo": {
+      "i1Title":   "Licence and register",
+      "i1Sub":     "Chamber registration, agent number",
+      "i1Content": "The registration was verified on 12.03.2026. The agent number is D-4F2K-9TQ8L-24 and is valid until 31.12.2027.",
+      "i2Title":   "Professional liability",
+      "i2Meta":    "2 entries",
+      "i2Content": "Sum insured 1.500.000,00 € per claim. Proof is on file until 30.06.2027.",
+      "i3Title":   "Premium and payment",
+      "i3Sub":     "Half-yearly, by direct debit",
+      "i3Content": "The next premium of 1.234,56 € will be collected on 04.08.2026. A change of payment method takes effect from the following due date.",
+      "i4Title":   "Archived records"
+    },
+    "faq": {
+      "q1": "How do I change my payment method?",
+      "a1": "Open the contract and choose “Change payment method”. The change takes effect from the next due date.",
+      "q2": "When do I receive my confirmation?",
+      "a2": "The confirmation is available in your inbox no later than two working days after conclusion.",
+      "q3": "Can I register several locations?",
+      "a3": "Yes. Add further locations in the practice details; each location receives its own number."
     },
     "overview": {
-      "anatomyTitle": "Anatomy",
-      "anatomyBody": "Accordion renders a list of AccordionItems, each with a trigger button and a collapsible content area.",
-      "an1": "AccordionItem — container for one expandable element, identified by id",
-      "an2": "AccordionTrigger — clickable button with title and chevron icon",
-      "an3": "AccordionContent — expanded content area, animated (height 0 → auto)",
-      "an4": "allowMultiple — false (default): only one item open; true: multiple simultaneously",
-      "singleTitle": "Single Mode (Default)",
-      "singleBody": "allowMultiple=false: opening one item automatically closes the previous. Ideal for FAQ or structured sections.",
-      "multipleTitle": "Multiple Mode",
-      "multipleBody": "allowMultiple=true: multiple items can be open simultaneously. Suitable for feature lists or independent sections."
+      "anatomyTitle":   "Anatomy",
+      "anatomyBody":    "Each section consists of a header acting as a button and a content area that grows via grid-template-rows from 0fr to 1fr — with no fixed height and no jump.",
+      "an1":            "title — a statement, not a question, except in genuine FAQs",
+      "an2":            "subtitle — second line in the header, short and explanatory",
+      "an3":            "meta — brief note to the right of the marker, such as “3 entries”",
+      "an4":            "icon — ligature name of a Material Symbols Rounded icon on the left of the header",
+      "variantsTitle":  "Variants",
+      "variantsBody":   "card places all sections in one card with dividers, separated sets each section as its own card, plain shows only lines without a frame.",
+      "behaviourTitle": "Several open or only one",
+      "behaviourBody":  "multiple is the default: expanding closes nothing that is currently being read. Use multiple={false} only when the sections exclude one another. showToggleAll adds “Expand all / Collapse all” — useful for long lists, unnecessary with three sections.",
+      "markerTitle":    "Marker on the right",
+      "markerBody":     "Plus and minus are the default. The rotating chevron is the alternative when plus and minus already carry another meaning nearby. The two are never mixed on one page.",
+      "sizesTitle":     "Density",
+      "sizesBody":      "md is the default, sm condenses header and content for data-heavy areas.",
+      "faqTitle":       "In use: frequent questions",
+      "faqBody":        "For questions and answers, separated cards with a chevron and only one open section work well."
+    },
+    "behaviour": {
+      "multiple": "multiple with “Expand all”",
+      "single":   "multiple={false}"
     },
     "usage": {
-      "title": "When to use Accordion?",
-      "intro": "Accordion suits optional details that don't always need to be visible — and that would otherwise make the page too long.",
-      "whenTitle": "Good use cases",
-      "when1": "FAQ sections — questions and answers structured clearly",
-      "when2": "Settings pages with many categories rarely needed simultaneously",
-      "when3": "Product descriptions with optional additional info (technical specs, shipping)",
-      "whenNotTitle": "When not to use?",
-      "whenNotBody": "Don't use Accordion for content that should always be visible. Not for step-by-step processes (→ Stepper). Don't use Accordion when all sections need to be compared simultaneously.",
-      "doTitle": "Do",
-      "dontTitle": "Don't",
-      "do1": "Write clear, descriptive trigger titles — the user decides to expand based on the title",
-      "do2": "Single mode for FAQ and structured sections, multiple mode for independent features",
-      "do3": "Pass JSX as content prop when the content is more than plain text",
-      "dont1": "Don't use Accordion for content the user always needs — don't hide important information",
-      "dont2": "Don't nest accordions inside accordions",
-      "dont3": "Don't overload the trigger button with additional onClick actions",
-      "doNote": "Accordion for optional additional info — not for required information.",
-      "dontNote": "No Accordion as a replacement for Tabs or Navigation."
+      "whenTitle":     "When to use Accordion",
+      "whenBody":      "For secondary content read one piece at a time: questions and answers, detail blocks of a form, optional entries. Whatever is needed to work stays open.",
+      "whenNotTitle":  "When not to use",
+      "whenNotBody":   "Not for content that has to be compared — show everything open instead. Not for navigation (use ContainedList or Tabs) and not for steps in a sequence (use ProgressIndicator). An accordion in which everything has to be expanded was the wrong choice.",
+      "headerTitle":   "Header",
+      "headerBody":    "The title is a statement, not an action: “Professional liability” instead of “Show details”. subtitle explains, meta counts.",
+      "toggleAllTitle":"Expand all",
+      "toggleAllBody": "showToggleAll appears only with multiple. Use it for long lists; with three sections it costs more attention than it saves.",
+      "doDontTitle":   "Usage",
+      "doTitle":       "Do",
+      "dontTitle":     "Don't",
+      "do1":           "Use it for secondary, groupable content that should save space",
+      "do2":           "Use multiple={false} for sections that exclude one another",
+      "do3":           "Keep headers short and unambiguous",
+      "dont1":         "Collapse required entries or error messages",
+      "dont2":         "Nest an accordion inside an accordion",
+      "dont3":         "Use an accordion for a single section — that is a paragraph with a heading"
     },
     "code": {
-      "title": "Code Examples",
-      "baseTitle": "Basic Accordion (Single)",
-      "baseDesc": "items array with id, title, and content. allowMultiple=false is the default.",
-      "multipleTitle": "Multiple Mode",
-      "multipleDesc": "allowMultiple=true allows multiple items open simultaneously.",
-      "jsxTitle": "JSX as Item Content",
-      "jsxDesc": "content can contain any JSX — not just plain text."
+      "title":            "Code Examples",
+      "basicTitle":       "Basic",
+      "singleTitle":      "Only one section open",
+      "controlledTitle":  "Controlled",
+      "variantTitle":     "Variants"
     },
     "a11y": {
-      "title": "Accessibility",
-      "intro": "Accordion is based on Radix UI and implements the WAI-ARIA Disclosure Pattern: role=\"button\" on the trigger, aria-expanded for state.",
-      "keyboardTitle": "Keyboard Navigation",
-      "k1": "Tab — focus the next AccordionTrigger",
-      "k2": "Enter / Space — open or close the focused trigger",
-      "k3": "Shift+Tab — focus the previous trigger",
-      "k4": "ArrowUp / ArrowDown — navigate between triggers (Radix behavior)",
-      "roleTitle": "role=\"button\" on Trigger",
-      "roleBody": "AccordionTrigger has role=\"button\" (not role=\"tab\") — screen readers announce the trigger as a button, not a tab.",
-      "expandedTitle": "aria-expanded",
-      "expandedBody": "Open triggers have aria-expanded=\"true\", closed ones aria-expanded=\"false\". Screen readers read out the state when focusing.",
-      "focusTitle": "Focus Management",
-      "focusBody": "Triggers remain focused after opening or closing. The content area itself is not focusable — elements inside it (links, buttons) are."
+      "rolesTitle":    "Roles",
+      "rolesBody":     "The header is a button with aria-expanded and aria-controls, the content a role=\"region\" with aria-labelledby. Disabled sections are real disabled buttons.",
+      "keyboardTitle": "Keyboard",
+      "key1":          "Enter or Space — expand or collapse the section",
+      "key2":          "Arrow up and down — move between headers, disabled ones are skipped",
+      "key3":          "Home and End — jump to the first or last header",
+      "domTitle":      "Content stays in the DOM",
+      "domBody":       "Collapsed sections remain in the document. Browser search finds their content even when it is not visible."
     }
   },
   "menus": {
@@ -1488,69 +1516,247 @@
       "focusBody": "When opened, focus automatically jumps to the first item. When closed (Escape / selection), focus returns to the trigger."
     }
   },
-  "lists": {
+
+  "list": {
     "page": {
-      "description": "Composition pattern for structured lists — Avatar, Badge, and Button as building blocks of a list row."
+      "title":       "List",
+      "description": "Display content in a structured way — bulleted, numbered, or as content rows with an icon. Purely for display: nothing in it is clickable."
+    },
+    "demo": {
+      "u1":       "Clarity before decoration",
+      "u2":       "Made for everyone",
+      "u3":       "Decided once, dependable everywhere",
+      "c1Title":  "Chamber licence",
+      "c1Desc":   "Since 2014, verified on 12.03.2026",
+      "c2Title":  "Region",
+      "c2Desc":   "Karlsruhe and 50 km around",
+      "c3Title":  "Availability",
+      "c3Desc":   "Monday to Friday, 08:00 to 17:00",
+      "kv1Key":   "Contract number",
+      "kv2Key":   "Premium",
+      "kv3Key":   "Next due date",
+      "kv4Key":   "Status",
+      "kv4Value": "Active",
+      "empty":    "No focus areas recorded yet."
+    },
+    "variants": {
+      "unordered": "unordered",
+      "ordered":   "ordered",
+      "content":   "content"
+    },
+    "flush": {
+      "withLines":   "With dividers",
+      "flushInCard": "flush inside a card"
+    },
+    "keyValue": {
+      "columns": "columns",
+      "stacked": "stacked"
     },
     "overview": {
-      "patternTitle": "Lists as Composition Pattern",
-      "patternBody": "There is no standalone List component. Instead, existing building blocks (Avatar, Badge, Button) are combined into list rows. This pattern is flexible and adaptable to any context.",
-      "userListTitle": "User List",
-      "userListBody": "Avatar + name/email + status badge + action button — the most common structure of a structured list row.",
-      "statusOnline": "Online",
-      "statusAway": "Away",
-      "statusOffline": "Offline",
-      "editAction": "Edit",
-      "iconListTitle": "Text list with icon prefix",
-      "iconListBody": "Simple lists with an icon (✓, →, •) to the left of the text — for feature lists, checklists, or enumerations.",
-      "featureTokens": "Design Tokens — colors, spacing, and radius as CSS custom properties",
-      "featureA11y": "Accessibility — WAI-ARIA patterns, full keyboard navigation",
-      "featureI18n": "Internationalization — all strings in t(), DE + EN out of the box",
-      "featureComponents": "Components — shadcn/ui-based, customizable via CSS tokens"
+      "variantsTitle":  "Variants",
+      "variantsBody":   "unordered for collections without an order, ordered only when the order means something — the numerals are then set in DM Mono. content is the row form with title, explanation, and an optional icon.",
+      "nestedTitle":    "Nesting",
+      "nestedBody":     "One level is possible, no deeper. Anything that would need further structure calls for headings or an Accordion.",
+      "flushTitle":     "Dividers and flush",
+      "flushBody":      "Content rows are separated by thin lines. When the list already sits inside a bordered card, flush removes them.",
+      "sizesTitle":     "Density",
+      "sizesBody":      "md is the default at 16 px, sm sets the text at 14 px and reduces the spacing — for data-heavy areas.",
+      "keyValueTitle":  "Key-value list",
+      "keyValueBody":   "KeyValueList shows the details of one object: the label on the left, the value on the right. With numeric, figures, amounts, IDs, and dates are set in DM Mono with tabular numerals. In narrow columns, layout=\"stacked\" places both below each other.",
+      "emptyTitle":     "Empty list",
+      "emptyBody":      "emptyText explains what will appear here — never just “No data”. The action that creates it sits next to the list, not in the text."
     },
     "usage": {
-      "title": "When to use list patterns?",
-      "intro": "The list pattern suits any entity displayed in a row — users, files, notifications, activity feeds.",
-      "whenTitle": "Good use cases",
-      "when1": "User and team lists with avatar, name, and status",
-      "when2": "Activity feeds and notifications with timestamps",
-      "when3": "File lists, table alternatives for a few columns",
-      "structureTitle": "Anatomy of a list row",
-      "partAvatar": "Visual identifier — Avatar with initials or profile picture",
-      "partText": "Primary and secondary text — name (font-semibold) and subtitle (xs, secondary)",
-      "partBadge": "Status indicator — Badge with variant for Online/Away/Offline",
-      "partAction": "Context action — Ghost button with aria-label for the screen reader",
-      "doTitle": "Do",
-      "dontTitle": "Don't",
-      "do1": "Set aria-label on action buttons: 'Edit: Anna Klein' instead of just 'Edit'",
-      "do2": "Use ul/li for plain text lists, div structure for complex rows with components",
-      "do3": "Apply truncate on text elements to prevent long names from breaking layout",
-      "dont1": "No too many actions per row — max 1–2, put the rest in a Menu",
-      "dont2": "No rigid layout — use flex-1 and min-w-0 on text containers for responsiveness",
-      "dont3": "No image-only without alt attribute or initials fallback",
-      "doNote": "Keep list rows consistent — same structure across all rows.",
-      "dontNote": "No different layout per data state within the same list."
+      "whenTitle":    "When to use List",
+      "whenBody":     "For structured, uniform content that is only read. As soon as rows navigate or select, it is a ContainedList; for data rows with columns, a table.",
+      "orderTitle":   "Order",
+      "orderBody":    "Use ordered only when the order means something — steps or a ranking. With an arbitrary order, numbers mislead.",
+      "nestingTitle": "Nesting",
+      "nestingBody":  "One level at most. Nesting deeper loses the overview the list was meant to create.",
+      "numbersTitle": "Figures and amounts",
+      "numbersBody":  "Mark amounts, IDs, and dates with numeric so they line up in DM Mono. When a value is missing, an em dash stands there, never an empty cell.",
+      "doDontTitle":  "Usage",
+      "doTitle":      "Do",
+      "dontTitle":    "Don't",
+      "do1":          "Use it for structured, uniform content",
+      "do2":          "Nest only where there is real hierarchy, one level at most",
+      "do3":          "Use sm for data-heavy areas",
+      "dont1":        "Put clickable rows into a List — use ContainedList",
+      "dont2":        "Replace a table with many columns by a list",
+      "dont3":        "Set amounts or IDs in DM Sans"
     },
     "code": {
-      "title": "Code Examples",
-      "userListTitle": "User List",
-      "userListDesc": "Avatar + name/email + status badge + action button with aria-label.",
-      "cardListTitle": "List inside Card.Body",
-      "cardListDesc": "List rows in Card.Body with p-0 — dividers sit flush against the card border.",
-      "iconListTitle": "Text list with icon prefix",
-      "iconListDesc": "ul/li structure with icon symbol on the left — for feature lists and enumerations."
+      "title":         "Code Examples",
+      "basicTitle":    "Basic",
+      "contentTitle":  "Content rows",
+      "keyValueTitle": "KeyValueList",
+      "emptyTitle":    "Empty list"
     },
     "a11y": {
-      "title": "Accessibility",
-      "intro": "List patterns are semantically flexible — the right HTML elements depend on the content.",
-      "semanticTitle": "ul/li vs. div",
-      "semanticBody": "Plain text lists → ul/li (screen readers count entries). Complex rows with multiple interactive elements → div structure with role=\"list\" and role=\"listitem\" when semantically needed.",
-      "tabTitle": "Focus on clickable rows",
-      "tabBody": "When the entire row is clickable: tabIndex={0} + role=\"button\" or role=\"link\" + onKeyDown for Enter/Space. Individual buttons in the row need no additional tabIndex.",
-      "ariaTitle": "aria-label on action buttons",
-      "ariaBody": "Generic labels like 'Edit' are contextless for screen readers. Better: aria-label='Edit: Anna Klein' — making every button unambiguous.",
-      "srTitle": "Screen reader context",
-      "srBody": "Avatar fallback (initials) is not accessible text. The surrounding list element should contain the full name as aria-label or visible text."
+      "semanticTitle": "Semantics",
+      "semanticBody":  "unordered renders a ul, ordered an ol, KeyValueList a dl with dt and dd. Screen readers therefore announce the number of entries and the relationship between label and value.",
+      "staticTitle":   "Nothing is clickable",
+      "staticBody":    "The list contains no buttons and no focus target. When a row needs to be clickable, ContainedList is the right component — making a List focusable afterwards breaks the semantics.",
+      "iconTitle":     "Icons in content rows",
+      "iconBody":      "The icon of a content row is decorative and echoes the title. It carries no label of its own; the message is in the text."
+    }
+  },
+
+  "containedList": {
+    "page": {
+      "title":       "Contained list",
+      "description": "Interactive rows in a bordered card — for navigating or selecting, with icon or avatar, description, meta, and a row action."
+    },
+    "demo": {
+      "title":         "Settings",
+      "n1":            "Profile",
+      "n1Desc":        "Name, photo, focus areas",
+      "n2":            "Security",
+      "n2Desc":        "Sign-in and two-factor confirmation",
+      "n3":            "Notifications",
+      "n3Desc":        "Email and inbox",
+      "n4":            "Export data",
+      "n4Desc":        "Currently unavailable",
+      "p1Desc":        "Commercial · Karlsruhe",
+      "p2Desc":        "Pensions · Bruchsal",
+      "p3Desc":        "Commercial · Ettlingen",
+      "m1":            "Standard delivery",
+      "m1Desc":        "Delivery in 3 to 5 working days",
+      "m2":            "Express delivery",
+      "m2Desc":        "Delivery on the next working day",
+      "m3":            "Preferred date",
+      "m3Desc":        "Delivery on a chosen day",
+      "d1":            "Quartalsbericht.pdf",
+      "d2":            "Titelbild.png",
+      "d3":            "Umsatz.xlsx",
+      "docsTitle":     "Documents",
+      "actionLabel":   "More actions",
+      "modeLabel":     "Delivery method",
+      "membersLabel":  "Members",
+      "contactsLabel": "Contacts",
+      "empty":         "No documents filed yet."
+    },
+    "modes": {
+      "navigation": "navigation",
+      "single":     "single",
+      "multiple":   "multiple"
+    },
+    "overview": {
+      "modesTitle":  "Modes",
+      "modesBody":   "navigation leads onwards: every row opens a target, with a chevron on the right. single and multiple select — a radio or checkbox sits on the left and the chosen row rests on the selection surface. One mode per list.",
+      "rowTitle":    "Anatomy of a row",
+      "rowBody":     "The title is required, everything else optional:",
+      "row1":        "description explains the row, it does not repeat it",
+      "row2":        "meta sits on the right in DM Mono for a date, count, or amount",
+      "row3":        "avatar carries two letters, icon sits in a tinted surface",
+      "row4":        "action replaces the chevron and does not open the row",
+      "groupsTitle": "Groups",
+      "groupsBody":  "groups instead of items sets headings in mono capitals that stay at the top while scrolling — by alphabet, date, or category. The heading itself is never clickable.",
+      "sizesTitle":  "Density",
+      "sizesBody":   "md is the default, sm condenses row height, icon, and text for compact areas.",
+      "emptyTitle":  "Empty state",
+      "emptyBody":   "emptyText explains what will appear here and does not apologise. The action that creates it sits next to or below the card, not as an empty row inside it."
+    },
+    "usage": {
+      "whenTitle":    "When to use Contained list",
+      "whenBody":     "For clickable or selectable rows in a clearly bounded container. When the list needs columns, sorting, or bulk actions, it is a table. When nothing is clickable, it is a List.",
+      "oneModeTitle": "One mode per list",
+      "oneModeBody":  "Navigating and selecting are never mixed. If both are needed, split the list or move the selection into its own view.",
+      "actionTitle":  "Row action",
+      "actionBody":   "At most one action per row. It stops the click, so it does not open the row, and needs its own aria-label. Several actions belong in a menu.",
+      "emptyTitle":   "Empty list",
+      "emptyBody":    "The text names what will appear here. “No data” says nothing about the next step.",
+      "doDontTitle":  "Usage",
+      "doTitle":      "Do",
+      "dontTitle":    "Don't",
+      "do1":          "Use it for clickable or selectable rows in a bounded container",
+      "do2":          "Use groups with sticky headings for long, sorted lists",
+      "do3":          "Use sm in dense, data-heavy areas",
+      "dont1":        "Mix navigation and multiple selection in the same list",
+      "dont2":        "Make the row clickable and offer several links inside it",
+      "dont3":        "Show the selection through the background colour alone"
+    },
+    "code": {
+      "title":       "Code Examples",
+      "navTitle":    "Navigation",
+      "selectTitle": "Selection",
+      "groupsTitle": "Groups",
+      "actionTitle": "Row action and empty state"
+    },
+    "a11y": {
+      "rolesTitle":    "Roles",
+      "rolesBody":     "navigation renders role=\"list\", the selection modes role=\"listbox\" with role=\"option\" and aria-selected per row. With multiple, the list also carries aria-multiselectable. ariaLabel names what the list is about.",
+      "keyboardTitle": "Keyboard",
+      "key1":          "Arrow up and down — move the focus only, they do not select",
+      "key2":          "Enter or Space — activates the focused row",
+      "key3":          "Home and End — jump to the start and to the end",
+      "key4":          "Disabled rows are skipped",
+      "actionTitle":   "Row action",
+      "actionBody":    "The action carries its own aria-label and sits outside the row's tab order. Without actionLabel it reads “More actions”."
+    }
+  },
+
+  "pagination": {
+    "page": {
+      "title":       "Pagination",
+      "description": "Pages through a set that does not fit on one screen. It is both position and control: you must be able to see where you are and how much is still to come."
+    },
+    "demo": {
+      "ariaLabel": "Pagination"
+    },
+    "window": {
+      "few":      "Few pages — all visible",
+      "start":    "At the start",
+      "middle":   "In the middle",
+      "siblings": "siblings={2}"
+    },
+    "states": {
+      "first": "First page — previous disabled",
+      "last":  "Last page — next disabled"
+    },
+    "overview": {
+      "variantsTitle": "Variants",
+      "variantsBody":  "numbers is the normal case below a list or a set of cards. bar belongs under a table: entries per page and the range on the left, the numbers and, with many pages, the direct jump on the right. compact is for narrow columns and mobile.",
+      "windowTitle":   "Window logic",
+      "windowBody":    "The first and last page are always visible, around the current one stand as many neighbours as siblings specifies, with an ellipsis in between. The bar therefore barely changes width while paging.",
+      "statesTitle":   "Edges",
+      "statesBody":    "At the edges, previous and next are disabled, not hidden — the bar keeps its shape. The active page is filled and carries aria-current.",
+      "sizesTitle":    "Density",
+      "sizesBody":     "Hit targets are 40 px at md and 32 px at sm. Use md on touch surfaces."
+    },
+    "usage": {
+      "whenTitle":     "When to use Pagination",
+      "whenBody":      "For long, clearly divided result sets: tables, search results, sets of cards. When the list loads more while scrolling, there is no pagination — the two do not go together.",
+      "positionTitle": "Placement",
+      "positionBody":  "The bar sits below the set it refers to. After a page change the view stays at the top of the list; the page does not jump into the middle.",
+      "pageSizeTitle": "Entries per page",
+      "pageSizeBody":  "When the number per page changes, the view returns to page 1. That belongs in the call: onPageSizeChange sets both size and page.",
+      "numeralsTitle": "Tabular numerals",
+      "numeralsBody":  "All figures are set in DM Mono with tabular numerals so they do not shift while paging. When the total is known, it is shown.",
+      "doDontTitle":   "Usage",
+      "doTitle":       "Do",
+      "dontTitle":     "Don't",
+      "do1":           "Mark the current page clearly and show the range “X–Y of Z”",
+      "do2":           "Use an ellipsis with many pages instead of showing every number",
+      "do3":           "Use the compact form on narrow layouts",
+      "dont1":         "Mark the active page by bold type alone",
+      "dont2":         "Hide previous and next at the edges instead of disabling them",
+      "dont3":         "Combine pagination with infinite scrolling"
+    },
+    "code": {
+      "title":              "Code Examples",
+      "numbersTitle":       "Numbers",
+      "barTitle":           "Full bar",
+      "compactTitle":       "Compact",
+      "uncontrolledTitle":  "Uncontrolled"
+    },
+    "a11y": {
+      "navTitle":     "Navigation landmark",
+      "navBody":      "The bar is a nav with aria-label. Every number is a button with a label such as “Page 4”, the ellipsis is aria-hidden and not focusable.",
+      "currentTitle": "Current page",
+      "currentBody":  "The active page carries aria-current=\"page\" and is filled. The marking therefore does not rest on colour alone.",
+      "targetTitle":  "Hit targets",
+      "targetBody":   "The buttons measure 40 px at md and 32 px at sm. On touch surfaces md is the right choice."
     }
   },
   "stats": {

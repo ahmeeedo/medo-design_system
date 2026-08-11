@@ -1,0 +1,64 @@
+.medo-list{
+  font-family: var(--medo-font-sans);
+  color: var(--medo-text);
+  margin: 0;
+  padding-left: 22px;
+  font-size: var(--medo-text-base);
+  line-height: 1.6;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.medo-list--sm{ font-size: var(--medo-text-sm); line-height: 1.45; gap: 5px; padding-left: 20px; }
+.medo-list li::marker{ color: var(--medo-color-stone-500); }
+.medo-list--ordered{ list-style: decimal; }
+.medo-list--ordered > li::marker{ font-family: var(--medo-font-mono); font-size: 0.9em; }
+.medo-list--unordered{ list-style: disc; }
+.medo-list .medo-list{ margin-top: 6px; }
+.medo-list__nested{ list-style: circle; }
+
+/* Inhalts-Zeilen — Icon, Titel, Erklärung, ohne Aufzählungszeichen */
+.medo-list--content{ list-style: none; padding-left: 0; gap: 0; }
+.medo-list__row{
+  display: flex;
+  gap: var(--medo-space-sm);
+  padding: 12px 0;
+  border-top: var(--medo-border-thin) solid var(--medo-divider);
+}
+.medo-list__row:first-child{ border-top: none; }
+.medo-list--flush .medo-list__row{ border-top: none; padding: 6px 0; }
+.medo-list__ic{ color: var(--medo-icon-muted); flex: none; margin-top: 2px; }
+.medo-list__t{ font-size: var(--medo-text-base); font-weight: 500; line-height: 1.5; }
+.medo-list--sm .medo-list__t{ font-size: var(--medo-text-sm); }
+.medo-list__d{ font-size: var(--medo-text-sm); line-height: 1.5; color: var(--medo-text-muted); margin-top: 2px; }
+.medo-list__empty{
+  font-family: var(--medo-font-sans);
+  font-size: var(--medo-text-sm);
+  color: var(--medo-text-muted);
+  padding: 14px 0;
+}
+
+/* Schlüssel-Wert */
+.medo-kv{ font-family: var(--medo-font-sans); margin: 0; }
+.medo-kv__row{
+  display: grid;
+  grid-template-columns: minmax(120px, 34%) 1fr;
+  gap: var(--medo-space-md);
+  padding: 10px 0;
+  border-top: var(--medo-border-thin) solid var(--medo-divider);
+}
+.medo-kv__row:first-child{ border-top: none; }
+.medo-kv--stacked .medo-kv__row{ grid-template-columns: 1fr; gap: 2px; }
+.medo-kv__k{
+  font-size: var(--medo-text-sm);
+  color: var(--medo-text-muted);
+  margin: 0;
+}
+.medo-kv__v{
+  font-size: var(--medo-text-sm);
+  color: var(--medo-text);
+  margin: 0;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.medo-kv__v--mono{ font-family: var(--medo-font-mono); font-variant-numeric: tabular-nums; }
