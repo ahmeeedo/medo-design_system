@@ -44,6 +44,7 @@ export function Field({
       {children}
       {msgText ? (
         <div
+          id={htmlFor ? htmlFor + '-msg' : undefined}
           className={['medo-field__msg', msgKind ? 'medo-field__msg--' + msgKind : null]
             .filter(Boolean)
             .join(' ')}

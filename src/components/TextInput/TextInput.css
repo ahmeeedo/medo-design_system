@@ -1,0 +1,25 @@
+.medo-ti-float{ position: relative; }
+.medo-ti-float .medo-field__box{ height: 52px; align-items: flex-end; padding-bottom: 7px; }
+.medo-ti-float .medo-field__control{ font-size: var(--medo-text-base); }
+.medo-ti-float__label{
+  position: absolute;
+  left: 12px;
+  top: 16px;
+  font-family: var(--medo-font-sans);
+  font-size: var(--medo-text-base);
+  color: var(--medo-text-muted);
+  pointer-events: none;
+  transition: top 140ms ease-out, font-size 140ms ease-out, color 140ms ease-out;
+}
+.medo-ti-float--up .medo-ti-float__label{
+  top: -8px;
+  padding: 0 5px;
+  background: var(--medo-input-bg);
+  font-size: var(--medo-text-xs);
+  font-weight: 500;
+  color: var(--medo-text-muted);
+}
+.medo-ti-float--focus .medo-ti-float__label{ color: var(--medo-action); }
+.medo-ti-float--error .medo-ti-float__label{ color: var(--medo-error-solid); }
+.medo-ti-float--disabled .medo-ti-float__label{ color: var(--medo-text-disabled); background: var(--medo-input-bg-disabled); }
+.medo-ti-float__req{ color: var(--medo-error-solid); margin-left: 2px; }
