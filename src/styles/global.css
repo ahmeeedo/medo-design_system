@@ -140,6 +140,13 @@
      hardcoded: 48 + 8 = 56, 32 + 12 = 44 (minimum touch target). */
   --docs-header-height: calc(var(--medo-space-2xl) + var(--medo-space-xs));
   --docs-hit-target:    calc(var(--medo-space-xl) + var(--medo-space-sm));
+
+  /* Color scale table: 96 + 48 = 144 name column, 48 + 16 = 64 per step. */
+  --docs-scale-label: calc(var(--medo-space-4xl) + var(--medo-space-2xl));
+  --docs-scale-step:  calc(var(--medo-space-2xl) + var(--medo-space-md));
+
+  /* Width of the token demo cards on the foundation pages: 4 × 96 + 16 = 400. */
+  --docs-demo-card: calc(var(--medo-space-4xl) * 4 + var(--medo-space-md));
 }
 
 /* Material Symbols Rounded axes. Unlayered on purpose: the material-symbols
