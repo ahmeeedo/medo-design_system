@@ -10,10 +10,10 @@ function entries(slug, route, pageTitle, tabs) {
 const T = { overview: 'Overview', usage: 'Usage', tokens: 'Tokens', code: 'Code', accessibility: 'Accessibility' }
 
 const FOUNDATION_TABS = [
-  { id: 'overview', section: T.overview },
-  { id: 'usage',    section: T.usage },
-  { id: 'tokens',   section: T.tokens },
-  { id: 'code',     section: T.code },
+  { id: 'overview',      section: T.overview },
+  { id: 'usage',         section: T.usage },
+  { id: 'tokens',        section: T.tokens },
+  { id: 'accessibility', section: T.accessibility },
 ]
 
 const COMPONENT_TABS = [
@@ -24,12 +24,12 @@ const COMPONENT_TABS = [
 ]
 
 export const searchData = [
-  ...entries('colors',     '/colors',     'Colors',                  FOUNDATION_TABS),
-  ...entries('typography', '/typography', 'Typography',              FOUNDATION_TABS),
-  ...entries('spacing',    '/spacing',    'Spacing',                 FOUNDATION_TABS),
-  ...entries('radius',     '/radius',     'Border Radius',           FOUNDATION_TABS),
-  ...entries('shadows',    '/shadows',    'Shadows',                 FOUNDATION_TABS),
-  ...entries('motion',     '/motion',     'Motion',                  FOUNDATION_TABS),
+  ...entries('brand',          '/brand',           'Marke',                   FOUNDATION_TABS),
+  ...entries('brand-colors',   '/brand-colors',    'Farben · Ebene 1 Brand',  FOUNDATION_TABS),
+  ...entries('alias-colors',   '/alias-colors',    'Farben · Ebene 2 Alias',  FOUNDATION_TABS),
+  ...entries('semantic-colors','/semantic-colors', 'Farben · Ebene 3 Semantic', FOUNDATION_TABS),
+  ...entries('typography',     '/typography',      'Typografie',              FOUNDATION_TABS),
+  ...entries('foundations',    '/foundations',     'Grundlagen',              FOUNDATION_TABS),
 
   ...entries('buttons',    '/buttons',    'Buttons',                 COMPONENT_TABS),
   ...entries('inputs',     '/inputs',     'Inputs',                  COMPONENT_TABS),

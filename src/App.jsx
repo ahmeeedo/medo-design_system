@@ -2,12 +2,12 @@ import { useEffect } from 'react'
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import { DocsLayout } from './docs/DocsLayout'
 
-import ColorsPage      from './pages/ColorsPage.jsx'
+import BrandPage          from './pages/BrandPage'
+import BrandColorsPage    from './pages/BrandColorsPage'
+import AliasColorsPage    from './pages/AliasColorsPage'
+import SemanticColorsPage from './pages/SemanticColorsPage'
 import TypographyPage  from './pages/TypographyPage'
-import SpacingPage     from './pages/SpacingPage'
-import RadiusPage      from './pages/RadiusPage'
-import ShadowsPage     from './pages/ShadowsPage'
-import MotionPage      from './pages/MotionPage'
+import FoundationsPage from './pages/FoundationsPage'
 import ButtonPage      from './pages/ButtonPage'
 import LinkPage        from './pages/LinkPage'
 import TextInputPage   from './pages/TextInputPage'
@@ -53,13 +53,13 @@ function AppContent() {
     <DocsLayout>
       <ScrollToTop />
       <Routes>
-        <Route path="/"           element={<Navigate to="/colors" replace />} />
-        <Route path="/colors"     element={<ColorsPage />} />
-        <Route path="/typography" element={<TypographyPage />} />
-        <Route path="/spacing"    element={<SpacingPage />} />
-        <Route path="/radius"     element={<RadiusPage />} />
-        <Route path="/shadows"    element={<ShadowsPage />} />
-        <Route path="/motion"     element={<MotionPage />} />
+        <Route path="/"                element={<Navigate to="/brand" replace />} />
+        <Route path="/brand"           element={<BrandPage />} />
+        <Route path="/brand-colors"    element={<BrandColorsPage />} />
+        <Route path="/alias-colors"    element={<AliasColorsPage />} />
+        <Route path="/semantic-colors" element={<SemanticColorsPage />} />
+        <Route path="/typography"      element={<TypographyPage />} />
+        <Route path="/foundations"     element={<FoundationsPage />} />
         <Route path="/button"       element={<ButtonPage />} />
         <Route path="/link"         element={<LinkPage />} />
         <Route path="/text-input"   element={<TextInputPage />} />

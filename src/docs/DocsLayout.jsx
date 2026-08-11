@@ -19,12 +19,12 @@ const NAV = [
     id: 'foundations',
     section: 'nav.sections.foundations',
     items: [
-      { id: 'colors',     label: 'nav.items.colors' },
-      { id: 'typography', label: 'nav.items.typography' },
-      { id: 'spacing',    label: 'nav.items.spacing' },
-      { id: 'radius',     label: 'nav.items.radius' },
-      { id: 'shadows',    label: 'nav.items.shadows' },
-      { id: 'motion',     label: 'nav.items.motion' },
+      { id: 'brand',           label: 'nav.items.brand' },
+      { id: 'brand-colors',    label: 'nav.items.brandColors' },
+      { id: 'alias-colors',    label: 'nav.items.aliasColors' },
+      { id: 'semantic-colors', label: 'nav.items.semanticColors' },
+      { id: 'typography',      label: 'nav.items.typography' },
+      { id: 'foundations',     label: 'nav.items.foundations' },
     ],
   },
   {
