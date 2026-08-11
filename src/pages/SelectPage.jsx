@@ -38,6 +38,20 @@ const GROUP_CODE = `const optionen = [
 const NATIVE_CODE = `{/* Betriebssystem-Auswahlrad: sehr lange Listen, Formulare ohne JavaScript */}
 <Select label="Land" native options={laender} />`
 
+const SEARCH_CODE = `{/* Ab etwa zehn Einträgen die Suche einblenden.
+    flag nimmt einen CSS-Hintergrundwert: Farbe oder Bild.
+    description steht als zweite Zeile unter der Bezeichnung. */}
+const laender = [
+  { value: 'de', label: 'Deutschland', description: 'DE · +49',
+    flag: 'linear-gradient(180deg, #000 33%, #dd0000 33% 66%, #ffce00 66%)' },
+  { value: 'at', label: 'Österreich',  description: 'AT · +43',
+    flag: 'linear-gradient(180deg, #ed2939 33%, #fff 33% 66%, #ed2939 66%)' },
+  { value: 'ch', label: 'Schweiz',     description: 'CH · +41',
+    flag: 'url(/flags/ch.svg)' },
+]
+
+<Select label="Land" searchable options={laender} placeholder="Land wählen" />`
+
 const OPTIONS = [
   { value: 'allgemein', label: 'Allgemeinmedizin' },
   { value: 'innere', label: 'Innere Medizin' },
@@ -62,6 +76,39 @@ const GROUPED = [
   },
 ]
 
+const stripes = (...c) =>
+  `linear-gradient(180deg, ${c[0]} 33%, ${c[1]} 33% 66%, ${c[2]} 66%)`
+const bars = (...c) =>
+  `linear-gradient(90deg, ${c[0]} 33%, ${c[1]} 33% 66%, ${c[2]} 66%)`
+
+const LAENDER = [
+  { value: 'de', label: 'Deutschland', description: 'DE · +49', flag: stripes('#000000', '#dd0000', '#ffce00') },
+  { value: 'at', label: 'Österreich', description: 'AT · +43', flag: stripes('#ed2939', '#ffffff', '#ed2939') },
+  { value: 'ch', label: 'Schweiz', description: 'CH · +41', flag: '#d52b1e' },
+  { value: 'fr', label: 'Frankreich', description: 'FR · +33', flag: bars('#002395', '#ffffff', '#ed2939') },
+  { value: 'it', label: 'Italien', description: 'IT · +39', flag: bars('#008c45', '#f4f5f0', '#cd212a') },
+  { value: 'nl', label: 'Niederlande', description: 'NL · +31', flag: stripes('#ae1c28', '#ffffff', '#21468b') },
+  { value: 'be', label: 'Belgien', description: 'BE · +32', flag: bars('#000000', '#fdda24', '#ef3340') },
+  { value: 'dk', label: 'Dänemark', description: 'DK · +45', flag: '#c8102e' },
+  { value: 'pl', label: 'Polen', description: 'PL · +48', flag: 'linear-gradient(180deg, #ffffff 50%, #dc143c 50%)' },
+  { value: 'cz', label: 'Tschechien', description: 'CZ · +420', flag: 'linear-gradient(180deg, #ffffff 50%, #d7141a 50%)' },
+  { value: 'es', label: 'Spanien', description: 'ES · +34', flag: stripes('#aa151b', '#f1bf00', '#aa151b') },
+  { value: 'se', label: 'Schweden', description: 'SE · +46', flag: '#006aa7' },
+]
+
+const ORTE = [
+  { value: 'b', label: 'Berlin', description: 'Berlin · 10115' },
+  { value: 'hh', label: 'Hamburg', description: 'Hamburg · 20095' },
+  { value: 'm', label: 'München', description: 'Bayern · 80331' },
+  { value: 'k', label: 'Köln', description: 'Nordrhein-Westfalen · 50667' },
+  { value: 'f', label: 'Frankfurt am Main', description: 'Hessen · 60311' },
+  { value: 's', label: 'Stuttgart', description: 'Baden-Württemberg · 70173' },
+  { value: 'd', label: 'Düsseldorf', description: 'Nordrhein-Westfalen · 40213' },
+  { value: 'l', label: 'Leipzig', description: 'Sachsen · 04109' },
+  { value: 'dd', label: 'Dresden', description: 'Sachsen · 01067' },
+  { value: 'h', label: 'Hannover', description: 'Niedersachsen · 30159' },
+]
+
 const ICON_OPTIONS = [
   { value: 'termin', label: 'Terminvergabe', icon: 'event' },
   { value: 'labor', label: 'Laborbefund', icon: 'science' },
@@ -78,10 +125,28 @@ export default function SelectPage() {
       content: (
         <>
           <DemoPanel
-            component={(values) => (
+            component={(values) => {
+              const data =
+                values.data === 'gruppen' ? GROUPED
+                : values.data === 'laender' ? LAENDER
+                : values.data === 'orte' ? ORTE
+                : OPTIONS
+              const first = values.data === 'gruppen' ? 'allgemein'
+                : values.data === 'laender' ? 'de'
+                : values.data === 'orte' ? 'b'
+                : 'allgemein'
+              const second = values.data === 'gruppen' ? 'innere'
+                : values.data === 'laender' ? 'at'
+                : values.data === 'orte' ? 'hh'
+                : 'innere'
+              return (
               <Select
-                label={t('select.demo.label')}
-                options={values.grouped ? GROUPED : OPTIONS}
+                key={values.data}
+                label={values.data === 'laender' ? t('select.search.countryLabel')
+                  : values.data === 'orte' ? t('select.search.placeLabel')
+                  : t('select.demo.label')}
+                options={data}
+                searchable={values.searchable}
                 size={values.size}
                 multiple={values.multiple}
                 multipleDisplay={values.multipleDisplay}
@@ -95,17 +160,19 @@ export default function SelectPage() {
                 error={values.message === 'error' ? t('select.demo.error') : undefined}
                 success={values.message === 'success' ? t('select.demo.success') : undefined}
                 fullWidth={values.fullWidth}
-                defaultValue={values.multiple ? ['allgemein', 'innere'] : 'allgemein'}
+                defaultValue={values.multiple ? [first, second] : first}
                 style={{ minWidth: '280px' }}
               />
-            )}
+              )
+            }}
             controls={[
+              { id: 'data', type: 'dropdown', label: 'Daten', options: ['einfach', 'gruppen', 'laender', 'orte'], default: 'einfach' },
               { id: 'size', type: 'dropdown', label: 'Size', options: ['sm', 'md', 'lg'], default: 'md' },
               { id: 'multipleDisplay', type: 'dropdown', label: 'Multiple Display', options: ['chips', 'count'], default: 'chips' },
               { id: 'message', type: 'dropdown', label: 'Message', options: ['keine', 'hint', 'error', 'success'], default: 'hint' },
+              { id: 'searchable', type: 'toggle', label: 'Searchable', default: false },
               { id: 'multiple', type: 'toggle', label: 'Multiple', default: false },
               { id: 'maxChips', type: 'toggle', label: 'Max Chips (2)', default: false },
-              { id: 'grouped', type: 'toggle', label: 'Gruppen', default: false },
               { id: 'native', type: 'toggle', label: 'Native', default: false },
               { id: 'icon', type: 'toggle', label: 'Icon', default: false },
               { id: 'required', type: 'toggle', label: 'Required', default: false },
@@ -140,6 +207,43 @@ export default function SelectPage() {
                 <Select label={t('select.multi.max')} multiple maxChips={2} options={OPTIONS} defaultValue={['allgemein', 'innere', 'derma', 'neuro']} />
                 <Select label={t('select.multi.empty')} multiple options={OPTIONS} />
               </GridWrapper>
+            </Content>
+          </Section>
+
+          <Section title={t('select.overview.searchTitle')}>
+            <Content>
+              <p className="[font-size:var(--medo-text-base)] text-[var(--medo-text-muted)] [line-height:var(--medo-leading-relaxed)] mb-[var(--medo-space-lg)]">
+                {t('select.overview.searchBody')}
+              </p>
+              <div className="grid grid-cols-2 max-[640px]:grid-cols-1 gap-[var(--medo-space-lg)] pb-[var(--medo-space-2xl)]">
+                <div>
+                  <p className="[font-size:var(--medo-text-sm)] [font-weight:var(--medo-weight-medium)] text-[var(--medo-text)] mb-[var(--medo-space-xs)]">
+                    {t('select.search.countries')}
+                  </p>
+                  <Select label={t('select.search.countryLabel')} searchable options={LAENDER} placeholder={t('select.search.countryPlaceholder')} />
+                </div>
+                <div>
+                  <p className="[font-size:var(--medo-text-sm)] [font-weight:var(--medo-weight-medium)] text-[var(--medo-text)] mb-[var(--medo-space-xs)]">
+                    {t('select.search.places')}
+                  </p>
+                  <Select label={t('select.search.placeLabel')} searchable options={ORTE} placeholder={t('select.search.placePlaceholder')} />
+                </div>
+                <div>
+                  <p className="[font-size:var(--medo-text-sm)] [font-weight:var(--medo-weight-medium)] text-[var(--medo-text)] mb-[var(--medo-space-xs)]">
+                    {t('select.search.multi')}
+                  </p>
+                  <Select label={t('select.search.countryLabel')} searchable multiple options={LAENDER} defaultValue={['de', 'at']} />
+                </div>
+                <div>
+                  <p className="[font-size:var(--medo-text-sm)] [font-weight:var(--medo-weight-medium)] text-[var(--medo-text)] mb-[var(--medo-space-xs)]">
+                    {t('select.search.open')}
+                  </p>
+                  <Select label={t('select.search.countryLabel')} searchable options={LAENDER} defaultOpen />
+                </div>
+              </div>
+              <p className="[font-size:var(--medo-text-sm)] text-[var(--medo-text-muted)]">
+                {t('select.overview.flagNote')}
+              </p>
             </Content>
           </Section>
 
@@ -220,6 +324,13 @@ export default function SelectPage() {
               </p>
             </Content>
           </Section>
+          <Section title={t('select.usage.searchTitle')}>
+            <Content>
+              <p className="[font-size:var(--medo-text-base)] text-[var(--medo-text-muted)] [line-height:var(--medo-leading-relaxed)]">
+                {t('select.usage.searchBody')}
+              </p>
+            </Content>
+          </Section>
           <Section title={t('select.usage.nativeTitle')}>
             <Content>
               <p className="[font-size:var(--medo-text-base)] text-[var(--medo-text-muted)] [line-height:var(--medo-leading-relaxed)]">
@@ -278,6 +389,11 @@ export default function SelectPage() {
             <CodeBlock language="jsx">{GROUP_CODE}</CodeBlock>
 
             <p className="[font-size:var(--medo-text-sm)] [font-weight:var(--medo-weight-semibold)] text-[var(--medo-text)] mb-[var(--medo-space-2xs)] mt-[var(--medo-space-lg)]">
+              {t('select.code.searchTitle')}
+            </p>
+            <CodeBlock language="jsx">{SEARCH_CODE}</CodeBlock>
+
+            <p className="[font-size:var(--medo-text-sm)] [font-weight:var(--medo-weight-semibold)] text-[var(--medo-text)] mb-[var(--medo-space-2xs)] mt-[var(--medo-space-lg)]">
               {t('select.code.nativeTitle')}
             </p>
             <CodeBlock language="jsx">{NATIVE_CODE}</CodeBlock>
@@ -305,6 +421,7 @@ export default function SelectPage() {
                 <li>{t('select.a11y.key3')}</li>
                 <li>{t('select.a11y.key4')}</li>
                 <li>{t('select.a11y.key5')}</li>
+                <li>{t('select.a11y.key6')}</li>
               </ul>
             </Content>
           </Section>

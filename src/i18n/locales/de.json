@@ -901,6 +901,9 @@
       "singleBody":   "Der Normalfall: ein Wert aus einer Liste. Das Aufklappmenü erscheint im medo-Stil, ist vollständig per Tastatur bedienbar und klappt nach oben auf, wenn unten kein Platz ist.",
       "multiTitle":   "Mehrfachauswahl",
       "multiBody":    "multiple macht aus dem Wert ein Array. Die Auswahl bleibt immer einzeilig: es werden so viele Chips gezeigt, wie in eine Zeile passen, der Rest erscheint als Zähler. multipleDisplay=\"count\" ersetzt die Chips ganz durch „N ausgewählt“, maxChips setzt eine harte Obergrenze.",
+      "searchTitle":  "Suche in der Liste",
+      "searchBody":   "`searchable` blendet oben im Panel ein Suchfeld ein und filtert die Liste beim Tippen über Bezeichnung und Beschreibung. Gruppenüberschriften bleiben nur stehen, solange unter ihnen noch ein Eintrag übrig ist; findet die Suche nichts, meldet das Panel „Keine Treffer“. Ab etwa zehn Einträgen gehört die Suche dazu.",
+      "flagNote":     "`flag` nimmt einen freien CSS-Hintergrundwert — eine Farbe, einen Verlauf oder `url(…)` für eine echte Flaggengrafik. Der Swatch ist 20 × 14 px. `description` steht als zweite Zeile unter der Bezeichnung, etwa für Landeskürzel, Vorwahl oder Postleitzahl.",
       "groupTitle":   "Gruppen",
       "groupBody":    "Einträge lassen sich unter Überschriften bündeln. Gruppentitel sind nicht auswählbar und werden von der Tastatursteuerung übersprungen; einzelne Einträge können inaktiv sein.",
       "sizesTitle":   "Größen",
@@ -909,6 +912,16 @@
       "statesBody":   "Fehler, Erfolg und gesperrt verhalten sich wie beim Textfeld. Eine leere Optionsliste zeigt statt eines leeren Menüs einen Hinweis.",
       "nativeTitle":  "Native Betriebsart",
       "nativeBody":   "native schaltet auf das Auswahlrad des Betriebssystems um. Richtig für sehr lange Listen und für Formulare, die ohne JavaScript funktionieren müssen — das Aufklappmenü ist dann nicht gestaltbar."
+    },
+    "search": {
+      "countries":         "Länder mit Flaggen und Beschreibung",
+      "places":            "Orte mit Beschreibung",
+      "multi":             "Suche mit Mehrfachauswahl",
+      "open":              "Geöffnet mit Suchfeld",
+      "countryLabel":      "Land",
+      "countryPlaceholder":"Land wählen",
+      "placeLabel":        "Ort",
+      "placePlaceholder":  "Ort wählen"
     },
     "single": {
       "empty":  "Ohne Vorauswahl",
@@ -937,11 +950,14 @@
     },
     "usage": {
       "whenTitle":   "Wann einsetzen",
-      "whenBody":    "Das Auswahlfeld gehört zu bekannten, geschlossenen Listen. Bei bis zu etwa fünf Einträgen sind Radio-Buttons besser — sie zeigen alle Möglichkeiten ohne Klick. Bei mehr als etwa fünfzehn Einträgen oder wenn gesucht werden soll, ist das Suchfeld richtig. Für Aktionen statt Werte: das Menü.",
+      "whenBody":    "Das Auswahlfeld gehört zu bekannten, geschlossenen Listen. Bei bis zu etwa fünf Einträgen sind Radio-Buttons besser — sie zeigen alle Möglichkeiten ohne Klick. Ab etwa zehn Einträgen blendet `searchable` eine Suche im Panel ein. Geht es um einen offenen Bestand statt um eine geschlossene Liste, ist das Suchfeld richtig. Für Aktionen statt Werte: das Menü.",
       "orderTitle":  "Reihenfolge und Gruppen",
       "orderBody":   "Sortieren Sie nach Häufigkeit oder alphabetisch, nicht zufällig. Gruppen lohnen sich ab etwa zehn Einträgen; die Gruppentitel benennen, wonach gebündelt wurde.",
       "multiTitle":  "Chips oder Zähler",
       "multiBody":   "Chips zeigen die Auswahl direkt und lassen sich einzeln entfernen — richtig, solange die Bezeichnungen kurz sind. Bei langen Bezeichnungen oder schmalen Feldern ist der Zähler ruhiger.",
+      "searchTitle": "Suche in der Liste",
+      "searchBody":  "Ab etwa zehn Einträgen gehört die Suche dazu — darunter kostet sie nur einen Handgriff. Die Suche filtert eine bekannte, geschlossene Liste; sie ersetzt nicht das Suchfeld, das über einen offenen Bestand sucht. Bei aktiver Suche liegt der Fokus im Eingabefeld, der Sprung per Anfangsbuchstabe entfällt dadurch.",
+      "searchTitle": "Suche, Flaggen und Beschreibung",
       "nativeTitle": "Native Betriebsart",
       "nativeBody":  "native ist die richtige Wahl bei sehr langen Listen und in Formularen, die ohne JavaScript funktionieren müssen. Der Preis ist das nicht gestaltbare Aufklappmenü — mischen Sie beide Betriebsarten nicht innerhalb eines Formulars.",
       "doDontTitle": "Do und Don't",
@@ -950,7 +966,7 @@
       "do2":         "Ab etwa zehn Einträgen in Gruppen bündeln.",
       "do3":         "Bei bis zu fünf Einträgen Radio-Buttons vorziehen.",
       "dontTitle":   "Don't",
-      "dont1":       "Die Liste nicht als Suchfeld missbrauchen.",
+      "dont1":       "Die Liste nicht für einen offenen Bestand nutzen.",
       "dont2":       "Keine Aktionen in die Liste legen — dafür das Menü.",
       "dont3":       "Beide Betriebsarten nicht im selben Formular mischen."
     },
@@ -959,6 +975,7 @@
       "basicTitle":  "Grundform",
       "multiTitle":  "Mehrfachauswahl",
       "groupTitle":  "Gruppen",
+      "searchTitle": "Suche, Flaggen und Beschreibung",
       "nativeTitle": "Native Betriebsart"
     },
     "a11y": {
@@ -970,6 +987,7 @@
       "key3":          "Pos1 und Ende springen zum ersten und letzten auswählbaren Eintrag.",
       "key4":          "Ein Buchstabe springt zum ersten Eintrag, der damit beginnt.",
       "key5":          "Escape und Tabulator schließen das Menü.",
+      "key6":          "Mit `searchable` liegt der Fokus im Suchfeld; die Pfeiltasten steuern von dort aus die Liste.",
       "chipTitle":     "Chips entfernen",
       "chipBody":      "Jedes Entfernen-Kreuz an einem Chip trägt ein aria-label, das den Eintrag beim Namen nennt („Auswahl entfernen: Innere Medizin“). Der Zähler „+N“ führt die verdeckten Einträge im title-Attribut."
     }

@@ -105,7 +105,51 @@
 .medo-select__opt--selected.medo-select__opt--active{ background: var(--medo-color-teal-200); }
 .medo-select__opt--disabled{ color: var(--medo-text-disabled); cursor: not-allowed; }
 .medo-select__opt-label{ flex: 1; min-width: 0; }
+.medo-select__opt-desc{
+  display: block;
+  font-size: var(--medo-text-xs);
+  color: var(--medo-text-muted);
+  font-weight: 400;
+}
+/* Freier CSS-Hintergrundwert: Farbe oder Bild. */
+.medo-select__flag{
+  flex: none;
+  width: calc(var(--medo-space-md) + var(--medo-space-2xs));
+  height: calc(var(--medo-space-sm) + var(--medo-space-3xs));
+  border-radius: calc(var(--medo-radius-sm) / 2);
+  background-size: cover;
+  background-position: center;
+}
 .medo-select__empty{ padding: 12px 10px; font-size: var(--medo-text-sm); color: var(--medo-text-muted); }
+
+/* Bleibt beim Scrollen oben stehen. Der Ring in Panel-Farbe deckt die 6px
+   Panel-Innenabstand links, rechts und oben ab, unter denen sonst Einträge durchlaufen. */
+.medo-select__search{
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: var(--medo-space-xs);
+  height: calc(var(--medo-space-xl) + var(--medo-space-3xs));
+  padding: 0 calc(var(--medo-space-xs) + var(--medo-space-3xs));
+  margin-bottom: calc(var(--medo-space-xs) * 0.75);
+  background: var(--medo-surface-container);
+  border-radius: var(--medo-radius-md);
+  box-shadow: 0 0 0 calc(var(--medo-space-xs) * 0.75) var(--medo-overlay);
+}
+.medo-select__searchctl{
+  flex: 1;
+  min-width: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: var(--medo-font-sans);
+  font-size: var(--medo-text-sm);
+  color: var(--medo-input-text);
+  padding: 0;
+}
+.medo-select__searchctl::placeholder{ color: var(--medo-input-placeholder); }
 
 .medo-select__nativectl{
   appearance: none;

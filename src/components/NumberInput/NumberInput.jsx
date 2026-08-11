@@ -46,6 +46,13 @@ export function NumberInput({
 
   const inputRef = useRef(null)
   const holdRef = useRef(null)
+  /* Beim Halten feuert `bump` mehrfach aus demselben Timer, ohne dass dazwischen neu
+     gerendert wird. Ohne diese Ref läse jeder Durchlauf den Wert des Ausgangs-Renders
+     und schriebe immer dasselbe Ergebnis. */
+  const valueRef = useRef(current)
+  useEffect(() => {
+    valueRef.current = current
+  })
 
   const autoId = useId()
   const fieldId = id || autoId
@@ -63,16 +70,23 @@ export function NumberInput({
     precision !== undefined ? precision : (String(step).split('.')[1] || '').length
 
   const commit = (raw) => {
+    valueRef.current = raw
     if (!isControlled) setInternal(raw)
     if (onChange) onChange({ target: { value: raw, name } })
   }
 
   const bump = (dir) => {
     if (locked) return
-    let next = (hasNum ? num : min !== undefined ? min - step : 0) + dir * step
+    const raw = valueRef.current
+    const base = parseFloat(String(raw).replace(',', '.'))
+    const hasBase = !isNaN(base)
+    let next = (hasBase ? base : min !== undefined ? min - step : 0) + dir * step
     if (min !== undefined && next < min) next = min
     if (max !== undefined && next > max) next = max
-    commit(decimals ? next.toFixed(decimals) : String(next))
+    const out = decimals ? next.toFixed(decimals) : String(next)
+    /* Am Grenzwert nicht weiter feuern, solange gehalten wird. */
+    if (out === raw) return
+    commit(out)
   }
 
   /* Gedrückt halten zählt fortlaufend weiter */

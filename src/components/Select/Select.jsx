@@ -48,6 +48,8 @@ export function Select({
   multiple = false,
   multipleDisplay = 'chips',
   maxChips = 0,
+  searchable = false,
+  searchPlaceholder = 'Suchen …',
   defaultOpen = false,
   className,
   style,
@@ -58,6 +60,7 @@ export function Select({
   const [focused, setFocused] = useState(false)
   const [activeIndex, setActiveIndex] = useState(-1)
   const [dropUp, setDropUp] = useState(false)
+  const [query, setQuery] = useState('')
   const [internal, setInternal] = useState(
     defaultValue !== undefined ? defaultValue : multiple ? [] : ''
   )
@@ -67,6 +70,7 @@ export function Select({
 
   const wrapRef = useRef(null)
   const panelRef = useRef(null)
+  const searchRef = useRef(null)
 
   const autoId = useId()
   const fieldId = id || autoId
@@ -79,6 +83,22 @@ export function Select({
   const many = multiple ? (Array.isArray(current) ? current : []) : []
   const isOn = (v) => (multiple ? many.indexOf(v) !== -1 : v === current)
   const chosen = multiple ? flat.filter((o) => !o.group && isOn(o.value)) : []
+
+  /* Gefilterte Liste. Eine Gruppenüberschrift bleibt nur stehen, solange unter ihr noch
+     ein Eintrag übrig ist. Ohne Suchbegriff ist das die unveränderte Liste. */
+  const shown = useMemo(() => {
+    const q = query.trim().toLowerCase()
+    if (!q) return flat
+    const hit = (o) =>
+      String(o.label).toLowerCase().includes(q) ||
+      (o.description ? String(o.description).toLowerCase().includes(q) : false)
+    const out = []
+    flat.forEach((o) => {
+      if (o.group) out.push(o)
+      else if (hit(o)) out.push(o)
+    })
+    return out.filter((o, i) => !o.group || (out[i + 1] && !out[i + 1].group))
+  }, [flat, query])
 
   /* Einzeilige Chips: messen, wie viele in eine Zeile passen. Der Spiegel-Container hält alle
      Chips in voller Breite (unsichtbar), damit die Breiten auch dann bekannt bleiben, wenn im
@@ -162,19 +182,35 @@ export function Select({
       p.scrollTop = el.offsetTop + el.offsetHeight - p.clientHeight + 6
   }, [open, activeIndex])
 
+  /* Suchfeld übernimmt den Fokus, solange das Panel offen ist; beim Schließen wird
+     der Suchbegriff verworfen, damit das Panel beim nächsten Öffnen vollständig ist. */
+  useEffect(() => {
+    if (!searchable) return
+    if (open) searchRef.current?.focus()
+    else setQuery('')
+  }, [open, searchable])
+
+  /* Der aktive Eintrag muss beim Tippen mitwandern, sonst zeigt er ins Leere —
+     auch beim Zurücksetzen des Suchbegriffs, weil sich die Indizes dann wieder ändern. */
+  useEffect(() => {
+    if (!open) return
+    setActiveIndex(shown.findIndex((o) => !o.group && !o.disabled))
+  }, [query])
+
   const openPanel = () => {
-    const i = selected ? flat.indexOf(selected) : flat.findIndex((o) => !o.group && !o.disabled)
+    const i = selected ? shown.indexOf(selected) : shown.findIndex((o) => !o.group && !o.disabled)
     setActiveIndex(i)
     setOpen(true)
   }
 
   const step = (dir) => {
+    if (!shown.some((o) => !o.group && !o.disabled)) return
     let i = activeIndex
-    for (let n = 0; n < flat.length; n++) {
+    for (let n = 0; n < shown.length; n++) {
       i += dir
-      if (i < 0) i = flat.length - 1
-      if (i >= flat.length) i = 0
-      const o = flat[i]
+      if (i < 0) i = shown.length - 1
+      if (i >= shown.length) i = 0
+      const o = shown[i]
       if (o && !o.group && !o.disabled) break
     }
     setActiveIndex(i)
@@ -197,18 +233,18 @@ export function Select({
       step(-1)
     } else if (e.key === 'Home') {
       e.preventDefault()
-      setActiveIndex(flat.findIndex((o) => !o.group && !o.disabled))
+      setActiveIndex(shown.findIndex((o) => !o.group && !o.disabled))
     } else if (e.key === 'End') {
       e.preventDefault()
-      for (let i = flat.length - 1; i >= 0; i--) {
-        if (!flat[i].group && !flat[i].disabled) {
+      for (let i = shown.length - 1; i >= 0; i--) {
+        if (!shown[i].group && !shown[i].disabled) {
           setActiveIndex(i)
           break
         }
       }
-    } else if (e.key === 'Enter' || e.key === ' ') {
+    } else if (e.key === 'Enter' || (e.key === ' ' && !searchable)) {
       e.preventDefault()
-      const o = flat[activeIndex]
+      const o = shown[activeIndex]
       if (o && !o.group && !o.disabled) {
         if (multiple) toggle(o.value)
         else {
@@ -217,10 +253,11 @@ export function Select({
         }
       }
     } else if (e.key === 'Escape' || e.key === 'Tab') setOpen(false)
-    else if (e.key.length === 1) {
+    else if (!searchable && e.key.length === 1) {
+      /* Sprung per Anfangsbuchstabe — mit Suchfeld übernimmt das die Eingabe. */
       const q = e.key.toLowerCase()
       const hit = selectable.find((o) => String(o.label).toLowerCase().startsWith(q))
-      if (hit) setActiveIndex(flat.indexOf(hit))
+      if (hit) setActiveIndex(shown.indexOf(hit))
     }
   }
 
@@ -335,10 +372,30 @@ export function Select({
       id={fieldId + '-list'}
       aria-labelledby={fieldId}
     >
+      {searchable ? (
+        <div className="medo-select__search">
+          <Icon name="search" size={18} color="var(--medo-icon-muted)" />
+          <input
+            ref={searchRef}
+            type="text"
+            className="medo-select__searchctl"
+            value={query}
+            placeholder={searchPlaceholder}
+            aria-label={searchPlaceholder}
+            aria-controls={fieldId + '-list'}
+            aria-autocomplete="list"
+            aria-activedescendant={activeIndex >= 0 ? fieldId + '-opt-' + activeIndex : undefined}
+            onChange={(e) => setQuery(e.target.value)}
+            onKeyDown={onKeyDown}
+          />
+        </div>
+      ) : null}
       {flat.length === 0 ? (
         <div className="medo-select__empty">Keine Einträge</div>
+      ) : shown.length === 0 ? (
+        <div className="medo-select__empty">Keine Treffer</div>
       ) : (
-        flat.map((o, i) =>
+        shown.map((o, i) =>
           o.group ? (
             <div key={'g' + i} className="medo-select__group">
               {o.group}
@@ -371,8 +428,20 @@ export function Select({
                 setOpen(false)
               }}
             >
+              {o.flag ? (
+                <span
+                  className="medo-select__flag"
+                  aria-hidden="true"
+                  style={{ background: o.flag }}
+                />
+              ) : null}
               {o.icon ? <Icon name={o.icon} size={18} color="var(--medo-icon-muted)" /> : null}
-              <span className="medo-select__opt-label">{o.label}</span>
+              <span className="medo-select__opt-label">
+                {o.label}
+                {o.description ? (
+                  <span className="medo-select__opt-desc">{o.description}</span>
+                ) : null}
+              </span>
               {isOn(o.value) ? <Icon name="check" size={18} color="var(--medo-action)" /> : null}
             </div>
           )

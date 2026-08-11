@@ -901,6 +901,9 @@
       "singleBody":   "The normal case: one value from a list. The dropdown appears in medo styling, is fully keyboard operable and opens upwards when there is no room below.",
       "multiTitle":   "Multiple selection",
       "multiBody":    "multiple turns the value into an array. The selection always stays on one line: as many chips are shown as fit into a line, the rest appears as a counter. multipleDisplay=\"count\" replaces the chips entirely with “N selected”, maxChips sets a hard upper bound.",
+      "searchTitle":  "Search within the list",
+      "searchBody":   "`searchable` shows a search field at the top of the panel and filters the list while typing, matching label and description. Group headings only remain while an entry below them survives; when nothing matches, the panel reports “No matches”. From about ten entries the search belongs there.",
+      "flagNote":     "`flag` takes any CSS background value — a colour, a gradient, or `url(…)` for a real flag graphic. The swatch is 20 × 14 px. `description` sits as a second line below the label, for a country code, dialling code or postcode.",
       "groupTitle":   "Groups",
       "groupBody":    "Entries can be bundled under headings. Group titles are not selectable and are skipped by keyboard navigation; individual entries can be inactive.",
       "sizesTitle":   "Sizes",
@@ -909,6 +912,16 @@
       "statesBody":   "Error, success and disabled behave as on the text field. An empty option list shows a note instead of an empty menu.",
       "nativeTitle":  "Native mode",
       "nativeBody":   "native switches to the operating system's picker. Right for very long lists and for forms that must work without JavaScript — the dropdown cannot be styled then."
+    },
+    "search": {
+      "countries":         "Countries with flags and description",
+      "places":            "Places with description",
+      "multi":             "Search with multiple selection",
+      "open":              "Opened with search field",
+      "countryLabel":      "Country",
+      "countryPlaceholder":"Choose a country",
+      "placeLabel":        "Place",
+      "placePlaceholder":  "Choose a place"
     },
     "single": {
       "empty":  "Without preselection",
@@ -937,11 +950,14 @@
     },
     "usage": {
       "whenTitle":   "When to use",
-      "whenBody":    "The select belongs to known, closed lists. Up to about five entries radio buttons are better — they show every option without a click. Above about fifteen entries, or when people should be able to search, the search field is right. For actions instead of values: the menu.",
+      "whenBody":    "The select belongs to known, closed lists. Up to about five entries radio buttons are better — they show every option without a click. From about ten entries `searchable` shows a search inside the panel. When it is an open body of data rather than a closed list, the search field is right. For actions instead of values: the menu.",
       "orderTitle":  "Order and groups",
       "orderBody":   "Sort by frequency or alphabetically, not randomly. Groups pay off from about ten entries; group titles name what was bundled.",
       "multiTitle":  "Chips or counter",
       "multiBody":   "Chips show the selection directly and can be removed one by one — right as long as the labels are short. With long labels or narrow fields the counter is calmer.",
+      "searchTitle": "Search within the list",
+      "searchBody":  "From about ten entries the search belongs there — below that it only costs an extra step. The search filters a known, closed list; it does not replace the search field, which searches an open body of data. With the search active the focus sits in the input, so the jump by first letter falls away.",
+      "searchTitle": "Search, flags and description",
       "nativeTitle": "Native mode",
       "nativeBody":  "native is the right choice for very long lists and in forms that must work without JavaScript. The price is the unstylable dropdown — do not mix both modes within one form.",
       "doDontTitle": "Do and Don't",
@@ -950,7 +966,7 @@
       "do2":         "Bundle into groups from about ten entries.",
       "do3":         "Prefer radio buttons for up to five entries.",
       "dontTitle":   "Don't",
-      "dont1":       "Don't misuse the list as a search field.",
+      "dont1":       "Don't use the list for an open body of data.",
       "dont2":       "No actions in the list — use the menu for those.",
       "dont3":       "Don't mix both modes within the same form."
     },
@@ -959,6 +975,7 @@
       "basicTitle":  "Basic form",
       "multiTitle":  "Multiple selection",
       "groupTitle":  "Groups",
+      "searchTitle": "Search, flags and description",
       "nativeTitle": "Native mode"
     },
     "a11y": {
@@ -970,6 +987,7 @@
       "key3":          "Home and End jump to the first and last selectable entry.",
       "key4":          "A single letter jumps to the first entry starting with it.",
       "key5":          "Escape and Tab close the menu.",
+      "key6":          "With `searchable` the focus sits in the search field; the arrow keys drive the list from there.",
       "chipTitle":     "Removing chips",
       "chipBody":      "Every remove cross on a chip carries an aria-label naming the entry (“Remove selection: Internal medicine”). The “+N” counter lists the hidden entries in its title attribute."
     }
