@@ -2,7 +2,10 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { PageLayout, Section, Content, DemoPanel } from '../docs/PageLayout'
 import { CodeBlock } from '../docs/CodeBlock'
-import { Breadcrumb, Pagination } from '../components'
+import { Breadcrumb } from '../components'
+/* Alt-Pagination direkt aus dem Modul: das Barrel führt unter diesem Namen
+   inzwischen die portierte Komponente mit anderem Props-Vertrag. */
+import { Pagination } from '../components/Navigation/Navigation'
 
 const BREADCRUMB_CODE = `import { Breadcrumb } from '@/components'
 

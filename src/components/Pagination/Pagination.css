@@ -1,0 +1,101 @@
+.medo-pag{
+  font-family: var(--medo-font-sans);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.medo-pag--sm{ gap: 4px; }
+.medo-pag__btn{
+  box-sizing: border-box;
+  appearance: none;
+  background: var(--medo-surface);
+  border: var(--medo-border-thin) solid transparent;
+  border-radius: var(--medo-radius-md);
+  font-family: inherit;
+  font-size: var(--medo-text-base);
+  font-weight: 500;
+  color: var(--medo-text);
+  min-width: 40px;
+  height: 40px;
+  padding: 0 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  cursor: pointer;
+  font-variant-numeric: tabular-nums;
+  transition: background-color 120ms ease-out, color 120ms ease-out;
+}
+.medo-pag--sm .medo-pag__btn{ min-width: 32px; height: 32px; padding: 0 5px; font-size: var(--medo-text-xs); }
+.medo-pag__btn:hover:not(:disabled){ background: var(--medo-state-hover); }
+.medo-pag__btn:active:not(:disabled){ background: var(--medo-state-pressed); }
+.medo-pag__btn:focus-visible{ outline: none; box-shadow: 0 0 0 3px var(--medo-focus-ring); }
+.medo-pag__btn:disabled{ color: var(--medo-color-stone-400); cursor: not-allowed; }
+.medo-pag__btn--icon{ width: 40px; min-width: 40px; padding: 0; }
+.medo-pag--sm .medo-pag__btn--icon{ width: 32px; min-width: 32px; }
+.medo-pag__btn--active{
+  background: var(--medo-action);
+  color: var(--medo-action-text);
+  font-weight: 600;
+}
+.medo-pag__btn--active:hover:not(:disabled){ background: var(--medo-action-hover); }
+.medo-pag__btn--wide{ width: auto; min-width: 0; padding: 0 14px; font-size: var(--medo-text-sm); border-color: var(--medo-border); }
+.medo-pag__ell{
+  min-width: 40px; height: 40px;
+  display: inline-flex; align-items: center; justify-content: center;
+  color: var(--medo-color-stone-500);
+  user-select: none;
+}
+.medo-pag--sm .medo-pag__ell{ min-width: 32px; height: 32px; }
+.medo-pag__info{
+  font-size: var(--medo-text-sm);
+  color: var(--medo-text-muted);
+  font-variant-numeric: tabular-nums;
+}
+.medo-pag__info b{ color: var(--medo-text); font-weight: 600; }
+.medo-pag__bar{
+  font-family: var(--medo-font-sans);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--medo-space-lg);
+  flex-wrap: wrap;
+}
+.medo-pag__side{ display: flex; align-items: center; gap: var(--medo-space-xs); }
+.medo-pag__label{ font-size: var(--medo-text-sm); color: var(--medo-text-muted); }
+.medo-pag__select{
+  box-sizing: border-box;
+  appearance: none;
+  height: 40px;
+  padding: 0 34px 0 12px;
+  border: var(--medo-border-thin) solid var(--medo-input-border, var(--medo-color-stone-400));
+  border-radius: var(--medo-radius-md);
+  background: var(--medo-input-bg, #fff) no-repeat right 12px center;
+  background-image: linear-gradient(45deg, transparent 50%, var(--medo-icon) 50%), linear-gradient(135deg, var(--medo-icon) 50%, transparent 50%);
+  background-size: 5px 5px, 5px 5px;
+  background-position: right 16px center, right 11px center;
+  font-family: var(--medo-font-sans);
+  font-size: var(--medo-text-sm);
+  color: var(--medo-input-text, var(--medo-text));
+  cursor: pointer;
+}
+.medo-pag__select:focus-visible{ outline: none; border-color: var(--medo-action); box-shadow: 0 0 0 3px var(--medo-focus-ring); }
+.medo-pag__jump{
+  box-sizing: border-box;
+  width: 56px;
+  height: 40px;
+  padding: 0 10px;
+  border: var(--medo-border-thin) solid var(--medo-input-border, var(--medo-color-stone-400));
+  border-radius: var(--medo-radius-md);
+  background: var(--medo-input-bg, #fff);
+  font-family: var(--medo-font-mono);
+  font-size: var(--medo-text-sm);
+  color: var(--medo-input-text, var(--medo-text));
+  text-align: center;
+}
+.medo-pag__jump:focus-visible{ outline: none; border-color: var(--medo-action); box-shadow: 0 0 0 3px var(--medo-focus-ring); }
+.medo-pag__bar--sm .medo-pag__select{ height: 32px; font-size: var(--medo-text-xs); padding-right: 30px; }
+.medo-pag__bar--sm .medo-pag__jump{ height: 32px; width: 48px; font-size: var(--medo-text-xs); }
+.medo-pag__bar--sm .medo-pag__label,
+.medo-pag__bar--sm .medo-pag__info{ font-size: var(--medo-text-xs); }
