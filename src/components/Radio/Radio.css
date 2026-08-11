@@ -1,0 +1,106 @@
+.medo-rb{
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-family: var(--medo-font-sans);
+  font-size: var(--medo-text-sm);
+  line-height: var(--medo-text-sm-line);
+  color: var(--medo-text);
+  cursor: pointer;
+  position: relative;
+}
+.medo-rb--disabled{ cursor: not-allowed; color: var(--medo-text-disabled); }
+
+.medo-rb__native{
+  position: absolute;
+  opacity: 0;
+  width: 0; height: 0;
+  margin: 0;
+  pointer-events: none;
+}
+
+.medo-rb__circle{
+  box-sizing: border-box;
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--medo-input-bg);
+  border: var(--medo-border-thin) solid var(--medo-input-border);
+  border-radius: var(--medo-radius-full);
+  transition: border-color 140ms ease-out, box-shadow 140ms ease-out;
+}
+.medo-rb__circle--sm{ width: 18px; height: 18px; }
+.medo-rb__circle--md{ width: 20px; height: 20px; }
+
+.medo-rb__dot{
+  width: 0; height: 0;
+  border-radius: var(--medo-radius-full);
+  background: var(--medo-action);
+  transition: width 140ms ease-out, height 140ms ease-out;
+}
+
+.medo-rb:hover:not(.medo-rb--disabled) .medo-rb__circle{ border-color: var(--medo-input-border-hover); }
+.medo-rb:hover:not(.medo-rb--disabled) .medo-rb__native:checked + .medo-rb__circle{ border-color: var(--medo-action-hover); }
+.medo-rb:hover:not(.medo-rb--disabled) .medo-rb__native:checked + .medo-rb__circle .medo-rb__dot{ background: var(--medo-action-hover); }
+
+.medo-rb__native:focus-visible + .medo-rb__circle{
+  box-shadow: 0 0 0 3px var(--medo-focus-ring);
+  border-color: var(--medo-input-border-focus);
+}
+
+.medo-rb__native:checked + .medo-rb__circle{ border-color: var(--medo-action); }
+.medo-rb__native:checked + .medo-rb__circle .medo-rb__dot{ width: 10px; height: 10px; }
+.medo-rb__native:checked + .medo-rb__circle--sm .medo-rb__dot{ width: 9px; height: 9px; }
+
+.medo-rb--error .medo-rb__circle{ border-color: var(--medo-input-border-error); }
+
+.medo-rb--disabled .medo-rb__circle{
+  background: var(--medo-input-bg-disabled);
+  border-color: var(--medo-input-border-disabled);
+}
+.medo-rb--disabled .medo-rb__native:checked + .medo-rb__circle{ border-color: var(--medo-border); }
+.medo-rb--disabled .medo-rb__native:checked + .medo-rb__circle .medo-rb__dot{ background: var(--medo-color-stone-400); }
+
+.medo-rb__text{ display: flex; flex-direction: column; gap: 2px; padding-top: 1px; }
+.medo-rb__hint{ font-size: var(--medo-text-xs); color: var(--medo-text-muted); }
+
+.medo-rb-group{ display: flex; flex-direction: column; gap: var(--medo-space-sm); }
+.medo-rb-group--horizontal{ flex-direction: row; flex-wrap: wrap; gap: var(--medo-space-lg); }
+
+/* Card-Radio — Auswahlkarten statt Zeilen */
+.medo-rb-group--card{ flex-direction: row; flex-wrap: wrap; gap: var(--medo-space-sm); }
+.medo-rb-card{
+  box-sizing: border-box;
+  flex: 1 1 180px;
+  cursor: pointer;
+  border: var(--medo-border-thin) solid var(--medo-border);
+  background: var(--medo-surface);
+  border-radius: var(--medo-radius-lg);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition: border-color 120ms ease-out, background-color 120ms ease-out;
+}
+.medo-rb-card:hover:not(.medo-rb-card--disabled){ border-color: var(--medo-border-strong); }
+.medo-rb-card--on{ border-color: var(--medo-action); background: var(--medo-primary-50); }
+.medo-rb-card--disabled{ cursor: not-allowed; background: var(--medo-surface-container); }
+.medo-rb-card--disabled .medo-rb-card__name,
+.medo-rb-card--disabled .medo-rb-card__desc{ color: var(--medo-text-disabled); }
+.medo-rb-card:has(.medo-rb-card__native:focus-visible){ box-shadow: 0 0 0 3px var(--medo-focus-ring); }
+.medo-rb-card__head{ display: flex; align-items: center; justify-content: space-between; gap: var(--medo-space-sm); }
+.medo-rb-card__name{ font-size: var(--medo-text-base); font-weight: 600; color: var(--medo-text); }
+.medo-rb-card__ring{
+  box-sizing: border-box;
+  width: 20px; height: 20px;
+  flex: none;
+  border-radius: var(--medo-radius-full);
+  display: inline-flex; align-items: center; justify-content: center;
+  background: var(--medo-color-white);
+  border: var(--medo-border-thin) solid var(--medo-input-border);
+}
+.medo-rb-card--on .medo-rb-card__ring{ border-color: var(--medo-action); }
+.medo-rb-card__dot{ width: 10px; height: 10px; border-radius: var(--medo-radius-full); background: var(--medo-action); }
+.medo-rb-card__desc{ font-size: var(--medo-text-sm); color: var(--medo-text-muted); }
+.medo-rb-card__native{ position: absolute; opacity: 0; width: 1px; height: 1px; margin: 0; }

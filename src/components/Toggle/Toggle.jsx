@@ -1,199 +1,106 @@
 import { useState } from 'react'
-import { Switch } from '@/components/ui/switch'
-import { Checkbox as ShadcnCheckbox } from '@/components/ui/checkbox'
-import { cn } from '@/lib/utils'
+import { Icon } from '../Icon/Icon'
+import './Toggle.css'
+
+/* medo Design System · Toggle
+   Schaltet eine Einstellung sofort um — kein Speichern-Schritt. Als role="switch" gerendert.
+   Aus = Bahn stone-300, An = Bahn primary-600. Griff immer weiß, Icon im Griff. */
+
+const MEDO_TOGGLE_SIZES = {
+  sm: { w: 36, h: 20, thumb: 16, icon: 12, spin: 10 },
+  md: { w: 44, h: 24, thumb: 20, icon: 14, spin: 12 },
+  lg: { w: 52, h: 30, thumb: 26, icon: 16, spin: 14 },
+}
 
 export function Toggle({
-  label,
-  text,
-  size = 'default',
-  checked: controlledChecked,
-  defaultChecked = false,
-  onChange,
-  helperText,
-  error,
-  disabled,
-}) {
-  const [internalChecked, setInternalChecked] = useState(defaultChecked)
-  const isControlled = controlledChecked !== undefined
-  const checked = isControlled ? controlledChecked : internalChecked
-
-  const handleChange = (val) => {
-    if (!isControlled) setInternalChecked(val)
-    onChange?.(val)
-  }
-
-  return (
-    <div className="flex flex-col gap-[var(--space-1)]">
-      {label && (
-        <span className="text-sm [font-weight:var(--weight-medium)] text-[var(--color-text-primary)]">
-          {label}
-        </span>
-      )}
-      <label className={cn(
-        'inline-flex items-center gap-2 cursor-pointer select-none',
-        disabled && 'opacity-50 cursor-not-allowed',
-      )}>
-        <Switch
-          checked={checked}
-          onCheckedChange={handleChange}
-          disabled={disabled}
-          size={size === 'sm' ? 'sm' : 'default'}
-        />
-        {text && (
-          <span className="text-sm text-[var(--color-text-primary)]">{text}</span>
-        )}
-      </label>
-      {error && (
-        <span className="text-xs text-[var(--color-error)]">{error}</span>
-      )}
-      {!error && helperText && (
-        <span className="text-xs text-[var(--color-text-secondary)]">{helperText}</span>
-      )}
-    </div>
-  )
-}
-
-export function Checkbox({
-  label,
-  text,
-  checked: controlledChecked,
-  defaultChecked = false,
-  onChange,
-  disabled,
-  helperText,
-  error,
-}) {
-  const [internalChecked, setInternalChecked] = useState(defaultChecked)
-  const isControlled = controlledChecked !== undefined
-  const checked = isControlled ? controlledChecked : internalChecked
-
-  const handleChange = (val) => {
-    if (!isControlled) setInternalChecked(val)
-    onChange?.(val)
-  }
-
-  return (
-    <div className="flex flex-col gap-[var(--space-1)]">
-      {label && (
-        <span className="text-sm [font-weight:var(--weight-medium)] text-[var(--color-text-primary)]">
-          {label}
-        </span>
-      )}
-      <label className={cn(
-        'inline-flex items-center gap-2 cursor-pointer select-none',
-        disabled && 'opacity-50 cursor-not-allowed',
-      )}>
-        <ShadcnCheckbox checked={checked} onCheckedChange={handleChange} disabled={disabled} />
-        {text && (
-          <span className="text-sm text-[var(--color-text-primary)]">{text}</span>
-        )}
-      </label>
-      {error && (
-        <span className="text-xs text-[var(--color-error)]">{error}</span>
-      )}
-      {!error && helperText && (
-        <span className="text-xs text-[var(--color-text-secondary)]">{helperText}</span>
-      )}
-    </div>
-  )
-}
-
-export function CheckboxGroup({ label, helperText, error, children }) {
-  return (
-    <div className="flex flex-col gap-[var(--space-2)]">
-      {label && (
-        <span className="text-sm [font-weight:var(--weight-medium)] text-[var(--color-text-primary)]">
-          {label}
-        </span>
-      )}
-      <div className="flex flex-col gap-[var(--space-2)]">
-        {children}
-      </div>
-      {error && (
-        <span className="text-xs text-[var(--color-error)]">{error}</span>
-      )}
-      {!error && helperText && (
-        <span className="text-xs text-[var(--color-text-secondary)]">{helperText}</span>
-      )}
-    </div>
-  )
-}
-
-export function Radio({
-  label,
-  text,
   checked,
+  defaultChecked = false,
   onChange,
-  name,
-  value,
-  disabled,
-  helperText,
-  error,
+  label,
+  description,
+  size = 'md',
+  labelPosition = 'right',
+  icons = true,
+  loading = false,
+  disabled = false,
+  id,
+  className,
+  style,
+  ...rest
 }) {
-  return (
-    <div className="flex flex-col gap-[var(--space-1)]">
-      {label && (
-        <span className="text-sm [font-weight:var(--weight-medium)] text-[var(--color-text-primary)]">
-          {label}
-        </span>
-      )}
-      <label className={cn(
-        'inline-flex items-center gap-2 cursor-pointer select-none',
-        disabled && 'opacity-50 cursor-not-allowed',
-      )}>
-        <span className="relative flex size-4 shrink-0">
-          <input
-            type="radio"
-            name={name}
-            value={value}
-            checked={checked}
-            onChange={onChange}
-            disabled={disabled}
-            className="peer absolute opacity-0 size-4 cursor-pointer"
-          />
-          <span className={cn(
-            'flex size-4 rounded-full border border-input transition-colors',
-            'peer-focus-visible:border-ring peer-focus-visible:ring-3 peer-focus-visible:ring-ring/50',
-            'peer-disabled:opacity-50',
-            checked ? 'border-primary bg-primary' : 'bg-background',
-          )}>
-            {checked && (
-              <span className="m-auto size-2 rounded-full bg-primary-foreground" />
-            )}
-          </span>
-        </span>
-        {text && (
-          <span className="text-sm text-[var(--color-text-primary)]">{text}</span>
-        )}
-      </label>
-      {error && (
-        <span className="text-xs text-[var(--color-error)]">{error}</span>
-      )}
-      {!error && helperText && (
-        <span className="text-xs text-[var(--color-text-secondary)]">{helperText}</span>
-      )}
-    </div>
-  )
-}
+  const controlled = checked !== undefined
+  const [inner, setInner] = useState(defaultChecked)
+  const on = controlled ? checked : inner
+  const s = MEDO_TOGGLE_SIZES[size] || MEDO_TOGGLE_SIZES.md
+  const blocked = disabled || loading
 
-export function RadioGroup({ label, helperText, error, children }) {
+  const toggle = () => {
+    if (blocked) return
+    if (!controlled) setInner(!on)
+    if (onChange) onChange(!on)
+  }
+
+  const iconColor = on ? 'var(--medo-action)' : 'var(--medo-color-stone-600)'
+
+  const control = (
+    <span
+      className="medo-tg__track"
+      style={{ width: s.w + 'px', height: s.h + 'px', justifyContent: on ? 'flex-end' : 'flex-start' }}
+    >
+      <span className="medo-tg__thumb" style={{ width: s.thumb + 'px', height: s.thumb + 'px' }}>
+        {loading ? (
+          <span
+            className="medo-tg__spin"
+            style={{
+              width: s.spin + 'px',
+              height: s.spin + 'px',
+              borderWidth: '2px',
+              borderColor: disabled ? 'var(--medo-color-stone-400)' : iconColor,
+            }}
+          />
+        ) : icons ? (
+          <Icon
+            name={on ? 'check' : 'close'}
+            size={s.icon}
+            color={disabled ? 'var(--medo-color-stone-400)' : iconColor}
+          />
+        ) : null}
+      </span>
+    </span>
+  )
+
+  const text =
+    label || description ? (
+      <span className="medo-tg__text">
+        {label ? <span className="medo-tg__label">{label}</span> : null}
+        {description ? <span className="medo-tg__desc">{description}</span> : null}
+      </span>
+    ) : null
+
   return (
-    <div className="flex flex-col gap-[var(--space-2)]">
-      {label && (
-        <span className="text-sm [font-weight:var(--weight-medium)] text-[var(--color-text-primary)]">
-          {label}
-        </span>
-      )}
-      <div className="flex flex-col gap-[var(--space-2)]">
-        {children}
-      </div>
-      {error && (
-        <span className="text-xs text-[var(--color-error)]">{error}</span>
-      )}
-      {!error && helperText && (
-        <span className="text-xs text-[var(--color-text-secondary)]">{helperText}</span>
-      )}
-    </div>
+    <button
+      type="button"
+      role="switch"
+      id={id}
+      aria-checked={on ? 'true' : 'false'}
+      aria-busy={loading ? 'true' : undefined}
+      disabled={blocked}
+      onClick={toggle}
+      className={[
+        'medo-tg',
+        'medo-tg--' + size,
+        on ? 'medo-tg--on' : null,
+        loading ? 'medo-tg--loading' : null,
+        labelPosition === 'left' ? 'medo-tg--block' : null,
+        className,
+      ]
+        .filter(Boolean)
+        .join(' ')}
+      style={style}
+      {...rest}
+    >
+      {labelPosition === 'left' ? text : control}
+      {labelPosition === 'left' ? control : text}
+    </button>
   )
 }

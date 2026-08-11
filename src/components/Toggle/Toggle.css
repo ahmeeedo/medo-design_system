@@ -1,0 +1,66 @@
+.medo-tg{
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--medo-space-sm);
+  appearance: none;
+  border: none;
+  background: none;
+  padding: 0;
+  margin: 0;
+  font-family: var(--medo-font-sans);
+  color: var(--medo-text);
+  text-align: left;
+  cursor: pointer;
+}
+.medo-tg--block{ display: flex; width: 100%; justify-content: space-between; }
+.medo-tg:disabled{ cursor: not-allowed; }
+.medo-tg__track{
+  box-sizing: border-box;
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  padding: 2px;
+  border-radius: var(--medo-radius-full);
+  background: var(--medo-color-stone-300);
+  transition: background-color 140ms ease-out, justify-content 0ms;
+}
+.medo-tg:hover:not(:disabled) .medo-tg__track{ background: var(--medo-color-stone-400); }
+.medo-tg--on .medo-tg__track{ background: var(--medo-action); }
+.medo-tg--on:hover:not(:disabled) .medo-tg__track{ background: var(--medo-action-hover); }
+.medo-tg--on:active:not(:disabled) .medo-tg__track{ background: var(--medo-action-active); }
+.medo-tg:focus-visible{ outline: none; }
+.medo-tg:focus-visible .medo-tg__track{ box-shadow: 0 0 0 3px var(--medo-focus-ring); }
+.medo-tg:disabled .medo-tg__track{ background: var(--medo-color-stone-200); }
+.medo-tg--on:disabled .medo-tg__track{ background: var(--medo-color-stone-300); }
+.medo-tg__thumb{
+  box-sizing: border-box;
+  flex: none;
+  border-radius: var(--medo-radius-full);
+  background: var(--medo-color-white);
+  box-shadow: 0 1px 2px rgba(31,29,26,0.28);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 140ms ease-out;
+}
+.medo-tg:disabled:not(.medo-tg--on) .medo-tg__thumb{ background: var(--medo-color-stone-50); }
+.medo-tg__spin{
+  border-radius: var(--medo-radius-full);
+  border-style: solid;
+  border-top-color: transparent !important;
+  animation: medo-tg-spin 0.7s linear infinite;
+}
+@keyframes medo-tg-spin{ to{ transform: rotate(360deg); } }
+.medo-tg__text{ display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.medo-tg__label{ font-size: var(--medo-text-sm); line-height: 1.45; }
+.medo-tg--lg .medo-tg__label{ font-size: var(--medo-text-base); }
+.medo-tg__desc{ font-size: var(--medo-text-sm); line-height: 1.45; color: var(--medo-text-muted); }
+.medo-tg:disabled .medo-tg__label,
+.medo-tg:disabled .medo-tg__desc{ color: var(--medo-text-disabled); }
+/* Ladezustand ist gesperrt, sieht aber nicht deaktiviert aus. */
+.medo-tg--loading:disabled .medo-tg__track{ background: var(--medo-color-stone-300); }
+.medo-tg--on.medo-tg--loading:disabled .medo-tg__track{ background: var(--medo-action); }
+.medo-tg--loading:disabled:not(.medo-tg--on) .medo-tg__thumb{ background: var(--medo-color-white); }
+.medo-tg--loading:disabled .medo-tg__label{ color: var(--medo-text); }
+.medo-tg--loading:disabled .medo-tg__desc{ color: var(--medo-text-muted); }
