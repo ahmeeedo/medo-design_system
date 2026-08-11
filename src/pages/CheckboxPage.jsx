@@ -1,30 +1,79 @@
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { PageLayout, Section, Content, DemoPanel } from '../docs/PageLayout'
 import { CodeBlock } from '../docs/CodeBlock'
 import { Checkbox, CheckboxGroup } from '../components'
 
-const CHECKBOX_CODE = `import { Checkbox, CheckboxGroup } from '@/components'
+const PROSE = 'text-[var(--medo-text-muted)] [font-family:var(--medo-font-sans)] [font-size:var(--medo-text-base)] [line-height:var(--medo-leading-relaxed)]'
+const CAPTION = '[font-family:var(--medo-font-mono)] [font-size:var(--medo-text-xs)] text-[var(--medo-text-muted)]'
+const COL = 'flex flex-col gap-[var(--medo-space-sm)] mt-[var(--medo-space-md)]'
+const LIST = `${PROSE} list-disc pl-[var(--medo-space-lg)] space-y-[var(--medo-space-3xs)]`
 
-{/* Single */}
-<Checkbox label="Zustimmung" text="AGB akzeptieren" />
-<Checkbox label="Zustimmung" text="AGB akzeptieren" helperText="Pflichtfeld." />
-<Checkbox label="Zustimmung" text="AGB akzeptieren" error="Bitte zustimmen." />
+const BASIC_CODE = `import { Checkbox } from '@/components'
 
-{/* Gruppe */}
-function PermissionsForm() {
+<Checkbox label="Terminerinnerung senden" />
+<Checkbox label="Befund freigeben" hint="Die Praxis sieht den Befund sofort." />
+<Checkbox label="Abrechnung vorbereiten" defaultChecked />`
+
+const GROUP_CODE = `import { Checkbox, CheckboxGroup } from '@/components'
+
+<CheckboxGroup legend="Benachrichtigungen" direction="vertical">
+  <Checkbox label="Termin bestätigt" />
+  <Checkbox label="Termin verschoben" />
+  <Checkbox label="Termin abgesagt" />
+</CheckboxGroup>`
+
+const INDETERMINATE_CODE = `const alle = auswahl.length === optionen.length
+const einige = auswahl.length > 0 && !alle
+
+<Checkbox
+  label="Alle auswählen"
+  checked={alle}
+  indeterminate={einige}
+  onChange={e => setAuswahl(e.target.checked ? optionen : [])}
+/>`
+
+const OPTIONS = ['confirmed', 'moved', 'cancelled']
+
+function GroupDemo() {
+  const { t } = useTranslation()
+  const [selected, setSelected] = useState(['confirmed'])
+
+  const all = selected.length === OPTIONS.length
+  const some = selected.length > 0 && !all
+
+  const toggle = id =>
+    setSelected(current =>
+      current.includes(id) ? current.filter(entry => entry !== id) : [...current, id]
+    )
+
   return (
-    <CheckboxGroup label="Berechtigungen" helperText="Wähle mindestens eine Option.">
-      <Checkbox text="Lesen"           defaultChecked />
-      <Checkbox text="Schreiben" />
-      <Checkbox text="Administrieren"  disabled />
-    </CheckboxGroup>
+    <div className="mt-[var(--medo-space-md)]">
+      <CheckboxGroup legend={t('checkbox.demo.legend')}>
+        <Checkbox
+          label={t('checkbox.demo.all')}
+          checked={all}
+          indeterminate={some}
+          onChange={e => setSelected(e.target.checked ? OPTIONS : [])}
+        />
+        {OPTIONS.map(id => (
+          <Checkbox
+            key={id}
+            label={t(`checkbox.demo.options.${id}`)}
+            checked={selected.includes(id)}
+            onChange={() => toggle(id)}
+          />
+        ))}
+      </CheckboxGroup>
+      <p className={`${CAPTION} mt-[var(--medo-space-sm)]`}>
+        {t('checkbox.demo.count', { count: selected.length, total: OPTIONS.length })}
+      </p>
+    </div>
   )
-}`
+}
 
 export default function CheckboxPage() {
   const { t } = useTranslation()
-
-  const doDont = ['1', '2', '3', '4'].map(n => ({ do: `do${n}`, dont: `dont${n}` }))
 
   const tabs = [
     {
@@ -33,46 +82,79 @@ export default function CheckboxPage() {
       content: (
         <>
           <DemoPanel
-            component={(values) => {
-              const helper = values.helper && !values.error ? 'Helper text' : undefined
-              const err = values.error ? 'Error text' : undefined
-              return values.variant === 'Group' ? (
-                <CheckboxGroup label="Label" helperText={helper} error={err}>
-                  <Checkbox text="Option 1" />
-                  <Checkbox text="Option 2" defaultChecked />
-                  <Checkbox text="Option 3" />
-                </CheckboxGroup>
-              ) : (
-                <Checkbox label="Label" text="Checkbox text" helperText={helper} error={err} />
-              )
-            }}
+            component={values => (
+              <Checkbox
+                label={t('checkbox.demo.reminder')}
+                hint={values.hint ? t('checkbox.demo.reminderHint') : undefined}
+                size={values.size}
+                indeterminate={values.indeterminate}
+                error={values.error}
+                disabled={values.disabled}
+                defaultChecked
+              />
+            )}
             controls={[
-              { id: 'variant', type: 'dropdown', label: 'Variant',     options: ['Single', 'Group'], default: 'Single' },
-              { id: 'helper',  type: 'toggle',   label: 'Helper Text', default: false },
-              { id: 'error',   type: 'toggle',   label: 'Error',       default: false },
+              { id: 'size', type: 'dropdown', label: t('checkbox.controls.size'), options: ['sm', 'md'], default: 'md' },
+              { id: 'hint', type: 'toggle', label: t('checkbox.controls.hint'), default: false },
+              { id: 'indeterminate', type: 'toggle', label: t('checkbox.controls.indeterminate'), default: false },
+              { id: 'error', type: 'toggle', label: t('checkbox.controls.error'), default: false },
+              { id: 'disabled', type: 'toggle', label: t('checkbox.controls.disabled'), default: false },
             ]}
           />
-          <Section title={t('checkbox.overview.anatomyTitle')}>
+
+          <Section title={t('checkbox.overview.statesTitle')}>
             <Content>
-              <p className="text-md text-[var(--color-text-secondary)] leading-[var(--leading-relaxed)] mb-[var(--space-3)]">
-                {t('checkbox.overview.anatomyBody')}
-              </p>
-              <ol className="flex flex-col gap-[var(--space-2)] pl-[var(--space-5)]">
-                {['an1', 'an2', 'an3'].map(k => (
-                  <li key={k} className="text-sm text-[var(--color-text-secondary)] leading-[var(--leading-relaxed)]">
-                    {t(`checkbox.overview.${k}`)}
-                  </li>
-                ))}
-              </ol>
+              <p className={PROSE}>{t('checkbox.overview.statesBody')}</p>
+              <div className={COL}>
+                <Checkbox label={t('checkbox.demo.states.unchecked')} />
+                <Checkbox label={t('checkbox.demo.states.checked')} defaultChecked />
+                <Checkbox label={t('checkbox.demo.states.indeterminate')} indeterminate />
+                <Checkbox label={t('checkbox.demo.states.error')} error />
+                <Checkbox label={t('checkbox.demo.states.disabled')} disabled />
+                <Checkbox label={t('checkbox.demo.states.disabledChecked')} disabled defaultChecked />
+              </div>
             </Content>
           </Section>
 
-          <Section title={t('checkbox.overview.statesTitle')}>
-            <div className="flex flex-col gap-[var(--space-3)]">
-              <Checkbox text={t('checkbox.overview.stateDefault')} />
-              <Checkbox text={t('checkbox.overview.stateChecked')} defaultChecked />
-              <Checkbox text={t('checkbox.overview.stateDisabled')} disabled />
-            </div>
+          <Section title={t('checkbox.overview.sizesTitle')}>
+            <Content>
+              <p className={PROSE}>{t('checkbox.overview.sizesBody')}</p>
+              <div className={COL}>
+                <Checkbox size="sm" label={t('checkbox.demo.reminder')} defaultChecked />
+                <span className={CAPTION}>sm · 18px</span>
+                <Checkbox size="md" label={t('checkbox.demo.reminder')} defaultChecked />
+                <span className={CAPTION}>md · 20px</span>
+              </div>
+            </Content>
+          </Section>
+
+          <Section title={t('checkbox.overview.hintTitle')}>
+            <Content>
+              <p className={PROSE}>{t('checkbox.overview.hintBody')}</p>
+              <div className={COL}>
+                <Checkbox label={t('checkbox.demo.release')} hint={t('checkbox.demo.releaseHint')} />
+              </div>
+            </Content>
+          </Section>
+
+          <Section title={t('checkbox.overview.groupTitle')}>
+            <Content>
+              <p className={PROSE}>{t('checkbox.overview.groupBody')}</p>
+              <GroupDemo />
+            </Content>
+          </Section>
+
+          <Section title={t('checkbox.overview.horizontalTitle')}>
+            <Content>
+              <p className={PROSE}>{t('checkbox.overview.horizontalBody')}</p>
+              <div className="mt-[var(--medo-space-md)]">
+                <CheckboxGroup legend={t('checkbox.demo.horizontalLegend')} direction="horizontal">
+                  <Checkbox label={t('checkbox.demo.days.mon')} defaultChecked />
+                  <Checkbox label={t('checkbox.demo.days.tue')} />
+                  <Checkbox label={t('checkbox.demo.days.wed')} defaultChecked />
+                </CheckboxGroup>
+              </div>
+            </Content>
           </Section>
         </>
       ),
@@ -82,49 +164,42 @@ export default function CheckboxPage() {
       label: t('tabs.usage'),
       content: (
         <>
-          <Section title={t('checkbox.usage.title')}>
+          <Section title={t('checkbox.usage.whenTitle')}>
             <Content>
-              <p className="text-md text-[var(--color-text-secondary)] leading-[var(--leading-relaxed)]">
-                {t('checkbox.usage.intro')}
-              </p>
+              <ul className={LIST}>
+                <li>{t('checkbox.usage.w1')}</li>
+                <li>{t('checkbox.usage.w2')}</li>
+                <li>{t('checkbox.usage.w3')}</li>
+              </ul>
             </Content>
           </Section>
 
-          <Section>
-            <div className="grid grid-cols-2 max-[640px]:grid-cols-1 gap-[var(--space-4)]">
-              <div className="bg-[var(--color-success-container-100)] border border-[var(--color-success)] rounded-[var(--radius-lg)] p-[var(--space-5)]">
-                <div className="text-sm [font-weight:var(--weight-semibold)] text-[var(--color-text-primary)] mb-[var(--space-3)]">
-                  {t('checkbox.usage.doTitle')}
-                </div>
-                <ul className="flex flex-col gap-[var(--space-2)]">
-                  {doDont.map(({ do: k }) => (
-                    <li key={k} className="text-sm text-[var(--color-text-secondary)] flex gap-[var(--space-2)]">
-                      <span className="text-[var(--color-success)] shrink-0">✓</span>
-                      <span>{t(`checkbox.usage.${k}`)}</span>
-                    </li>
-                  ))}
-                </ul>
-                <div className="text-xs text-[var(--color-text-secondary)] mt-[var(--space-3)] pt-[var(--space-3)] border-t border-[var(--border-subtle-100)]">
-                  {t('checkbox.usage.doNote')}
-                </div>
-              </div>
-              <div className="bg-[var(--color-error-container-100)] border border-[var(--color-error)] rounded-[var(--radius-lg)] p-[var(--space-5)]">
-                <div className="text-sm [font-weight:var(--weight-semibold)] text-[var(--color-text-primary)] mb-[var(--space-3)]">
-                  {t('checkbox.usage.dontTitle')}
-                </div>
-                <ul className="flex flex-col gap-[var(--space-2)]">
-                  {doDont.map(({ dont: k }) => (
-                    <li key={k} className="text-sm text-[var(--color-text-secondary)] flex gap-[var(--space-2)]">
-                      <span className="text-[var(--color-error)] shrink-0">✗</span>
-                      <span>{t(`checkbox.usage.${k}`)}</span>
-                    </li>
-                  ))}
-                </ul>
-                <div className="text-xs text-[var(--color-text-secondary)] mt-[var(--space-3)] pt-[var(--space-3)] border-t border-[var(--border-subtle-100)]">
-                  {t('checkbox.usage.dontNote')}
-                </div>
-              </div>
-            </div>
+          <Section title={t('checkbox.usage.labelTitle')}>
+            <Content>
+              <p className={PROSE}>{t('checkbox.usage.labelBody')}</p>
+            </Content>
+          </Section>
+
+          <Section title={t('checkbox.usage.indeterminateTitle')}>
+            <Content>
+              <p className={PROSE}>{t('checkbox.usage.indeterminateBody')}</p>
+            </Content>
+          </Section>
+
+          <Section title={t('checkbox.usage.errorTitle')}>
+            <Content>
+              <p className={PROSE}>{t('checkbox.usage.errorBody')}</p>
+            </Content>
+          </Section>
+
+          <Section title={t('checkbox.usage.dontTitle')}>
+            <Content>
+              <ul className={LIST}>
+                <li>{t('checkbox.usage.dont1')}</li>
+                <li>{t('checkbox.usage.dont2')}</li>
+                <li>{t('checkbox.usage.dont3')}</li>
+              </ul>
+            </Content>
           </Section>
         </>
       ),
@@ -133,19 +208,24 @@ export default function CheckboxPage() {
       id: 'code',
       label: t('tabs.code'),
       content: (
-        <>
-          <Section title={t('checkbox.code.title')}>
-            <Content>
-              <p className="text-sm [font-weight:var(--weight-semibold)] text-[var(--color-text-primary)] mb-[var(--space-2)]">
-                {t('checkbox.code.checkboxTitle')}
-              </p>
-              <p className="text-sm text-[var(--color-text-secondary)] mb-[var(--space-3)]">
-                {t('checkbox.code.checkboxDesc')}
-              </p>
-              <CodeBlock language="jsx">{CHECKBOX_CODE}</CodeBlock>
-            </Content>
-          </Section>
-        </>
+        <Section title={t('checkbox.code.title')}>
+          <Content>
+            <p className={PROSE}>{t('checkbox.code.basicDesc')}</p>
+            <div className="mt-[var(--medo-space-sm)]">
+              <CodeBlock language="jsx">{BASIC_CODE}</CodeBlock>
+            </div>
+
+            <p className={`${PROSE} mt-[var(--medo-space-lg)]`}>{t('checkbox.code.groupDesc')}</p>
+            <div className="mt-[var(--medo-space-sm)]">
+              <CodeBlock language="jsx">{GROUP_CODE}</CodeBlock>
+            </div>
+
+            <p className={`${PROSE} mt-[var(--medo-space-lg)]`}>{t('checkbox.code.indeterminateDesc')}</p>
+            <div className="mt-[var(--medo-space-sm)]">
+              <CodeBlock language="jsx">{INDETERMINATE_CODE}</CodeBlock>
+            </div>
+          </Content>
+        </Section>
       ),
     },
     {
@@ -153,41 +233,29 @@ export default function CheckboxPage() {
       label: t('tabs.accessibility'),
       content: (
         <>
-          <Section title={t('checkbox.a11y.title')}>
+          <Section title={t('checkbox.a11y.labelTitle')}>
             <Content>
-              <p className="text-md text-[var(--color-text-secondary)] leading-[var(--leading-relaxed)]">
-                {t('checkbox.a11y.intro')}
-              </p>
+              <p className={PROSE}>{t('checkbox.a11y.labelBody')}</p>
             </Content>
           </Section>
 
           <Section title={t('checkbox.a11y.keyboardTitle')}>
             <Content>
-              <p className="text-md text-[var(--color-text-secondary)] leading-[var(--leading-relaxed)] mb-[var(--space-4)]">
-                {t('checkbox.a11y.keyboardBody')}
-              </p>
+              <ul className={LIST}>
+                <li>{t('checkbox.a11y.k1')}</li>
+                <li>{t('checkbox.a11y.k2')}</li>
+              </ul>
             </Content>
-            <div className="border border-[var(--border-subtle-100)] rounded-[var(--radius-lg)] overflow-hidden mb-[var(--space-6)]">
-              {['k1', 'k2', 'k3', 'k4'].map((k, i) => (
-                <div key={k} className={`flex items-center gap-[var(--space-4)] px-[var(--space-4)] py-[var(--space-3)] ${i % 2 === 0 ? 'bg-[var(--surface_100)]' : 'bg-[var(--surface_200)]'}`}>
-                  <span className="text-sm text-[var(--color-text-secondary)]">{t(`checkbox.a11y.${k}`)}</span>
-                </div>
-              ))}
-            </div>
           </Section>
 
-          <Section>
-            <div className="grid grid-cols-2 max-[640px]:grid-cols-1 gap-[var(--space-6)]">
-              {[
-                { title: t('checkbox.a11y.ariaTitle'),  body: t('checkbox.a11y.ariaBody') },
-                { title: t('checkbox.a11y.labelTitle'), body: t('checkbox.a11y.labelBody') },
-              ].map(({ title, body }) => (
-                <div key={title} className="bg-[var(--surface-container_100)] rounded-[var(--radius-lg)] p-[var(--space-5)] border border-[var(--border-subtle-100)]">
-                  <div className="text-md [font-weight:var(--weight-semibold)] text-[var(--color-text-primary)] mb-[var(--space-2)]">{title}</div>
-                  <p className="text-sm text-[var(--color-text-secondary)] leading-[var(--leading-relaxed)]">{body}</p>
-                </div>
-              ))}
-            </div>
+          <Section title={t('checkbox.a11y.stateTitle')}>
+            <Content>
+              <ul className={LIST}>
+                <li>{t('checkbox.a11y.s1')}</li>
+                <li>{t('checkbox.a11y.s2')}</li>
+                <li>{t('checkbox.a11y.s3')}</li>
+              </ul>
+            </Content>
           </Section>
         </>
       ),

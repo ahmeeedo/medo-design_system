@@ -1165,155 +1165,255 @@
   "toggle": {
     "page": {
       "title":       "Toggle",
-      "description": "Toggle-Switch — ein Steuerelement für sofort wirksame binäre Einstellungen."
+      "description": "Schaltet eine Einstellung sofort um. Kein Speichern-Schritt, keine Bestätigung."
+    },
+    "controls": {
+      "size":          "Größe",
+      "labelPosition": "Label-Position",
+      "description":   "Beschreibung",
+      "icons":         "Icons im Griff",
+      "loading":       "Lädt",
+      "disabled":      "Deaktiviert"
+    },
+    "demo": {
+      "reminder":      "Terminerinnerung",
+      "reminderDesc":  "Geht 24 Stunden vor dem Termin raus.",
+      "video":         "Videosprechstunde",
+      "videoDesc":     "Patientinnen und Patienten können online buchen.",
+      "billing":       "Automatische Abrechnung",
+      "billingDesc":   "Rechnungen gehen am Monatsende automatisch raus.",
+      "saving":        "Wird gespeichert",
+      "saved":         "Gespeichert",
+      "withIcons":     "Mit Icon im Griff",
+      "withoutIcons":  "Ohne Icon im Griff",
+      "states": {
+        "off":         "Aus",
+        "on":          "An",
+        "disabledOff": "Deaktiviert, aus",
+        "disabledOn":  "Deaktiviert, an",
+        "loading":     "Wird gespeichert"
+      }
     },
     "overview": {
-      "toggleTitle": "Toggle (Switch)",
-      "toggleBody":  "Ein Toggle-Switch schaltet sofort zwischen zwei Zuständen um — ohne Formular-Submit. Er eignet sich für Einstellungen, die unmittelbar wirksam werden.",
-      "an1":         "Track — der Hintergrundstreifen zeigt den Gesamtzustand (ein/aus)",
-      "an2":         "Knob — der gleitende Kreis zeigt die aktuelle Position",
-      "an3":         "Label — optionaler Text rechts neben dem Switch"
+      "statesTitle":      "Zustände",
+      "statesBody":       "Aus ist stone-300, an ist die Aktionsfarbe. Der Griff ist immer weiß und trägt Häkchen beziehungsweise Kreuz, damit der Zustand nicht allein an der Farbe hängt.",
+      "sizesTitle":       "Größen",
+      "sizesBody":        "Drei Größen für unterschiedliche Dichte. Die Beschriftung wächst erst bei lg von 14px auf 16px mit.",
+      "descriptionTitle": "Mit Beschreibung",
+      "descriptionBody":  "Die Beschreibung erklärt die Folge des eingeschalteten Zustands, nicht die Bedienung.",
+      "labelLeftTitle":   "In Einstellungslisten",
+      "labelLeftBody":    "In Einstellungslisten steht die Beschriftung links und der Schalter rechts am Zeilenende. Der Schalter füllt dann die volle Breite der Zeile.",
+      "iconsTitle":       "Icons im Griff",
+      "iconsBody":        "Häkchen und Kreuz im Griff sind der Standard und lassen sich abschalten, wo der Schalter sehr klein ist oder in großer Zahl auftritt.",
+      "loadingTitle":     "Ladezustand",
+      "loadingBody":      "Dauert das Speichern merkbar, zeigt der Griff einen Spinner und die Bedienung ist gesperrt — der Schalter sieht dabei nicht deaktiviert aus. Probieren Sie es aus: Das Beispiel speichert simuliert."
     },
     "usage": {
-      "title":    "Einsatz",
-      "intro":    "Toggle-Switches eignen sich für Einstellungen, die sofort wirksam werden — ohne Formular-Submit.",
-      "doTitle":  "Do",
-      "dontTitle":"Don't",
-      "do1":      "Toggle für sofort wirksame Einstellungen ohne Submit",
-      "do2":      "Toggle für binäre Ein/Aus-Optionen in Einstellungsmenüs verwenden",
-      "do3":      "Immer einen Label-Text für Screenreader bereitstellen",
-      "do4":      "Sichtbaren Label-Text für Maus- und Touch-Nutzer anbieten",
-      "dont1":    "Keinen Toggle für Formular-Daten verwenden, die erst bei Submit gesendet werden",
-      "dont2":    "Toggle nicht für Auswahl-Aktionen ohne sofortige Wirkung — dafür Button",
-      "dont3":    "Toggle nicht für Mehrfachauswahl — dafür Checkbox",
-      "dont4":    "Keine Labels weglassen — Screen-Reader brauchen klickbare Bereiche",
-      "doNote":   "Sofortwirkung und klare Semantik verbessern die Bedienbarkeit.",
-      "dontNote": "Falscher Einsatz führt zu Verwirrung über das Speicherverhalten."
+      "whenTitle":    "Wann",
+      "whenBody":     "Für zwei Zustände einer laufenden Einstellung, die unmittelbar wirken: Benachrichtigungen an, Profil sichtbar, Erinnerung aktiv. Braucht die Änderung einen Absenden-Schritt oder gehört sie zu einem Formular, das gespeichert wird, ist es eine Checkbox — kein Toggle.",
+      "labelTitle":   "Beschriftung",
+      "labelBody":    "Das Label benennt den eingeschalteten Zustand („Benachrichtigungen“), nicht die Handlung („Benachrichtigungen einschalten“). Kein „An/Aus“ als Text daneben — das zeigt der Schalter selbst.",
+      "loadingTitle": "Speichern und Fehlschlag",
+      "loadingBody":  "Der Schalter springt sofort in die neue Stellung und wird nur zurückgesetzt, wenn der Server ablehnt — dann mit einer sichtbaren Meldung. Ohne Rückmeldung zu schalten, wenn der Vorgang fehlschlagen kann, ist die eine Sache, die hier nicht passieren darf.",
+      "dontTitle":    "Nicht tun",
+      "dont1":        "Als Formularfeld benutzen, das erst mit „Speichern“ wirkt.",
+      "dont2":        "Zwei Toggles für eine Entweder-oder-Wahl — dafür ist Radio da.",
+      "dont3":        "Das Label mit „aktivieren“ formulieren.",
+      "dont4":        "Ohne Rückmeldung schalten, wenn der Vorgang fehlschlagen kann."
     },
     "code": {
-      "title":       "Code",
-      "toggleTitle": "Toggle — controlled und uncontrolled",
-      "toggleDesc":  "Ohne checked-Prop verwaltet der Toggle seinen State intern. Mit checked und onChange wird er controlled."
+      "title":          "Toggle im Code",
+      "basicDesc":      "Ungesteuert mit Startwert über defaultChecked:",
+      "controlledDesc": "Gesteuert über checked und onChange — onChange bekommt den neuen Zustand als Wahrheitswert, kein Ereignis:",
+      "loadingDesc":    "Während des Speicherns sperrt loading die Bedienung:",
+      "settingsDesc":   "In Einstellungslisten steht die Beschriftung links:"
     },
     "a11y": {
-      "title":         "Accessibility",
-      "intro":         "Der Toggle-Switch nutzt Radix UI Switch Primitive mit korrekter ARIA-Semantik — solange Labels korrekt verknüpft sind.",
-      "keyboardTitle": "Keyboard-Navigation",
-      "keyboardBody":  "Der Toggle ist vollständig per Tastatur bedienbar.",
-      "k1":            "Tab — fokussiert den Toggle",
-      "k2":            "Space — aktiviert oder deaktiviert den Toggle",
-      "k3":            "Enter — nicht standardmäßig für Toggle (Browser-abhängig)",
-      "k4":            "Shift+Tab — fokussiert das vorherige Element",
-      "ariaTitle":     "ARIA-Rolle",
-      "ariaBody":      "Toggle → role=\"switch\". Die Rolle wird von Radix UI Switch Primitive automatisch gesetzt.",
-      "labelTitle":    "Label-Pflicht",
-      "labelBody":     "Jeder Toggle braucht ein verknüpftes Label. Ohne label-Prop aria-label am Element setzen."
+      "roleTitle":     "Rolle",
+      "roleBody":      "Gerendert als button mit role=\"switch\" und aria-checked. Ohne Beschriftung ist ein aria-label Pflicht.",
+      "keyboardTitle": "Tastatur",
+      "k1":            "Tab setzt den Fokus, der 3px-Ring liegt um die Bahn.",
+      "k2":            "Leertaste und Enter schalten um.",
+      "stateTitle":    "Zustand und Trefferfläche",
+      "s1":            "Der Ladezustand setzt aria-busy=\"true\" und sperrt die Bedienung.",
+      "s2":            "Der Zustand hängt nicht allein an der Farbe: Häkchen und Kreuz im Griff tragen ihn mit.",
+      "s3":            "Die Größen sm und md liegen unter 44px — in Touch-Listen sorgt die Zeile für die Trefferfläche, alleinstehend gehört dorthin lg."
     }
   },
 
   "checkbox": {
     "page": {
       "title":       "Checkbox",
-      "description": "Checkbox — Mehrfachauswahl für unabhängige Optionen in Formularen."
+      "description": "Mehrfachauswahl: null bis viele Optionen. Eigene Grafik, damit Farbe, Radius und Fokusring aus den Tokens kommen."
+    },
+    "controls": {
+      "size":          "Größe",
+      "hint":          "Hilfetext",
+      "indeterminate": "Zwischenzustand",
+      "error":         "Fehler",
+      "disabled":      "Deaktiviert"
+    },
+    "demo": {
+      "reminder":         "Terminerinnerung senden",
+      "reminderHint":     "Die Erinnerung geht 24 Stunden vorher raus.",
+      "release":          "Befund freigeben",
+      "releaseHint":      "Die Praxis sieht den Befund sofort.",
+      "legend":           "Benachrichtigungen",
+      "all":              "Alle auswählen",
+      "count":            "{{count}} von {{total}} ausgewählt",
+      "horizontalLegend": "Sprechtage",
+      "options": {
+        "confirmed": "Termin bestätigt",
+        "moved":     "Termin verschoben",
+        "cancelled": "Termin abgesagt"
+      },
+      "days": {
+        "mon": "Mo",
+        "tue": "Di",
+        "wed": "Mi"
+      },
+      "states": {
+        "unchecked":       "Nicht ausgewählt",
+        "checked":         "Ausgewählt",
+        "indeterminate":   "Zwischenzustand",
+        "error":           "Fehlerzustand",
+        "disabled":        "Deaktiviert",
+        "disabledChecked": "Deaktiviert und ausgewählt"
+      }
     },
     "overview": {
-      "anatomyTitle":    "Anatomie",
-      "anatomyBody":     "Eine Checkbox besteht aus einem Auswahlfeld und einem optionalen Label. Jede Option ist unabhängig.",
-      "an1":             "Box — das visuell umrahmte Auswahlfeld",
-      "an2":             "Checkmark — das Häkchen im aktivierten Zustand",
-      "an3":             "Label — beschreibt die einzelne Option",
       "statesTitle":     "Zustände",
-      "stateDefault":    "Default (unchecked)",
-      "stateChecked":    "Checked",
-      "stateDisabled":   "Disabled"
+      "statesBody":      "Ausgewählt und Zwischenzustand teilen sich dieselbe Fläche in der Aktionsfarbe und unterscheiden sich durch das Zeichen: Häkchen gegen Strich. Der Fehlerzustand färbt nur den Rahmen.",
+      "sizesTitle":      "Größen",
+      "sizesBody":       "Kästchen 18px (sm) oder 20px (md), Radius 4px, Rahmen 1px. Das Label bleibt in beiden Größen bei 14px.",
+      "hintTitle":       "Mit Hilfetext",
+      "hintBody":        "Der Hilfetext steht unter dem Label und erklärt die Folge der Auswahl — nicht die Bedienung.",
+      "groupTitle":      "Gruppe mit Zwischenzustand",
+      "groupBody":       "Checkboxen gehören in eine Gruppe mit Beschriftung, sonst weiß ein Screenreader nicht, wozu die Optionen gehören. Die Kopfzeile steht im Zwischenzustand, solange nur ein Teil darunter gewählt ist.",
+      "horizontalTitle": "Waagerechte Anordnung",
+      "horizontalBody":  "Senkrecht ist der Normalfall. Waagerecht nur bei zwei bis drei sehr kurzen Beschriftungen."
     },
     "usage": {
-      "title":    "Einsatz",
-      "intro":    "Checkboxen ermöglichen Mehrfachauswahl. Jede Option ist unabhängig und kann einzeln aktiviert oder deaktiviert werden.",
-      "doTitle":  "Do",
-      "dontTitle":"Don't",
-      "do1":      "Checkbox für Mehrfachauswahl und Zustimmungsfelder verwenden",
-      "do2":      "Jede Checkbox mit sichtbarem Label versehen",
-      "do3":      "Disabled-State setzen, wenn Optionen kontextbedingt nicht verfügbar sind",
-      "do4":      "Zusammengehörige Checkboxen in Gruppen anordnen",
-      "dont1":    "Keine Checkbox für Einzelauswahl aus einer Gruppe — dafür Radio",
-      "dont2":    "Keinen Toggle statt Checkbox für Formular-Submit-Daten",
-      "dont3":    "Keine Checkbox ohne Label — Screen-Reader benötigen sichtbaren Text",
-      "dont4":    "Keine langen Texte als Checkbox-Label — kurz und präzise bleiben",
-      "doNote":   "Checkboxen sind für unabhängige, mehrstufige Auswahl gedacht.",
-      "dontNote": "Falsche Komponente führt zu falschen Erwartungen beim Nutzer."
+      "whenTitle":           "Wann",
+      "w1":                  "Für null bis viele Optionen aus einer Liste.",
+      "w2":                  "Eine einzelne Checkbox ist richtig für Zustimmung — etwa zur Kenntnisnahme einer Einwilligung.",
+      "w3":                  "Geht es um zwei Zustände, die sofort wirken, gehört dorthin ein Toggle; geht es um genau eine Option aus mehreren, ein Radio.",
+      "labelTitle":          "Beschriftung",
+      "labelBody":           "Das Label gehört ins Label-Element, damit die ganze Zeile trifft. Auf Touch-Geräten muss die Zeile mindestens 44px hoch sein.",
+      "indeterminateTitle":  "Zwischenzustand",
+      "indeterminateBody":   "Der Zwischenzustand bedeutet „einige darunter sind ausgewählt“ — typisch für die Kopfzeile einer Baumauswahl oder einer Tabellenspalte. Er ist kein dritter Wert für „unbekannt“ und wird nie gesetzt, ohne dass darunter eine Auswahl liegt.",
+      "errorTitle":          "Fehlerzustand",
+      "errorBody":           "Eine Pflichtzustimmung ohne Fehlermeldung stehen zu lassen, hilft niemandem: Der Fehlerzustand färbt den Rahmen und setzt aria-invalid, die Begründung gehört daneben.",
+      "dontTitle":           "Nicht tun",
+      "dont1":               "Ohne Gruppenbeschriftung gruppieren.",
+      "dont2":               "Den Zwischenzustand als eigenständigen Wert benutzen.",
+      "dont3":               "Für An-/Aus-Schalter verwenden, die sofort wirken."
     },
     "code": {
-      "title":        "Code",
-      "checkboxTitle":"Checkbox-Gruppe",
-      "checkboxDesc": "Mehrere Checkboxen teilen keinen gemeinsamen State — jede ist eigenständig. Den internen State per onChange-Handler aggregieren."
+      "title":             "Checkbox im Code",
+      "basicDesc":         "Beschriftung über label, zweite Zeile über hint:",
+      "groupDesc":         "Gruppen bekommen eine Beschriftung und eine Richtung:",
+      "indeterminateDesc": "Der Zwischenzustand entsteht aus dem Zustand der Kinder:"
     },
     "a11y": {
-      "title":         "Accessibility",
-      "intro":         "Checkboxen nutzen shadcn/ui Primitive mit korrekter ARIA-Semantik — solange Labels korrekt verknüpft sind.",
-      "keyboardTitle": "Keyboard-Navigation",
-      "keyboardBody":  "Die Checkbox ist vollständig per Tastatur bedienbar.",
-      "k1":            "Tab — fokussiert die Checkbox",
-      "k2":            "Space — aktiviert oder deaktiviert die Checkbox",
-      "k3":            "Enter — sendet das Formular (falls verfügbar)",
-      "k4":            "Shift+Tab — fokussiert das vorherige Element",
-      "ariaTitle":     "ARIA-Rolle",
-      "ariaBody":      "Checkbox → role=\"checkbox\". Die Rolle wird von shadcn/ui automatisch gesetzt.",
-      "labelTitle":    "Label-Pflicht",
-      "labelBody":     "Jede Checkbox braucht ein verknüpftes Label. Ohne label-Prop aria-label am Element setzen."
+      "labelTitle":    "Beschriftung",
+      "labelBody":     "Die Komponente rendert ein Label-Element um das native Eingabefeld — das Label ist damit ohne id-Verknüpfung Teil der Trefferfläche und wird von Screenreadern vorgelesen.",
+      "keyboardTitle": "Tastatur",
+      "k1":            "Tab setzt den Fokus auf das Kästchen, der Ring liegt 3px um das Kästchen.",
+      "k2":            "Die Leertaste schaltet die Auswahl um.",
+      "stateTitle":    "Zustand",
+      "s1":            "Der Zwischenzustand wird als DOM-Eigenschaft am nativen Feld gesetzt, nicht nur optisch — Screenreader kündigen ihn als „teilweise ausgewählt“ an.",
+      "s2":            "Der Fehlerzustand setzt aria-invalid=\"true\".",
+      "s3":            "Deaktivierte Kästchen sind nicht fokussierbar; die Begründung gehört sichtbar auf die Seite."
     }
   },
 
   "radio": {
     "page": {
       "title":       "Radio",
-      "description": "Radio — Einfachauswahl aus einer Gruppe von Optionen."
+      "description": "Einfachauswahl: genau eine Option aus einer überschaubaren Menge."
+    },
+    "controls": {
+      "variant":   "Variante",
+      "direction": "Richtung",
+      "size":      "Größe",
+      "disabled":  "Deaktiviert"
+    },
+    "demo": {
+      "legend":         "Terminart",
+      "videoHint":      "Der Zugangslink kommt per E-Mail.",
+      "durationLegend": "Termindauer",
+      "billingLegend":  "Abrechnungsweg",
+      "selected":       "Gewählt: {{value}}",
+      "options": {
+        "praxis": "In der Praxis",
+        "video":  "Videosprechstunde",
+        "phone":  "Telefonisch"
+      },
+      "durations": {
+        "min15": "15 min",
+        "min30": "30 min",
+        "min60": "60 min"
+      },
+      "billing": {
+        "statutory":     "Gesetzlich",
+        "statutoryHint": "Abrechnung über die Kassenärztliche Vereinigung.",
+        "private":       "Privat",
+        "privateHint":   "Rechnung direkt an die Patientin oder den Patienten."
+      },
+      "states": {
+        "unselected":       "Nicht gewählt",
+        "selected":         "Gewählt",
+        "error":            "Fehlerzustand",
+        "disabled":         "Deaktiviert",
+        "disabledSelected": "Deaktiviert und gewählt"
+      }
     },
     "overview": {
-      "anatomyTitle":    "Anatomie",
-      "anatomyBody":     "Ein Radio-Button gehört immer zu einer Gruppe (name-Attribut). Nur eine Option kann gleichzeitig ausgewählt sein.",
-      "an1":             "Circle — der äußere Ring, sichtbar in allen Zuständen",
-      "an2":             "Dot — der innere ausgefüllte Punkt im aktivierten Zustand",
-      "an3":             "Label — beschreibt die einzelne Radio-Option",
       "statesTitle":     "Zustände",
-      "stateUnselected": "Unselected",
-      "stateSelected":   "Selected",
-      "stateDisabled":   "Disabled"
+      "statesBody":      "Im Ruhezustand trägt der Kreis die Feldrahmenfarbe, gewählt die Aktionsfarbe, im Hover eine Stufe dunkler. Gesperrt und gewählt zeigt einen stone-400-Punkt in einem gedämpften Kreis — nicht die Aktionsfarbe.",
+      "sizesTitle":      "Größen",
+      "sizesBody":       "Kreis 18px (sm) oder 20px (md), Punkt 9px beziehungsweise 10px, Rahmen 1px.",
+      "groupTitle":      "Gruppe",
+      "groupBody":       "Die Gruppe ist der Normalfall: Sie erzeugt den gemeinsamen Namen selbst, wenn keiner gesetzt ist, und nimmt die Optionen als Array. Eine Beschriftung ist Pflicht, sonst fehlt der Bezug für Screenreader.",
+      "hintTitle":       "Mit Hilfetext",
+      "hintBody":        "Ein Hilfetext unter der Option erklärt, was die Wahl bedeutet. Er ersetzt keine klare Beschriftung.",
+      "horizontalTitle": "Waagerechte Anordnung",
+      "horizontalBody":  "Senkrecht ist der Normalfall; waagerecht nur bei zwei bis drei kurzen Beschriftungen.",
+      "cardTitle":       "Auswahlkarten",
+      "cardBody":        "Die Kartenvariante rendert die Optionen als Auswahlkarten: Titel links, Punkt rechts, Erklärung darunter. Die gewählte Karte bekommt Rahmen und Fläche in der Primärfarbe, und die ganze Karte ist Klickfläche."
     },
     "usage": {
-      "title":    "Einsatz",
-      "intro":    "Radio-Buttons erzwingen Einfachauswahl aus einer festen Gruppe. Alle Radios einer Gruppe teilen denselben name-Wert.",
-      "doTitle":  "Do",
-      "dontTitle":"Don't",
-      "do1":      "Radio für genau eine Auswahl aus einer Gruppe verwenden",
-      "do2":      "Alle Radios einer Gruppe mit gleichem name-Attribut versehen",
-      "do3":      "Jede Option mit sichtbarem Label versehen",
-      "do4":      "Maximal 6–7 Optionen — ab dann Select bevorzugen",
-      "dont1":    "Keine Radio-Buttons für Mehrfachauswahl — dafür Checkboxen",
-      "dont2":    "Kein name-Attribut weglassen — sonst unabhängige Buttons",
-      "dont3":    "Keine Radio-Gruppe ohne vorausgewählte Option lassen",
-      "dont4":    "Nicht mehr als 7 Optionen in einer Radio-Gruppe",
-      "doNote":   "Radio erzwingt Einfachauswahl und kommuniziert das visuell klar.",
-      "dontNote": "Zu viele Optionen machen die Auswahl unübersichtlich."
+      "whenTitle":  "Wann",
+      "whenBody":   "Bei zwei bis etwa fünf gleichrangigen Optionen, die alle sichtbar sein sollen. Werden es mehr, nehmen Sie Select. Geht es um null bis viele, nehmen Sie Checkbox. Geht es um einen Schalter, der sofort wirkt, nehmen Sie Toggle.",
+      "groupTitle": "Gruppe und Vorauswahl",
+      "g1":         "Eine Gruppenbeschriftung ist Pflicht — ohne sie fehlt der Bezug für Screenreader.",
+      "g2":         "Einzelne Radios ohne Gruppe brauchen einen manuell gesetzten, gemeinsamen Namen, sonst schließen sie sich nicht gegenseitig aus.",
+      "g3":         "Treffen Sie eine Vorauswahl, wenn eine Option die sichere Voreinstellung ist. Gibt es keine, lassen Sie alles leer — eine falsche Vorauswahl ist schlechter als keine, weil sie unbemerkt übernommen wird.",
+      "cardTitle":  "Auswahlkarten",
+      "cardBody":   "Karten sind für wenige, gewichtige Alternativen gedacht, die eine Beschreibung brauchen — Tarife, Versandarten, Sichtbarkeitsstufen. Drei bis vier Karten sind das Maximum; darüber wird die Zeile zu voll und die Listenform ist besser.",
+      "dontTitle":  "Nicht tun",
+      "dont1":      "Ohne Gruppenbeschriftung gruppieren.",
+      "dont2":      "Radios ohne gemeinsamen Namen einzeln verstreuen.",
+      "dont3":      "Ein einzelnes Radio verwenden, das man nicht wieder abwählen kann — dafür ist die Checkbox da.",
+      "dont4":      "Mehr als etwa fünf Optionen auflisten."
     },
     "code": {
-      "title":      "Code",
-      "radioTitle": "Radio-Gruppe",
-      "radioDesc":  "Alle Radios einer Gruppe teilen denselben name-Wert. Nur der ausgewählte Radio hat checked={true}."
+      "title":        "Radio im Code",
+      "groupDesc":    "Die Gruppe nimmt die Optionen als Array:",
+      "cardDesc":     "Die Kartenvariante braucht Optionen; hint wird zur Erklärung unter dem Titel:",
+      "childrenDesc": "Statt der Kurzform lassen sich einzelne Radios als Kinder übergeben:"
     },
     "a11y": {
-      "title":         "Accessibility",
-      "intro":         "Radio-Buttons nutzen native Inputs — korrekte ARIA-Semantik ist durch das name-Attribut und role=\"radio\" sichergestellt.",
-      "keyboardTitle": "Keyboard-Navigation",
-      "keyboardBody":  "Tab fokussiert die Radio-Gruppe, Pfeiltasten navigieren innerhalb:",
-      "k1":            "Tab — fokussiert die gesamte Radio-Gruppe",
-      "k2":            "Arrow Up / Down — wechselt Selection innerhalb der Gruppe",
-      "k3":            "Space — wählt den fokussierten Radio aus",
-      "k4":            "Enter — sendet das Formular (falls verfügbar)",
-      "ariaTitle":     "ARIA-Rolle",
-      "ariaBody":      "Radio → role=\"radio\". Die Rolle wird durch das native input type=\"radio\" automatisch gesetzt.",
-      "labelTitle":    "Label-Pflicht",
-      "labelBody":     "Jeder Radio braucht ein verknüpftes Label. Ohne label-Prop aria-label am Element setzen."
+      "groupTitle":    "Gruppe",
+      "groupBody":     "Die Gruppe rendert ein fieldset mit role=\"radiogroup\" und die Beschriftung als legend. Damit kündigen Screenreader beim Betreten an, wozu die Optionen gehören.",
+      "keyboardTitle": "Tastatur",
+      "k1":            "Tab springt in die Gruppe — auf die gewählte Option, sonst auf die erste.",
+      "k2":            "Die Pfeiltasten wechseln innerhalb der Gruppe und wählen dabei direkt aus.",
+      "k3":            "Tab verlässt die Gruppe wieder als Ganzes, statt jede Option einzeln anzulaufen.",
+      "stateTitle":    "Zustand",
+      "s1":            "Der Fehlerzustand setzt aria-invalid=\"true\" auf dem betroffenen Feld.",
+      "s2":            "Deaktivierte Optionen bleiben sichtbar, nehmen aber keinen Fokus — der Grund gehört sichtbar daneben."
     }
   },
 
@@ -2448,32 +2548,82 @@
   "slider": {
     "page": {
       "title":       "Slider",
-      "description": "Eingabekomponente zur Auswahl eines Wertes innerhalb eines definierten Bereichs durch Ziehen"
+      "description": "Wert stufenlos oder in Schritten einstellen — wenn die ungefähre Lage wichtiger ist als die genaue Zahl."
+    },
+    "controls": {
+      "size":        "Größe",
+      "orientation": "Ausrichtung",
+      "label":       "Beschriftung",
+      "showValue":   "Wert anzeigen",
+      "showMinMax":  "Min und Max",
+      "showTicks":   "Ticks",
+      "icons":       "Icons an den Enden",
+      "disabled":    "Deaktiviert"
+    },
+    "demo": {
+      "share":        "Eigenanteil",
+      "duration":     "Termindauer",
+      "volume":       "Lautstärke",
+      "urgencyLabel": "Dringlichkeit",
+      "committed":    "Übernommen beim Loslassen: {{value}} min",
+      "urgency": {
+        "routine":   "Routine",
+        "raised":    "Erhöht",
+        "urgent":    "Dringend",
+        "immediate": "Sofort"
+      }
     },
     "overview": {
-      "anatomyTitle": "Anatomie",
-      "anatomyBody":  "Ein Slider besteht aus einer Track-Leiste, einem Range-Bereich und einem Thumb-Handle, das der Nutzer ziehen kann.",
-      "rangeTitle":   "Wertebereich",
-      "rangeBody":    "Min, Max und Step steuern den gültigen Wertebereich und die Schrittgröße."
+      "basicTitle":      "Stufenlos",
+      "basicBody":       "Ohne Ticks und Stufenbeschriftung läuft der Griff frei. Die Wertanzeige über der Bahn zeigt den Wert dauerhaft, die dunkle Blase nur beim Ziehen und bei Tastaturfokus.",
+      "sizesTitle":      "Größen",
+      "sizesBody":       "Der Griff ist weiß mit dünnem Rahmen und wirft einen leichten Schatten — er soll über der Bahn liegen, nicht in ihr verschwinden.",
+      "discreteTitle":   "Diskret mit Stufenbeschriftung",
+      "discreteBody":    "Im diskreten Modus zeigen 4px-Punkte die Stufen, und die Stufenbeschriftung benennt sie unter der Bahn. Die aktive Stufe steht in der Textfarbe, die übrigen gedämpft; die Blase zeigt dann den Namen der Stufe statt der Zahl.",
+      "minMaxTitle":     "Min, Max und Schrittweite",
+      "minMaxBody":      "Minimum und Maximum stehen unter den Enden der Bahn. Die Schrittweite bestimmt, auf welche Werte der Griff einrastet.",
+      "iconsTitle":      "Icons an den Enden",
+      "iconsBody":       "Icons an den Enden zeigen die Richtung der Größe. Sie ersetzen keine Beschriftung — ohne sichtbares Label braucht der Slider ein ariaLabel.",
+      "controlledTitle": "Gesteuert mit onChangeEnd",
+      "controlledBody":  "onChange feuert während des Ziehens, onChangeEnd erst beim Loslassen — für teure Aktualisierungen wie Serveranfragen. Ziehen Sie den Griff und lassen Sie los: Der untere Wert folgt erst danach.",
+      "verticalTitle":   "Vertikal",
+      "verticalBody":    "Die vertikale Ausrichtung nur, wenn die Größe selbst senkrecht gedacht ist — Helligkeit, Pegel. Die Wertblase erscheint dann rechts neben dem Griff.",
+      "disabledTitle":   "Deaktiviert",
+      "disabledBody":    "Deaktiviert bleiben Bahn und Griff sichtbar, nehmen aber weder Zeiger noch Tastatur an."
     },
     "usage": {
-      "title":      "Verwendung",
-      "intro":      "Slider eignen sich für kontinuierliche Eingaben wie Lautstärke, Helligkeit oder Preisbereiche.",
-      "stateTitle": "Gesteuerter Zustand",
-      "stateBody":  "Der Slider ist eine kontrollierte Komponente — übergib den aktuellen Wert via value und verarbeite Änderungen via onChange."
+      "whenTitle":      "Wann",
+      "whenBody":       "Wenn die ungefähre Lage wichtiger ist als die genaue Zahl: Lautstärke, Helligkeit, Umkreis, Preisspanne. Muss der Wert exakt sein oder getippt werden können, gehört daneben ein Zahlenfeld — oder es ist gleich nur ein Zahlenfeld.",
+      "valueTitle":     "Wert sichtbar halten",
+      "valueBody":      "Die Blase ersetzt keine dauerhafte Wertanzeige: Sie erscheint nur beim Ziehen und bei Fokus. Wo der Wert dauerhaft sichtbar sein soll, gehört die Wertanzeige daneben oder ein gekoppeltes Zahlenfeld.",
+      "stepTitle":      "Stufen wählen",
+      "stepBody":       "Bei wenigen benannten Stufen — drei, vier — ist ein Radio klarer als ein Slider. Mehr als etwa zehn sichtbare Ticks werden unruhig und helfen niemandem beim Treffen.",
+      "changeEndTitle": "Teure Aktualisierungen",
+      "changeEndBody":  "Löst die Änderung eine Serveranfrage oder eine aufwendige Neuberechnung aus, gehört sie in onChangeEnd — sonst feuert sie bei jedem Pixel der Zugbewegung.",
+      "dontTitle":      "Nicht tun",
+      "dont1":          "Slider für Werte, die exakt getroffen werden müssen.",
+      "dont2":          "Die Wertblase dauerhaft einblenden.",
+      "dont3":          "Mehr als etwa zehn sichtbare Ticks zeigen.",
+      "dont4":          "Ohne Beschriftung oder ariaLabel einsetzen."
     },
     "code": {
-      "title":         "Code",
-      "basicTitle":    "Grundlegend",
-      "basicDesc":     "Verwende value und onChange für einen kontrollierten Slider.",
-      "rangeTitle":    "Benutzerdefinierter Bereich",
-      "disabledTitle": "Deaktiviert"
+      "title":        "Slider im Code",
+      "basicDesc":    "Bereich über min, max und step; die Wertanzeige über showValue:",
+      "discreteDesc": "Der diskrete Modus entsteht aus showTicks und stepLabels:",
+      "formatDesc":   "formatValue steuert Blase, Wertanzeige und aria-valuetext gemeinsam:",
+      "verticalDesc": "Vertikal mit Icons an den Enden:"
     },
     "a11y": {
-      "title":         "Barrierefreiheit",
-      "intro":         "Der Slider basiert auf Radix UI Primitives und folgt dem ARIA Slider-Muster mit vollständiger Tastaturunterstützung.",
-      "keyboardTitle": "Tastaturinteraktion",
-      "keyboardBody":  "Pfeiltasten ändern den Wert schrittweise. Home und End springen zum Minimum bzw. Maximum."
+      "keyboardTitle": "Tastatur",
+      "k1":            "Pfeiltasten bewegen den Wert um eine Stufe.",
+      "k2":            "Bild auf und Bild ab bewegen ihn um ein Zehntel des Bereichs.",
+      "k3":            "Pos1 und Ende springen an die Ränder.",
+      "ariaTitle":     "ARIA",
+      "a1":            "Der Griff trägt role=\"slider\" mit aria-valuemin, aria-valuemax und aria-valuenow.",
+      "a2":            "Benannte Stufen und eigene Formatierungen kommen über aria-valuetext an — sonst läse ein Screenreader nur die nackte Zahl vor.",
+      "a3":            "Ohne sichtbare Beschriftung ist ariaLabel Pflicht.",
+      "targetTitle":   "Trefferfläche",
+      "targetBody":    "Die Bahn hat oben und unten Polsterung, damit die Trefferfläche größer ist als die sichtbaren 6px. Ein Klick auf die Bahn springt zum Wert, statt nur den Griff anzunehmen."
     }
   },
   "about": {
