@@ -27,7 +27,9 @@
       "cards": "Cards",
       "tables": "Tables",
       "tabs": "Tabs",
-      "navigation": "Navigation",
+      "contentSwitcher": "Content Switcher",
+      "breadcrumb":      "Breadcrumb",
+      "codeSnippet":     "Code Snippet",
       "overlays":   "Modal",
       "accordion":  "Accordion",
       "dropdown":    "Dropdown",
@@ -1159,130 +1161,287 @@
   },
   "tabsPage": {
     "page": {
-      "description": "Navigation zwischen verwandten Inhaltsgruppen auf gleicher Hierarchieebene — als Underline oder Pill-Variante."
+      "title":       "Tabs",
+      "description": "Wechsel zwischen gleichrangigen Ansichten desselben Objekts — dieselbe Person, dieselbe Akte, andere Sicht darauf."
+    },
+    "demo": {
+      "ariaLabel": "Profilbereiche",
+      "profil":    "Profil",
+      "netz":      "Netzwerk",
+      "anfragen":  "Anfragen",
+      "archiv":    "Archiv",
+      "panel":     "Der Inhalt des aktiven Tabs steht hier. Abstand, Fläche und Radius setzt die Seite, nicht die Komponente."
+    },
+    "many": {
+      "a": "Übersicht",
+      "b": "Verträge",
+      "c": "Dokumente",
+      "d": "Termine",
+      "e": "Abrechnung",
+      "f": "Nachweise",
+      "g": "Verlauf"
+    },
+    "full": {
+      "a": "Übersicht",
+      "b": "Verlauf"
     },
     "overview": {
-      "anatomyTitle": "Anatomie",
-      "anatomyBody": "Die Tabs-Komponente besteht aus drei Ebenen: der Tab-Liste, den einzelnen Tab-Triggern und den Tab-Inhalten.",
-      "an1": "TabsList — horizontale Leiste, die alle TabsTrigger enthält",
-      "an2": "TabsTrigger — einzelner Tab-Button, der den zugehörigen Inhalt aktiviert",
-      "an3": "TabsContent — Inhaltsbereich, der bei aktivem Tab eingeblendet wird",
-      "variantsTitle": "Varianten",
-      "variantsBody": "Zwei Varianten: underline für Seiten-Navigation, pill für Filter und Kategorien.",
-      "underlineLabel": "Underline",
-      "pillLabel": "Pill",
-      "stateTitle": "Controlled vs. Uncontrolled",
-      "stateBody": "Tabs können intern (uncontrolled) oder extern (controlled) gesteuert werden:",
-      "stateUncontrolled": "defaultTab setzt den initialen Tab — der interne State wird von der Komponente verwaltet",
-      "stateControlled": "activeTab + onTabChange — der State liegt außerhalb der Komponente, z. B. in useState"
+      "variantsTitle":  "Varianten",
+      "variantsBody":   "underline ist der Normalfall für Tabs, die einen Seitenbereich gliedern; der Indikator sitzt unter dem aktiven Tab, eine durchgehende Grundlinie gibt es nicht. contained liegt auf einer stone-100-Leiste und ist für Tabs innerhalb einer Karte oder neben einer Toolbar gedacht, wo eine Unterstreichung mit dem Kartenrand kollidiert.",
+      "panelTitle":     "Panel",
+      "panelBody":      "Kinder werden als role=\"tabpanel\" des aktiven Tabs gerendert und bleiben ungestylt. Der Panel-Inhalt wird bei jedem Wechsel neu gemountet — Zustand, der den Wechsel überleben soll, gehört nach außen.",
+      "verticalTitle":  "Vertikal",
+      "verticalBody":   "Bei sehr vielen Bereichen ist die vertikale Form die ruhigere Lösung. Sie steht links neben dem Panel und folgt immer der underline-Logik; der Indikator wandert dabei an die linke Kante.",
+      "scrollTitle":    "Scrollbar",
+      "scrollBody":     "Ab etwa sieben Tabs scrollable setzen: die Leiste scrollt waagerecht statt umzubrechen, ohne sichtbare Scrollbar.",
+      "fullWidthTitle": "Volle Breite",
+      "fullWidthBody":  "fullWidth teilt die Breite gleichmäßig auf die Tabs auf. Nur einsetzen, wenn die Tabs eine Karte oder ein Sheet vollständig überspannen — auf breiten Seiten laufen die Labels sonst weit auseinander.",
+      "sizesTitle":     "Dichte",
+      "sizesBody":      "md ist der Standard, sm verdichtet Leiste und Beschriftung für Karten und Werkzeugleisten."
     },
     "usage": {
-      "title": "Wann Tabs verwenden?",
-      "intro": "Tabs eignen sich für Inhalte, die thematisch zusammengehören, aber nicht gleichzeitig sichtbar sein müssen — z. B. Profil / Sicherheit / Abrechnung.",
-      "whenTitle": "Geeignete Einsätze",
-      "when1": "Verwandte Inhaltsgruppen auf derselben Hierarchieebene (z. B. Profil, Sicherheit, Einstellungen)",
-      "when2": "Filter-Ansichten, bei denen Nutzer zwischen Teilmengen einer Liste wechseln",
-      "when3": "Detail-Ansichten mit mehreren Informationskategorien zu einem Objekt",
-      "whenNotTitle": "Wann nicht?",
-      "whenNotBody": "Tabs nicht für schrittweise Prozesse verwenden (→ Stepper/Wizard). Und nicht für Navigation zwischen grundlegend verschiedenen Kontexten (→ Sidebar-Navigation).",
-      "doTitle": "Do",
-      "dontTitle": "Don't",
-      "do1": "Tab-Labels kurz und aussagekräftig halten (1–2 Wörter)",
-      "do2": "Unterline-Variante für Seiten-Navigation, Pill für Filter",
-      "do3": "Controlled Tabs verwenden, wenn externe Logik den aktiven Tab steuern muss",
-      "dont1": "Keine zu vielen Tabs (max. 5–6) — bei mehr Optionen Dropdown oder Nav erwägen",
-      "dont2": "Tabs nicht für Wizards oder mehrstufige Formulare nutzen",
-      "dont3": "Kein tief verschachtelter Tab-in-Tab-Aufbau",
-      "doNote": "Tabs für gleich-gewichtete Inhalte — nicht für Prozesse.",
-      "dontNote": "Tabs sind keine Navigation für unterschiedliche Kontexte."
+      "whenTitle":   "Wann Tabs",
+      "whenBody":    "Für gleichrangige Ansichten desselben Objekts. Geht es um die Darstellung derselben Liste — Liste, Raster, Kanban —, ist es ein ContentSwitcher. Geht es um Schritte einer Abfolge, ein ProgressIndicator.",
+      "styleTitle":  "Welcher Stil",
+      "styleBody":   "underline gliedert einen Seitenbereich, contained sitzt in einer Karte oder neben einer Toolbar. Beide nie auf derselben Ebene mischen.",
+      "labelTitle":  "Beschriftung",
+      "labelBody":   "Ein bis zwei Wörter pro Label, keine Sätze. Ein badge trägt nur eine Anzahl — kein Statuswort und kein „neu“.",
+      "stateTitle":  "Zustand",
+      "stateBody":   "Ohne value verwaltet die Komponente die Auswahl selbst. Mit value und onChange liegt sie außen — nötig, wenn die Adresse oder andere Teile der Oberfläche mitziehen sollen.",
+      "doDontTitle": "Einsatz",
+      "doTitle":     "Do",
+      "dontTitle":   "Don't",
+      "do1":         "Gleichrangige Ansichten desselben Gegenstands zeigen",
+      "do2":         "Ab etwa sieben Tabs scrollable setzen, bei sehr vielen Bereichen vertikal",
+      "do3":         "Labels auf ein bis zwei Wörter kürzen",
+      "dont1":       "Schritte oder eine Reihenfolge in Tabs abbilden",
+      "dont2":       "Tabs verschachteln — eine zweite Ebene wird nicht als Tabs gezeigt",
+      "dont3":       "Beim Wechsel etwas absenden lassen; Tabs zeigen, sie speichern nicht"
     },
     "code": {
-      "title": "Code-Beispiele",
-      "uncontrolledTitle": "Uncontrolled Tabs",
-      "uncontrolledDesc": "defaultTab setzt den initialen Tab — kein externer State nötig.",
-      "controlledTitle": "Controlled Tabs",
-      "controlledDesc": "activeTab und onTabChange für externen State-Control — z. B. wenn andere UI-Teile vom aktiven Tab abhängen.",
-      "controlledDemoA": "Profilinformationen werden hier angezeigt.",
-      "controlledDemoB": "Passwort, 2FA und Session-Verwaltung.",
-      "controlledDemoC": "Abrechnungsdetails und Rechnungen.",
-      "pillTitle": "Pill-Variante",
-      "pillDesc": "variant=\"pill\" für Filter-Tabs und Kategorien — kompaktere Darstellung."
+      "title":          "Code-Beispiele",
+      "basicTitle":     "Basis mit Panel",
+      "containedTitle": "Contained, gesteuert",
+      "verticalTitle":  "Vertikal",
+      "scrollTitle":    "Scrollbar und volle Breite"
     },
     "a11y": {
-      "title": "Accessibility",
-      "intro": "Die Tabs-Komponente basiert auf Radix UI und implementiert das WAI-ARIA Tabs Pattern vollständig.",
-      "keyboardTitle": "Keyboard-Navigation",
-      "k1": "Tab — Fokus auf das aktive TabsTrigger setzen",
-      "k2": "ArrowLeft / ArrowRight — zwischen Tabs navigieren",
-      "k3": "Home / End — zum ersten bzw. letzten Tab springen",
-      "k4": "Space / Enter — aktiven Tab aktivieren",
-      "rolesTitle": "ARIA-Rollen",
-      "rolesBody": "TabsList erhält role=\"tablist\", TabsTrigger role=\"tab\", TabsContent role=\"tabpanel\". Die Zuordnung erfolgt via aria-controls und aria-labelledby.",
-      "ariaTitle": "aria-selected",
-      "ariaBody": "Das aktive Tab-Element hat aria-selected=\"true\". Screen-Reader kündigen den aktivierten Tab beim Wechsel an.",
-      "focusTitle": "Fokus-Management",
-      "focusBody": "Beim Aktivieren eines Tabs erhält der zugehörige TabsContent keinen automatischen Fokus. Falls der Inhalt fokussierbar sein soll, muss focus() programmatisch aufgerufen werden."
+      "rolesTitle":    "Rollen",
+      "rolesBody":     "Die Leiste ist role=\"tablist\" mit aria-orientation, jeder Tab role=\"tab\" mit aria-selected. Sind Kinder vorhanden, werden sie als role=\"tabpanel\" gerendert und über aria-controls und aria-labelledby mit dem aktiven Tab verbunden.",
+      "keyboardTitle": "Tastatur",
+      "key1":          "Pfeiltasten — wechseln direkt, die Auswahl folgt dem Fokus",
+      "key2":          "Pos1 und Ende — springen an die Ränder",
+      "key3":          "Deaktivierte Tabs werden übersprungen",
+      "key4":          "Nur der aktive Tab liegt im Tab-Index; von dort führt Tab weiter in das Panel",
+      "badgeTitle":    "Badge",
+      "badgeBody":     "Der Zähler steht im Label des Tabs und wird mit vorgelesen. Er trägt deshalb nur eine Anzahl — ein Statuswort wäre an dieser Stelle nicht zuzuordnen."
     }
   },
-  "navigation": {
+
+  "contentSwitcher": {
     "page": {
-      "description": "Breadcrumb für hierarchische Pfaddarstellung und Pagination für seitenweise Navigation durch Datenlisten."
+      "title":       "Content Switcher",
+      "description": "Wechselt die Darstellung desselben Inhalts — Liste, Raster, Kanban; Monat, Quartal, Jahr. Der Gegenstand bleibt derselbe, nur die Sicht ändert sich."
+    },
+    "demo": {
+      "ariaLabel":   "Ansicht",
+      "periodLabel": "Zeitraum",
+      "liste":       "Liste",
+      "raster":      "Raster",
+      "kanban":      "Kanban",
+      "monat":       "Monat",
+      "quartal":     "Quartal",
+      "jahr":        "Jahr"
+    },
+    "uneven": {
+      "a": "Alle",
+      "b": "Offene Vorgänge",
+      "c": "Archiv"
+    },
+    "icon": {
+      "withLabel":   "Mit Beschriftung",
+      "iconOnly":    "Nur Icons",
+      "sharedState": "Beide Leisten teilen denselben Zustand — was Sie in der einen wählen, steht auch in der anderen."
+    },
+    "width": {
+      "equal":  "equalWidth (Standard)",
+      "uneven": "equalWidth={false}",
+      "full":   "fullWidth"
     },
     "overview": {
-      "breadcrumbTitle": "Breadcrumb",
-      "breadcrumbBody": "Breadcrumb zeigt den aktuellen Ort in der Seitenhierarchie und ermöglicht die Navigation zu übergeordneten Ebenen.",
-      "ban1": "Items — Array von { label, href? }, das letzte Item hat kein href (aktuelle Seite)",
-      "ban2": "Separator — visuelles Trennzeichen zwischen den Ebenen (/ Schrägstrich)",
-      "ban3": "BreadcrumbLink — klickbarer Link zu übergeordneten Ebenen",
-      "ban4": "BreadcrumbPage — nicht verlinktes Label der aktuellen Seite (fett)",
-      "paginationTitle": "Pagination",
-      "paginationBody": "Pagination ermöglicht die seitenweise Navigation durch große Datensätze. Bei mehr als 7 Seiten werden mittlere Seiten durch Ellipsis ersetzt.",
-      "pan1": "current — aktuelle Seitenzahl (controlled prop)",
-      "pan2": "total — Gesamtanzahl der Seiten",
-      "pan3": "onChange — Callback mit der neuen Seitenzahl",
-      "pan4": "Ellipsis-Logik: ≤ 7 Seiten = alle; > 7 = Ellipsis-Muster je nach current",
-      "paginationDemoLabel": "Aktuelle Seite:"
+      "variantsTitle": "Stile",
+      "variantsBody":  "neutral liegt auf einer stone-100-Leiste, das aktive Segment ist weiß mit shadow-sm — der Standardfall, ruhig genug für Werkzeugleisten. outline teilt einen Rahmen und füllt das aktive Segment mit primary-600; sinnvoll, wenn die Leiste auf einer bereits getönten Fläche liegt und die neutrale Bahn dort verschwindet.",
+      "iconTitle":     "Nur Icons",
+      "iconBody":      "iconOnly ist nur für allgemein bekannte Darstellungen erlaubt. Das Label wird dann zum aria-label und erscheint bei Hover oder Fokus als dunkler Hinweis über dem Segment — ein zusätzlicher Tooltip ist nicht nötig und würde doppelt erscheinen.",
+      "widthTitle":    "Breite",
+      "widthBody":     "Alle Segmente sind gleich breit, damit beim Wechsel nichts springt. equalWidth={false} koppelt die Breite an den Text — dann ändert die Leiste beim Wechsel ihre Form. fullWidth spannt sie über die verfügbare Breite.",
+      "sizesTitle":    "Dichte",
+      "sizesBody":     "md misst 40 px Höhe, sm 32 px. sm gehört in Werkzeugleisten, md steht allein über einem Inhalt.",
+      "statesTitle":   "Zustände",
+      "statesBody":    "Deaktivierte Segmente bleiben sichtbar und werden von den Pfeiltasten übersprungen. In der outline-Form tragen sie zusätzlich eine getönte Fläche."
     },
     "usage": {
-      "title": "Wann verwenden?",
-      "intro": "Breadcrumb und Pagination sind eigenständige Navigations-Hilfsmittel — Breadcrumb für Hierarchien, Pagination für Datenlisten.",
-      "whenBreadcrumbTitle": "Breadcrumb",
-      "whenBreadcrumbBody": "Breadcrumb nur einsetzen, wenn die Seite mindestens 3 Hierarchieebenen tief liegt. Auf flachen Strukturen (Home → Seite) ist Breadcrumb überdimensioniert.",
-      "whenPaginationTitle": "Pagination",
-      "whenPaginationBody": "Pagination für Listen mit mehr als ~20 Einträgen, die seitenweise geladen werden. Bei kleinen Mengen oder Infinite Scroll ist Pagination nicht geeignet.",
-      "doTitle": "Do",
-      "dontTitle": "Don't",
-      "do1": "Letztes Breadcrumb-Item ohne href lassen (aktuelle Seite ist nicht verlinkbar)",
-      "do2": "Pagination-State mit useState außerhalb der Komponente verwalten",
-      "do3": "Breadcrumb und Pagination semantisch im nav-Element platzieren",
-      "dont1": "Breadcrumb nicht auf flachen 1-Ebenen-Seiten verwenden",
-      "dont2": "Pagination nicht mit Infinite Scroll kombinieren",
-      "dont3": "Nicht alle Seitenzahlen bei sehr vielen Seiten anzeigen — Ellipsis-Muster nutzen",
-      "doNote": "Breadcrumb: Hierarchie sichtbar machen. Pagination: Datenmenge kontrollieren.",
-      "dontNote": "Keine redundante Navigation einbauen."
+      "whenTitle":   "Wann Content Switcher",
+      "whenBody":    "Wenn sich die Sicht auf denselben Inhalt ändert. Wechseln sich ganze Ansichten eines Objekts ab, sind es Tabs. Löst der Klick eine Handlung aus, ist es ein Button. Geht es um eine Einstellung, die gespeichert wird, sind es Radio-Optionen — der Content Switcher schaltet immer sofort und speichert nichts.",
+      "countTitle":  "Anzahl der Segmente",
+      "countBody":   "Zwei bis fünf Segmente. Mehr wird ein Select — eine Leiste, die scrollen muss, ist keine Leiste mehr.",
+      "labelTitle":  "Beschriftung",
+      "labelBody":   "Ein Wort pro Segment. Bei iconOnly muss das Icon ohne Erklärung verständlich sein; Icons, die man raten muss, gehören nicht in eine Leiste ohne Text.",
+      "widthTitle":  "Gleiche Breite",
+      "widthBody":   "equalWidth ist Standard und sollte es bleiben. Koppelt man die Breite an den Text, springt die Leiste bei jedem Wechsel — genau das, was sie verhindern soll.",
+      "doDontTitle": "Einsatz",
+      "doTitle":     "Do",
+      "dontTitle":   "Don't",
+      "do1":         "Für den Wechsel der Darstellung desselben Inhalts einsetzen",
+      "do2":         "Zwei bis fünf Segmente, ein Wort pro Segment",
+      "do3":         "Segmente gleich breit lassen",
+      "dont1":       "Als Filter mit mehreren gleichzeitigen Werten benutzen — das sind auswählbare Tags",
+      "dont2":       "Mehr als fünf Segmente zeigen",
+      "dont3":       "Icon-only mit Icons, die man raten muss"
     },
     "code": {
-      "title": "Code-Beispiele",
-      "breadcrumbTitle": "Breadcrumb mit 3 Items",
-      "breadcrumbDesc": "items-Array: alle Items außer dem letzten haben href — das letzte Item ist die aktuelle Seite.",
-      "paginationControlledTitle": "Pagination controlled",
-      "paginationControlledDesc": "State liegt in der übergeordneten Komponente — onChange aktualisiert current und lädt die Daten für die neue Seite.",
-      "paginationFewTitle": "Pagination — wenige Seiten",
-      "paginationFewDesc": "Bei ≤ 7 Seiten werden alle Seitenzahlen angezeigt, kein Ellipsis."
+      "title":        "Code-Beispiele",
+      "basicTitle":   "Basis",
+      "iconTitle":    "Nur Icons",
+      "outlineTitle": "Outline",
+      "widthTitle":   "Breite"
     },
     "a11y": {
-      "title": "Accessibility",
-      "intro": "Beide Komponenten nutzen semantisches nav-Element mit aria-label, um Screen-Readern den Zweck der Navigation zu kommunizieren.",
-      "keyboardTitle": "Keyboard-Navigation",
-      "k1": "Tab — nächsten fokussierbaren Link oder Button fokussieren",
-      "k2": "Enter — Link oder Button aktivieren",
-      "k3": "Shift+Tab — vorherigen fokussierbaren Element fokussieren",
-      "navTitle": "nav aria-label",
-      "navBody": "Die Breadcrumb-Komponente ist in einem nav-Element mit implizitem landmark. Die Pagination hat aria-label=\"Pagination\". Screen-Reader können so zwischen den Navigations-Bereichen unterscheiden.",
-      "currentTitle": "aria-current=\"page\"",
-      "currentBody": "Der aktive Pagination-Button hat aria-current=\"page\". Das letzte Breadcrumb-Item ist als BreadcrumbPage ausgezeichnet — Screen-Reader erkennen die aktuelle Seite.",
-      "srTitle": "Prev/Next-Buttons",
-      "srBody": "Die Prev/Next-Buttons haben aria-label=\"Vorherige Seite\" und aria-label=\"Nächste Seite\" — sinnvoller als nur ← / →."
+      "rolesTitle":     "Rollen",
+      "rolesBody":      "Die Leiste ist role=\"tablist\", jedes Segment role=\"tab\" mit aria-selected. Der zugehörige Inhalt wird von der Seite gerendert und trägt role=\"tabpanel\". ariaLabel benennt, was umgeschaltet wird.",
+      "keyboardTitle":  "Tastatur",
+      "key1":           "Pfeiltasten — wechseln direkt zwischen den Segmenten",
+      "key2":           "Pos1 und Ende — springen an die Ränder",
+      "key3":           "Nur das aktive Segment liegt im Tab-Index, deaktivierte werden übersprungen",
+      "iconOnlyTitle":  "Nur Icons",
+      "iconOnlyBody":   "Bei iconOnly wird das Label zum aria-label des Segments und erscheint zusätzlich sichtbar bei Hover und Fokus. Der Hinweis selbst ist aria-hidden, damit er nicht doppelt vorgelesen wird."
+    }
+  },
+
+  "breadcrumb": {
+    "page": {
+      "title":       "Breadcrumb",
+      "description": "Zeigt den Weg zur aktuellen Seite und führt zurück. Er ist Orientierung, keine Navigation für den nächsten Schritt."
+    },
+    "demo": {
+      "ariaLabel":    "Pfad zur aktuellen Seite",
+      "start":        "Start",
+      "vertraege":    "Verträge",
+      "netzwerk":     "Netzwerk",
+      "spezialisten": "Spezialisten",
+      "bw":           "Baden-Württemberg",
+      "praxis":       "Praxis",
+      "team":         "Team"
+    },
+    "collapse": {
+      "off": "Fünf Ebenen ohne Kollaps",
+      "on":  "maxItems={4}"
+    },
+    "overview": {
+      "anatomyTitle":  "Aufbau",
+      "anatomyBody":   "Die erste Stufe ist die Wurzel, die letzte die aktuelle Seite:",
+      "an1":           "Die aktuelle Seite ist kein Link, steht in text-muted und trägt aria-current=\"page\"",
+      "an2":           "Trenner ist ein Schrägstrich in stone-400 — kein Chevron, keine Pfeile",
+      "an3":           "Die Labels sind die echten Seitentitel; eine Stufe schneidet bei etwa 220 px mit Auslassungspunkten ab",
+      "collapseTitle": "Kollabieren",
+      "collapseBody":  "Ab maxItems klappt die Mitte in ein …-Menü: erste Stufe, „…“, die letzten zwei Stufen. Das Menü öffnet auf Klick und schließt bei Klick außerhalb oder mit Esc. Die erste und die aktuelle Stufe werden nie versteckt — genau die beiden tragen die Orientierung.",
+      "iconTitle":     "Icons",
+      "iconBody":      "homeIcon ersetzt die Beschriftung der ersten Stufe durch das Haus-Icon. Einzelne Stufen können ein eigenes Icon tragen, wenn es die Ebene schneller erkennbar macht.",
+      "sizesTitle":    "Dichte",
+      "sizesBody":     "sm ist der Standard über einer Seitenüberschrift, md steht allein in einer Kopfzeile."
+    },
+    "usage": {
+      "whenTitle":    "Wann Breadcrumb",
+      "whenBody":     "Sobald Inhalte mindestens drei Ebenen tief liegen und man von außen direkt hineinspringen kann. Auf Seiten der ersten Ebene ist er überflüssig — dort steht nur der Titel. Er ersetzt nie den Zurück-Knopf des Browsers und nie eine sichtbare Hauptnavigation.",
+      "labelTitle":   "Beschriftung",
+      "labelBody":    "Die Labels sind die echten Seitentitel. Keine erfundenen Kurzformen — wer die Stufe kürzt, macht den Weg unlesbar.",
+      "collapseTitle":"Wann kollabieren",
+      "collapseBody": "Sobald der Pfad über eine Zeile hinausliefe. maxItems={0} schaltet das Kollabieren ab; das ist nur bei kurzen, festen Pfaden sinnvoll.",
+      "currentTitle": "Aktuelle Seite",
+      "currentBody":  "Die letzte Stufe ist bewusst kein Link und nicht fokussierbar. Sie sagt, wo man ist, nicht wohin man kann.",
+      "doDontTitle":  "Einsatz",
+      "doTitle":      "Do",
+      "dontTitle":    "Don't",
+      "do1":          "Ab drei Ebenen einsetzen, mit den echten Seitentiteln",
+      "do2":          "Bei langen Pfaden die Mitte in das …-Menü klappen",
+      "do3":          "Die aktuelle Seite als letzte Stufe ohne Link führen",
+      "dont1":        "Die aktuelle Seite als Link ausgeben",
+      "dont2":        "Den Breadcrumb als Ersatz für Tabs oder Menü verwenden",
+      "dont3":        "Stufen einfügen, die es als Seite nicht gibt"
+    },
+    "code": {
+      "title":         "Code-Beispiele",
+      "basicTitle":    "Basis",
+      "collapseTitle": "Kollabieren",
+      "clickTitle":    "Ohne Adresse",
+      "iconTitle":     "Icons"
+    },
+    "a11y": {
+      "structureTitle": "Struktur",
+      "structureBody":  "Die Leiste ist ein nav mit aria-label und enthält eine ol. Die Trenner sind aria-hidden, damit Screenreader keine Schrägstriche vorlesen. Jede Stufe ist ein Link oder eine Schaltfläche mit Fokusring.",
+      "currentTitle":   "Aktuelle Seite",
+      "currentBody":    "Die letzte Stufe trägt aria-current=\"page\" und ist bewusst nicht fokussierbar — sie führt nirgendwohin.",
+      "menuTitle":      "…-Menü",
+      "menuBody":       "Die Schaltfläche trägt eine eigene Beschriftung und aria-expanded. Das geöffnete Menü ist role=\"menu\" mit role=\"menuitem\" je Eintrag und schließt bei Klick außerhalb oder mit Esc."
+    }
+  },
+
+  "codeSnippet": {
+    "page": {
+      "title":       "Code Snippet",
+      "description": "Code lesbar und kopierbar darstellen — inline im Text, als einzelne Zeile, als Block mit Zeilennummern oder als Terminal-Ausgabe."
+    },
+    "demo": {
+      "inlineBefore": "Führen Sie",
+      "inlineAfter":  "im Projektverzeichnis aus.",
+      "copyLabel":    "Befehl kopieren",
+      "copiedLabel":  "In der Zwischenablage"
+    },
+    "overview": {
+      "variantsTitle":  "Formen",
+      "variantsBody":   "inline steht im Fließtext auf hellem Grund — für einzelne Befehle und Bezeichner, ohne Kopieren-Schaltfläche. single ist eine Zeile mit Kopieren. block hat eine Kopfleiste mit Sprach-Label und Kopieren, Zeilennummern in der Rinne und klappt ab acht Zeilen ein. terminal zeigt statt des Sprach-Labels drei Punkte und setzt $-Prompts in Grün.",
+      "highlightTitle": "Syntaxfarben",
+      "highlightBody":  "Sechs Farben, mehr gibt es nicht: Schlüsselwörter, Zeichenketten, Zahlen, Kommentare kursiv, Aufrufe und der Prompt. highlight={false} schaltet sie ab — sinnvoll für Ausgaben, die keine Sprache haben.",
+      "numbersTitle":   "Zeilennummern",
+      "numbersBody":    "Zeilennummern stehen in einer eigenen Rinne und sind für Screenreader ausgeblendet. Bei kurzen Ausschnitten kosten sie mehr Aufmerksamkeit, als sie helfen — dann showLineNumbers={false}.",
+      "collapseTitle":  "Einklappen",
+      "collapseBody":   "Ab collapseAfter Zeilen klappt der Block ein und zeigt darunter, wie viele Zeilen insgesamt vorhanden sind. Der Standard liegt bei acht Zeilen; Terminal-Ausgaben klappen nie ein.",
+      "copyTitle":      "Kopieren",
+      "copyBody":       "Die Schaltfläche liegt rechts in der Kopfleiste und bestätigt rund 1,5 Sekunden in Grün. Zusätzlich meldet eine unsichtbare aria-live-Region den Erfolg — dafür braucht es keine Meldung."
+    },
+    "usage": {
+      "whenTitle":   "Wann Code Snippet",
+      "whenBody":    "Für Code, den man lesen oder übernehmen soll. Fließtext und Meldungen gehören nicht in einen Codeblock — dort verlieren sie ihre Lesbarkeit und suggerieren, man müsse sie abtippen.",
+      "darkTitle":   "Die dunkle Fläche",
+      "darkBody":    "Block und Terminal stehen auf #211f1c — die einzige dunkle Fläche im System. Das ist Absicht: Code soll sich vom Rest der Oberfläche abheben.",
+      "colorTitle":  "Farben",
+      "colorBody":   "Die sechs Syntaxfarben sind der ganze Satz. Weitere Farben für Schlüsselwörter oder Typen zu erfinden, macht den Code bunter, aber nicht lesbarer.",
+      "copyTitle":   "Kopieren-Schaltfläche",
+      "copyBody":    "Jede Form außer inline trägt sie. Bei inline wäre sie größer als der Inhalt und stünde mitten im Satz.",
+      "doDontTitle": "Einsatz",
+      "doTitle":     "Do",
+      "dontTitle":   "Don't",
+      "do1":         "Blöcke mit Sprach-Label zeigen",
+      "do2":         "Lange Blöcke einklappen lassen",
+      "do3":         "inline für einzelne Befehle und Bezeichner im Fließtext",
+      "dont1":       "Fließtext oder Meldungen in einen Codeblock setzen",
+      "dont2":       "Eigene Farben für Schlüsselwörter erfinden",
+      "dont3":       "Eine Kopieren-Schaltfläche an inline hängen"
+    },
+    "code": {
+      "title":         "Code-Beispiele",
+      "inlineTitle":   "Inline und einzeilig",
+      "blockTitle":    "Block",
+      "terminalTitle": "Terminal",
+      "copyTitle":     "Kopieren"
+    },
+    "a11y": {
+      "liveTitle":     "Rückmeldung beim Kopieren",
+      "liveBody":      "Der Erfolg wird über eine unsichtbare Region mit role=\"status\" und aria-live=\"polite\" gemeldet. Screenreader hören die Bestätigung, ohne dass eine Meldung den Ablauf unterbricht.",
+      "gutterTitle":   "Zeilennummern",
+      "gutterBody":    "Die Rinne mit den Zeilennummern ist aria-hidden und nicht markierbar. Beim Kopieren aus der Seite heraus landen die Nummern deshalb nicht im Text.",
+      "contrastTitle": "Kontrast",
+      "contrastBody":  "Die Syntaxfarben sind gegen den dunklen Grund geprüft. Sie tragen nie allein eine Aussage — die Bedeutung steht im Code selbst, nicht in seiner Färbung."
     }
   },
   "overlays": {

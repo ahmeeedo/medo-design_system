@@ -1,0 +1,103 @@
+.medo-ctsw{
+  box-sizing: border-box;
+  font-family: var(--medo-font-sans);
+  display: inline-flex;
+}
+.medo-ctsw--neutral{
+  gap: 4px;
+  padding: 4px;
+  background: var(--medo-surface-sunken);
+  border-radius: var(--medo-radius-lg);
+}
+.medo-ctsw--neutral.medo-ctsw--sm{ gap: 3px; padding: 3px; border-radius: 9px; }
+.medo-ctsw--outline{
+  border: var(--medo-border-thin) solid var(--medo-border-strong);
+  border-radius: var(--medo-radius-md);
+}
+.medo-ctsw--outline .medo-ctsw__seg:first-child{ border-radius: 7px 0 0 7px; }
+.medo-ctsw--outline .medo-ctsw__seg:last-child{ border-radius: 0 7px 7px 0; }
+.medo-ctsw--outline.medo-ctsw--sm{ border-radius: 6px; }
+.medo-ctsw--outline.medo-ctsw--sm .medo-ctsw__seg:first-child{ border-radius: 5px 0 0 5px; }
+.medo-ctsw--outline.medo-ctsw--sm .medo-ctsw__seg:last-child{ border-radius: 0 5px 5px 0; }
+.medo-ctsw--full{ display: flex; width: 100%; }
+
+.medo-ctsw__seg{
+  box-sizing: border-box;
+  position: relative;
+  appearance: none;
+  border: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: var(--medo-text-sm);
+  font-weight: 500;
+  color: var(--medo-text-muted);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 40px;
+  padding: 0 16px;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color 120ms ease-out, color 120ms ease-out;
+}
+.medo-ctsw--sm .medo-ctsw__seg{ height: 32px; padding: 0 12px; font-size: var(--medo-text-xs); gap: 6px; }
+.medo-ctsw__seg--equal{ flex: 1 1 0; }
+.medo-ctsw__seg--iconOnly{ min-width: 44px; padding: 0 10px; }
+.medo-ctsw--sm .medo-ctsw__seg--iconOnly{ min-width: 36px; padding: 0 8px; }
+.medo-ctsw__seg:focus-visible{ outline: none; box-shadow: 0 0 0 3px var(--medo-focus-ring); z-index: 2; }
+.medo-ctsw__seg:disabled{ color: var(--medo-text-disabled); cursor: not-allowed; }
+
+/* Neutral */
+.medo-ctsw--neutral .medo-ctsw__seg{ border-radius: var(--medo-radius-md); }
+.medo-ctsw--neutral.medo-ctsw--sm .medo-ctsw__seg{ border-radius: 6px; }
+.medo-ctsw--neutral .medo-ctsw__seg:hover:not(:disabled):not([aria-selected="true"]){
+  background: var(--medo-state-hover);
+  color: var(--medo-text);
+}
+.medo-ctsw--neutral .medo-ctsw__seg[aria-selected="true"]{
+  background: var(--medo-surface);
+  box-shadow: var(--medo-shadow-sm);
+  color: var(--medo-text);
+  font-weight: 600;
+}
+
+/* Outline */
+.medo-ctsw--outline .medo-ctsw__seg + .medo-ctsw__seg{
+  border-left: var(--medo-border-thin) solid var(--medo-border-strong);
+}
+.medo-ctsw--outline .medo-ctsw__seg:hover:not(:disabled):not([aria-selected="true"]){
+  background: var(--medo-state-hover);
+  color: var(--medo-text);
+}
+.medo-ctsw--outline .medo-ctsw__seg[aria-selected="true"]{
+  background: var(--medo-action);
+  color: var(--medo-action-text);
+  font-weight: 600;
+}
+.medo-ctsw--outline .medo-ctsw__seg[aria-selected="true"] + .medo-ctsw__seg{ border-left-color: var(--medo-action); }
+.medo-ctsw--outline .medo-ctsw__seg:disabled{ background: var(--medo-surface-container); }
+
+/* Icon-only: das Label erscheint als dunkler Hinweis über dem Segment. */
+.medo-ctsw__tip{
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--medo-color-stone-1000);
+  color: var(--medo-color-white);
+  font-family: var(--medo-font-sans);
+  font-size: var(--medo-text-xs);
+  font-weight: 400;
+  line-height: 1.45;
+  padding: 6px 9px;
+  border-radius: 7px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 120ms ease-out;
+  box-shadow: var(--medo-shadow-md);
+  z-index: 5;
+}
+.medo-ctsw__seg:hover .medo-ctsw__tip,
+.medo-ctsw__seg:focus-visible .medo-ctsw__tip{ opacity: 1; }
