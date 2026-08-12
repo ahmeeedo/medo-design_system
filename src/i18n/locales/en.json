@@ -27,7 +27,9 @@
       "cards": "Cards",
       "tables": "Tables",
       "tabs": "Tabs",
-      "navigation": "Navigation",
+      "contentSwitcher": "Content Switcher",
+      "breadcrumb":      "Breadcrumb",
+      "codeSnippet":     "Code Snippet",
       "overlays":   "Modal",
       "accordion":  "Accordion",
       "menus":      "Menus",
@@ -1157,130 +1159,287 @@
   },
   "tabsPage": {
     "page": {
-      "description": "Navigate between related content groups at the same hierarchy level — as underline or pill variant."
+      "title":       "Tabs",
+      "description": "Switching between equal views of the same object — the same person, the same file, a different view of it."
+    },
+    "demo": {
+      "ariaLabel": "Profile areas",
+      "profil":    "Profile",
+      "netz":      "Network",
+      "anfragen":  "Requests",
+      "archiv":    "Archive",
+      "panel":     "The content of the active tab goes here. Spacing, surface, and radius are set by the page, not by the component."
+    },
+    "many": {
+      "a": "Overview",
+      "b": "Contracts",
+      "c": "Documents",
+      "d": "Appointments",
+      "e": "Billing",
+      "f": "Records",
+      "g": "History"
+    },
+    "full": {
+      "a": "Overview",
+      "b": "History"
     },
     "overview": {
-      "anatomyTitle": "Anatomy",
-      "anatomyBody": "The Tabs component consists of three layers: the tab list, individual tab triggers, and tab content panels.",
-      "an1": "TabsList — horizontal bar containing all TabsTriggers",
-      "an2": "TabsTrigger — individual tab button that activates the associated content",
-      "an3": "TabsContent — content area shown when its tab is active",
-      "variantsTitle": "Variants",
-      "variantsBody": "Two variants: underline for page navigation, pill for filters and categories.",
-      "underlineLabel": "Underline",
-      "pillLabel": "Pill",
-      "stateTitle": "Controlled vs. Uncontrolled",
-      "stateBody": "Tabs can be managed internally (uncontrolled) or externally (controlled):",
-      "stateUncontrolled": "defaultTab sets the initial tab — internal state is managed by the component",
-      "stateControlled": "activeTab + onTabChange — state lives outside the component, e.g. in useState"
+      "variantsTitle":  "Variants",
+      "variantsBody":   "underline is the normal case for tabs that structure a page area; the indicator sits below the active tab and there is no continuous baseline. contained rests on a stone-100 bar and is meant for tabs inside a card or next to a toolbar, where an underline would clash with the card edge.",
+      "panelTitle":     "Panel",
+      "panelBody":      "Children are rendered as the role=\"tabpanel\" of the active tab and stay unstyled. The panel content is remounted on every switch — state that should survive the switch belongs outside.",
+      "verticalTitle":  "Vertical",
+      "verticalBody":   "With many areas the vertical form is the calmer solution. It sits to the left of the panel and always follows the underline logic; the indicator moves to the left edge.",
+      "scrollTitle":    "Scrollable",
+      "scrollBody":     "From about seven tabs on, set scrollable: the bar scrolls horizontally instead of wrapping, without a visible scrollbar.",
+      "fullWidthTitle": "Full width",
+      "fullWidthBody":  "fullWidth divides the width evenly between the tabs. Use it only when the tabs span a card or sheet completely — on wide pages the labels drift far apart otherwise.",
+      "sizesTitle":     "Density",
+      "sizesBody":      "md is the default, sm condenses bar and labels for cards and toolbars."
     },
     "usage": {
-      "title": "When to use tabs?",
-      "intro": "Tabs suit content that belongs together thematically but doesn't need to be visible simultaneously — e.g. Profile / Security / Billing.",
-      "whenTitle": "Good use cases",
-      "when1": "Related content groups at the same hierarchy level (e.g. Profile, Security, Settings)",
-      "when2": "Filter views where users switch between subsets of a list",
-      "when3": "Detail views with multiple information categories for one object",
-      "whenNotTitle": "When not to use?",
-      "whenNotBody": "Don't use tabs for step-by-step processes (→ Stepper/Wizard). And not for navigation between fundamentally different contexts (→ Sidebar navigation).",
-      "doTitle": "Do",
-      "dontTitle": "Don't",
-      "do1": "Keep tab labels short and descriptive (1–2 words)",
-      "do2": "Use underline for page navigation, pill for filters",
-      "do3": "Use controlled tabs when external logic needs to control the active tab",
-      "dont1": "Don't use too many tabs (max 5–6) — consider Dropdown or Nav for more options",
-      "dont2": "Don't use tabs for wizards or multi-step forms",
-      "dont3": "No deeply nested tab-in-tab structure",
-      "doNote": "Tabs for equally weighted content — not for processes.",
-      "dontNote": "Tabs are not navigation for different contexts."
+      "whenTitle":   "When to use Tabs",
+      "whenBody":    "For equal views of the same object. When it is about the presentation of the same list — list, grid, kanban — it is a ContentSwitcher. When it is about steps in a sequence, a ProgressIndicator.",
+      "styleTitle":  "Which style",
+      "styleBody":   "underline structures a page area, contained sits in a card or next to a toolbar. Never mix the two on the same level.",
+      "labelTitle":  "Labels",
+      "labelBody":   "One or two words per label, no sentences. A badge carries a count only — no status word and no “new”.",
+      "stateTitle":  "State",
+      "stateBody":   "Without value the component manages the selection itself. With value and onChange it lives outside — necessary when the address or other parts of the interface should follow along.",
+      "doDontTitle": "Usage",
+      "doTitle":     "Do",
+      "dontTitle":   "Don't",
+      "do1":         "Show equal views of the same subject",
+      "do2":         "Set scrollable from about seven tabs on, vertical with many areas",
+      "do3":         "Keep labels to one or two words",
+      "dont1":       "Map steps or a sequence onto tabs",
+      "dont2":       "Nest tabs — a second level is not shown as tabs",
+      "dont3":       "Submit something on switching; tabs show, they do not save"
     },
     "code": {
-      "title": "Code Examples",
-      "uncontrolledTitle": "Uncontrolled Tabs",
-      "uncontrolledDesc": "defaultTab sets the initial tab — no external state needed.",
-      "controlledTitle": "Controlled Tabs",
-      "controlledDesc": "activeTab and onTabChange for external state control — e.g. when other UI parts depend on the active tab.",
-      "controlledDemoA": "Profile information is shown here.",
-      "controlledDemoB": "Password, 2FA, and session management.",
-      "controlledDemoC": "Billing details and invoices.",
-      "pillTitle": "Pill Variant",
-      "pillDesc": "variant=\"pill\" for filter tabs and categories — more compact layout."
+      "title":          "Code Examples",
+      "basicTitle":     "Basic with panel",
+      "containedTitle": "Contained, controlled",
+      "verticalTitle":  "Vertical",
+      "scrollTitle":    "Scrollable and full width"
     },
     "a11y": {
-      "title": "Accessibility",
-      "intro": "The Tabs component is based on Radix UI and fully implements the WAI-ARIA Tabs Pattern.",
-      "keyboardTitle": "Keyboard Navigation",
-      "k1": "Tab — move focus to the active TabsTrigger",
-      "k2": "ArrowLeft / ArrowRight — navigate between tabs",
-      "k3": "Home / End — jump to first or last tab",
-      "k4": "Space / Enter — activate the focused tab",
-      "rolesTitle": "ARIA Roles",
-      "rolesBody": "TabsList receives role=\"tablist\", TabsTrigger role=\"tab\", TabsContent role=\"tabpanel\". Association is via aria-controls and aria-labelledby.",
-      "ariaTitle": "aria-selected",
-      "ariaBody": "The active tab element has aria-selected=\"true\". Screen readers announce the activated tab on change.",
-      "focusTitle": "Focus Management",
-      "focusBody": "When a tab is activated, the associated TabsContent does not receive focus automatically. If the content should be focusable, call focus() programmatically."
+      "rolesTitle":    "Roles",
+      "rolesBody":     "The bar is role=\"tablist\" with aria-orientation, each tab role=\"tab\" with aria-selected. When children are present they are rendered as role=\"tabpanel\" and connected to the active tab via aria-controls and aria-labelledby.",
+      "keyboardTitle": "Keyboard",
+      "key1":          "Arrow keys — switch directly, the selection follows the focus",
+      "key2":          "Home and End — jump to the edges",
+      "key3":          "Disabled tabs are skipped",
+      "key4":          "Only the active tab is in the tab order; from there Tab leads on into the panel",
+      "badgeTitle":    "Badge",
+      "badgeBody":     "The counter sits inside the tab label and is read out with it. That is why it carries a count only — a status word could not be attributed at this position."
     }
   },
-  "navigation": {
+
+  "contentSwitcher": {
     "page": {
-      "description": "Breadcrumb for hierarchical path display and Pagination for page-by-page navigation through data lists."
+      "title":       "Content Switcher",
+      "description": "Switches the presentation of the same content — list, grid, kanban; month, quarter, year. The subject stays the same, only the view changes."
+    },
+    "demo": {
+      "ariaLabel":   "View",
+      "periodLabel": "Period",
+      "liste":       "List",
+      "raster":      "Grid",
+      "kanban":      "Kanban",
+      "monat":       "Month",
+      "quartal":     "Quarter",
+      "jahr":        "Year"
+    },
+    "uneven": {
+      "a": "All",
+      "b": "Open cases",
+      "c": "Archive"
+    },
+    "icon": {
+      "withLabel":   "With labels",
+      "iconOnly":    "Icons only",
+      "sharedState": "Both bars share the same state — what you pick in one also shows in the other."
+    },
+    "width": {
+      "equal":  "equalWidth (default)",
+      "uneven": "equalWidth={false}",
+      "full":   "fullWidth"
     },
     "overview": {
-      "breadcrumbTitle": "Breadcrumb",
-      "breadcrumbBody": "Breadcrumb shows the current location in the page hierarchy and enables navigation to parent levels.",
-      "ban1": "Items — array of { label, href? }, the last item has no href (current page)",
-      "ban2": "Separator — visual divider between levels (/ slash)",
-      "ban3": "BreadcrumbLink — clickable link to parent levels",
-      "ban4": "BreadcrumbPage — non-linked label of the current page (bold)",
-      "paginationTitle": "Pagination",
-      "paginationBody": "Pagination enables page-by-page navigation through large datasets. When more than 7 pages exist, middle pages are replaced with ellipsis.",
-      "pan1": "current — current page number (controlled prop)",
-      "pan2": "total — total number of pages",
-      "pan3": "onChange — callback with the new page number",
-      "pan4": "Ellipsis logic: ≤ 7 pages = all; > 7 = ellipsis pattern depending on current",
-      "paginationDemoLabel": "Current page:"
+      "variantsTitle": "Styles",
+      "variantsBody":  "neutral rests on a stone-100 bar, the active segment is white with shadow-sm — the default case, calm enough for toolbars. outline shares a border and fills the active segment with primary-600; useful when the bar sits on an already tinted surface where the neutral track disappears.",
+      "iconTitle":     "Icons only",
+      "iconBody":      "iconOnly is allowed only for generally known presentations. The label then becomes the aria-label and appears on hover or focus as a dark hint above the segment — an additional tooltip is unnecessary and would appear twice.",
+      "widthTitle":    "Width",
+      "widthBody":     "All segments are equally wide so that nothing jumps on switching. equalWidth={false} ties the width to the text — then the bar changes shape on every switch. fullWidth stretches it across the available width.",
+      "sizesTitle":    "Density",
+      "sizesBody":     "md measures 40 px in height, sm 32 px. sm belongs in toolbars, md stands on its own above content.",
+      "statesTitle":   "States",
+      "statesBody":    "Disabled segments stay visible and are skipped by the arrow keys. In the outline form they also carry a tinted surface."
     },
     "usage": {
-      "title": "When to use?",
-      "intro": "Breadcrumb and Pagination are independent navigation aids — Breadcrumb for hierarchies, Pagination for data lists.",
-      "whenBreadcrumbTitle": "Breadcrumb",
-      "whenBreadcrumbBody": "Use Breadcrumb only when the page is at least 3 hierarchy levels deep. On flat structures (Home → Page) Breadcrumb is overkill.",
-      "whenPaginationTitle": "Pagination",
-      "whenPaginationBody": "Pagination for lists with more than ~20 entries loaded page by page. For small amounts or infinite scroll, Pagination is not suitable.",
-      "doTitle": "Do",
-      "dontTitle": "Don't",
-      "do1": "Leave the last Breadcrumb item without href (current page cannot be linked)",
-      "do2": "Manage Pagination state with useState outside the component",
-      "do3": "Place Breadcrumb and Pagination semantically inside a nav element",
-      "dont1": "Don't use Breadcrumb on flat single-level pages",
-      "dont2": "Don't combine Pagination with infinite scroll",
-      "dont3": "Don't display all page numbers for very many pages — use the ellipsis pattern",
-      "doNote": "Breadcrumb: make hierarchy visible. Pagination: control data volume.",
-      "dontNote": "Don't add redundant navigation."
+      "whenTitle":   "When to use Content Switcher",
+      "whenBody":    "When the view of the same content changes. When whole views of an object alternate, they are Tabs. When the click triggers an action, it is a Button. When it is a setting that gets saved, they are Radio options — the content switcher always switches immediately and saves nothing.",
+      "countTitle":  "Number of segments",
+      "countBody":   "Two to five segments. More becomes a Select — a bar that has to scroll is no longer a bar.",
+      "labelTitle":  "Labels",
+      "labelBody":   "One word per segment. With iconOnly the icon must be understandable without explanation; icons you have to guess do not belong in a bar without text.",
+      "widthTitle":  "Equal width",
+      "widthBody":   "equalWidth is the default and should stay that way. Tie the width to the text and the bar jumps on every switch — exactly what it is meant to prevent.",
+      "doDontTitle": "Usage",
+      "doTitle":     "Do",
+      "dontTitle":   "Don't",
+      "do1":         "Use it to switch the presentation of the same content",
+      "do2":         "Two to five segments, one word per segment",
+      "do3":         "Keep the segments equally wide",
+      "dont1":       "Use it as a filter with several simultaneous values — those are selectable tags",
+      "dont2":       "Show more than five segments",
+      "dont3":       "Use icon-only with icons you have to guess"
     },
     "code": {
-      "title": "Code Examples",
-      "breadcrumbTitle": "Breadcrumb with 3 items",
-      "breadcrumbDesc": "items array: all items except the last have href — the last item is the current page.",
-      "paginationControlledTitle": "Controlled Pagination",
-      "paginationControlledDesc": "State lives in the parent component — onChange updates current and loads data for the new page.",
-      "paginationFewTitle": "Pagination — few pages",
-      "paginationFewDesc": "With ≤ 7 pages all page numbers are displayed, no ellipsis."
+      "title":        "Code Examples",
+      "basicTitle":   "Basic",
+      "iconTitle":    "Icons only",
+      "outlineTitle": "Outline",
+      "widthTitle":   "Width"
     },
     "a11y": {
-      "title": "Accessibility",
-      "intro": "Both components use a semantic nav element with aria-label to communicate the purpose of the navigation to screen readers.",
-      "keyboardTitle": "Keyboard Navigation",
-      "k1": "Tab — focus the next focusable link or button",
-      "k2": "Enter — activate the link or button",
-      "k3": "Shift+Tab — focus the previous focusable element",
-      "navTitle": "nav aria-label",
-      "navBody": "The Breadcrumb component is wrapped in a nav element with an implicit landmark. Pagination has aria-label=\"Pagination\". Screen readers can distinguish between navigation areas.",
-      "currentTitle": "aria-current=\"page\"",
-      "currentBody": "The active Pagination button has aria-current=\"page\". The last Breadcrumb item is marked as BreadcrumbPage — screen readers recognize the current page.",
-      "srTitle": "Prev/Next Buttons",
-      "srBody": "The Prev/Next buttons have aria-label=\"Previous page\" and aria-label=\"Next page\" — more meaningful than just ← / →."
+      "rolesTitle":     "Roles",
+      "rolesBody":      "The bar is role=\"tablist\", each segment role=\"tab\" with aria-selected. The matching content is rendered by the page and carries role=\"tabpanel\". ariaLabel names what is being switched.",
+      "keyboardTitle":  "Keyboard",
+      "key1":           "Arrow keys — switch directly between segments",
+      "key2":           "Home and End — jump to the edges",
+      "key3":           "Only the active segment is in the tab order, disabled ones are skipped",
+      "iconOnlyTitle":  "Icons only",
+      "iconOnlyBody":   "With iconOnly the label becomes the segment's aria-label and also appears visibly on hover and focus. The hint itself is aria-hidden so it is not read out twice."
+    }
+  },
+
+  "breadcrumb": {
+    "page": {
+      "title":       "Breadcrumb",
+      "description": "Shows the path to the current page and leads back. It is orientation, not navigation for the next step."
+    },
+    "demo": {
+      "ariaLabel":    "Path to the current page",
+      "start":        "Home",
+      "vertraege":    "Contracts",
+      "netzwerk":     "Network",
+      "spezialisten": "Specialists",
+      "bw":           "Baden-Württemberg",
+      "praxis":       "Practice",
+      "team":         "Team"
+    },
+    "collapse": {
+      "off": "Five levels without collapsing",
+      "on":  "maxItems={4}"
+    },
+    "overview": {
+      "anatomyTitle":  "Anatomy",
+      "anatomyBody":   "The first level is the root, the last one the current page:",
+      "an1":           "The current page is not a link, sits in text-muted, and carries aria-current=\"page\"",
+      "an2":           "The separator is a slash in stone-400 — no chevron, no arrows",
+      "an3":           "The labels are the real page titles; a level truncates with an ellipsis at about 220 px",
+      "collapseTitle": "Collapsing",
+      "collapseBody":  "From maxItems on, the middle collapses into a … menu: first level, “…”, the last two levels. The menu opens on click and closes on a click outside or with Esc. The first and the current level are never hidden — those two carry the orientation.",
+      "iconTitle":     "Icons",
+      "iconBody":      "homeIcon replaces the label of the first level with the house icon. Individual levels can carry their own icon when it makes the level quicker to recognise.",
+      "sizesTitle":    "Density",
+      "sizesBody":     "sm is the default above a page heading, md stands on its own in a header."
+    },
+    "usage": {
+      "whenTitle":    "When to use Breadcrumb",
+      "whenBody":     "As soon as content sits at least three levels deep and can be entered directly from outside. On first-level pages it is superfluous — there only the title stands. It never replaces the browser's back button and never a visible main navigation.",
+      "labelTitle":   "Labels",
+      "labelBody":    "The labels are the real page titles. No invented short forms — shortening a level makes the path unreadable.",
+      "collapseTitle":"When to collapse",
+      "collapseBody": "As soon as the path would run past one line. maxItems={0} turns collapsing off; that only makes sense for short, fixed paths.",
+      "currentTitle": "Current page",
+      "currentBody":  "The last level is deliberately not a link and not focusable. It says where you are, not where you can go.",
+      "doDontTitle":  "Usage",
+      "doTitle":      "Do",
+      "dontTitle":    "Don't",
+      "do1":          "Use it from three levels on, with the real page titles",
+      "do2":          "Collapse the middle into the … menu on long paths",
+      "do3":          "Keep the current page as the last level without a link",
+      "dont1":        "Render the current page as a link",
+      "dont2":        "Use the breadcrumb as a replacement for tabs or a menu",
+      "dont3":        "Insert levels that do not exist as pages"
+    },
+    "code": {
+      "title":         "Code Examples",
+      "basicTitle":    "Basic",
+      "collapseTitle": "Collapsing",
+      "clickTitle":    "Without an address",
+      "iconTitle":     "Icons"
+    },
+    "a11y": {
+      "structureTitle": "Structure",
+      "structureBody":  "The bar is a nav with aria-label and contains an ol. The separators are aria-hidden so screen readers do not read out slashes. Every level is a link or a button with a focus ring.",
+      "currentTitle":   "Current page",
+      "currentBody":    "The last level carries aria-current=\"page\" and is deliberately not focusable — it leads nowhere.",
+      "menuTitle":      "… menu",
+      "menuBody":       "The button carries its own label and aria-expanded. The opened menu is role=\"menu\" with role=\"menuitem\" per entry and closes on a click outside or with Esc."
+    }
+  },
+
+  "codeSnippet": {
+    "page": {
+      "title":       "Code Snippet",
+      "description": "Present code readably and copyably — inline in text, as a single line, as a block with line numbers, or as terminal output."
+    },
+    "demo": {
+      "inlineBefore": "Run",
+      "inlineAfter":  "in the project directory.",
+      "copyLabel":    "Copy command",
+      "copiedLabel":  "In the clipboard"
+    },
+    "overview": {
+      "variantsTitle":  "Forms",
+      "variantsBody":   "inline sits in running text on a light surface — for single commands and identifiers, without a copy button. single is one line with copying. block has a header bar with a language label and copying, line numbers in the gutter, and collapses from eight lines on. terminal shows three dots instead of the language label and sets $ prompts in green.",
+      "highlightTitle": "Syntax colours",
+      "highlightBody":  "Six colours, and no more: keywords, strings, numbers, comments in italics, calls, and the prompt. highlight={false} turns them off — useful for output that has no language.",
+      "numbersTitle":   "Line numbers",
+      "numbersBody":    "Line numbers sit in their own gutter and are hidden from screen readers. On short excerpts they cost more attention than they help — then use showLineNumbers={false}.",
+      "collapseTitle":  "Collapsing",
+      "collapseBody":   "From collapseAfter lines on, the block collapses and shows below how many lines there are in total. The default is eight lines; terminal output never collapses.",
+      "copyTitle":      "Copying",
+      "copyBody":       "The button sits at the right of the header bar and confirms for about 1.5 seconds in green. An invisible aria-live region also reports the success — no notification is needed for that."
+    },
+    "usage": {
+      "whenTitle":   "When to use Code Snippet",
+      "whenBody":    "For code that is meant to be read or taken over. Running text and messages do not belong in a code block — there they lose their readability and suggest they have to be typed out.",
+      "darkTitle":   "The dark surface",
+      "darkBody":    "Block and terminal sit on #211f1c — the only dark surface in the system. That is deliberate: code should stand out from the rest of the interface.",
+      "colorTitle":  "Colours",
+      "colorBody":   "The six syntax colours are the whole set. Inventing further colours for keywords or types makes the code more colourful, but not more readable.",
+      "copyTitle":   "Copy button",
+      "copyBody":    "Every form except inline carries it. On inline it would be larger than the content and would stand in the middle of a sentence.",
+      "doDontTitle": "Usage",
+      "doTitle":     "Do",
+      "dontTitle":   "Don't",
+      "do1":         "Show blocks with a language label",
+      "do2":         "Let long blocks collapse",
+      "do3":         "Use inline for single commands and identifiers in running text",
+      "dont1":       "Put running text or messages into a code block",
+      "dont2":       "Invent your own colours for keywords",
+      "dont3":       "Attach a copy button to inline"
+    },
+    "code": {
+      "title":         "Code Examples",
+      "inlineTitle":   "Inline and single line",
+      "blockTitle":    "Block",
+      "terminalTitle": "Terminal",
+      "copyTitle":     "Copying"
+    },
+    "a11y": {
+      "liveTitle":     "Feedback on copying",
+      "liveBody":      "The success is announced through an invisible region with role=\"status\" and aria-live=\"polite\". Screen readers hear the confirmation without a notification interrupting the flow.",
+      "gutterTitle":   "Line numbers",
+      "gutterBody":    "The gutter with the line numbers is aria-hidden and not selectable. Copying from the page therefore does not carry the numbers into the text.",
+      "contrastTitle": "Contrast",
+      "contrastBody":  "The syntax colours are checked against the dark surface. They never carry a message on their own — the meaning is in the code itself, not in its colouring."
     }
   },
   "overlays": {

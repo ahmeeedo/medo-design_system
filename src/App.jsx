@@ -22,7 +22,9 @@ import AlertsPage      from './pages/AlertsPage'
 import CardsPage       from './pages/CardsPage'
 import TablesPage      from './pages/TablesPage'
 import TabsPage        from './pages/TabsPage'
-import NavigationPage  from './pages/NavigationPage'
+import ContentSwitcherPage from './pages/ContentSwitcherPage'
+import BreadcrumbPage      from './pages/BreadcrumbPage'
+import CodeSnippetPage     from './pages/CodeSnippetPage'
 import OverlaysPage    from './pages/OverlaysPage'
 import AccordionPage   from './pages/AccordionPage'
 import MenusPage       from './pages/MenusPage'
@@ -76,7 +78,9 @@ function AppContent() {
         <Route path="/cards"      element={<CardsPage />} />
         <Route path="/tables"     element={<TablesPage />} />
         <Route path="/tabs"       element={<TabsPage />} />
-        <Route path="/navigation" element={<NavigationPage />} />
+        <Route path="/content-switcher" element={<ContentSwitcherPage />} />
+        <Route path="/breadcrumb"       element={<BreadcrumbPage />} />
+        <Route path="/code-snippet"     element={<CodeSnippetPage />} />
         <Route path="/overlays"   element={<OverlaysPage />} />
         <Route path="/accordion"  element={<AccordionPage />} />
         <Route path="/menus"      element={<MenusPage />} />

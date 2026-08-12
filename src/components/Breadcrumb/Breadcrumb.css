@@ -1,0 +1,83 @@
+.medo-bc{ font-family: var(--medo-font-sans); }
+.medo-bc__list{
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: var(--medo-text-sm);
+}
+.medo-bc--md .medo-bc__list{ font-size: var(--medo-text-base); }
+.medo-bc__li{ display: inline-flex; align-items: center; gap: 8px; min-width: 0; }
+.medo-bc__sep{ color: var(--medo-color-stone-400); user-select: none; }
+.medo-bc__link{
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--medo-text-link);
+  text-decoration: none;
+  border-radius: var(--medo-radius-sm);
+  max-width: 220px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.medo-bc__link:hover{ color: var(--medo-text-link-hover); }
+.medo-bc__link:focus-visible{ outline: none; box-shadow: 0 0 0 3px var(--medo-focus-ring); }
+.medo-bc__current{
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--medo-text-muted);
+  max-width: 280px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.medo-bc__more{ position: relative; display: inline-flex; }
+.medo-bc__dots{
+  appearance: none;
+  border: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: inherit;
+  color: var(--medo-text-link);
+  cursor: pointer;
+  padding: 2px 6px;
+  border-radius: var(--medo-radius-sm);
+  line-height: 1;
+}
+.medo-bc__dots:hover{ background: var(--medo-state-hover); color: var(--medo-text-link-hover); }
+.medo-bc__dots:focus-visible{ outline: none; box-shadow: 0 0 0 3px var(--medo-focus-ring); }
+.medo-bc__menu{
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  z-index: 60;
+  min-width: 200px;
+  padding: 6px;
+  background: var(--medo-surface);
+  border: var(--medo-border-thin) solid var(--medo-border);
+  border-radius: var(--medo-radius-md);
+  box-shadow: var(--medo-shadow-md);
+  display: flex;
+  flex-direction: column;
+}
+.medo-bc__mitem{
+  appearance: none;
+  border: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: var(--medo-text-sm);
+  color: var(--medo-text);
+  text-align: left;
+  text-decoration: none;
+  padding: 8px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.medo-bc__mitem:hover{ background: var(--medo-state-hover); }
+.medo-bc__mitem:focus-visible{ outline: none; box-shadow: 0 0 0 3px var(--medo-focus-ring); }
