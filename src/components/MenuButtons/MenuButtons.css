@@ -1,0 +1,48 @@
+.medo-mb{ position: relative; display: inline-flex; font-family: var(--medo-font-sans); }
+.medo-mb__pop{ position: absolute; top: calc(100% + 6px); z-index: 1000; }
+.medo-mb__btn{
+  box-sizing: border-box;
+  appearance: none;
+  font-family: inherit;
+  font-size: var(--medo-text-sm);
+  font-weight: 400;
+  height: 40px;
+  padding: 0 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: var(--medo-border-thin) solid transparent;
+  border-radius: var(--medo-radius-md);
+  cursor: pointer;
+  transition: background-color 120ms ease-out;
+}
+.medo-mb__btn:focus-visible{ outline: none; box-shadow: 0 0 0 3px var(--medo-focus-ring); z-index: 2; }
+.medo-mb__btn--primary{ background: var(--medo-action); color: var(--medo-action-text); }
+.medo-mb__btn--primary:hover:not(:disabled){ background: var(--medo-action-hover); }
+.medo-mb__btn--primary:active:not(:disabled){ background: var(--medo-action-active); }
+.medo-mb__btn--neutral{
+  background: var(--medo-surface);
+  color: var(--medo-text);
+  border-color: var(--medo-border-strong);
+}
+.medo-mb__btn--neutral:hover:not(:disabled){ background: var(--medo-state-hover); }
+.medo-mb__btn--neutral:active:not(:disabled){ background: var(--medo-state-pressed); }
+.medo-mb__btn:disabled{
+  background: var(--medo-action-disabled);
+  color: var(--medo-action-text-disabled);
+  border-color: transparent;
+  cursor: not-allowed;
+}
+.medo-mb__btn--icon{ width: 40px; padding: 0; justify-content: center; }
+.medo-mb__chev{ flex: none; transition: transform 160ms ease-out; }
+.medo-mb__btn[aria-expanded="true"] .medo-mb__chev{ transform: rotate(180deg); }
+
+/* Split: zwei Flächen, eine Fuge */
+.medo-mb__split{ display: inline-flex; }
+.medo-mb__split .medo-mb__btn:first-child{ border-top-right-radius: 0; border-bottom-right-radius: 0; }
+.medo-mb__split .medo-mb__btn:last-child{
+  border-top-left-radius: 0; border-bottom-left-radius: 0;
+  width: 40px; padding: 0; justify-content: center;
+}
+.medo-mb__split--primary .medo-mb__btn:last-child{ box-shadow: inset 1px 0 0 rgba(255,255,255,0.28); }
+.medo-mb__split--neutral .medo-mb__btn:last-child{ margin-left: -1px; }

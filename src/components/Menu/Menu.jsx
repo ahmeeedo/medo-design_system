@@ -1,57 +1,72 @@
-import { cn } from '@/lib/utils'
-import {
-  DropdownMenu as DropdownMenuRoot,
-  DropdownMenuTrigger,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-} from '@/components/ui/dropdown-menu'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { MenuList } from '../Dropdown/Dropdown'
+import './Menu.css'
 
-const defaultTrigger = (
-  <button className="inline-flex items-center gap-1.5 h-8 px-3 rounded-md text-sm text-[var(--color-text-secondary)] hover:bg-[var(--surface_200)] border border-border transition-colors">
-    ···
-  </button>
-)
+/* medo Design System · Menu (Kontextmenü)
+   Öffnet auf Rechtsklick an der Cursorposition und kippt an den Rändern nach innen.
+   Benutzt die gemeinsame Menüfläche MenuList aus Dropdown.
+   Esc, Klick außerhalb und Auswahl schließen; Pfeile/Enter/Home/End und Tippen wie im Dropdown. */
 
-export function Menu({ children, className = '', trigger }) {
+export function Menu({
+  items = [],
+  onSelect,
+  children,
+  ariaLabel = 'Kontextmenü',
+  disabled = false,
+  className,
+  style,
+  ...rest
+}) {
+  const [pos, setPos] = useState(null)
+  const popRef = useRef(null)
+
+  const close = () => setPos(null)
+
+  useEffect(() => {
+    if (!pos) return
+    const scroll = () => close()
+    window.addEventListener('scroll', scroll, true)
+    window.addEventListener('resize', scroll)
+    return () => {
+      window.removeEventListener('scroll', scroll, true)
+      window.removeEventListener('resize', scroll)
+    }
+  }, [pos])
+
+  /* Nach dem Einhängen messen und bei Platzmangel nach innen kippen. */
+  useLayoutEffect(() => {
+    if (!pos || pos.fixed || !popRef.current) return
+    const r = popRef.current.getBoundingClientRect()
+    const pad = 8
+    let x = pos.x
+    let y = pos.y
+    if (x + r.width > window.innerWidth - pad) x = Math.max(pad, x - r.width)
+    if (y + r.height > window.innerHeight - pad) y = Math.max(pad, y - r.height)
+    setPos({ x, y, fixed: true })
+  }, [pos])
+
+  const onContextMenu = e => {
+    if (disabled) return
+    e.preventDefault()
+    setPos({ x: e.clientX, y: e.clientY })
+  }
+
   return (
-    <DropdownMenuRoot>
-      <DropdownMenuTrigger asChild>
-        {trigger ?? defaultTrigger}
-      </DropdownMenuTrigger>
-      <DropdownMenuContent className={cn('min-w-[200px] w-auto', className)}>
-        {children}
-      </DropdownMenuContent>
-    </DropdownMenuRoot>
-  )
-}
-
-Menu.Item = function MenuItem({ children, icon, shortcut, danger = false, onClick, disabled = false }) {
-  return (
-    <DropdownMenuItem
-      variant={danger ? 'destructive' : 'default'}
-      onClick={onClick}
-      disabled={disabled}
-      className="gap-3 px-3 py-2 cursor-pointer"
+    <div
+      className={['medo-ctx', className].filter(Boolean).join(' ')}
+      onContextMenu={onContextMenu}
+      style={style}
+      {...rest}
     >
-      {icon && <span className="shrink-0 text-sm">{icon}</span>}
-      <span className="flex-1 text-sm">{children}</span>
-      {shortcut && (
-        <span className="ml-auto text-xs font-mono text-[var(--color-text-secondary)]">{shortcut}</span>
-      )}
-    </DropdownMenuItem>
-  )
-}
-
-Menu.Label = function MenuLabel({ children }) {
-  return (
-    <DropdownMenuLabel className="text-xs font-semibold [letter-spacing:var(--tracking-wide)] uppercase text-[var(--color-text-secondary)] px-3 pt-2 pb-1">
       {children}
-    </DropdownMenuLabel>
+      {pos ? (
+        <>
+          <div className="medo-ctx__layer" onMouseDown={close} />
+          <div ref={popRef} className="medo-ctx__pop" style={{ top: pos.y + 'px', left: pos.x + 'px' }}>
+            <MenuList items={items} ariaLabel={ariaLabel} onSelect={onSelect} onClose={close} />
+          </div>
+        </>
+      ) : null}
+    </div>
   )
-}
-
-Menu.Separator = function MenuSeparator() {
-  return <DropdownMenuSeparator />
 }
