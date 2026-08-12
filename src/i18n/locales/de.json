@@ -30,7 +30,9 @@
       "navigation": "Navigation",
       "overlays":   "Modal",
       "accordion":  "Accordion",
-      "menus":      "Menus",
+      "dropdown":    "Dropdown",
+      "menu":        "Kontextmenü",
+      "menuButtons": "Menu Buttons",
       "list":          "List",
       "containedList": "Contained List",
       "pagination":    "Pagination",
@@ -1440,80 +1442,255 @@
       "domBody":       "Zugeklappte Abschnitte bleiben im Dokument. Die Browsersuche findet ihren Inhalt auch dann, wenn er nicht sichtbar ist."
     }
   },
-  "menus": {
+  "dropdown": {
     "page": {
-      "description": "Kontextbezogene Aktionsmenüs als Compound-Komponente mit Menu.Item, Menu.Label und Menu.Separator."
+      "title":       "Dropdown",
+      "description": "Auslöser mit Menü. MenuList ist die gemeinsame Menüfläche des Systems — Kontextmenü und Menu Buttons benutzen sie mit."
+    },
+    "controls": {
+      "trigger":       "Auslöser",
+      "size":          "Größe",
+      "align":         "Ausrichtung",
+      "selectionMode": "Auswahlmodus",
+      "icon":          "Icon",
+      "disabled":      "Deaktiviert"
+    },
+    "demo": {
+      "actionsLabel":      "Aktionen",
+      "moreLabel":         "Weitere Aktionen",
+      "exportLabel":       "Ausgeben",
+      "columnsLabel":      "Spalten",
+      "headingEdit":       "Bearbeiten",
+      "selectedSingle":    "Gewählt: {{value}}",
+      "selectedMultiple":  "{{count}} Spalten sichtbar",
+      "items": {
+        "edit":   "Termin bearbeiten",
+        "move":   "Termin verschieben",
+        "lock":   "Termin sperren",
+        "delete": "Termin absagen",
+        "export": "Exportieren",
+        "print":  "Drucken",
+        "pdf":    "Als PDF",
+        "csv":    "Als CSV"
+      },
+      "columns": {
+        "patient": "Patientin oder Patient",
+        "date":    "Datum",
+        "doctor":  "Behandelnde Person"
+      }
     },
     "overview": {
-      "anatomyTitle": "Anatomie",
-      "anatomyBody": "Menu ist eine Compound-Komponente auf Basis von Radix UI DropdownMenu. Sie besteht aus fünf Bausteinen:",
-      "an1": "Menu — Root-Container mit Trigger und Content",
-      "an2": "trigger-Prop — beliebiger ReactNode als Auslöser (Standard: ···-Button)",
-      "an3": "Menu.Item — einzelne Aktion mit optionalem Icon, Shortcut und danger-Modus",
-      "an4": "Menu.Label — Abschnitts-Überschrift (uppercase, klein)",
-      "an5": "Menu.Separator — horizontale Trennlinie zwischen Abschnitten",
-      "demoTitle": "Live-Demo",
-      "demoBody": "Klicke auf den Trigger, um das Menu zu öffnen. Beide Varianten (Standard-Trigger und benutzerdefinierter Button) sind interaktiv.",
-      "demoDefault": "Standard-Trigger (···)",
-      "demoCustomTrigger": "Benutzerdefinierter Trigger",
-      "labelAccount": "Account",
-      "labelWorkspace": "Workspace",
-      "itemProfile": "Profil anzeigen",
-      "itemSettings": "Einstellungen",
-      "itemNewProject": "Neues Projekt",
-      "itemDuplicate": "Duplizieren",
-      "itemDelete": "Löschen",
-      "itemEdit": "Bearbeiten",
-      "itemExport": "Exportieren",
-      "itemCopyLink": "Link kopieren",
-      "triggerOptions": "Optionen"
+      "triggerTitle":   "Auslöser",
+      "triggerBody":    "Die Schaltfläche trägt Beschriftung und Chevron, der Kebab nur ein Icon ohne Rahmen. Der Kebab gehört in Tabellenzeilen und Kartenköpfe, wo für eine Beschriftung kein Platz ist — er braucht dann ein ariaLabel.",
+      "sizesTitle":     "Größen",
+      "sizesBody":      "Zwei Größen: sm mit 32px für dichte Bereiche, md mit 40px als Normalfall. Die Menüfläche selbst bleibt in beiden Größen gleich.",
+      "alignTitle":     "Ausrichtung",
+      "alignBody":      "Das Menü richtet sich links oder rechts am Auslöser aus. Am rechten Bildschirmrand gehört dorthin end, sonst läuft die Fläche aus dem sichtbaren Bereich.",
+      "entriesTitle":   "Einträge",
+      "entriesBody":    "Ein Eintrag trägt Beschriftung und wahlweise Icon, Tastenkürzel und Zustand. Struktur entsteht über zwei eigene Typen.",
+      "e1":             "icon setzt ein Material-Symbol links, shortcut ein Kürzel rechts in DM Mono.",
+      "e2":             "danger färbt Text und Icon rot — der Eintrag gehört ans Ende.",
+      "e3":             "disabled sperrt den Eintrag; er bleibt sichtbar, nimmt aber keinen Fokus.",
+      "e4":             "type: divider trennt Gruppen, type: heading beschriftet sie.",
+      "e5":             "href rendert den Eintrag als Verweis statt als Schaltfläche.",
+      "subTitle":       "Untermenü",
+      "subBody":        "Ein Eintrag mit eigenen items öffnet ein Untermenü — eine Ebene, mehr nicht. Es öffnet bei Hover und mit der Pfeiltaste nach rechts, die Pfeiltaste nach links schließt wieder.",
+      "selectionTitle": "Auswahlmodus",
+      "selectionBody":  "Mit Auswahlmodus bekommt jeder Eintrag eine Häkchen-Spalte und die passende ARIA-Rolle. Bei Mehrfachauswahl hält keepOpen das Menü offen, damit mehrere Einträge nacheinander umgeschaltet werden können.",
+      "menuListTitle":  "MenuList einzeln",
+      "menuListBody":   "Die Menüfläche lässt sich auch ohne Auslöser einsetzen — hier ohne automatischen Fokus dargestellt, damit die Seite beim Laden nicht springt. Kontextmenü und Menu Buttons setzen sie genauso ein.",
+      "disabledTitle":  "Deaktiviert",
+      "disabledBody":   "Der deaktivierte Auslöser bleibt sichtbar und öffnet nicht. Gehört die Aktion dauerhaft nicht in diese Ansicht, gehört sie ganz weg statt deaktiviert dazustehen."
     },
     "usage": {
-      "title": "Wann Menus verwenden?",
-      "intro": "Menus bündeln mehrere kontextbezogene Aktionen hinter einem einzigen Trigger — ohne den Hauptflow zu unterbrechen.",
-      "whenTitle": "Geeignete Einsätze",
-      "when1": "Overflow-Menüs (···) mit 3+ sekundären Aktionen pro Zeile oder Element",
-      "when2": "Kontextmenüs an Datensätzen (Bearbeiten / Duplizieren / Löschen)",
-      "when3": "Account-Menüs mit Gruppen (Account, Workspace, Abmelden)",
-      "whenNotTitle": "Wann nicht?",
-      "whenNotBody": "Primäre Aktionen (wie 'Speichern') gehören als sichtbarer Button, nicht in ein Menu. Formular-Auswahl gehört in eine Select-Komponente.",
-      "doTitle": "Do",
-      "dontTitle": "Don't",
-      "do1": "danger-Prop für irreversible Aktionen (Löschen, Deaktivieren) verwenden",
-      "do2": "Menu.Label für Gruppen einsetzen, wenn mehr als 3 Items vorhanden sind",
-      "do3": "Shortcut-Strings als Hinweis anzeigen — sie aktivieren die Aktion nicht automatisch",
-      "dont1": "Keine primären Aktionen ins Menu — sie müssen direkt sichtbar sein",
-      "dont2": "Nicht mehr als ~8 Items ohne Gruppierung — kognitive Überlastung vermeiden",
-      "dont3": "Kein Menu für Formular-Auswahl — Select-Komponente verwenden",
-      "doNote": "Menus für sekundäre und kontextbezogene Aktionen.",
-      "dontNote": "Kein Menu als Ersatz für Select oder primäre Buttons."
+      "whenTitle":  "Wann",
+      "whenBody":   "Für eine Handvoll gleichrangiger Aktionen, die nicht alle dauerhaft sichtbar sein müssen. Geht es um die Auswahl eines Werts für ein Formular, gehört dorthin Select — das Dropdown löst Aktionen aus, es füllt kein Feld.",
+      "orderTitle": "Reihenfolge",
+      "o1":         "Die häufigste Aktion steht oben.",
+      "o2":         "Gruppen entstehen über Trenner, nicht über Leerzeilen.",
+      "o3":         "Zerstörende Aktionen stehen unten, abgetrennt und in danger.",
+      "labelTitle": "Beschriftung",
+      "labelBody":  "Verb im Infinitiv plus Objekt, wie bei der Schaltfläche. Der Auslöser benennt die Gruppe der Aktionen, nicht die erste davon.",
+      "dontTitle":  "Nicht tun",
+      "dont1":      "Mehr als etwa acht Einträge in eine Fläche legen.",
+      "dont2":      "Untermenüs verschachteln — eine Ebene ist das Maximum.",
+      "dont3":      "Einen Kebab ohne ariaLabel einsetzen.",
+      "dont4":      "Das Dropdown als Ersatz für ein Auswahlfeld verwenden."
     },
     "code": {
-      "title": "Code-Beispiele",
-      "baseTitle": "Basis-Menu",
-      "baseDesc": "Standard-Trigger (···), Items mit icon und shortcut, danger-Item.",
-      "triggerTitle": "Benutzerdefinierter Trigger",
-      "triggerDesc": "trigger-Prop nimmt beliebigen ReactNode — z. B. einen Button.",
-      "labelTitle": "Menu.Label für Gruppen",
-      "labelDesc": "Menu.Label zeigt einen uppercase-Abschnittstitel — keine eigene Funktion, nur visuell.",
-      "disabledTitle": "Disabled Items",
-      "disabledDesc": "disabled-Prop deaktiviert ein Item — visuell gedimmt, nicht klickbar."
+      "title":         "Dropdown im Code",
+      "basicDesc":     "Auslöser und Einträge; onSelect bekommt den Wert und den ganzen Eintrag:",
+      "entriesDesc":   "Die Felder eines Eintrags und die beiden Struktur-Typen:",
+      "subDesc":       "Ein Untermenü entsteht durch eigene items am Eintrag:",
+      "selectionDesc": "Auswahlmodus mit Häkchen-Spalte:",
+      "menuListDesc":  "MenuList ohne Auslöser — dieselbe Fläche, die auch Kontextmenü und Menu Buttons verwenden:"
     },
     "a11y": {
-      "title": "Accessibility",
-      "intro": "Menu basiert auf Radix UI DropdownMenu und implementiert das WAI-ARIA Menu Pattern vollständig.",
-      "keyboardTitle": "Keyboard-Navigation",
-      "k1": "Enter / Space — Menu über Trigger öffnen",
-      "k2": "ArrowDown / ArrowUp — zwischen Items navigieren",
-      "k3": "Enter — fokussiertes Item aktivieren",
-      "k4": "Escape — Menu schließen, Fokus zurück auf Trigger",
-      "k5": "Tab — Menu verlassen (schließt das Menu)",
-      "roleTitle": "role=\"menu\"",
-      "roleBody": "Der Menü-Container hat role=\"menu\", einzelne Items role=\"menuitem\". Screen-Reader kündigen das Menu beim Öffnen an und lesen Items beim Navigieren vor.",
-      "ariaTitle": "aria-haspopup + aria-expanded",
-      "ariaBody": "Der Trigger-Button hat aria-haspopup=\"menu\" und aria-expanded (true/false). Screen-Reader erkennen, dass der Button ein Dropdown öffnet.",
-      "focusTitle": "Fokus-Management",
-      "focusBody": "Beim Öffnen springt der Fokus automatisch auf das erste Item. Beim Schließen (Escape / Auswahl) kehrt der Fokus zum Trigger zurück."
+      "keyboardTitle": "Tastatur",
+      "k1":            "Pfeil nach unten öffnet das Menü aus dem Auslöser heraus; beim Öffnen liegt der Fokus auf dem ersten Eintrag.",
+      "k2":            "Pfeil hoch und runter bewegen zwischen den Einträgen und laufen an den Enden um.",
+      "k3":            "Pos1 und Ende springen zum ersten und letzten Eintrag.",
+      "k4":            "Tippen springt zum Eintrag, dessen Beschriftung passt — mehrere Zeichen innerhalb von 800ms zählen als ein Suchbegriff.",
+      "k5":            "Enter oder Leertaste wählt, Esc schließt und gibt den Fokus an den Auslöser zurück.",
+      "rolesTitle":    "Rollen",
+      "r1":            "Die Fläche trägt role=menu, jeder Eintrag role=menuitem.",
+      "r2":            "Im Auswahlmodus werden daraus menuitemradio beziehungsweise menuitemcheckbox mit aria-checked.",
+      "r3":            "Der Auslöser trägt aria-haspopup=menu und aria-expanded.",
+      "focusTitle":    "Fokus",
+      "focusBody":     "Beim Schließen kehrt der Fokus auf den Auslöser zurück — auch nach Esc und nach einer Auswahl. Ohne diese Rückgabe landet der Fokus am Seitenanfang und der Weg durch die Seite beginnt von vorn."
+    }
+  },
+
+  "menu": {
+    "page": {
+      "title":       "Kontextmenü",
+      "description": "Öffnet auf Rechtsklick an der Cursorposition und kippt an den Rändern nach innen."
+    },
+    "controls": {
+      "submenu":  "Mit Untermenü",
+      "disabled": "Deaktiviert"
+    },
+    "demo": {
+      "ariaLabel":    "Termin-Aktionen",
+      "areaHint":     "Rechtsklick in diesen Bereich öffnet das Kontextmenü",
+      "areaEdge":     "Rechtsklick nah am rechten Rand",
+      "areaRich":     "Rechtsklick zeigt Überschrift, Untermenü und Trenner",
+      "areaDisabled": "Hier gilt das Menü des Browsers",
+      "headingFile":  "Termin",
+      "lastAction":   "Zuletzt gewählt: {{value}}",
+      "noAction":     "Noch nichts gewählt",
+      "items": {
+        "open":   "Termin öffnen",
+        "move":   "Termin verschieben",
+        "copy":   "Termin kopieren",
+        "delete": "Termin absagen",
+        "export": "Exportieren",
+        "pdf":    "Als PDF",
+        "csv":    "Als CSV"
+      }
+    },
+    "overview": {
+      "basicTitle":    "Rechtsklick",
+      "basicBody":     "Das Menü öffnet an der Cursorposition. Ein Klick außerhalb, Esc und die Auswahl schließen es wieder; Scrollen und Größenänderung des Fensters ebenfalls, weil die Position sonst nicht mehr stimmt.",
+      "flipTitle":     "Randkippung",
+      "flipBody":      "Reicht der Platz nach rechts oder unten nicht, kippt das Menü zur anderen Seite des Cursors, statt aus dem sichtbaren Bereich zu laufen. Probieren Sie den Rechtsklick nah am rechten Fensterrand.",
+      "entriesTitle":  "Einträge",
+      "entriesBody":   "Die Einträge sind dieselben wie im Dropdown — inklusive Überschrift, Trenner, Tastenkürzel, zerstörender Aktion und einer Ebene Untermenü.",
+      "disabledTitle": "Deaktiviert",
+      "disabledBody":  "Deaktiviert übernimmt der Browser den Rechtsklick wieder. Das ist der richtige Zustand für Bereiche, in denen Text markiert und kopiert werden soll."
+    },
+    "usage": {
+      "whenTitle":     "Wann",
+      "whenBody":      "Für Aktionen, die zu einem bestimmten Objekt gehören — eine Tabellenzeile, eine Karte, ein Termin im Kalender. Das Kontextmenü ist immer die Abkürzung, nie der einzige Weg.",
+      "discoverTitle": "Auffindbarkeit",
+      "discoverBody":  "Ein Rechtsklick ist unsichtbar: Auf Touch-Geräten gibt es ihn nicht, und viele Menschen suchen ihn nicht. Jede Aktion aus dem Kontextmenü muss deshalb auch sichtbar erreichbar sein, etwa über einen Kebab-Auslöser in derselben Zeile.",
+      "contentTitle":  "Inhalt",
+      "c1":            "Nur Aktionen, die sich auf das angeklickte Objekt beziehen.",
+      "c2":            "Die häufigste Aktion oben, zerstörende unten und abgetrennt.",
+      "c3":            "Kurz halten — was länger als etwa acht Einträge wird, gehört in eine sichtbare Werkzeugleiste.",
+      "dontTitle":     "Nicht tun",
+      "dont1":         "Aktionen ausschließlich über den Rechtsklick anbieten.",
+      "dont2":         "Das Kontextmenü über Textbereichen abfangen, in denen kopiert wird.",
+      "dont3":         "Es als Ersatz für eine sichtbare Werkzeugleiste verwenden."
+    },
+    "code": {
+      "title":        "Kontextmenü im Code",
+      "basicDesc":    "Der Bereich für den Rechtsklick steht als Kind, die Aktionen kommen als items:",
+      "disabledDesc": "Deaktiviert gibt den Rechtsklick an den Browser zurück:"
+    },
+    "a11y": {
+      "keyboardTitle":  "Tastatur",
+      "keyboardBody":   "Ist das Menü offen, gelten dieselben Wege wie im Dropdown, weil beide dieselbe Menüfläche benutzen:",
+      "k1":             "Pfeile bewegen, Pos1 und Ende springen an die Ränder.",
+      "k2":             "Tippen springt zum passenden Eintrag.",
+      "k3":             "Enter wählt, Esc schließt.",
+      "parallelTitle":  "Sichtbarer Weg daneben",
+      "parallelBody":   "Das Öffnen selbst hängt am Rechtsklick und ist damit weder per Tastatur noch auf Touch-Geräten erreichbar. Deshalb braucht jede Aktion einen zweiten, sichtbaren Weg — sonst ist sie für einen Teil der Nutzenden schlicht nicht vorhanden.",
+      "rolesTitle":     "Rollen",
+      "rolesBody":      "Die Fläche trägt role=menu mit einer Beschriftung über ariaLabel, die Einträge tragen role=menuitem. Eine unsichtbare Schicht über der Seite fängt den Klick außerhalb ab und schließt das Menü."
+    }
+  },
+
+  "menuButtons": {
+    "page": {
+      "title":       "Menu Buttons",
+      "description": "Drei Formen für Aktionen mit Varianten: MenuButton, SplitButton und IconMenuButton. Eine Größe, 40px hoch."
+    },
+    "controls": {
+      "form":     "Form",
+      "variant":  "Variante",
+      "align":    "Ausrichtung",
+      "icon":     "Icon",
+      "disabled": "Deaktiviert"
+    },
+    "demo": {
+      "createLabel": "Termin anlegen",
+      "menuLabel":   "Weitere Terminarten",
+      "moreLabel":   "Weitere Aktionen",
+      "lastAction":  "Zuletzt ausgelöst: {{value}}",
+      "noAction":    "Noch nichts ausgelöst",
+      "items": {
+        "video":  "Videosprechstunde",
+        "phone":  "Telefonisch",
+        "series": "Terminserie",
+        "edit":   "Termin bearbeiten",
+        "copy":   "Termin kopieren",
+        "delete": "Termin absagen"
+      },
+      "kinds": {
+        "praxis": "In der Praxis",
+        "video":  "Videosprechstunde",
+        "phone":  "Telefonisch",
+        "series": "Terminserie"
+      }
+    },
+    "overview": {
+      "formsTitle":    "Drei Formen",
+      "formsBody":     "Alle drei öffnen dieselbe Menüfläche und unterscheiden sich darin, wie viel sie vorab zeigen.",
+      "f1":            "MenuButton — eine Schaltfläche, die nur das Menü öffnet. Es gibt keine Aktion ohne Auswahl.",
+      "f2":            "SplitButton — die Hauptaktion links läuft direkt, das Menü rechts trägt die Varianten.",
+      "f3":            "IconMenuButton — nur ein Icon, 40px im Quadrat, für Werkzeugleisten und Tabellenzeilen.",
+      "variantsTitle": "Varianten",
+      "variantsBody":  "primary trägt die Aktionsfarbe und gehört zur wichtigsten Aktion einer Ansicht; neutral ist die zurückhaltende Form mit Rahmen. Wie bei der Schaltfläche gilt: pro Ansicht nur eine primäre Aktion.",
+      "splitTitle":    "SplitButton und die Fuge",
+      "splitBody":     "Die beiden Hälften teilen sich eine Trefferfläche und sind durch eine Fuge getrennt: In der primären Variante ist das eine helle Innenlinie, in der neutralen der geteilte Rahmen. Die linke Hälfte löst sofort aus, ohne das Menü zu öffnen.",
+      "iconTitle":     "IconMenuButton",
+      "iconBody":      "Ohne Beschriftung ist ariaLabel Pflicht — sonst ist die Schaltfläche unbenannt. Der Standard ist das Kebab-Icon in der neutralen Variante.",
+      "alignTitle":    "Ausrichtung",
+      "alignBody":     "Das Menü richtet sich links oder rechts an der Schaltfläche aus. Am rechten Rand einer Ansicht gehört dorthin end.",
+      "disabledTitle": "Deaktiviert",
+      "disabledBody":  "Deaktiviert sind beide Hälften gesperrt — beim SplitButton also auch die Hauptaktion, nicht nur das Menü."
+    },
+    "usage": {
+      "whichTitle":   "Welche Form",
+      "w1":           "Gibt es keine sinnvolle Standardaktion, ist es ein MenuButton.",
+      "w2":           "Gibt es eine klare Hauptaktion und seltener gebrauchte Varianten davon, ist es ein SplitButton.",
+      "w3":           "Ist für eine Beschriftung kein Platz, ist es ein IconMenuButton — in Tabellenzeilen und Werkzeugleisten.",
+      "splitTitle":   "SplitButton mit Bedacht",
+      "splitBody":    "Der SplitButton verspricht, dass die linke Hälfte die richtige Wahl für die meisten Fälle ist. Stimmt das nicht, wählen Menschen versehentlich falsch — dann ist der MenuButton die ehrlichere Form.",
+      "variantTitle": "Varianten mischen",
+      "variantBody":  "Stehen mehrere Menu Buttons nebeneinander, trägt höchstens einer die primäre Variante. Alle übrigen sind neutral, sonst konkurrieren sie um dieselbe Aufmerksamkeit.",
+      "dontTitle":    "Nicht tun",
+      "dont1":        "Die Hauptaktion des SplitButton auch noch ins Menü legen.",
+      "dont2":        "Einen IconMenuButton ohne ariaLabel einsetzen.",
+      "dont3":        "Zerstörende Aktionen zur Hauptaktion eines SplitButton machen."
+    },
+    "code": {
+      "title":          "Menu Buttons im Code",
+      "menuButtonDesc": "Eine Schaltfläche, die nur das Menü öffnet:",
+      "splitDesc":      "Hauptaktion über onClick, Varianten über items und onSelect:",
+      "iconDesc":       "Nur Icon — die Beschriftung kommt über ariaLabel:"
+    },
+    "a11y": {
+      "labelTitle":    "Beschriftung",
+      "l1":            "Beim IconMenuButton ist ariaLabel die einzige Beschriftung und damit Pflicht.",
+      "l2":            "Beim SplitButton trägt die Menühälfte ein eigenes menuLabel — sonst hätten beide Hälften denselben Namen.",
+      "keyboardTitle": "Tastatur",
+      "k1":            "Pfeil nach unten öffnet das Menü aus der Schaltfläche heraus.",
+      "k2":            "In der Fläche gelten die Wege des Dropdowns: Pfeile, Pos1 und Ende, Tippen, Enter und Esc.",
+      "k3":            "Beim SplitButton führt Tab zuerst auf die Hauptaktion und dann auf die Menühälfte.",
+      "stateTitle":    "Zustand",
+      "stateBody":     "Die Menühälfte trägt aria-haspopup=menu und aria-expanded; beim Schließen kehrt der Fokus auf sie zurück, nicht auf die Hauptaktion."
     }
   },
 

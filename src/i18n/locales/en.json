@@ -30,7 +30,9 @@
       "navigation": "Navigation",
       "overlays":   "Modal",
       "accordion":  "Accordion",
-      "menus":      "Menus",
+      "dropdown":    "Dropdown",
+      "menu":        "Context Menu",
+      "menuButtons": "Menu Buttons",
       "list":          "List",
       "containedList": "Contained List",
       "pagination":    "Pagination",
@@ -1440,80 +1442,255 @@
       "domBody":       "Collapsed sections remain in the document. Browser search finds their content even when it is not visible."
     }
   },
-  "menus": {
+  "dropdown": {
     "page": {
-      "description": "Context-sensitive action menus as a compound component with Menu.Item, Menu.Label, and Menu.Separator."
+      "title":       "Dropdown",
+      "description": "A trigger with a menu. MenuList is the shared menu surface of the system — context menu and menu buttons use it too."
+    },
+    "controls": {
+      "trigger":       "Trigger",
+      "size":          "Size",
+      "align":         "Alignment",
+      "selectionMode": "Selection mode",
+      "icon":          "Icon",
+      "disabled":      "Disabled"
+    },
+    "demo": {
+      "actionsLabel":      "Aktionen",
+      "moreLabel":         "Weitere Aktionen",
+      "exportLabel":       "Ausgeben",
+      "columnsLabel":      "Spalten",
+      "headingEdit":       "Bearbeiten",
+      "selectedSingle":    "Gewählt: {{value}}",
+      "selectedMultiple":  "{{count}} Spalten sichtbar",
+      "items": {
+        "edit":   "Termin bearbeiten",
+        "move":   "Termin verschieben",
+        "lock":   "Termin sperren",
+        "delete": "Termin absagen",
+        "export": "Exportieren",
+        "print":  "Drucken",
+        "pdf":    "Als PDF",
+        "csv":    "Als CSV"
+      },
+      "columns": {
+        "patient": "Patientin oder Patient",
+        "date":    "Datum",
+        "doctor":  "Behandelnde Person"
+      }
     },
     "overview": {
-      "anatomyTitle": "Anatomy",
-      "anatomyBody": "Menu is a compound component based on Radix UI DropdownMenu. It consists of five building blocks:",
-      "an1": "Menu — root container with trigger and content",
-      "an2": "trigger prop — any ReactNode as the activator (default: ··· button)",
-      "an3": "Menu.Item — single action with optional icon, shortcut, and danger mode",
-      "an4": "Menu.Label — section heading (uppercase, small)",
-      "an5": "Menu.Separator — horizontal divider between sections",
-      "demoTitle": "Live Demo",
-      "demoBody": "Click the trigger to open the menu. Both variants (default trigger and custom button) are interactive.",
-      "demoDefault": "Default trigger (···)",
-      "demoCustomTrigger": "Custom trigger",
-      "labelAccount": "Account",
-      "labelWorkspace": "Workspace",
-      "itemProfile": "View profile",
-      "itemSettings": "Settings",
-      "itemNewProject": "New project",
-      "itemDuplicate": "Duplicate",
-      "itemDelete": "Delete",
-      "itemEdit": "Edit",
-      "itemExport": "Export",
-      "itemCopyLink": "Copy link",
-      "triggerOptions": "Options"
+      "triggerTitle":   "Trigger",
+      "triggerBody":    "The button carries a label and a chevron, the kebab only an icon without a border. The kebab belongs in table rows and card headers where there is no room for a label — it then needs an ariaLabel.",
+      "sizesTitle":     "Sizes",
+      "sizesBody":      "Two sizes: sm at 32px for dense areas, md at 40px as the normal case. The menu surface itself stays the same in both.",
+      "alignTitle":     "Alignment",
+      "alignBody":      "The menu aligns to the left or right of the trigger. At the right edge of the screen use end, otherwise the surface runs out of view.",
+      "entriesTitle":   "Entries",
+      "entriesBody":    "An entry carries a label and optionally an icon, a shortcut and a state. Structure comes from two dedicated types.",
+      "e1":             "icon places a Material symbol on the left, shortcut a key hint on the right in DM Mono.",
+      "e2":             "danger colours text and icon red — that entry belongs at the end.",
+      "e3":             "disabled locks the entry; it stays visible but takes no focus.",
+      "e4":             "type: divider separates groups, type: heading labels them.",
+      "e5":             "href renders the entry as a link instead of a button.",
+      "subTitle":       "Submenu",
+      "subBody":        "An entry with its own items opens a submenu — one level, no more. It opens on hover and with the right arrow key; the left arrow closes it again.",
+      "selectionTitle": "Selection mode",
+      "selectionBody":  "With a selection mode every entry gets a check column and the matching ARIA role. For multiple selection keepOpen keeps the menu open so several entries can be toggled in a row.",
+      "menuListTitle":  "MenuList on its own",
+      "menuListBody":   "The menu surface can be used without a trigger — shown here without auto focus so the page does not jump on load. Context menu and menu buttons use it the same way.",
+      "disabledTitle":  "Disabled",
+      "disabledBody":   "A disabled trigger stays visible and does not open. If the action does not belong in this view at all, remove it rather than showing it disabled."
     },
     "usage": {
-      "title": "When to use menus?",
-      "intro": "Menus bundle multiple context-sensitive actions behind a single trigger — without interrupting the main flow.",
-      "whenTitle": "Good use cases",
-      "when1": "Overflow menus (···) with 3+ secondary actions per row or element",
-      "when2": "Context menus on data items (Edit / Duplicate / Delete)",
-      "when3": "Account menus with groups (Account, Workspace, Sign out)",
-      "whenNotTitle": "When not to use?",
-      "whenNotBody": "Primary actions (like 'Save') belong as a visible button, not in a menu. Form selection belongs in a Select component.",
-      "doTitle": "Do",
-      "dontTitle": "Don't",
-      "do1": "Use the danger prop for irreversible actions (Delete, Deactivate)",
-      "do2": "Use Menu.Label for groups when more than 3 items are present",
-      "do3": "Show shortcut strings as hints — they don't automatically trigger the action",
-      "dont1": "No primary actions in a menu — they must be directly visible",
-      "dont2": "No more than ~8 items without grouping — avoid cognitive overload",
-      "dont3": "No menu for form selection — use the Select component",
-      "doNote": "Menus for secondary and context-sensitive actions.",
-      "dontNote": "No menu as a replacement for Select or primary buttons."
+      "whenTitle":  "When",
+      "whenBody":   "For a handful of equally ranked actions that need not all be permanently visible. If it is about choosing a value for a form, use Select — the dropdown triggers actions, it does not fill a field.",
+      "orderTitle": "Order",
+      "o1":         "The most common action goes on top.",
+      "o2":         "Groups come from dividers, not from blank lines.",
+      "o3":         "Destructive actions go at the bottom, separated and in danger.",
+      "labelTitle": "Label",
+      "labelBody":  "Infinitive verb plus object, as with the button. The trigger names the group of actions, not the first of them.",
+      "dontTitle":  "Don't",
+      "dont1":      "Put more than about eight entries on one surface.",
+      "dont2":      "Nest submenus — one level is the maximum.",
+      "dont3":      "Use a kebab without an ariaLabel.",
+      "dont4":      "Use the dropdown as a replacement for a select field."
     },
     "code": {
-      "title": "Code Examples",
-      "baseTitle": "Basic Menu",
-      "baseDesc": "Default trigger (···), items with icon and shortcut, danger item.",
-      "triggerTitle": "Custom Trigger",
-      "triggerDesc": "The trigger prop accepts any ReactNode — e.g. a Button.",
-      "labelTitle": "Menu.Label for Groups",
-      "labelDesc": "Menu.Label shows an uppercase section title — no own function, purely visual.",
-      "disabledTitle": "Disabled Items",
-      "disabledDesc": "The disabled prop deactivates an item — visually dimmed, not clickable."
+      "title":         "Dropdown in code",
+      "basicDesc":     "Trigger and entries; onSelect receives the value and the whole entry:",
+      "entriesDesc":   "The fields of an entry and the two structural types:",
+      "subDesc":       "A submenu comes from items on the entry itself:",
+      "selectionDesc": "Selection mode with a check column:",
+      "menuListDesc":  "MenuList without a trigger — the same surface the context menu and menu buttons use:"
     },
     "a11y": {
-      "title": "Accessibility",
-      "intro": "Menu is based on Radix UI DropdownMenu and fully implements the WAI-ARIA Menu Pattern.",
-      "keyboardTitle": "Keyboard Navigation",
-      "k1": "Enter / Space — open the menu via trigger",
-      "k2": "ArrowDown / ArrowUp — navigate between items",
-      "k3": "Enter — activate the focused item",
-      "k4": "Escape — close the menu, focus returns to trigger",
-      "k5": "Tab — leave the menu (closes it)",
-      "roleTitle": "role=\"menu\"",
-      "roleBody": "The menu container has role=\"menu\", individual items role=\"menuitem\". Screen readers announce the menu on open and read items while navigating.",
-      "ariaTitle": "aria-haspopup + aria-expanded",
-      "ariaBody": "The trigger button has aria-haspopup=\"menu\" and aria-expanded (true/false). Screen readers recognize that the button opens a dropdown.",
-      "focusTitle": "Focus Management",
-      "focusBody": "When opened, focus automatically jumps to the first item. When closed (Escape / selection), focus returns to the trigger."
+      "keyboardTitle": "Keyboard",
+      "k1":            "Arrow down opens the menu from the trigger; on opening, focus sits on the first entry.",
+      "k2":            "Arrow up and down move between entries and wrap around at the ends.",
+      "k3":            "Home and End jump to the first and last entry.",
+      "k4":            "Typing jumps to the entry whose label matches — several characters within 800ms count as one search term.",
+      "k5":            "Enter or Space selects, Esc closes and returns focus to the trigger.",
+      "rolesTitle":    "Roles",
+      "r1":            "The surface carries role=menu, every entry role=menuitem.",
+      "r2":            "In selection mode these become menuitemradio or menuitemcheckbox with aria-checked.",
+      "r3":            "The trigger carries aria-haspopup=menu and aria-expanded.",
+      "focusTitle":    "Focus",
+      "focusBody":     "On closing, focus returns to the trigger — after Esc and after a selection alike. Without that return, focus lands at the top of the page and the journey through it starts over."
+    }
+  },
+
+  "menu": {
+    "page": {
+      "title":       "Context Menu",
+      "description": "Opens on right-click at the cursor position and flips inward at the edges."
+    },
+    "controls": {
+      "submenu":  "With submenu",
+      "disabled": "Disabled"
+    },
+    "demo": {
+      "ariaLabel":    "Termin-Aktionen",
+      "areaHint":     "Rechtsklick in diesen Bereich öffnet das Kontextmenü",
+      "areaEdge":     "Rechtsklick nah am rechten Rand",
+      "areaRich":     "Rechtsklick zeigt Überschrift, Untermenü und Trenner",
+      "areaDisabled": "Hier gilt das Menü des Browsers",
+      "headingFile":  "Termin",
+      "lastAction":   "Zuletzt gewählt: {{value}}",
+      "noAction":     "Noch nichts gewählt",
+      "items": {
+        "open":   "Termin öffnen",
+        "move":   "Termin verschieben",
+        "copy":   "Termin kopieren",
+        "delete": "Termin absagen",
+        "export": "Exportieren",
+        "pdf":    "Als PDF",
+        "csv":    "Als CSV"
+      }
+    },
+    "overview": {
+      "basicTitle":    "Right-click",
+      "basicBody":     "The menu opens at the cursor position. A click outside, Esc and a selection close it again; so do scrolling and resizing the window, because the position would no longer hold.",
+      "flipTitle":     "Edge flipping",
+      "flipBody":      "If there is not enough room to the right or below, the menu flips to the other side of the cursor instead of running out of view. Try right-clicking close to the right window edge.",
+      "entriesTitle":  "Entries",
+      "entriesBody":   "The entries are the same as in the dropdown — including heading, divider, shortcut, destructive action and one level of submenu.",
+      "disabledTitle": "Disabled",
+      "disabledBody":  "When disabled, the browser takes the right-click back. That is the right state for areas where text is meant to be selected and copied."
+    },
+    "usage": {
+      "whenTitle":     "When",
+      "whenBody":      "For actions belonging to a specific object — a table row, a card, an appointment in the calendar. The context menu is always the shortcut, never the only way.",
+      "discoverTitle": "Discoverability",
+      "discoverBody":  "A right-click is invisible: it does not exist on touch devices, and many people never look for it. Every action in the context menu must therefore also be reachable visibly, for example through a kebab trigger in the same row.",
+      "contentTitle":  "Content",
+      "c1":            "Only actions that relate to the object clicked.",
+      "c2":            "The most common action on top, destructive ones at the bottom and separated.",
+      "c3":            "Keep it short — anything beyond about eight entries belongs in a visible toolbar.",
+      "dontTitle":     "Don't",
+      "dont1":         "Offer actions exclusively through right-click.",
+      "dont2":         "Capture the context menu over text areas where people copy.",
+      "dont3":         "Use it as a replacement for a visible toolbar."
+    },
+    "code": {
+      "title":        "Context menu in code",
+      "basicDesc":    "The right-click area is the child, the actions come as items:",
+      "disabledDesc": "Disabled hands the right-click back to the browser:"
+    },
+    "a11y": {
+      "keyboardTitle":  "Keyboard",
+      "keyboardBody":   "Once the menu is open the same paths apply as in the dropdown, because both use the same menu surface:",
+      "k1":             "Arrows move, Home and End jump to the ends.",
+      "k2":             "Typing jumps to the matching entry.",
+      "k3":             "Enter selects, Esc closes.",
+      "parallelTitle":  "A visible path alongside",
+      "parallelBody":   "Opening itself hangs on the right-click and is therefore reachable neither by keyboard nor on touch devices. That is why every action needs a second, visible path — otherwise it simply does not exist for part of your users.",
+      "rolesTitle":     "Roles",
+      "rolesBody":      "The surface carries role=menu with a label through ariaLabel, the entries carry role=menuitem. An invisible layer above the page catches the click outside and closes the menu."
+    }
+  },
+
+  "menuButtons": {
+    "page": {
+      "title":       "Menu Buttons",
+      "description": "Three forms for actions with variants: MenuButton, SplitButton and IconMenuButton. One size, 40px high."
+    },
+    "controls": {
+      "form":     "Form",
+      "variant":  "Variant",
+      "align":    "Alignment",
+      "icon":     "Icon",
+      "disabled": "Disabled"
+    },
+    "demo": {
+      "createLabel": "Termin anlegen",
+      "menuLabel":   "Weitere Terminarten",
+      "moreLabel":   "Weitere Aktionen",
+      "lastAction":  "Zuletzt ausgelöst: {{value}}",
+      "noAction":    "Noch nichts ausgelöst",
+      "items": {
+        "video":  "Videosprechstunde",
+        "phone":  "Telefonisch",
+        "series": "Terminserie",
+        "edit":   "Termin bearbeiten",
+        "copy":   "Termin kopieren",
+        "delete": "Termin absagen"
+      },
+      "kinds": {
+        "praxis": "In der Praxis",
+        "video":  "Videosprechstunde",
+        "phone":  "Telefonisch",
+        "series": "Terminserie"
+      }
+    },
+    "overview": {
+      "formsTitle":    "Three forms",
+      "formsBody":     "All three open the same menu surface and differ in how much they show up front.",
+      "f1":            "MenuButton — one button that only opens the menu. There is no action without a choice.",
+      "f2":            "SplitButton — the main action on the left runs directly, the menu on the right carries the variants.",
+      "f3":            "IconMenuButton — icon only, 40px square, for toolbars and table rows.",
+      "variantsTitle": "Variants",
+      "variantsBody":  "primary carries the action colour and belongs to the most important action in a view; neutral is the restrained form with a border. As with the button: only one primary action per view.",
+      "splitTitle":    "SplitButton and the seam",
+      "splitBody":     "The two halves share one hit area and are separated by a seam: in the primary variant a light inner line, in the neutral one the shared border. The left half fires immediately without opening the menu.",
+      "iconTitle":     "IconMenuButton",
+      "iconBody":      "Without a label an ariaLabel is mandatory — otherwise the button is unnamed. The default is the kebab icon in the neutral variant.",
+      "alignTitle":    "Alignment",
+      "alignBody":     "The menu aligns to the left or right of the button. At the right edge of a view use end.",
+      "disabledTitle": "Disabled",
+      "disabledBody":  "When disabled both halves are locked — on the SplitButton that includes the main action, not just the menu."
+    },
+    "usage": {
+      "whichTitle":   "Which form",
+      "w1":           "If there is no sensible default action, it is a MenuButton.",
+      "w2":           "If there is a clear main action and less common variants of it, it is a SplitButton.",
+      "w3":           "If there is no room for a label, it is an IconMenuButton — in table rows and toolbars.",
+      "splitTitle":   "SplitButton with care",
+      "splitBody":    "The SplitButton promises that the left half is the right choice for most cases. If that is not true, people pick wrongly by accident — then the MenuButton is the more honest form.",
+      "variantTitle": "Mixing variants",
+      "variantBody":  "Where several menu buttons sit side by side, at most one carries the primary variant. All others are neutral, otherwise they compete for the same attention.",
+      "dontTitle":    "Don't",
+      "dont1":        "Put the SplitButton's main action into its menu as well.",
+      "dont2":        "Use an IconMenuButton without an ariaLabel.",
+      "dont3":        "Make a destructive action the main action of a SplitButton."
+    },
+    "code": {
+      "title":          "Menu buttons in code",
+      "menuButtonDesc": "A button that only opens the menu:",
+      "splitDesc":      "Main action through onClick, variants through items and onSelect:",
+      "iconDesc":       "Icon only — the label comes through ariaLabel:"
+    },
+    "a11y": {
+      "labelTitle":    "Labelling",
+      "l1":            "On the IconMenuButton the ariaLabel is the only label and therefore mandatory.",
+      "l2":            "On the SplitButton the menu half carries its own menuLabel — otherwise both halves would share one name.",
+      "keyboardTitle": "Keyboard",
+      "k1":            "Arrow down opens the menu from the button.",
+      "k2":            "Inside the surface the dropdown paths apply: arrows, Home and End, typing, Enter and Esc.",
+      "k3":            "On the SplitButton, Tab reaches the main action first and then the menu half.",
+      "stateTitle":    "State",
+      "stateBody":     "The menu half carries aria-haspopup=menu and aria-expanded; on closing, focus returns to it, not to the main action."
     }
   },
 
