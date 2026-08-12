@@ -13,4 +13,13 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
     },
   },
+  test: {
+    environment: 'jsdom',
+    globals: true,
+    setupFiles: './src/test/setup.js',
+    /* Component CSS imports resolve to nothing in the test run — the assertions
+       go against markup, roles and focus, never against computed styles. */
+    css: false,
+    include: ['src/**/*.test.{js,jsx}'],
+  },
 })
