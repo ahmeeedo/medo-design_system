@@ -18,14 +18,15 @@ import TogglePage      from './pages/TogglePage'
 import CheckboxPage    from './pages/CheckboxPage'
 import RadioPage       from './pages/RadioPage'
 import TagPage         from './pages/TagPage'
-import AlertsPage      from './pages/AlertsPage'
+import NotificationPage from './pages/NotificationPage'
 import CardsPage       from './pages/CardsPage'
 import TablesPage      from './pages/TablesPage'
 import TabsPage        from './pages/TabsPage'
 import ContentSwitcherPage from './pages/ContentSwitcherPage'
 import BreadcrumbPage      from './pages/BreadcrumbPage'
 import CodeSnippetPage     from './pages/CodeSnippetPage'
-import OverlaysPage    from './pages/OverlaysPage'
+import ModalPage       from './pages/ModalPage'
+import PopoverPage     from './pages/PopoverPage'
 import AccordionPage   from './pages/AccordionPage'
 import DropdownPage    from './pages/DropdownPage'
 import MenuPage        from './pages/MenuPage'
@@ -76,14 +77,15 @@ function AppContent() {
         <Route path="/checkbox"   element={<CheckboxPage />} />
         <Route path="/radio"      element={<RadioPage />} />
         <Route path="/tag"        element={<TagPage />} />
-        <Route path="/alerts"     element={<AlertsPage />} />
+        <Route path="/notification" element={<NotificationPage />} />
         <Route path="/cards"      element={<CardsPage />} />
         <Route path="/tables"     element={<TablesPage />} />
         <Route path="/tabs"       element={<TabsPage />} />
         <Route path="/content-switcher" element={<ContentSwitcherPage />} />
         <Route path="/breadcrumb"       element={<BreadcrumbPage />} />
         <Route path="/code-snippet"     element={<CodeSnippetPage />} />
-        <Route path="/overlays"   element={<OverlaysPage />} />
+        <Route path="/modal"      element={<ModalPage />} />
+        <Route path="/popover"    element={<PopoverPage />} />
         <Route path="/accordion"  element={<AccordionPage />} />
         <Route path="/dropdown"   element={<DropdownPage />} />
         <Route path="/menu"       element={<MenuPage />} />
