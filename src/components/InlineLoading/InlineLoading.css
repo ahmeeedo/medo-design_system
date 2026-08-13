@@ -1,0 +1,32 @@
+.medo-il{
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--medo-font-sans);
+  font-size: var(--medo-text-sm);
+  color: var(--medo-text-muted);
+  vertical-align: middle;
+}
+.medo-il--sm{ font-size: var(--medo-text-xs); gap: 7px; }
+.medo-il__dots{ display: inline-flex; align-items: center; gap: 3px; flex: none; }
+.medo-il__dot{
+  border-radius: var(--medo-radius-full);
+  background: currentColor;
+  animation: medo-il-pulse 1.05s ease-in-out infinite;
+}
+.medo-il__dot:nth-child(2){ animation-delay: 0.15s; }
+.medo-il__dot:nth-child(3){ animation-delay: 0.3s; }
+@keyframes medo-il-pulse{
+  0%, 100%{ opacity: 0.28; transform: scale(0.82); }
+  45%{ opacity: 1; transform: scale(1); }
+}
+.medo-il--loading{ color: var(--medo-action); }
+.medo-il--success{ color: var(--medo-success-solid); }
+.medo-il--error{ color: var(--medo-error-solid); }
+.medo-il--inactive{ color: var(--medo-text-muted); }
+/* In gefüllten Schaltflächen: Farbe der Umgebung übernehmen, sonst teal auf teal. */
+.medo-il--inherit,
+.medo-il--inherit .medo-il__txt{ color: inherit; }
+.medo-il__txt{ color: var(--medo-text-muted); }
+.medo-il--success .medo-il__txt,
+.medo-il--error .medo-il__txt{ color: currentColor; }

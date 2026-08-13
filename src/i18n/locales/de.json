@@ -38,13 +38,13 @@
       "list":          "List",
       "containedList": "Contained List",
       "pagination":    "Pagination",
-      "stats":      "Stats / KPI",
-      "feedback":   "Feedback",
       "avatar":     "Avatar",
-      "skeleton":          "Skeleton",
+      "loading":            "Loading",
+      "inlineLoading":      "Inline Loading",
+      "progressBar":        "Progress Bar",
+      "progressIndicator":  "Progress Indicator",
       "tooltip":           "Tooltip",
       "slider":            "Slider",
-      "loadingIndicator":  "Loading Indicator",
       "uploadField":       "Upload Field",
       "datePicker":        "Date Picker",
       "whatIsMedo":        "Was ist med.o?",
@@ -2095,128 +2095,267 @@
       "targetBody":   "Die Schaltflächen messen 40 px bei md und 32 px bei sm. Auf Touch-Oberflächen ist md die richtige Wahl."
     }
   },
-  "stats": {
+  "loading": {
     "page": {
-      "description": "KPI-Karten mit Label, vorformatiertem Wert und optionaler Delta-Anzeige (up / down / neutral)."
+      "title":       "Loading",
+      "description": "Zeigt, dass etwas läuft. Der Teilring-Spinner ist die einzige Dauerbewegung im System; Skeletons stehen dort, wo die Form des Inhalts schon bekannt ist."
+    },
+    "demo": {
+      "label":          "Profile werden geprüft …",
+      "overlayTitle":   "Offene Vorgänge",
+      "overlayContent": "Der bereits sichtbare Inhalt bleibt stehen und wird nicht ersetzt — die Fläche legt sich darüber."
+    },
+    "which": {
+      "skeleton": "Skeleton — Form bekannt",
+      "spinner":  "Spinner — Form unbekannt"
     },
     "overview": {
-      "anatomyTitle": "Anatomie",
-      "anatomyBody": "StatCard besteht aus vier Bereichen — Label und Wert sind immer sichtbar, Delta ist optional.",
-      "an1": "label — Uppercase-Bezeichner der Kennzahl (z. B. 'Aktive Nutzer')",
-      "an2": "value — vorformatierter Wert als String (z. B. '12.847', '€84.2k')",
-      "an3": "delta — optionaler Vergleichswert mit Richtungsindikator (↑/↓/→)",
-      "an4": "deltaDir — Richtung: 'up' (grün), 'down' (rot), 'neutral' (grau)",
-      "demoTitle": "Live-Demo — alle Delta-Varianten",
-      "demoBody": "4 StatCards: up (grün), up (grün), down (rot) und ohne delta.",
-      "statsCardRevenue": "Umsatz",
-      "statsCardUsers": "Aktive Nutzer",
-      "statsCardConv": "Conversion Rate",
-      "statsCardTickets": "Offene Tickets"
+      "whichTitle":    "Welche Form wann",
+      "whichBody":     "Skeleton, wenn die Form des Inhalts schon bekannt ist — Listen, Karten, Tabellen. Er zeigt, wo was erscheint, und die Seite springt beim Eintreffen nicht. Spinner, wenn die Form unbekannt ist oder nur ein kleiner Bereich wartet.",
+      "sizesTitle":    "Größen und Farbe",
+      "sizesBody":     "sm misst 20 px, md 32 px, lg 48 px. Der Spinner erbt currentColor; mit color lässt er sich abweichend setzen, etwa gedämpft in einer ruhigen Fläche.",
+      "overlayTitle":  "Overlay und Vollseite",
+      "overlayBody":   "variant=\"overlay\" legt den Spinner über den bereits sichtbaren Bereich — der Vorfahre braucht position: relative, der alte Inhalt bleibt sichtbar. fullpage gehört nur an den ersten Start der Anwendung.",
+      "skeletonTitle": "Skeleton-Formen",
+      "skeletonBody":  "lines für Textzeilen, block für eine Fläche, card für Avatar mit Titel und Zeilen, table für ein Zeilenraster. Der Skeleton ahmt die Anzahl der erwarteten Zeilen nach, nicht mehr — er ist kein Platzhalterteppich."
     },
     "usage": {
-      "title": "Wann StatCard verwenden?",
-      "intro": "StatCards eignen sich für KPI-Dashboards und Metriken-Übersichten, bei denen eine Kennzahl schnell erfassbar sein muss.",
-      "formatTitle": "Wert-Formatierung",
-      "formatBody": "Die Komponente führt keine Zahlenformatierung durch — value und delta werden als String übergeben. Die Formatierung (Währung, Einheit, Tausender-Trenner) erfolgt in der aufrufenden Komponente, z. B. per Intl.NumberFormat.",
-      "doTitle": "Do",
-      "dontTitle": "Don't",
-      "do1": "Werte als vorformatierte Strings übergeben (z. B. '€84.2k', '12.847')",
-      "do2": "deltaDir korrekt setzen: up = Anstieg positiv, down = Rückgang negativ",
-      "do3": "StatCards in einem Grid mit konsistenter Breite pro Zeile anordnen (4 Spalten)",
-      "dont1": "Keine rohen Zahlen ohne Formatierung übergeben",
-      "dont2": "delta nicht leer lassen, wenn deltaDir gesetzt ist — sonst kein Delta-Bereich angezeigt",
-      "dont3": "Keine zu langen Labels — max. 2–3 Wörter für die Uppercase-Zeile",
-      "doNote": "StatCards für schnell erfassbare Einzelkennzahlen.",
-      "dontNote": "Keine StatCard für komplexe Datensätze — Table verwenden."
+      "whichTitle":  "Skeleton oder Spinner",
+      "whichBody":   "Ist die Form des Inhalts bekannt, zeigt der Skeleton sie vorweg und die Seite springt beim Eintreffen nicht. Ist sie unbekannt oder wartet nur ein kleiner Bereich, ist der Spinner richtig. Für eine Wartezeit in einer Schaltfläche oder neben einem Feld ist es InlineLoading, für bekannten Fortschritt die ProgressBar.",
+      "timingTitle": "Zeitschwellen",
+      "timingBody":  "Unter etwa 300 ms zeigt man nichts — ein aufblitzender Spinner wirkt wie ein Fehler. Länger als etwa zehn Sekunden braucht es einen Text, der sagt, was geschieht.",
+      "oneTitle":    "Ein Ladezustand pro Bereich",
+      "oneBody":     "Skeleton und Spinner nie gleichzeitig für denselben Inhalt. Zwei Anzeigen für dieselbe Wartezeit lassen den Eindruck entstehen, es liefen zwei Vorgänge.",
+      "scopeTitle":  "Nur den wartenden Teil abdecken",
+      "scopeBody":   "Wartet ein Ausschnitt, gehört der Spinner als Overlay über genau diesen Ausschnitt. Die ganze Seite zu überdecken nimmt der Person auch das, was bereits nutzbar wäre.",
+      "doDontTitle": "Einsatz",
+      "doTitle":     "Do",
+      "dontTitle":   "Don't",
+      "do1":         "Skeleton nutzen, wenn die Form des Inhalts bekannt ist",
+      "do2":         "Ab etwa zehn Sekunden einen Text ergänzen, der den Vorgang benennt",
+      "do3":         "Den wartenden Bereich mit aria-busy auszeichnen",
+      "dont1":       "Spinner für Vorgänge mit bekanntem Fortschritt",
+      "dont2":       "Die ganze Seite überdecken, wenn nur ein Teil lädt",
+      "dont3":       "Skeletons mit mehr Zeilen zeigen, als danach erscheinen"
     },
     "code": {
-      "title": "Code-Beispiele",
-      "baseTitle": "Basis-StatCard",
-      "baseDesc": "label, value, delta und deltaDir — alle vier Props.",
-      "noDeltaTitle": "Ohne delta / neutral",
-      "noDeltaDesc": "Ohne delta-Prop wird kein Delta-Bereich angezeigt. deltaDir='neutral' zeigt grau mit →.",
-      "gridTitle": "Grid aus 4 StatCards",
-      "gridDesc": "4-spaltiges Grid — Standard-Layout für KPI-Dashboards.",
-      "formatTitle": "Wert-Formatierung",
-      "formatDesc": "Formatierung findet außerhalb der Komponente statt — vorformatierten String übergeben."
+      "title":         "Code-Beispiele",
+      "spinnerTitle":  "Spinner",
+      "overlayTitle":  "Overlay und Vollseite",
+      "skeletonTitle": "Skeleton",
+      "colorTitle":    "Farbe und aria-busy"
     },
     "a11y": {
-      "title": "Accessibility",
-      "intro": "StatCards sind statische Anzeigeelemente. Screen-Reader lesen Label, Wert und Delta als normalen Text — keine ARIA-Sonderbehandlung nötig, sofern die Delta-Icons Textalternativen haben.",
-      "iconTitle": "Delta-Icons als Text",
-      "iconBody": "↑ / ↓ / → sind Unicode-Zeichen, die Screen-Reader vorlesen. Wenn die Bedeutung unklar ist, ein visuell verborgenes span mit aria-label='Anstieg' / 'Rückgang' ergänzen.",
-      "ariaTitle": "aria-label für Delta-Richtung",
-      "ariaBody": "Bei reinen Icon-Deltas (ohne Text) aria-label auf dem Delta-Element setzen: aria-label='Anstieg um 4.2 Prozent'. Bei kombinierten Strings (↑ 4.2%) ist kein weiteres ARIA nötig.",
-      "colorTitle": "Farbe ist nicht alleiniger Indikator",
-      "colorBody": "up (grün) / down (rot) / neutral (grau) kommunizieren Richtung farblich. Das Pfeil-Symbol (↑/↓/→) sorgt dafür, dass die Richtung auch ohne Farbe erkennbar ist — WCAG 1.4.1 konform."
+      "statusTitle":   "Rolle und Zustand",
+      "statusBody":    "Der Spinner ist role=\"status\" mit aria-busy=\"true\". Ohne Text trägt er das aria-label „Wird geladen“; mit Text übernimmt der Text die Ansage.",
+      "skeletonTitle": "Skeletons sind unsichtbar für Screenreader",
+      "skeletonBody":  "Sie tragen aria-hidden, damit keine Bruchstücke vorgelesen werden. Der wartende Bereich selbst sollte aria-busy=\"true\" tragen, solange er lädt.",
+      "motionTitle":   "Bewegung",
+      "motionBody":    "Es gibt genau zwei Dauerbewegungen: die Drehung des Teilrings und das Shimmer des Skeletons. Weitere Ladeanimationen kommen im System nicht vor."
     }
   },
-  "feedback": {
+
+  "inlineLoading": {
     "page": {
-      "description": "Fortschrittsanzeige für Ladevorgänge, Datei-Uploads und mehrstufige Prozesse."
+      "title":       "Inline Loading",
+      "description": "Wartezustand im Textfluss: drei pulsierende Punkte, danach Häkchen oder Kreuz. Er ersetzt keine Fläche, er begleitet eine Zeile."
+    },
+    "demo": {
+      "loading":     "Wird gespeichert …",
+      "success":     "Gespeichert",
+      "error":       "Nicht gespeichert — prüfen Sie die Verbindung",
+      "inactive":    "Noch nicht geprüft",
+      "buttonLabel": "Anfrage senden"
+    },
+    "button": {
+      "withInherit":    "inherit gesetzt",
+      "withoutInherit": "ohne inherit"
+    },
+    "row": {
+      "r1": "Stammdaten",
+      "r2": "Nachweise",
+      "r3": "Bankverbindung"
     },
     "overview": {
-      "anatomyTitle": "Anatomie",
-      "anatomyBody": "Progress besteht aus einem Track und einem Indicator, der den aktuellen Fortschritt anzeigt. Optionale Label- und Value-Elemente ergänzen den Balken.",
-      "an1": "Track — grauer Hintergrundbalken als Gesamtbreite",
-      "an2": "Indicator — farbiger Fortschrittsbalken (translateX-Animation)",
-      "an3": "Label — optionaler Beschreibungstext links über dem Balken",
-      "an4": "Value — optionale Prozentanzeige rechts über dem Balken (showValue)",
-      "an5": "size — Balkendicke: sm (4 px), md (6 px), lg (10 px)",
-      "variantsTitle": "Varianten",
-      "variantsBody": "Fünf Farbvarianten für unterschiedliche Kontexte: neutral (Standard), accent (orange), success (grün), warning (gelb), error (rot).",
-      "variant_neutral": "Neutral",
-      "variant_accent": "Accent",
-      "variant_success": "Success",
-      "variant_warning": "Warning",
-      "variant_error": "Error",
-      "sizesTitle": "Größen",
-      "sizesBody": "Drei Größen steuern die Balkendicke. md ist der Standard für die meisten Anwendungsfälle.",
-      "size_sm": "Small (sm) — 4 px",
-      "size_md": "Medium (md) — 6 px",
-      "size_lg": "Large (lg) — 10 px",
-      "showValueTitle": "Prozentzahl (showValue)",
-      "showValueBody": "showValue zeigt die aktuelle Prozentzahl rechts über dem Balken an. Kann mit label kombiniert werden.",
-      "showValueLabel": "Upload läuft..."
+      "statesTitle": "Zustände",
+      "statesBody":  "loading zeigt drei pulsierende Punkte, success ein Häkchen, error ein Kreuz, inactive bleibt ruhend. Die Farben kommen aus den Statusrollen: laufend primary-600, Erfolg green-600, Fehler red-600.",
+      "buttonTitle": "In einer Schaltfläche",
+      "buttonBody":  "In einer gefüllten Schaltfläche ist inherit Pflicht — sonst stünde teal auf teal und die Punkte wären unsichtbar. Mit inherit übernehmen Punkte und Text die Schriftfarbe der Schaltfläche. Vergleichen Sie die beiden Schaltflächen.",
+      "sizesTitle":  "Größen",
+      "sizesBody":   "sm gehört neben text-sm und in Schaltflächen, md daneben in den Fließtext.",
+      "rowTitle":    "Am Ende einer Zeile",
+      "rowBody":     "Der typische Ort: rechts in einer Zeile, die gerade gespeichert oder geprüft wird. Pro Zeile steht höchstens einer."
     },
     "usage": {
-      "title": "Wann Progress verwenden?",
-      "intro": "Progress eignet sich für Vorgänge mit bekanntem Endpunkt: Datei-Uploads, Formular-Schritte und Ladefortschritte. Der value-Prop muss immer einen konkreten 0–100-Wert haben.",
-      "whenNotTitle": "Wann nicht verwenden?",
-      "whenNotBody": "Für unbekannte Ladezeiten (Indeterminate-Zustand) ist Skeleton besser geeignet. Progress kommuniziert immer einen konkreten Fortschritt — niemals für allgemeine Ladezustände ohne Prozentwert.",
-      "doTitle": "Do",
-      "dontTitle": "Don't",
-      "do1": "label-Prop setzen, um den Kontext des Fortschritts zu erklären",
-      "do2": "variant semantisch einsetzen: success nach Abschluss, error bei Fehlern",
-      "do3": "showValue für Upload-Dialoge verwenden, wo der genaue Prozentsatz hilfreich ist",
-      "dont1": "Keinen Progress für Indeterminate-Zustände verwenden — Skeleton nutzen",
-      "dont2": "value nicht animiert erhöhen ohne echten Fortschritt dahinter",
-      "dont3": "Nicht mehrere Progress-Balken ohne Labels nebeneinander platzieren",
-      "doNote": "Progress für messbare, kontrollierte Fortschritte.",
-      "dontNote": "Kein Progress für Ladezustände ohne konkreten Prozentwert."
+      "whenTitle":    "Wann Inline Loading",
+      "whenBody":     "In einer Schaltfläche während des Absendens, neben einem Feld, das geprüft wird, am Ende einer Zeile, die gespeichert wird. Für ganze Bereiche ist es Loading, für bekannten Fortschritt die ProgressBar.",
+      "flowTitle":    "Ablauf der Zustände",
+      "flowBody":     "loading führt zu success oder error. Der Erfolgszustand bleibt kurz stehen — etwa zwei Sekunden — und verschwindet dann. Ein Fehler bleibt, bis die Person etwas tut. Wo der Vorgang noch nicht begonnen hat, steht inactive.",
+      "labelTitle":   "Label",
+      "labelBody":    "Es beschreibt den Vorgang, nicht den Zustand: „Wird gespeichert …“, danach „Gespeichert“. Kein „Erfolg“, kein Ausrufezeichen. Ein Fehler nennt die Ursache und den nächsten Schritt.",
+      "inheritTitle": "inherit",
+      "inheritBody":  "In gefüllten Schaltflächen zwingend. In einer Schaltfläche bleibt das ursprüngliche Label besser stehen und die Punkte treten daneben — so ändert die Schaltfläche ihre Breite nicht.",
+      "doDontTitle":  "Einsatz",
+      "doTitle":      "Do",
+      "dontTitle":    "Don't",
+      "do1":          "Den Vorgang benennen, nicht den Zustand",
+      "do2":          "In gefüllten Schaltflächen inherit setzen",
+      "do3":          "Den Erfolgszustand nach kurzer Zeit wieder ausblenden",
+      "dont1":        "Für Ladezeiten ganzer Bereiche verwenden",
+      "dont2":        "Den Erfolgszustand dauerhaft stehen lassen",
+      "dont3":        "Mehrere Inline Loadings gleichzeitig in derselben Zeile zeigen"
     },
     "code": {
-      "title": "Code-Beispiele",
-      "baseTitle": "Basis-Progress",
-      "baseDesc": "Minimale Verwendung — value ist der einzige Pflicht-Prop (0–100).",
-      "variantsTitle": "Alle Varianten",
-      "variantsDesc": "Fünf Varianten mit label-Prop für kontextuelle Farben.",
-      "sizesTitle": "Größen",
-      "sizesDesc": "sm / md (Standard) / lg — steuern die Balkendicke.",
-      "showValueTitle": "Mit label und showValue",
-      "showValueDesc": "Kombiniert Label (links) und Prozentzahl (rechts) über dem Balken."
+      "title":       "Code-Beispiele",
+      "basicTitle":  "Zustände",
+      "buttonTitle": "In einer Schaltfläche",
+      "flowTitle":   "Ablauf",
+      "sizeTitle":   "Größen"
     },
     "a11y": {
-      "title": "Accessibility",
-      "intro": "Radix setzt role='progressbar', aria-valuenow, aria-valuemin und aria-valuemax automatisch. Für Screen-Reader ist ein beschreibendes Label zwingend erforderlich.",
-      "roleTitle": "role=\"progressbar\"",
-      "roleBody": "Radix UI setzt role='progressbar' automatisch auf dem Root-Element. Kein manuelles ARIA-Attribut nötig.",
-      "ariaTitle": "aria-valuenow / min / max",
-      "ariaBody": "Radix setzt aria-valuenow={value}, aria-valuemin={0}, aria-valuemax={100} automatisch. Der Screen-Reader liest z. B. '75 %'.",
-      "labelTitle": "label oder aria-label ist Pflicht",
-      "labelBody": "Ohne label-Prop muss aria-label auf dem Progress gesetzt werden, damit Screen-Reader den Kontext verstehen: 'Upload läuft: 75 %'.",
-      "colorTitle": "Farbe ist nicht alleiniger Indikator",
-      "colorBody": "Die Variant-Farbe (grün/rot/gelb) allein reicht nicht aus. Der label-Text muss den Zustand auch sprachlich kommunizieren — WCAG 1.4.1 konform."
+      "liveTitle":  "Rolle und Ansage",
+      "liveBody":   "role=\"status\" mit aria-live=\"polite\"; im Ladezustand zusätzlich aria-busy. Der Wechsel wird damit angesagt, ohne den Ablauf zu unterbrechen.",
+      "dotsTitle":  "Die Punkte",
+      "dotsBody":   "Sie tragen aria-hidden. Screenreader lesen also nur den Text, nicht die Animation.",
+      "colorTitle": "Farbe allein trägt nichts",
+      "colorBody":  "Grün und Rot unterscheiden Erfolg und Fehler sichtbar, das Häkchen und das Kreuz unterscheiden sie in der Form, und das Label sagt es in Worten."
+    }
+  },
+
+  "progressBar": {
+    "page": {
+      "title":       "Progress Bar",
+      "description": "Zeigt den Fortschritt eines Vorgangs. Ohne Wert läuft die Bahn unbestimmt weiter — für Vorgänge, deren Dauer nicht bekannt ist."
+    },
+    "demo": {
+      "label":       "Unterlagen werden übertragen",
+      "helper":      "2 von 6 Dateien",
+      "checking":    "Verbindung wird geprüft",
+      "storage":     "Speicherplatz",
+      "steps":       "Antrag",
+      "stepsHelper": "Schritt 3 von 6",
+      "status": {
+        "normal":  "Die Übertragung läuft.",
+        "success": "Alle Unterlagen wurden übertragen.",
+        "warning": "Der Speicherplatz reicht noch für etwa zwei Wochen.",
+        "error":   "Die Verbindung wurde unterbrochen. Starten Sie die Übertragung erneut."
+      }
+    },
+    "overview": {
+      "anatomyTitle":       "Aufbau",
+      "anatomyBody":        "Über der Bahn stehen Beschriftung und Prozentwert, darunter bei Bedarf ein Satz zum Zustand:",
+      "an1":                "label benennt den Vorgang, helper ergänzt ihn — etwa „2 von 6 Dateien“",
+      "an2":                "showValue setzt den Prozentwert rechts in DM Mono mit Tabellenziffern",
+      "an3":                "statusText steht unter der Bahn und trägt bei Erfolg und Fehler ein Statusicon",
+      "indeterminateTitle": "Unbestimmt",
+      "indeterminateBody":  "Ohne value läuft ein Abschnitt der Bahn endlos durch. Das ist der Zustand für Vorgänge, deren Dauer sich nicht abschätzen lässt — ein Prozentwert erscheint dann nicht.",
+      "statusTitle":        "Status",
+      "statusBody":         "normal führt die Bahn in primary-600, success in grün, warning in amber, error in rot. Bei success und error trägt der Satz darunter zusätzlich ein Icon.",
+      "sizesTitle":         "Größen",
+      "sizesBody":          "standard misst 8 px, thin 4 px. Die dünne Form gehört an den Kopf einer Karte oder an den oberen Rand eines Bereichs, meist ohne Beschriftung.",
+      "maxTitle":           "Bezugsgröße",
+      "maxBody":            "max verschiebt den Bezug: bei max={6} entsprechen 3 genau der Hälfte. So lässt sich ein Fortschritt in Schritten führen, ohne ihn selbst in Prozent umzurechnen."
+    },
+    "usage": {
+      "whenTitle":          "Wann Progress Bar",
+      "whenBody":           "Für Vorgänge mit bekanntem Fortschritt: Übertragungen, Verarbeitungen, mehrteilige Abläufe. Ist der Fortschritt unbekannt, ist es ein Spinner; geht es um Schritte, die die Person selbst durchläuft, ist es der Progress Indicator.",
+      "indeterminateTitle": "Unbestimmt statt geschätzt",
+      "indeterminateBody":  "Lieber die unbestimmte Bahn als ein erfundener Prozentwert. Eine Anzeige, die bei 90 Prozent stehen bleibt, verliert das Vertrauen für alle folgenden Vorgänge.",
+      "labelTitle":         "Beschriftung",
+      "labelBody":          "Das Label benennt den Vorgang, nicht die Anzeige. Fehlt es, braucht die Bahn ein ariaLabel — sonst bleibt sie für Screenreader namenlos.",
+      "statusTitle":        "Abschluss",
+      "statusBody":         "Bei Erfolg und Fehler sagt der Satz unter der Bahn, was geschehen ist und was jetzt gilt. Ein Fehler nennt die Ursache und den nächsten Schritt.",
+      "doDontTitle":        "Einsatz",
+      "doTitle":            "Do",
+      "dontTitle":          "Don't",
+      "do1":                "Den Vorgang über der Bahn benennen",
+      "do2":                "Bei unbekannter Dauer die unbestimmte Form nutzen",
+      "do3":                "Den Abschluss mit einem Satz unter der Bahn erklären",
+      "dont1":              "Einen Prozentwert schätzen, den man nicht kennt",
+      "dont2":              "Die Bahn ohne Beschriftung und ohne ariaLabel zeigen",
+      "dont3":              "Den Fortschritt rückwärts laufen lassen"
+    },
+    "code": {
+      "title":              "Code-Beispiele",
+      "basicTitle":         "Basis",
+      "indeterminateTitle": "Unbestimmt",
+      "statusTitle":        "Status",
+      "sizeTitle":          "Größe und Bezug"
+    },
+    "a11y": {
+      "roleTitle":  "Rolle und Werte",
+      "roleBody":   "Die Bahn ist role=\"progressbar\" mit aria-valuemin, aria-valuemax und aria-valuenow. Im unbestimmten Zustand entfallen die Werte — genau daran erkennen Screenreader, dass der Fortschritt unbekannt ist.",
+      "labelTitle": "Beschriftung",
+      "labelBody":  "Ein Text-label wird automatisch zur Beschriftung der Bahn. Steht dort kein Text oder ein zusammengesetzter Knoten, ist ariaLabel nötig.",
+      "colorTitle": "Farbe allein trägt nichts",
+      "colorBody":  "Der Status ist zusätzlich am Prozentwert, am Statussatz und bei Erfolg und Fehler am Icon erkennbar."
+    }
+  },
+
+  "progressIndicator": {
+    "page": {
+      "title":       "Progress Indicator",
+      "description": "Führt durch die Schritte einer Abfolge und zeigt, was erledigt ist, wo man steht und was noch kommt."
+    },
+    "demo": {
+      "ariaLabel": "Antrag",
+      "s1":        "Angaben",
+      "s1Sub":     "Name und Anschrift",
+      "s2":        "Nachweise",
+      "s2Sub":     "Zulassung und Haftpflicht",
+      "s3":        "Prüfung",
+      "s3Sub":     "Dauert bis zu zwei Werktage",
+      "s4":        "Abschluss",
+      "errorSub":  "Die Haftpflicht fehlt",
+      "clickHint": "Erledigte Schritte sind hier anklickbar — der aktive Schritt wandert mit."
+    },
+    "overview": {
+      "statesTitle":      "Zustände",
+      "statesBody":       "current ist 0-basiert; alles davor gilt als erledigt. Vier Zustände sind möglich:",
+      "st1":              "done — erledigt, mit Häkchen; die Linie danach ist gefüllt",
+      "st2":              "active — der Schritt, an dem die Person gerade steht, mit aria-current",
+      "st3":              "pending — noch offen, mit der Nummer des Schritts",
+      "st4":              "error — fehlgeschlagen, mit Kreuz; muss über status gesetzt werden",
+      "orientationTitle": "Ausrichtung",
+      "orientationBody":  "Horizontal für kurze Titel und breite Flächen, vertikal bei langen Titeln, ausführlichen Zweitzeilen oder in schmalen Spalten. Die Linie läuft in beiden Fällen vom erledigten zum nächsten Schritt.",
+      "errorTitle":       "Fehlgeschlagener Schritt",
+      "errorBody":        "Ein Fehler lässt sich nicht aus current ableiten und wird deshalb über status am Schritt gesetzt. Die Zweitzeile sagt, was fehlt.",
+      "clickTitle":       "Zurückspringen",
+      "clickBody":        "Mit onStepClick werden erledigte Schritte anklickbar — sinnvoll, wenn die Person eine frühere Angabe ändern darf. clickableDone={false} schaltet das ab, ohne den Rückruf zu entfernen."
+    },
+    "usage": {
+      "whenTitle":   "Wann Progress Indicator",
+      "whenBody":    "Für Abfolgen, die die Person selbst durchläuft: Anträge, Einrichtung, mehrteilige Formulare. Für den Fortschritt eines Vorgangs, der von selbst läuft, ist es die ProgressBar; für gleichrangige Ansichten sind es Tabs.",
+      "countTitle":  "Anzahl der Schritte",
+      "countBody":   "Drei bis fünf Schritte. Bei zwei lohnt die Anzeige nicht, bei mehr als fünf verliert sie ihren Zweck — dann Schritte zusammenfassen.",
+      "errorTitle":  "Fehler zeigen",
+      "errorBody":   "Ein fehlgeschlagener Schritt bleibt sichtbar und sagt in der Zweitzeile, was fehlt. Ihn stillschweigend auf offen zurückzusetzen, verbirgt die Ursache.",
+      "backTitle":   "Zurückspringen erlauben",
+      "backBody":    "Erledigte Schritte anklickbar zu machen, ist nur dann richtig, wenn die Person die Angabe tatsächlich noch ändern darf. Sonst führt der Klick ins Leere.",
+      "doDontTitle": "Einsatz",
+      "doTitle":     "Do",
+      "dontTitle":   "Don't",
+      "do1":         "Drei bis fünf Schritte mit kurzen, gleichartigen Titeln",
+      "do2":         "Optionale Schritte als optional kennzeichnen",
+      "do3":         "Fehler am Schritt selbst zeigen, mit Ursache in der Zweitzeile",
+      "dont1":       "Mehr als fünf Schritte zeigen",
+      "dont2":       "Erledigte Schritte anklickbar machen, ohne dass etwas änderbar wäre",
+      "dont3":       "Den Fortschritt eines automatisch laufenden Vorgangs damit abbilden"
+    },
+    "code": {
+      "title":         "Code-Beispiele",
+      "basicTitle":    "Basis",
+      "verticalTitle": "Vertikal",
+      "errorTitle":    "Fehlgeschlagener Schritt",
+      "clickTitle":    "Zurückspringen"
+    },
+    "a11y": {
+      "rolesTitle":   "Rollen",
+      "rolesBody":    "Die Abfolge ist role=\"list\" mit einem role=\"listitem\" je Schritt und trägt ein ariaLabel. Anklickbare Schritte sind echte Schaltflächen; der Fokusring liegt auf dem Kreis.",
+      "currentTitle": "Aktueller Schritt",
+      "currentBody":  "Der aktive Schritt trägt aria-current=\"step\". Screenreader können damit ansagen, an welcher Stelle der Abfolge die Person steht.",
+      "colorTitle":   "Farbe allein trägt nichts",
+      "colorBody":    "Erledigte Schritte tragen ein Häkchen, fehlgeschlagene ein Kreuz, offene ihre Nummer. Der Zustand ist damit auch ohne Farbe erkennbar."
     }
   },
   "avatar": {
@@ -2274,65 +2413,6 @@
       "ariaBody": "Wenn Avatar nur Initialen zeigt und kein umgebender Kontext den Namen nennt, aria-label='Alice Jones' auf dem Avatar setzen.",
       "overflowTitle": "AvatarGroup '+N' beschriften",
       "overflowBody": "Der Overflow-Zähler '+N' braucht aria-label='N weitere Teilnehmer', damit Screen-Reader die Bedeutung verstehen."
-    }
-  },
-  "skeleton": {
-    "page": {
-      "description": "Lade-Platzhalter für Content, der noch nicht verfügbar ist."
-    },
-    "overview": {
-      "anatomyTitle": "Anatomie",
-      "anatomyBody": "Skeleton ist ein pulsierender Platzhalter, der die Form des erwarteten Inhalts nachahmt. Drei Varianten decken Text, Kreise (Avatar) und Rechtecke (Bilder/Cards) ab.",
-      "an1": "variant — text (abgerundet-klein), circle (rund), rect (abgerundet-mittel)",
-      "an2": "width / height — Breite und Höhe als Zahl (px) oder CSS-String ('60%')",
-      "an3": "animate-pulse — pulsierende Animation via Tailwind (immer aktiv)",
-      "an4": "aria-hidden='true' — Skeleton ist für Screen-Reader unsichtbar (in Komponente gesetzt)",
-      "variantsTitle": "Varianten",
-      "variantsBody": "text für Absätze, circle für Avatar-Platzhalter, rect für Bilder und Karten-Blöcke.",
-      "variantText": "text",
-      "variantCircle": "circle",
-      "variantRect": "rect",
-      "cardTitle": "SkeletonCard",
-      "cardBody": "SkeletonCard ist eine vorkonfigurierte Komposition: Avatar + 2 Textzeilen, Rect-Block und 3 abfallende Textzeilen — max-w-[360px]."
-    },
-    "usage": {
-      "title": "Wann Skeleton verwenden?",
-      "intro": "Skeleton eignet sich für initiales Laden von Content, dessen Struktur bekannt ist: Listen, Cards, Profil-Seiten. Der Platzhalter soll der Form des echten Inhalts möglichst nahekommen.",
-      "whenNotTitle": "Wann nicht verwenden?",
-      "whenNotBody": "Für Fehler- und Leer-Zustände sind Alert und EmptyState besser geeignet. Skeleton signalisiert 'lädt gleich' — nicht 'nichts gefunden' oder 'Fehler aufgetreten'.",
-      "doTitle": "Do",
-      "dontTitle": "Don't",
-      "do1": "Skeleton-Formen an den echten Content anpassen (Größe, Anzahl der Zeilen)",
-      "do2": "SkeletonCard für Card-Layouts verwenden — spart Kompositions-Aufwand",
-      "do3": "aria-live='polite' außerhalb des Skeletons setzen, um Ladeende anzukündigen",
-      "dont1": "Keinen Skeleton für bekannte Fehler- oder Leer-Zustände verwenden",
-      "dont2": "Skeleton nicht ohne Zeitbegrenzung anzeigen — nach Timeout Fehlerzustand zeigen",
-      "dont3": "Keine Skeleton-Animationen für Nutzer mit prefers-reduced-motion ignorieren",
-      "doNote": "Skeleton für Ladevorgänge mit bekannter Content-Struktur.",
-      "dontNote": "Kein Skeleton als dauerhafter Zustand ohne Timeout-Logik."
-    },
-    "code": {
-      "title": "Code-Beispiele",
-      "textTitle": "Text-Skeleton",
-      "textDesc": "Abfallende Textzeilen simulieren einen Absatz — width absteigend für natürlichere Optik.",
-      "circleTitle": "Circle-Skeleton",
-      "circleDesc": "Runde Platzhalter für Avatar-Elemente in verschiedenen Größen.",
-      "rectTitle": "Rect-Skeleton",
-      "rectDesc": "Rechteckige Platzhalter für Bilder, Hero-Bereiche und Card-Blöcke.",
-      "cardTitle": "SkeletonCard",
-      "cardDesc": "Fertige Komposition ohne Props — für Standard-Card-Layouts.",
-      "compositeTitle": "Komposition: Listenzeile",
-      "compositeDesc": "Einzelne Skeleton-Elemente zu einer Listenzeile (Circle + 2 Textzeilen) kombinieren."
-    },
-    "a11y": {
-      "title": "Accessibility",
-      "intro": "Skeleton-Elemente sind rein visuell — aria-hidden='true' ist bereits in der Komponente gesetzt. Screen-Reader ignorieren sie automatisch. Für die Ladeankündigung ist aria-live außerhalb des Skeletons nötig.",
-      "hiddenTitle": "aria-hidden='true' (bereits gesetzt)",
-      "hiddenBody": "Die Skeleton-Komponente setzt aria-hidden='true' intern. Kein manuelles ARIA-Attribut nötig — Screen-Reader überspringen den Platzhalter.",
-      "liveTitle": "Ladeende via aria-live ankündigen",
-      "liveBody": "Ein Container mit aria-live='polite' außerhalb des Skeletons kündigt das Ende des Ladevorgangs an: z. B. 'Inhalte geladen'. So werden Screen-Reader-Nutzer informiert.",
-      "motionTitle": "prefers-reduced-motion beachten",
-      "motionBody": "animate-pulse animiert den Skeleton. Nutzer mit prefers-reduced-motion haben in ihrem OS Animationen reduziert. Tailwind's animate-pulse respektiert dieses Setting automatisch in modernen Browsern."
     }
   },
   "impressum": {
@@ -2400,35 +2480,6 @@
       "intro": "Der DatePicker basiert auf Radix UI Popover und react-day-picker mit vollständiger Tastaturnavigation.",
       "keyboardTitle": "Tastaturinteraktion",
       "keyboardBody": "Enter/Space öffnet das Popover. Im Kalender navigieren Pfeiltasten zwischen den Tagen, Enter wählt ein Datum aus, Escape schließt das Popover."
-    }
-  },
-  "loadingIndicator": {
-    "page": {
-      "title": "Loading Indicator",
-      "description": "Visuelle Anzeige für laufende Hintergrundprozesse in drei Varianten"
-    },
-    "overview": {
-      "anatomyTitle": "Anatomie",
-      "anatomyBody": "Der LoadingIndicator ist eine rein visuelle Komponente ohne interaktive Elemente. Er signalisiert dem Nutzer, dass eine Operation im Hintergrund läuft.",
-      "variantsTitle": "Varianten",
-      "variantsBody": "Drei Varianten stehen zur Verfügung: Spinner (rotierende Kreislinie), Bar (pulsierende horizontale Leiste) und Dots (drei hüpfende Punkte)."
-    },
-    "usage": {
-      "title": "Verwendung",
-      "intro": "Verwende einen Loading Indicator, wenn eine Operation länger als 300ms dauert. Bei sehr kurzen Operationen ist kein Indicator nötig.",
-      "variantGuideTitle": "Wann welche Variante?",
-      "variantGuideBody": "Spinner eignet sich für allgemeine Ladezustände. Bar passt zu Fortschrittsanzeigen in Formularen. Dots eignet sich für Inline-Ladezustände in Text oder Schaltflächen."
-    },
-    "code": {
-      "title": "Code",
-      "basicTitle": "Alle Varianten",
-      "basicDesc": "Wähle die Variante über die variant-Prop."
-    },
-    "a11y": {
-      "title": "Barrierefreiheit",
-      "intro": "Füge dem Loading Indicator ein aria-label hinzu, damit Screen-Reader den Ladezustand ankündigen können.",
-      "motionTitle": "Reduzierte Bewegung",
-      "motionBody": "Tailwinds animate-* Klassen respektieren das prefers-reduced-motion-Setting des Betriebssystems automatisch."
     }
   },
   "uploadField": {

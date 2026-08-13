@@ -33,13 +33,13 @@ import MenuButtonsPage from './pages/MenuButtonsPage'
 import ListPage          from './pages/ListPage'
 import ContainedListPage from './pages/ContainedListPage'
 import PaginationPage    from './pages/PaginationPage'
-import StatsPage       from './pages/StatsPage'
-import FeedbackPage    from './pages/FeedbackPage'
 import AvatarPage      from './pages/AvatarPage'
-import SkeletonPage    from './pages/SkeletonPage'
+import LoadingPage           from './pages/LoadingPage'
+import InlineLoadingPage     from './pages/InlineLoadingPage'
+import ProgressBarPage       from './pages/ProgressBarPage'
+import ProgressIndicatorPage from './pages/ProgressIndicatorPage'
 import TooltipPage            from './pages/TooltipPage'
 import SliderPage             from './pages/SliderPage'
-import LoadingIndicatorPage   from './pages/LoadingIndicatorPage'
 import UploadFieldPage        from './pages/UploadFieldPage'
 import DatePickerPage         from './pages/DatePickerPage'
 import WhatIsMedoPage   from './pages/WhatIsMedoPage'
@@ -91,13 +91,13 @@ function AppContent() {
         <Route path="/list"           element={<ListPage />} />
         <Route path="/contained-list" element={<ContainedListPage />} />
         <Route path="/pagination"     element={<PaginationPage />} />
-        <Route path="/stats"      element={<StatsPage />} />
-        <Route path="/feedback"   element={<FeedbackPage />} />
         <Route path="/avatar"     element={<AvatarPage />} />
-        <Route path="/skeleton"    element={<SkeletonPage />} />
+        <Route path="/loading"             element={<LoadingPage />} />
+        <Route path="/inline-loading"      element={<InlineLoadingPage />} />
+        <Route path="/progress-bar"        element={<ProgressBarPage />} />
+        <Route path="/progress-indicator"  element={<ProgressIndicatorPage />} />
         <Route path="/tooltip"            element={<TooltipPage />} />
         <Route path="/slider"             element={<SliderPage />} />
-        <Route path="/loading-indicator"  element={<LoadingIndicatorPage />} />
         <Route path="/upload-field"       element={<UploadFieldPage />} />
         <Route path="/date-picker"        element={<DatePickerPage />} />
         <Route path="/about"      element={<WhatIsMedoPage />} />
