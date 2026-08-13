@@ -1026,7 +1026,7 @@
       "iconTitle":     "Eigenes Glyph",
       "iconBody":      "Das Standard-Glyph der Statusart lässt sich ersetzen, wenn ein konkreteres Symbol die Meldung schneller erklärt. Die Farbrolle bleibt dabei die der Statusart.",
       "toastTitle":    "Toast",
-      "toastBody":     "ToastHost wird einmal pro Anwendung eingehängt und nimmt den Stapel oben rechts auf; toast() löst von überall aus. Erfolg und Hinweis blenden nach 5 Sekunden aus, Fehler bleiben stehen, bis sie geschlossen werden."
+      "toastBody":     "ToastHost wird einmal pro Anwendung eingehängt und nimmt den Stapel oben rechts auf; toast() löst von überall aus. Erfolg und Hinweis blenden nach 5 Sekunden aus, Fehler bleiben stehen, bis sie geschlossen werden. Die Betonungsstufen gehören allein zum Inline-Banner: Ein Toast schwebt über wechselndem Inhalt und bleibt deshalb immer eine weiße Karte — seine Statusfarbe tragen der Rahmen und die Kante links."
     },
     "usage": {
       "whichTitle": "Inline oder Toast",

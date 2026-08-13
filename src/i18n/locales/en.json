@@ -1026,7 +1026,7 @@
       "iconTitle":     "Custom glyph",
       "iconBody":      "The default glyph of the kind can be replaced when a more concrete symbol explains the message faster. The colour role stays that of the kind.",
       "toastTitle":    "Toast",
-      "toastBody":     "ToastHost is mounted once per application and holds the stack in the top right; toast() fires from anywhere. Success and info fade after 5 seconds, errors stay until closed."
+      "toastBody":     "ToastHost is mounted once per application and holds the stack in the top right; toast() fires from anywhere. Success and info fade after 5 seconds, errors stay until closed. The emphasis levels belong to the inline banner alone: a toast floats above changing content and therefore stays a white card — its status colour is carried by the border and the left edge."
     },
     "usage": {
       "whichTitle": "Inline or toast",
