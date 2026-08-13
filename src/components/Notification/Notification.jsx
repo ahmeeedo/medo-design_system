@@ -143,7 +143,9 @@ export function ToastHost({ label = 'Benachrichtigungen' }) {
             key={t.id}
             className="medo-toast"
             role={t.kind === 'error' ? 'alert' : 'status'}
-            style={{ borderLeftColor: 'var(' + set.accent + ')' }}
+            /* Der Rahmen trägt die Statusfarbe, wie in components/Notification.dc.html
+               festgelegt; der Referenzcode ließ ihn neutral. */
+            style={{ borderColor: 'var(' + set.border + ')', borderLeftColor: 'var(' + set.accent + ')' }}
           >
             <Icon
               name={t.icon || set.icon}

@@ -1511,6 +1511,7 @@
       "fieldReason":           "Grund der Absage",
       "fieldReasonPlaceholder": "Kurz und sachlich",
       "secondaryLabel":        "Mit Nebenaktion",
+      "secondaryHelp":         "Termine lassen sich bis 24 Stunden vorher ohne Rückfrage verschieben.",
       "secondary":             "Hilfe zu Terminen",
       "noFooterLabel":         "Ohne Fuß",
       "noFooterTitle":         "Sprechzeiten am Freitag",

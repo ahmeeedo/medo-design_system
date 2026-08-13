@@ -5,7 +5,6 @@ import { CodeBlock } from '../docs/CodeBlock'
 import { Modal, Button, TextInput } from '../components'
 
 const PROSE = 'text-[var(--medo-text-muted)] [font-family:var(--medo-font-sans)] [font-size:var(--medo-text-base)] [line-height:var(--medo-leading-relaxed)]'
-const CAPTION = '[font-family:var(--medo-font-mono)] [font-size:var(--medo-text-xs)] text-[var(--medo-text-muted)]'
 const ROW = 'flex flex-wrap items-center gap-[var(--medo-space-sm)] mt-[var(--medo-space-md)]'
 const LIST = `${PROSE} list-disc pl-[var(--medo-space-lg)] space-y-[var(--medo-space-3xs)]`
 
@@ -56,6 +55,38 @@ function ModalDemo({ label, variant = 'secondary', ...modalProps }) {
   )
 }
 
+/* Die Nebenaktion ist eine echte Aktion, kein Text — deshalb mit sichtbarer Wirkung. */
+function SecondaryDemo() {
+  const { t } = useTranslation()
+  const [open, setOpen] = useState(false)
+  const [helpShown, setHelpShown] = useState(false)
+
+  return (
+    <>
+      <Button variant="secondary" onClick={() => { setHelpShown(false); setOpen(true) }}>
+        {t('modal.demo.secondaryLabel')}
+      </Button>
+      <Modal
+        open={open}
+        onClose={() => setOpen(false)}
+        onConfirm={() => setOpen(false)}
+        title={t('modal.demo.moveTitle')}
+        confirmLabel={t('modal.demo.moveConfirm')}
+        secondary={
+          <Button variant="ghost" size="sm" icon="help" onClick={() => setHelpShown(true)}>
+            {t('modal.demo.secondary')}
+          </Button>
+        }
+      >
+        <p>{t('modal.demo.moveBody')}</p>
+        {helpShown ? (
+          <p className="mt-[var(--medo-space-sm)] text-[var(--medo-text)]">{t('modal.demo.secondaryHelp')}</p>
+        ) : null}
+      </Modal>
+    </>
+  )
+}
+
 export default function ModalPage() {
   const { t } = useTranslation()
 
@@ -76,7 +107,11 @@ export default function ModalPage() {
                 title={t('modal.demo.moveTitle')}
                 subtitle={values.subtitle ? t('modal.demo.moveSubtitle') : undefined}
                 confirmLabel={t('modal.demo.moveConfirm')}
-                secondary={values.secondary ? <span className={CAPTION}>{t('modal.demo.secondary')}</span> : undefined}
+                secondary={
+                  values.secondary ? (
+                    <Button variant="ghost" size="sm" icon="help">{t('modal.demo.secondary')}</Button>
+                  ) : undefined
+                }
               >
                 {values.body ? t('modal.demo.moveBody') : undefined}
               </ModalDemo>
@@ -174,15 +209,7 @@ export default function ModalPage() {
             <Content>
               <p className={PROSE}>{t('modal.overview.footerBody')}</p>
               <div className={ROW}>
-                <ModalDemo
-                  label={t('modal.demo.secondaryLabel')}
-                  size="md"
-                  title={t('modal.demo.moveTitle')}
-                  confirmLabel={t('modal.demo.moveConfirm')}
-                  secondary={<span className={CAPTION}>{t('modal.demo.secondary')}</span>}
-                >
-                  {t('modal.demo.moveBody')}
-                </ModalDemo>
+                <SecondaryDemo />
                 <ModalDemo
                   label={t('modal.demo.noFooterLabel')}
                   size="sm"

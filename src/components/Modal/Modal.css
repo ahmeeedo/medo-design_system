@@ -29,7 +29,7 @@
 .medo-mod--lg{ max-width: 760px; }
 .medo-mod__head{
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: var(--medo-space-sm);
   padding: 24px 24px 0;
 }
@@ -69,6 +69,8 @@
   line-height: 1.6;
   color: var(--medo-text-subtle);
 }
+/* Ohne Fuß fehlt sonst der untere Abstand — der Inhalt klebte am Rand. */
+.medo-mod__body:last-child{ padding-bottom: 24px; }
 .medo-mod__foot{
   display: flex;
   align-items: center;
