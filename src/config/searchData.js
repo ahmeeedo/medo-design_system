@@ -37,8 +37,7 @@ export const searchData = [
   ...entries('toggle',     '/toggle',     'Toggle, Checkbox & Radio',COMPONENT_TABS),
   ...entries('badges',     '/badges',     'Badges & Tags',           COMPONENT_TABS),
   ...entries('alerts',     '/alerts',     'Alerts',                  COMPONENT_TABS),
-  ...entries('cards',      '/cards',      'Cards',                   COMPONENT_TABS),
-  ...entries('tables',     '/tables',     'Tables',                  COMPONENT_TABS),
+  ...entries('data-table', '/data-table', 'DataTable',               COMPONENT_TABS),
   ...entries('tabs',       '/tabs',       'Tabs',                    COMPONENT_TABS),
   ...entries('navigation', '/navigation', 'Navigation',              COMPONENT_TABS),
   ...entries('overlays',   '/overlays',   'Modal',                   COMPONENT_TABS),
@@ -47,7 +46,6 @@ export const searchData = [
   ...entries('lists',      '/lists',      'Lists',                   COMPONENT_TABS),
   ...entries('stats',      '/stats',      'Stats / KPI',             COMPONENT_TABS),
   ...entries('feedback',   '/feedback',   'Feedback / Progress',     COMPONENT_TABS),
-  ...entries('avatar',     '/avatar',     'Avatar',                  COMPONENT_TABS),
   ...entries('skeleton',   '/skeleton',   'Skeleton',                COMPONENT_TABS),
   ...sectionData,
 ]

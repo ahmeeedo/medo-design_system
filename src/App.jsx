@@ -19,8 +19,7 @@ import CheckboxPage    from './pages/CheckboxPage'
 import RadioPage       from './pages/RadioPage'
 import TagPage         from './pages/TagPage'
 import NotificationPage from './pages/NotificationPage'
-import CardsPage       from './pages/CardsPage'
-import TablesPage      from './pages/TablesPage'
+import DataTablePage   from './pages/DataTablePage'
 import TabsPage        from './pages/TabsPage'
 import ContentSwitcherPage from './pages/ContentSwitcherPage'
 import BreadcrumbPage      from './pages/BreadcrumbPage'
@@ -34,14 +33,13 @@ import MenuButtonsPage from './pages/MenuButtonsPage'
 import ListPage          from './pages/ListPage'
 import ContainedListPage from './pages/ContainedListPage'
 import PaginationPage    from './pages/PaginationPage'
-import AvatarPage      from './pages/AvatarPage'
 import LoadingPage           from './pages/LoadingPage'
 import InlineLoadingPage     from './pages/InlineLoadingPage'
 import ProgressBarPage       from './pages/ProgressBarPage'
 import ProgressIndicatorPage from './pages/ProgressIndicatorPage'
 import TooltipPage            from './pages/TooltipPage'
 import SliderPage             from './pages/SliderPage'
-import UploadFieldPage        from './pages/UploadFieldPage'
+import FileUploaderPage       from './pages/FileUploaderPage'
 import DatePickerPage         from './pages/DatePickerPage'
 import WhatIsMedoPage   from './pages/WhatIsMedoPage'
 import ReleasesPage     from './pages/ReleasesPage'
@@ -78,8 +76,7 @@ function AppContent() {
         <Route path="/radio"      element={<RadioPage />} />
         <Route path="/tag"        element={<TagPage />} />
         <Route path="/notification" element={<NotificationPage />} />
-        <Route path="/cards"      element={<CardsPage />} />
-        <Route path="/tables"     element={<TablesPage />} />
+        <Route path="/data-table" element={<DataTablePage />} />
         <Route path="/tabs"       element={<TabsPage />} />
         <Route path="/content-switcher" element={<ContentSwitcherPage />} />
         <Route path="/breadcrumb"       element={<BreadcrumbPage />} />
@@ -93,14 +90,13 @@ function AppContent() {
         <Route path="/list"           element={<ListPage />} />
         <Route path="/contained-list" element={<ContainedListPage />} />
         <Route path="/pagination"     element={<PaginationPage />} />
-        <Route path="/avatar"     element={<AvatarPage />} />
         <Route path="/loading"             element={<LoadingPage />} />
         <Route path="/inline-loading"      element={<InlineLoadingPage />} />
         <Route path="/progress-bar"        element={<ProgressBarPage />} />
         <Route path="/progress-indicator"  element={<ProgressIndicatorPage />} />
         <Route path="/tooltip"            element={<TooltipPage />} />
         <Route path="/slider"             element={<SliderPage />} />
-        <Route path="/upload-field"       element={<UploadFieldPage />} />
+        <Route path="/file-uploader"      element={<FileUploaderPage />} />
         <Route path="/date-picker"        element={<DatePickerPage />} />
         <Route path="/about"      element={<WhatIsMedoPage />} />
         <Route path="/releases"   element={<ReleasesPage />} />

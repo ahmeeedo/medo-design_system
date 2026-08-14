@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-export function UploadField({ variant = 'default' }) {
+export function LegacyUploadField({ variant = 'default' }) {
   const { t } = useTranslation()
   const inputRef = useRef(null)
   const [isDragging, setIsDragging] = useState(false)

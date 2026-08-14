@@ -24,8 +24,7 @@
       "radio": "Radio",
       "tag": "Tag",
       "notification": "Notification",
-      "cards": "Cards",
-      "tables": "Tables",
+      "dataTable": "DataTable",
       "tabs": "Tabs",
       "contentSwitcher": "Content Switcher",
       "breadcrumb":      "Breadcrumb",
@@ -39,14 +38,13 @@
       "list":          "List",
       "containedList": "Contained List",
       "pagination":    "Pagination",
-      "avatar":     "Avatar",
       "loading":            "Loading",
       "inlineLoading":      "Inline Loading",
       "progressBar":        "Progress Bar",
       "progressIndicator":  "Progress Indicator",
       "tooltip":           "Tooltip",
       "slider":            "Slider",
-      "uploadField":       "Upload Field",
+      "fileUploader":      "FileUploader",
       "datePicker":        "Date Picker",
       "whatIsMedo":        "Was ist med.o?",
       "releases":          "Releases"
@@ -1063,135 +1061,79 @@
       "timeBody":   "Fünf Sekunden reichen für einen kurzen Satz. Alles, was länger zum Lesen braucht, gehört inline auf die Seite; Fehler blenden deshalb gar nicht erst aus."
     }
   },
-  "cards": {
-    "page": {
-      "description": "Flexibler Container-Baustein mit Compound-API aus Card.Header, Card.Body und Card.Footer."
+    "dataTable": {
+      "page": {
+        "title": "DataTable",
+        "description": "Zeigt gleichartige Datensätze in Spalten — zum Vergleichen, Sortieren und Auswählen. Mit haftendem Kopf, Bulk-Leiste, Lade- und Leerzustand."
+      },
+      "demo": {
+        "title": "Verträge",
+        "colNr": "Nummer",
+        "colKunde": "Kunde",
+        "colStatus": "Status",
+        "colAbschluss": "Abschluss",
+        "colBeitrag": "Jahresbeitrag",
+        "search": "Verträge durchsuchen",
+        "export": "Exportieren",
+        "delete": "Kündigen",
+        "empty": "Keine Verträge gefunden. Setzen Sie den Filter zurück oder erweitern Sie den Zeitraum."
+      },
+      "states": {
+        "loading": "Ladezustand mit Skeleton-Zeilen",
+        "empty": "Leerzustand mit Begründung"
+      },
+      "overview": {
+        "columnsTitle": "Spalten und Ausrichtung",
+        "columnsBody": "Text steht links, Zahlen stehen rechts und in DM Mono mit Tabellenziffern, damit Beträge untereinander liegen. Die wichtigste Spalte steht links, Nebenangaben bekommen muted. Mit render setzen Sie echte Bausteine in die Zelle, etwa ein Tag für den Status.",
+        "sortTitle": "Sortierung",
+        "sortBody": "Sortierbare Spalten tragen eine Schaltfläche im Kopf. Der Pfeil erscheint beim Überfahren blass und steht in primary-600, sobald die Spalte aktiv ist. Ohne onSortChange sortiert die Komponente selbst — Zahlen numerisch, Text nach deutscher Locale.",
+        "selectTitle": "Auswahl und Bulk-Leiste",
+        "selectBody": "selectable setzt eine Auswahlspalte links; der Kopf wählt alle sichtbaren Zeilen. Sobald etwas ausgewählt ist, wird die Kopfleiste zur Bulk-Leiste: die Anzahl ersetzt den Titel, die Leiste färbt sich teal-100 und bulkActions ersetzt die toolbar.",
+        "statesTitle": "Laden und Leerzustand",
+        "statesBody": "loading zeigt Skeleton-Zeilen in der Form der Spalten, damit die Tabelle beim Eintreffen der Daten nicht springt. Der Leerzustand erklärt, warum nichts da ist und was hilft — bei aktivem Filter also anders als bei leerem Datenbestand.",
+        "frameTitle": "Kopf und Fuß",
+        "frameBody": "Mit maxHeight bleibt der Tabellenkopf beim Scrollen stehen. Der Fuß nimmt üblicherweise eine Pagination mit variant=\"bar\" auf."
+      },
+      "usage": {
+        "whenTitle": "Wann verwenden",
+        "whenBody": "Sobald mehr als eine Eigenschaft je Eintrag verglichen wird. Reicht Titel plus Nebenzeile, ist es eine ContainedList; geht es um Detailangaben zu einem einzelnen Objekt, eine KeyValueList.",
+        "columnsTitle": "Spalten wählen",
+        "columnsBody": "Sechs bis sieben Spalten sind die Grenze, darüber gehört der Rest in die Detailansicht. Jede Spalte trägt einen ausgeschriebenen Kopf, keine Abkürzungen. In einer Zelle steht höchstens ein interaktives Element.",
+        "sortTitle": "Sortierung anbieten",
+        "sortBody": "Machen Sie nur Spalten sortierbar, bei denen die Reihenfolge eine Frage beantwortet. Bei serverseitiger Sortierung übernimmt onSortChange; die Komponente ordnet dann nicht selbst um.",
+        "bulkTitle": "Massenaktionen",
+        "bulkBody": "Massenaktionen stehen in der Bulk-Leiste, nie in jeder Zeile. Zerstörende Aktionen tragen dort die Danger-Variante und fragen vor dem Ausführen nach.",
+        "emptyTitle": "Leerzustand formulieren",
+        "emptyBody": "emptyText nennt Ursache und nächsten Schritt. „Keine Einträge“ allein hilft nicht — bei aktivem Filter gehört der Hinweis dazu, dass ein Zurücksetzen Treffer bringt.",
+        "doDontTitle": "Empfehlungen",
+        "doTitle": "Tun",
+        "do1": "Zahlen rechtsbündig und in DM Mono setzen.",
+        "do2": "Status als Tag mit klarer Farbe zeigen.",
+        "do3": "Bei langen Tabellen maxHeight setzen, damit der Kopf stehen bleibt.",
+        "dontTitle": "Nicht tun",
+        "dont1": "Mehrere Aktionsschaltflächen in jede Zeile legen.",
+        "dont2": "Ganze Zeilen anklickbar machen und zugleich Links in der Zeile anbieten.",
+        "dont3": "Zu viele Spalten quetschen oder Köpfe abkürzen."
+      },
+      "code": {
+        "title": "Code",
+        "basicTitle": "Grundgerüst",
+        "renderTitle": "Eigene Zelldarstellung",
+        "sortTitle": "Sortierung, gesteuert und ungesteuert",
+        "selectionTitle": "Auswahl und Bulk-Leiste",
+        "frameTitle": "Haftender Kopf, Laden und Fuß"
+      },
+      "a11y": {
+        "structureTitle": "Tabellenstruktur",
+        "structureBody": "Die Komponente rendert eine echte table mit thead und tbody; jede Kopfzelle trägt scope=\"col\". ariaLabel benennt die Tabelle, oder der Titel übernimmt das, wenn er reiner Text ist.",
+        "sortTitle": "Sortierung melden",
+        "sortBody": "Sortierbare Kopfzellen tragen aria-sort mit none, ascending oder descending. Die Sortierung liegt auf einer echten Schaltfläche und ist damit über Tabulator und Eingabetaste erreichbar.",
+        "selectTitle": "Auswahl melden",
+        "selectBody": "Ausgewählte Zeilen tragen aria-selected. Jedes Auswahlkästchen hat ein aria-label, das zwischen „Zeile auswählen“, „Alle auswählen“ und „Auswahl aufheben“ wechselt, und meldet seinen Zustand über aria-pressed.",
+        "colorTitle": "Nicht nur Farbe",
+        "colorBody": "Zustände werden nie allein über Farbe getragen: die Auswahl steht zusätzlich im Kästchen und in aria-selected, der Status in der Beschriftung des Tag."
+      }
     },
-    "overview": {
-      "anatomyTitle": "Anatomie",
-      "anatomyBody": "Eine Card besteht aus bis zu drei optionalen Bereichen, die gemeinsam eine strukturierte Inhaltseinheit ergeben.",
-      "an1": "Card.Header — Titel, optionaler Untertitel und optionale Aktionen rechts",
-      "an2": "Card.Body — Hauptinhalt: Text, Formulare, Listen oder andere Komponenten",
-      "an3": "Card.Footer — Aktionszeile, rechtsbündig ausgerichtet (z. B. Buttons)",
-      "an4": "variant-Prop — flat (Standard, mit Border) oder raised (Schatten, ohne Border)",
-      "variantsTitle": "Varianten & Aufbau",
-      "variantsBody": "Die vier häufigsten Konfigurationen: flat mit Footer, raised mit Footer, ohne Footer und Header mit Action-Button.",
-      "flatTitle": "Projektübersicht",
-      "flatSubtitle": "Zuletzt aktualisiert: heute",
-      "flatBody": "Karteninhalt — Text, Daten, Formulare oder andere Komponenten.",
-      "raisedTitle": "Highlight-Panel",
-      "raisedSubtitle": "Mit Elevation hervorgehoben",
-      "raisedBody": "Raised Cards heben sich durch Schatten vom Hintergrund ab. Geeignet für Panels, die optisch im Vordergrund stehen sollen.",
-      "noFooterTitle": "Info-Karte",
-      "noFooterSubtitle": "Kein Footer nötig",
-      "noFooterBody": "Wenn keine Aktionen benötigt werden, kann Card.Footer weggelassen werden.",
-      "actionTitle": "Team-Mitglieder",
-      "actionSubtitle": "3 aktive Nutzer",
-      "actionBody": "Card.Header nimmt optional children für Aktionen entgegen — rechtsbündig neben Titel und Untertitel.",
-      "cancel": "Abbrechen",
-      "confirm": "Bestätigen",
-      "save": "Speichern",
-      "invite": "Einladen"
-    },
-    "usage": {
-      "title": "Wann Cards verwenden?",
-      "intro": "Cards eignen sich für abgegrenzte Inhaltseinheiten, die visuell vom Rest der Seite getrennt werden sollen — z. B. Produkte, Nutzerprofile, Dashboard-Panels oder Formular-Container.",
-      "compoundTitle": "Compound-Aufbau",
-      "compoundBody": "Alle drei Bereiche sind optional. Kombiniere sie je nach Bedarf:",
-      "partHeader": "Titel und optionaler Untertitel, rechts optionale Aktionen (z. B. Button, Icon)",
-      "partBody": "Hauptinhalt — keine Einschränkung, was hier platziert werden darf",
-      "partFooter": "Aktionszeile, typisch rechts ausgerichtet (Abbrechen / Bestätigen)",
-      "doTitle": "Do",
-      "dontTitle": "Don't",
-      "do1": "Card als Container für zusammengehörige Inhalte verwenden",
-      "do2": "flat für Standard-Layouts, raised für hervorgehobene Panels nutzen",
-      "do3": "Card.Footer nur einsetzen, wenn Aktionen vorhanden sind",
-      "dont1": "Kein onClick direkt auf der Card — interaktive Elemente in Card.Body oder Footer platzieren",
-      "dont2": "Keine tief verschachtelten Cards (Card in Card) — Layout-Komplexität vermeiden",
-      "dont3": "Card nicht als rein dekorativer Rahmen ohne Inhalt nutzen",
-      "doNote": "Cards strukturieren Inhalte — nicht ersetzen.",
-      "dontNote": "Cards sind Container, keine interaktiven Elemente."
-    },
-    "code": {
-      "title": "Code-Beispiele",
-      "flatTitle": "Flat Card mit Footer",
-      "flatDesc": "Standard-Card mit Header, Body und Footer-Buttons.",
-      "raisedTitle": "Raised Card",
-      "raisedDesc": "Erhöhte Variante mit Schatten — ohne Border.",
-      "actionTitle": "Header mit Action-Button",
-      "actionDesc": "Card.Header nimmt optional children für Aktionen rechts vom Titel entgegen.",
-      "formTitle": "Card als Formular-Container",
-      "formDesc": "Cards eignen sich gut als strukturierte Formularbehälter mit Submit-Aktionen im Footer."
-    },
-    "a11y": {
-      "title": "Accessibility",
-      "intro": "Cards sind semantisch neutrale div-Container. Die Zugänglichkeit hängt vom Inhalt ab — insbesondere von der Heading-Hierarchie und fokussierbaren Elementen.",
-      "headingTitle": "Heading-Hierarchie",
-      "headingBody": "Card.Header rendert den Titel als div, nicht als heading-Element. Verwende im Card.Body eine passende Heading-Ebene (h2–h4), wenn die Card Teil einer dokumentierten Hierarchie ist.",
-      "focusTitle": "Fokussierbare Elemente",
-      "focusBody": "Alle interaktiven Elemente (Buttons, Links, Inputs) innerhalb der Card sind per Tab erreichbar. Die Card selbst erhält keinen Fokus.",
-      "clickTitle": "Kein onClick auf Card",
-      "clickBody": "Card ist kein interaktives Element. Ein onClick auf der äußeren Card wäre für Tastatur- und Screen-Reader-Nutzer nicht bedienbar. Aktionen gehören in Card.Footer oder Card.Body."
-    }
-  },
-  "tables": {
-    "page": {
-      "description": "Strukturierte Datentabelle mit konfigurierbaren Spalten und optionalen render-Funktionen für Zellen."
-    },
-    "overview": {
-      "anatomyTitle": "Anatomie",
-      "anatomyBody": "Die Table-Komponente besteht aus einer Header-Zeile und beliebig vielen Datenzeilen. Jede Spalte wird über ein columns-Array definiert.",
-      "an1": "Header-Row — aus columns[].label generiert, uppercase mit tracking",
-      "an2": "Data-Row — aus rows[]-Objekten, jede Zelle liest row[col.key]",
-      "an3": "render-Funktion — optionales col.render(row) für benutzerdefinierte Zell-Inhalte (z. B. Badge, Button)",
-      "an4": "rowKey — Prop für den React-Key, Standard ist 'id'",
-      "demoTitle": "Live-Demo",
-      "demoBody": "5 Zeilen, 4 Spalten — die Statusspalte verwendet eine render-Funktion mit Badge-Komponente.",
-      "hoverTitle": "Hover-State",
-      "hoverBody": "Jede Zeile hat einen group-hover-Effekt: beim Überfahren wird der Hintergrund auf surface-alt gesetzt. Dies verbessert die Ablesbarkeit bei langen Tabellen."
-    },
-    "usage": {
-      "title": "Wann Tables verwenden?",
-      "intro": "Tables eignen sich für strukturierte Datenlisten, bei denen Nutzer Werte spaltenweise vergleichen oder scannen wollen.",
-      "whenTitle": "Einsatzszenarien",
-      "when1": "Nutzerlisten, Produkte, Bestellungen — jede Entität hat identische Attribute",
-      "when2": "Vergleichsdaten, bei denen Nutzer Werte in einer Spalte scannen",
-      "when3": "Tabellen mit Aktionen pro Zeile (Bearbeiten, Löschen) via render-Funktion",
-      "renderTitle": "Wann render-Funktionen?",
-      "renderBody": "Wenn eine Spalte mehr als plain text benötigt — z. B. Badge für Status, Button für Aktionen, Link für Navigation — wird eine render-Funktion übergeben. render erhält das gesamte row-Objekt.",
-      "doTitle": "Do",
-      "dontTitle": "Don't",
-      "do1": "rowKey auf das eindeutige Primärschlüsselfeld der Daten setzen",
-      "do2": "render-Funktionen für Status-Badges, Aktions-Buttons oder Links nutzen",
-      "do3": "Spaltenanzahl auf das Wesentliche beschränken — max. 6–7 Spalten",
-      "dont1": "Keine verschachtelten Tabellen (Table in Table)",
-      "dont2": "Keine reinen Bild-Zellen ohne Text-Alternative",
-      "dont3": "rowKey nicht auf einen nicht-eindeutigen Wert setzen (z. B. index)",
-      "doNote": "Tables für tabellarische Daten — nicht als Layout-Grid.",
-      "dontNote": "Bilder als einziger Zellinhalt sind für Screen-Reader bedeutungslos."
-    },
-    "code": {
-      "title": "Code-Beispiele",
-      "baseTitle": "Basis-Table",
-      "baseDesc": "Minimale Konfiguration mit columns und rows.",
-      "renderTitle": "Table mit render-Funktionen",
-      "renderDesc": "Badge in der Statusspalte und Button in der Aktionsspalte über col.render(row).",
-      "rowKeyTitle": "Benutzerdefinierter rowKey",
-      "rowKeyDesc": "Wenn der Primärschlüssel nicht 'id' heißt, explizit über rowKey übergeben."
-    },
-    "a11y": {
-      "title": "Accessibility",
-      "intro": "Die Table-Komponente rendert semantisches HTML: table, thead, tbody, th, td. Screen-Reader erkennen die Tabellenstruktur automatisch.",
-      "roleTitle": "Semantisches HTML",
-      "roleBody": "table/thead/tbody/th/td-Elemente sind implizit mit role=\"table\", role=\"rowgroup\", role=\"columnheader\" und role=\"cell\" versehen — kein explizites ARIA nötig.",
-      "scopeTitle": "scope=\"col\" auf th",
-      "scopeBody": "Alle th-Elemente haben scope=\"col\" — Screen-Reader können damit Zellen korrekt den Spalten-Headern zuordnen.",
-      "keyboardTitle": "Keyboard-Navigation",
-      "keyboardBody": "Tab navigiert durch alle fokussierbaren Elemente innerhalb der Tabelle (Buttons, Links). Die Zeilen selbst sind nicht fokussierbar.",
-      "srTitle": "Screen-Reader-Kontext",
-      "srBody": "Bilder oder Icons als alleinige Zell-Inhalte benötigen ein aria-label oder alt-Attribut, damit der Screen-Reader den Kontext versteht."
-    }
-  },
   "tabsPage": {
     "page": {
       "title":       "Tabs",
@@ -2501,63 +2443,6 @@
       "colorBody":    "Erledigte Schritte tragen ein Häkchen, fehlgeschlagene ein Kreuz, offene ihre Nummer. Der Zustand ist damit auch ohne Farbe erkennbar."
     }
   },
-  "avatar": {
-    "page": {
-      "description": "Benutzerrepräsentation durch Bild oder Initialen — einzeln oder als Gruppe."
-    },
-    "overview": {
-      "anatomyTitle": "Anatomie",
-      "anatomyBody": "Avatar zeigt entweder ein Bild (src) oder einen Fallback mit Initialen. AvatarGroup stapelt mehrere Avatare mit automatischem Overflow-Zähler.",
-      "an1": "Image — Bild-Variante via src-Prop mit alt-Text",
-      "an2": "Fallback — Initialen-Variante mit optionaler Hintergrundfarbe (color/textColor)",
-      "an3": "Größe — xs (24 px) bis xl (56 px) über size-Prop",
-      "sizesTitle": "Größen",
-      "sizesBody": "Fünf Größen von xs bis xl. md (40 px) ist der Standard für Listenzeilen und Kommentare.",
-      "fallbackTitle": "Fallback-Varianten",
-      "fallbackBody": "Wenn kein src übergeben wird, zeigt Avatar die Initialen. Mit color/textColor wird die Hintergrundfarbe gesteuert; ohne color greift die System-Fallback-Farbe.",
-      "fallbackWithColor": "Mit color",
-      "fallbackNoColor": "Ohne color",
-      "groupTitle": "AvatarGroup",
-      "groupBody": "AvatarGroup zeigt bis zu max Avatare — Überschuss wird als '+N' dargestellt. Demo: 6 Avatare mit max=4 → 4 sichtbar + '+2'."
-    },
-    "usage": {
-      "title": "Wann Avatar verwenden?",
-      "intro": "Avatar eignet sich für Benutzer-Identifikation in Listen, Kommentaren, Profil-Überschriften und Team-Ansichten. Initialen-Fallback verwenden, wenn kein Bild verfügbar ist.",
-      "groupMaxTitle": "AvatarGroup max-Empfehlung",
-      "groupMaxBody": "max=4 oder max=5 ist der empfohlene Bereich für AvatarGroup. Bei mehr sichtbaren Avataren sinkt die Lesbarkeit. Der '+N'-Count informiert über die Gesamtzahl.",
-      "doTitle": "Do",
-      "dontTitle": "Don't",
-      "do1": "alt-Text bei src-Avataren immer setzen (z. B. alt='Alice Jones')",
-      "do2": "Initialen-Fallback mit color/textColor für konsistente Markenzuordnung nutzen",
-      "do3": "AvatarGroup für Team-Zugehörigkeit und Teilnehmer-Listen verwenden",
-      "dont1": "Kein src ohne alt-Attribut — Screen-Reader können das Bild nicht beschreiben",
-      "dont2": "Nicht mehr als 5 Avatare ohne Overflow — AvatarGroup mit max nutzen",
-      "dont3": "Keine Avatar-Größen mischen innerhalb einer AvatarGroup",
-      "doNote": "Avatar für Personen-Identifikation mit klarer Fallback-Strategie.",
-      "dontNote": "Kein Avatar ohne Textalternative für Screen-Reader."
-    },
-    "code": {
-      "title": "Code-Beispiele",
-      "sizesTitle": "Größen-Varianten",
-      "sizesDesc": "Alle fünf Größen von xs bis xl mit Initialen.",
-      "imageTitle": "Avatar mit Bild",
-      "imageDesc": "src-Variante — alt-Text ist Pflicht.",
-      "groupTitle": "AvatarGroup mit Overflow",
-      "groupDesc": "6 Avatare, max=4 — zeigt 4 Avatare + '+2' Overflow-Zähler.",
-      "noColorTitle": "Ohne color-Prop",
-      "noColorDesc": "Ohne color greift der System-Fallback. Mit color/textColor explizite Markenzuordnung."
-    },
-    "a11y": {
-      "title": "Accessibility",
-      "intro": "Avatare sind visuelle Elemente. Screen-Reader brauchen Textalternativen — entweder über alt (src-Variante) oder aria-label (Initialen-Variante im kontextlosen Einsatz).",
-      "altTitle": "alt für src-Avatare",
-      "altBody": "Bei Avatar mit src immer alt='Vollständiger Name' setzen. Leeres alt (alt='') nur wenn der Avatar rein dekorativ ist und der Name bereits im umgebenden Text steht.",
-      "ariaTitle": "aria-label für Initialen-only",
-      "ariaBody": "Wenn Avatar nur Initialen zeigt und kein umgebender Kontext den Namen nennt, aria-label='Alice Jones' auf dem Avatar setzen.",
-      "overflowTitle": "AvatarGroup '+N' beschriften",
-      "overflowBody": "Der Overflow-Zähler '+N' braucht aria-label='N weitere Teilnehmer', damit Screen-Reader die Bedeutung verstehen."
-    }
-  },
   "impressum": {
     "page": {
       "title": "Impressum",
@@ -2574,92 +2459,141 @@
     "title": "Auf dieser Seite",
     "openButton": "Inhaltsverzeichnis"
   },
-  "datePicker": {
-    "page": {
-      "title": "Date Picker",
-      "description": "Datumsauswahl-Komponente mit Kalender-Popover und Lokalisierungsunterstützung"
+    "datePicker": {
+      "page": {
+        "title": "DatePicker",
+        "description": "Datum wählen — ein einzelner Tag oder ein Zeitraum. Als Feld mit aufklappendem Kalender oder inline, mit Monats- und Jahreswahl, Schnellauswahl und Zeitfenstern."
+      },
+      "demo": {
+        "label": "Vertragsbeginn",
+        "helper": "Format TT.MM.JJJJ. Frühestens ab dem Tag des Abschlusses.",
+        "error": "Das Datum liegt vor dem Vertragsabschluss. Bitte wählen Sie den 04.08.2026 oder später.",
+        "summary": "Abrechnungszeitraum",
+        "limitHelper": "Wählbar vom 10.08.2026 bis 20.08.2026.",
+        "presetWeek": "Diese Woche",
+        "presetMonth": "Dieser Monat",
+        "slotsLabel": "Uhrzeit"
+      },
+      "forms": {
+        "field": "Feld mit Kalender-Popover",
+        "inline": "Inline — der Kalender steht fest"
+      },
+      "states": {
+        "empty": "Leer",
+        "filled": "Gefüllt",
+        "error": "Fehler",
+        "disabled": "Deaktiviert",
+        "limited": "Mit min und max"
+      },
+      "overview": {
+        "formsTitle": "Formen",
+        "formsBody": "Das Feld zeigt das gewählte Datum, links ein Kalendersymbol und rechts entweder das Kreuz zum Zurücksetzen oder den Aufklapp-Pfeil. Es ist 44px hoch und mindestens 230px breit. inline stellt den Kalender fest dar — für Zeiträume und Terminbuchungen, wo der Kalender das Hauptelement der Seite ist.",
+        "rangeTitle": "Zeitraum und Schnellauswahl",
+        "rangeBody": "Bei mode=\"range\" wählt der erste Klick den Start, der zweite das Ende; ein weiterer Klick beginnt von vorn. Liegt der zweite Klick vor dem ersten, dreht sich der Zeitraum um. Start und Ende sind gefüllt und an den Innenseiten eckig, die Tage dazwischen liegen flach dahinter. Daneben stehen die Schnellauswahl und die Zusammenfassung mit Zeitraum und Tagesanzahl.",
+        "statesTitle": "Zustände",
+        "statesBody": "min und max deaktivieren Tage — sie werden nie ausgeblendet. Der Fehlerzustand ersetzt den Hinweis und schaltet den Danger-Fokusring. Heute trägt einen dünnen teal-Ring und eine fette Ziffer.",
+        "slotsTitle": "TimeSlots",
+        "slotsBody": "Für Terminbuchungen: das Raster der Uhrzeiten neben dem Kalender. Belegte Zeiten sind deaktiviert und durchgestrichen, nicht ausgeblendet — man soll sehen, dass es den Termin gibt."
+      },
+      "usage": {
+        "whenTitle": "Wann verwenden",
+        "whenBody": "Für Daten, die im Kalender gesucht werden: Termine, Zeiträume, Fristen. Für ein Geburtsdatum ist ein Feld mit Formathilfe schneller — dort ist der Kalender ein Umweg über viele Jahre.",
+        "selectTitle": "Auswahl",
+        "selectBody": "Der Klick wählt direkt, es gibt kein Bestätigen. Der Kopf trägt Monat und Jahr als Schaltfläche: sie öffnet ein Monatsraster mit Jahresnavigation, damit weit entfernte Daten ohne zwölf Klicks erreichbar sind.",
+        "limitsTitle": "Grenzen setzen",
+        "limitsBody": "min und max deaktivieren, was nicht wählbar ist. Sagen Sie im helper, welcher Bereich offen steht — sonst probiert man Tage durch, bis einer reagiert.",
+        "presetsTitle": "Schnellauswahl",
+        "presetsBody": "presets setzt Chips neben den Kalender („Diese Woche“, „Letzte 30 Tage“). Sie gehören an den inline stehenden Kalender, wo Platz daneben ist, und ersparen bei wiederkehrenden Zeiträumen das Klicken im Raster.",
+        "formatTitle": "Format",
+        "formatBody": "Das Feld zeigt TT.MM.JJJJ in DM Mono, die Woche beginnt am Montag und die Monatsnamen stehen ausgeschrieben auf Deutsch. Amerikanische Reihenfolge oder Sonntag als Wochenbeginn gibt es nicht.",
+        "doDontTitle": "Empfehlungen",
+        "doTitle": "Tun",
+        "do1": "Feld mit Popover für einzelne Daten, inline für Zeiträume und Buchungen.",
+        "do2": "Ungültige und ausgebuchte Tage deutlich deaktivieren.",
+        "do3": "Monat und Jahr direkt wählbar machen.",
+        "dontTitle": "Nicht tun",
+        "dont1": "Gesperrte Tage oder belegte Zeiten ausblenden statt deaktivieren.",
+        "dont2": "Sonntag als Wochenbeginn oder amerikanische Reihenfolge verwenden.",
+        "dont3": "Die Auswahl erst nach „Übernehmen“ wirksam machen."
+      },
+      "code": {
+        "title": "Code",
+        "fieldTitle": "Feld mit Kalender-Popover",
+        "rangeTitle": "Zeitraum mit Schnellauswahl",
+        "slotsTitle": "TimeSlots",
+        "errorTitle": "Fehlerzustand"
+      },
+      "a11y": {
+        "keyboardTitle": "Tastatur",
+        "keyboardBody": "Das Feld öffnet den Kalender mit Eingabe- und Leertaste. Im Raster bewegen die Pfeiltasten den Fokus tageweise und wochenweise, Escape schließt den Kalender und ein Klick außerhalb ebenfalls.",
+        "namingTitle": "Benennung",
+        "namingBody": "Das Feld trägt aria-haspopup=\"dialog\" und aria-expanded; der Kalender ist ein Dialog mit dem Namen „Kalender“. Jeder Tag trägt sein vollständiges Datum als aria-label („4. August 2026“), heute zusätzlich aria-current=\"date\".",
+        "stateTitle": "Zustand melden",
+        "stateBody": "Gewählte Tage melden sich über aria-pressed, gesperrte über das disabled-Attribut. Bei TimeSlots gilt dasselbe: belegte Zeiten sind deaktiviert und tragen zusätzlich die Durchstreichung, nicht nur eine andere Farbe.",
+        "errorTitle": "Fehler und Hinweise",
+        "errorBody": "Hinweis und Fehlermeldung sind über aria-describedby mit dem Feld verbunden, im Fehlerfall kommt aria-invalid dazu. Die Meldung nennt Ursache und nächsten Schritt, nicht nur den Zustand."
+      }
     },
-    "placeholder": "Datum auswählen",
-    "range": {
-      "placeholder": "Zeitraum auswählen"
+    "fileUploader": {
+      "page": {
+        "title": "FileUploader",
+        "description": "Dateien wählen oder in die Fläche ziehen. Zeigt je Datei Name, Größe und Zustand und prüft Typ und Größe vor dem Übernehmen."
+      },
+      "demo": {
+        "label": "Gewerbeschein",
+        "helper": "Als PDF oder Foto, damit wir Ihre Zulassung prüfen können.",
+        "compactLabel": "Kündigungsschreiben",
+        "tooLarge": "Datei ist größer als 5,0 MB. Bitte verkleinern Sie den Scan oder laden Sie ihn als PDF hoch."
+      },
+      "states": {
+        "empty": "Leer",
+        "disabled": "Deaktiviert"
+      },
+      "overview": {
+        "zoneTitle": "Ablagefläche",
+        "zoneBody": "Die Fläche ist selbst die Schaltfläche — Ziehen ist die Zugabe, nie der einzige Weg. Sie trägt ein Icon, eine sichtbare Schaltfläche, den Zusatz „oder hierher ziehen“ und darunter Formate und Höchstgröße. Beim Ziehen wird der gestrichelte Rahmen durchgezogen und teal.",
+        "compactTitle": "Kompakte Form",
+        "compactBody": "compact ersetzt die Fläche durch eine Zeile aus Schaltfläche und Formathinweis — für genau eine Datei in einem dichten Formular. Ziehen funktioniert dort weiter.",
+        "statusTitle": "Zustände je Datei",
+        "statusBody": "Je Datei: 40px-Vorschau (Bild, sonst Dokument-Icon), Name gekürzt mit Auslassungspunkten, Größe in DM Mono und rechts der Zustand. Läuft der Upload, steht dort ein Balken; ist er fertig, ein grünes Häkchen. Abgelehnte Dateien tragen roten Rand und den Grund.",
+        "statesTitle": "Weitere Zustände",
+        "statesBody": "Ohne Dateien steht nur die Ablagefläche. Deaktiviert nimmt sie weder Klick noch Ziehen an."
+      },
+      "usage": {
+        "whenTitle": "Wann verwenden",
+        "whenBody": "Für Dateien, die der Vorgang braucht: Nachweise, Scans, Belege. Die Ablagefläche passt für mehrere oder große Dateien, die kompakte Zeile für genau eine in einem dichten Formular.",
+        "stateTitle": "Zustand bleibt außen",
+        "stateBody": "Die Komponente hält keinen eigenen Zustand: files kommt von außen, onFilesAdded liefert die geprüften neuen Dateien, onRemove entfernt. So bleibt der echte Upload beim Aufrufer — samt Fortschritt und Abbruch.",
+        "checkTitle": "Prüfung",
+        "checkBody": "accept und maxSize werden vor dem Übernehmen geprüft. Abgelehnte Dateien verschwinden nicht still, sondern erscheinen in der Liste mit rotem Rand und dem Grund. Nur so weiß man, warum das Ziehen scheinbar nichts getan hat.",
+        "rowsTitle": "Liste führen",
+        "rowsBody": "Was hochgeladen wurde, bleibt sichtbar — leeren Sie die Liste nicht nach dem Upload. Entfernen ist immer möglich, auch während der Übertragung.",
+        "doDontTitle": "Empfehlungen",
+        "doTitle": "Tun",
+        "do1": "Erlaubte Typen und Höchstgröße vorab nennen, nicht erst im Fehlerfall.",
+        "do2": "Fortschritt zeigen und einen sichtbaren Weg zum Entfernen anbieten.",
+        "do3": "Fehler an der Datei zeigen, mit Text und Icon.",
+        "dontTitle": "Nicht tun",
+        "dont1": "Nur Drag & Drop anbieten; ohne Maus ist das unbedienbar.",
+        "dont2": "Fehler als Notification statt an der Datei zeigen.",
+        "dont3": "Ungültige Dateien still zurückweisen."
+      },
+      "code": {
+        "title": "Code",
+        "basicTitle": "Ablagefläche mit Prüfung",
+        "compactTitle": "Kompakte Form",
+        "statusTitle": "Zustände je Datei",
+        "previewTitle": "Bildvorschau"
+      },
+      "a11y": {
+        "keyboardTitle": "Tastatur",
+        "keyboardBody": "Die Ablagefläche ist eine echte Schaltfläche und damit über Tabulator erreichbar; Eingabe- und Leertaste öffnen die Dateiauswahl. Ziehen ist eine Zugabe und nie der einzige Weg. Das eigentliche Dateifeld liegt unsichtbar dahinter und ist aus der Tabulatorfolge genommen.",
+        "namingTitle": "Benennung",
+        "namingBody": "label benennt, was gebraucht wird, helper sagt warum und wozu. Jede Entfernen-Schaltfläche trägt ein aria-label mit dem Dateinamen, damit im Screenreader klar ist, welche Zeile sie betrifft.",
+        "errorTitle": "Fehler",
+        "errorBody": "Abgelehnte Dateien tragen neben dem roten Rand ein Fehler-Icon und den Grund im Klartext — Farbe allein trägt die Information nicht. Der Grund nennt die Grenze und den nächsten Schritt."
+      }
     },
-    "withTime": {
-      "timeLabel": "Uhrzeit"
-    },
-    "overview": {
-      "anatomyTitle": "Anatomie",
-      "anatomyBody": "Der DatePicker besteht aus einem Trigger-Button und einem Kalender-Popover. Das Popover schließt sich automatisch nach der Datumsauswahl.",
-      "variantsTitle": "Varianten",
-      "variantsBody": "Fünf Varianten stehen zur Verfügung: default (einzelner Tag), range (Zeitraum), withTime (Datum + Uhrzeit), inline (Kalender immer sichtbar) und input (Tastatur-Eingabe mit Kalender-Icon).",
-      "localeTitle": "Lokalisierung",
-      "localeBody": "Das angezeigte Datum wird automatisch gemäß der aktiven Sprache formatiert: Deutsch (de-DE) oder Englisch (en-US)."
-    },
-    "usage": {
-      "title": "Verwendung",
-      "intro": "Der DatePicker ist eine kontrollierte Komponente — übergib den aktuellen Wert via value und verarbeite Änderungen via onChange.",
-      "rangeTitle": "Zeitraum (range)",
-      "rangeBody": "Der range-Variant erwartet ein Objekt { from, to } als value und gibt dasselbe Format zurück.",
-      "withTimeTitle": "Datum + Uhrzeit (withTime)",
-      "withTimeBody": "Der withTime-Variant ergänzt den Kalender um ein Uhrzeiteingabefeld. Der onChange-Callback gibt ein vollständiges Date-Objekt inkl. Stunden und Minuten zurück.",
-      "inlineTitle": "Inline",
-      "inlineBody": "Der inline-Variant zeigt den Kalender dauerhaft an — ohne Popover-Trigger. Eignet sich für eingebettete Formulare mit prominenter Datumsauswahl.",
-      "inputTitle": "Tastatureingabe (input)",
-      "inputBody": "Der input-Variant kombiniert ein Textfeld im Format DD/MM/YYYY mit einem Kalender-Icon-Button. Slashes werden beim Tippen automatisch eingefügt. Das Kalender-Icon öffnet ein Popover zur Auswahl.",
-      "disabledTitle": "Daten deaktivieren",
-      "disabledBody": "Über die disabledDates-Prop können einzelne Daten von der Auswahl ausgeschlossen werden, z. B. Feiertage oder bereits belegte Termine."
-    },
-    "code": {
-      "title": "Code",
-      "basicTitle": "Default",
-      "basicDesc": "Kontrollierter DatePicker mit lokalem State.",
-      "rangeTitle": "Range",
-      "withTimeTitle": "With Time",
-      "inlineTitle": "Inline",
-      "inputTitle": "Input",
-      "disabledTitle": "Deaktivierte Daten"
-    },
-    "a11y": {
-      "title": "Barrierefreiheit",
-      "intro": "Der DatePicker basiert auf Radix UI Popover und react-day-picker mit vollständiger Tastaturnavigation.",
-      "keyboardTitle": "Tastaturinteraktion",
-      "keyboardBody": "Enter/Space öffnet das Popover. Im Kalender navigieren Pfeiltasten zwischen den Tagen, Enter wählt ein Datum aus, Escape schließt das Popover."
-    }
-  },
-  "uploadField": {
-    "page": {
-      "title": "Upload Field",
-      "description": "Datei-Eingabefeld in drei Varianten: Standard, Drag-and-Drop und Vorschau"
-    },
-    "overview": {
-      "anatomyTitle": "Anatomie",
-      "anatomyBody": "Das UploadField besteht aus einem versteckten nativen file-Input und einem visuellen Trigger. Der Trigger öffnet den Datei-Dialog des Browsers.",
-      "variantsTitle": "Varianten",
-      "variantsBody": "default: einfacher Button. dropzone: Drag-and-Drop-Bereich mit Drag-over-Zustand. preview: zeigt den Dateinamen nach der Auswahl an."
-    },
-    "usage": {
-      "title": "Verwendung",
-      "intro": "Nutze UploadField überall dort, wo Nutzer eine Datei auswählen sollen. Die Variante richtet sich nach dem verfügbaren Platz und dem Nutzungskontext.",
-      "variantGuideTitle": "Wann welche Variante?",
-      "variantGuideBody": "default für kompakte Formulare, dropzone für prominente Upload-Bereiche, preview wenn der gewählte Dateiname sichtbar sein soll."
-    },
-    "code": {
-      "title": "Code",
-      "basicTitle": "Alle Varianten",
-      "basicDesc": "Wähle die Variante über die variant-Prop."
-    },
-    "a11y": {
-      "title": "Barrierefreiheit",
-      "intro": "Der Trigger-Button ist per Tastatur fokussierbar. Das versteckte native Input wird per Klick ausgelöst.",
-      "keyboardTitle": "Tastaturinteraktion",
-      "keyboardBody": "Tab fokussiert den Trigger, Enter oder Space öffnet den Datei-Dialog."
-    },
-    "button": {
-      "label": "Datei auswählen"
-    },
-    "dropzone": {
-      "hint": "Datei hierher ziehen oder klicken"
-    }
-  },
   "tooltip": {
     "page": {
       "title": "Tooltip",
