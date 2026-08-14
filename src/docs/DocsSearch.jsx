@@ -6,11 +6,6 @@ import { Dialog as DialogPrimitive } from 'radix-ui'
 import { Icon } from '@/components/Icon/Icon'
 import { searchData } from '@/config/searchData'
 
-const TAB_LABELS = {
-  overview: 'Overview', usage: 'Usage', tokens: 'Tokens',
-  code: 'Code', accessibility: 'Accessibility',
-}
-
 export function DocsSearch({ isOpen, onClose }) {
   const { t, i18n } = useTranslation()
   const navigate = useNavigate()
@@ -45,8 +40,10 @@ export function DocsSearch({ isOpen, onClose }) {
   }, [activeIndex])
 
   const handleSelect = (result) => {
-    navigate(`${result.route}?tab=${result.tab}`)
-    setTimeout(() => document.getElementById(result.anchor)?.scrollIntoView({ behavior: 'smooth' }), 100)
+    navigate(result.tab ? `${result.route}?tab=${result.tab}` : result.route)
+    if (result.anchor) {
+      setTimeout(() => document.getElementById(result.anchor)?.scrollIntoView({ behavior: 'smooth' }), 100)
+    }
     onClose()
   }
 
@@ -127,7 +124,7 @@ export function DocsSearch({ isOpen, onClose }) {
                         {result.type === 'section' && (
                           <>
                             <Icon name="chevron_right" size={18} color="var(--medo-icon-muted)" />
-                            <span className="[font-size:var(--medo-text-xs)] text-[var(--medo-text-muted)]">{TAB_LABELS[result.tab] ?? result.tab}</span>
+                            <span className="[font-size:var(--medo-text-xs)] text-[var(--medo-text-muted)]">{t(`tabs.${result.tab}`)}</span>
                           </>
                         )}
                       </div>

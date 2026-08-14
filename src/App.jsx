@@ -53,55 +53,67 @@ function ScrollToTop() {
   return null
 }
 
+/* Single source of truth for the route inventory. The search index generator
+   walks this list, and a test asserts it stays aligned with the sidebar NAV. */
+export const ROUTES = [
+  { path: '/',                  redirect: '/brand' },
+  { path: '/brand',             element: <BrandPage /> },
+  { path: '/brand-colors',      element: <BrandColorsPage /> },
+  { path: '/alias-colors',      element: <AliasColorsPage /> },
+  { path: '/semantic-colors',   element: <SemanticColorsPage /> },
+  { path: '/typography',        element: <TypographyPage /> },
+  { path: '/foundations',       element: <FoundationsPage /> },
+  { path: '/button',            element: <ButtonPage /> },
+  { path: '/link',              element: <LinkPage /> },
+  { path: '/text-input',        element: <TextInputPage /> },
+  { path: '/number-input',      element: <NumberInputPage /> },
+  { path: '/select',            element: <SelectPage /> },
+  { path: '/search',            element: <SearchPage /> },
+  { path: '/toggle',            element: <TogglePage /> },
+  { path: '/checkbox',          element: <CheckboxPage /> },
+  { path: '/radio',             element: <RadioPage /> },
+  { path: '/tag',               element: <TagPage /> },
+  { path: '/notification',      element: <NotificationPage /> },
+  { path: '/data-table',        element: <DataTablePage /> },
+  { path: '/tabs',              element: <TabsPage /> },
+  { path: '/content-switcher',  element: <ContentSwitcherPage /> },
+  { path: '/breadcrumb',        element: <BreadcrumbPage /> },
+  { path: '/code-snippet',      element: <CodeSnippetPage /> },
+  { path: '/modal',             element: <ModalPage /> },
+  { path: '/popover',           element: <PopoverPage /> },
+  { path: '/accordion',         element: <AccordionPage /> },
+  { path: '/dropdown',          element: <DropdownPage /> },
+  { path: '/menu',              element: <MenuPage /> },
+  { path: '/menu-buttons',      element: <MenuButtonsPage /> },
+  { path: '/list',              element: <ListPage /> },
+  { path: '/contained-list',    element: <ContainedListPage /> },
+  { path: '/pagination',        element: <PaginationPage /> },
+  { path: '/loading',           element: <LoadingPage /> },
+  { path: '/inline-loading',    element: <InlineLoadingPage /> },
+  { path: '/progress-bar',      element: <ProgressBarPage /> },
+  { path: '/progress-indicator', element: <ProgressIndicatorPage /> },
+  { path: '/tooltip',           element: <TooltipPage /> },
+  { path: '/slider',            element: <SliderPage /> },
+  { path: '/file-uploader',     element: <FileUploaderPage /> },
+  { path: '/date-picker',       element: <DatePickerPage /> },
+  { path: '/about',             element: <WhatIsMedoPage /> },
+  { path: '/releases',          element: <ReleasesPage /> },
+  { path: '/impressum',         element: <ImpressumPage /> },
+  { path: '/datenschutz',       element: <DatenschutzPage /> },
+]
+
 function AppContent() {
   return (
     <DocsLayout>
       <ScrollToTop />
       <Routes>
-        <Route path="/"                element={<Navigate to="/brand" replace />} />
-        <Route path="/brand"           element={<BrandPage />} />
-        <Route path="/brand-colors"    element={<BrandColorsPage />} />
-        <Route path="/alias-colors"    element={<AliasColorsPage />} />
-        <Route path="/semantic-colors" element={<SemanticColorsPage />} />
-        <Route path="/typography"      element={<TypographyPage />} />
-        <Route path="/foundations"     element={<FoundationsPage />} />
-        <Route path="/button"       element={<ButtonPage />} />
-        <Route path="/link"         element={<LinkPage />} />
-        <Route path="/text-input"   element={<TextInputPage />} />
-        <Route path="/number-input" element={<NumberInputPage />} />
-        <Route path="/select"       element={<SelectPage />} />
-        <Route path="/search"       element={<SearchPage />} />
-        <Route path="/toggle"     element={<TogglePage />} />
-        <Route path="/checkbox"   element={<CheckboxPage />} />
-        <Route path="/radio"      element={<RadioPage />} />
-        <Route path="/tag"        element={<TagPage />} />
-        <Route path="/notification" element={<NotificationPage />} />
-        <Route path="/data-table" element={<DataTablePage />} />
-        <Route path="/tabs"       element={<TabsPage />} />
-        <Route path="/content-switcher" element={<ContentSwitcherPage />} />
-        <Route path="/breadcrumb"       element={<BreadcrumbPage />} />
-        <Route path="/code-snippet"     element={<CodeSnippetPage />} />
-        <Route path="/modal"      element={<ModalPage />} />
-        <Route path="/popover"    element={<PopoverPage />} />
-        <Route path="/accordion"  element={<AccordionPage />} />
-        <Route path="/dropdown"   element={<DropdownPage />} />
-        <Route path="/menu"       element={<MenuPage />} />
-        <Route path="/menu-buttons" element={<MenuButtonsPage />} />
-        <Route path="/list"           element={<ListPage />} />
-        <Route path="/contained-list" element={<ContainedListPage />} />
-        <Route path="/pagination"     element={<PaginationPage />} />
-        <Route path="/loading"             element={<LoadingPage />} />
-        <Route path="/inline-loading"      element={<InlineLoadingPage />} />
-        <Route path="/progress-bar"        element={<ProgressBarPage />} />
-        <Route path="/progress-indicator"  element={<ProgressIndicatorPage />} />
-        <Route path="/tooltip"            element={<TooltipPage />} />
-        <Route path="/slider"             element={<SliderPage />} />
-        <Route path="/file-uploader"      element={<FileUploaderPage />} />
-        <Route path="/date-picker"        element={<DatePickerPage />} />
-        <Route path="/about"      element={<WhatIsMedoPage />} />
-        <Route path="/releases"   element={<ReleasesPage />} />
-        <Route path="/impressum"          element={<ImpressumPage />} />
-        <Route path="/datenschutz" element={<DatenschutzPage />} />
+        {ROUTES.map(({ path, element, redirect }) => (
+          <Route
+            key={path}
+            path={path}
+            element={redirect ? <Navigate to={redirect} replace /> : element}
+          />
+        ))}
       </Routes>
     </DocsLayout>
   )
