@@ -14,7 +14,7 @@ const variantClasses = {
   error:   'bg-error-container border-error/20 text-content-error',
 }
 
-export function Alert({ variant = 'info', title, children }) {
+export function LegacyAlert({ variant = 'info', title, children }) {
   return (
     <div
       className={cn('flex gap-4 px-5 py-4 rounded-lg border', variantClasses[variant])}
@@ -31,7 +31,7 @@ export function Alert({ variant = 'info', title, children }) {
   )
 }
 
-export function Toast({ children, action, onAction }) {
+export function LegacyToast({ children, action, onAction }) {
   return (
     <div
       className="inline-flex items-center gap-3 px-4 py-3 bg-surface-inverse text-content-inverse rounded-lg text-sm shadow-lg max-w-[360px]"
