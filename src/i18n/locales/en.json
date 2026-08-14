@@ -39,13 +39,13 @@
       "list":          "List",
       "containedList": "Contained List",
       "pagination":    "Pagination",
-      "stats":      "Stats / KPI",
-      "feedback":   "Feedback",
       "avatar":     "Avatar",
-      "skeleton":          "Skeleton",
+      "loading":            "Loading",
+      "inlineLoading":      "Inline Loading",
+      "progressBar":        "Progress Bar",
+      "progressIndicator":  "Progress Indicator",
       "tooltip":           "Tooltip",
       "slider":            "Slider",
-      "loadingIndicator":  "Loading Indicator",
       "uploadField":       "Upload Field",
       "datePicker":        "Date Picker",
       "whatIsMedo":        "What is med.o?",
@@ -2238,128 +2238,267 @@
       "targetBody":   "The buttons measure 40 px at md and 32 px at sm. On touch surfaces md is the right choice."
     }
   },
-  "stats": {
+  "loading": {
     "page": {
-      "description": "KPI cards with label, pre-formatted value, and optional delta display (up / down / neutral)."
+      "title":       "Loading",
+      "description": "Shows that something is running. The partial-ring spinner is the only continuous motion in the system; skeletons stand where the shape of the content is already known."
+    },
+    "demo": {
+      "label":          "Profiles are being checked …",
+      "overlayTitle":   "Open cases",
+      "overlayContent": "The already visible content stays in place and is not replaced — the surface lays itself over it."
+    },
+    "which": {
+      "skeleton": "Skeleton — shape known",
+      "spinner":  "Spinner — shape unknown"
     },
     "overview": {
-      "anatomyTitle": "Anatomy",
-      "anatomyBody": "StatCard consists of four sections — label and value are always visible, delta is optional.",
-      "an1": "label — uppercase identifier for the metric (e.g. 'Active Users')",
-      "an2": "value — pre-formatted value as string (e.g. '12,847', '€84.2k')",
-      "an3": "delta — optional comparison value with direction indicator (↑/↓/→)",
-      "an4": "deltaDir — direction: 'up' (green), 'down' (red), 'neutral' (gray)",
-      "demoTitle": "Live Demo — all delta variants",
-      "demoBody": "4 StatCards: up (green), up (green), down (red), and no delta.",
-      "statsCardRevenue": "Revenue",
-      "statsCardUsers": "Active Users",
-      "statsCardConv": "Conversion Rate",
-      "statsCardTickets": "Open Tickets"
+      "whichTitle":    "Which form when",
+      "whichBody":     "Skeleton when the shape of the content is already known — lists, cards, tables. It shows where what will appear, and the page does not jump when it arrives. Spinner when the shape is unknown or only a small area is waiting.",
+      "sizesTitle":    "Sizes and colour",
+      "sizesBody":     "sm measures 20 px, md 32 px, lg 48 px. The spinner inherits currentColor; with color it can be set differently, for example muted on a calm surface.",
+      "overlayTitle":  "Overlay and full page",
+      "overlayBody":   "variant=\"overlay\" places the spinner over the already visible area — the ancestor needs position: relative, and the old content stays visible. fullpage belongs only to the first start of the application.",
+      "skeletonTitle": "Skeleton forms",
+      "skeletonBody":  "lines for text lines, block for a surface, card for an avatar with title and lines, table for a row grid. The skeleton mimics the number of expected lines, no more — it is not a placeholder carpet."
     },
     "usage": {
-      "title": "When to use StatCard?",
-      "intro": "StatCards suit KPI dashboards and metrics overviews where a single metric needs to be grasped at a glance.",
-      "formatTitle": "Value Formatting",
-      "formatBody": "The component performs no number formatting — value and delta are passed as strings. Formatting (currency, unit, thousands separator) happens in the calling component, e.g. via Intl.NumberFormat.",
-      "doTitle": "Do",
-      "dontTitle": "Don't",
-      "do1": "Pass values as pre-formatted strings (e.g. '€84.2k', '12,847')",
-      "do2": "Set deltaDir correctly: up = positive increase, down = negative decline",
-      "do3": "Arrange StatCards in a grid with consistent width per row (4 columns)",
-      "dont1": "No raw numbers without formatting",
-      "dont2": "Don't leave delta empty when deltaDir is set — no delta section will be shown",
-      "dont3": "No overly long labels — max 2–3 words for the uppercase line",
-      "doNote": "StatCards for quickly readable single metrics.",
-      "dontNote": "No StatCard for complex datasets — use Table."
+      "whichTitle":  "Skeleton or spinner",
+      "whichBody":   "When the shape of the content is known, the skeleton shows it in advance and the page does not jump when it arrives. When it is unknown, or only a small area is waiting, the spinner is right. For a wait inside a button or next to a field it is InlineLoading, for known progress the ProgressBar.",
+      "timingTitle": "Time thresholds",
+      "timingBody":  "Below about 300 ms show nothing — a spinner that flashes up reads like an error. Longer than about ten seconds needs a text saying what is happening.",
+      "oneTitle":    "One loading state per area",
+      "oneBody":     "Never show a skeleton and a spinner for the same content at once. Two indicators for the same wait suggest two processes are running.",
+      "scopeTitle":  "Cover only the waiting part",
+      "scopeBody":   "When a section is waiting, the spinner belongs as an overlay over exactly that section. Covering the whole page also takes away what would already be usable.",
+      "doDontTitle": "Usage",
+      "doTitle":     "Do",
+      "dontTitle":   "Don't",
+      "do1":         "Use a skeleton when the shape of the content is known",
+      "do2":         "Add a text naming the process from about ten seconds on",
+      "do3":         "Mark the waiting area with aria-busy",
+      "dont1":       "Use a spinner for processes with known progress",
+      "dont2":       "Cover the whole page when only a part is loading",
+      "dont3":       "Show skeletons with more lines than will appear afterwards"
     },
     "code": {
-      "title": "Code Examples",
-      "baseTitle": "Basic StatCard",
-      "baseDesc": "label, value, delta, and deltaDir — all four props.",
-      "noDeltaTitle": "Without delta / neutral",
-      "noDeltaDesc": "Without the delta prop, no delta section is shown. deltaDir='neutral' shows gray with →.",
-      "gridTitle": "Grid of 4 StatCards",
-      "gridDesc": "4-column grid — standard layout for KPI dashboards.",
-      "formatTitle": "Value Formatting",
-      "formatDesc": "Formatting happens outside the component — pass a pre-formatted string."
+      "title":         "Code Examples",
+      "spinnerTitle":  "Spinner",
+      "overlayTitle":  "Overlay and full page",
+      "skeletonTitle": "Skeleton",
+      "colorTitle":    "Colour and aria-busy"
     },
     "a11y": {
-      "title": "Accessibility",
-      "intro": "StatCards are static display elements. Screen readers read label, value, and delta as regular text — no special ARIA handling needed, provided delta icons have text alternatives.",
-      "iconTitle": "Delta icons as text",
-      "iconBody": "↑ / ↓ / → are Unicode characters that screen readers read aloud. If meaning is unclear, add a visually hidden span with aria-label='Increase' / 'Decrease'.",
-      "ariaTitle": "aria-label for delta direction",
-      "ariaBody": "For icon-only deltas (no text), set aria-label on the delta element: aria-label='Increase of 4.2 percent'. For combined strings (↑ 4.2%) no further ARIA is needed.",
-      "colorTitle": "Color is not the only indicator",
-      "colorBody": "up (green) / down (red) / neutral (gray) communicate direction via color. The arrow symbol (↑/↓/→) ensures direction is also recognizable without color — WCAG 1.4.1 compliant."
+      "statusTitle":   "Role and state",
+      "statusBody":    "The spinner is role=\"status\" with aria-busy=\"true\". Without text it carries the aria-label “Wird geladen”; with text the text takes over the announcement.",
+      "skeletonTitle": "Skeletons are invisible to screen readers",
+      "skeletonBody":  "They carry aria-hidden so no fragments are read out. The waiting area itself should carry aria-busy=\"true\" while it loads.",
+      "motionTitle":   "Motion",
+      "motionBody":    "There are exactly two continuous motions: the rotation of the partial ring and the shimmer of the skeleton. No further loading animations exist in the system."
     }
   },
-  "feedback": {
+
+  "inlineLoading": {
     "page": {
-      "description": "Progress bar for loading operations, file uploads, and multi-step processes."
+      "title":       "Inline Loading",
+      "description": "A waiting state in running text: three pulsing dots, then a check mark or a cross. It does not replace a surface, it accompanies a line."
+    },
+    "demo": {
+      "loading":     "Saving …",
+      "success":     "Saved",
+      "error":       "Not saved — please check the connection",
+      "inactive":    "Not checked yet",
+      "buttonLabel": "Send request"
+    },
+    "button": {
+      "withInherit":    "inherit set",
+      "withoutInherit": "without inherit"
+    },
+    "row": {
+      "r1": "Master data",
+      "r2": "Records",
+      "r3": "Bank details"
     },
     "overview": {
-      "anatomyTitle": "Anatomy",
-      "anatomyBody": "Progress consists of a track and an indicator showing current progress. Optional label and value elements complement the bar.",
-      "an1": "Track — gray background bar as full width",
-      "an2": "Indicator — colored progress bar (translateX animation)",
-      "an3": "Label — optional description text left above the bar",
-      "an4": "Value — optional percentage display right above the bar (showValue)",
-      "an5": "size — bar thickness: sm (4 px), md (6 px), lg (10 px)",
-      "variantsTitle": "Variants",
-      "variantsBody": "Five color variants for different contexts: neutral (default), accent (orange), success (green), warning (yellow), error (red).",
-      "variant_neutral": "Neutral",
-      "variant_accent": "Accent",
-      "variant_success": "Success",
-      "variant_warning": "Warning",
-      "variant_error": "Error",
-      "sizesTitle": "Sizes",
-      "sizesBody": "Three sizes control bar thickness. md is the default for most use cases.",
-      "size_sm": "Small (sm) — 4 px",
-      "size_md": "Medium (md) — 6 px",
-      "size_lg": "Large (lg) — 10 px",
-      "showValueTitle": "Percentage (showValue)",
-      "showValueBody": "showValue displays the current percentage right above the bar. Can be combined with label.",
-      "showValueLabel": "Upload in progress..."
+      "statesTitle": "States",
+      "statesBody":  "loading shows three pulsing dots, success a check mark, error a cross, inactive stays at rest. The colours come from the status roles: running primary-600, success green-600, error red-600.",
+      "buttonTitle": "Inside a button",
+      "buttonBody":  "Inside a filled button inherit is mandatory — otherwise teal would sit on teal and the dots would be invisible. With inherit the dots and text take on the button's text colour. Compare the two buttons.",
+      "sizesTitle":  "Sizes",
+      "sizesBody":   "sm belongs next to text-sm and inside buttons, md next to running text.",
+      "rowTitle":    "At the end of a row",
+      "rowBody":     "The typical place: on the right of a row that is being saved or checked. At most one per row."
     },
     "usage": {
-      "title": "When to use Progress?",
-      "intro": "Progress suits operations with a known endpoint: file uploads, form steps, and load progress. The value prop must always hold a concrete 0–100 value.",
-      "whenNotTitle": "When not to use?",
-      "whenNotBody": "For unknown loading times (indeterminate state), Skeleton is more appropriate. Progress always communicates concrete progress — never use it for general loading states without a percentage value.",
-      "doTitle": "Do",
-      "dontTitle": "Don't",
-      "do1": "Set the label prop to explain the context of the progress",
-      "do2": "Use variant semantically: success on completion, error on failure",
-      "do3": "Use showValue in upload dialogs where the exact percentage is helpful",
-      "dont1": "Don't use Progress for indeterminate states — use Skeleton instead",
-      "dont2": "Don't animate value upward without real progress behind it",
-      "dont3": "Don't place multiple progress bars side by side without labels",
-      "doNote": "Progress for measurable, controlled progress states.",
-      "dontNote": "No Progress for loading states without a concrete percentage value."
+      "whenTitle":    "When to use Inline Loading",
+      "whenBody":     "Inside a button while submitting, next to a field being checked, at the end of a row being saved. For whole areas it is Loading, for known progress the ProgressBar.",
+      "flowTitle":    "Flow of states",
+      "flowBody":     "loading leads to success or error. The success state stays briefly — about two seconds — and then disappears. An error stays until the person does something. Where the process has not started yet, inactive stands.",
+      "labelTitle":   "Label",
+      "labelBody":    "It describes the process, not the state: “Saving …”, then “Saved”. No “Success”, no exclamation mark. An error names the cause and the next step.",
+      "inheritTitle": "inherit",
+      "inheritBody":  "Mandatory in filled buttons. Inside a button the original label is better left standing with the dots beside it — that way the button does not change width.",
+      "doDontTitle":  "Usage",
+      "doTitle":      "Do",
+      "dontTitle":    "Don't",
+      "do1":          "Name the process, not the state",
+      "do2":          "Set inherit inside filled buttons",
+      "do3":          "Hide the success state again after a short while",
+      "dont1":        "Use it for loading times of whole areas",
+      "dont2":        "Leave the success state standing permanently",
+      "dont3":        "Show several inline loadings in the same row at once"
     },
     "code": {
-      "title": "Code Examples",
-      "baseTitle": "Basic Progress",
-      "baseDesc": "Minimal usage — value is the only required prop (0–100).",
-      "variantsTitle": "All Variants",
-      "variantsDesc": "Five variants with label prop for contextual colors.",
-      "sizesTitle": "Sizes",
-      "sizesDesc": "sm / md (default) / lg — control bar thickness.",
-      "showValueTitle": "With label and showValue",
-      "showValueDesc": "Combines label (left) and percentage (right) above the bar."
+      "title":       "Code Examples",
+      "basicTitle":  "States",
+      "buttonTitle": "Inside a button",
+      "flowTitle":   "Flow",
+      "sizeTitle":   "Sizes"
     },
     "a11y": {
-      "title": "Accessibility",
-      "intro": "Radix sets role='progressbar', aria-valuenow, aria-valuemin, and aria-valuemax automatically. A descriptive label is mandatory for screen readers.",
-      "roleTitle": "role=\"progressbar\"",
-      "roleBody": "Radix UI sets role='progressbar' automatically on the root element. No manual ARIA attribute needed.",
-      "ariaTitle": "aria-valuenow / min / max",
-      "ariaBody": "Radix sets aria-valuenow={value}, aria-valuemin={0}, aria-valuemax={100} automatically. Screen readers announce e.g. '75%'.",
-      "labelTitle": "label or aria-label is required",
-      "labelBody": "Without the label prop, aria-label must be set on the Progress element so screen readers understand the context: 'Upload in progress: 75%'.",
-      "colorTitle": "Color is not the only indicator",
-      "colorBody": "The variant color (green/red/yellow) alone is insufficient. The label text must also communicate the state linguistically — WCAG 1.4.1 compliant."
+      "liveTitle":  "Role and announcement",
+      "liveBody":   "role=\"status\" with aria-live=\"polite\"; in the loading state also aria-busy. The change is announced without interrupting the flow.",
+      "dotsTitle":  "The dots",
+      "dotsBody":   "They carry aria-hidden. Screen readers therefore read only the text, not the animation.",
+      "colorTitle": "Colour carries nothing on its own",
+      "colorBody":  "Green and red separate success and error visually, the check mark and the cross separate them in shape, and the label says it in words."
+    }
+  },
+
+  "progressBar": {
+    "page": {
+      "title":       "Progress Bar",
+      "description": "Shows the progress of a process. Without a value the track runs on indeterminately — for processes whose duration is not known."
+    },
+    "demo": {
+      "label":       "Documents are being transferred",
+      "helper":      "2 of 6 files",
+      "checking":    "Connection is being checked",
+      "storage":     "Storage space",
+      "steps":       "Application",
+      "stepsHelper": "Step 3 of 6",
+      "status": {
+        "normal":  "The transfer is running.",
+        "success": "All documents have been transferred.",
+        "warning": "The storage space will last about two more weeks.",
+        "error":   "The connection was interrupted. Start the transfer again."
+      }
+    },
+    "overview": {
+      "anatomyTitle":       "Anatomy",
+      "anatomyBody":        "Above the track sit the label and the percentage, below it a sentence about the state where needed:",
+      "an1":                "label names the process, helper adds to it — such as “2 of 6 files”",
+      "an2":                "showValue sets the percentage on the right in DM Mono with tabular numerals",
+      "an3":                "statusText sits below the track and carries a status icon on success and error",
+      "indeterminateTitle": "Indeterminate",
+      "indeterminateBody":  "Without value a section of the track runs endlessly. That is the state for processes whose duration cannot be estimated — no percentage appears then.",
+      "statusTitle":        "Status",
+      "statusBody":         "normal carries the track in primary-600, success in green, warning in amber, error in red. On success and error the sentence below also carries an icon.",
+      "sizesTitle":         "Sizes",
+      "sizesBody":          "standard measures 8 px, thin 4 px. The thin form belongs at the head of a card or the top edge of an area, usually without a label.",
+      "maxTitle":           "Reference value",
+      "maxBody":            "max shifts the reference: with max={6}, 3 is exactly half. Progress can be expressed in steps without converting it to percent yourself."
+    },
+    "usage": {
+      "whenTitle":          "When to use Progress Bar",
+      "whenBody":           "For processes with known progress: transfers, processing, multi-part sequences. When the progress is unknown it is a spinner; when it is about steps the person walks through themselves, it is the Progress Indicator.",
+      "indeterminateTitle": "Indeterminate rather than guessed",
+      "indeterminateBody":  "Better the indeterminate track than an invented percentage. An indicator that stalls at 90 percent loses trust for every process that follows.",
+      "labelTitle":         "Label",
+      "labelBody":          "The label names the process, not the indicator. Without one the track needs an ariaLabel — otherwise it stays nameless for screen readers.",
+      "statusTitle":        "Completion",
+      "statusBody":         "On success and error the sentence below the track says what happened and what applies now. An error names the cause and the next step.",
+      "doDontTitle":        "Usage",
+      "doTitle":            "Do",
+      "dontTitle":          "Don't",
+      "do1":                "Name the process above the track",
+      "do2":                "Use the indeterminate form when the duration is unknown",
+      "do3":                "Explain the completion with a sentence below the track",
+      "dont1":              "Guess a percentage you do not know",
+      "dont2":              "Show the track without a label and without an ariaLabel",
+      "dont3":              "Let the progress run backwards"
+    },
+    "code": {
+      "title":              "Code Examples",
+      "basicTitle":         "Basic",
+      "indeterminateTitle": "Indeterminate",
+      "statusTitle":        "Status",
+      "sizeTitle":          "Size and reference"
+    },
+    "a11y": {
+      "roleTitle":  "Role and values",
+      "roleBody":   "The track is role=\"progressbar\" with aria-valuemin, aria-valuemax, and aria-valuenow. In the indeterminate state the values are omitted — that is exactly how screen readers recognise that the progress is unknown.",
+      "labelTitle": "Label",
+      "labelBody":  "A text label automatically becomes the label of the track. When no text or a composite node stands there, ariaLabel is required.",
+      "colorTitle": "Colour carries nothing on its own",
+      "colorBody":  "The status is also visible in the percentage, in the status sentence, and on success and error in the icon."
+    }
+  },
+
+  "progressIndicator": {
+    "page": {
+      "title":       "Progress Indicator",
+      "description": "Leads through the steps of a sequence and shows what is done, where you stand, and what is still to come."
+    },
+    "demo": {
+      "ariaLabel": "Application",
+      "s1":        "Details",
+      "s1Sub":     "Name and address",
+      "s2":        "Records",
+      "s2Sub":     "Licence and liability cover",
+      "s3":        "Review",
+      "s3Sub":     "Takes up to two working days",
+      "s4":        "Completion",
+      "errorSub":  "The liability cover is missing",
+      "clickHint": "Completed steps are clickable here — the active step moves along."
+    },
+    "overview": {
+      "statesTitle":      "States",
+      "statesBody":       "current is 0-based; everything before it counts as done. Four states are possible:",
+      "st1":              "done — completed, with a check mark; the line after it is filled",
+      "st2":              "active — the step the person is currently on, with aria-current",
+      "st3":              "pending — still open, with the step number",
+      "st4":              "error — failed, with a cross; must be set via status",
+      "orientationTitle": "Orientation",
+      "orientationBody":  "Horizontal for short titles and wide surfaces, vertical for long titles, detailed second lines, or narrow columns. In both cases the line runs from the completed step to the next.",
+      "errorTitle":       "Failed step",
+      "errorBody":        "An error cannot be derived from current and is therefore set via status on the step. The second line says what is missing.",
+      "clickTitle":       "Going back",
+      "clickBody":        "With onStepClick completed steps become clickable — useful when the person may change an earlier entry. clickableDone={false} turns that off without removing the callback."
+    },
+    "usage": {
+      "whenTitle":   "When to use Progress Indicator",
+      "whenBody":    "For sequences the person walks through themselves: applications, setup, multi-part forms. For the progress of a process that runs on its own it is the ProgressBar; for equal views they are Tabs.",
+      "countTitle":  "Number of steps",
+      "countBody":   "Three to five steps. With two the indicator is not worth it, with more than five it loses its purpose — then merge steps.",
+      "errorTitle":  "Showing errors",
+      "errorBody":   "A failed step stays visible and says in the second line what is missing. Silently resetting it to open hides the cause.",
+      "backTitle":   "Allowing a step back",
+      "backBody":    "Making completed steps clickable is right only when the person may actually still change the entry. Otherwise the click leads nowhere.",
+      "doDontTitle": "Usage",
+      "doTitle":     "Do",
+      "dontTitle":   "Don't",
+      "do1":         "Three to five steps with short, uniform titles",
+      "do2":         "Mark optional steps as optional",
+      "do3":         "Show errors on the step itself, with the cause in the second line",
+      "dont1":       "Show more than five steps",
+      "dont2":       "Make completed steps clickable when nothing can be changed",
+      "dont3":       "Use it for the progress of an automatically running process"
+    },
+    "code": {
+      "title":         "Code Examples",
+      "basicTitle":    "Basic",
+      "verticalTitle": "Vertical",
+      "errorTitle":    "Failed step",
+      "clickTitle":    "Going back"
+    },
+    "a11y": {
+      "rolesTitle":   "Roles",
+      "rolesBody":    "The sequence is role=\"list\" with one role=\"listitem\" per step and carries an ariaLabel. Clickable steps are real buttons; the focus ring sits on the circle.",
+      "currentTitle": "Current step",
+      "currentBody":  "The active step carries aria-current=\"step\". Screen readers can therefore announce where in the sequence the person stands.",
+      "colorTitle":   "Colour carries nothing on its own",
+      "colorBody":    "Completed steps carry a check mark, failed ones a cross, open ones their number. The state is recognisable without colour."
     }
   },
   "avatar": {
@@ -2417,65 +2556,6 @@
       "ariaBody": "When Avatar shows only initials and no surrounding context names the person, set aria-label='Alice Jones' on the avatar.",
       "overflowTitle": "Label AvatarGroup '+N'",
       "overflowBody": "The overflow counter '+N' needs aria-label='N more participants' so screen readers understand the meaning."
-    }
-  },
-  "skeleton": {
-    "page": {
-      "description": "Loading placeholder for content that is not yet available."
-    },
-    "overview": {
-      "anatomyTitle": "Anatomy",
-      "anatomyBody": "Skeleton is a pulsing placeholder that mimics the shape of the expected content. Three variants cover text, circles (avatar), and rectangles (images/cards).",
-      "an1": "variant — text (small-rounded), circle (round), rect (medium-rounded)",
-      "an2": "width / height — width and height as number (px) or CSS string ('60%')",
-      "an3": "animate-pulse — pulsing animation via Tailwind (always active)",
-      "an4": "aria-hidden='true' — Skeleton is invisible to screen readers (set in component)",
-      "variantsTitle": "Variants",
-      "variantsBody": "text for paragraphs, circle for avatar placeholders, rect for images and card blocks.",
-      "variantText": "text",
-      "variantCircle": "circle",
-      "variantRect": "rect",
-      "cardTitle": "SkeletonCard",
-      "cardBody": "SkeletonCard is a pre-configured composition: Avatar + 2 text lines, rect block, and 3 descending text lines — max-w-[360px]."
-    },
-    "usage": {
-      "title": "When to use Skeleton?",
-      "intro": "Skeleton suits initial loading of content whose structure is known: lists, cards, profile pages. The placeholder should closely match the shape of the real content.",
-      "whenNotTitle": "When not to use?",
-      "whenNotBody": "For error and empty states, Alert and EmptyState are more appropriate. Skeleton signals 'loading soon' — not 'nothing found' or 'error occurred'.",
-      "doTitle": "Do",
-      "dontTitle": "Don't",
-      "do1": "Match skeleton shapes to the real content (size, number of lines)",
-      "do2": "Use SkeletonCard for card layouts — saves composition effort",
-      "do3": "Set aria-live='polite' outside the skeleton to announce when loading ends",
-      "dont1": "Don't use Skeleton for known error or empty states",
-      "dont2": "Don't show Skeleton indefinitely — show an error state after timeout",
-      "dont3": "Don't ignore skeleton animations for users with prefers-reduced-motion",
-      "doNote": "Skeleton for loading states with a known content structure.",
-      "dontNote": "No Skeleton as a permanent state without timeout logic."
-    },
-    "code": {
-      "title": "Code Examples",
-      "textTitle": "Text Skeleton",
-      "textDesc": "Descending text lines simulate a paragraph — decreasing width for a more natural look.",
-      "circleTitle": "Circle Skeleton",
-      "circleDesc": "Round placeholders for avatar elements in various sizes.",
-      "rectTitle": "Rect Skeleton",
-      "rectDesc": "Rectangular placeholders for images, hero areas, and card blocks.",
-      "cardTitle": "SkeletonCard",
-      "cardDesc": "Ready-made composition without props — for standard card layouts.",
-      "compositeTitle": "Composition: List Row",
-      "compositeDesc": "Combine individual skeleton elements into a list row (circle + 2 text lines)."
-    },
-    "a11y": {
-      "title": "Accessibility",
-      "intro": "Skeleton elements are purely visual — aria-hidden='true' is already set in the component. Screen readers automatically skip them. For the loading announcement, aria-live outside the skeleton is needed.",
-      "hiddenTitle": "aria-hidden='true' (already set)",
-      "hiddenBody": "The Skeleton component sets aria-hidden='true' internally. No manual ARIA attribute needed — screen readers skip the placeholder.",
-      "liveTitle": "Announce loading end via aria-live",
-      "liveBody": "A container with aria-live='polite' outside the skeleton announces the end of loading: e.g. 'Content loaded'. This informs screen reader users.",
-      "motionTitle": "Respect prefers-reduced-motion",
-      "motionBody": "animate-pulse animates the skeleton. Users with prefers-reduced-motion have reduced animations in their OS. Tailwind's animate-pulse respects this setting automatically in modern browsers."
     }
   },
   "impressum": {
@@ -2543,35 +2623,6 @@
       "intro": "The DatePicker is built on Radix UI Popover and react-day-picker with full keyboard navigation.",
       "keyboardTitle": "Keyboard interaction",
       "keyboardBody": "Enter/Space opens the popover. Inside the calendar, arrow keys navigate between days, Enter selects a date, and Escape closes the popover."
-    }
-  },
-  "loadingIndicator": {
-    "page": {
-      "title": "Loading Indicator",
-      "description": "Visual feedback for background operations in three variants"
-    },
-    "overview": {
-      "anatomyTitle": "Anatomy",
-      "anatomyBody": "The LoadingIndicator is a purely visual component with no interactive elements. It signals to the user that a background operation is in progress.",
-      "variantsTitle": "Variants",
-      "variantsBody": "Three variants are available: Spinner (rotating circle border), Bar (pulsing horizontal bar), and Dots (three bouncing dots)."
-    },
-    "usage": {
-      "title": "Usage",
-      "intro": "Use a Loading Indicator when an operation takes longer than 300ms. Very short operations do not require an indicator.",
-      "variantGuideTitle": "Which variant to use?",
-      "variantGuideBody": "Spinner suits general loading states. Bar fits progress feedback in forms. Dots works well for inline loading states inside text or buttons."
-    },
-    "code": {
-      "title": "Code",
-      "basicTitle": "All variants",
-      "basicDesc": "Select the variant via the variant prop."
-    },
-    "a11y": {
-      "title": "Accessibility",
-      "intro": "Add an aria-label to the LoadingIndicator so screen readers can announce the loading state.",
-      "motionTitle": "Reduced motion",
-      "motionBody": "Tailwind's animate-* classes automatically respect the operating system's prefers-reduced-motion setting."
     }
   },
   "uploadField": {
