@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { generateId } from './anchors'
 
 export function DemoPanel({ component, controls }) {
   const { t } = useTranslation()
@@ -10,7 +11,7 @@ export function DemoPanel({ component, controls }) {
   const update = (id, value) => setValues(prev => ({ ...prev, [id]: value }))
 
   return (
-    <div className="mb-[var(--medo-space-xl)] px-[var(--medo-space-xl)] max-w-[980px]">
+    <div id={generateId(t('demoPanel.title'))} className="mb-[var(--medo-space-xl)] px-[var(--medo-space-xl)] max-w-[980px]">
       <h2 className="[font-size:var(--medo-text-2xl)] [font-family:var(--medo-font-sans)] [font-weight:var(--medo-weight-semibold)] tracking-[var(--medo-tracking-tight)] text-[var(--medo-text)] mb-[var(--medo-space-md)] pb-[var(--medo-space-xs)] border-b border-[var(--medo-divider)]">
         {t('demoPanel.title')}
       </h2>

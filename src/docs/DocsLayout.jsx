@@ -6,7 +6,7 @@ import { Icon } from '@/components/Icon/Icon'
 import { headerLinks } from '@/config/headerLinks'
 import { DocsSearch } from './DocsSearch'
 
-const NAV = [
+export const NAV = [
   {
     id: 'about',
     section: 'nav.sections.about',

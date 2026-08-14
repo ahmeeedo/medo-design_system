@@ -2,6 +2,7 @@ import { useSearchParams } from 'react-router-dom'
 import { Children, useRef, useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { TableOfContents } from './TableOfContents'
+import { generateId } from './anchors'
 import { Sheet, SheetContent, SheetClose, SheetTitle } from '../components/ui/sheet'
 import { Tabs as TabsPrimitive, TabsList, TabsTrigger, TabsContent } from '../components/ui/tabs'
 
@@ -16,9 +17,6 @@ const GRID_CLASSES = {
 
 /* Same global definition the header in DocsLayout uses. */
 const HEADER_H = 'var(--docs-header-height)'
-
-const generateId = (text) =>
-  text.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')
 
 export function PageLayout({ title, description, tabs = [] }) {
   const [searchParams, setSearchParams] = useSearchParams()
@@ -194,9 +192,7 @@ export function PageLayout({ title, description, tabs = [] }) {
 }
 
 export function Section({ title, children }) {
-  const id = title
-    ? title.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')
-    : undefined
+  const id = title ? generateId(title) : undefined
 
   return (
     <div id={id} className="mb-[var(--medo-space-2xl)] px-[var(--medo-space-xl)] max-w-[980px]">

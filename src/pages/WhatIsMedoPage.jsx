@@ -4,17 +4,17 @@ export default function WhatIsMedoPage() {
   const { t } = useTranslation()
 
   return (
-    <div className="px-[var(--space-8)] py-[var(--space-8)] max-w-[760px]">
-      <h1 className="text-3xl [font-weight:var(--weight-bold)] text-[var(--color-text-primary)] mb-[var(--space-4)]">
+    <div className="px-[var(--medo-space-xl)] py-[var(--medo-space-xl)] max-w-[760px]">
+      <h1 className="[font-size:var(--medo-text-3xl)] [font-weight:var(--medo-weight-bold)] tracking-[var(--medo-tracking-tight)] text-[var(--medo-text)] mb-[var(--medo-space-md)]">
         {t('about.page.title')}
       </h1>
-      <p className="text-md text-[var(--color-text-secondary)] leading-[var(--leading-relaxed)] mb-[var(--space-4)]">
+      <p className="[font-size:var(--medo-text-base)] text-[var(--medo-text-muted)] [line-height:var(--medo-leading-relaxed)] mb-[var(--medo-space-md)]">
         {t('about.page.intro')}
       </p>
-      <p className="text-md text-[var(--color-text-secondary)] leading-[var(--leading-relaxed)] mb-[var(--space-4)]">
+      <p className="[font-size:var(--medo-text-base)] text-[var(--medo-text-muted)] [line-height:var(--medo-leading-relaxed)] mb-[var(--medo-space-md)]">
         {t('about.page.body1')}
       </p>
-      <p className="text-md text-[var(--color-text-secondary)] leading-[var(--leading-relaxed)]">
+      <p className="[font-size:var(--medo-text-base)] text-[var(--medo-text-muted)] [line-height:var(--medo-leading-relaxed)]">
         {t('about.page.body2')}
       </p>
     </div>
