@@ -24,8 +24,7 @@
       "radio": "Radio",
       "tag": "Tag",
       "notification": "Notification",
-      "cards": "Cards",
-      "tables": "Tables",
+      "dataTable": "DataTable",
       "tabs": "Tabs",
       "contentSwitcher": "Content Switcher",
       "breadcrumb":      "Breadcrumb",
@@ -39,14 +38,13 @@
       "list":          "List",
       "containedList": "Contained List",
       "pagination":    "Pagination",
-      "avatar":     "Avatar",
       "loading":            "Loading",
       "inlineLoading":      "Inline Loading",
       "progressBar":        "Progress Bar",
       "progressIndicator":  "Progress Indicator",
       "tooltip":           "Tooltip",
       "slider":            "Slider",
-      "uploadField":       "Upload Field",
+      "fileUploader":      "FileUploader",
       "datePicker":        "Date Picker",
       "whatIsMedo":        "What is med.o?",
       "releases":          "Releases"
@@ -1063,135 +1061,79 @@
       "timeBody":   "Five seconds is enough for a short sentence. Anything that takes longer to read belongs inline on the page; that is why errors do not fade at all."
     }
   },
-  "cards": {
-    "page": {
-      "description": "Flexible container component with a compound API of Card.Header, Card.Body, and Card.Footer."
+    "dataTable": {
+      "page": {
+        "title": "DataTable",
+        "description": "Shows comparable records in columns — for comparing, sorting and selecting. With a sticky header, bulk bar, loading and empty states."
+      },
+      "demo": {
+        "title": "Contracts",
+        "colNr": "Number",
+        "colKunde": "Customer",
+        "colStatus": "Status",
+        "colAbschluss": "Signed",
+        "colBeitrag": "Annual premium",
+        "search": "Search contracts",
+        "export": "Export",
+        "delete": "Terminate",
+        "empty": "No contracts found. Reset the filter or widen the date range."
+      },
+      "states": {
+        "loading": "Loading state with skeleton rows",
+        "empty": "Empty state with a reason"
+      },
+      "overview": {
+        "columnsTitle": "Columns and alignment",
+        "columnsBody": "Text sits left, numbers sit right in DM Mono with tabular figures so amounts line up. The most important column comes first, secondary values get muted. Use render to place real building blocks in a cell, such as a Tag for status.",
+        "sortTitle": "Sorting",
+        "sortBody": "Sortable columns carry a button in the header. The arrow appears faintly on hover and turns primary-600 once the column is active. Without onSortChange the component sorts on its own — numerically for numbers, by German locale for text.",
+        "selectTitle": "Selection and bulk bar",
+        "selectBody": "selectable adds a selection column on the left; the header selects every visible row. As soon as something is selected the header turns into the bulk bar: the count replaces the title, the bar turns teal-100 and bulkActions replaces the toolbar.",
+        "statesTitle": "Loading and empty state",
+        "statesBody": "loading shows skeleton rows shaped like the columns so the table does not jump when the data arrives. The empty state explains why there is nothing and what helps — which reads differently with an active filter than with an empty data set.",
+        "frameTitle": "Header and footer",
+        "frameBody": "With maxHeight the table header stays put while scrolling. The footer usually holds a Pagination with variant=\"bar\"."
+      },
+      "usage": {
+        "whenTitle": "When to use",
+        "whenBody": "As soon as more than one property per record is being compared. If a title plus a secondary line is enough, use a ContainedList; for details about a single object, use a KeyValueList.",
+        "columnsTitle": "Choosing columns",
+        "columnsBody": "Six to seven columns is the limit; anything beyond belongs in the detail view. Every column carries a spelled-out header, no abbreviations. A cell holds at most one interactive element.",
+        "sortTitle": "Offering sorting",
+        "sortBody": "Only make columns sortable where the order answers a question. For server-side sorting, onSortChange takes over and the component no longer reorders rows itself.",
+        "bulkTitle": "Bulk actions",
+        "bulkBody": "Bulk actions live in the bulk bar, never in every row. Destructive actions use the danger variant there and ask before they run.",
+        "emptyTitle": "Writing the empty state",
+        "emptyBody": "emptyText names the cause and the next step. \"No entries\" alone does not help — with an active filter, say that resetting it will bring results.",
+        "doDontTitle": "Recommendations",
+        "doTitle": "Do",
+        "do1": "Set numbers right-aligned and in DM Mono.",
+        "do2": "Show status as a Tag with a clear colour.",
+        "do3": "Set maxHeight on long tables so the header stays put.",
+        "dontTitle": "Don't",
+        "dont1": "Put several action buttons into every row.",
+        "dont2": "Make whole rows clickable and also offer links inside the row.",
+        "dont3": "Squeeze in too many columns or abbreviate headers."
+      },
+      "code": {
+        "title": "Code",
+        "basicTitle": "Basic structure",
+        "renderTitle": "Custom cell rendering",
+        "sortTitle": "Sorting, controlled and uncontrolled",
+        "selectionTitle": "Selection and bulk bar",
+        "frameTitle": "Sticky header, loading and footer"
+      },
+      "a11y": {
+        "structureTitle": "Table structure",
+        "structureBody": "The component renders a real table with thead and tbody; every header cell carries scope=\"col\". ariaLabel names the table, or the title does so when it is plain text.",
+        "sortTitle": "Announcing sorting",
+        "sortBody": "Sortable header cells carry aria-sort with none, ascending or descending. Sorting sits on a real button and is therefore reachable by Tab and Enter.",
+        "selectTitle": "Announcing selection",
+        "selectBody": "Selected rows carry aria-selected. Every selection box has an aria-label that switches between \"select row\", \"select all\" and \"clear selection\", and reports its state through aria-pressed.",
+        "colorTitle": "Not colour alone",
+        "colorBody": "States are never carried by colour alone: selection also shows in the box and in aria-selected, status in the Tag's label."
+      }
     },
-    "overview": {
-      "anatomyTitle": "Anatomy",
-      "anatomyBody": "A card consists of up to three optional sections that together form a structured content unit.",
-      "an1": "Card.Header — title, optional subtitle, and optional actions on the right",
-      "an2": "Card.Body — main content: text, forms, lists, or other components",
-      "an3": "Card.Footer — action row, right-aligned (e.g. buttons)",
-      "an4": "variant prop — flat (default, with border) or raised (shadow, no border)",
-      "variantsTitle": "Variants & Structure",
-      "variantsBody": "The four most common configurations: flat with footer, raised with footer, no footer, and header with action button.",
-      "flatTitle": "Project Overview",
-      "flatSubtitle": "Last updated: today",
-      "flatBody": "Card content — text, data, forms, or other components.",
-      "raisedTitle": "Highlight Panel",
-      "raisedSubtitle": "Elevated for visual prominence",
-      "raisedBody": "Raised cards stand out through a shadow effect. Suitable for panels that should appear visually in the foreground.",
-      "noFooterTitle": "Info Card",
-      "noFooterSubtitle": "No footer needed",
-      "noFooterBody": "When no actions are required, Card.Footer can be omitted.",
-      "actionTitle": "Team Members",
-      "actionSubtitle": "3 active users",
-      "actionBody": "Card.Header optionally accepts children for actions — right-aligned next to title and subtitle.",
-      "cancel": "Cancel",
-      "confirm": "Confirm",
-      "save": "Save",
-      "invite": "Invite"
-    },
-    "usage": {
-      "title": "When to use cards?",
-      "intro": "Cards suit discrete content units that should be visually separated from the rest of the page — e.g. products, user profiles, dashboard panels, or form containers.",
-      "compoundTitle": "Compound Structure",
-      "compoundBody": "All three sections are optional. Combine them as needed:",
-      "partHeader": "Title and optional subtitle, optional actions on the right (e.g. button, icon)",
-      "partBody": "Main content — no restrictions on what can be placed here",
-      "partFooter": "Action row, typically right-aligned (Cancel / Confirm)",
-      "doTitle": "Do",
-      "dontTitle": "Don't",
-      "do1": "Use Card as a container for related content",
-      "do2": "Use flat for standard layouts, raised for highlighted panels",
-      "do3": "Only use Card.Footer when actions are present",
-      "dont1": "No onClick directly on Card — place interactive elements in Card.Body or Footer",
-      "dont2": "No deeply nested cards (Card in Card) — avoid layout complexity",
-      "dont3": "Don't use Card as a purely decorative frame without content",
-      "doNote": "Cards structure content — they don't replace it.",
-      "dontNote": "Cards are containers, not interactive elements."
-    },
-    "code": {
-      "title": "Code Examples",
-      "flatTitle": "Flat Card with Footer",
-      "flatDesc": "Standard card with header, body, and footer buttons.",
-      "raisedTitle": "Raised Card",
-      "raisedDesc": "Elevated variant with shadow — no border.",
-      "actionTitle": "Header with Action Button",
-      "actionDesc": "Card.Header optionally accepts children for actions right of the title.",
-      "formTitle": "Card as Form Container",
-      "formDesc": "Cards work well as structured form containers with submit actions in the footer."
-    },
-    "a11y": {
-      "title": "Accessibility",
-      "intro": "Cards are semantically neutral div containers. Accessibility depends on the content — particularly the heading hierarchy and focusable elements.",
-      "headingTitle": "Heading Hierarchy",
-      "headingBody": "Card.Header renders the title as a div, not a heading element. Use an appropriate heading level (h2–h4) inside Card.Body if the card is part of a documented hierarchy.",
-      "focusTitle": "Focusable Elements",
-      "focusBody": "All interactive elements (buttons, links, inputs) inside the card are reachable via Tab. The card itself receives no focus.",
-      "clickTitle": "No onClick on Card",
-      "clickBody": "Card is not an interactive element. An onClick on the outer card would not be operable for keyboard and screen reader users. Actions belong in Card.Footer or Card.Body."
-    }
-  },
-  "tables": {
-    "page": {
-      "description": "Structured data table with configurable columns and optional render functions for custom cell content."
-    },
-    "overview": {
-      "anatomyTitle": "Anatomy",
-      "anatomyBody": "The Table component consists of a header row and any number of data rows. Each column is defined via a columns array.",
-      "an1": "Header row — generated from columns[].label, uppercase with letter-spacing",
-      "an2": "Data row — from rows[] objects; each cell reads row[col.key]",
-      "an3": "render function — optional col.render(row) for custom cell content (e.g. Badge, Button)",
-      "an4": "rowKey — prop for the React key, defaults to 'id'",
-      "demoTitle": "Live Demo",
-      "demoBody": "5 rows, 4 columns — the status column uses a render function with a Badge component.",
-      "hoverTitle": "Hover State",
-      "hoverBody": "Each row has a group-hover effect: hovering sets the background to surface-alt. This improves readability in long tables."
-    },
-    "usage": {
-      "title": "When to use tables?",
-      "intro": "Tables suit structured data lists where users want to compare or scan values column by column.",
-      "whenTitle": "Use cases",
-      "when1": "User lists, products, orders — each entity has identical attributes",
-      "when2": "Comparison data where users scan values in a column",
-      "when3": "Tables with per-row actions (Edit, Delete) via render function",
-      "renderTitle": "When to use render functions?",
-      "renderBody": "When a column needs more than plain text — e.g. Badge for status, Button for actions, Link for navigation — pass a render function. render receives the entire row object.",
-      "doTitle": "Do",
-      "dontTitle": "Don't",
-      "do1": "Set rowKey to the unique primary key field of your data",
-      "do2": "Use render functions for status badges, action buttons, or links",
-      "do3": "Limit column count to essentials — max 6–7 columns",
-      "dont1": "No nested tables (Table inside Table)",
-      "dont2": "No image-only cells without a text alternative",
-      "dont3": "Don't set rowKey to a non-unique value (e.g. index)",
-      "doNote": "Tables for tabular data — not as a layout grid.",
-      "dontNote": "Images as the sole cell content are meaningless to screen readers."
-    },
-    "code": {
-      "title": "Code Examples",
-      "baseTitle": "Basic Table",
-      "baseDesc": "Minimal configuration with columns and rows.",
-      "renderTitle": "Table with Render Functions",
-      "renderDesc": "Badge in the status column and Button in the action column via col.render(row).",
-      "rowKeyTitle": "Custom rowKey",
-      "rowKeyDesc": "When the primary key is not 'id', pass it explicitly via rowKey."
-    },
-    "a11y": {
-      "title": "Accessibility",
-      "intro": "The Table component renders semantic HTML: table, thead, tbody, th, td. Screen readers recognize the table structure automatically.",
-      "roleTitle": "Semantic HTML",
-      "roleBody": "table/thead/tbody/th/td elements are implicitly marked with role=\"table\", role=\"rowgroup\", role=\"columnheader\", and role=\"cell\" — no explicit ARIA needed.",
-      "scopeTitle": "scope=\"col\" on th",
-      "scopeBody": "All th elements have scope=\"col\" — screen readers can correctly associate cells with column headers.",
-      "keyboardTitle": "Keyboard Navigation",
-      "keyboardBody": "Tab navigates through all focusable elements inside the table (buttons, links). Rows themselves are not focusable.",
-      "srTitle": "Screen Reader Context",
-      "srBody": "Images or icons as the sole cell content need an aria-label or alt attribute so screen readers understand the context."
-    }
-  },
   "tabsPage": {
     "page": {
       "title":       "Tabs",
@@ -2501,63 +2443,6 @@
       "colorBody":    "Completed steps carry a check mark, failed ones a cross, open ones their number. The state is recognisable without colour."
     }
   },
-  "avatar": {
-    "page": {
-      "description": "User representation via image or initials — individually or as a group."
-    },
-    "overview": {
-      "anatomyTitle": "Anatomy",
-      "anatomyBody": "Avatar shows either an image (src) or an initials fallback. AvatarGroup stacks multiple avatars with an automatic overflow counter.",
-      "an1": "Image — image variant via src prop with alt text",
-      "an2": "Fallback — initials variant with optional background color (color/textColor)",
-      "an3": "Size — xs (24 px) to xl (56 px) via size prop",
-      "sizesTitle": "Sizes",
-      "sizesBody": "Five sizes from xs to xl. md (40 px) is the standard for list rows and comments.",
-      "fallbackTitle": "Fallback Variants",
-      "fallbackBody": "When no src is provided, Avatar shows initials. With color/textColor the background color is controlled; without color the system fallback color applies.",
-      "fallbackWithColor": "With color",
-      "fallbackNoColor": "Without color",
-      "groupTitle": "AvatarGroup",
-      "groupBody": "AvatarGroup shows up to max avatars — excess is shown as '+N'. Demo: 6 avatars with max=4 → 4 visible + '+2'."
-    },
-    "usage": {
-      "title": "When to use Avatar?",
-      "intro": "Avatar suits user identification in lists, comments, profile headers, and team views. Use the initials fallback when no image is available.",
-      "groupMaxTitle": "AvatarGroup max recommendation",
-      "groupMaxBody": "max=4 or max=5 is the recommended range for AvatarGroup. With more visible avatars, readability decreases. The '+N' count informs about the total number.",
-      "doTitle": "Do",
-      "dontTitle": "Don't",
-      "do1": "Always set alt text for src avatars (e.g. alt='Alice Jones')",
-      "do2": "Use initials fallback with color/textColor for consistent brand assignment",
-      "do3": "Use AvatarGroup for team membership and participant lists",
-      "dont1": "No src without alt attribute — screen readers cannot describe the image",
-      "dont2": "Don't show more than 5 avatars without overflow — use AvatarGroup with max",
-      "dont3": "Don't mix avatar sizes within an AvatarGroup",
-      "doNote": "Avatar for person identification with a clear fallback strategy.",
-      "dontNote": "No avatar without a text alternative for screen readers."
-    },
-    "code": {
-      "title": "Code Examples",
-      "sizesTitle": "Size Variants",
-      "sizesDesc": "All five sizes from xs to xl with initials.",
-      "imageTitle": "Avatar with Image",
-      "imageDesc": "src variant — alt text is required.",
-      "groupTitle": "AvatarGroup with Overflow",
-      "groupDesc": "6 avatars, max=4 — shows 4 avatars + '+2' overflow counter.",
-      "noColorTitle": "Without color Prop",
-      "noColorDesc": "Without color the system fallback applies. With color/textColor explicit brand assignment."
-    },
-    "a11y": {
-      "title": "Accessibility",
-      "intro": "Avatars are visual elements. Screen readers need text alternatives — either via alt (src variant) or aria-label (initials variant in contextless use).",
-      "altTitle": "alt for src avatars",
-      "altBody": "For Avatar with src always set alt='Full Name'. Empty alt (alt='') only when the avatar is purely decorative and the name already appears in surrounding text.",
-      "ariaTitle": "aria-label for initials-only",
-      "ariaBody": "When Avatar shows only initials and no surrounding context names the person, set aria-label='Alice Jones' on the avatar.",
-      "overflowTitle": "Label AvatarGroup '+N'",
-      "overflowBody": "The overflow counter '+N' needs aria-label='N more participants' so screen readers understand the meaning."
-    }
-  },
   "impressum": {
     "page": {
       "title": "Legal Notice",
@@ -2574,92 +2459,141 @@
     "title": "On this page",
     "openButton": "Table of Contents"
   },
-  "datePicker": {
-    "page": {
-      "title": "Date Picker",
-      "description": "Date selection component with a calendar popover and localization support"
+    "datePicker": {
+      "page": {
+        "title": "DatePicker",
+        "description": "Pick a date — a single day or a range. As a field with a pop-up calendar or inline, with month and year selection, presets and time slots."
+      },
+      "demo": {
+        "label": "Contract start",
+        "helper": "Format DD.MM.YYYY. No earlier than the day the contract is signed.",
+        "error": "The date is before the contract was signed. Please pick 04.08.2026 or later.",
+        "summary": "Billing period",
+        "limitHelper": "Selectable from 10.08.2026 to 20.08.2026.",
+        "presetWeek": "This week",
+        "presetMonth": "This month",
+        "slotsLabel": "Time"
+      },
+      "forms": {
+        "field": "Field with calendar popover",
+        "inline": "Inline — the calendar stays put"
+      },
+      "states": {
+        "empty": "Empty",
+        "filled": "Filled",
+        "error": "Error",
+        "disabled": "Disabled",
+        "limited": "With min and max"
+      },
+      "overview": {
+        "formsTitle": "Forms",
+        "formsBody": "The field shows the chosen date, a calendar icon on the left and, on the right, either the cross to clear it or the expand arrow. It is 44px tall and at least 230px wide. inline shows the calendar permanently — for ranges and appointment booking, where the calendar is the main element of the page.",
+        "rangeTitle": "Range and presets",
+        "rangeBody": "With mode=\"range\" the first click sets the start, the second the end; another click starts over. If the second click falls before the first, the range flips. Start and end are filled and square on their inner edges, the days between sit on a flat tint. Next to it stand the presets and the summary with the range and the number of days.",
+        "statesTitle": "States",
+        "statesBody": "min and max disable days — they are never hidden. The error state replaces the hint and switches on the danger focus ring. Today carries a thin teal ring and a bold numeral.",
+        "slotsTitle": "TimeSlots",
+        "slotsBody": "For appointment booking: the grid of times next to the calendar. Taken times are disabled and struck through, not hidden — people should see that the appointment exists."
+      },
+      "usage": {
+        "whenTitle": "When to use",
+        "whenBody": "For dates people look up in a calendar: appointments, ranges, deadlines. For a date of birth, a field with format help is faster — there the calendar is a detour through many years.",
+        "selectTitle": "Selection",
+        "selectBody": "A click selects directly, there is no confirming step. The header carries month and year as a button: it opens a month grid with year navigation, so distant dates are reachable without twelve clicks.",
+        "limitsTitle": "Setting limits",
+        "limitsBody": "min and max disable what cannot be picked. Say in the helper which range is open — otherwise people try days until one responds.",
+        "presetsTitle": "Presets",
+        "presetsBody": "presets places chips next to the calendar (\"This week\", \"Last 30 days\"). They belong to the inline calendar, where there is room beside it, and save clicking through the grid for recurring ranges.",
+        "formatTitle": "Format",
+        "formatBody": "The field shows DD.MM.YYYY in DM Mono, the week starts on Monday and month names are spelled out in German. There is no US ordering and no Sunday as the first day.",
+        "doDontTitle": "Recommendations",
+        "doTitle": "Do",
+        "do1": "Field with popover for single dates, inline for ranges and booking.",
+        "do2": "Clearly disable invalid and fully booked days.",
+        "do3": "Make month and year directly selectable.",
+        "dontTitle": "Don't",
+        "dont1": "Hide blocked days or taken times instead of disabling them.",
+        "dont2": "Use Sunday as the first day of the week or US ordering.",
+        "dont3": "Apply the selection only after an \"Apply\" step."
+      },
+      "code": {
+        "title": "Code",
+        "fieldTitle": "Field with calendar popover",
+        "rangeTitle": "Range with presets",
+        "slotsTitle": "TimeSlots",
+        "errorTitle": "Error state"
+      },
+      "a11y": {
+        "keyboardTitle": "Keyboard",
+        "keyboardBody": "The field opens the calendar with Enter and Space. Inside the grid the arrow keys move focus by day and by week, Escape closes the calendar and so does a click outside.",
+        "namingTitle": "Naming",
+        "namingBody": "The field carries aria-haspopup=\"dialog\" and aria-expanded; the calendar is a dialog named \"Kalender\". Every day carries its full date as an aria-label (\"4. August 2026\"), today additionally aria-current=\"date\".",
+        "stateTitle": "Announcing state",
+        "stateBody": "Selected days report through aria-pressed, blocked ones through the disabled attribute. The same holds for TimeSlots: taken times are disabled and additionally struck through, not merely a different colour.",
+        "errorTitle": "Errors and hints",
+        "errorBody": "Hint and error message are tied to the field through aria-describedby, with aria-invalid added in the error case. The message names the cause and the next step, not just the state."
+      }
     },
-    "placeholder": "Select a date",
-    "range": {
-      "placeholder": "Select a range"
+    "fileUploader": {
+      "page": {
+        "title": "FileUploader",
+        "description": "Pick files or drag them into the zone. Shows name, size and state per file and checks type and size before accepting."
+      },
+      "demo": {
+        "label": "Trade licence",
+        "helper": "As a PDF or a photo, so we can verify your registration.",
+        "compactLabel": "Termination letter",
+        "tooLarge": "File is larger than 5.0 MB. Please reduce the scan or upload it as a PDF."
+      },
+      "states": {
+        "empty": "Empty",
+        "disabled": "Disabled"
+      },
+      "overview": {
+        "zoneTitle": "Drop zone",
+        "zoneBody": "The zone is the button itself — dragging is a bonus, never the only way. It carries an icon, a visible button, the note \"or drag it here\" and below that the formats and maximum size. While dragging, the dashed border turns solid and teal.",
+        "compactTitle": "Compact form",
+        "compactBody": "compact replaces the zone with a single row of button and format hint — for exactly one file in a dense form. Dragging still works there.",
+        "statusTitle": "Per-file states",
+        "statusBody": "Per file: a 40px preview (image, otherwise a document icon), the name truncated with an ellipsis, the size in DM Mono and the state on the right. While uploading there is a bar; when finished, a green check. Rejected files carry a red border and the reason.",
+        "statesTitle": "Further states",
+        "statesBody": "Without files only the drop zone shows. Disabled, it accepts neither a click nor a drop."
+      },
+      "usage": {
+        "whenTitle": "When to use",
+        "whenBody": "For files the process needs: proofs, scans, receipts. The drop zone suits several or large files, the compact row exactly one file in a dense form.",
+        "stateTitle": "State stays outside",
+        "stateBody": "The component holds no state of its own: files comes from outside, onFilesAdded delivers the checked new files, onRemove removes. That keeps the actual upload with the caller — including progress and cancellation.",
+        "checkTitle": "Checking",
+        "checkBody": "accept and maxSize are checked before accepting. Rejected files do not vanish silently but appear in the list with a red border and the reason. That is the only way to know why dragging seemingly did nothing.",
+        "rowsTitle": "Keeping the list",
+        "rowsBody": "What has been uploaded stays visible — do not clear the list after the upload. Removing is always possible, even during the transfer.",
+        "doDontTitle": "Recommendations",
+        "doTitle": "Do",
+        "do1": "Name the allowed types and maximum size up front, not only on failure.",
+        "do2": "Show progress and offer a visible way to remove.",
+        "do3": "Show errors at the file, with text and icon.",
+        "dontTitle": "Don't",
+        "dont1": "Offer drag & drop only; without a mouse that is unusable.",
+        "dont2": "Show errors as a Notification instead of at the file.",
+        "dont3": "Reject invalid files silently."
+      },
+      "code": {
+        "title": "Code",
+        "basicTitle": "Drop zone with checking",
+        "compactTitle": "Compact form",
+        "statusTitle": "Per-file states",
+        "previewTitle": "Image preview"
+      },
+      "a11y": {
+        "keyboardTitle": "Keyboard",
+        "keyboardBody": "The drop zone is a real button and therefore reachable by Tab; Enter and Space open the file picker. Dragging is a bonus and never the only way. The actual file input sits invisibly behind it and is taken out of the tab order.",
+        "namingTitle": "Naming",
+        "namingBody": "label names what is needed, helper says why and what for. Every remove button carries an aria-label with the file name, so a screen reader makes clear which row it affects.",
+        "errorTitle": "Errors",
+        "errorBody": "Besides the red border, rejected files carry an error icon and the reason in plain text — colour alone does not carry the information. The reason names the limit and the next step."
+      }
     },
-    "withTime": {
-      "timeLabel": "Time"
-    },
-    "overview": {
-      "anatomyTitle": "Anatomy",
-      "anatomyBody": "The DatePicker consists of a trigger button and a calendar popover. The popover closes automatically after a date is selected.",
-      "variantsTitle": "Variants",
-      "variantsBody": "Five variants are available: default (single day), range (date range), withTime (date + time), inline (always-visible calendar), and input (keyboard entry with calendar icon).",
-      "localeTitle": "Localization",
-      "localeBody": "The displayed date is automatically formatted according to the active language: German (de-DE) or English (en-US)."
-    },
-    "usage": {
-      "title": "Usage",
-      "intro": "The DatePicker is a controlled component — pass the current value via value and handle changes via onChange.",
-      "rangeTitle": "Date range (range)",
-      "rangeBody": "The range variant expects an object { from, to } as value and returns the same format.",
-      "withTimeTitle": "Date + time (withTime)",
-      "withTimeBody": "The withTime variant adds a time input below the calendar. The onChange callback returns a full Date object including hours and minutes.",
-      "inlineTitle": "Inline",
-      "inlineBody": "The inline variant renders the calendar directly — without a popover trigger. Use it for embedded forms where prominent date selection is needed.",
-      "inputTitle": "Keyboard input (input)",
-      "inputBody": "The input variant combines a DD/MM/YYYY text field with a calendar icon button. Slashes are inserted automatically as the user types. The calendar icon opens a popover for visual date selection.",
-      "disabledTitle": "Disabling dates",
-      "disabledBody": "Use the disabledDates prop to exclude specific dates from selection, such as holidays or already booked dates."
-    },
-    "code": {
-      "title": "Code",
-      "basicTitle": "Default",
-      "basicDesc": "Controlled DatePicker with local state.",
-      "rangeTitle": "Range",
-      "withTimeTitle": "With Time",
-      "inlineTitle": "Inline",
-      "inputTitle": "Input",
-      "disabledTitle": "Disabled dates"
-    },
-    "a11y": {
-      "title": "Accessibility",
-      "intro": "The DatePicker is built on Radix UI Popover and react-day-picker with full keyboard navigation.",
-      "keyboardTitle": "Keyboard interaction",
-      "keyboardBody": "Enter/Space opens the popover. Inside the calendar, arrow keys navigate between days, Enter selects a date, and Escape closes the popover."
-    }
-  },
-  "uploadField": {
-    "page": {
-      "title": "Upload Field",
-      "description": "File input component in three variants: default, drag-and-drop, and preview"
-    },
-    "overview": {
-      "anatomyTitle": "Anatomy",
-      "anatomyBody": "The UploadField consists of a hidden native file input and a visual trigger. The trigger opens the browser's file dialog.",
-      "variantsTitle": "Variants",
-      "variantsBody": "default: simple button. dropzone: drag-and-drop area with drag-over state. preview: shows the filename after selection."
-    },
-    "usage": {
-      "title": "Usage",
-      "intro": "Use UploadField wherever users need to select a file. Choose the variant based on available space and context.",
-      "variantGuideTitle": "Which variant to use?",
-      "variantGuideBody": "default for compact forms, dropzone for prominent upload areas, preview when the selected filename should remain visible."
-    },
-    "code": {
-      "title": "Code",
-      "basicTitle": "All variants",
-      "basicDesc": "Select the variant via the variant prop."
-    },
-    "a11y": {
-      "title": "Accessibility",
-      "intro": "The trigger button is keyboard-focusable. The hidden native input is activated by clicking the trigger.",
-      "keyboardTitle": "Keyboard interaction",
-      "keyboardBody": "Tab focuses the trigger; Enter or Space opens the file dialog."
-    },
-    "button": {
-      "label": "Choose file"
-    },
-    "dropzone": {
-      "hint": "Drag a file here or click to browse"
-    }
-  },
   "tooltip": {
     "page": {
       "title": "Tooltip",
