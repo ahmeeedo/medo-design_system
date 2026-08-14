@@ -1,6 +1,6 @@
 import { cn } from '@/lib/utils'
 
-export function Table({ columns = [], rows = [], rowKey = 'id' }) {
+export function LegacyTable({ columns = [], rows = [], rowKey = 'id' }) {
   return (
     <div className="border border-border-subtle rounded-lg overflow-x-auto">
       <table className="w-full border-collapse text-sm min-w-[500px]">
