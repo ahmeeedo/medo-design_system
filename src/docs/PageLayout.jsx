@@ -132,10 +132,14 @@ export function PageLayout({ title, description, tabs = [] }) {
         )}
       </div>
 
+      {/* The contained list is inline-flex with labels that never wrap, so it is
+          sized to its own min-content and cannot scroll itself. The scroll
+          container has to be this wrapper, otherwise the page overflows
+          sideways on narrow viewports. */}
       <div
         ref={tabBarRef}
         {...{ [TAB_BAR_MARKER]: '' }}
-        className="sticky z-20 bg-[var(--medo-surface)] border-b border-[var(--medo-border)] mb-[var(--medo-space-2xl)] px-[var(--medo-space-xl)] py-[var(--medo-space-sm)]"
+        className="sticky z-20 bg-[var(--medo-surface)] border-b border-[var(--medo-border)] mb-[var(--medo-space-2xl)] px-[var(--medo-space-xl)] py-[var(--medo-space-sm)] overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
         style={{ top: HEADER_H }}
       >
         <Tabs
@@ -143,7 +147,6 @@ export function PageLayout({ title, description, tabs = [] }) {
           value={active}
           onChange={handleTabClick}
           variant="contained"
-          scrollable
           ariaLabel={title}
         />
       </div>
