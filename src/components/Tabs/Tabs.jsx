@@ -19,17 +19,12 @@ export function Tabs({
   fullWidth = false,
   scrollable = false,
   ariaLabel,
-  idPrefix,
   children,
   className,
   style,
   ...rest
 }) {
-  /* idPrefix lets a caller render the panel outside this component and still
-     wire tab and panel together: the panel takes `${idPrefix}-panel`. */
-  const autoId = useId()
-  const uid = idPrefix || autoId
-  const hasPanel = Boolean(children) || Boolean(idPrefix)
+  const uid = useId()
   const controlled = value !== undefined
   const first = items.find((t) => !t.disabled) || items[0] || {}
   const [inner, setInner] = useState(defaultValue !== undefined ? defaultValue : first.value)
@@ -99,7 +94,7 @@ export function Tabs({
               id={uid + '-tab-' + t.value}
               data-val={t.value}
               aria-selected={selected ? 'true' : 'false'}
-              aria-controls={hasPanel ? uid + '-panel' : undefined}
+              aria-controls={children ? uid + '-panel' : undefined}
               tabIndex={selected ? 0 : -1}
               disabled={!!t.disabled}
               onClick={() => !t.disabled && select(t.value)}

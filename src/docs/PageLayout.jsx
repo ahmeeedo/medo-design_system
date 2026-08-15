@@ -18,11 +18,9 @@ const GRID_CLASSES = {
 /* Same global definition the header in DocsLayout uses. */
 const HEADER_H = 'var(--docs-header-height)'
 
-/* The tab bar sticks to the header while the panel sits further down beside the
-   table of contents, so Tabs renders the bar only and the panel is wired back
-   to it by hand over this prefix. The search index generator uses it to tell
-   the docs tab bar apart from Tabs instances demoed inside page content. */
-export const TAB_ID_PREFIX = 'docs-tabs'
+/* Marks the docs tab bar. Page content demoes the Tabs component too, so the
+   search index generator needs to tell the two apart. */
+export const TAB_BAR_MARKER = 'data-docs-tabbar'
 
 export function PageLayout({ title, description, tabs = [] }) {
   const [searchParams, setSearchParams] = useSearchParams()
@@ -127,6 +125,7 @@ export function PageLayout({ title, description, tabs = [] }) {
 
       <div
         ref={tabBarRef}
+        {...{ [TAB_BAR_MARKER]: '' }}
         className="sticky z-20 bg-[var(--medo-surface)] border-b border-[var(--medo-border)] mb-[var(--medo-space-2xl)]"
         style={{ top: HEADER_H }}
       >
@@ -136,7 +135,6 @@ export function PageLayout({ title, description, tabs = [] }) {
           onChange={handleTabClick}
           variant="underline"
           scrollable
-          idPrefix={TAB_ID_PREFIX}
           ariaLabel={title}
         />
       </div>
@@ -145,8 +143,7 @@ export function PageLayout({ title, description, tabs = [] }) {
         <div
           ref={contentRef}
           role="tabpanel"
-          id={`${TAB_ID_PREFIX}-panel`}
-          aria-labelledby={`${TAB_ID_PREFIX}-tab-${active}`}
+          aria-label={title}
           className="flex-1 min-w-0"
         >
           {tabs.find(tab => tab.id === active)?.content}

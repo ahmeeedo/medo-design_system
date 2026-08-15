@@ -77,21 +77,12 @@ describe('Tabs', () => {
     expect(tab).toHaveAttribute('aria-controls', panel.id)
   })
 
-  /* idPrefix lets the docs chrome place the panel elsewhere in the DOM and
-     still wire it to the tab bar. */
-  it('wires an externally rendered panel through idPrefix', () => {
-    render(<Tabs items={items} value="usage" onChange={() => {}} idPrefix="docs-tabs" />)
+  /* children is optional in the contract, so the component doubles as a bare
+     tab bar — that is how the docs chrome uses it. */
+  it('renders no panel and no dangling aria-controls without children', () => {
+    render(<Tabs items={items} value="usage" onChange={() => {}} />)
 
     expect(screen.queryByRole('tabpanel')).not.toBeInTheDocument()
-    expect(screen.getByRole('tab', { name: 'Usage' })).toHaveAttribute('id', 'docs-tabs-tab-usage')
-    expect(screen.getByRole('tab', { name: 'Usage' })).toHaveAttribute(
-      'aria-controls',
-      'docs-tabs-panel',
-    )
-  })
-
-  it('leaves aria-controls off when there is neither a panel nor a prefix', () => {
-    render(<Tabs items={items} value="usage" onChange={() => {}} />)
     expect(screen.getByRole('tab', { name: 'Usage' })).not.toHaveAttribute('aria-controls')
   })
 })
