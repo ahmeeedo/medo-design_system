@@ -63,10 +63,24 @@ export function PageLayout({ title, description, tabs = [] }) {
     [tabs],
   )
 
+  /* Scrolls the tab bar itself rather than calling scrollIntoView, which would
+     walk every scrollable ancestor and can move the page under a sticky
+     element. The gap stays in CSS as scroll-padding and is read back here. */
   useEffect(() => {
-    if (!tabBarRef.current || !active) return
-    const btn = tabBarRef.current.querySelector(`[data-val="${active}"]`)
-    btn?.scrollIntoView({ behavior: 'smooth', inline: 'nearest', block: 'nearest' })
+    const bar = tabBarRef.current
+    if (!bar || !active) return
+    const btn = bar.querySelector(`[data-val="${active}"]`)
+    if (!btn) return
+
+    const pad = parseFloat(getComputedStyle(bar).scrollPaddingInlineStart) || 0
+    const barBox = bar.getBoundingClientRect()
+    const btnBox = btn.getBoundingClientRect()
+
+    const shortLeft = btnBox.left - (barBox.left + pad)
+    const shortRight = btnBox.right - (barBox.right - pad)
+    const delta = shortLeft < 0 ? shortLeft : shortRight > 0 ? shortRight : 0
+
+    if (delta) bar.scrollBy({ left: delta, behavior: 'smooth' })
   }, [active])
 
   useEffect(() => {
@@ -135,11 +149,12 @@ export function PageLayout({ title, description, tabs = [] }) {
       {/* The contained list is inline-flex with labels that never wrap, so it is
           sized to its own min-content and cannot scroll itself. The scroll
           container has to be this wrapper, otherwise the page overflows
-          sideways on narrow viewports. */}
+          sideways on narrow viewports. scroll-padding keeps the tab that is
+          scrolled into view off the edge instead of flush against it. */}
       <div
         ref={tabBarRef}
         {...{ [TAB_BAR_MARKER]: '' }}
-        className="sticky z-20 bg-[var(--medo-surface)] border-b border-[var(--medo-border)] mb-[var(--medo-space-2xl)] px-[var(--medo-space-xl)] py-[var(--medo-space-sm)] overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        className="sticky z-20 bg-[var(--medo-surface)] border-b border-[var(--medo-border)] mb-[var(--medo-space-2xl)] px-[var(--medo-space-xl)] py-[var(--medo-space-sm)] overflow-x-auto [scroll-padding-inline:var(--medo-space-xl)] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
         style={{ top: HEADER_H }}
       >
         <Tabs

@@ -18,6 +18,7 @@ export function installDomStubs() {
   globalThis.ResizeObserver ??= Observer
   globalThis.IntersectionObserver ??= Observer
   Element.prototype.scrollIntoView ??= function scrollIntoView() {}
+  Element.prototype.scrollBy ??= function scrollBy() {}
   Element.prototype.hasPointerCapture ??= function hasPointerCapture() { return false }
   Element.prototype.setPointerCapture ??= function setPointerCapture() {}
   Element.prototype.releasePointerCapture ??= function releasePointerCapture() {}
