@@ -9,7 +9,9 @@
     "preview": "vite preview",
     "test": "vitest run",
     "test:watch": "vitest",
-    "search-index": "vite-node scripts/generate-search-index.mjs"
+    "search-index": "vite-node scripts/generate-search-index.mjs",
+    "contrast": "node scripts/contrast/report.mjs",
+    "contrast:verify": "node scripts/contrast/verify.mjs"
   },
   "dependencies": {
     "fuse.js": "^7.3.0",
