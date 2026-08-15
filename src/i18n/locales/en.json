@@ -57,6 +57,9 @@
     "en": "EN",
     "de": "DE"
   },
+  "app": {
+    "toastRegion": "Notifications"
+  },
   "tabs": {
     "overview": "Overview",
     "usage": "Usage",
@@ -1002,7 +1005,6 @@
       "toastQueued":        "Meldung {{n}} von 3",
       "toastStackBtn":      "Drei auf einmal",
       "toastHint":          "Der Stapel steht oben rechts. Erfolg und Hinweis blenden nach 5 Sekunden aus, Fehler bleiben stehen.",
-      "toastRegion":        "Benachrichtigungen",
       "kinds": {
         "info":    "Die Sprechzeiten am Freitag wurden angepasst",
         "success": "Termin gespeichert",
@@ -2752,7 +2754,7 @@
       "title": "What is med.o?",
       "intro": "med.o specialises in developing software products for the medical sector.",
       "body1": "The med.o Design System provides a collection of reusable UI components, design decisions, and guidelines that enable consistent and accessible user interfaces.",
-      "body2": "All components are built on Tailwind CSS and Radix UI Primitives and follow a unified token system for colours, spacing, typography, and more."
+      "body2": "All components are built with React and styled exclusively through class-based CSS on the medo design tokens — without a third-party component library. They follow a unified token system for colours, spacing, typography, and more; the icons come from Material Symbols Rounded. This documentation portal additionally uses Tailwind utilities that reference the same tokens."
     }
   },
   "releases": {

@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import { PageLayout, Section, Content, DemoPanel } from '../docs/PageLayout'
 import { CodeBlock } from '../docs/CodeBlock'
-import { Notification, ToastHost, toast, Button } from '../components'
+import { Notification, toast, Button } from '../components'
 
 const PROSE = 'text-[var(--medo-text-muted)] [font-family:var(--medo-font-sans)] [font-size:var(--medo-text-base)] [line-height:var(--medo-leading-relaxed)]'
 const CAPTION = '[font-family:var(--medo-font-mono)] [font-size:var(--medo-text-xs)] text-[var(--medo-text-muted)]'
@@ -176,7 +176,6 @@ export default function NotificationPage() {
               <p className={`${CAPTION} mt-[var(--medo-space-sm)]`}>{t('notification.demo.toastHint')}</p>
             </Content>
           </Section>
-          <ToastHost label={t('notification.demo.toastRegion')} />
         </>
       ),
     },

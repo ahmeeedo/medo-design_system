@@ -1,6 +1,8 @@
 import { useEffect } from 'react'
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { DocsLayout } from './docs/DocsLayout'
+import { ToastHost } from './components'
 
 import BrandPage          from './pages/BrandPage'
 import BrandColorsPage    from './pages/BrandColorsPage'
@@ -120,9 +122,14 @@ function AppContent() {
 }
 
 export default function App() {
+  const { t } = useTranslation()
+
+  /* Sits outside the routed content so a page change never unmounts the stack
+     and discards toasts that are still on screen. */
   return (
     <BrowserRouter>
       <AppContent />
+      <ToastHost label={t('app.toastRegion')} />
     </BrowserRouter>
   )
 }
