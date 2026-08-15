@@ -1,54 +1,84 @@
 APM_RULES {
 
-## Communication
+## Kommunikation
 
-- Respond in German. Write all code, variable names, function names, and inline code comments in English.
-- Keep responses short and precise.
-- After completing work, document what was done and what the next steps are.
-- No unnecessary code comments — only add a comment when the *why* is non-obvious.
+- Auf Deutsch antworten. Code, Variablen-/Funktionsnamen und Code-Kommentare auf Englisch.
+- Antworten kurz und präzise halten. Nach Abschluss dokumentieren, was getan wurde und was die nächsten Schritte sind.
+- Keine unnötigen Code-Kommentare — nur kommentieren, wenn das *Warum* nicht offensichtlich ist.
+- Bei Kontext über 50 %: neue Konversation oder Subagenten für unabhängige Aufgaben vorschlagen; Datei-Reads statt Einfügen großer Inhalte, Recherche in Subagenten.
 
-## Context Management
+## Code-Qualität
 
-- When context exceeds 50%, suggest starting a new conversation or using subagents for independent tasks.
-- Proactively recommend context-saving strategies: use file reads instead of pasting, suggest /compact when context is heavy, recommend subagents for research tasks.
+- Nachhaltigen, wartbaren Code schreiben. Klarheit und Wiederverwendbarkeit vor Cleverness.
+- Keine halbfertigen Implementierungen — jeder gelieferte Stand ist funktionsfähig.
+- Kein Error-Handling, keine Fallbacks, keine Validierung für Szenarien, die nicht eintreten können. Nur an Systemgrenzen validieren (User-Eingaben, externe APIs).
 
-## Code Quality
+## Referenzmaterial
 
-- Write sustainable, maintainable code. Prefer clarity and reusability over cleverness.
-- No half-finished implementations. Every delivered piece of code must be functional.
-- Do not add error handling, fallbacks, or validation for scenarios that cannot happen. Only validate at system boundaries (user input, external APIs).
+- `design-reference/` ist die unveränderliche Design-Wahrheit (Kopie des medo-Design-Projekts). Nie editieren, nur lesen.
+- Verbindlichkeit bei Widersprüchen (absteigend): `design-reference/CLAUDE.md` (gelockte Beschlüsse) → `design-reference/components/<Name>.dc.html` (Spezifikation pro Komponente) → `design-reference/ui/<Name>.jsx` / `.d.ts` / `.prompt.md` (Referenzcode, Props-Vertrag, Nutzungsregeln).
+- Die Referenz ist maßgeblich, nicht Ausgangspunkt für Vereinfachungen: Verhalten, Zustände und Details vollständig übernehmen. Jede in der `.d.ts` deklarierte Prop/Variante muss funktionieren.
+- **`design-reference/` ist die alleinige Quelle: portierte Komponenten werden auch nicht additiv erweitert.** Eine Prop, die die `.d.ts` nicht kennt, gehört nicht hinein — auch nicht als „dokumentierte Abweichung", auch nicht, wenn sie einen echten Bedarf löst. Braucht der Aufrufer mehr, löst er es auf seiner Seite oder der Bedarf geht als Änderungswunsch ins Design-Projekt zurück.
+- Fehlt ein Token oder eine Angabe, oder widerspricht sich Material: an den Manager eskalieren und auf Klärung warten. Nie Werte erfinden, nachrechnen oder improvisieren.
+
+## Port-Konventionen (Komponenten aus design-reference/ui/)
+
+- `React.createElement`-Code in normales JSX umschreiben; Verhalten 1:1 erhalten.
+- Den `MEDO_*_CSS`-String der Referenz in eine eigene Datei `src/components/<Name>/<Name>.css` extrahieren und in der Komponente importieren. CSS-Klassennamen (`medo-btn` …) und Selektoren unverändert lassen; das `injectCss`-Muster entfällt.
+- **Vor dem Anlegen der CSS-Datei den Klassenpräfix gegen die bereits portierten Komponenten prüfen** (`grep` über `src/components/`). Anders als in der Referenz, wo jede Spezifikationsseite für sich läuft, landen hier alle Stylesheets in einem Bündel — ein doppelt belegter Präfix lässt zwei Komponenten einander stillschweigend überschreiben, ohne Build-Fehler. Bei einer Kollision an den Manager eskalieren; der neue Präfix wird dort entschieden und gilt als dokumentierte Abweichung von der Referenz.
+- `window.MedoUI`-Registrierung entfernen; stattdessen benannte ES-Exporte und Export über das Barrel `src/components/index.js`.
+- Interne Abhängigkeiten der Referenz (z.B. Icon, Field, MenuList aus Dropdown) als ES-Imports auflösen — keine Window-Lookups, keine Ladereihenfolge-Annahmen.
+- **Inline-Stile mit Token-Werten nur in Längsformen setzen** (`borderTopColor`, `borderRightColor` … statt `borderColor`). Kurzformen mit `var()`-Werten kommen unvollständig an, und der Fehler ist stumm: ein Teil der Kanten färbt sich korrekt, der Rest bleibt neutral. Betrifft jede Komponente, die Farben inline aus Tokens setzt.
+- Ablage: `src/components/<Name>/<Name>.jsx` + `<Name>.css`.
 
 ## Styling
 
-- All styling uses Tailwind CSS utility classes. Do not create new CSS Module files (`.module.css`).
-- Tailwind classes must reference design tokens from `src/styles/tokens.css` via the configured `tailwind.config.js` mappings. Never hardcode color, spacing, radius, or shadow values directly in JSX or CSS.
-- When a required design token does not exist in `src/styles/tokens.css`: stop, document the missing token, and report it to the Manager for User clarification. Do not invent token values.
-- `src/styles/global.css` structure: ONE `@theme inline` block (no duplicates), ONE `:root` block. `--font-sans` must be set to a string literal in `@theme inline` — never `var(--font-sans)` (circular). `--radius` must be a concrete pixel value (e.g. `8px`) — never `var(--radius-lg)` (circular). Do not add `@source` directives — `@tailwindcss/vite` scans all project files automatically in both dev and build modes.
-- Do not add `@import "shadcn/tailwind.css"` — its `@custom-variant` and `@utility` content is already inlined in `global.css`. Running `npx shadcn@latest add` only installs component primitives; it must not overwrite or add duplicate blocks to `global.css`.
-- After every `npx shadcn@latest add <name>`, immediately inspect all generated files in `src/components/ui/` for lucide-react imports. Replace every lucide-react icon import with the `Icon` component from `src/components/Icon/Icon.jsx` using the equivalent Material Symbols name. Never leave lucide-react imports in the codebase.
+- Zwei Welten, klare Grenze: Komponenten (`src/components/`) verwenden ausschließlich das portierte klassenbasierte CSS auf `--medo-*`-Tokens — kein Tailwind in Komponenten-CSS. Docs-Chrome und Seiten (`src/docs/`, `src/pages/`) verwenden Tailwind-Utilities, die ausschließlich `--medo-*`-Tokens referenzieren (z.B. `bg-[var(--medo-surface-container)]`).
+- Nie Farb-, Abstands-, Radius- oder Schatten-Werte hardcoden — immer Token-Referenz. Bevorzugt semantische Tokens (Ebene 3); Brand-Stufen nur, wo die Referenz sie selbst nutzt.
+- Die Zwischenwert-Regel gilt für selbst geschriebenen Code (Docs-Chrome, Doku-Seiten, neu ergänzte Komponenten-CSS). **1:1 portiertes Komponenten-CSS behält die Zahlenwerte der Referenz** — Umrechnen fiele unter das Verbot des Nachrechnens.
+- Zwischenwerte, die auf keiner Token-Stufe liegen, werden im CSS aus Tokens berechnet statt hardcodiert: `calc(var(--medo-space-xs) * 0.75)` für 6px, `calc(var(--medo-space-2xl) + var(--medo-space-xs))` für 56px. Wiederkehrende Zwischenwerte bekommen eine globale Definition im `:root`-Block von `src\styles\global.css` (z.B. `--docs-header-height`, `--docs-hit-target`) und werden überall darüber referenziert, nie mehrfach ausgerechnet.
+- Alt-Tokens (`--color-brand-*`, `--space-1…32` usw.) in neuem oder geändertem Code nicht mehr verwenden; sie existieren nur noch für unmigrierte Alt-Seiten bis zum Cleanup.
+- `src/styles/global.css`: EIN `@theme inline`-Block, EIN `:root`-Block, keine zirkulären `var()`-Selbstreferenzen, keine `@source`-Direktiven.
 
-## DemoPanel
+## Icons
 
-- Every component docs page must include `<DemoPanel>` as the **first JSX element inside the Overview tab content**, before any `<Section>` elements. This applies when creating new component pages and when retrofitting existing ones.
-- Import: `import { DemoPanel } from '../docs/PageLayout'` (DemoPanel is re-exported from PageLayout alongside Section, GridWrapper, Content).
-- DemoPanel is for component docs pages only. Info pages (WhatIsMedoPage, ReleasesPage, ImpressumPage, DatenschutzPage) do not use DemoPanel.
-- Configure via two props: `component` (function receiving current control values, returns ReactNode), `controls` (array of dropdown/toggle definitions). See `src/docs/DemoPanel.jsx` for the full API.
+- Ausschließlich Material Symbols Rounded, weight 300, FILL 0 — immer über die `Icon`-Komponente aus `src/components/Icon/`. `size` ist eine freie Zahl: Standardgrößen sind 18 (neben `text-sm`), 20 (neben `text-base`, Default) und 24 (alleinstehend); kleinere Werte wie 16 nur dort, wo die Referenz sie selbst setzt (Meldungszeilen, Chips, dichte Kontexte).
+- **Maßgeblich ist die Auslösefläche, nicht die Komponente:** Icons, die eine Auslösefläche begleiten (Button, Link, Dropdown-Auslöser, MenuButton, SplitButton, IconMenuButton), liegen auf sm 20 / md 22 / lg 24; der `+2`-Aufschlag der Referenz für Icon-only entfällt dabei. **Alle übrigen Icons behalten die Größen ihrer Referenzimplementierung** — Icons in Menü- und Listeneinträgen, Feld-Icons, Chips, Meldungszeilen, Tabellen. Eine Komponente kann beides enthalten. Im Zweifel: an den Manager eskalieren.
+- Keine Inline-SVGs, keine Emojis als Icons, kein lucide-react oder andere Icon-Bibliotheken.
+- Bedienbare Icons in Feldern (Leeren, Passwort anzeigen, Kopieren) haben Icon-Button-Optik (Ruhefläche stone-100, Hover stone-200) und immer ein `aria-label`; dekorative Icons stehen flach im Text.
 
-## Internationalization
+## Internationalisierung und Demo-Inhalte
 
-- Every user-facing string in JSX must be wrapped in `t()` from `react-i18next`. Never hardcode German (or any language) text directly in JSX without the `t()` wrapper.
-- Every new translation key must be added to both `src/i18n/locales/de.json` (German, default) and `src/i18n/locales/en.json` (English).
+- Jeder User-facing String in JSX läuft über `t()` aus `react-i18next`; jeder neue Key wird in `src/i18n/locales/de.json` **und** `en.json` eingetragen (Deutsch ist Standard, Englisch übersetzt der Worker). `tabs.*` ist reserviert für globale Tab-Labels.
+- Demo-Inhalte in Komponenten-Vorschauen sind Deutsch mit „Sie"-Anrede: Buttons tragen Verb-Infinitive („Termin anlegen", nie „OK"), keine Ausrufezeichen, keine Werbesprache, keine Emojis, deutsche Formate (`1.234,56 €`, `04.08.2026`, 24h-Uhrzeit). Zahlen, Beträge, IDs und Daten stehen in DM Mono.
+- Fehlermeldungs-Demos benennen Ursache und nächsten Schritt, nie nur den Zustand.
 
-## Build Validation
+## Doku-Seiten und DemoPanel
 
-- Run `npm run build` before committing. Fix all build errors before proceeding.
-- Run `npm run dev` and perform a visual browser check after any component or page change.
+- Jede Komponenten-Doku-Seite folgt dem 4-Tab-Muster (Overview/Usage/Code/Accessibility); Inhalte entstehen aus der jeweiligen Spezifikation in `design-reference/components/`, nicht aus Alt-Seiten.
+- `<DemoPanel>` ist das erste JSX-Element im Overview-Tab-Content jeder Komponenten-Seite, vor allen `<Section>`-Elementen (Import: `import { DemoPanel } from '../docs/PageLayout'`; API: `component`-Funktion + `controls`-Array, siehe `src/docs/DemoPanel.jsx`). Die Controls decken die Varianten/Props aus der `.d.ts` der Komponente ab. Info-Seiten haben kein DemoPanel.
+- **Überschriften der Ebene h2 gehören in einen `<Section>`-Wrapper.** Steht eine `h2` außerhalb, greift die Ankersuche über `el.closest('[id]')` die ID des nächsten Vorfahren ab statt einen eigenen Anker zu erzeugen — Inhaltsverzeichnis und Suchtreffer springen dann ins Ungefähre. Der Anker-Algorithmus liegt in `src/docs/anchors.js` und ist die einzige Quelle; nicht kopieren, importieren.
+- **`src/config/searchData.js` und `sectionData.js` werden erzeugt, nicht gepflegt.** Nach jeder neuen, umbenannten oder entfernten Seite und nach jeder geänderten Abschnittsüberschrift `npm run search-index` laufen lassen; sonst schlägt `npm test` fehl. Neue Routen werden als Datenzeile in `ROUTES` (`src/App.jsx`) ergänzt, nicht als `<Route>`-Element. Eine bewusst nicht in der NAV geführte Route gehört in `NAV_EXEMPT` in `src/config/searchData.test.jsx`.
 
-## Version Control
+## Validierung und Abnahme
 
-- Create a feature branch before starting any Task: `type/short-description` (e.g., `feat/tailwind-setup`, `docs/buttons-page`).
-- Commit convention: `type: short description`. Types: `feat`, `fix`, `refactor`, `docs`, `chore`.
-- Never commit directly to `main`. Merge feature branch into `main`, then push: `git push origin main` without confirmation when build is clean and merge is successful.
-- Commit author is the project owner (ahmeeedo). Do not include AI tool references in commit messages, code comments, or documentation.
+- Vor jedem Commit: `npm run build` und `npm test` fehlerfrei; nach Komponenten-/Seitenänderungen zusätzlich `npm run dev` mit Browser-Check (alle Tabs, Desktop und Mobile ≤768px).
+- Verhaltensanteile (Tastaturwege, Fokus, Rückrufe, Zeitgeber) werden per Vitest belegt: Testdatei neben der Komponente als `src/components/<Name>/<Name>.test.jsx`, Elemente über Rolle und Namen ansprechen, Zeitgeber mit `fireEvent` statt `userEvent`. Vor der Übergabe eine Zusicherung absichtlich verdrehen und den Lauf wiederholen — ein grüner Lauf, der nie rot werden kann, belegt nichts. Markup und Props weiterhin per `react-dom/server`; Farben und Abstände bleiben Sache des visuellen Abgleichs.
+- **Komponenten mit `createPortal` lassen sich nicht über `react-dom/server` nachweisen** — Portale rendern serverseitig nicht, das Skript meldet stillschweigend leeres Markup und damit lauter Fehlschläge, die wie Portfehler aussehen. Solche Komponenten über echtes Client-Rendering prüfen (`createRoot` plus `flushSync`, gelesen wird der ganze `body`).
+- Anzahl-Zusicherungen im Prüfskript auf ein Klassen-Token stützen (`class="[^"]*\btoken\b[^"]*"`), nie auf die nackte Zeichenkette: Klassennamen desselben Blocks sind Präfixe voneinander (`__dot`/`__dots`, `__line`/`__line--filled`), eine `split()`-Zählung liegt deshalb leise zu hoch. Vorhandensein-Prüfungen sind nicht betroffen.
+- `vitest` bleibt auf 3.x (4.x zieht Rolldown mit gebrochenem nativem Binding ein) und `jsdom` auf 26.x (30.x lädt ESM per `require` und bricht auf Node 20). Beide Deckel nicht arglos anheben.
+- Visueller Abgleich jeder portierten Komponente gegen ihre Spezifikationsseite `design-reference/components/<Name>.dc.html` (im Browser öffnen; sie ist eigenständig lauffähig und zeigt Varianten-, Zustands- und Größenmatrix). Die Vorschauen `design-reference/ui/*.card.html` rendern leer, weil das kompilierte Bündel `_ds_bundle.js` nicht übertragbar war — nicht als Abgleichsgrundlage verwenden.
+- Jede fertige Komponente/Seite wird dem Inhaber mit einer Prüf-Checkliste übergeben (was prüfen, unter welcher Route, welche Varianten/Zustände/Viewports). Der Task gilt erst nach Abnahme als abgeschlossen; Feedback wird vorher eingearbeitet.
+
+## Versionskontrolle
+
+- Vor jedem Task einen Feature-Branch anlegen: `type/kurze-beschreibung` (z.B. `feat/port-button-batch`).
+- Commit-Konvention: `type: kurze beschreibung`. Typen: `feat`, `fix`, `refactor`, `docs`, `chore`.
+- Nie direkt auf `main` committen. Feature-Branch in `main` mergen, dann pushen: `git push origin main` ohne Rückfrage, wenn Build clean und Merge erfolgreich.
+- Commit-Autor ist der Projektinhaber (ahmeeedo). Keine AI-Tool-Referenzen in Commits, Code-Kommentaren oder Doku.
+
+## Scope-Grenzen
+
+- `README.md`, `DEVELOPMENT.md`, `editors-doc.md` und die Releases-Seite werden in dieser Session nicht aktualisiert. Kein Dark Mode. Keine Nebenreparaturen an Alt-Code, der ohnehin ersetzt oder entfernt wird.
 
 } //APM_RULES
