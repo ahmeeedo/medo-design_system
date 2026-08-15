@@ -2,8 +2,8 @@ import { useEffect, useRef, useState, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import Fuse from 'fuse.js'
-import { Dialog as DialogPrimitive } from 'radix-ui'
 import { Icon } from '@/components/Icon/Icon'
+import { Overlay } from './Overlay'
 import { searchData } from '@/config/searchData'
 
 export function DocsSearch({ isOpen, onClose }) {
@@ -65,14 +65,14 @@ export function DocsSearch({ isOpen, onClose }) {
   }
 
   return (
-    <DialogPrimitive.Root open={isOpen} onOpenChange={(open) => { if (!open) onClose() }}>
-      <DialogPrimitive.Portal>
-        <DialogPrimitive.Overlay className="fixed inset-0 z-50 bg-[var(--medo-scrim)]" />
-        <DialogPrimitive.Content
-          aria-label={t('search.open')}
-          onKeyDown={handleKeyDown}
-          className="fixed top-[10%] left-1/2 -translate-x-1/2 w-[calc(100vw-2rem)] max-w-xl z-50 bg-[var(--medo-overlay)] border border-[var(--medo-border)] rounded-[var(--medo-radius-lg)] shadow-[var(--medo-shadow-xl)] overflow-hidden outline-none [font-family:var(--medo-font-sans)]"
-        >
+    <Overlay
+      open={isOpen}
+      onClose={onClose}
+      label={t('search.open')}
+      autoFocus={false}
+      className="absolute top-[10%] left-1/2 -translate-x-1/2 w-[calc(100vw-2rem)] max-w-xl bg-[var(--medo-overlay)] border border-[var(--medo-border)] rounded-[var(--medo-radius-lg)] shadow-[var(--medo-shadow-xl)] overflow-hidden outline-none [font-family:var(--medo-font-sans)]"
+    >
+      <div onKeyDown={handleKeyDown}>
           <div className="flex items-center gap-[var(--medo-space-xs)] px-[var(--medo-space-sm)] border-b border-[var(--medo-border-subtle)]">
             <Icon name="search" size={20} color="var(--medo-icon-muted)" />
             <input
@@ -134,8 +134,7 @@ export function DocsSearch({ isOpen, onClose }) {
               )}
             </div>
           )}
-        </DialogPrimitive.Content>
-      </DialogPrimitive.Portal>
-    </DialogPrimitive.Root>
+      </div>
+    </Overlay>
   )
 }

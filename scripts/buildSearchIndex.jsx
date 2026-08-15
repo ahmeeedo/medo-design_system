@@ -4,6 +4,7 @@ import { MemoryRouter } from 'react-router-dom'
 import { ROUTES } from '../src/App'
 import i18n from '../src/i18n/index.js'
 import { generateId } from '../src/docs/anchors'
+import { TAB_ID_PREFIX } from '../src/docs/PageLayout'
 
 export const LANGS = ['de', 'en']
 
@@ -49,9 +50,11 @@ function readSections(container) {
   })
 }
 
+/* Scoped to the docs tab bar by its id prefix: page content demoes the Tabs
+   component too, and those tabs must not be mistaken for page tabs. */
 function readTabs(container) {
-  return Array.from(container.querySelectorAll('[data-tab-id]')).map((el) => ({
-    id: el.dataset.tabId,
+  return Array.from(container.querySelectorAll(`[id^="${TAB_ID_PREFIX}-tab-"]`)).map((el) => ({
+    id: el.dataset.val,
     label: el.textContent.trim(),
   }))
 }

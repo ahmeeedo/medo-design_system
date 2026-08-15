@@ -9,8 +9,8 @@ import './Button.css'
 
 const ICON_SIZE_FOR = { sm: 20, md: 22, lg: 24 }
 
-/* forwardRef, damit der Button als Tooltip-Auslöser und als Radix-`asChild`-Kind taugt —
-   beide reichen eine ref an das Kind durch. */
+/* forwardRef, damit der Button als Tooltip-Auslöser taugt: der Auslöser reicht
+   eine ref an sein Kind durch. */
 export const Button = forwardRef(function Button({
   children,
   variant = 'primary',
