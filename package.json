@@ -10,7 +10,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "search-index": "vite-node scripts/generate-search-index.mjs",
-    "contrast": "node scripts/contrast/report.mjs",
+    "contrast": "node scripts/contrast/report.mjs && node scripts/contrast/page.mjs",
     "contrast:verify": "node scripts/contrast/verify.mjs"
   },
   "dependencies": {
