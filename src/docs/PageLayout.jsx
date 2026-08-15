@@ -74,11 +74,28 @@ export function PageLayout({ title, description, tabs = [] }) {
 
     const pad = parseFloat(getComputedStyle(bar).scrollPaddingInlineStart) || 0
     const barBox = bar.getBoundingClientRect()
-    const btnBox = btn.getBoundingClientRect()
+    const box = btn.getBoundingClientRect()
 
-    const shortLeft = btnBox.left - (barBox.left + pad)
-    const shortRight = btnBox.right - (barBox.right - pad)
-    const delta = shortLeft < 0 ? shortLeft : shortRight > 0 ? shortRight : 0
+    const shortOf = (left, right) => {
+      const short = left - (barBox.left + pad)
+      const over = right - (barBox.right - pad)
+      return short < 0 ? short : over > 0 ? over : 0
+    }
+
+    let delta = shortOf(box.left, box.right)
+
+    /* The tab itself is in view, so nudge on until the neighbouring tab peeks
+       in — otherwise nothing signals that the bar continues. Clamped so the
+       selected tab never leaves its padded area. */
+    if (!delta) {
+      const prev = btn.previousElementSibling
+      const next = btn.nextElementSibling
+      const left = prev ? Math.max(prev.getBoundingClientRect().left, box.left - pad) : box.left
+      const right = next ? Math.min(next.getBoundingClientRect().right, box.right + pad) : box.right
+      const lowest = box.right - (barBox.right - pad)
+      const highest = box.left - (barBox.left + pad)
+      delta = Math.min(Math.max(shortOf(left, right), lowest), highest)
+    }
 
     if (delta) bar.scrollBy({ left: delta, behavior: 'smooth' })
   }, [active])
@@ -163,6 +180,7 @@ export function PageLayout({ title, description, tabs = [] }) {
           onChange={handleTabClick}
           variant="contained"
           ariaLabel={title}
+          className="w-max"
         />
       </div>
 
