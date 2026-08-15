@@ -8,8 +8,7 @@ import { TAB_BAR_MARKER } from '../src/docs/PageLayout'
 
 export const LANGS = ['de', 'en']
 
-/* jsdom lacks the layout and pointer APIs that PageLayout and the Radix
-   primitives touch on mount. */
+/* jsdom lacks the layout and pointer APIs the pages touch on mount. */
 export function installDomStubs() {
   class Observer {
     observe() {}
@@ -51,14 +50,16 @@ function readSections(container) {
 }
 
 /* Scoped to the docs tab bar: page content demoes the Tabs component too, and
-   those tabs must not be mistaken for page tabs. */
+   those tabs must not be mistaken for page tabs. Icons render their ligature
+   name as text, so they are dropped before the label is read. */
 function readTabs(container) {
   return Array.from(
     container.querySelectorAll(`[${TAB_BAR_MARKER}] [role="tab"]`),
-  ).map((el) => ({
-    id: el.dataset.val,
-    label: el.textContent.trim(),
-  }))
+  ).map((el) => {
+    const label = el.cloneNode(true)
+    label.querySelectorAll('.medo-icon').forEach((icon) => icon.remove())
+    return { id: el.dataset.val, label: label.textContent.trim() }
+  })
 }
 
 export async function buildSearchIndex() {

@@ -22,6 +22,15 @@ const HEADER_H = 'var(--docs-header-height)'
    search index generator needs to tell the two apart. */
 export const TAB_BAR_MARKER = 'data-docs-tabbar'
 
+const TAB_ICONS = {
+  overview:      'visibility',
+  usage:         'lightbulb',
+  tokens:        'token',
+  code:          'code',
+  accessibility: 'accessibility_new',
+  style:         'brush',
+}
+
 export function PageLayout({ title, description, tabs = [] }) {
   const [searchParams, setSearchParams] = useSearchParams()
   const { t, i18n } = useTranslation()
@@ -50,7 +59,7 @@ export function PageLayout({ title, description, tabs = [] }) {
   const closeSheet = useCallback(() => setSheetOpen(false), [])
 
   const tabItems = useMemo(
-    () => tabs.map(tab => ({ value: tab.id, label: tab.label })),
+    () => tabs.map(tab => ({ value: tab.id, label: tab.label, icon: TAB_ICONS[tab.id] })),
     [tabs],
   )
 
@@ -126,14 +135,14 @@ export function PageLayout({ title, description, tabs = [] }) {
       <div
         ref={tabBarRef}
         {...{ [TAB_BAR_MARKER]: '' }}
-        className="sticky z-20 bg-[var(--medo-surface)] border-b border-[var(--medo-border)] mb-[var(--medo-space-2xl)]"
+        className="sticky z-20 bg-[var(--medo-surface)] border-b border-[var(--medo-border)] mb-[var(--medo-space-2xl)] px-[var(--medo-space-xl)] py-[var(--medo-space-sm)]"
         style={{ top: HEADER_H }}
       >
         <Tabs
           items={tabItems}
           value={active}
           onChange={handleTabClick}
-          variant="underline"
+          variant="contained"
           scrollable
           ariaLabel={title}
         />
