@@ -72,13 +72,18 @@ APM_RULES {
 
 ## Versionskontrolle
 
-- Vor jedem Task einen Feature-Branch anlegen: `type/kurze-beschreibung` (z.B. `feat/port-button-batch`).
-- Commit-Konvention: `type: kurze beschreibung`. Typen: `feat`, `fix`, `refactor`, `docs`, `chore`.
+- Basis-Branch ist `main`. Vor jedem Task einen Feature-Branch davon anlegen: `type/kurze-beschreibung` (z.B. `feat/port-button-batch`).
+- Commit-Konvention: `type: kurze beschreibung`. Typen: `feat`, `fix`, `refactor`, `docs`, `chore`. Betreff deutsch und kleingeschrieben, ohne Umlaute (`abstand am rechten rand`, nicht `Abstände`).
 - Nie direkt auf `main` committen. Feature-Branch in `main` mergen, dann pushen: `git push origin main` ohne Rückfrage, wenn Build clean und Merge erfolgreich.
 - Commit-Autor ist der Projektinhaber (ahmeeedo). Keine AI-Tool-Referenzen in Commits, Code-Kommentaren oder Doku.
+- Bei paralleler Arbeit erhält jeder Arbeitsstrang einen eigenen Worktree unter `.apm/worktrees/`. Dort Shell-Befehle mit explizitem Verzeichnisbezug ausführen — die Shell ist in früheren Worktree-Betrieben mehrfach ins Hauptverzeichnis zurückgefallen.
 
 ## Scope-Grenzen
 
-- `README.md`, `DEVELOPMENT.md`, `editors-doc.md` und die Releases-Seite werden in dieser Session nicht aktualisiert. Kein Dark Mode. Keine Nebenreparaturen an Alt-Code, der ohnehin ersetzt oder entfernt wird.
+- Keine Nebenreparaturen an Alt-Code, der ohnehin ersetzt oder entfernt wird.
+- Der Rücklauf der Dark-Palette ins medo-Design-Projekt wird protokolliert, nicht ausgeführt. Ebenso die in der Vorsession protokollierten Rückläufer (Präfix-Kollision, Select-Vertrag, Tabs-Befund `contained` + `scrollable`).
+- Keine Veröffentlichung in einer npm-Registry, kein Umbau zu einer Monorepo-/Workspace-Struktur, keine Auslagerung der Bibliothek in ein eigenes Repository.
+- Keine Vergleichsseite im Portal, die alle Tokens beider Themes samt Kontrastwerten gegenüberstellt. Kein neuer Eintrag auf der Releases-Seite.
+- `worktrees-backup/` und die sechs lokalen Feature-Branches der Vorsessions bleiben unangetastet.
 
 } //APM_RULES
