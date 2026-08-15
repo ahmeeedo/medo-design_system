@@ -1,141 +1,23 @@
 /* medo foundation: local DM Sans/DM Mono and the --medo-* tokens load before
-   the Tailwind layers. The legacy tokens below coexist until the cleanup. */
+   the Tailwind layers. */
 @import "./fonts.css";
 @import "./medo-tokens.css";
 
 @import "tailwindcss";
 @import 'material-symbols/rounded';
-@import "./tokens.css";
-@import "tw-animate-css";
-@import "@fontsource-variable/geist";
-
-/* ── Custom variants ── */
-@custom-variant dark (&:is(.dark *));
-@custom-variant data-open {
-  &:where([data-state="open"]), &:where([data-open]:not([data-open="false"])) { @slot; }
-}
-@custom-variant data-closed {
-  &:where([data-state="closed"]), &:where([data-closed]:not([data-closed="false"])) { @slot; }
-}
-@custom-variant data-checked {
-  &:where([data-state="checked"]), &:where([data-checked]:not([data-checked="false"])) { @slot; }
-}
-@custom-variant data-unchecked {
-  &:where([data-state="unchecked"]), &:where([data-unchecked]:not([data-unchecked="false"])) { @slot; }
-}
-@custom-variant data-selected {
-  &:where([data-selected="true"]) { @slot; }
-}
-@custom-variant data-disabled {
-  &:where([data-disabled="true"]), &:where([data-disabled]:not([data-disabled="false"])) { @slot; }
-}
-@custom-variant data-active {
-  &:where([data-state="active"]), &:where([data-active]:not([data-active="false"])) { @slot; }
-}
-@custom-variant data-horizontal {
-  &:where([data-orientation="horizontal"]) { @slot; }
-}
-@custom-variant data-vertical {
-  &:where([data-orientation="vertical"]) { @slot; }
-}
-
-@utility no-scrollbar {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-  &::-webkit-scrollbar { display: none; }
-}
 
 /* ── Theme ─────────────────────────────────────────────────────────────────
-   Single @theme inline block. --font-sans is set to a literal string here
-   to override the circular var(--font-sans) from tokens.css @theme inline.
-   --radius is set to 8px (= --radius-lg token) in :root below — using a
-   concrete value avoids the circular --radius: var(--radius-lg) dependency.
+   Single @theme inline block. The font families are set to literal token
+   references so the font-sans and font-mono utilities resolve to the medo
+   faces rather than Tailwind's defaults.
    ─────────────────────────────────────────────────────────────────────── */
 @theme inline {
-  --font-sans: 'Geist Variable', sans-serif;
-  --font-heading: var(--font-sans);
-  --text-md: var(--text-md);
-
-  --color-background:                   var(--background);
-  --color-foreground:                   var(--foreground);
-  --color-card:                         var(--card);
-  --color-card-foreground:              var(--card-foreground);
-  --color-popover:                      var(--popover);
-  --color-popover-foreground:           var(--popover-foreground);
-  --color-primary:                      var(--primary);
-  --color-primary-foreground:           var(--primary-foreground);
-  --color-secondary:                    var(--secondary);
-  --color-secondary-foreground:         var(--secondary-foreground);
-  --color-muted:                        var(--muted);
-  --color-muted-foreground:             var(--muted-foreground);
-  --color-accent:                       var(--accent);
-  --color-accent-foreground:            var(--accent-foreground);
-  --color-destructive:                  var(--destructive);
-  --color-border:                       var(--border);
-  --color-input:                        var(--input);
-  --color-ring:                         var(--ring);
-  --color-chart-1:                      var(--chart-1);
-  --color-chart-2:                      var(--chart-2);
-  --color-chart-3:                      var(--chart-3);
-  --color-chart-4:                      var(--chart-4);
-  --color-chart-5:                      var(--chart-5);
-  --color-sidebar:                      var(--sidebar);
-  --color-sidebar-foreground:           var(--sidebar-foreground);
-  --color-sidebar-primary:              var(--sidebar-primary);
-  --color-sidebar-primary-foreground:   var(--sidebar-primary-foreground);
-  --color-sidebar-accent:               var(--sidebar-accent);
-  --color-sidebar-accent-foreground:    var(--sidebar-accent-foreground);
-  --color-sidebar-border:               var(--sidebar-border);
-  --color-sidebar-ring:                 var(--sidebar-ring);
-
-  /* Radius — calc from --radius: 8px → matches design tokens exactly */
-  --radius-sm:  calc(var(--radius) * 0.5);
-  --radius-md:  calc(var(--radius) * 0.75);
-  --radius-lg:  var(--radius);
-  --radius-xl:  calc(var(--radius) * 1.5);
-  --radius-2xl: calc(var(--radius) * 2);
-  --radius-3xl: calc(var(--radius) * 3);
-  --radius-4xl: calc(var(--radius) * 4);
+  --font-sans: var(--medo-font-sans);
+  --font-mono: var(--medo-font-mono);
 }
 
 /* ── Variables ── */
 :root {
-  /* shadcn defaults for unmapped tokens */
-  --card:                        oklch(1 0 0);
-  --card-foreground:             oklch(0.145 0 0);
-  --popover:                     oklch(1 0 0);
-  --popover-foreground:          oklch(0.145 0 0);
-  --chart-1:                     oklch(0.87 0 0);
-  --chart-2:                     oklch(0.556 0 0);
-  --chart-3:                     oklch(0.439 0 0);
-  --chart-4:                     oklch(0.371 0 0);
-  --chart-5:                     oklch(0.269 0 0);
-  --sidebar:                     oklch(0.985 0 0);
-  --sidebar-foreground:          oklch(0.145 0 0);
-  --sidebar-primary:             oklch(0.205 0 0);
-  --sidebar-primary-foreground:  oklch(0.985 0 0);
-  --sidebar-accent:              oklch(0.97 0 0);
-  --sidebar-accent-foreground:   oklch(0.205 0 0);
-  --sidebar-border:              oklch(0.922 0 0);
-  --sidebar-ring:                oklch(0.708 0 0);
-
-  /* med.o design token mappings */
-  --background:          var(--surface_100);
-  --foreground:          var(--color-text-primary);
-  --primary:             var(--color-brand-primary-500);
-  --primary-foreground:  var(--color-neutral-0);
-  --secondary:           var(--color-brand-secondary-900);
-  --secondary-foreground: var(--color-text-on-color);
-  --accent:              var(--color-brand-navy-100);
-  --accent-foreground:   var(--color-brand-primary-500);
-  --muted:               var(--color-neutral-100);
-  --muted-foreground:    var(--color-text-secondary);
-  --destructive:         var(--color-error-500);
-  --border:              var(--border-subtle-100);
-  --input:               var(--border-subtle-100);
-  --ring:                var(--color-focus);
-  --radius:              8px;
-
   /* Docs chrome. In-between values are computed from medo tokens, never
      hardcoded: 48 + 8 = 56, 32 + 12 = 44 (minimum touch target). */
   --docs-header-height: calc(var(--medo-space-2xl) + var(--medo-space-xs));
@@ -157,57 +39,25 @@
   font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0;
 }
 
-.dark {
-  --background:                  oklch(0.145 0 0);
-  --foreground:                  oklch(0.985 0 0);
-  --card:                        oklch(0.205 0 0);
-  --card-foreground:             oklch(0.985 0 0);
-  --popover:                     oklch(0.205 0 0);
-  --popover-foreground:          oklch(0.985 0 0);
-  --primary:                     oklch(0.922 0 0);
-  --primary-foreground:          oklch(0.205 0 0);
-  --secondary:                   oklch(0.269 0 0);
-  --secondary-foreground:        oklch(0.985 0 0);
-  --muted:                       oklch(0.269 0 0);
-  --muted-foreground:            oklch(0.708 0 0);
-  --accent:                      oklch(0.269 0 0);
-  --accent-foreground:           oklch(0.985 0 0);
-  --destructive:                 oklch(0.704 0.191 22.216);
-  --border:                      oklch(1 0 0 / 10%);
-  --input:                       oklch(1 0 0 / 15%);
-  --ring:                        oklch(0.556 0 0);
-  --chart-1:                     oklch(0.87 0 0);
-  --chart-2:                     oklch(0.556 0 0);
-  --chart-3:                     oklch(0.439 0 0);
-  --chart-4:                     oklch(0.371 0 0);
-  --chart-5:                     oklch(0.269 0 0);
-  --sidebar:                     oklch(0.205 0 0);
-  --sidebar-foreground:          oklch(0.985 0 0);
-  --sidebar-primary:             oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground:  oklch(0.985 0 0);
-  --sidebar-accent:              oklch(0.269 0 0);
-  --sidebar-accent-foreground:   oklch(0.985 0 0);
-  --sidebar-border:              oklch(1 0 0 / 10%);
-  --sidebar-ring:                oklch(0.556 0 0);
-}
-
 @layer base {
   *, *::before, *::after {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    @apply border-border outline-ring/50;
+    border-color: var(--medo-border);
   }
   html {
     font-size: 16px;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    @apply font-sans;
+    font-family: var(--medo-font-sans);
   }
   body {
-    font-size: var(--text-md);
-    line-height: var(--leading-normal);
-    @apply font-sans bg-background text-foreground;
+    font-size: var(--medo-text-base);
+    line-height: var(--medo-leading-normal);
+    font-family: var(--medo-font-sans);
+    background: var(--medo-surface-container);
+    color: var(--medo-text);
   }
   button {
     font-family: inherit;
@@ -223,7 +73,7 @@
     text-decoration: none;
   }
   :focus-visible {
-    outline: 2px solid var(--color-focus);
+    outline: 2px solid var(--medo-focus-ring);
     outline-offset: 2px;
   }
 }

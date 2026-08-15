@@ -4,11 +4,11 @@ import { MemoryRouter } from 'react-router-dom'
 import { ROUTES } from '../src/App'
 import i18n from '../src/i18n/index.js'
 import { generateId } from '../src/docs/anchors'
+import { TAB_BAR_MARKER } from '../src/docs/PageLayout'
 
 export const LANGS = ['de', 'en']
 
-/* jsdom lacks the layout and pointer APIs that PageLayout and the Radix
-   primitives touch on mount. */
+/* jsdom lacks the layout and pointer APIs the pages touch on mount. */
 export function installDomStubs() {
   class Observer {
     observe() {}
@@ -18,6 +18,7 @@ export function installDomStubs() {
   globalThis.ResizeObserver ??= Observer
   globalThis.IntersectionObserver ??= Observer
   Element.prototype.scrollIntoView ??= function scrollIntoView() {}
+  Element.prototype.scrollBy ??= function scrollBy() {}
   Element.prototype.hasPointerCapture ??= function hasPointerCapture() { return false }
   Element.prototype.setPointerCapture ??= function setPointerCapture() {}
   Element.prototype.releasePointerCapture ??= function releasePointerCapture() {}
@@ -49,11 +50,17 @@ function readSections(container) {
   })
 }
 
+/* Scoped to the docs tab bar: page content demoes the Tabs component too, and
+   those tabs must not be mistaken for page tabs. Icons render their ligature
+   name as text, so they are dropped before the label is read. */
 function readTabs(container) {
-  return Array.from(container.querySelectorAll('[data-tab-id]')).map((el) => ({
-    id: el.dataset.tabId,
-    label: el.textContent.trim(),
-  }))
+  return Array.from(
+    container.querySelectorAll(`[${TAB_BAR_MARKER}] [role="tab"]`),
+  ).map((el) => {
+    const label = el.cloneNode(true)
+    label.querySelectorAll('.medo-icon').forEach((icon) => icon.remove())
+    return { id: el.dataset.val, label: label.textContent.trim() }
+  })
 }
 
 export async function buildSearchIndex() {

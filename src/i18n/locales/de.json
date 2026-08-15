@@ -1,6 +1,5 @@
 {
   "nav": {
-    "title": "Design System",
     "sections": {
       "about": "About med.o",
       "foundations": "Foundations",
@@ -2457,7 +2456,8 @@
   },
   "toc": {
     "title": "Auf dieser Seite",
-    "openButton": "Inhaltsverzeichnis"
+    "openButton": "Inhaltsverzeichnis",
+    "close": "Inhaltsverzeichnis schließen"
   },
     "datePicker": {
       "page": {

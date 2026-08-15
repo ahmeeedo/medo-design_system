@@ -1,10 +1,10 @@
 import { useSearchParams } from 'react-router-dom'
-import { Children, useRef, useState, useEffect } from 'react'
+import { Children, useRef, useState, useEffect, useMemo, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { TableOfContents } from './TableOfContents'
 import { generateId } from './anchors'
-import { Sheet, SheetContent, SheetClose, SheetTitle } from '../components/ui/sheet'
-import { Tabs as TabsPrimitive, TabsList, TabsTrigger, TabsContent } from '../components/ui/tabs'
+import { Tabs } from '../components/Tabs/Tabs'
+import { Drawer } from './Drawer'
 
 const GRID_CLASSES = {
   1: 'grid-cols-1',
@@ -17,6 +17,19 @@ const GRID_CLASSES = {
 
 /* Same global definition the header in DocsLayout uses. */
 const HEADER_H = 'var(--docs-header-height)'
+
+/* Marks the docs tab bar. Page content demoes the Tabs component too, so the
+   search index generator needs to tell the two apart. */
+export const TAB_BAR_MARKER = 'data-docs-tabbar'
+
+const TAB_ICONS = {
+  overview:      'visibility',
+  usage:         'lightbulb',
+  tokens:        'token',
+  code:          'code',
+  accessibility: 'accessibility_new',
+  style:         'brush',
+}
 
 export function PageLayout({ title, description, tabs = [] }) {
   const [searchParams, setSearchParams] = useSearchParams()
@@ -43,10 +56,48 @@ export function PageLayout({ title, description, tabs = [] }) {
     setSearchParams({ tab: id })
   }
 
+  const closeSheet = useCallback(() => setSheetOpen(false), [])
+
+  const tabItems = useMemo(
+    () => tabs.map(tab => ({ value: tab.id, label: tab.label, icon: TAB_ICONS[tab.id] })),
+    [tabs],
+  )
+
+  /* Scrolls the tab bar itself rather than calling scrollIntoView, which would
+     walk every scrollable ancestor and can move the page under a sticky
+     element. The gap stays in CSS as scroll-padding and is read back here. */
   useEffect(() => {
-    if (!tabBarRef.current || !active) return
-    const btn = tabBarRef.current.querySelector(`[data-tab-id="${active}"]`)
-    btn?.scrollIntoView({ behavior: 'smooth', inline: 'nearest', block: 'nearest' })
+    const bar = tabBarRef.current
+    if (!bar || !active) return
+    const btn = bar.querySelector(`[data-val="${active}"]`)
+    if (!btn) return
+
+    const pad = parseFloat(getComputedStyle(bar).scrollPaddingInlineStart) || 0
+    const barBox = bar.getBoundingClientRect()
+    const box = btn.getBoundingClientRect()
+
+    const shortOf = (left, right) => {
+      const short = left - (barBox.left + pad)
+      const over = right - (barBox.right - pad)
+      return short < 0 ? short : over > 0 ? over : 0
+    }
+
+    let delta = shortOf(box.left, box.right)
+
+    /* The tab itself is in view, so nudge on until the neighbouring tab peeks
+       in — otherwise nothing signals that the bar continues. Clamped so the
+       selected tab never leaves its padded area. */
+    if (!delta) {
+      const prev = btn.previousElementSibling
+      const next = btn.nextElementSibling
+      const left = prev ? Math.max(prev.getBoundingClientRect().left, box.left - pad) : box.left
+      const right = next ? Math.min(next.getBoundingClientRect().right, box.right + pad) : box.right
+      const lowest = box.right - (barBox.right - pad)
+      const highest = box.left - (barBox.left + pad)
+      delta = Math.min(Math.max(shortOf(left, right), lowest), highest)
+    }
+
+    if (delta) bar.scrollBy({ left: delta, behavior: 'smooth' })
   }, [active])
 
   useEffect(() => {
@@ -112,48 +163,47 @@ export function PageLayout({ title, description, tabs = [] }) {
         )}
       </div>
 
-      <TabsPrimitive value={active} onValueChange={handleTabClick} className="block">
-        <div
-          ref={tabBarRef}
-          className="sticky z-20 bg-[var(--medo-surface)] border-b border-[var(--medo-border)] overflow-x-auto mb-[var(--medo-space-2xl)]"
-          style={{ top: HEADER_H }}
-        >
-          <TabsList variant="line" className="w-full h-[var(--medo-space-2xl)] rounded-none p-0 justify-start">
-            {tabs.map(tab => (
-              <TabsTrigger
-                key={tab.id}
-                value={tab.id}
-                data-tab-id={tab.id}
-                className="flex-none h-full rounded-none px-[var(--medo-space-lg)] text-sm [font-family:var(--medo-font-sans)] text-[var(--medo-text-muted)] transition-colors duration-150 ease-out hover:text-[var(--medo-text)] data-active:text-[var(--medo-action)] data-active:[font-weight:var(--medo-weight-semibold)] after:bg-[var(--medo-action)]"
-              >
-                {tab.label}
-              </TabsTrigger>
-            ))}
-          </TabsList>
-        </div>
+      {/* The contained list is inline-flex with labels that never wrap, so it is
+          sized to its own min-content and cannot scroll itself. The scroll
+          container has to be this wrapper, otherwise the page overflows
+          sideways on narrow viewports. scroll-padding keeps the tab that is
+          scrolled into view off the edge instead of flush against it. */}
+      <div
+        ref={tabBarRef}
+        {...{ [TAB_BAR_MARKER]: '' }}
+        className="sticky z-20 bg-[var(--medo-surface)] border-b border-[var(--medo-border)] mb-[var(--medo-space-2xl)] px-[var(--medo-space-xl)] py-[var(--medo-space-sm)] overflow-x-auto [scroll-padding-inline:var(--medo-space-xl)] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        style={{ top: HEADER_H }}
+      >
+        <Tabs
+          items={tabItems}
+          value={active}
+          onChange={handleTabClick}
+          variant="contained"
+          ariaLabel={title}
+          className="w-max"
+        />
+      </div>
 
-        <div className="flex flex-row mb-[var(--medo-space-xl)]">
-          <div ref={contentRef} className="flex-1 min-w-0">
-            {tabs.map(tab =>
-              tab.content ? (
-                <TabsContent key={tab.id} value={tab.id}>
-                  {tab.content}
-                </TabsContent>
-              ) : null
-            )}
-          </div>
-          {headings.length > 0 && (
-            <div className="w-[240px] flex-shrink-0 hidden md:block pr-[var(--medo-space-xl)]">
-              <div
-                className="sticky overflow-y-auto pt-[var(--medo-space-lg)] pb-[var(--medo-space-lg)]"
-                style={{ top: `calc(${HEADER_H} + ${tabBarHeight}px)`, maxHeight: `calc(100vh - ${HEADER_H} - ${tabBarHeight}px)` }}
-              >
-                <TableOfContents headings={headings} activeId={activeId} />
-              </div>
-            </div>
-          )}
+      <div className="flex flex-row mb-[var(--medo-space-xl)]">
+        <div
+          ref={contentRef}
+          role="tabpanel"
+          aria-label={title}
+          className="flex-1 min-w-0"
+        >
+          {tabs.find(tab => tab.id === active)?.content}
         </div>
-      </TabsPrimitive>
+        {headings.length > 0 && (
+          <div className="w-[240px] flex-shrink-0 hidden md:block pr-[var(--medo-space-xl)]">
+            <div
+              className="sticky overflow-y-auto pt-[var(--medo-space-lg)] pb-[var(--medo-space-lg)]"
+              style={{ top: `calc(${HEADER_H} + ${tabBarHeight}px)`, maxHeight: `calc(100vh - ${HEADER_H} - ${tabBarHeight}px)` }}
+            >
+              <TableOfContents headings={headings} activeId={activeId} />
+            </div>
+          </div>
+        )}
+      </div>
 
       {headings.length > 0 && !sheetOpen && (
         <div className="block md:hidden fixed bottom-0 left-0 right-0 z-30 px-[var(--medo-space-md)] pb-[var(--medo-space-md)]">
@@ -166,27 +216,19 @@ export function PageLayout({ title, description, tabs = [] }) {
         </div>
       )}
 
-      <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
-        <SheetContent side="bottom" showCloseButton={false} className="max-h-[60vh] overflow-y-auto p-[var(--medo-space-lg)] rounded-t-[var(--medo-radius-2xl)] bg-[var(--medo-overlay)] border-[var(--medo-border)]">
-          <div className="flex items-center justify-between mb-[var(--medo-space-lg)]">
-            <SheetTitle className="[font-size:var(--medo-text-base)] [font-family:var(--medo-font-sans)] [font-weight:var(--medo-weight-semibold)] text-[var(--medo-text)]">
-              {t('toc.title')}
-            </SheetTitle>
-            <SheetClose asChild>
-              <button className="flex items-center justify-center w-[var(--docs-hit-target)] h-[var(--docs-hit-target)] -mr-[var(--medo-space-xs)] rounded-[var(--medo-radius-md)] text-[var(--medo-icon)] cursor-pointer transition-colors duration-150 ease-out hover:bg-[var(--medo-state-hover)] outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--medo-focus-ring)]">
-                <span className="material-symbols-rounded" style={{ fontSize: '24px', lineHeight: 1 }}>close</span>
-                <span className="sr-only">{t('toc.title')}</span>
-              </button>
-            </SheetClose>
-          </div>
-          <TableOfContents
-            headings={headings}
-            activeId={activeId}
-            onSelect={() => setSheetOpen(false)}
-            showTitle={false}
-          />
-        </SheetContent>
-      </Sheet>
+      <Drawer
+        open={sheetOpen}
+        onClose={closeSheet}
+        title={t('toc.title')}
+        closeLabel={t('toc.close')}
+      >
+        <TableOfContents
+          headings={headings}
+          activeId={activeId}
+          onSelect={closeSheet}
+          showTitle={false}
+        />
+      </Drawer>
     </div>
   )
 }

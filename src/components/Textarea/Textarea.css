@@ -1,0 +1,19 @@
+/* Multi-line variant of the shared field box: the single-line box fixes a
+   height and centres its content, both of which have to give way here. */
+.medo-ta__box{
+  height: auto;
+  align-items: flex-start;
+  padding-top: var(--medo-space-xs);
+  padding-bottom: var(--medo-space-xs);
+}
+
+.medo-ta__control{
+  line-height: var(--medo-leading-normal);
+  font-family: var(--medo-font-sans);
+}
+
+.medo-ta__control--vertical{ resize: vertical; }
+.medo-ta__control--none{ resize: none; }
+.medo-ta__control--both{ resize: both; }
+
+.medo-ta__counter{ align-self: flex-end; }
