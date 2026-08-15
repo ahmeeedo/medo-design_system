@@ -57,6 +57,9 @@
     "en": "EN",
     "de": "DE"
   },
+  "app": {
+    "toastRegion": "Benachrichtigungen"
+  },
   "tabs": {
     "overview": "Overview",
     "usage": "Usage",
@@ -1002,7 +1005,6 @@
       "toastQueued":        "Meldung {{n}} von 3",
       "toastStackBtn":      "Drei auf einmal",
       "toastHint":          "Der Stapel steht oben rechts. Erfolg und Hinweis blenden nach 5 Sekunden aus, Fehler bleiben stehen.",
-      "toastRegion":        "Benachrichtigungen",
       "kinds": {
         "info":    "Die Sprechzeiten am Freitag wurden angepasst",
         "success": "Termin gespeichert",
@@ -2752,7 +2754,7 @@
       "title": "Was ist med.o?",
       "intro": "med.o spezialisiert sich in der Entwicklung von Software-Produkten im medizinischen Bereich.",
       "body1": "Das med.o Design System stellt eine Sammlung wiederverwendbarer UI-Komponenten, Designentscheidungen und Richtlinien bereit, die konsistente und barrierefreie Benutzeroberflächen ermöglichen.",
-      "body2": "Alle Komponenten sind auf Basis von Tailwind CSS und Radix UI Primitives gebaut und folgen einem einheitlichen Token-System für Farben, Abstände, Typografie und mehr."
+      "body2": "Alle Komponenten sind mit React gebaut und ausschließlich über klassenbasiertes CSS auf den medo-Design-Tokens gestaltet — ohne fremde Komponentenbibliothek. Sie folgen einem einheitlichen Token-System für Farben, Abstände, Typografie und mehr; die Symbole stammen aus Material Symbols Rounded. Dieses Dokumentationsportal nutzt zusätzlich Tailwind-Utilities, die dieselben Tokens referenzieren."
     }
   },
   "releases": {
