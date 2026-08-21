@@ -1,7 +1,10 @@
 /* medo Design System · Token-Einstiegspunkt
-   Die Dateien in medo/ sind byte-identische Kopien von design-reference/tokens/.
+   Die Dateien in medo/ sind inhaltsgleiche Kopien von design-reference/tokens/;
+   sie tragen CRLF, die Referenz LF, weshalb rohe Prüfsummen abweichen und die
+   Gleichheit erst nach Normalisierung der Zeilenenden gilt.
    Reihenfolge wie in design-reference/styles.css: Brand → Alias → Semantic.
-   Werte werden nie hier geändert — Änderungen kommen aus dem Design-Projekt. */
+   Werte werden nie hier geändert — Änderungen kommen aus dem Design-Projekt.
+   Die dunkle Ausprägung liegt in ../medo-theme.css, nicht hier. */
 
 @import "./medo/brand-colors.css";
 @import "./medo/alias-colors.css";

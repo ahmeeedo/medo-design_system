@@ -1,7 +1,9 @@
 /* medo foundation: local DM Sans/DM Mono and the --medo-* tokens load before
-   the Tailwind layers. */
+   the Tailwind layers. medo-theme.css follows medo-tokens.css and restates the
+   semantic layer as light/dark pairs — it has to win, so it stays last. */
 @import "./fonts.css";
 @import "./medo-tokens.css";
+@import "./medo-theme.css";
 
 @import "tailwindcss";
 @import 'material-symbols/rounded';
