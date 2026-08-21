@@ -33,7 +33,10 @@ export function runVerification() {
   }
 
   const tokens = loadTokens()
-  const light = (name) => tokens.light(name)
+  /* Deliberately the mirror, not the theme file: these checks validate the tool
+     against the values design-reference ships, independent of the theme layer.
+     analysis.mjs separately proves the theme file's light branch matches. */
+  const light = (name) => tokens.mirrorLight(name)
   const brand = (step) => tokens.raw.get(`medo-color-${step}`)
 
   // --- 1. formula fixed points -------------------------------------------

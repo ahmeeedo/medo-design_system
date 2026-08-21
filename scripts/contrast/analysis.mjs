@@ -1,26 +1,35 @@
 /* Builds the full comparison between the light palette and the dark proposal.
    Nothing here writes to src/styles/medo/ — the token files are read only. */
 
-import { loadTokens } from './tokens.mjs'
+import { loadTokens, stepOf } from './tokens.mjs'
 import { contrastRatio, flatten, round2, parseColor } from './color.mjs'
-import { DARK, DARK_SHADOWS, darkValue, THRESHOLDS } from './dark-palette.mjs'
+import { ROLES, THRESHOLDS } from './roles.mjs'
 import { matrixPairs, CONTEXT_PAIRS, makeTheme, evaluate, resolveSurface, GENERAL_SURFACES,
   TEXT_FOREGROUNDS, ICON_FOREGROUNDS, DISABLED_FOREGROUNDS, coverageGaps } from './pairs.mjs'
 import { JUSTIFICATIONS } from './shortfalls.mjs'
 
-function assertCoverage(tokens) {
+/* Everything the semantic layer declares must be restated by the theme file,
+   and the theme file must not invent tokens the semantic layer does not know. */
+export function assertCoverage(tokens) {
   const declared = tokens.semantic.map(([name]) => name)
-  const missing = declared.filter((name) => !DARK.has(name))
+  const shadowNames = tokens.shadows.map(([name]) => name)
+
+  const missing = declared.filter((name) => !tokens.theme.has(name))
   if (missing.length) {
-    throw new Error(`Kein dunkler Wert vorgeschlagen für: ${missing.join(', ')}`)
+    throw new Error(`medo-theme.css deckt diese Token nicht ab: ${missing.join(', ')}`)
   }
-  const surplus = [...DARK.keys()].filter((name) => !declared.includes(name))
+  const missingShadows = shadowNames.filter((name) => !tokens.theme.has(name))
+  if (missingShadows.length) {
+    throw new Error(`medo-theme.css deckt diese Schatten nicht ab: ${missingShadows.join(', ')}`)
+  }
+  const known = new Set([...declared, ...shadowNames])
+  const surplus = [...tokens.theme.keys()].filter((name) => !known.has(name))
   if (surplus.length) {
-    throw new Error(`Vorschlag kennt Token, die die Semantic-Ebene nicht deklariert: ${surplus.join(', ')}`)
+    throw new Error(`medo-theme.css kennt Token, die die Semantic-Ebene nicht deklariert: ${surplus.join(', ')}`)
   }
-  const shadowsMissing = tokens.shadows.map(([name]) => name).filter((name) => !DARK_SHADOWS.has(name))
-  if (shadowsMissing.length) {
-    throw new Error(`Kein dunkler Schatten vorgeschlagen für: ${shadowsMissing.join(', ')}`)
+  const withoutRole = declared.filter((name) => !ROLES.has(name))
+  if (withoutRole.length) {
+    throw new Error(`Keine Rollenbeschreibung für: ${withoutRole.join(', ')}`)
   }
   const gaps = coverageGaps()
   if (gaps.length) {
@@ -28,25 +37,46 @@ function assertCoverage(tokens) {
   }
 }
 
+/**
+ * The light branch of medo-theme.css restates what src/styles/medo/ already
+ * declares. That restatement is unavoidable — light-dark() needs both arguments
+ * — so it is checked instead of trusted. The mirror stays authoritative for
+ * light; the theme file only gets to repeat it.
+ */
+export function assertNoLightDrift(tokens) {
+  const drifted = []
+  for (const [name] of [...tokens.semantic, ...tokens.shadows]) {
+    const mirror = tokens.mirrorLight(name)
+    const theme = tokens.light(name)
+    if (mirror !== theme) drifted.push({ name, mirror, theme })
+  }
+  if (drifted.length) {
+    throw new Error(
+      `Der helle Zweig von medo-theme.css weicht vom Spiegel in src/styles/medo/ ab:\n${
+        drifted.map((d) => `  --${d.name}: Spiegel ${d.mirror}, Theme ${d.theme}`).join('\n')}`,
+    )
+  }
+}
+
 export function analyse() {
   const tokens = loadTokens()
   assertCoverage(tokens)
+  assertNoLightDrift(tokens)
 
   const light = makeTheme(tokens, 'light')
   const dark = makeTheme(tokens, 'dark')
 
   const rows = tokens.semantic.map(([name]) => {
-    const entry = DARK.get(name)
+    const entry = ROLES.get(name)
     const ref = entry.ref
     return {
       name,
       lightValue: light(name),
       darkValue: dark(name),
-      step: entry.step ?? null,
-      lightStep: describeLightStep(tokens, name),
+      step: stepOf(tokens, name, 'dark'),
+      lightStep: stepOf(tokens, name, 'light'),
       ref,
       kind: entry.kind,
-      special: entry.special ?? null,
       note: entry.note,
       lightRatio: round2(pairRatio(light, name, ref)),
       darkRatio: round2(pairRatio(dark, name, ref)),
@@ -57,7 +87,7 @@ export function analyse() {
   const context = groupContext(light, dark)
   const shortfalls = collectShortfalls(light, dark)
   const shadows = tokens.shadows.map(([name, value]) => ({
-    name, lightValue: value, darkValue: DARK_SHADOWS.get(name),
+    name, lightValue: value, darkValue: tokens.dark(name),
   }))
 
   return {
@@ -68,14 +98,6 @@ export function analyse() {
     actionAlternative: buildActionAlternative(light, dark),
     focusAlternative: buildFocusAlternative(dark),
   }
-}
-
-function describeLightStep(tokens, name) {
-  const declared = tokens.raw.get(name)
-  const match = declared.match(/var\(\s*--medo-color-([\w-]+)\s*\)/)
-  if (match) return match[1]
-  const alias = declared.match(/var\(\s*--medo-([\w-]+)\s*\)/)
-  return alias ? alias[1] : null
 }
 
 function pairRatio(theme, name, ref) {

@@ -9,7 +9,7 @@ import { analyse } from './analysis.mjs'
 import { runVerification, report as reportVerification } from './verify.mjs'
 import { SPECIAL_CASES, SHADOW_CASE } from './specials.mjs'
 import { REPO_ROOT } from './tokens.mjs'
-import { THRESHOLDS } from './dark-palette.mjs'
+import { THRESHOLDS } from './roles.mjs'
 
 const OUT = path.join(REPO_ROOT, 'docs', 'dark-palette-vorschlag.md')
 

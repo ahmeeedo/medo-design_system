@@ -1,0 +1,147 @@
+/* medo Design System · Theme layer
+
+   The eight files in medo/ are the untouched mirror of design-reference/tokens/
+   and hold the light values. This file is loaded after them and restates every
+   semantic token as a light/dark pair. Brand and alias layers are identical in
+   both themes and are not touched here.
+
+   One declaration per token, both themes in it. The switch is color-scheme, so
+   the token values and the native controls can never disagree. Browsers without
+   light-dark() drop these declarations and keep the light values underneath —
+   the fallback is today's appearance, not a broken one.
+
+   Contract: data-theme on <html>. Absent follows the system, "light" and "dark"
+   force the respective theme.
+
+   Dark values approved by the owner; the derivation is documented in
+   docs/dark-palette-vorschlag.md. src/styles/dark-theme.test.js reads this file
+   and fails on contrast shortfalls. */
+
+/* The switch. color-scheme drives both light-dark() below and the native
+   controls, so the tokens and the scrollbars can never disagree. */
+:root[data-theme="light"] {
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+:root {
+  color-scheme: light dark;
+
+  /* Surfaces — in dark, lightness carries elevation */
+  --medo-surface: light-dark(var(--medo-color-white), var(--medo-color-stone-1000));
+  --medo-surface-container: light-dark(var(--medo-color-stone-50), var(--medo-color-stone-900));
+  --medo-surface-container-high: light-dark(var(--medo-color-stone-100), var(--medo-color-stone-800));
+  --medo-surface-sunken: light-dark(var(--medo-color-stone-100), var(--medo-color-stone-1100));
+  --medo-surface-hover: light-dark(var(--medo-color-stone-100), var(--medo-color-stone-800));
+  --medo-surface-selected: light-dark(var(--medo-color-teal-100), var(--medo-color-teal-900));
+  --medo-overlay: light-dark(var(--medo-color-white), var(--medo-color-stone-900));
+
+  /* Text */
+  --medo-text: light-dark(var(--medo-color-stone-1000), var(--medo-color-stone-50));
+  --medo-text-muted: light-dark(#24221ead, #f7f7f6ad);
+  --medo-text-subtle: light-dark(var(--medo-color-stone-800), var(--medo-color-stone-300));
+  --medo-text-on-primary: light-dark(var(--medo-color-white), var(--medo-color-stone-1100));
+  --medo-text-disabled: light-dark(var(--medo-color-stone-500), var(--medo-color-stone-500));
+  --medo-text-link: light-dark(var(--medo-color-teal-600), var(--medo-color-teal-400));
+  --medo-text-link-hover: light-dark(var(--medo-color-teal-800), var(--medo-color-teal-300));
+
+  /* Icons */
+  --medo-icon: light-dark(var(--medo-color-stone-900), var(--medo-color-stone-100));
+  --medo-icon-muted: light-dark(#24221e8c, #f7f7f68c);
+  --medo-icon-on-primary: light-dark(var(--medo-color-white), var(--medo-color-stone-1100));
+  --medo-icon-disabled: light-dark(var(--medo-color-stone-500), var(--medo-color-stone-500));
+
+  /* Borders */
+  --medo-border: light-dark(var(--medo-color-stone-300), var(--medo-color-stone-700));
+  --medo-border-strong: light-dark(var(--medo-color-stone-500), var(--medo-color-stone-500));
+  --medo-border-subtle: light-dark(var(--medo-color-stone-200), var(--medo-color-stone-800));
+  --medo-border-disabled: light-dark(var(--medo-color-stone-200), var(--medo-color-stone-800));
+
+  /* Input fields */
+  --medo-input-bg: light-dark(var(--medo-color-white), var(--medo-color-stone-1100));
+  --medo-input-bg-disabled: light-dark(var(--medo-color-stone-100), var(--medo-color-stone-900));
+  --medo-input-text: light-dark(var(--medo-color-stone-1000), var(--medo-color-stone-50));
+  --medo-input-placeholder: light-dark(var(--medo-color-stone-600), var(--medo-color-stone-400));
+  --medo-input-border: light-dark(var(--medo-color-stone-400), var(--medo-color-stone-600));
+  --medo-input-border-hover: light-dark(var(--medo-color-stone-600), var(--medo-color-stone-400));
+  --medo-input-border-focus: light-dark(var(--medo-color-teal-600), var(--medo-color-teal-400));
+  --medo-input-border-error: light-dark(var(--medo-color-red-600), var(--medo-color-red-400));
+  --medo-input-border-disabled: light-dark(var(--medo-color-stone-200), var(--medo-color-stone-800));
+
+  /* Actions */
+  --medo-action: light-dark(var(--medo-color-teal-600), var(--medo-color-teal-500));
+  --medo-action-hover: light-dark(var(--medo-color-teal-700), var(--medo-color-teal-400));
+  --medo-action-active: light-dark(var(--medo-color-teal-800), var(--medo-color-teal-300));
+  --medo-action-disabled: light-dark(var(--medo-color-stone-200), var(--medo-color-stone-800));
+  --medo-action-text: light-dark(var(--medo-color-white), var(--medo-color-stone-1100));
+  --medo-action-text-disabled: light-dark(var(--medo-color-stone-500), var(--medo-color-stone-500));
+  --medo-action-neutral: light-dark(var(--medo-color-stone-100), var(--medo-color-stone-800));
+  --medo-action-neutral-hover: light-dark(var(--medo-color-stone-200), var(--medo-color-stone-700));
+  --medo-action-neutral-active: light-dark(var(--medo-color-stone-300), var(--medo-color-stone-600));
+  --medo-action-neutral-text: light-dark(var(--medo-color-stone-1000), var(--medo-color-stone-50));
+
+  /* Focus */
+  --medo-focus-ring: light-dark(#00726559, #adccc88c);
+  --medo-focus-ring-danger: light-dark(#ab091359, #e1bab58c);
+
+  /* States, selection, scrim */
+  --medo-state-hover: light-dark(var(--medo-color-stone-100), var(--medo-color-stone-800));
+  --medo-state-pressed: light-dark(var(--medo-color-stone-200), var(--medo-color-stone-700));
+  --medo-state-selected: light-dark(var(--medo-color-teal-100), var(--medo-color-teal-900));
+  --medo-selection: light-dark(var(--medo-color-teal-200), var(--medo-color-teal-800));
+  --medo-divider: light-dark(var(--medo-color-stone-200), var(--medo-color-stone-800));
+  --medo-scrim: light-dark(rgba(23,21,19,0.5), rgba(0,0,0,0.5));
+
+  /* Status — success */
+  --medo-success-surface: light-dark(var(--medo-color-green-50), var(--medo-color-green-1000));
+  --medo-success-text: light-dark(var(--medo-color-green-1000), var(--medo-color-green-300));
+  --medo-success-border: light-dark(var(--medo-color-green-300), var(--medo-color-green-700));
+  --medo-success-solid: light-dark(var(--medo-color-green-600), var(--medo-color-green-500));
+  --medo-success-solid-hover: light-dark(var(--medo-color-green-700), var(--medo-color-green-400));
+  --medo-success-solid-active: light-dark(var(--medo-color-green-800), var(--medo-color-green-300));
+  --medo-success-on-solid: light-dark(var(--medo-color-white), var(--medo-color-stone-1100));
+
+  /* Status — warning */
+  --medo-warning-surface: light-dark(var(--medo-color-amber-50), var(--medo-color-amber-1000));
+  --medo-warning-text: light-dark(var(--medo-color-amber-1000), var(--medo-color-amber-300));
+  --medo-warning-border: light-dark(var(--medo-color-amber-300), var(--medo-color-amber-700));
+  --medo-warning-solid: light-dark(var(--medo-color-amber-600), var(--medo-color-amber-500));
+  --medo-warning-solid-hover: light-dark(var(--medo-color-amber-700), var(--medo-color-amber-400));
+  --medo-warning-solid-active: light-dark(var(--medo-color-amber-800), var(--medo-color-amber-300));
+  --medo-warning-on-solid: light-dark(var(--medo-color-stone-1000), var(--medo-color-stone-1100));
+
+  /* Status — error */
+  --medo-error-surface: light-dark(var(--medo-color-red-50), var(--medo-color-red-1000));
+  --medo-error-text: light-dark(var(--medo-color-red-1000), var(--medo-color-red-300));
+  --medo-error-border: light-dark(var(--medo-color-red-300), var(--medo-color-red-700));
+  --medo-error-solid: light-dark(var(--medo-color-red-600), var(--medo-color-red-500));
+  --medo-error-solid-hover: light-dark(var(--medo-color-red-700), var(--medo-color-red-400));
+  --medo-error-solid-active: light-dark(var(--medo-color-red-800), var(--medo-color-red-300));
+  --medo-error-on-solid: light-dark(var(--medo-color-white), var(--medo-color-stone-1100));
+
+  /* Status — info */
+  --medo-info-surface: light-dark(var(--medo-color-blue-50), var(--medo-color-blue-1000));
+  --medo-info-text: light-dark(var(--medo-color-blue-1000), var(--medo-color-blue-300));
+  --medo-info-border: light-dark(var(--medo-color-blue-300), var(--medo-color-blue-700));
+  --medo-info-solid: light-dark(var(--medo-color-blue-600), var(--medo-color-blue-500));
+  --medo-info-solid-hover: light-dark(var(--medo-color-blue-700), var(--medo-color-blue-400));
+  --medo-info-solid-active: light-dark(var(--medo-color-blue-800), var(--medo-color-blue-300));
+  --medo-info-on-solid: light-dark(var(--medo-color-white), var(--medo-color-stone-1100));
+
+  /* Elevation — geometry identical, only the shadow colour swaps */
+  --medo-shadow-sm:
+    0 1px 2px light-dark(rgba(31,29,26,0.06), rgba(0,0,0,0.24)),
+    0 1px 3px light-dark(rgba(31,29,26,0.04), rgba(0,0,0,0.16));
+  --medo-shadow-md:
+    0 2px 4px light-dark(rgba(31,29,26,0.06), rgba(0,0,0,0.24)),
+    0 6px 16px light-dark(rgba(31,29,26,0.07), rgba(0,0,0,0.28));
+  --medo-shadow-lg:
+    0 4px 8px light-dark(rgba(31,29,26,0.06), rgba(0,0,0,0.24)),
+    0 14px 32px light-dark(rgba(31,29,26,0.10), rgba(0,0,0,0.40));
+  --medo-shadow-xl:
+    0 8px 18px light-dark(rgba(31,29,26,0.08), rgba(0,0,0,0.32)),
+    0 28px 60px light-dark(rgba(31,29,26,0.16), rgba(0,0,0,0.64));
+}

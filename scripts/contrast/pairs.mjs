@@ -2,7 +2,7 @@
    against the light palette and against the dark proposal. */
 
 import { contrastRatio, parseColor, flatten, round2 } from './color.mjs'
-import { darkValue, DARK, THRESHOLDS } from './dark-palette.mjs'
+import { ROLES, THRESHOLDS } from './roles.mjs'
 
 export const TEXT_FOREGROUNDS = [
   'medo-text',
@@ -103,8 +103,9 @@ export function allPairs() {
   return [...matrixPairs(), ...CONTEXT_PAIRS]
 }
 
+/* Both branches come out of medo-theme.css — the stylesheet the browser reads. */
 export function makeTheme(tokens, mode) {
-  return (name) => (mode === 'light' ? tokens.light(name) : darkValue(tokens, name))
+  return (name) => (mode === 'dark' ? tokens.dark(name) : tokens.light(name))
 }
 
 /** Backgrounds must be opaque before they can carry a foreground. */
@@ -135,5 +136,5 @@ export function coverageGaps() {
     seen.add(pair.fg)
     seen.add(pair.bg)
   }
-  return [...DARK.keys()].filter((name) => !seen.has(name))
+  return [...ROLES.keys()].filter((name) => !seen.has(name))
 }
