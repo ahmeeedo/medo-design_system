@@ -307,10 +307,10 @@
    The icon disc keeps --medo-surface-sunken: it is an inset, and the token is
    one step below the dialog surface in both themes.
 
-   The scrim is left alone deliberately. It reaches 3.39:1 in light but only
-   1.31:1 in dark, which is close to the physical ceiling for black at 50% over
-   stone-900. Strengthening it means changing --medo-scrim in medo-theme.css,
-   which is out of scope here — recorded for the owner instead. */
+   The scrim stays as it is. It reaches 3.39:1 in light and 1.31:1 in dark,
+   close to the physical ceiling for black at 50% over stone-900. The owner
+   sighted it in dark and confirmed the dialog reads clearly against the
+   darkened page, so --medo-scrim is left untouched. */
 
 /* The dialog floats above the page and must not stand on the page surface. */
 :root .medo-mod{
@@ -321,8 +321,13 @@
    Notification (.medo-nt)
    ---------------------------------------------------------------------------
    The bar already uses --medo-overlay. The four status kinds colour themselves
-   from semantic tokens; the neutral kind uses stone-700 with white lettering,
-   which holds on the dark page just as it does in light.
+   from semantic tokens. The neutral kind's solid variant (stone-700 with white
+   lettering) holds on the dark page; its accent does not — stone-700 falls from
+   8.40:1 to 1.52:1 on the neutral surface, taking the icon and the left stripe
+   with it. That accent is set inline per kind from the map in Notification.jsx,
+   and the element carries no class naming the kind, so no selector here can
+   reach the neutral one without hitting the four that are correct. Left for the
+   design project; see the task log.
 
    The solid variants keep their white veils and white focus rings. Measured
    across all five solid surfaces they shift from 1.20-1.52:1 to 1.14-1.52:1 on
@@ -449,18 +454,26 @@
 /* ---------------------------------------------------------------------------
    Tabs (.medo-tabs)
    ---------------------------------------------------------------------------
-   Both findings are alias-layer teal on a teal tint: teal-1000 lettering on
-   --medo-state-selected, which is teal-900 in dark. The lettering follows the
-   1000 -> 300 mapping medo-theme.css uses for its status text tokens; teal-100
-   is the light value of --medo-state-selected. */
+   Both findings are alias-layer teal on a teal tint: teal-1000 lettering on a
+   teal-100 fill, neither of which is paired. The vertical tab's lettering
+   follows the 1000 -> 300 mapping medo-theme.css uses for its status text
+   tokens and reaches 7.31:1 on the teal-900 tab.
+
+   The badge is the one place where the dark treatment is deliberately stronger
+   than a mirror of light. Mirroring the step lands the fill at 1.27:1 against
+   the card — numerically the same as light's 1.18:1, but two dark tones are far
+   harder to tell apart than two light ones, and the owner reported the badge
+   merging into its background. teal-700 lifts it to 2.06:1 against the card and
+   1.63:1 against the vertical selected tab, where light leaves it at 1.00:1 and
+   only the lettering carries it. teal-100 keeps the numerals at 6.53:1. */
 
 :root .medo-tabs__tab--vertical[aria-selected="true"]{
   color: light-dark(var(--medo-primary-1000), var(--medo-color-teal-300));
 }
 
 :root .medo-tabs__tab[aria-selected="true"] .medo-tabs__badge{
-  background: var(--medo-state-selected);
-  color: light-dark(var(--medo-primary-1000), var(--medo-color-teal-300));
+  background: light-dark(var(--medo-primary-100), var(--medo-color-teal-700));
+  color: light-dark(var(--medo-primary-1000), var(--medo-color-teal-100));
 }
 
 /* ---------------------------------------------------------------------------
