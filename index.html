@@ -4,6 +4,16 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Design System</title>
+    <script>
+      /* Applies a remembered choice before the first paint. Without one the
+         attribute stays absent and color-scheme: light dark lets the browser
+         follow the system on its own — nothing to correct afterwards, so this
+         is the only case that could flash. */
+      var medoTheme = localStorage.getItem('medo-theme')
+      if (medoTheme === 'light' || medoTheme === 'dark') {
+        document.documentElement.dataset.theme = medoTheme
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>

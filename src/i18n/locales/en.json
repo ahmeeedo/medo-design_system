@@ -58,7 +58,8 @@
     "de": "DE"
   },
   "app": {
-    "toastRegion": "Notifications"
+    "toastRegion": "Notifications",
+    "themeToggle": "Dark theme"
   },
   "tabs": {
     "overview": "Overview",
