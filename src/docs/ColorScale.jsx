@@ -1,4 +1,6 @@
 import { SCALE_STEPS, useTokenValues } from './tokens'
+import { themePair } from './themeTokens'
+import { useTheme } from './useTheme'
 
 const TRACK = 'grid gap-[var(--medo-space-2xs)] items-end'
 const TRACK_COLS = { gridTemplateColumns: 'var(--docs-scale-label) repeat(12, var(--docs-scale-step))' }
@@ -34,7 +36,7 @@ export function ColorScaleGrid({ scales, roleLabel }) {
                 <div key={step} className="flex flex-col gap-[var(--medo-space-3xs)]">
                   <div
                     className="h-[var(--medo-space-2xl)] rounded-[var(--medo-radius-sm)] border border-[var(--medo-border-subtle)]"
-                    style={{ background: `var(${token})` }}
+                    style={{ backgroundColor: `var(${token})` }}
                   />
                   <span className={`${MICRO} text-center uppercase`}>{values[token]}</span>
                 </div>
@@ -47,16 +49,18 @@ export function ColorScaleGrid({ scales, roleLabel }) {
   )
 }
 
-/* Single swatches with their token name, the alias step they point at and the
-   value the browser resolved. */
+/* Single swatches with their token name, the step they point at and their
+   value — all three for the theme on screen, so they match the swatch. Read
+   from the stylesheet rather than off the element: a custom property hands
+   back the whole light-dark() expression, not the branch in force. */
 export function SwatchList({ tokens }) {
-  const names = tokens.map((entry) => `--medo-${entry.name}`)
-  const values = useTokenValues(names)
+  const theme = useTheme()
 
   return (
     <div className="grid grid-cols-2 max-[900px]:grid-cols-1 gap-x-[var(--medo-space-xl)]">
       {tokens.map((entry) => {
         const token = `--medo-${entry.name}`
+        const side = themePair(token)[theme]
         return (
           <div
             key={entry.name}
@@ -64,13 +68,13 @@ export function SwatchList({ tokens }) {
           >
             <span
               className="w-[var(--medo-space-xl)] h-[var(--medo-space-xl)] rounded-[var(--medo-radius-md)] border border-[var(--medo-border)] shrink-0"
-              style={{ background: `var(${token})` }}
+              style={{ backgroundColor: `var(${token})` }}
             />
             <div className="flex flex-col gap-[var(--medo-space-3xs)] min-w-0">
               <span className="[font-family:var(--medo-font-mono)] [font-size:var(--medo-text-sm)] [font-weight:var(--medo-weight-medium)] text-[var(--medo-text)] truncate">
                 {entry.name}
               </span>
-              <span className={`${MICRO} truncate uppercase`}>{entry.ref} · {values[token]}</span>
+              <span className={`${MICRO} truncate uppercase`}>{side.ref} · {side.value}</span>
             </div>
           </div>
         )

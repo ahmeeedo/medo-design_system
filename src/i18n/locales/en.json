@@ -95,9 +95,10 @@
   },
   "tokensTable": {
     "token": "Token",
+    "light": "Light",
+    "dark": "Dark",
     "value": "Value",
-    "description": "Description",
-    "reference": "Reference"
+    "description": "Description"
   },
   "button": {
     "page": {
