@@ -293,11 +293,14 @@
    solid primary (teal-600 on white) also hold up on the dark page and stay as
    they are. The two soft roles are an open case — see the escalation list. */
 
-/* The remove button darkens its chip with ink at 10%. On a dark chip that is
-   invisible; the dark branch lightens instead, derived from the text token so
-   the light branch keeps the reference literal. */
+/* The remove button darkens its chip with ink at 10%. That ink disappears on a
+   dark chip, but so does a light veil on the pale solid roles — no overlay that
+   only darkens or only lightens carries all six roles in dark. stone-600 is the
+   one grey step that stays visible on every chip surface the component can
+   have: 1.16:1 on the teal solid up to 1.86:1 on the amber solid, against the
+   1.17-1.22:1 the reference produces in light. */
 :root .medo-tag__x:hover{
-  background: light-dark(rgba(31,29,26,0.10), color-mix(in srgb, var(--medo-text) 10%, transparent));
+  background: light-dark(rgba(31,29,26,0.10), color-mix(in srgb, var(--medo-color-stone-600) 60%, transparent));
 }
 
 /* ---------------------------------------------------------------------------
