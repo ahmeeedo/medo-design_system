@@ -23,9 +23,31 @@
    Selectors are prefixed with :root so these rules outrank the component
    stylesheets by specificity rather than by bundle order.
 
+   Surveyed with no findings, therefore without a section of their own: Checkbox,
+   Field, Icon, Link, NumberInput, Textarea, TextInput. They colour themselves
+   from semantic tokens only, which medo-theme.css already pairs.
+
    src/styles/component-theme.test.js resolves every declaration below for the
    light theme and fails if it differs from what the component stylesheet
    declares — the light rendering is guarded, not asserted. */
+
+/* ---------------------------------------------------------------------------
+   Button (.medo-btn)
+   ---------------------------------------------------------------------------
+   The primary and danger disabled rows already use --medo-action-disabled and
+   --medo-action-text-disabled. Only the secondary and ghost rows reach for raw
+   brand steps, and only their two surfaces need a counterpart.
+
+   Both disabled labels keep stone-400. On the dark disabled surface it reaches
+   3.4:1 (light: 2.1:1) and on the page 7:1 (light: 2.4:1) — in both cases still
+   well below the enabled label, so the disabled reading survives. */
+
+/* stone-100 is the light value of --medo-action-neutral, stone-200 that of
+   --medo-border-disabled. */
+:root .medo-btn--secondary[aria-disabled="true"]{
+  background: var(--medo-action-neutral);
+  border-color: var(--medo-border-disabled);
+}
 
 /* ---------------------------------------------------------------------------
    CodeSnippet (.medo-cds)
@@ -65,6 +87,9 @@
 /* ---------------------------------------------------------------------------
    DatePicker (.medo-dp)
    --------------------------------------------------------------------------- */
+
+/* Out-of-month days keep stone-400. On the dark page it reaches 7:1 while the
+   body text sits at 14:1, so the day stays visibly recessed, as it is in light. */
 
 /* Today's ring. Off-palette teal between steps 200 and 300; as a border it
    follows the 300 -> 700 mapping. */
@@ -137,6 +162,12 @@
 }
 
 /* ---------------------------------------------------------------------------
+   List (.medo-list)
+   ---------------------------------------------------------------------------
+   The marker keeps stone-500: 5:1 against the dark page, recessed against the
+   14:1 body text, which mirrors the role it plays in light. */
+
+/* ---------------------------------------------------------------------------
    Loading (.medo-load, .medo-sk, .medo-spin)
    ---------------------------------------------------------------------------
    Both fixed values are the #000 inside the spinner's mask. A mask consumes
@@ -166,3 +197,149 @@
    for the same reason as in ContainedList. The select's arrow is drawn from
    two gradients tinted with var(--medo-icon), which is already paired. This
    component needs no overrides. */
+
+/* ---------------------------------------------------------------------------
+   Radio (.medo-rb)
+   ---------------------------------------------------------------------------
+   The disabled dot keeps stone-400: it sits inside the disabled circle and
+   stays the muted mark it is in light. */
+
+/* The card's ring interior is the same surface as an input field; white is the
+   light value of --medo-input-bg. */
+:root .medo-rb-card__ring{
+  background: var(--medo-input-bg);
+}
+
+/* --medo-primary-50 is an alias-layer token and therefore identical in both
+   themes; a teal-50 card would stay bright on the dark page. */
+:root .medo-rb-card--on{
+  background: light-dark(var(--medo-primary-50), var(--medo-surface-selected));
+}
+
+/* ---------------------------------------------------------------------------
+   Search (.medo-search)
+   ---------------------------------------------------------------------------
+   The group label keeps stone-500 for the same reason as the one in Select:
+   5:1 against the dark page, clearly recessed against the body text. */
+
+/* ---------------------------------------------------------------------------
+   Select (.medo-select)
+   ---------------------------------------------------------------------------
+   The multi-select chips colour themselves from the alias layer
+   (--medo-primary-*), which medo-theme.css does not pair — in dark they would
+   stay a bright teal chip with dark teal lettering. teal-200 is the light value
+   of --medo-selection, so border and hover fill need no light branch; the
+   surface follows 50 -> 900 and the lettering 800 -> 300, as in FileUploader.
+
+   The group label keeps stone-500: 5:1 against the dark page and clearly
+   recessed against the 14:1 body text. */
+
+:root .medo-select__chip{
+  background: light-dark(var(--medo-primary-50), var(--medo-surface-selected));
+  border-color: var(--medo-selection);
+  color: light-dark(var(--medo-primary-800), var(--medo-color-teal-300));
+}
+
+:root .medo-select__chipx:hover{
+  background: var(--medo-selection);
+}
+
+/* teal-200 is the light value of --medo-selection. */
+:root .medo-select__opt--selected.medo-select__opt--active{
+  background: var(--medo-selection);
+}
+
+/* ---------------------------------------------------------------------------
+   Slider (.medo-sl)
+   ---------------------------------------------------------------------------
+   The handle keeps white and the disabled handle keeps stone-50: the knob reads
+   as a light disc against the rail in both themes, and the disabled state is
+   carried by the greyed fill and the disabled border, exactly as in light.
+   The three handle shadows keep their dark ink — shadows stay dark in both
+   themes, which is what medo-theme.css does with the elevation tokens too. */
+
+/* stone-200 is the light value of --medo-border-subtle. */
+:root .medo-sl__track{
+  background: var(--medo-border-subtle);
+}
+
+/* stone-400 and stone-600 are the light values of --medo-input-border and
+   --medo-input-border-hover, whose dark branches swap places — so the handle
+   outline darkens on hover in light and lightens in dark. */
+:root .medo-sl__handle{
+  border-color: var(--medo-input-border);
+}
+
+:root .medo-sl__handle:hover{
+  border-color: var(--medo-input-border-hover);
+}
+
+:root .medo-sl--disabled .medo-sl__fill{
+  background: light-dark(var(--medo-color-stone-400), var(--medo-color-stone-600));
+}
+
+/* The value bubble is stone-1000, which is the page surface in dark — it would
+   dissolve into the background. stone-800 keeps it a raised chip. */
+:root .medo-sl__bubble,
+:root .medo-sl__bubble::after{
+  background: light-dark(var(--medo-color-stone-1000), var(--medo-color-stone-800));
+}
+
+/* ---------------------------------------------------------------------------
+   Tag (.medo-tag)
+   ---------------------------------------------------------------------------
+   The four status roles colour themselves from semantic tokens and follow the
+   theme on their own. The solid neutral (stone-700 on white lettering) and
+   solid primary (teal-600 on white) also hold up on the dark page and stay as
+   they are. The two soft roles are an open case — see the escalation list. */
+
+/* The remove button darkens its chip with ink at 10%. On a dark chip that is
+   invisible; the dark branch lightens instead, derived from the text token so
+   the light branch keeps the reference literal. */
+:root .medo-tag__x:hover{
+  background: light-dark(rgba(31,29,26,0.10), color-mix(in srgb, var(--medo-text) 10%, transparent));
+}
+
+/* ---------------------------------------------------------------------------
+   Toggle (.medo-tg)
+   ---------------------------------------------------------------------------
+   The thumb keeps white, the disabled thumb stone-50, and the thumb shadow its
+   dark ink. That is deliberate: Toggle.jsx sets the icon inside the thumb with
+   dark ink colours, so a darker thumb would make the icon unreadable — and the
+   icon cannot be reached from here. The off-state icon (stone-600 on the light
+   thumb) is therefore correct in both themes; the on-state icon is an open case,
+   see the escalation list.
+
+   The track steps mirror around the middle of the scale: 200 <-> 800,
+   300 <-> 700, 400 <-> 600. Hover keeps lifting one step in both themes. */
+
+:root .medo-tg__track{
+  background: light-dark(var(--medo-color-stone-300), var(--medo-color-stone-700));
+}
+
+:root .medo-tg:hover:not(:disabled) .medo-tg__track{
+  background: light-dark(var(--medo-color-stone-400), var(--medo-color-stone-600));
+}
+
+/* stone-200 is the light value of --medo-border-disabled. */
+:root .medo-tg:disabled .medo-tg__track{
+  background: var(--medo-border-disabled);
+}
+
+:root .medo-tg--on:disabled .medo-tg__track,
+:root .medo-tg--loading:disabled .medo-tg__track{
+  background: light-dark(var(--medo-color-stone-300), var(--medo-color-stone-700));
+}
+
+/* ---------------------------------------------------------------------------
+   Tooltip (.medo-tt)
+   ---------------------------------------------------------------------------
+   The lettering keeps white and the secondary line its white at 80%: the
+   tooltip is a dark chip in both themes, so both stay correct. */
+
+/* stone-1000 is the page surface in dark — the tooltip and its arrow would
+   dissolve into the background behind them. */
+:root .medo-tt,
+:root .medo-tt__arrow{
+  background: light-dark(var(--medo-color-stone-1000), var(--medo-color-stone-800));
+}
