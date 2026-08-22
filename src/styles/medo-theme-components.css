@@ -1,0 +1,168 @@
+/* medo Design System · Theme layer — component overrides
+
+   The ported stylesheets under src/components/ carry the reference's literal
+   colour values and stay untouched, so the 1:1 comparison against
+   design-reference/components/<Name>.dc.html remains provable. This file is
+   loaded after medo-theme.css and re-addresses those same class selectors from
+   the outside to give the fixed values a dark counterpart.
+
+   Two forms are used:
+
+   - Where the reference's light value is exactly a token's light value, the
+     declaration is unconditional: it renders identically in light and follows
+     the token into dark.
+   - Where the reference's value sits off the palette, only the colour is
+     wrapped in light-dark(); the light branch repeats the reference literal, so
+     light rendering cannot change.
+
+   Every dark value comes from the approved palette. Off-palette light values
+   were mapped to their nearest brand step, then the step mapping medo-theme.css
+   already uses for that role was applied (borders 300 -> 700, status surfaces
+   50 -> 1000, tint surfaces 100 -> 900, accents 800 -> 300).
+
+   Selectors are prefixed with :root so these rules outrank the component
+   stylesheets by specificity rather than by bundle order.
+
+   src/styles/component-theme.test.js resolves every declaration below for the
+   light theme and fails if it differs from what the component stylesheet
+   declares — the light rendering is guarded, not asserted. */
+
+/* ---------------------------------------------------------------------------
+   CodeSnippet (.medo-cds)
+   ---------------------------------------------------------------------------
+   The block presentation is dark by specification and holds 23 of the fixed
+   values. It renders identically in both themes and is deliberately left
+   alone.
+
+   The inline variant is the component's only light surface and sits inside
+   flowing text. Keeping it as is would put a 13.43:1 chip against the dark
+   page — as loud as the body text around it — where light deliberately keeps
+   it at 1.18:1. The dark values below restore that restraint (1.15:1) and are
+   documented in docs/codesnippet-inline-dark.md. */
+
+/* #ececeb is stone-100 exactly, the light value of --medo-surface-sunken. */
+:root .medo-cds-inline{
+  background: var(--medo-surface-sunken);
+  border-color: light-dark(#e0ddd8, var(--medo-border-subtle));
+  color: light-dark(#8a3f36, var(--medo-color-red-300));
+}
+
+/* ---------------------------------------------------------------------------
+   ContainedList (.medo-clist)
+   ---------------------------------------------------------------------------
+   The one fixed value, #fff in .medo-clist__row[aria-selected="true"]
+   .medo-clist__box--radio, is the fallback of var(--medo-input-bg). That token
+   is declared in the mirror and paired in medo-theme.css, so the fallback is
+   unreachable and needs no counterpart. */
+
+/* The check glyph sits on --medo-action. In dark that surface inverts to
+   teal-500, where white drops to 2.6:1. --medo-action-text is white in light,
+   so this changes nothing there. */
+:root .medo-clist__box{
+  color: var(--medo-action-text);
+}
+
+/* ---------------------------------------------------------------------------
+   DatePicker (.medo-dp)
+   --------------------------------------------------------------------------- */
+
+/* Today's ring. Off-palette teal between steps 200 and 300; as a border it
+   follows the 300 -> 700 mapping. */
+:root .medo-dp__day--today{
+  box-shadow: inset 0 0 0 var(--medo-border-thin) light-dark(#b7d8d3, var(--medo-color-teal-700));
+}
+
+/* #e2efed is teal-100 exactly, which is the light value of --medo-state-selected. */
+:root .medo-dp__day--inrange{
+  background: var(--medo-state-selected);
+}
+
+/* Preset chips and time slots share one hover treatment: teal-50 tint with an
+   off-palette teal-300 border. The tint becomes the semantic teal surface, the
+   border follows 300 -> 700. */
+:root .medo-dp__chip:hover,
+:root .medo-dp__slot:hover:not(:disabled){
+  background: light-dark(#f2f9f8, var(--medo-surface-selected));
+  border-color: light-dark(#9fd0c8, var(--medo-color-teal-700));
+}
+
+/* The reset control is red-tinted. Its resting border is a near red-300, its
+   hover border a near red-400, its hover fill a near red-100. */
+:root .medo-dp__reset{
+  border-color: light-dark(#e3c4bf, var(--medo-error-border));
+}
+
+:root .medo-dp__reset:hover{
+  background: light-dark(#fbecea, var(--medo-color-red-900));
+  border-color: light-dark(#d9a9a2, var(--medo-error-solid));
+}
+
+/* ---------------------------------------------------------------------------
+   FileUploader (.medo-fu)
+   --------------------------------------------------------------------------- */
+
+/* The drop zone's dashed border is a near stone-300. */
+:root .medo-fu__zone{
+  border-color: light-dark(#c6c2ba, var(--medo-border));
+}
+
+:root .medo-fu__zone:hover:not(:disabled){
+  border-color: light-dark(#9a948a, var(--medo-border-strong));
+  background: light-dark(#f5f3f0, var(--medo-surface-hover));
+}
+
+/* While dragging over: teal-50 fill with teal-800 lettering. In dark the fill
+   becomes the semantic teal surface and the lettering follows 800 -> 300,
+   because teal-800 on a teal surface would be unreadable. */
+:root .medo-fu__zone--over{
+  background: light-dark(#f2f9f8, var(--medo-surface-selected));
+  color: light-dark(var(--medo-primary-800), var(--medo-color-teal-300));
+}
+
+/* Disabled fill is a near stone-100; opacity carries the disabled signal in
+   both themes, as it already does in light. */
+:root .medo-fu__zone:disabled{
+  background: light-dark(#f3f1ee, var(--medo-input-bg-disabled));
+}
+
+/* #f7f7f6 is stone-50 exactly, the light value of --medo-surface-container. */
+:root .medo-fu__zone:hover:not(:disabled) .medo-fu__btn{
+  background: var(--medo-surface-container);
+}
+
+/* The error row is a near red-300 border on a near red-50 fill. */
+:root .medo-fu__item--error{
+  border-color: light-dark(#e0b8b2, var(--medo-error-border));
+  background: light-dark(#fdf6f5, var(--medo-error-surface));
+}
+
+/* ---------------------------------------------------------------------------
+   Loading (.medo-load, .medo-sk, .medo-spin)
+   ---------------------------------------------------------------------------
+   Both fixed values are the #000 inside the spinner's mask. A mask consumes
+   only the alpha channel, so the colour is arbitrary and needs no counterpart.
+   The spinner's visible colour is currentColor and already follows the theme.
+
+   The three declarations below are not hex values and were therefore outside
+   the surveyed set, but they are the ones that actually break in dark. */
+
+/* A white veil over dark content. Derived from the surface token, so light
+   resolves to the reference's own rgba(255,255,255,0.78). */
+:root .medo-load__overlay{
+  background: color-mix(in srgb, var(--medo-surface) 78%, transparent);
+}
+
+/* stone-100 is a brand step and stays near-white in dark. Its light value is
+   the light value of --medo-surface-container-high. */
+:root .medo-sk__b{
+  background: var(--medo-surface-container-high);
+  background-image: linear-gradient(90deg, transparent 0%, light-dark(rgba(255,255,255,0.85), var(--medo-state-pressed)) 50%, transparent 100%);
+}
+
+/* ---------------------------------------------------------------------------
+   Pagination (.medo-pag)
+   ---------------------------------------------------------------------------
+   Both fixed values are #fff fallbacks of var(--medo-input-bg) and unreachable
+   for the same reason as in ContainedList. The select's arrow is drawn from
+   two gradients tinted with var(--medo-icon), which is already paired. This
+   component needs no overrides. */
