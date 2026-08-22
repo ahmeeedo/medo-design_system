@@ -9,7 +9,7 @@
    property. A drifting light branch fails here instead of on screen. */
 
 import { describe, it, expect } from 'vitest'
-import { readFileSync, readdirSync } from 'node:fs'
+import { readFileSync, readdirSync, existsSync } from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { splitTopLevel } from '../../scripts/contrast/tokens.mjs'
@@ -18,7 +18,15 @@ const here = path.dirname(fileURLToPath(import.meta.url))
 const REPO_ROOT = path.resolve(here, '..', '..')
 const OVERRIDES = path.join(REPO_ROOT, 'src', 'styles', 'medo-theme-components.css')
 
-const COMPONENTS = ['CodeSnippet', 'ContainedList', 'DatePicker', 'FileUploader', 'Loading', 'Pagination']
+/* Every ported component, discovered rather than listed — a later pass adding
+   overrides for another component must not have to remember to extend a list. */
+function componentNames() {
+  const dir = path.join(REPO_ROOT, 'src', 'components')
+  return readdirSync(dir, { withFileTypes: true })
+    .filter((entry) => entry.isDirectory())
+    .map((entry) => entry.name)
+    .filter((name) => existsSync(path.join(dir, name, `${name}.css`)))
+}
 
 const DECLARATION = /--([\w-]+)\s*:\s*([^;]+);/g
 const VAR_REFERENCE = /var\(\s*--([\w-]+)\s*\)/
@@ -166,7 +174,7 @@ function declarationIndex(rules) {
 
 function componentIndex() {
   const rules = []
-  for (const name of COMPONENTS) {
+  for (const name of componentNames()) {
     rules.push(...parseRules(readFileSync(path.join(REPO_ROOT, 'src', 'components', name, `${name}.css`), 'utf8')))
   }
   return declarationIndex(rules)
@@ -209,7 +217,7 @@ describe('component theme overrides', () => {
     expect(overrides.filter((rule) => !rule.selector.startsWith(':root ')).map((rule) => rule.selector)).toEqual([])
   })
 
-  it('targets only selectors the six component stylesheets declare', () => {
+  it('targets only selectors the component stylesheets declare', () => {
     const unknown = overrides
       .map((rule) => rule.selector.replace(/^:root /, ''))
       .filter((selector) => !components.has(selector))
@@ -242,17 +250,25 @@ describe('component theme overrides', () => {
     expect(literals).toEqual([])
   })
 
+  /* Compared without the alpha channel: a dark branch may carry a palette colour
+     at reduced opacity (a veil over a chip), which is still that palette colour. */
   it('resolves every dark value to a colour from the brand palette', () => {
+    const rgbOf = (value) => {
+      const rgba = toRgba(normalise(value))
+      return rgba ? `${rgba[0]},${rgba[1]},${rgba[2]}` : null
+    }
     const palette = new Set(
       [...tokens.entries()]
         .filter(([name]) => name.startsWith('medo-color-'))
-        .map(([, value]) => normalise(value)),
+        .map(([, value]) => rgbOf(value))
+        .filter(Boolean),
     )
     const foreign = []
     for (const rule of overrides) {
       for (const branch of darkBranches(rule.value)) {
         const resolved = normalise(resolveDark(branch, tokens))
-        if (!palette.has(resolved)) foreign.push(`${rule.selector} { ${rule.property} }: ${branch} -> ${resolved}`)
+        const rgb = rgbOf(resolved)
+        if (!rgb || !palette.has(rgb)) foreign.push(`${rule.selector} { ${rule.property} }: ${branch} -> ${resolved}`)
       }
     }
     expect(foreign).toEqual([])
