@@ -3,6 +3,7 @@ import { PageLayout, Section, Content } from '../docs/PageLayout'
 import { TokensTable } from '../docs/TokensTable'
 import { Icon } from '../components/Icon/Icon'
 import { PROSE, LIST, CAPTION, CARD, SUBHEAD } from '../docs/pageStyles'
+import { MedoLogo } from '../docs/MedoLogo'
 
 const ICON_SAMPLES = [
   'search', 'check_circle', 'info', 'warning', 'delete',
@@ -36,14 +37,10 @@ export default function BrandPage() {
             </Content>
             <div className="flex flex-wrap items-center gap-[var(--medo-space-lg)]">
               <div className={`${CARD} flex items-center justify-center min-w-[var(--medo-space-4xl)]`}>
-                <img src="/logo-medo.svg" alt="medo" className="h-[var(--medo-space-xl)] w-auto" />
+                <MedoLogo className="h-[var(--medo-space-xl)] w-auto" />
               </div>
               <div className="bg-[var(--medo-color-stone-1000)] rounded-[var(--medo-radius-lg)] p-[var(--medo-space-lg)] flex items-center justify-center">
-                <img
-                  src="/logo-medo.svg"
-                  alt="medo"
-                  className="h-[var(--medo-space-xl)] w-auto [filter:invert(1)_brightness(1.6)]"
-                />
+                <MedoLogo inverted className="h-[var(--medo-space-xl)] w-auto" />
               </div>
               <div className="flex flex-col gap-[var(--medo-space-2xs)] max-w-[40ch]">
                 <span className={CAPTION}>{t('brand.wordmark.minHeight')}</span>

@@ -2,6 +2,9 @@ import { useState, useEffect, useRef } from 'react'
 import { NavLink, Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { LanguageSwitcher } from './LanguageSwitcher'
+import { ThemeSwitcher } from './ThemeSwitcher'
+import { MedoLogo } from './MedoLogo'
+import { ICON_BTN } from './chromeStyles'
 import { Icon } from '@/components/Icon/Icon'
 import { headerLinks } from '@/config/headerLinks'
 import { DocsSearch } from './DocsSearch'
@@ -83,8 +86,6 @@ function loadSidebarState() {
    refer back to it. */
 const HEADER_H = 'var(--docs-header-height)'
 
-const ICON_BTN = 'flex items-center justify-center w-[var(--docs-hit-target)] h-[var(--docs-hit-target)] rounded-[var(--medo-radius-md)] text-[var(--medo-icon)] cursor-pointer bg-transparent border-0 transition-colors duration-150 ease-out hover:bg-[var(--medo-state-hover)] active:bg-[var(--medo-state-pressed)] outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--medo-focus-ring)]'
-
 const NAV_LINK_BASE = 'block w-full px-[var(--medo-space-lg)] py-[var(--medo-space-xs)] [font-family:var(--medo-font-sans)] text-sm text-left no-underline cursor-pointer transition-colors duration-150 ease-out border-0 border-l-2 outline-none focus-visible:ring-[3px] focus-visible:ring-inset focus-visible:ring-[var(--medo-focus-ring)]'
 const NAV_LINK_ACTIVE = 'text-[var(--medo-text)] [font-weight:var(--medo-weight-semibold)] bg-[var(--medo-state-selected)] border-l-[var(--medo-action)]'
 const NAV_LINK_INACTIVE = 'text-[var(--medo-text-muted)] [font-weight:var(--medo-weight-regular)] border-l-transparent hover:text-[var(--medo-text)] hover:bg-[var(--medo-state-hover)]'
@@ -158,9 +159,10 @@ export function DocsLayout({ children }) {
           {mobileOpen ? <Icon name="close" size={24} /> : <Icon name="menu" size={24} />}
         </button>
         <Link to="/" className="flex items-center ml-[var(--medo-space-2xs)] outline-none rounded-[var(--medo-radius-sm)] focus-visible:ring-[3px] focus-visible:ring-[var(--medo-focus-ring)]">
-          <img src="/logo-medo.svg" alt="medo" className="h-[var(--medo-space-lg)] w-auto" />
+          <MedoLogo className="h-[var(--medo-space-lg)] w-auto" />
         </Link>
         <div className="flex-1" />
+        <ThemeSwitcher />
         <LanguageSwitcher />
         <button className={ICON_BTN} aria-label={t('header.aria.search')} onClick={() => setIsSearchOpen(true)}>
           <Icon name="search" size={24} />
