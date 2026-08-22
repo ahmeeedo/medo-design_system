@@ -143,7 +143,7 @@ export default function SemanticColorsPage() {
             <div key={group.id}>
               <h3 className={SUBHEAD}>{t(`semanticColors.groupTitles.${group.id}`)}</h3>
               <TokensTable
-                tokens={group.tokens.map((entry) => ({ token: `--medo-${entry.name}`, ref: entry.ref }))}
+                tokens={group.tokens.map((entry) => ({ token: `--medo-${entry.name}` }))}
               />
             </div>
           ))}

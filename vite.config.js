@@ -17,9 +17,12 @@ export default defineConfig({
     environment: 'jsdom',
     globals: true,
     setupFiles: './src/test/setup.js',
-    /* Component CSS imports resolve to nothing in the test run — the assertions
-       go against markup, roles and focus, never against computed styles. */
-    css: false,
+    /* On, because the token docs read the stylesheets through ?raw to show
+       both themes of a token: with CSS off every CSS import is replaced by an
+       empty string, that one included, and the page renders nothing. The
+       assertions still go against markup, roles and focus, never against
+       computed styles. */
+    css: true,
     include: ['src/**/*.test.{js,jsx}'],
   },
 })
