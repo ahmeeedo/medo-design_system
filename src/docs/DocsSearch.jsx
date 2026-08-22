@@ -24,10 +24,14 @@ export function DocsSearch({ isOpen, onClose }) {
     return fuse.search(query).map((r) => r.item)
   }, [fuse, query])
 
+  /* Focus has to be taken here, not left to the activeIndex effect below:
+     on open the index is reset to the -1 it already holds, React bails out of
+     the render and that effect never runs. */
   useEffect(() => {
     if (isOpen) {
       setQuery('')
       setActiveIndex(-1)
+      inputRef.current?.focus()
     }
   }, [isOpen])
 
@@ -81,7 +85,7 @@ export function DocsSearch({ isOpen, onClose }) {
               value={query}
               onChange={(e) => { setQuery(e.target.value); setActiveIndex(-1) }}
               placeholder={t('search.placeholder')}
-              className="flex-1 h-[var(--medo-space-2xl)] bg-transparent border-0 outline-none [font-size:var(--medo-text-base)] text-[var(--medo-input-text)] placeholder:text-[var(--medo-input-placeholder)] [font-family:var(--medo-font-sans)]"
+              className="flex-1 h-[var(--medo-space-2xl)] bg-transparent border-0 outline-none [font-size:var(--medo-text-base)] text-[var(--medo-input-text)] placeholder:text-[var(--medo-input-placeholder)] [font-family:var(--medo-font-sans)] rounded-[var(--medo-radius-sm)] focus-visible:ring-[3px] focus-visible:ring-inset focus-visible:ring-[var(--medo-focus-ring)]"
             />
             {query && (
               <button

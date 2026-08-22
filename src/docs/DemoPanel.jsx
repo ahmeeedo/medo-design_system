@@ -10,14 +10,18 @@ export function DemoPanel({ component, controls }) {
 
   const update = (id, value) => setValues(prev => ({ ...prev, [id]: value }))
 
+  const hasControls = controls.length > 0
+
   return (
     <div id={generateId(t('demoPanel.title'))} className="mb-[var(--medo-space-xl)] px-[var(--medo-space-xl)] max-w-[980px]">
       <h2 className="[font-size:var(--medo-text-2xl)] [font-family:var(--medo-font-sans)] [font-weight:var(--medo-weight-semibold)] tracking-[var(--medo-tracking-tight)] text-[var(--medo-text)] mb-[var(--medo-space-md)] pb-[var(--medo-space-xs)] border-b border-[var(--medo-divider)]">
         {t('demoPanel.title')}
       </h2>
-      <div className="border border-[var(--medo-border)] rounded-[var(--medo-radius-lg)] overflow-hidden">
-        {controls.length > 0 && (
-          <div className="flex gap-[var(--medo-space-md)] flex-wrap px-[var(--medo-space-lg)] py-[var(--medo-space-sm)] border-b border-[var(--medo-border-subtle)] bg-[var(--medo-surface-container)]">
+      {/* No overflow-hidden: it clipped every popup that opens inside the preview.
+          The children carry the corners instead. */}
+      <div className="border border-[var(--medo-border)] rounded-[var(--medo-radius-lg)]">
+        {hasControls && (
+          <div className="flex gap-[var(--medo-space-md)] flex-wrap px-[var(--medo-space-lg)] py-[var(--medo-space-sm)] border-b border-[var(--medo-border-subtle)] bg-[var(--medo-surface-container)] rounded-t-[var(--medo-radius-lg)]">
             {controls.map(control => (
               <div key={control.id} className="flex items-center gap-[var(--medo-space-xs)]">
                 <span className="text-sm [font-family:var(--medo-font-sans)] text-[var(--medo-text-subtle)] [font-weight:var(--medo-weight-medium)]">
@@ -51,7 +55,7 @@ export function DemoPanel({ component, controls }) {
           </div>
         )}
 
-        <div className="bg-[var(--medo-surface)] flex items-center justify-center min-h-[200px] p-[var(--medo-space-xl)]">
+        <div className={`bg-[var(--medo-surface)] flex items-center justify-center min-h-[200px] p-[var(--medo-space-xl)] rounded-b-[var(--medo-radius-lg)] ${hasControls ? '' : 'rounded-t-[var(--medo-radius-lg)]'}`}>
           {component(values)}
         </div>
       </div>
