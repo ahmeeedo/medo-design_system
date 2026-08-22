@@ -1,11 +1,14 @@
 import { useMemo } from 'react'
+import { useTheme } from './useTheme'
 
 /* The docs never transcribe token values. Everything shown as a value is read
    back from the loaded token chain (src/styles/medo/) at runtime, so a change
    in the design tokens shows up here without touching the pages. The joined
-   name list is the cache key so callers can pass a fresh array every render. */
+   name list and the active theme are the cache key: callers may pass a fresh
+   array every render, and a themed token resolves differently per theme. */
 export function useTokenValues(names) {
   const key = names.join(',')
+  const theme = useTheme()
 
   return useMemo(() => {
     const style = getComputedStyle(document.documentElement)
@@ -14,7 +17,7 @@ export function useTokenValues(names) {
       values[name] = style.getPropertyValue(name).trim()
     })
     return values
-  }, [key])
+  }, [key, theme])
 }
 
 export const SCALE_STEPS = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1100]

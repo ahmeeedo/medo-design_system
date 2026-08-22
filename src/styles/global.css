@@ -33,6 +33,13 @@
      ground per design-reference/guidelines/10-marke-1-logo.card.html. */
   --medo-logo-dot: light-dark(var(--medo-color-teal-600), var(--medo-color-teal-500));
 
+  /* Code panels stay dark in both themes. In dark they would otherwise share
+     stone-900 with the page behind them and lose both their frame and the
+     edge under the header; the light values are the ones already in use. */
+  --docs-code-border: light-dark(var(--medo-color-stone-900), var(--medo-color-stone-700));
+  --docs-code-header: light-dark(var(--medo-color-stone-900), var(--medo-color-stone-800));
+  --docs-code-line:   light-dark(var(--medo-color-stone-800), var(--medo-color-stone-600));
+
   /* Color scale table: 96 + 48 = 144 name column, 48 + 16 = 64 per step. */
   --docs-scale-label: calc(var(--medo-space-4xl) + var(--medo-space-2xl));
   --docs-scale-step:  calc(var(--medo-space-2xl) + var(--medo-space-md));
