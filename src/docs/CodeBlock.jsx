@@ -15,14 +15,14 @@ export function CodeBlock({ children, language = 'jsx' }) {
   }
 
   return (
-    <div className="border border-[var(--medo-color-stone-900)] rounded-[var(--medo-radius-md)] overflow-hidden bg-[var(--medo-color-stone-1000)]">
-      <div className="flex items-center justify-between px-[var(--medo-space-md)] py-[var(--medo-space-xs)] bg-[var(--medo-color-stone-900)] border-b border-[var(--medo-color-stone-800)]">
+    <div className="border border-[var(--docs-code-border)] rounded-[var(--medo-radius-md)] overflow-hidden bg-[var(--medo-color-stone-1000)]">
+      <div className="flex items-center justify-between px-[var(--medo-space-md)] py-[var(--medo-space-xs)] bg-[var(--docs-code-header)] border-b border-[var(--docs-code-border)]">
         <span className="[font-size:var(--medo-text-xs)] [font-family:var(--medo-font-mono)] text-[var(--medo-color-stone-500)] tracking-[var(--medo-tracking-wide)]">
           {language}
         </span>
         <button
           onClick={handleCopy}
-          className="[font-size:var(--medo-text-xs)] [font-family:var(--medo-font-sans)] [font-weight:var(--medo-weight-medium)] text-[var(--medo-color-stone-500)] bg-transparent border border-[var(--medo-color-stone-800)] rounded-[var(--medo-radius-sm)] px-[var(--medo-space-xs)] py-[var(--medo-space-3xs)] cursor-pointer transition-colors duration-150 ease-out hover:text-[var(--medo-color-white)] hover:border-[var(--medo-color-stone-600)] outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--medo-focus-ring)]"
+          className="[font-size:var(--medo-text-xs)] [font-family:var(--medo-font-sans)] [font-weight:var(--medo-weight-medium)] text-[var(--medo-color-stone-500)] bg-transparent border border-[var(--docs-code-line)] rounded-[var(--medo-radius-sm)] px-[var(--medo-space-xs)] py-[var(--medo-space-3xs)] cursor-pointer transition-colors duration-150 ease-out hover:text-[var(--medo-color-white)] hover:border-[var(--medo-color-stone-600)] outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--medo-focus-ring)]"
         >
           {copied ? t('codeblock.copied') : t('codeblock.copy')}
         </button>
