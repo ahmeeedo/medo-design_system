@@ -1,5 +1,5 @@
 import { readFileSync } from 'node:fs'
-import { buildThemeTokens, pairFrom, splitTopLevel, themePair } from './themeTokens'
+import { buildThemeTokens, pairFrom, pickBranch, splitTopLevel, themePair } from './themeTokens'
 import { SEMANTIC_GROUPS } from './tokens'
 
 /* Fed from disk so the parsing is checked against the files themselves,
@@ -65,5 +65,35 @@ describe('themeTokens', () => {
       light: { value: '#ffffff', ref: 'white' },
       dark: { value: '#24221e', ref: 'stone-1000' },
     })
+  })
+})
+
+describe('pickBranch', () => {
+  /* The declaration as medo-theme.css writes it: geometry shared, two shadow
+     colours swapped, so two light-dark() calls sit inside one value. */
+  const declared = readFileSync('src/styles/medo-theme.css', 'utf8')
+    .match(/--medo-shadow-md:([^;]+);/)[1]
+    .replace(/\s+/g, ' ')
+    .trim()
+
+  it('finds a declaration that carries two of them', () => {
+    expect(declared.match(/light-dark\(/g)).toHaveLength(2)
+  })
+
+  it('replaces every occurrence, leaving no expression behind', () => {
+    expect(pickBranch(declared, 'light')).not.toContain('light-dark(')
+    expect(pickBranch(declared, 'dark')).not.toContain('light-dark(')
+  })
+
+  it('keeps the geometry and swaps only the colours', () => {
+    const light = pickBranch(declared, 'light')
+    const dark = pickBranch(declared, 'dark')
+
+    expect(light).toBe('0 2px 4px rgba(31,29,26,0.06), 0 6px 16px rgba(31,29,26,0.07)')
+    expect(dark).toBe('0 2px 4px rgba(0,0,0,0.24), 0 6px 16px rgba(0,0,0,0.28)')
+  })
+
+  it('passes a value without light-dark through untouched', () => {
+    expect(pickBranch('16px', 'dark')).toBe('16px')
   })
 })

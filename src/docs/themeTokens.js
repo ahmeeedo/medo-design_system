@@ -44,10 +44,48 @@ export function splitTopLevel(value) {
   return parts
 }
 
+const MARKER = 'light-dark('
+
+/** Index of the bracket closing the light-dark( that opens at `start`. */
+function closingBracket(value, start) {
+  let depth = 0
+  for (let i = start + MARKER.length - 1; i < value.length; i += 1) {
+    if (value[i] === '(') depth += 1
+    else if (value[i] === ')') {
+      depth -= 1
+      if (depth === 0) return i
+    }
+  }
+  return -1
+}
+
+/* Replaces every light-dark() in a value with the branch this theme uses.
+   Needed wherever the pair is not the whole declaration: the elevation tokens
+   keep their geometry in both themes and swap only the two shadow colours, so
+   each value carries two light-dark() calls in the middle of it. */
+export function pickBranch(value, theme) {
+  let result = value
+  let start = result.indexOf(MARKER)
+
+  while (start !== -1) {
+    const end = closingBracket(result, start)
+    if (end === -1) return result
+
+    const args = splitTopLevel(result.slice(start + MARKER.length, end))
+    if (args.length !== 2) return result
+
+    result = result.slice(0, start) + args[theme === 'dark' ? 1 : 0] + result.slice(end + 1)
+    start = result.indexOf(MARKER)
+  }
+
+  return result
+}
+
 /* Only a declaration that is entirely one light-dark() pair, which is every
-   colour of the semantic layer. The elevation tokens carry light-dark() nested
-   inside the shadow value instead and are deliberately left out: they are
-   documented on the foundations page, not here. */
+   colour of the semantic layer, and which is what lets both themes be shown
+   side by side. The elevation tokens nest light-dark() inside the shadow value
+   and have no single branch to show, so they stay out of the pairs and are
+   resolved for the theme on screen through pickBranch instead. */
 function branchesOf(declared) {
   if (!declared.startsWith('light-dark(')) return null
   const inner = declared.slice('light-dark('.length, declared.lastIndexOf(')'))
@@ -56,8 +94,8 @@ function branchesOf(declared) {
 }
 
 /* Kept separate from the imports above so a test can feed it the same two
-   files read from disk: under vitest a ?raw import of CSS yields an empty
-   string, and the parsing is the part worth proving. */
+   files read from disk, checking the parsing against the stylesheets
+   themselves rather than against whatever the bundler hands over. */
 export function buildThemeTokens(themeSource, brandSource) {
   const brand = new Map(declarations(brandSource))
 
