@@ -484,14 +484,29 @@
    solid primary (teal-600 on white) also hold up on the dark page and stay as
    they are. The two soft roles are an open case — see the escalation list. */
 
-/* The remove button darkens its chip with ink at 10%. That ink disappears on a
-   dark chip, but so does a light veil on the pale solid roles — no overlay that
-   only darkens or only lightens carries all six roles in dark. stone-600 is the
-   one grey step that stays visible on every chip surface the component can
-   have: 1.16:1 on the teal solid up to 1.86:1 on the amber solid, against the
-   1.17-1.22:1 the reference produces in light. */
+/* The remove button darkens its chip with ink at 10%. No fixed colour repeats
+   that in dark: the twelve chip surfaces run from a pale stone-100 (neutral
+   soft, a brand step and therefore theme-invariant) to a near-black blue-1000
+   (info soft), so anything that only darkens or only lightens dies on one end.
+   A single grey was tried first and reached 1.16:1 on the teal solid while
+   sitting at 2.67:1 on the primary soft — present on some roles, absent on
+   others.
+
+   currentColor solves it by construction rather than by search. The button
+   inherits the chip's own lettering colour, and that colour has to contrast
+   with the chip or the label would be unreadable — so a veil made from it
+   separates on every role, darkening the pale chips and lightening the dark
+   ones. Measured across all twelve: 1.65-2.27:1, where light gives 1.07-1.22:1.
+
+   30% is the ceiling, not caution. The glyph is currentColor too, so a stronger
+   veil eats its own icon: at 30% the cross keeps 3.23:1 against the hover fill,
+   at 35% it falls to 2.94:1 and below the 3:1 floor for non-text contrast.
+
+   The value is set for recognisability, with the contrast figure as evidence
+   rather than as the target — matching light's number was the mistake that made
+   the first attempt invisible. */
 :root .medo-tag__x:hover{
-  background: light-dark(rgba(31,29,26,0.10), color-mix(in srgb, var(--medo-color-stone-600) 60%, transparent));
+  background: light-dark(rgba(31,29,26,0.10), color-mix(in srgb, currentColor 30%, transparent));
 }
 
 /* ---------------------------------------------------------------------------
