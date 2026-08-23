@@ -1,5 +1,6 @@
 import { useMemo } from 'react'
 import { useTheme } from './useTheme'
+import { pickBranch } from './themeTokens'
 
 /* The docs never transcribe token values. Everything shown as a value is read
    back from the loaded token chain (src/styles/medo/) at runtime, so a change
@@ -14,7 +15,9 @@ export function useTokenValues(names) {
     const style = getComputedStyle(document.documentElement)
     const values = {}
     key.split(',').filter(Boolean).forEach((name) => {
-      values[name] = style.getPropertyValue(name).trim()
+      // A custom property hands back light-dark() unevaluated — that only
+      // resolves once the value lands in a property that takes a colour.
+      values[name] = pickBranch(style.getPropertyValue(name).trim(), theme)
     })
     return values
   }, [key, theme])
