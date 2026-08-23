@@ -240,18 +240,24 @@ describe('component theme overrides', () => {
     expect(drift).toEqual([])
   })
 
+  /* currentColor counts as a token source: it binds to the component's own
+     colour, which is itself set from tokens, and it is the only way to reach a
+     value that differs per variant without a class naming that variant. */
   it('takes every dark value from a token rather than a literal', () => {
     const literals = []
     for (const rule of overrides) {
       for (const branch of darkBranches(rule.value)) {
-        if (!branch.includes('var(--medo-')) literals.push(`${rule.selector} { ${rule.property} }: ${branch}`)
+        const sourced = branch.includes('var(--medo-') || /\bcurrentColor\b/i.test(branch)
+        if (!sourced) literals.push(`${rule.selector} { ${rule.property} }: ${branch}`)
       }
     }
     expect(literals).toEqual([])
   })
 
   /* Compared without the alpha channel: a dark branch may carry a palette colour
-     at reduced opacity (a veil over a chip), which is still that palette colour. */
+     at reduced opacity (a veil over a chip), which is still that palette colour.
+     A currentColor branch has no fixed colour to resolve and is skipped here —
+     the assertion above is what holds it to a token source. */
   it('resolves every dark value to a colour from the brand palette', () => {
     const rgbOf = (value) => {
       const rgba = toRgba(normalise(value))
@@ -266,6 +272,14 @@ describe('component theme overrides', () => {
     const foreign = []
     for (const rule of overrides) {
       for (const branch of darkBranches(rule.value)) {
+        if (/\bcurrentColor\b/i.test(branch)) {
+          /* Skipping the palette check must not become a way in for a literal
+             smuggled alongside currentColor. */
+          if (/#[0-9a-f]{3,8}\b|\brgba?\(|\bhsla?\(/i.test(branch)) {
+            foreign.push(`${rule.selector} { ${rule.property} }: literal beside currentColor in ${branch}`)
+          }
+          continue
+        }
         const resolved = normalise(resolveDark(branch, tokens))
         const rgb = rgbOf(resolved)
         if (!rgb || !palette.has(rgb)) foreign.push(`${rule.selector} { ${rule.property} }: ${branch} -> ${resolved}`)
