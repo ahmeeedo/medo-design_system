@@ -53,6 +53,19 @@ mitinstalliert wird. Sie liegt bewusst nicht im Auslieferumfang: die Datei ist
 Achseneinstellungen des Systems (weight 300, FILL 0) bringen beide
 Stil-Einstiegspunkte mit; ohne den Import oben erscheinen Icons als Ligaturnamen.
 
+Das Paket setzt **keine Grundschrift** auf `html` oder `body` — eine Bibliothek
+fasst das Markup der Anwendung nicht an. Die Komponenten bringen ihre Schrift
+selbst mit; für das übrige Markup gehört eine Zeile ins Stylesheet der Anwendung:
+
+```css
+body {
+  font-family: var(--medo-font-sans);
+}
+```
+
+Ohne sie stehen Überschriften und Fließtext der Anwendung in der Standardschrift
+des Browsers, während die Komponenten korrekt in DM Sans erscheinen.
+
 ### Theme
 
 Geschaltet wird über `data-theme` am `<html>`-Element:
