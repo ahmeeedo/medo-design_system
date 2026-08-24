@@ -1,0 +1,16 @@
+/* medo Design System · Material Symbols Rounded axes
+   Weight 300, FILL 0 — the only icon face in the system.
+
+   Unlayered on purpose: the material-symbols package ships an unlayered
+   `.material-symbols-rounded { font-weight: normal }` that a @layer base rule
+   would lose against. Whoever imports this file has to place it after
+   material-symbols/rounded, since both rules are unlayered and equally
+   specific.
+
+   The @font-face itself is not declared here. It comes from the
+   material-symbols package, which the portal imports in global.css and which
+   consumers of the library receive as a runtime dependency. */
+.material-symbols-rounded {
+  font-weight: 300;
+  font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0;
+}
