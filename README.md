@@ -13,54 +13,95 @@ npm run preview  # Build lokal vorschauen
 
 ---
 
+## Einbindung als Paket
+
+Das Repository liefert neben dem Doku-Portal das Paket `@medo/design-system`. Es
+wird als Git-Abhängigkeit eingebunden, nicht über eine Registry:
+
+```bash
+npm install github:<organisation>/medo-design_system
+```
+
+Der Paket-Build läuft beim Installieren über das `prepare`-Skript; im Repository
+selbst startet ihn `npm run build:lib`. Der Portal-Build (`npm run build`) bleibt
+davon unberührt.
+
+React und React DOM sind Peer-Abhängigkeiten (`^18 || ^19`) und werden vom
+Abnehmer gestellt.
+
+### Einstiegspunkte
+
+| Import | Inhalt |
+|---|---|
+| `@medo/design-system` | alle Komponenten als benannte ES-Exporte |
+| `@medo/design-system/styles.css` | vollständige Stile: Schriften, die drei Token-Ebenen, das Theme und das CSS aller Komponenten |
+| `@medo/design-system/tokens.css` | nur Fundament — Schriften, Token-Ebenen, Theme, ohne Komponenten-CSS |
+
+Die Komponenten laden ihr CSS nicht selbst. Genau einer der beiden Stil-Einstiegspunkte
+gehört einmalig in den Einstiegspunkt der Anwendung:
+
+```js
+import '@medo/design-system/styles.css'
+import 'material-symbols/rounded'
+
+import { Button, Icon } from '@medo/design-system'
+```
+
+Die Icon-Schrift kommt aus dem Paket `material-symbols`, das als Abhängigkeit
+mitinstalliert wird. Sie liegt bewusst nicht im Auslieferumfang: die Datei ist
+5,3 MB groß und würde in jedem Abnehmerbündel ein zweites Mal auftauchen. Die
+Achseneinstellungen des Systems (weight 300, FILL 0) bringen beide
+Stil-Einstiegspunkte mit; ohne den Import oben erscheinen Icons als Ligaturnamen.
+
+### Theme
+
+Geschaltet wird über `data-theme` am `<html>`-Element:
+
+| Wert | Verhalten |
+|---|---|
+| nicht gesetzt | folgt dem Systemtheme |
+| `light` | erzwingt hell |
+| `dark` | erzwingt dunkel |
+
+Der Schalter arbeitet über `color-scheme`, damit Token-Werte und native
+Bedienelemente nicht auseinanderlaufen können. **Eine Anwendung, die
+`color-scheme` selbst auf `:root` setzt, hebelt das Theme aus** — die
+`light-dark()`-Paare folgen dann ihrem Wert statt dem `data-theme`-Attribut.
+
+---
+
 ## Projektstruktur
 
 ```
 src/
+├── components/             # 36 portierte Komponenten, je <Name>/<Name>.jsx + .css
+│   └── index.js            # Barrel-Export, zugleich Einstiegspunkt des Pakets
 ├── styles/
-│   ├── tokens.css          # Alle Design-Tokens als CSS Custom Properties
-│   └── global.css          # Tailwind + shadcn/ui Basis, @theme inline, :root
-├── components/
-│   ├── Button/Button.jsx
-│   ├── Input/Input.jsx
-│   ├── Toggle/Toggle.jsx
-│   ├── Badge/Badge.jsx
-│   ├── Alert/Alert.jsx
-│   ├── Card/Card.jsx
-│   ├── Table/Table.jsx
-│   ├── Tabs/Tabs.jsx
-│   ├── Avatar/Avatar.jsx
-│   ├── Modal/Modal.jsx
-│   ├── Accordion/Accordion.jsx
-│   ├── Progress/Progress.jsx
-│   ├── Skeleton/Skeleton.jsx
-│   ├── Menu/Menu.jsx
-│   ├── Navigation/Navigation.jsx   # Breadcrumb, Pagination, StatCard
-│   └── index.js                    # Barrel-Export
-├── docs/
-│   ├── DocsLayout.jsx      # Sidebar + Hauptlayout
-│   ├── PageLayout.jsx      # Seitenrahmen mit Tabs (Section, GridWrapper, Content)
-│   ├── DocSection.jsx      # Hilfskomponenten (SubSection, Row, Grid2, TokenChip)
-│   ├── CodeBlock.jsx       # Syntax-Highlight-Block
-│   ├── TokensTable.jsx     # Token-Tabelle für Foundation-Seiten
-│   ├── LanguageSwitcher.jsx
-│   └── helpers.jsx
-├── pages/                  # 24 Dokumentationsseiten
-├── i18n/
-│   ├── index.js            # i18next-Konfiguration
-│   └── locales/
-│       ├── de.json         # Deutsch (Standard)
-│       └── en.json         # Englisch
-├── lib/utils.js            # cn() Tailwind-Merge-Hilfsfunktion
-├── App.jsx                 # Router + Routing-Tabelle
-└── main.jsx                # React-Einstiegspunkt
+│   ├── medo/               # die acht Token-Dateien, Spiegel von design-reference/tokens/
+│   ├── medo-tokens.css     # Token-Einstiegspunkt: Brand -> Alias -> Semantic
+│   ├── medo-theme.css      # Semantic-Ebene als light-dark()-Paare
+│   ├── medo-theme-components.css  # dunkle Entsprechung fuer feste Farbwerte im Komponenten-CSS
+│   ├── fonts.css           # lokale DM Sans / DM Mono
+│   ├── icons.css           # Achsenregel Material Symbols Rounded
+│   └── global.css          # Portal: Ladekette, @theme inline, :root, Basis-Layer
+├── lib/tokens.js           # Fundament-Einstiegspunkt des Paket-Builds
+├── docs/                   # Portal-Rahmen: Layout, Suche, Tabs, Theme-Schalter
+├── pages/                  # 43 Dokumentationsseiten
+├── config/                 # erzeugter Suchindex (searchData.js, sectionData.js)
+├── i18n/                   # i18next-Konfiguration und locales/de.json, en.json
+├── fonts/                  # woff2-Schnitte
+├── App.jsx                 # Routing-Tabelle
+└── main.jsx                # React-Einstiegspunkt des Portals
 ```
+
+Der Suchindex unter `config/` wird erzeugt, nicht gepflegt: nach neuen, umbenannten
+oder entfernten Seiten `npm run search-index` laufen lassen.
 
 ---
 
 ## Design-Token-System
 
-Alle Design-Entscheidungen leben in [`src/styles/tokens.css`](src/styles/tokens.css) als CSS Custom Properties im `:root`-Block. Tailwind liest diese Tokens über `@theme inline` in `global.css` ein — keine Werte in `tailwind.config.js`.
+Alle Design-Entscheidungen leben als CSS Custom Properties in den acht Dateien unter [`src/styles/medo/`](src/styles/medo/), die [`src/styles/medo-tokens.css`](src/styles/medo-tokens.css) in der Reihenfolge Brand → Alias → Semantic einbindet. Tailwind liest sie über `@theme inline` in `global.css` ein — keine Werte in einer Tailwind-Konfigurationsdatei.
 
 **Goldene Regel:** Niemals Farb-, Abstands-, Radius- oder Schatten-Werte in JSX oder CSS hardcoden. Immer auf einen Token referenzieren.
 
@@ -160,236 +201,33 @@ Verwendung in Tailwind: `px-[var(--space-4)]`, `mb-[var(--space-6)]` etc.
 
 ## Komponenten-Bibliothek
 
-Alle Komponenten werden aus `src/components/index.js` importiert:
+Im Repository werden die Komponenten aus dem Barrel importiert, beim Abnehmer des
+Pakets über dessen Einstiegspunkt:
 
 ```jsx
-import { Button, Input, Badge, Card, Modal, ... } from './components'
+import { Button, TextInput, Modal } from './components'      // im Repository
+import { Button, TextInput, Modal } from '@medo/design-system' // als Paket
 ```
 
-### Button
+36 Module mit 46 benannten Exporten. Wo ein Modul mehr als seinen Namensgeber
+exportiert, stehen die Exporte dahinter:
 
-```jsx
-<Button
-  variant="primary"      // primary | secondary | ghost | outline | danger | accent
-  size="md"              // xs | sm | md | lg | xl
-  disabled={false}
-  leadingIcon={<Icon />}
-  trailingIcon={<Icon />}
-  onClick={fn}
->
-  Beschriftung
-</Button>
-```
+`Accordion` · `Breadcrumb` · `Button` · `Checkbox` (`Checkbox`, `CheckboxGroup`) ·
+`CodeSnippet` · `ContainedList` · `ContentSwitcher` · `DataTable` ·
+`DatePicker` (`DatePicker`, `TimeSlots`) · `Dropdown` (`Dropdown`, `MenuList`) ·
+`Field` · `FileUploader` · `Icon` · `InlineLoading` · `Link` ·
+`List` (`List`, `KeyValueList`) · `Loading` (`Loading`, `Skeleton`) · `Menu` ·
+`MenuButtons` (`MenuButton`, `SplitButton`, `IconMenuButton`) · `Modal` ·
+`Notification` (`Notification`, `ToastHost`, `toast`) · `NumberInput` ·
+`Pagination` · `Popover` · `ProgressBar` · `ProgressIndicator` ·
+`Radio` (`Radio`, `RadioGroup`) · `Search` · `Select` · `Slider` · `Tabs` · `Tag` ·
+`Textarea` · `TextInput` · `Toggle` · `Tooltip`
 
-### Input / Textarea / Select / InputWithAddon
-
-```jsx
-<Input
-  label="Bezeichnung"
-  placeholder="..."
-  size="md"              // sm | md | lg
-  error="Fehlermeldung"
-  disabled={false}
-/>
-
-<Textarea label="Notizen" rows={4} />
-
-<Select
-  label="Kategorie"
-  options={['Option A', 'Option B']}
-  // oder: options={[{ value: 'a', label: 'Option A' }]}
-  defaultValue="Option A"
-/>
-
-<InputWithAddon addon="https://" placeholder="domain.de" />
-```
-
-### Toggle / Checkbox / Radio
-
-```jsx
-<Toggle label="Benachrichtigungen" checked={bool} onChange={fn} />
-<Checkbox label="Zustimmen" checked={bool} onChange={fn} disabled={false} />
-<Radio label="Option A" name="gruppe" value="a" checked={bool} onChange={fn} />
-```
-
-### Badge / Tag
-
-```jsx
-<Badge
-  variant="neutral"      // neutral | accent | success | warning | error
-  size="md"              // sm | md
-  dot={false}
->
-  Label
-</Badge>
-
-<Tag onRemove={() => {}}>Entfernbar</Tag>
-```
-
-### Alert
-
-```jsx
-<Alert variant="info" title="Hinweis">
-  Meldungstext
-</Alert>
-// variant: info | success | warning | error
-// title ist optional
-```
-
-### Card
-
-```jsx
-<Card variant="flat">    {/* flat | raised */}
-  <Card.Header title="Titel" subtitle="Untertitel">
-    <Button size="sm">Aktion</Button>  {/* optionaler Action-Slot */}
-  </Card.Header>
-  <Card.Body>Inhalt</Card.Body>
-  <Card.Footer>
-    <Button variant="primary">Speichern</Button>
-  </Card.Footer>
-</Card>
-```
-
-### Table
-
-```jsx
-<Table
-  columns={[
-    { key: 'name',   label: 'Name' },
-    { key: 'status', label: 'Status', render: (row) => <Badge>{row.status}</Badge> },
-  ]}
-  rows={[{ id: 1, name: 'Alice', status: 'Aktiv' }]}
-  rowKey="id"
-/>
-```
-
-### Tabs
-
-```jsx
-<Tabs
-  variant="underline"    // underline | pill
-  defaultTab="tab1"
-  tabs={[
-    { id: 'tab1', label: 'Übersicht', content: <div>...</div> },
-    { id: 'tab2', label: 'Details',   content: <div>...</div> },
-  ]}
-/>
-
-{/* Controlled: */}
-<Tabs
-  activeTab={activeTab}
-  onTabChange={setActiveTab}
-  tabs={...}
-/>
-```
-
-### Avatar / AvatarGroup
-
-```jsx
-<Avatar
-  size="md"              // xs | sm | md | lg | xl
-  initials="AJ"
-  color="#1C2855"
-  textColor="#fff"
-  src="/path/to/image.jpg"
-  alt="Alice Jones"
-/>
-
-<AvatarGroup
-  avatars={[{ initials: 'AJ', color: '#1C2855', textColor: '#fff' }, ...]}
-  max={4}
-  size="md"
-/>
-```
-
-### Modal
-
-```jsx
-const [open, setOpen] = useState(false)
-
-<Button onClick={() => setOpen(true)}>Öffnen</Button>
-
-<Modal
-  open={open}
-  onClose={() => setOpen(false)}
-  title="Titel"
-  size="md"              // sm | md | lg
-  footer={
-    <>
-      <Button variant="ghost" onClick={() => setOpen(false)}>Abbrechen</Button>
-      <Button variant="primary">Bestätigen</Button>
-    </>
-  }
->
-  Modalinhalt
-</Modal>
-```
-
-### Accordion
-
-```jsx
-<Accordion
-  allowMultiple={false}
-  items={[
-    { id: 'item1', title: 'Frage 1', content: <p>Antwort 1</p> },
-    { id: 'item2', title: 'Frage 2', content: <p>Antwort 2</p> },
-  ]}
-/>
-```
-
-### Progress
-
-```jsx
-<Progress
-  value={75}             // 0–100
-  variant="neutral"      // neutral | accent | success | warning | error
-  size="md"              // sm | md | lg
-  label="Ladefortschritt"
-  showValue={true}
-/>
-```
-
-### Skeleton / SkeletonCard
-
-```jsx
-<Skeleton variant="rect" width={200} height={120} />
-<Skeleton variant="text" width="80%" height={14} />
-<Skeleton variant="circle" width={40} height={40} />
-
-<SkeletonCard />   {/* Vorgefertigtes Karten-Platzhalter-Layout */}
-```
-
-### Menu
-
-```jsx
-<Menu trigger={<Button variant="secondary">Optionen</Button>}>
-  <Menu.Label>Abschnitt</Menu.Label>
-  <Menu.Item icon="✏️" shortcut="⌘E" onClick={fn}>Bearbeiten</Menu.Item>
-  <Menu.Item icon="📋">Kopieren</Menu.Item>
-  <Menu.Separator />
-  <Menu.Item icon="🗑️" danger onClick={fn}>Löschen</Menu.Item>
-  <Menu.Item disabled>Gesperrt</Menu.Item>
-</Menu>
-```
-
-### Breadcrumb / Pagination / StatCard
-
-```jsx
-<Breadcrumb items={[
-  { label: 'Start', href: '/' },
-  { label: 'Komponenten', href: '/components' },
-  { label: 'Breadcrumb' },
-]} />
-
-<Pagination current={3} total={10} onChange={(page) => setPage(page)} />
-
-<StatCard
-  label="Aktive Nutzer"
-  value="12.847"
-  delta="↑ 4,2 %"
-  deltaDir="up"          // up | down | neutral
-/>
-```
+Der Props-Vertrag jeder Komponente steht im Doku-Portal (`npm run dev`) auf der
+Seite der Komponente im Tab „Code", daneben Varianten, Zustände und
+Barrierefreiheit. Diese Datei wiederholt ihn bewusst nicht: das Portal entsteht aus
+den Spezifikationen in `design-reference/components/` und kann deshalb nicht mit der
+Implementierung auseinanderlaufen, eine zweite Abschrift hier könnte es.
 
 ---
 

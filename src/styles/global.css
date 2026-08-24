@@ -10,6 +10,7 @@
 
 @import "tailwindcss";
 @import 'material-symbols/rounded';
+@import "./icons.css";
 
 /* ── Theme ─────────────────────────────────────────────────────────────────
    Single @theme inline block. The font families are set to literal token
@@ -46,14 +47,6 @@
 
   /* Width of the token demo cards on the foundation pages: 4 × 96 + 16 = 400. */
   --docs-demo-card: calc(var(--medo-space-4xl) * 4 + var(--medo-space-md));
-}
-
-/* Material Symbols Rounded axes. Unlayered on purpose: the material-symbols
-   package ships an unlayered `.material-symbols-rounded { font-weight: normal }`
-   that a @layer base rule would lose against. */
-.material-symbols-rounded {
-  font-weight: 300;
-  font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0;
 }
 
 @layer base {
