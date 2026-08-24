@@ -42,7 +42,7 @@ gehört einmalig in den Einstiegspunkt der Anwendung:
 
 ```js
 import '@medo/design-system/styles.css'
-import 'material-symbols/rounded'
+import 'material-symbols/rounded.css'
 
 import { Button, Icon } from '@medo/design-system'
 ```
