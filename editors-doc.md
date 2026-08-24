@@ -1,309 +1,121 @@
-# editors-doc — Entwickler-Kurzanleitung
+# Kurzreferenz — med.o Design System
 
-Handlungsorientierte Referenz für häufige Aufgaben im med.o Design System.
+Diese Karte beantwortet **eine** Frage: *Habe ich etwas vergessen?*
 
----
+Sie erklärt nichts. Wie ein Handgriff geht, steht in `DEVELOPMENT.md`; jeder
+Block hier verweist auf das Kapitel, das ihn durchgeht. Die Trennlinie zwischen
+beiden Dateien ist die Regel, an der auch spätere Ergänzungen entlanglaufen:
 
-## 1. Neue Komponente anlegen
+> Was **erklärt**, gehört in den Leitfaden. Was nur **erinnert**, gehört hierher.
 
-### Schritt 1 — Komponenten-Datei erstellen
-
-```
-src/components/<Name>/<Name>.jsx
-```
-
-```jsx
-import { cn } from '@/lib/utils'
-
-export function MeineKomponente({ variant = 'default', children, className }) {
-  return (
-    <div className={cn(
-      'bg-[var(--surface_100)] border border-[var(--color-border)] rounded-[var(--radius-lg)] p-[var(--space-4)]',
-      variant === 'raised' && 'shadow-[var(--shadow-md)]',
-      className
-    )}>
-      {children}
-    </div>
-  )
-}
-```
-
-Regeln:
-- Nur Token-Referenzen aus `tokens.css` — keine hardcodierten Farbwerte
-- Schriftgrößen als `text-xs/sm/md/lg` — **nicht** `text-[var(--text-*)]`
-- Bedingte Klassen über `cn()` aus `src/lib/utils.js`
-
-### Schritt 2 — Export in `src/components/index.js`
-
-```js
-export { MeineKomponente } from './MeineKomponente/MeineKomponente.jsx'
-```
-
-### Schritt 3 — Docs-Seite anlegen
-
-Neue Datei: `src/pages/MeineKomponentePage.jsx` → siehe [Abschnitt 3](#3-neue-docs-page-anlegen).
-
-### Schritt 4 — Route in `src/App.jsx` eintragen
-
-```jsx
-import MeineKomponentePage from './pages/MeineKomponentePage'
-
-// In der <Routes>-Liste:
-<Route path="/meine-komponente" element={<MeineKomponentePage />} />
-```
-
-### Schritt 5 — Nav-Eintrag in `src/docs/DocsLayout.jsx`
-
-```jsx
-const NAV = [
-  {
-    id: 'components',
-    section: 'nav.sections.components',
-    items: [
-      // ...bestehende Einträge...
-      { id: 'meine-komponente', label: 'nav.items.meineKomponente' },
-    ],
-  },
-]
-```
-
-`id` entspricht dem URL-Pfad (ohne führenden Slash).
-
-### Schritt 6 — i18n-Keys eintragen
-
-→ Beide Locale-Dateien befüllen: `src/i18n/locales/de.json` und `src/i18n/locales/en.json`. Siehe [Abschnitt 4](#4-i18n-keys-ergänzen).
+Deshalb stehen hier keine Prozeduren, keine Codebeispiele und keine
+Begründungen — nur Haken und Fallen.
 
 ---
 
-## 2. Neue Sektion auf bestehender Page
+## Neue Doku-Seite — fünf Stellen
 
-Alle Seiten liegen in `src/pages/`. Eine Sektion besteht aus `<Section>` mit optionalem `<Content>` oder `<GridWrapper>` darunter.
+Keine ist optional. Fehlt eine, fällt die Testsuite oder die Suche.
 
-```jsx
-import { Section, Content, GridWrapper } from '../docs/PageLayout'
+- [ ] `src/pages/<Name>Page.jsx` angelegt, **default** exportiert
+- [ ] `src/App.jsx`: Import **und** Zeile in `ROUTES`
+- [ ] `src/docs/DocsLayout.jsx`: Eintrag in `NAV`, `id` = Pfad ohne Schrägstrich
+- [ ] `de.json` **und** `en.json`: jeder Text
+- [ ] `npm run search-index` gelaufen
+- [ ] Soll die Route bewusst nicht in den Seitenstreifen: Pfad in `NAV_EXEMPT`
+      in `src/config/searchData.test.jsx`
+- [ ] `<DemoPanel>` als erstes Element im Overview-Tab — oder bewusst keins
+- [ ] Jede `h2` steht in einem `<Section>`-Wrapper
 
-<Section title={t('meine.overview.neueSektion')}>
-  {/* Fließtext */}
-  <Content>
-    <p>{t('meine.overview.neuerAbsatz')}</p>
-    <ul>
-      <li>{t('meine.overview.punkt1')}</li>
-    </ul>
-  </Content>
-
-  {/* Oder: Side-by-Side-Grid (Anzahl Kinder bestimmt Spaltenanzahl) */}
-  <GridWrapper>
-    <div>{/* Linke Spalte */}</div>
-    <div>{/* Rechte Spalte */}</div>
-  </GridWrapper>
-</Section>
-```
-
-Neue i18n-Keys direkt in beiden Locale-Dateien eintragen (→ [Abschnitt 4](#4-i18n-keys-ergänzen)).
+→ `DEVELOPMENT.md` Kapitel 5 und 6
 
 ---
 
-## 3. Neue Docs-Page anlegen
+## Neue oder geänderte Komponente
 
-Neue Datei: `src/pages/MeinePage.jsx`
+- [ ] Ablage `src/components/<Name>/<Name>.jsx` + `<Name>.css`
+- [ ] Klassenpräfix projektweit eindeutig geprüft
+- [ ] Benannter Export, durchgereicht in `src/components/index.js`
+- [ ] Jede in der `.d.ts` deklarierte Prop und Variante funktioniert
+- [ ] Keine Prop, die die `.d.ts` nicht kennt
+- [ ] Inline-Stile mit Token-Werten in Längsformen
+- [ ] Icons über die `Icon`-Komponente
+- [ ] Verhaltensanteile in `<Name>.test.jsx` belegt
+- [ ] Gegenprobe gefahren: eine Zusicherung verdreht, Lauf wurde rot,
+      Zusicherung zurückgedreht
+- [ ] Visueller Abgleich gegen `design-reference/components/<Name>.dc.html`
 
-```jsx
-import { useTranslation } from 'react-i18next'
-import { PageLayout, Section, Content, GridWrapper } from '../docs/PageLayout'
-import { CodeBlock } from '../docs/CodeBlock'
-import { MeineKomponente } from '../components'
-
-export default function MeinePage() {
-  const { t } = useTranslation()
-
-  return (
-    <PageLayout
-      title={t('meine.page.title')}
-      description={t('meine.page.description')}
-      tabs={[
-        {
-          id: 'overview',
-          label: t('tabs.overview'),
-          content: (
-            <>
-              <Section title={t('meine.overview.anatomyTitle')}>
-                <Content>
-                  <ol>
-                    <li>{t('meine.overview.anatomy1')}</li>
-                    <li>{t('meine.overview.anatomy2')}</li>
-                  </ol>
-                </Content>
-              </Section>
-              <Section title={t('meine.overview.demoTitle')}>
-                <MeineKomponente>Demo</MeineKomponente>
-              </Section>
-            </>
-          ),
-        },
-        {
-          id: 'usage',
-          label: t('tabs.usage'),
-          content: (
-            <Section title={t('meine.usage.title')}>
-              <Content>
-                <p>{t('meine.usage.description')}</p>
-              </Content>
-            </Section>
-          ),
-        },
-        {
-          id: 'code',
-          label: t('tabs.code'),
-          content: (
-            <Section title={t('meine.code.exampleTitle')}>
-              <CodeBlock language="jsx">{`<MeineKomponente variant="default">Inhalt</MeineKomponente>`}</CodeBlock>
-            </Section>
-          ),
-        },
-        {
-          id: 'accessibility',
-          label: t('tabs.accessibility'),
-          content: (
-            <Section title={t('meine.a11y.title')}>
-              <Content>
-                <p>{t('meine.a11y.description')}</p>
-              </Content>
-            </Section>
-          ),
-        },
-      ]}
-    />
-  )
-}
-```
-
-**Tab-IDs:** `overview`, `usage`, `code`, `accessibility` — immer alle vier anlegen.  
-**`tabs.*`-Namespace ist reserviert** — nicht für eigene Seiteninhalte verwenden.
-
-Danach Route und Nav-Eintrag ergänzen (→ [Abschnitt 1, Schritt 4–5](#1-neue-komponente-anlegen)).
+→ `DEVELOPMENT.md` Kapitel 4 und 9
 
 ---
 
-## 4. i18n-Keys ergänzen
+## Token- oder Theme-Änderung
 
-Beide Dateien müssen immer synchron gehalten werden:
+- [ ] Nichts unter `src/styles/medo/` angefasst
+- [ ] Nur der dunkle Zweig des `light-dark()`-Paares geändert
+- [ ] Portierte Komponente unverändert; Nachbesserung in
+      `medo-theme-components.css`
+- [ ] Alles Theme-Abhängige zeigt auf ein semantisches Token, nicht auf Brand
+      oder Alias
+- [ ] Zwischenwerte aus Tokens gerechnet, nicht hartkodiert
+- [ ] `npm test` — die Kontrastprüfung läuft mit
+- [ ] Sichtprüfung in **beiden** Themes
 
-- `src/i18n/locales/de.json` — Deutsch (Standardsprache)
-- `src/i18n/locales/en.json` — Englisch
+→ `DEVELOPMENT.md` Kapitel 3
 
-### Namespace-Konvention
+---
 
-Jede Seite erhält einen eigenen Top-Level-Namespace:
+## Vor dem Commit
 
-| Namespace | Seite |
+- [ ] Jeder sichtbare Text läuft über `t()`, jeder Schlüssel steht in `de.json`
+      **und** `en.json`
+- [ ] Kein hartkodierter Farb-, Abstands-, Radius- oder Schattenwert
+- [ ] `npm run build` fehlerfrei
+- [ ] `npm test` fehlerfrei
+- [ ] Bei Komponenten- oder Seitenänderungen: `npm run dev`, alle Tabs, beide
+      Themes, Desktop und ≤ 768 px
+- [ ] Genau **ein** Entwicklungsserver lief dabei
+- [ ] Eigener Zweig von `main`, Betreff deutsch, kleingeschrieben, ohne Umlaute
+
+→ `DEVELOPMENT.md` Kapitel 11
+
+---
+
+## Stumme Fallen
+
+Keiner dieser Fehler erzeugt einen Build-Fehler. Sie fallen erst im Browser
+auf — oder gar nicht.
+
+| Falle | Woran man es merkt |
 |---|---|
-| `tabs.*` | Globale Tab-Labels — **reserviert, nicht überschreiben** |
-| `nav.*` | Sidebar-Navigation |
-| `buttons.*` | ButtonsPage |
-| `inputs.*` | InputsPage |
-| `colors.*` | ColorsPage |
-| `typography.*` | TypographyPage |
-| `tabsPage.*` | TabsPage (nicht `tabs.*`!) |
-| *(eigener Name)* | Neue Seite |
+| Brand- oder Alias-Token für etwas Theme-Abhängiges | Fläche bleibt im Dunkeln hell |
+| Kurzform-Inline-Stil mit `var()` | ein Teil der Kanten färbt sich, der Rest nicht |
+| Doppelter Klassenpräfix | zwei Komponenten überschreiben einander |
+| `h2` außerhalb `<Section>` | Inhaltsverzeichnis und Suchtreffer springen ins Ungefähre |
+| Zählung über die nackte Zeichenkette im Test | Anzahl liegt zu hoch — `__dot` steckt in `__dots` |
+| `userEvent` bei Zeitgebern | Test hängt oder wird flatterig |
+| Portal-Komponente serverseitig gerendert | leeres Markup, sieht nach Portierungsfehler aus |
+| Zweiter `@theme inline`- oder `:root`-Block | Auflösung bricht ohne Meldung |
+| Rundlauf über `JSON.parse`/`JSON.stringify` auf den Locale-Dateien | Änderung über alle 3175 Zeilen |
+| `git diff` auf `src/styles/medo/` | Prüfsummen weichen immer ab — CRLF gegen LF |
+| `design-reference/ui/*.card.html` als Abgleichsgrundlage | Seite rendert leer |
 
-### Beispiel
+Zwei Sätze, die man sich falsch merkt:
 
-```json
-// src/i18n/locales/de.json
-{
-  "meine": {
-    "page": {
-      "title": "Meine Komponente",
-      "description": "Kurze Beschreibung."
-    },
-    "overview": {
-      "anatomyTitle": "Anatomie",
-      "anatomy1": "Container-Element",
-      "anatomy2": "Inhalt"
-    }
-  },
-  "nav": {
-    "items": {
-      "meineKomponente": "Meine Komponente"
-    }
-  }
-}
-```
+- **Portale liegen ausschließlich in `Modal`, `Popover` und `Tooltip`.** `Menu`
+  arbeitet mit `position: fixed`, nicht mit einem Portal.
+- **Brand und Alias wechseln nicht mit dem Theme.** Nur die semantische Ebene
+  tut das.
 
-```json
-// src/i18n/locales/en.json
-{
-  "meine": {
-    "page": {
-      "title": "My Component",
-      "description": "Short description."
-    },
-    "overview": {
-      "anatomyTitle": "Anatomy",
-      "anatomy1": "Container element",
-      "anatomy2": "Content"
-    }
-  },
-  "nav": {
-    "items": {
-      "meineKomponente": "My Component"
-    }
-  }
-}
-```
-
-Jeder in JSX verwendete `t('...')`-Key muss in **beiden** Dateien vorhanden sein.
+→ `DEVELOPMENT.md` Kapitel 3, 4, 5 und 9
 
 ---
 
-## 5. DemoPanel-Konfiguration
+## Bekannter Defekt
 
-`DemoPanel` rendert eine interaktive Komponentenvorschau mit Controls und synchronem Code-Snippet. Import über `PageLayout`:
+`npm run search-index` bricht derzeit ab (`window.matchMedia is not a
+function`, Beendigungscode 1) und schreibt nichts. Der vorhandene Index ist in
+sich stimmig, aber wer eine Seite hinzufügt oder eine Abschnittsüberschrift
+ändert, kommt bis zur Behebung nicht an einen grünen `npm test`.
 
-```jsx
-import { DemoPanel } from '../docs/PageLayout'
-```
-
-### Platzierung
-
-DemoPanel ist das **allererste JSX-Element im OverviewTab-Content** — vor dem ersten `<Section>`-Element, ohne eigenen `<Section>`-Wrapper.
-
-### Props
-
-| Prop | Typ | Beschreibung |
-|---|---|---|
-| `component` | `(values) => ReactNode` | Rendert die Komponente live mit den aktuellen Control-Werten |
-| `controls` | `Control[]` | Array von Dropdown- oder Toggle-Definitionen |
-
-**Control-Definitionen:**
-
-```ts
-// Dropdown
-{ id: string, type: 'dropdown', label: string, options: string[], default: string }
-
-// Toggle
-{ id: string, type: 'toggle', label: string, default: boolean }
-```
-
-### Vollständiges Beispiel (ButtonsPage)
-
-```jsx
-<DemoPanel
-  component={(values) => (
-    <Button variant={values.variant} size={values.size} disabled={values.disabled}>
-      Label
-    </Button>
-  )}
-  controls={[
-    { id: 'variant',  type: 'dropdown', label: 'Variant',  options: ['primary', 'accent', 'secondary', 'ghost', 'danger', 'link'], default: 'primary' },
-    { id: 'size',     type: 'dropdown', label: 'Size',     options: ['xs', 'sm', 'md', 'lg', 'xl'], default: 'md' },
-    { id: 'disabled', type: 'toggle',   label: 'Disabled', default: false },
-  ]}
-/>
-```
-
-### Regeln
-
-- DemoPanel nur auf Komponenten-Docs-Seiten — nicht auf Info-Seiten (Impressum, Datenschutz, Releases).
-- `component`-Prop rendert live; alle Control-Werte kommen aus `values`-Objekt.
-- Dropdown-`options` müssen den tatsächlichen Prop-Werten der Komponente entsprechen.
+→ `DEVELOPMENT.md` Kapitel 8
