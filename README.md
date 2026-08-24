@@ -13,6 +13,63 @@ npm run preview  # Build lokal vorschauen
 
 ---
 
+## Einbindung als Paket
+
+Das Repository liefert neben dem Doku-Portal das Paket `@medo/design-system`. Es
+wird als Git-Abhängigkeit eingebunden, nicht über eine Registry:
+
+```bash
+npm install github:<organisation>/medo-design_system
+```
+
+Der Paket-Build läuft beim Installieren über das `prepare`-Skript; im Repository
+selbst startet ihn `npm run build:lib`. Der Portal-Build (`npm run build`) bleibt
+davon unberührt.
+
+React und React DOM sind Peer-Abhängigkeiten (`^18 || ^19`) und werden vom
+Abnehmer gestellt.
+
+### Einstiegspunkte
+
+| Import | Inhalt |
+|---|---|
+| `@medo/design-system` | alle Komponenten als benannte ES-Exporte |
+| `@medo/design-system/styles.css` | vollständige Stile: Schriften, die drei Token-Ebenen, das Theme und das CSS aller Komponenten |
+| `@medo/design-system/tokens.css` | nur Fundament — Schriften, Token-Ebenen, Theme, ohne Komponenten-CSS |
+
+Die Komponenten laden ihr CSS nicht selbst. Genau einer der beiden Stil-Einstiegspunkte
+gehört einmalig in den Einstiegspunkt der Anwendung:
+
+```js
+import '@medo/design-system/styles.css'
+import 'material-symbols/rounded'
+
+import { Button, Icon } from '@medo/design-system'
+```
+
+Die Icon-Schrift kommt aus dem Paket `material-symbols`, das als Abhängigkeit
+mitinstalliert wird. Sie liegt bewusst nicht im Auslieferumfang: die Datei ist
+5,3 MB groß und würde in jedem Abnehmerbündel ein zweites Mal auftauchen. Die
+Achseneinstellungen des Systems (weight 300, FILL 0) bringen beide
+Stil-Einstiegspunkte mit; ohne den Import oben erscheinen Icons als Ligaturnamen.
+
+### Theme
+
+Geschaltet wird über `data-theme` am `<html>`-Element:
+
+| Wert | Verhalten |
+|---|---|
+| nicht gesetzt | folgt dem Systemtheme |
+| `light` | erzwingt hell |
+| `dark` | erzwingt dunkel |
+
+Der Schalter arbeitet über `color-scheme`, damit Token-Werte und native
+Bedienelemente nicht auseinanderlaufen können. **Eine Anwendung, die
+`color-scheme` selbst auf `:root` setzt, hebelt das Theme aus** — die
+`light-dark()`-Paare folgen dann ihrem Wert statt dem `data-theme`-Attribut.
+
+---
+
 ## Projektstruktur
 
 ```

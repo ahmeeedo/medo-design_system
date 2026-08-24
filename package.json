@@ -1,11 +1,26 @@
 {
-  "name": "design-system",
+  "name": "@medo/design-system",
   "private": true,
   "version": "1.0.0",
   "type": "module",
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "files": [
+    "dist-lib"
+  ],
+  "main": "./dist-lib/index.js",
+  "exports": {
+    ".": "./dist-lib/index.js",
+    "./styles.css": "./dist-lib/styles.css",
+    "./tokens.css": "./dist-lib/tokens.css",
+    "./package.json": "./package.json"
+  },
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "build:lib": "vite build --config vite.config.lib.js && node scripts/build-package.mjs",
+    "prepare": "npm run build:lib",
     "preview": "vite preview",
     "test": "vitest run",
     "test:watch": "vitest",
@@ -13,14 +28,12 @@
     "contrast": "node scripts/contrast/report.mjs && node scripts/contrast/page.mjs",
     "contrast:verify": "node scripts/contrast/verify.mjs"
   },
+  "peerDependencies": {
+    "react": "^18 || ^19",
+    "react-dom": "^18 || ^19"
+  },
   "dependencies": {
-    "fuse.js": "^7.3.0",
-    "i18next": "^26.1.0",
-    "material-symbols": "^0.44.8",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "react-i18next": "^17.0.7",
-    "react-router-dom": "^6.26.1"
+    "material-symbols": "^0.44.8"
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.3.0",
@@ -28,7 +41,13 @@
     "@testing-library/react": "^16.3.2",
     "@testing-library/user-event": "^14.6.4",
     "@vitejs/plugin-react": "^4.3.1",
+    "fuse.js": "^7.3.0",
+    "i18next": "^26.1.0",
     "jsdom": "^26.1.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-i18next": "^17.0.7",
+    "react-router-dom": "^6.26.1",
     "tailwindcss": "^4.3.0",
     "vite": "^5.4.2",
     "vitest": "^3.2.7"
