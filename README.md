@@ -63,14 +63,17 @@ import 'material-symbols/rounded.css'
 import { Button, Icon } from '@medo/design-system'
 ```
 
-Drei Dinge, an denen eine Einbindung erfahrungsgemäß scheitert — alle drei sind
+Vier Dinge, an denen eine Einbindung erfahrungsgemäß scheitert — alle vier sind
 in [HANDOFF.md](HANDOFF.md) ausgeschrieben:
 
-1. **Der Icon-Import braucht die Endung `.css`.** Ohne ihn erscheinen die
+1. **In Next.js mit App Router brauchen die Komponenten eine eigene
+   Client-Grenze.** Sie tragen keine `'use client'`-Direktive; ein direkter
+   Import in eine Server-Komponente schlägt beim Bauen fehl.
+2. **Der Icon-Import braucht die Endung `.css`.** Ohne ihn erscheinen die
    Ligaturnamen als Text.
-2. **Das Paket setzt keine Grundschrift** auf `html` oder `body`. Eine Zeile
+3. **Das Paket setzt keine Grundschrift** auf `html` oder `body`. Eine Zeile
    `body { font-family: var(--medo-font-sans) }` gehört in Ihr Stylesheet.
-3. **Nur die semantische Token-Ebene folgt dem Theme.** Brand- und Alias-Ebene
+4. **Nur die semantische Token-Ebene folgt dem Theme.** Brand- und Alias-Ebene
    sind in Hell und Dunkel identisch.
 
 Das Theme wird über `data-theme` am `<html>`-Element gesteuert (`light`, `dark`,
