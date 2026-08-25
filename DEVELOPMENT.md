@@ -1,291 +1,378 @@
 # Entwickler-Leitfaden — med.o Design System
 
-Dieser Leitfaden beschreibt, wie das Projekt bearbeitet wird: Farben und Tokens anpassen, Komponenten ändern oder neu anlegen, Dokumentationsseiten bearbeiten und die Navigation erweitern.
+Dieser Leitfaden beschreibt, wie in **diesem Repository** gearbeitet wird: Tokens
+und Theme ändern, Komponenten bearbeiten, Doku-Seiten anlegen, Navigation und
+Übersetzungen pflegen, Tests schreiben und die Abnahme fahren.
+
+Er richtet sich an Mitarbeitende am Repository. Für den Einstieg und den
+Überblick über das System siehe `README.md`. Für die Kurzreferenz — Skripte,
+Pfade, Checklisten, Fallen auf einen Blick — siehe `editors-doc.md`; sie
+wiederholt diesen Leitfaden nicht, sondern verweist auf ihn.
 
 ---
 
 ## Inhaltsverzeichnis
 
-1. [Farben und Design-Tokens ändern](#1-farben-und-design-tokens-ändern)
-2. [Eine bestehende Komponente bearbeiten](#2-eine-bestehende-komponente-bearbeiten)
-3. [Eine neue Komponente anlegen](#3-eine-neue-komponente-anlegen)
-4. [Eine Dokumentationsseite bearbeiten](#4-eine-dokumentationsseite-bearbeiten)
-5. [Eine neue Dokumentationsseite anlegen](#5-eine-neue-dokumentationsseite-anlegen)
-6. [Die Seitennavigation erweitern](#6-die-seitennavigation-erweitern)
-7. [Übersetzungen (i18n) pflegen](#7-übersetzungen-i18n-pflegen)
-8. [Docs-Infrastruktur: PageLayout und Hilfskomponenten](#8-docs-infrastruktur-pagelayout-und-hilfskomponenten)
-9. [CSS und Tailwind](#9-css-und-tailwind)
-10. [Responsive Anpassung](#10-responsive-anpassung)
-11. [States: Hover, Active, Focus und mehr](#11-states-hover-active-focus-und-mehr)
-12. [Qualitätssicherung](#12-qualitätssicherung)
+1. [Aufbau des Repositories](#1-aufbau-des-repositories)
+2. [Einrichten und Skripte](#2-einrichten-und-skripte)
+3. [Token und Theme ändern](#3-token-und-theme-ändern)
+4. [Eine Komponente bearbeiten](#4-eine-komponente-bearbeiten)
+5. [Eine Doku-Seite anlegen](#5-eine-doku-seite-anlegen)
+6. [Navigation und Routen erweitern](#6-navigation-und-routen-erweitern)
+7. [Übersetzungen pflegen](#7-übersetzungen-pflegen)
+8. [Suchindex erzeugen](#8-suchindex-erzeugen)
+9. [Tests schreiben](#9-tests-schreiben)
+10. [Die Bibliothek bauen](#10-die-bibliothek-bauen)
+11. [Abnahmeverfahren](#11-abnahmeverfahren)
 
 ---
 
-## 1. Farben und Design-Tokens ändern
+## 1. Aufbau des Repositories
 
-**Alle** Farb-, Abstands-, Radius-, Schatten- und Motion-Werte leben in einer einzigen Datei:
-
-**[`src/styles/tokens.css`](src/styles/tokens.css)**
-
-Das Farbsystem hat drei Schichten:
+Das Repository enthält zwei Dinge, die getrennt bleiben: die **Komponenten** des
+Design Systems und das **Portal**, das sie dokumentiert.
 
 ```
-Basis-Palette                  Semantische Aliase              Funktionale Tokens
---color-brand-navy-500         --color-brand-primary-500       --color-text-primary
-(konkreter Hex-Wert)       →   (Alias auf Basis)           →   (Alias auf Semantisch)
+src/
+  components/        36 Komponenten, je <Name>/<Name>.jsx + <Name>.css
+    index.js         Barrel — die einzige Import-Adresse nach außen
+  pages/             43 Doku-Seiten, je eine <Name>Page.jsx
+  docs/              Portal-Gerüst: PageLayout, DemoPanel, Suche, Navigation
+  styles/            Tokens, Theme, globale Stile
+    medo/            8 Token-Dateien — Spiegel des Design-Projekts, unantastbar
+  i18n/locales/      de.json und en.json
+  config/            searchData.js und sectionData.js — erzeugt, nicht gepflegt
+  lib/tokens.js      Stil-Einstiegspunkt des Pakets
+scripts/             Suchindex-Generator, Kontrastwerkzeug, Paket-Build
+design-reference/    Design-Wahrheit — ausschließlich lesend
 ```
 
-### Bestehende Farbe ändern
+### Die zwei Welten
 
-Um z.B. die Primärfarbe (Navy) heller zu machen:
+Die Grenze verläuft an der Verzeichnisgrenze und ist verbindlich:
 
-```css
-/* In src/styles/tokens.css */
---color-brand-navy-500: #2A3F70;   /* Wert anpassen */
-```
+| | Komponenten (`src/components/`) | Portal (`src/docs/`, `src/pages/`) |
+|---|---|---|
+| Stile | klassenbasiertes CSS in `<Name>.css` | Utility-Klassen im JSX |
+| Werte | ausschließlich `--medo-*`-Tokens | ausschließlich `--medo-*`-Tokens |
+| Utility-Klassen | **nein** | ja |
 
-Alle Komponenten, die `--color-brand-primary-500` oder `--color-text-primary` verwenden, übernehmen die Änderung automatisch.
-
-### Neue Farbpalette hinzufügen
-
-```css
-/* 1. Basis-Palette eintragen */
---color-brand-teal-100: #E0F7FA;
---color-brand-teal-500: #00897B;
---color-brand-teal-900: #004D40;
-
-/* 2. Semantischen Alias anlegen (falls nötig) */
---color-brand-tertiary-500: var(--color-brand-teal-500);
-```
-
-**Regel:** Im Komponenten-Code nur semantische oder funktionale Tokens referenzieren, nie Basis-Palette direkt.
-
-### Spacing, Radius, Shadows, Motion
-
-Gleiches Prinzip — Werte in `tokens.css` ändern:
-
-```css
---space-4: 16px;       /* Abstände */
---radius-lg: 8px;      /* Radius */
---shadow-md: 0 4px ... /* Schatten */
---duration-normal: 200ms;
-```
-
----
-
-## 2. Eine bestehende Komponente bearbeiten
-
-Jede Komponente liegt als einzelne JSX-Datei in `src/components/<Name>/<Name>.jsx`.
-
-### Beispiel: Button — neue Variante hinzufügen
+Beide Welten beziehen jeden Farb-, Abstands-, Radius- und Schattenwert aus
+Tokens. Der Unterschied liegt nur darin, wie der Wert an das Element kommt. Im
+Portal geschieht das über die Klammerschreibweise:
 
 ```jsx
-// src/components/Button/Button.jsx
-const variants = cva('...Basis-Klassen...', {
-  variants: {
-    variant: {
-      primary:   '...',
-      secondary: '...',
-      // Neue Variante:
-      brand: 'bg-[var(--color-brand-accent-500)] text-white hover:bg-[var(--color-brand-accent-600)]',
-    },
-  },
-})
+<div className="bg-[var(--medo-surface-container)] p-[var(--medo-space-lg)]">
 ```
 
-Danach die neue Variante in der Dokumentationsseite ([`src/pages/ButtonsPage.jsx`](src/pages/ButtonsPage.jsx)) demonstrieren und den i18n-Schlüssel eintragen.
+Hartkodierte Werte sind in beiden Welten ausgeschlossen — auch in
+Zwischenschritten.
 
-### Styling-Regeln
+### Der Alias `@`
 
-- Tailwind-Utility-Klassen verwenden, **keine** neuen `.module.css`-Dateien anlegen
-- Farbwerte immer als `text-[var(--color-*)]` oder `bg-[var(--color-*)]` — nie als `text-blue-500`
-- Schriftgrößen als `text-xs`, `text-sm`, `text-md` etc. — **nicht** `text-[var(--text-*)]`
-- Für bedingte Klassen: `cn()` aus `src/lib/utils.js` verwenden
+`@` zeigt auf `src/`. Beides ist gesetzt: in `vite.config.js` als
+`resolve.alias` und in `jsconfig.json` für die Auflösung im Editor. Innerhalb
+einer Komponente werden Geschwister relativ importiert (`../Icon/Icon`), von
+außen läuft alles über das Barrel:
 
 ```jsx
-import { cn } from '@/lib/utils'
-
-<div className={cn('base-class', condition && 'optional-class')} />
+import { Button, Icon } from '@/components'
 ```
 
 ---
 
-## 3. Eine neue Komponente anlegen
-
-### Schritt 1 — shadcn/ui-Primitiv installieren (falls vorhanden)
+## 2. Einrichten und Skripte
 
 ```bash
-cd c:/Programming/medo-design_system
-npx shadcn@latest add <komponent-name>
-# Erzeugt src/components/ui/<komponent-name>.tsx
+npm ci
+npm run dev
 ```
 
-### Schritt 2 — Komponenten-Datei anlegen
+| Skript | Wirkung |
+|---|---|
+| `npm run dev` | Entwicklungsserver für das Portal |
+| `npm run build` | Portal-Build nach `dist/` |
+| `npm run build:lib` | Paket-Build nach `dist-lib/` (Kapitel 10) |
+| `npm run preview` | gebautes Portal lokal ausliefern |
+| `npm test` | gesamte Testsuite, einmalig |
+| `npm run test:watch` | Testsuite im Beobachtungsmodus |
+| `npm run search-index` | `src/config/searchData.js` und `sectionData.js` neu erzeugen |
+| `npm run contrast` | Kontrastbericht nach `docs/dark-palette-vorschlag.md` und `.html` |
+| `npm run contrast:verify` | prüft das Kontrastwerkzeug gegen die helle Palette |
 
+`prepare` ist auf `build:lib` gesetzt. Ein `npm install` ohne Argumente löst den
+Paket-Build deshalb mit aus; `npm ci` tut das nicht.
+
+**Nur ein Entwicklungsserver zur Zeit.** Mehrere parallel laufende Instanzen
+liefern unterschiedliche Stände an denselben Browser-Tab und haben in diesem
+Projekt bereits eine Abnahme verfälscht. Vor dem Start prüfen, ob noch einer
+läuft.
+
+---
+
+## 3. Token und Theme ändern
+
+Das Farbsystem hat drei Ebenen: **Brand** (Rohskalen), **Alias** (benannte
+Stufen) und **Semantic** (Rollen). Doku-Seiten und Komponenten greifen auf die
+semantische Ebene zu; Brand-Stufen nur dort, wo die Referenz sie selbst nutzt.
+
+### Die Ladekette
+
+`src/styles/global.css` lädt in dieser Reihenfolge, und die Reihenfolge ist der
+Punkt — später Geladenes gewinnt:
+
+```css
+@import "./fonts.css";
+@import "./medo-tokens.css";            /* die drei Token-Ebenen, helle Werte */
+@import "./medo-theme.css";             /* dieselben Rollen als hell/dunkel-Paare */
+@import "./medo-theme-components.css";  /* Theme-Nachbesserungen an Komponenten */
+
+@import "tailwindcss";
+@import 'material-symbols/rounded';
+@import "./icons.css";                  /* Achsenregel der Icon-Schrift */
 ```
-src/components/MeineKomponente/MeineKomponente.jsx
+
+Darunter steht **ein** `@theme inline`-Block und **ein** `:root`-Block. Beide
+bleiben einzeln; eine zweite Instanz bricht die Auflösung still.
+
+### Was wo geändert wird
+
+| Datei | Inhalt | Änderbar? |
+|---|---|---|
+| `src/styles/medo/*.css` (8 Dateien) | die Token-Werte selbst | **nein** — Spiegel des Design-Projekts |
+| `src/styles/medo-tokens.css` | nur die Importliste | nur bei neuer Token-Datei |
+| `src/styles/medo-theme.css` | die dunklen Werte | ja |
+| `src/styles/medo-theme-components.css` | Theme-Nachbesserung an Komponentenklassen | ja |
+| `src/styles/global.css` | Docs-Zwischenwerte, Basisstile | ja |
+
+Die acht Dateien unter `src/styles/medo/` sind inhaltsgleiche Kopien von
+`design-reference/tokens/`. Sie werden hier **nie** geändert — ein neuer oder
+geänderter Wert entsteht im Design-Projekt und kommt von dort zurück. Die Kopien
+tragen CRLF, die Referenz LF; rohe Prüfsummen weichen deshalb immer ab, gleich
+ist der Inhalt erst nach Normalisierung der Zeilenenden.
+
+### Der Dark Mode liegt allein auf der semantischen Ebene
+
+Brand- und Alias-Ebene sind in beiden Themes identisch. Das ist die häufigste
+Stolperstelle des Projekts: `var(--medo-color-white)` und
+`var(--medo-primary-50)` sehen wie saubere Token-Referenzen aus, folgen aber
+keinem Theme und bleiben im Dunkeln stehen, wo sie standen.
+
+**Regel:** Alles, was mit dem Theme wechseln soll, referenziert ein semantisches
+Token — `--medo-surface`, `--medo-text`, `--medo-border`, `--medo-action` und
+ihresgleichen.
+
+In `medo-theme.css` steht jedes semantische Token als **ein** Paar:
+
+```css
+--medo-surface: light-dark(var(--medo-color-white), var(--medo-color-stone-1000));
 ```
 
-```jsx
-import { cn } from '@/lib/utils'
+Geschaltet wird über `color-scheme`, nicht über Klassen:
 
-export function MeineKomponente({ variant = 'default', children, className }) {
-  return (
-    <div className={cn(
-      'bg-[var(--surface_100)] border border-[var(--color-border)] rounded-[var(--radius-lg)] p-[var(--space-4)]',
-      variant === 'raised' && 'shadow-[var(--shadow-md)]',
-      className
-    )}>
-      {children}
-    </div>
-  )
+```css
+:root                     { color-scheme: light dark; }  /* folgt dem System */
+:root[data-theme="light"] { color-scheme: light; }
+:root[data-theme="dark"]  { color-scheme: dark; }
+```
+
+Träger ist das Attribut `data-theme` auf `<html>`. Fehlt es, folgt die
+Darstellung dem System. Eine ausdrückliche Wahl merkt sich das Portal im
+`localStorage` unter `medo-theme` und setzt das Attribut über ein Inline-Skript
+in `index.html`, bevor der erste Anstrich passiert.
+
+Browser ohne `light-dark()` verwerfen diese Deklarationen und behalten die
+hellen Werte darunter — der Rückfall ist das heutige Aussehen, kein kaputtes.
+
+**Einen dunklen Wert ändern:**
+
+1. Das Paar in `src/styles/medo-theme.css` anpassen — nur der zweite Zweig. Der
+   erste Zweig wiederholt exakt, was der Spiegel deklariert, und darf nicht
+   abweichen; `src/styles/dark-theme.test.js` prüft genau das.
+2. `npm test` — die Kontrastprüfung liest die Werte aus `medo-theme.css` selbst
+   und fällt, wenn ein Wert seine WCAG-2.2-Schwelle unterschreitet.
+3. Sichtprüfung in beiden Themes.
+
+### Theme-Nachbesserung an einer Komponente
+
+Portierte Komponenten tragen die wörtlichen Farbwerte der Referenz und werden
+**nicht angefasst** — weder ihr `.jsx` noch ihr `.css`. Braucht eine solche
+Farbe ein dunkles Gegenstück, wird die vorhandene Klasse von außen adressiert,
+in `src/styles/medo-theme-components.css`:
+
+```css
+:root .medo-btn--secondary {
+  background-color: light-dark(#f7f7f6, var(--medo-color-stone-800));
 }
 ```
 
-**Wichtig:** Keine hardcodierten Farb- oder Abstands-Werte. Nur Token-Referenzen aus `tokens.css`.
+Zwei Schreibweisen, je nach Ausgangslage:
 
-### Schritt 3 — In index.js exportieren
+- Der helle Wert der Referenz ist **exakt** der helle Wert eines Tokens: dann
+  wird unbedingt auf das Token gesetzt. Hell rendert es identisch, dunkel folgt
+  es dem Token.
+- Der helle Wert liegt **neben** der Palette: dann wird nur die Farbe in
+  `light-dark()` gefasst, und der helle Zweig wiederholt das Literal der
+  Referenz wörtlich. Die helle Darstellung kann sich so nicht ändern.
+
+Der `:root`-Präfix ist kein Schmuck: er hebt die Spezifität über die des
+Komponenten-Stylesheets, sodass die Regel unabhängig von der Bündelreihenfolge
+gewinnt. `src/styles/component-theme.test.js` löst jede Deklaration dieser Datei
+für das helle Theme auf und fällt, wenn sie von dem abweicht, was das
+Komponenten-Stylesheet für denselben Selektor und dieselbe Eigenschaft sagt.
+
+### Zwischenwerte
+
+Werte, die auf keiner Token-Stufe liegen, werden im CSS **aus Tokens gerechnet**,
+nie hartkodiert:
+
+```css
+--docs-header-height: calc(var(--medo-space-2xl) + var(--medo-space-xs)); /* 56 */
+--docs-hit-target:    calc(var(--medo-space-xl) + var(--medo-space-sm));  /* 44 */
+```
+
+Ein Zwischenwert, der mehrfach vorkommt, bekommt eine Definition im
+`:root`-Block von `src/styles/global.css` und wird überall darüber referenziert.
+Zweimal ausrechnen heißt zweimal nachziehen.
+
+Diese Regel gilt für selbst geschriebenen Code. **1:1 portiertes Komponenten-CSS
+behält die Zahlenwerte der Referenz** — dort umzurechnen hieße, den Nachweis der
+Portierungstreue aufzugeben.
+
+---
+
+## 4. Eine Komponente bearbeiten
+
+Jede Komponente liegt als Paar:
+
+```
+src/components/Toggle/Toggle.jsx
+src/components/Toggle/Toggle.css
+```
+
+Das `.jsx` importiert sein Stylesheet selbst (`import './Toggle.css'`) und
+exportiert benannt. Der Export wird in `src/components/index.js` durchgereicht:
 
 ```js
-// src/components/index.js
-export { MeineKomponente } from './MeineKomponente/MeineKomponente.jsx'
+export { Toggle } from './Toggle/Toggle'
 ```
 
-### Schritt 4 — Dokumentationsseite anlegen
+Eine Komponente, die nicht im Barrel steht, existiert für den Rest des Systems
+nicht — der Paket-Build zieht seinen Inhalt aus dieser Datei.
 
-Siehe [Abschnitt 5](#5-eine-neue-dokumentationsseite-anlegen).
+### Was den Rahmen bestimmt
+
+`design-reference/` ist die alleinige Quelle, keine Anregung. Die Verbindlichkeit
+fällt absteigend so:
+
+1. `design-reference/CLAUDE.md` — gelockte Beschlüsse
+2. `design-reference/components/<Name>.dc.html` — die Spezifikation
+3. `design-reference/ui/<Name>.jsx` / `.d.ts` / `.prompt.md` — Referenzcode,
+   Props-Vertrag, Nutzungsregeln
+
+Die Spezifikationsdateien heißen in Bindestrich-Schreibweise mit
+kleingeschriebenem zweiten Wort: `Code-snippet.dc.html`, `Text-input.dc.html`,
+`Radio-button.dc.html`. Vor dem Zugriff den Namen im Verzeichnis nachsehen.
+
+Daraus folgt für jede Änderung:
+
+- **Jede in der `.d.ts` deklarierte Prop und Variante muss funktionieren.**
+- **Keine Prop, die die `.d.ts` nicht kennt** — auch nicht als dokumentierte
+  Abweichung, auch nicht, wenn sie einen echten Bedarf löst. Braucht der
+  Aufrufer mehr, löst er es auf seiner Seite, oder der Bedarf geht als
+  Änderungswunsch ins Design-Projekt zurück.
+- Fehlt ein Token oder eine Angabe, oder widerspricht sich das Material: nicht
+  nachrechnen, nicht improvisieren — klären lassen.
+
+### Stilregeln in Komponenten
+
+**Der Klassenpräfix ist projektweit eindeutig.** Anders als in der Referenz, wo
+jede Spezifikationsseite für sich läuft, landen hier alle Stylesheets in einem
+Bündel. Ein doppelt belegter Präfix lässt zwei Komponenten einander
+stillschweigend überschreiben, ohne Build-Fehler. Vor dem Anlegen einer neuen
+CSS-Datei den Präfix gegen die vorhandenen prüfen:
+
+```bash
+grep -rn "medo-tg" src/components/
+```
+
+**Inline-Stile mit Token-Werten nur in Längsformen.** Kurzformen mit
+`var()`-Werten kommen unvollständig an, und der Fehler ist stumm — ein Teil der
+Kanten färbt sich, der Rest bleibt neutral:
+
+```jsx
+// richtig
+style={{ borderTopColor: 'var(--medo-border)', borderRightColor: 'var(--medo-border)' }}
+
+// falsch — färbt nicht vollständig, ohne Fehlermeldung
+style={{ borderColor: 'var(--medo-border)' }}
+```
+
+### Icons
+
+Ausschließlich Material Symbols Rounded, weight 300, FILL 0, immer über die
+`Icon`-Komponente. Keine eingebetteten Vektorgrafiken, keine Emojis als Icons,
+keine weitere Icon-Bibliothek.
+
+```jsx
+import { Icon } from '@/components'
+
+<Icon name="calendar_month" size={20} />
+```
+
+`size` ist eine freie Zahl. Standardgrößen sind 18 neben kleinem Text, 20 neben
+normalem Text (Vorgabe) und 24 alleinstehend. Kleinere Werte wie 16 nur dort, wo
+die Referenz sie selbst setzt — Meldungszeilen, Chips, dichte Kontexte.
+
+**Maßgeblich ist die Auslösefläche, nicht die Komponente.** Icons, die eine
+Auslösefläche begleiten — Button, Link, Dropdown-Auslöser, MenuButton,
+SplitButton, IconMenuButton — liegen auf sm 20 / md 22 / lg 24. Alle übrigen
+Icons behalten die Größen ihrer Referenzimplementierung: Menü- und
+Listeneinträge, Feld-Icons, Chips, Meldungszeilen, Tabellen. Eine Komponente
+kann beides enthalten.
+
+Bedienbare Icons in Feldern — Leeren, Passwort anzeigen, Kopieren — haben
+Icon-Button-Optik und immer ein `aria-label`. Dekorative Icons stehen flach im
+Text.
+
+Die Achsenregel der Icon-Schrift steht in `src/styles/icons.css` und ist bewusst
+ungeschichtet: das Schriftpaket liefert eine ebenfalls ungeschichtete Regel mit,
+gegen die eine Regel in einer Schicht verlöre. Die Datei muss deshalb nach dem
+Schriftpaket geladen werden.
 
 ---
 
-## 4. Eine Dokumentationsseite bearbeiten
+## 5. Eine Doku-Seite anlegen
 
-Alle Seiten liegen in [`src/pages/`](src/pages/). Sie folgen dem PageLayout-Muster mit 4 Tabs.
+Eine neue Seite berührt **fünf** Stellen. Keine ist optional; fehlt eine, fällt
+entweder die Testsuite oder die Suche.
 
-### Aufbau einer Seite
+1. `src/pages/<Name>Page.jsx` — die Seite
+2. `src/App.jsx` — Import und Zeile in `ROUTES`
+3. `src/docs/DocsLayout.jsx` — Eintrag in `NAV`
+4. `src/i18n/locales/de.json` und `en.json` — alle Texte
+5. `npm run search-index` — der Suchindex
 
-```jsx
-import { useTranslation } from 'react-i18next'
-import { PageLayout, Section, GridWrapper, Content } from '../docs/PageLayout'
-import { CodeBlock } from '../docs/CodeBlock'
-import { Button } from '../components'
+### Das Seitengerüst
 
-export default function ButtonsPage() {
-  const { t } = useTranslation()
-
-  const tabs = [
-    { id: 'overview',     label: t('tabs.overview'),     content: <OverviewTab t={t} /> },
-    { id: 'usage',        label: t('tabs.usage'),        content: <UsageTab t={t} /> },
-    { id: 'code',         label: t('tabs.code'),         content: <CodeTab t={t} /> },
-    { id: 'accessibility',label: t('tabs.accessibility'),content: <A11yTab t={t} /> },
-  ]
-
-  return (
-    <PageLayout
-      title={t('buttons.page.title')}
-      description={t('buttons.page.description')}
-      tabs={tabs}
-    />
-  )
-}
-```
-
-### Tab-Struktur mit Section und GridWrapper
-
-```jsx
-function OverviewTab({ t }) {
-  return (
-    <>
-      {/* Abschnitt mit Titel */}
-      <Section title={t('buttons.overview.anatomyTitle')}>
-        <Content>
-          <ol>
-            <li>{t('buttons.overview.anatomy1')}</li>
-            <li>{t('buttons.overview.anatomy2')}</li>
-          </ol>
-        </Content>
-      </Section>
-
-      {/* Live-Demo-Grid (automatische Spaltenanzahl) */}
-      <Section title={t('buttons.overview.variantsTitle')}>
-        <GridWrapper>
-          <Button variant="primary">Primary</Button>
-          <Button variant="secondary">Secondary</Button>
-          <Button variant="ghost">Ghost</Button>
-        </GridWrapper>
-      </Section>
-    </>
-  )
-}
-```
-
-### Do/Don't-Paare
-
-```jsx
-<GridWrapper>
-  {/* Do */}
-  <div className="border border-[var(--color-success-500)] rounded-[var(--radius-lg)] p-[var(--space-4)]">
-    <div className="text-xs font-semibold text-[var(--color-success-700)] mb-2">✓ Do</div>
-    <p className="text-sm text-[var(--color-text-secondary)]">{t('buttons.usage.do1')}</p>
-  </div>
-  {/* Don't */}
-  <div className="border border-[var(--color-error-500)] rounded-[var(--radius-lg)] p-[var(--space-4)]">
-    <div className="text-xs font-semibold text-[var(--color-error-700)] mb-2">✗ Don't</div>
-    <p className="text-sm text-[var(--color-text-secondary)]">{t('buttons.usage.dont1')}</p>
-  </div>
-</GridWrapper>
-```
-
-### Code-Snippets
-
-```jsx
-<Section title="Beispiele">
-  <CodeBlock language="jsx" code={`<Button variant="primary">Speichern</Button>`} />
-</Section>
-```
-
-### Keyboard-Tabelle (Accessibility-Tab)
-
-```jsx
-<table className="w-full text-sm border-collapse">
-  <thead>
-    <tr className="border-b border-[var(--color-border)]">
-      <th className="text-left py-2 pr-4 font-semibold">Taste</th>
-      <th className="text-left py-2 font-semibold">Funktion</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr className="border-b border-[var(--color-border-subtle)]">
-      <td className="py-2 pr-4 font-mono text-xs">Tab</td>
-      <td className="py-2 text-[var(--color-text-secondary)]">{t('buttons.a11y.keyTab')}</td>
-    </tr>
-    <tr>
-      <td className="py-2 pr-4 font-mono text-xs">Enter / Space</td>
-      <td className="py-2 text-[var(--color-text-secondary)]">{t('buttons.a11y.keyEnter')}</td>
-    </tr>
-  </tbody>
-</table>
-```
-
----
-
-## 5. Eine neue Dokumentationsseite anlegen
-
-### Schritt 1 — Seite anlegen
-
-Neue Datei erstellen: `src/pages/MeineSeite.jsx`
-
-Ausgangspunkt (vollständige 4-Tab-Struktur):
+Jede Komponenten-Seite folgt dem Vier-Tab-Muster: **Overview**, **Usage**,
+**Code**, **Accessibility**. Die Inhalte entstehen aus der jeweiligen
+Spezifikation in `design-reference/components/`, nicht aus einer Altfassung.
 
 ```jsx
 import { useTranslation } from 'react-i18next'
-import { PageLayout, Section, GridWrapper, Content } from '../docs/PageLayout'
+import { PageLayout, Section, Content, DemoPanel } from '../docs/PageLayout'
 import { CodeBlock } from '../docs/CodeBlock'
-import { MeineKomponente } from '../components'
+import { Toggle } from '../components'
 
-export default function MeinePage() {
+const PROSE = 'text-[var(--medo-text-muted)] [font-family:var(--medo-font-sans)] [line-height:var(--medo-leading-relaxed)]'
+
+const BASIC_CODE = `import { Toggle } from '@/components'
+
+<Toggle label="Terminerinnerung senden" defaultChecked />`
+
+export default function TogglePage() {
   const { t } = useTranslation()
-
-  const CODE = `<MeineKomponente variant="default">Inhalt</MeineKomponente>`
 
   const tabs = [
     {
@@ -293,51 +380,30 @@ export default function MeinePage() {
       label: t('tabs.overview'),
       content: (
         <>
-          <Section title={t('meine.overview.anatomyTitle')}>
+          <DemoPanel
+            component={values => (
+              <Toggle size={values.size} disabled={values.disabled} label={t('toggle.demo.reminder')} />
+            )}
+            controls={[
+              { id: 'size',     type: 'dropdown', label: t('toggle.controls.size'), options: ['sm', 'md', 'lg'], default: 'md' },
+              { id: 'disabled', type: 'toggle',   label: t('toggle.controls.disabled'), default: false },
+            ]}
+          />
+
+          <Section title={t('toggle.overview.whenTitle')}>
             <Content>
-              <ol>
-                <li>{t('meine.overview.anatomy1')}</li>
-                <li>{t('meine.overview.anatomy2')}</li>
-              </ol>
+              <p className={PROSE}>{t('toggle.overview.whenText')}</p>
             </Content>
           </Section>
-          <Section title={t('meine.overview.demoTitle')}>
-            <MeineKomponente>Demo-Inhalt</MeineKomponente>
-          </Section>
         </>
-      ),
-    },
-    {
-      id: 'usage',
-      label: t('tabs.usage'),
-      content: (
-        <Section title={t('meine.usage.title')}>
-          <Content>
-            <p>{t('meine.usage.description')}</p>
-          </Content>
-          <GridWrapper>
-            {/* Do/Don't-Paare */}
-          </GridWrapper>
-        </Section>
       ),
     },
     {
       id: 'code',
       label: t('tabs.code'),
       content: (
-        <Section title={t('meine.code.exampleTitle')}>
-          <CodeBlock language="jsx" code={CODE} />
-        </Section>
-      ),
-    },
-    {
-      id: 'accessibility',
-      label: t('tabs.accessibility'),
-      content: (
-        <Section title={t('meine.a11y.title')}>
-          <Content>
-            <p>{t('meine.a11y.description')}</p>
-          </Content>
+        <Section title={t('toggle.code.basicTitle')}>
+          <CodeBlock>{BASIC_CODE}</CodeBlock>
         </Section>
       ),
     },
@@ -345,458 +411,429 @@ export default function MeinePage() {
 
   return (
     <PageLayout
-      title={t('meine.page.title')}
-      description={t('meine.page.description')}
+      title={t('toggle.page.title')}
+      description={t('toggle.page.description')}
       tabs={tabs}
     />
   )
 }
 ```
 
-### Schritt 2 — Route in App.jsx eintragen
+Die Seite exportiert **default**. Die Tab-Bezeichner sind gesetzt und tragen je
+ein Icon: `overview`, `usage`, `tokens`, `code`, `accessibility`, `style`. Die
+Labels kommen aus dem reservierten Namensraum `tabs.*`.
 
-```jsx
-// src/App.jsx
-import MeinePage from './pages/MeinePage'
+### Bausteine aus `src/docs/`
 
-// In der Routes-Liste:
-<Route path="/meine" element={<MeinePage />} />
+| Baustein | Import | Zweck |
+|---|---|---|
+| `PageLayout` | `../docs/PageLayout` | Kopf, Tab-Leiste, Inhaltsverzeichnis |
+| `Section` | `../docs/PageLayout` | Abschnitt mit `h2` und Anker |
+| `Content` | `../docs/PageLayout` | Fließtextblock mit Listen- und Link-Stilen |
+| `GridWrapper` | `../docs/PageLayout` | Raster, Spaltenzahl aus der Kinderzahl |
+| `DemoPanel` | `../docs/PageLayout` | bedienbare Vorschau mit Reglern |
+| `CodeBlock` | `../docs/CodeBlock` | Codeblock mit Kopierschalter |
+| `TokensTable` | `../docs/TokensTable` | Token-Tabelle, Werte zur Laufzeit gelesen |
+
+`TokensTable` bekommt **nur Token-Namen**. Jeder angezeigte Wert wird aus der
+geladenen Token-Kette zurückgelesen, nie in die Seite geschrieben — eine
+Änderung an den Tokens schlägt dadurch ohne Zutun bis in die Doku durch.
+
+### DemoPanel
+
+`<DemoPanel>` ist das **erste JSX-Element im Overview-Tab**, vor allen
+`<Section>`-Elementen und ohne eigenen `Section`-Wrapper — es bringt seine
+eigene `h2` mit. Info-Seiten (Impressum, Datenschutz, Releases) haben kein
+DemoPanel.
+
+| Prop | Typ | Bedeutung |
+|---|---|---|
+| `component` | `(values) => ReactNode` | rendert die Komponente mit den aktuellen Reglerwerten |
+| `controls` | `Control[]` | Regler; ein leeres Array blendet die Reglerzeile aus |
+
+```ts
+{ id: string, type: 'dropdown', label: string, options: string[], default: string }
+{ id: string, type: 'toggle',   label: string, default: boolean }
 ```
 
-### Schritt 3 — Navigation eintragen
+Die Regler decken die Varianten und Props aus der `.d.ts` der Komponente ab, und
+`options` enthält die tatsächlichen Prop-Werte — nichts, was die Komponente
+nicht kennt.
 
-Siehe [Abschnitt 6](#6-die-seitennavigation-erweitern).
+### Die Ankerregel
 
-### Schritt 4 — i18n-Keys eintragen
+**Jede `h2` gehört in einen `<Section>`-Wrapper.** `Section` erzeugt aus dem
+Titel eine ID und hängt sie an das umschließende `div`. Steht eine `h2`
+außerhalb, greift die Ankersuche über `el.closest('[id]')` die ID des nächsten
+Vorfahren ab, statt einen eigenen Anker zu erzeugen — Inhaltsverzeichnis und
+Suchtreffer springen dann ins Ungefähre.
 
-Siehe [Abschnitt 7](#7-übersetzungen-i18n-pflegen).
+Der Algorithmus steht in `src/docs/anchors.js` und ist die einzige Quelle:
+
+```js
+export const generateId = (text) =>
+  text.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')
+```
+
+Er wird **importiert, nie kopiert** — auch der Suchindex-Generator liest genau
+diese Funktion, damit vorerzeugte Anker nicht von den gerenderten abweichen
+können. Umlaute fallen ersatzlos heraus: aus „Größen" wird `gren`. Das ist kein
+Fehler, sondern der vereinbarte Stand; Anker sind dadurch sprachabhängig.
 
 ---
 
-## 6. Die Seitennavigation erweitern
+## 6. Navigation und Routen erweitern
 
-Die Sidebar-Navigation wird in [`src/docs/DocsLayout.jsx`](src/docs/DocsLayout.jsx) definiert:
+### Route
+
+Routen stehen als **Datenzeile** in `ROUTES` in `src/App.jsx`, nicht als
+`<Route>`-Element. `ROUTES` ist die einzige Quelle des Seitenbestands: der
+Suchindex-Generator läuft diese Liste ab, und ein Test hält sie mit der
+Navigation im Gleichstand.
 
 ```jsx
-const NAV = [
-  {
-    section: 'nav.sections.foundations',
-    items: [
-      { id: 'colors',     label: 'nav.items.colors' },
-      // ...
-    ],
-  },
-  {
-    section: 'nav.sections.components',
-    items: [
-      { id: 'buttons', label: 'nav.items.buttons' },
-      // Neuer Eintrag:
-      { id: 'meine', label: 'nav.items.meine' },
-    ],
-  },
+import TogglePage from './pages/TogglePage'
+
+export const ROUTES = [
+  // ...
+  { path: '/toggle', element: <TogglePage /> },
 ]
 ```
 
-`id` entspricht dem URL-Pfad (`/meine`). Den Label-Schlüssel in `de.json` und `en.json` eintragen:
+Der Wurzelpfad ist die einzige Zeile mit `redirect` statt `element`.
 
-```json
-// de.json → "nav": { "items": { "meine": "Meine Seite" } }
-// en.json → "nav": { "items": { "meine": "My Page" } }
+### Navigation
+
+Der Seitenstreifen zieht seinen Inhalt aus `NAV` in `src/docs/DocsLayout.jsx`.
+Drei Gruppen: `about`, `foundations`, `components`. Die `id` eines Eintrags
+**ist** der Pfad ohne führenden Schrägstrich — daraus baut der Streifen sein
+Ziel, deshalb müssen beide zusammenpassen.
+
+```js
+{ id: 'toggle', label: 'nav.items.toggle' },
 ```
+
+`label` ist ein i18n-Schlüssel, kein Text.
+
+### Bewusst nicht geführte Routen
+
+Drei Routen stehen absichtlich nicht im Seitenstreifen: der Wurzel-Umzug und die
+beiden Rechtstexte, die über die Fußzeile erreichbar sind. Sie stehen in
+`NAV_EXEMPT` in `src/config/searchData.test.jsx`:
+
+```js
+const NAV_EXEMPT = ['/', '/impressum', '/datenschutz']
+```
+
+Eine neue Route, die nicht in die Navigation soll, gehört dort eingetragen —
+sonst fällt der Test, der jeden Pfad im Seitenstreifen sehen will.
 
 ---
 
-## 7. Übersetzungen (i18n) pflegen
+## 7. Übersetzungen pflegen
 
-### Keys eintragen
+Jeder Text, den ein Mensch zu sehen bekommt, läuft über `t()`:
 
-Beide Dateien müssen immer synchron sein:
+```jsx
+const { t } = useTranslation()
+
+<h3>{t('toggle.overview.whenTitle')}</h3>
+```
+
+Deutsch ist der Standard und die Rückfallsprache; Englisch ist die Übersetzung.
+Beide Dateien — `src/i18n/locales/de.json` **und** `en.json` — bekommen jeden
+neuen Schlüssel. Ein Schlüssel, der nur in einer der beiden steht, zeigt in der
+anderen Sprache seinen eigenen Namen an.
+
+### Aufbau
+
+Pro Seite ein Namensraum auf oberster Ebene, darin `page`, `controls`, `demo`
+und die Abschnittsblöcke:
 
 ```json
-// src/i18n/locales/de.json
-{
-  "meine": {
-    "page": {
-      "title": "Meine Komponente",
-      "description": "Kurze Beschreibung."
-    },
-    "overview": {
-      "anatomyTitle": "Anatomie",
-      "anatomy1": "Container-Element",
-      "anatomy2": "Inhalt"
-    }
-  }
+"toggle": {
+  "page": {
+    "title":       "Toggle",
+    "description": "Schaltet eine Einstellung sofort um."
+  },
+  "controls": { "size": "Größe" },
+  "demo":     { "reminder": "Terminerinnerung" }
 }
 ```
 
-```json
-// src/i18n/locales/en.json
-{
-  "meine": {
-    "page": {
-      "title": "My Component",
-      "description": "Short description."
-    },
-    "overview": {
-      "anatomyTitle": "Anatomy",
-      "anatomy1": "Container element",
-      "anatomy2": "Content"
-    }
-  }
-}
-```
+`tabs.*` ist reserviert für die globalen Tab-Labels und wird nicht pro Seite
+erweitert.
 
-### Bestehende Namespaces
+### Die Dateien vertragen keinen Rundlauf
 
-| Namespace | Seite |
-|---|---|
-| `tabs.*` | Globale Tab-Labels (reserviert — nicht überschreiben) |
-| `nav.*` | Sidebar-Navigation |
-| `buttons.*` | ButtonsPage |
-| `inputs.*` | InputsPage |
-| `selects.*` | SelectsPage |
-| `toggle.*` | TogglePage |
-| `badges.*` | BadgesPage |
-| `alerts.*` | AlertsPage |
-| `cards.*` | CardsPage |
-| `tables.*` | TablesPage |
-| `tabsPage.*` | TabsPage (nicht `tabs.*`!) |
-| `navigation.*` | NavigationPage |
-| `overlays.*` | OverlaysPage |
-| `accordion.*` | AccordionPage |
-| `menus.*` | MenusPage |
-| `lists.*` | ListsPage |
-| `stats.*` | StatsPage |
-| `feedback.*` | FeedbackPage |
-| `avatar.*` | AvatarPage |
-| `skeleton.*` | SkeletonPage |
+Beide Locale-Dateien sind **spaltenausgerichtet** — die Werte stehen
+untereinander. Ein `JSON.parse` mit anschließendem `JSON.stringify` wirft diese
+Ausrichtung weg und erzeugt eine Änderung über alle 3175 Zeilen, in der die
+eigentliche Änderung nicht mehr auffindbar ist.
 
----
-
-## 8. Docs-Infrastruktur: PageLayout und Hilfskomponenten
-
-### PageLayout
-
-```jsx
-import { PageLayout, Section, GridWrapper, Grid, Content } from '../docs/PageLayout'
-
-// Seitenrahmen mit Tab-Navigation:
-<PageLayout title="..." description="..." tabs={[...]} />
-
-// Abschnitt mit optionalem Titel (max-w: 980px, px-8):
-<Section title="Anatomie">...</Section>
-
-// Auto-Grid (1–6 Spalten je nach Kindanzahl, responsive):
-<GridWrapper>
-  <ComponentA />
-  <ComponentB />
-  <ComponentC />
-</GridWrapper>
-
-// Fließtext-Container mit Listenformatierung:
-<Content>
-  <p>Absatz</p>
-  <ul><li>Punkt</li></ul>
-</Content>
-```
-
-### CodeBlock
-
-```jsx
-import { CodeBlock } from '../docs/CodeBlock'
-
-<CodeBlock
-  language="jsx"
-  code={`<Button variant="primary">Speichern</Button>`}
-/>
-```
-
-### TokensTable (für Foundation-Seiten)
-
-```jsx
-import { TokensTable } from '../docs/TokensTable'
-
-<TokensTable tokens={[
-  { name: '--color-brand-primary-500', value: '#1C2855', description: 'Primärfarbe Navy' },
-]} />
-```
-
-### DocSection (ältere Hilfskomponenten)
-
-```jsx
-import { SubSection, Row, Grid2, TokenChip } from '../docs/DocSection'
-```
-
----
-
-## 9. CSS und Tailwind
-
-### global.css — was sich nie ändern sollte
-
-[`src/styles/global.css`](src/styles/global.css) enthält **einen** `@theme inline`-Block und **einen** `:root`-Block. Folgende Regeln sind kritisch:
-
-```css
-/* RICHTIG: Literal-String, kein var() */
---font-sans: 'Geist Variable', sans-serif;
-
-/* RICHTIG: Konkreter Pixel-Wert */
---radius: 8px;
-
-/* FALSCH — erzeugt zirkuläre Referenz: */
---font-sans: var(--font-sans);   /* ← NIE so */
---radius: var(--radius-lg);      /* ← NIE so */
-```
-
-**Kein `@import "shadcn/tailwind.css"`** — der Inhalt ist bereits inline in `global.css`.  
-**Kein `@source`** — `@tailwindcss/vite` scannt automatisch alle Projektdateien.
-
-### shadcn/ui-Komponenten aktualisieren
-
-Neue shadcn/ui-Primitiven installieren:
+**Vorgehen:** an einem eindeutigen Anker einfügen oder ersetzen, die Ausrichtung
+der Nachbarzeilen übernehmen, danach gegenprüfen:
 
 ```bash
-npx shadcn@latest add <name>
+node -e "JSON.parse(require('fs').readFileSync('src/i18n/locales/de.json','utf8')); console.log('ok')"
 ```
 
-Das erzeugt Dateien in `src/components/ui/`. Danach **manuell prüfen**, ob `global.css` verändert wurde — falls shadcn einen neuen `@theme`- oder `@import`-Block eingefügt hat, diesen entfernen und ggf. nötigen Inhalt in den bestehenden Block integrieren.
+### Demo-Inhalte
 
-### med.o-Overrides in global.css
+Demo-Inhalte in Komponenten-Vorschauen sind Deutsch mit „Sie"-Anrede:
 
-Eigene Token-Überschreibungen kommen **nach** dem shadcn/ui-Block im `@theme inline`:
-
-```css
-@theme inline {
-  /* shadcn Defaults */
-  ...
-  /* med.o Overrides */
-  --color-primary: var(--color-brand-primary-500);
-}
-```
+- Buttons tragen Verb-Infinitive — „Termin anlegen", nie „OK"
+- keine Ausrufezeichen, keine Werbesprache, keine Emojis
+- deutsche Formate: `1.234,56 €`, `04.08.2026`, 24-Stunden-Uhrzeit
+- Zahlen, Beträge, IDs und Daten stehen in der dicktengleichen Schrift
+- Fehlermeldungs-Demos benennen Ursache **und** nächsten Schritt, nie nur den
+  Zustand
 
 ---
 
-## 10. Responsive Anpassung
+## 8. Suchindex erzeugen
 
-Tailwind v4 verwendet Breakpoint-Modifier direkt als Klassen-Präfix. Im Projekt wird ausschließlich der **Mobile-First**-Ansatz gebrochen durch `max-*`-Varianten — d.h. Stile gelten standardmäßig für Desktop und werden bei kleineren Viewports überschrieben.
+`src/config/searchData.js` und `src/config/sectionData.js` werden **erzeugt,
+nicht gepflegt**. Beide tragen den Hinweis im Kopf und werden nicht von Hand
+angefasst.
 
-### Verwendete Breakpoints
-
-| Modifier | Breakpoint | Einsatz im Projekt |
-|---|---|---|
-| `max-md:` | ≤ 767 px | Sidebar → Hamburger-Navigation; Hauptinhalt ohne left margin |
-| `max-[640px]:` | ≤ 640 px | GridWrapper: mehrspaltig → einspaltig |
-| `max-[1024px]:` | ≤ 1024 px | GridWrapper: 3–6-spaltig → 2–3-spaltig |
-
-### Responsive Klassen schreiben
-
-```jsx
-{/* Desktop: 3 Spalten, Tablet: 2 Spalten, Mobil: 1 Spalte */}
-<div className="grid grid-cols-3 max-[1024px]:grid-cols-2 max-[640px]:grid-cols-1 gap-[var(--space-6)]">
-  ...
-</div>
-
-{/* Text größer auf Desktop, kleiner auf Mobil */}
-<h1 className="text-5xl max-md:text-3xl">Überschrift</h1>
-
-{/* Element auf Desktop sichtbar, auf Mobil ausgeblendet */}
-<div className="block max-md:hidden">Nur Desktop</div>
-
-{/* Element nur auf Mobil sichtbar */}
-<div className="hidden max-md:block">Nur Mobil</div>
+```bash
+npm run search-index
 ```
 
-### GridWrapper — automatisches responsives Grid
+Der Generator rendert jede Seite aus `ROUTES` in jeder Sprache und jedem Tab und
+liest die Anker aus, die die Seiten tatsächlich erzeugen. Von Hand geschriebene
+Anker gingen still veraltet, weil sie aus übersetzten Überschriften entstehen.
 
-`GridWrapper` aus `PageLayout.jsx` übernimmt die Spaltenanzahl automatisch basierend auf der Anzahl der Kinder:
+**Wann er laufen muss:** nach jeder neuen, umbenannten oder entfernten Seite und
+nach jeder geänderten Abschnittsüberschrift. Sonst fällt `npm test` — und zwar
+deutlich:
 
-```jsx
-{/* 3 Kinder → 3 Spalten Desktop, 2 Tablet, 1 Mobil — automatisch */}
-<GridWrapper>
-  <KindA />
-  <KindB />
-  <KindC />
-</GridWrapper>
+```
+× search index > matches what the pages actually render
+  → expected [ …(1104) ] to deeply equal [ …(1110) ]
+× search index > finds every page in both languages
+  → expected [ '/pruefung' ] to deeply equal []
 ```
 
-Für manuelle Kontrolle ein eigenes `<div>` mit expliziten Grid-Klassen verwenden.
-
-### Sidebar und Navigation
-
-Die Sidebar (`DocsLayout.jsx`) wechselt bei `max-md` (≤ 767 px) zu einer Hamburger-Navigation. Der Hauptinhalt erhält dann keinen `ml-[220px]` mehr und nutzt den vollen Viewport. Das `pt-[56px]` kompensiert den fixen Mobile-Header.
-
-```jsx
-{/* Aus DocsLayout.jsx — Muster für responsive Layout-Anpassung */}
-<nav className="fixed w-[220px] max-md:w-[280px] max-md:-translate-x-full max-md:data-[mobile-open=true]:translate-x-0" />
-<main className="ml-[220px] max-md:ml-0 max-md:pt-[56px]" />
-```
-
-### Eigene Breakpoints definieren
-
-Für einmalige Sonderfälle kann ein beliebiger Pixel-Wert als Breakpoint angegeben werden:
-
-```jsx
-<div className="grid-cols-4 max-[900px]:grid-cols-2">...</div>
-```
-
-Wiederkehrende Breakpoints besser als Token in `tokens.css` dokumentieren und per `@custom-variant` in `global.css` registrieren:
-
-```css
-/* global.css */
-@custom-variant tablet (&:is([data-viewport="tablet"] *));
-```
+> **Derzeit defekt.** `npm run search-index` bricht mit
+> `TypeError: window.matchMedia is not a function` ab und schreibt nichts
+> (Beendigungscode 1, das Arbeitsverzeichnis bleibt unberührt). Ursache: die
+> eingesetzte DOM-Nachbildung kennt `window.matchMedia` nicht, und
+> `installDomStubs()` in `scripts/buildSearchIndex.jsx` legt den Ersatz auf
+> `globalThis` ab. Unter der Testumgebung ist `globalThis` das Fenster, im
+> eigenständigen Generator ist `globalThis.window` dagegen ein anderes Objekt —
+> `resolveTheme()` in `src/docs/useTheme.js` greift daneben. Der Index selbst ist
+> in sich stimmig; die Testsuite belegt das. Wer eine Seite hinzufügt, kommt bis
+> zur Behebung nicht an einen grünen Lauf.
 
 ---
 
-## 11. States: Hover, Active, Focus und mehr
+## 9. Tests schreiben
 
-Tailwind-State-Modifier werden als Klassen-Präfix geschrieben. Alle Farbwerte bleiben Token-Referenzen — auch in State-Klassen.
-
-### Hover
-
-```jsx
-{/* Hintergrundfarbe bei Hover */}
-<button className="hover:bg-[var(--surface_200)]">...</button>
-
-{/* Textfarbe bei Hover */}
-<a className="text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]">Link</a>
-
-{/* Mehrere Eigenschaften kombinieren */}
-<div className="hover:bg-[var(--color-neutral-100)] hover:shadow-[var(--shadow-md)] transition-[background,box-shadow] duration-[var(--duration-fast)]">
-  ...
-</div>
+```bash
+npm test          # einmalig
+npm run test:watch
 ```
 
-### Active (Gedrückt)
+Die Suite läuft gegen eine DOM-Nachbildung; die Einrichtung steht in
+`vite.config.js` unter `test`, die Vorbereitung in `src/test/setup.js`. Gefunden
+wird alles unter `src/**/*.test.{js,jsx}`.
 
-```jsx
-<button className="active:scale-95 active:bg-[var(--color-brand-primary-600)] transition-transform duration-[var(--duration-fast)]">
-  Klick mich
-</button>
+Die Option `css: true` ist gesetzt und bleibt es: die Token-Doku liest
+Stylesheets als Rohtext ein, um beide Zweige eines Tokens zu zeigen. Ohne sie
+kommt jeder CSS-Import als leere Zeichenkette an, und die Seiten rendern nichts.
+
+### Was belegt wird — und was nicht
+
+**Verhalten wird getestet:** Tastaturwege, Fokusführung, Rückrufe, Zeitgeber,
+Zustandswechsel. Markup und Props werden über gerendertes Markup geprüft.
+
+**Farben und Abstände werden nicht getestet.** Sie bleiben dem visuellen Abgleich
+vorbehalten. Die einzige maschinelle Farbaussage ist die Kontrastzahl
+(Kapitel 11).
+
+Die Testdatei liegt neben der Komponente:
+
+```
+src/components/Tabs/Tabs.jsx
+src/components/Tabs/Tabs.test.jsx
 ```
 
-### Focus und Focus-Visible
+### Muster
 
-`focus-visible` ist gegenüber `focus` zu bevorzugen — es greift nur bei Tastatur-Navigation, nicht bei Mausklick:
-
-```jsx
-{/* Tastatur-Fokus-Ring (WCAG-konform) */}
-<button className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-focus-500)] focus-visible:ring-offset-2">
-  Barrierefrei
-</button>
-
-{/* Fokus ohne sichtbaren Ring (nur wenn anderer Indikator vorhanden) */}
-<input className="focus:outline-none focus:border-[var(--color-focus-500)] focus:ring-1 focus:ring-[var(--color-focus-500)]" />
-```
-
-**Regel:** Niemals `outline-none` oder `ring-0` setzen ohne gleichwertigen visuellen Fokus-Indikator — das verletzt WCAG 2.4.7.
-
-### Disabled
+Elemente werden über **Rolle und Namen** angesprochen, nie über Klassennamen
+oder Testkennungen:
 
 ```jsx
-{/* Visuelle Deaktivierung */}
-<button
-  disabled
-  className="disabled:opacity-40 disabled:cursor-not-allowed disabled:pointer-events-none"
->
-  Gesperrt
-</button>
+import { render, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
+import { Tabs } from './Tabs'
 
-{/* Für nicht-native Elemente (div, span) mit aria-disabled */}
-<div
-  aria-disabled="true"
-  className="aria-disabled:opacity-40 aria-disabled:cursor-not-allowed"
->
-  ...
-</div>
+it('skips disabled tabs with the arrow keys and wraps around', async () => {
+  const onChange = vi.fn()
+  const user = userEvent.setup()
+  render(<Tabs items={items} value="usage" onChange={onChange} />)
+
+  screen.getByRole('tab', { name: 'Usage' }).focus()
+  await user.keyboard('{ArrowRight}')
+
+  expect(onChange).toHaveBeenLastCalledWith('accessibility')
+})
 ```
 
-### Checked / Selected (Toggle, Checkbox, Radio)
+Testtexte und Beschreibungen sind Englisch.
 
-```jsx
-{/* Zustand über data-Attribut steuern (shadcn/ui-Muster) */}
-<button
-  data-checked={isChecked}
-  className="data-[checked=true]:bg-[var(--color-brand-primary-500)] data-[checked=true]:text-white"
->
-  ...
-</button>
+### Vier Fallen
+
+**Zeitgeber.** Wo Zeit im Spiel ist, mit `fireEvent` arbeiten, nicht mit
+`userEvent` — dessen eigene Zeitsteuerung kommt der künstlichen Uhr in die Quere.
+
+**Portale.** Sie liegen ausschließlich in `Modal`, `Popover` und `Tooltip`.
+`Menu` entkommt der Beschneidung über `position: fixed` mit `z-index: 1000`,
+**nicht** über ein Portal — wer sich auf eine Portal-Einteilung stützt, prüfe sie
+am Code nach. Komponenten mit Portal lassen sich nicht über serverseitiges
+Rendern nachweisen: Portale rendern dort nicht, das Markup kommt leer zurück und
+alles sieht nach einem Portierungsfehler aus. Solche Komponenten über echtes
+Rendern im Browserkontext prüfen und den ganzen `body` lesen.
+
+**Anzahl-Zusicherungen.** Auf ein Klassen-Token stützen, nie auf die nackte
+Zeichenkette. Klassennamen desselben Blocks sind Präfixe voneinander —
+`__dot`/`__dots`, `__line`/`__line--filled` — eine Zählung über die Zeichenkette
+liegt deshalb leise zu hoch:
+
+```js
+const count = (html, token) =>
+  (html.match(new RegExp(`class="[^"]*\\b${token}\\b[^"]*"`, 'g')) ?? []).length
 ```
 
-### Group-Hover (übergeordnetes Element steuert Kind)
+Vorhandensein-Prüfungen sind davon nicht betroffen.
 
-```jsx
-{/* Klasse 'group' am Container, 'group-hover:' am Kind */}
-<div className="group flex items-center gap-3 p-[var(--space-3)] rounded-[var(--radius-md)]">
-  <span className="text-[var(--color-text-secondary)] group-hover:text-[var(--color-text-primary)]">
-    Label
-  </span>
-  <button className="opacity-0 group-hover:opacity-100 transition-opacity duration-[var(--duration-fast)]">
-    Aktion
-  </button>
-</div>
-```
+**Versionsdeckel.** Der Testläufer bleibt auf 3.x und die DOM-Nachbildung auf
+26.x. Die jeweils nächste Hauptversion zieht ein gebrochenes natives Modul
+beziehungsweise einen Ladefehler auf der eingesetzten Laufzeit nach sich. Beide
+Deckel nicht arglos anheben.
 
-Reales Beispiel aus `Table.jsx`: Tabellenzeilen zeigen Hover-Hintergrund, alle Zellen reagieren auf das `group`-Element der Zeile.
+### Die Gegenprobe
 
-```jsx
-<tr className="group">
-  <td className="group-hover:bg-[var(--surface_200)]">...</td>
-</tr>
-```
+Vor der Übergabe **eine Zusicherung absichtlich verdrehen und den Lauf
+wiederholen.** Ein grüner Lauf, der nie rot werden kann, belegt nichts — ein
+Test, der am falschen Element hängt oder auf ein nie erfülltes Versprechen
+wartet, läuft ebenso grün durch. Danach zurückdrehen.
 
-### Transitions
+### Was die Suite außerdem hält
 
-State-Übergänge immer mit Token-Werten für Dauer und Easing:
-
-```jsx
-{/* Einzelne Eigenschaft */}
-<div className="transition-colors duration-[var(--duration-fast)] ease-[var(--ease-out)]">
-
-{/* Mehrere Eigenschaften */}
-<div className="transition-[color,background,box-shadow] duration-[var(--duration-normal)] ease-[var(--ease-out)]">
-
-{/* Alle Eigenschaften (Performance-Vorsicht bei transform/opacity) */}
-<div className="transition-all duration-[var(--duration-slow)]">
-```
-
-### State-Token-Referenz
-
-| State | Empfohlene Tokens |
+| Testdatei | Zusicherung |
 |---|---|
-| Hover Hintergrund | `--surface_200`, `--color-neutral-100` |
-| Hover Text | `--color-text-primary` |
-| Fokus-Ring | `--color-focus-500` |
-| Aktiv / Gedrückt | `--color-brand-primary-600` (dunkler als 500) |
-| Disabled | `opacity-40` + `cursor-not-allowed` |
-| Selected / Checked | `--color-brand-primary-500` als Hintergrund |
-| Danger / Error | `--color-error-500`, `--color-error-container-100` |
+| `src/config/searchData.test.jsx` | Index, Routen und Navigation stimmen überein |
+| `src/styles/dark-theme.test.js` | die dunkle Palette hält ihre Kontrastschwellen |
+| `src/styles/component-theme.test.js` | die Theme-Nachbesserungen ändern hell nichts |
+| `src/docs/themeTokens.test.js` | beide Zweige eines Tokens werden korrekt gelesen |
 
 ---
 
-## 12. Qualitätssicherung
+## 10. Die Bibliothek bauen
+
+Das Repository liefert die Komponenten zusätzlich als Paket aus.
+
+```bash
+npm run build:lib
+```
+
+Der Lauf besteht aus zwei Schritten: ein eigener Build nach `dist-lib/`, dann
+`scripts/build-package.mjs`, das die Stile zusammensetzt und das Ergebnis prüft.
+Die Portal-Konfiguration bleibt davon unberührt — sie baut das Portal und muss
+unverändert weiterlaufen.
+
+Zwei Einstiegspunkte:
+
+- `src/components/index.js` — das Barrel; die Komponenten-Stylesheets reisen als
+  Nebenwirkung mit
+- `src/lib/tokens.js` — das Fundament: Schriften, die drei Token-Ebenen, das
+  Theme, die Achsenregel der Icon-Schrift
+
+Ausgeliefert werden `index.js`, `styles.css`, `tokens.css` und `fonts/`.
+`styles.css` ist die Verkettung von Fundament, Komponenten-Stylesheets und
+Theme-Nachbesserungen, in dieser Reihenfolge.
+
+Der zweite Schritt ist **keine Meldung, sondern eine Schranke.** Er bricht ab,
+wenn Portal-Abhängigkeiten in das Paket geraten sind, wenn eine deklarierte
+Eigenschaft oder Klasse einer Quelldatei den Weg in `styles.css` nicht gefunden
+hat, wenn eine Schriftdatei fehlt oder wenn die Achsenregel der Icon-Schrift
+nicht mitgekommen ist. Geprüft wird gegen die Quellen, nicht gegen eine
+aufgeschriebene Liste — die Schranke kann deshalb nicht veralten.
+
+Ein erfolgreicher Lauf meldet:
+
+```
+package build: fonts, index.js, styles.css, tokens.css
+  no portal dependencies in index.js
+  style entry point complete: 47 stylesheets, 7 font faces
+```
+
+`dist/` und `dist-lib/` sind Bau-Ergebnisse und nicht versioniert.
+
+---
+
+## 11. Abnahmeverfahren
 
 ### Vor jedem Commit
 
 ```bash
 npm run build
+npm test
 ```
 
-Der Build muss fehlerfrei durchlaufen. Warnungen wegen Chunk-Größe sind bekannt und unkritisch.
+Beides fehlerfrei. Die Warnung zur Bündelgröße im Portal-Build ist bekannt und
+unkritisch.
 
-### Visueller Check
+### Nach Änderungen an Komponenten oder Seiten
 
 ```bash
 npm run dev
 ```
 
-Geänderte Seiten im Browser aufrufen, alle Tabs durchklicken, verschiedene Viewport-Breiten prüfen (Desktop / Mobile ≤ 768 px — Sidebar klappt zur Hamburger-Navigation um).
+Im Browser prüfen — und zwar vollständig:
 
-### Checkliste für neue Inhalte
+- alle Tabs der geänderten Seite
+- **beide Themes**, hell und dunkel
+- Desktop und Mobil (≤ 768 px, dort klappt der Seitenstreifen um)
 
-- [ ] Alle User-facing Strings in `t()` — kein hardcodiertes Deutsch in JSX
-- [ ] Neue Keys in `de.json` **und** `en.json` eingetragen
-- [ ] Nur Token-Referenzen aus `tokens.css` — keine hardcodierten Farbwerte
-- [ ] Schriftgrößen als `text-xs/sm/md/lg` — nicht `text-[var(--text-*)]`
-- [ ] `npm run build` fehlerfrei
-- [ ] Route in `App.jsx` und Navigation in `DocsLayout.jsx` eingetragen (falls neue Seite)
-- [ ] Barrel-Export in `src/components/index.js` (falls neue Komponente)
+Farbergebnisse sind maschinell nur als Kontrastzahl prüfbar. Lesbarkeit,
+Tiefenwirkung und der Eindruck einer Fläche bleiben der Sichtprüfung vorbehalten
+— ein grüner Kontrastlauf ist eine Untergrenze, keine Abnahme.
+
+### Portierte Komponenten
+
+Der visuelle Abgleich läuft gegen die Spezifikationsseite in
+`design-reference/components/`. Sie ist eigenständig lauffähig, im Browser zu
+öffnen und zeigt die Varianten-, Zustands- und Größenmatrix.
+
+Die Vorschauen `design-reference/ui/*.card.html` rendern **leer**, weil das
+kompilierte Bündel nicht übertragbar war. Sie sind keine Abgleichsgrundlage.
+
+### Kontrast
+
+Die Kontrastprüfung läuft in `npm test` mit. Für den ausführlichen Bericht:
+
+```bash
+npm run contrast:verify   # prüft das Werkzeug gegen die helle Palette
+npm run contrast          # erzeugt den Bericht in docs/
+```
+
+Das Werkzeug weigert sich zu schreiben, solange es seine eigene Prüfung gegen
+die helle Palette nicht bestanden hat.
+
+### Checklisten
+
+Die abzuhakenden Listen stehen in `editors-doc.md` — je eine für die neue
+Doku-Seite, die neue oder geänderte Komponente, die Token- oder
+Theme-Änderung und den Commit. Sie stehen dort und nicht hier, damit sie an
+**einer** Stelle nachgezogen werden.
+
+### Versionskontrolle
+
+Basis ist `main`. Vor jeder Aufgabe ein eigener Zweig davon:
+`type/kurze-beschreibung`. Commit-Konvention `type: kurze beschreibung` mit
+`feat`, `fix`, `refactor`, `docs` oder `chore`; der Betreff ist deutsch,
+kleingeschrieben und ohne Umlaute. Nie direkt auf `main` committen.
