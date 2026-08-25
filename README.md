@@ -1,44 +1,60 @@
 # med.o Design System
 
-Vollständige Komponenten-Bibliothek und Styling-Richtlinien von med.o, gebaut mit Vite + React, Tailwind CSS v4 und shadcn/ui.
+Komponenten-Bibliothek und Gestaltungsgrundlagen von med.o: 36 React-Komponenten
+auf einem dreistufigen Token-System mit hellem und dunklem Theme, dazu ein
+Doku-Portal, das jede Komponente bedienbar zeigt.
+
+Das Repository enthält zwei Dinge:
+
+- **das Paket `@medo/design-system`** — die Komponenten und ihre Stile, zur
+  Einbindung in andere Projekte
+- **das Doku-Portal** — 43 Seiten, die jede Komponente mit Varianten, Zuständen,
+  Props-Vertrag und Barrierefreiheit dokumentieren
+
+---
 
 ## Schnellstart
 
 ```bash
-npm install
-npm run dev      # Dev-Server auf http://localhost:5173
-npm run build    # Produktions-Build nach dist/
-npm run preview  # Build lokal vorschauen
+npm ci
+npm run dev      # Doku-Portal auf http://localhost:5173
 ```
+
+| Skript | Wirkung |
+|---|---|
+| `npm run dev` | Entwicklungsserver für das Portal |
+| `npm run build` | Portal-Build nach `dist/` |
+| `npm run build:lib` | Paket-Build nach `dist-lib/` |
+| `npm run preview` | gebautes Portal lokal ausliefern |
+| `npm test` | Testsuite |
+| `npm run search-index` | Suchindex des Portals neu erzeugen |
+| `npm run contrast` | Kontrastbericht nach `docs/` |
 
 ---
 
-## Einbindung als Paket
+## Wohin von hier
 
-Das Repository liefert neben dem Doku-Portal das Paket `@medo/design-system`. Es
-wird als Git-Abhängigkeit eingebunden, nicht über eine Registry:
+| Ihre Frage | Ort |
+|---|---|
+| Ich will das System **in einem anderen Projekt** verwenden. | **[HANDOFF.md](HANDOFF.md)** — Installation, Stile, Schrift und Icons, Theme, Tokens, Typen, Grenzen |
+| Ich arbeite **in diesem Repository**. | **[DEVELOPMENT.md](DEVELOPMENT.md)** — Tokens und Theme ändern, Komponenten bearbeiten, Doku-Seiten anlegen, Tests, Abnahme |
+| Habe ich beim Arbeiten etwas vergessen? | **[editors-doc.md](editors-doc.md)** — Checklisten und stumme Fallen |
+| Wie sieht Komponente X aus, was kann sie? | Das Portal: `npm run dev` |
+| Was ist die verbindliche Gestaltungsvorgabe? | [`design-reference/`](design-reference/) — ausschließlich lesend |
+
+Diese Datei wiederholt den Inhalt der drei Dokumente nicht. Sie ist der
+Einstieg, nicht die Anleitung.
+
+---
+
+## Einbindung als Paket — in Kürze
+
+Das Paket wird als Git-Abhängigkeit eingebunden, nicht über eine Registry. Das
+Repository ist öffentlich; die Adresse braucht kein Zugangstoken.
 
 ```bash
-npm install github:<organisation>/medo-design_system
+npm install github:ahmeeedo/medo-design_system
 ```
-
-Der Paket-Build läuft beim Installieren über das `prepare`-Skript; im Repository
-selbst startet ihn `npm run build:lib`. Der Portal-Build (`npm run build`) bleibt
-davon unberührt.
-
-React und React DOM sind Peer-Abhängigkeiten (`^18 || ^19`) und werden vom
-Abnehmer gestellt.
-
-### Einstiegspunkte
-
-| Import | Inhalt |
-|---|---|
-| `@medo/design-system` | alle Komponenten als benannte ES-Exporte |
-| `@medo/design-system/styles.css` | vollständige Stile: Schriften, die drei Token-Ebenen, das Theme und das CSS aller Komponenten |
-| `@medo/design-system/tokens.css` | nur Fundament — Schriften, Token-Ebenen, Theme, ohne Komponenten-CSS |
-
-Die Komponenten laden ihr CSS nicht selbst. Genau einer der beiden Stil-Einstiegspunkte
-gehört einmalig in den Einstiegspunkt der Anwendung:
 
 ```js
 import '@medo/design-system/styles.css'
@@ -47,39 +63,18 @@ import 'material-symbols/rounded.css'
 import { Button, Icon } from '@medo/design-system'
 ```
 
-Die Icon-Schrift kommt aus dem Paket `material-symbols`, das als Abhängigkeit
-mitinstalliert wird. Sie liegt bewusst nicht im Auslieferumfang: die Datei ist
-5,3 MB groß und würde in jedem Abnehmerbündel ein zweites Mal auftauchen. Die
-Achseneinstellungen des Systems (weight 300, FILL 0) bringen beide
-Stil-Einstiegspunkte mit; ohne den Import oben erscheinen Icons als Ligaturnamen.
+Drei Dinge, an denen eine Einbindung erfahrungsgemäß scheitert — alle drei sind
+in [HANDOFF.md](HANDOFF.md) ausgeschrieben:
 
-Das Paket setzt **keine Grundschrift** auf `html` oder `body` — eine Bibliothek
-fasst das Markup der Anwendung nicht an. Die Komponenten bringen ihre Schrift
-selbst mit; für das übrige Markup gehört eine Zeile ins Stylesheet der Anwendung:
+1. **Der Icon-Import braucht die Endung `.css`.** Ohne ihn erscheinen die
+   Ligaturnamen als Text.
+2. **Das Paket setzt keine Grundschrift** auf `html` oder `body`. Eine Zeile
+   `body { font-family: var(--medo-font-sans) }` gehört in Ihr Stylesheet.
+3. **Nur die semantische Token-Ebene folgt dem Theme.** Brand- und Alias-Ebene
+   sind in Hell und Dunkel identisch.
 
-```css
-body {
-  font-family: var(--medo-font-sans);
-}
-```
-
-Ohne sie stehen Überschriften und Fließtext der Anwendung in der Standardschrift
-des Browsers, während die Komponenten korrekt in DM Sans erscheinen.
-
-### Theme
-
-Geschaltet wird über `data-theme` am `<html>`-Element:
-
-| Wert | Verhalten |
-|---|---|
-| nicht gesetzt | folgt dem Systemtheme |
-| `light` | erzwingt hell |
-| `dark` | erzwingt dunkel |
-
-Der Schalter arbeitet über `color-scheme`, damit Token-Werte und native
-Bedienelemente nicht auseinanderlaufen können. **Eine Anwendung, die
-`color-scheme` selbst auf `:root` setzt, hebelt das Theme aus** — die
-`light-dark()`-Paare folgen dann ihrem Wert statt dem `data-theme`-Attribut.
+Das Theme wird über `data-theme` am `<html>`-Element gesteuert (`light`, `dark`,
+oder nicht gesetzt — dann folgt es der Systemeinstellung).
 
 ---
 
@@ -89,6 +84,7 @@ Bedienelemente nicht auseinanderlaufen können. **Eine Anwendung, die
 src/
 ├── components/             # 36 portierte Komponenten, je <Name>/<Name>.jsx + .css
 │   └── index.js            # Barrel-Export, zugleich Einstiegspunkt des Pakets
+├── types/                  # 35 Props-Vertraege, Kopien aus dem Design-Projekt
 ├── styles/
 │   ├── medo/               # die acht Token-Dateien, Spiegel von design-reference/tokens/
 │   ├── medo-tokens.css     # Token-Einstiegspunkt: Brand -> Alias -> Semantic
@@ -101,129 +97,41 @@ src/
 ├── docs/                   # Portal-Rahmen: Layout, Suche, Tabs, Theme-Schalter
 ├── pages/                  # 43 Dokumentationsseiten
 ├── config/                 # erzeugter Suchindex (searchData.js, sectionData.js)
-├── i18n/                   # i18next-Konfiguration und locales/de.json, en.json
+├── i18n/                   # Konfiguration und locales/de.json, en.json
 ├── fonts/                  # woff2-Schnitte
 ├── App.jsx                 # Routing-Tabelle
 └── main.jsx                # React-Einstiegspunkt des Portals
-```
-
-Der Suchindex unter `config/` wird erzeugt, nicht gepflegt: nach neuen, umbenannten
-oder entfernten Seiten `npm run search-index` laufen lassen.
-
----
-
-## Design-Token-System
-
-Alle Design-Entscheidungen leben als CSS Custom Properties in den acht Dateien unter [`src/styles/medo/`](src/styles/medo/), die [`src/styles/medo-tokens.css`](src/styles/medo-tokens.css) in der Reihenfolge Brand → Alias → Semantic einbindet. Tailwind liest sie über `@theme inline` in `global.css` ein — keine Werte in einer Tailwind-Konfigurationsdatei.
-
-**Goldene Regel:** Niemals Farb-, Abstands-, Radius- oder Schatten-Werte in JSX oder CSS hardcoden. Immer auf einen Token referenzieren.
-
-### Farb-Tokens
-
-Das Farbsystem besteht aus drei Schichten:
-
-**1. Basis-Palette** (konkrete Hex-Werte, nicht direkt im Code verwenden):
-```
---color-brand-navy-*      (100–1000)  Dunkles Navy
---color-brand-orange-*    (100–1000)  Orange-Töne
---color-brand-cobalt-*    (100–1000)  Kobaltblau
---color-brand-grey-*      (100–1000)  Graustufen
---color-brand-red-*       (100–1000)
---color-brand-green-*     (100–1000)
---color-brand-yellow-*    (100–1000)
---color-brand-blue-*      (100–1000)
-```
-
-**2. Semantische Aliase** (im Code verwenden):
-```
---color-brand-primary-*   (100–1000)  → Navy  (Hauptmarkenfarbe)
---color-brand-secondary-* (100–1000)  → Orange
---color-brand-accent-*    (100–1000)  → Orange (Alias auf Secondary)
---color-neutral-*         (0, 50, 100–1000)
---color-success-*         (100–1000)  → Grün
---color-warning-*         (100–1000)  → Gelb
---color-error-*           (100–1000)  → Rot
---color-info-*            (100–1000)  → Blau
---color-focus-*           (100–1000)  → Kobalt
-```
-
-**3. Funktionale Tokens** (bevorzugt im Code verwenden):
-```
---color-text-primary        Haupttext
---color-text-secondary      Sekundärtext (Beschriftungen, Hinweise)
---color-text-tertiary       Tertiärtext
---color-text-on-color       Weißer Text auf farbigem Hintergrund
---color-border              Standard-Rahmenfarbe
---color-border-subtle       Subtiler Rahmen
---color-link-primary        Linkfarbe
---color-link-primary-hover  Linkfarbe bei Hover
---surface_100 / --surface_200 / --surface_brand   Oberflächenfarben
-```
-
-### Typografie-Tokens
-
-```
---font-sans           'DM Sans', system-ui, sans-serif
---font-mono           'DM Mono', monospace
-
---weight-light        300
---weight-regular      400
---weight-medium       500
---weight-semibold     600
---weight-bold         700
---weight-extrabold    800
-
---leading-none / --leading-tight / --leading-snug / --leading-normal
---leading-relaxed / --leading-loose
-
---tracking-tight / --tracking-normal / --tracking-wide / --tracking-wider
---tracking-widest
-```
-
-**Achtung:** `text-xs`, `text-sm`, `text-md`, `text-lg`, `text-xl` etc. für Schriftgrößen verwenden — **nicht** `text-[var(--text-*)]` (das würde eine Farb-Utility erzeugen, nicht eine Größen-Utility).
-
-### Abstands-Tokens
-
-```
---space-1 (4px) bis --space-32 (128px)
-```
-
-Verwendung in Tailwind: `px-[var(--space-4)]`, `mb-[var(--space-6)]` etc.
-
-### Radius-Tokens
-
-```
---radius-xs (2px) → --radius-sm (4px) → --radius-md (6px) → --radius-lg (8px)
---radius-xl (12px) → --radius-2xl (16px) → --radius-3xl (24px) → --radius-full (9999px)
-```
-
-### Schatten-Tokens
-
-```
---shadow-sm / --shadow-md / --shadow-lg / --shadow-xl
-```
-
-### Motion-Tokens
-
-```
---duration-fast / --duration-normal / --duration-slow
---ease-in / --ease-out / --ease-in-out / --ease-elastic
+scripts/                    # Suchindex-Generator, Kontrastwerkzeug, Paket-Build
+design-reference/           # Gestaltungsvorgabe, ausschliesslich lesend
 ```
 
 ---
 
-## Komponenten-Bibliothek
+## Gestaltungsgrundlagen
 
-Im Repository werden die Komponenten aus dem Barrel importiert, beim Abnehmer des
-Pakets über dessen Einstiegspunkt:
+Alle Gestaltungsentscheidungen liegen als CSS Custom Properties mit dem Präfix
+`--medo-` in den acht Dateien unter [`src/styles/medo/`](src/styles/medo/), die
+[`src/styles/medo-tokens.css`](src/styles/medo-tokens.css) in der Reihenfolge
+Brand → Alias → Semantic einbindet. Diese acht Dateien sind ein Spiegel des
+Design-Projekts und werden hier nicht geändert.
+
+**Goldene Regel:** Keine Farb-, Abstands-, Radius- oder Schattenwerte hartkodieren
+— immer auf ein Token referenzieren, bevorzugt auf die semantische Ebene.
+
+Die vollständige Übersicht mit allen Rollen und ihren Werten in beiden Themes
+steht im Portal auf den Seiten „Farben · Ebene 3 Semantic" und „Grundlagen".
+
+---
+
+## Komponenten
 
 ```jsx
-import { Button, TextInput, Modal } from './components'      // im Repository
+import { Button, TextInput, Modal } from './components'       // im Repository
 import { Button, TextInput, Modal } from '@medo/design-system' // als Paket
 ```
 
 36 Module mit 46 benannten Exporten. Wo ein Modul mehr als seinen Namensgeber
-exportiert, stehen die Exporte dahinter:
+exportiert, stehen die weiteren Exporte dahinter:
 
 `Accordion` · `Breadcrumb` · `Button` · `Checkbox` (`Checkbox`, `CheckboxGroup`) ·
 `CodeSnippet` · `ContainedList` · `ContentSwitcher` · `DataTable` ·
@@ -236,46 +144,27 @@ exportiert, stehen die Exporte dahinter:
 `Radio` (`Radio`, `RadioGroup`) · `Search` · `Select` · `Slider` · `Tabs` · `Tag` ·
 `Textarea` · `TextInput` · `Toggle` · `Tooltip`
 
-Der Props-Vertrag jeder Komponente steht im Doku-Portal (`npm run dev`) auf der
-Seite der Komponente im Tab „Code", daneben Varianten, Zustände und
-Barrierefreiheit. Diese Datei wiederholt ihn bewusst nicht: das Portal entsteht aus
-den Spezifikationen in `design-reference/components/` und kann deshalb nicht mit der
-Implementierung auseinanderlaufen, eine zweite Abschrift hier könnte es.
+Der Props-Vertrag jeder Komponente steht im Portal auf ihrer Seite im Tab „Code",
+daneben Varianten, Zustände und Barrierefreiheit. Diese Datei wiederholt ihn
+bewusst nicht: das Portal entsteht aus den Spezifikationen in
+`design-reference/components/` und kann deshalb nicht mit der Umsetzung
+auseinanderlaufen, eine zweite Abschrift hier könnte es.
 
 ---
 
-## Internationalisierung
+## Technischer Rahmen
 
-Alle User-facing Strings in JSX werden über `t()` aus `react-i18next` übersetzt:
-
-```jsx
-import { useTranslation } from 'react-i18next'
-
-function MyPage() {
-  const { t } = useTranslation()
-  return <h1>{t('myPage.title')}</h1>
-}
-```
-
-Neue Keys müssen in **beiden** Dateien eingetragen werden:
-
-- [`src/i18n/locales/de.json`](src/i18n/locales/de.json) — Deutsch (Standard)
-- [`src/i18n/locales/en.json`](src/i18n/locales/en.json) — Englisch
-
-**Reservierter Namespace:** `tabs.*` enthält die globalen Tab-Labels (`overview`, `usage`, `code`, `accessibility`, `tokens`). Für Seiteninhalte eigene Namespaces verwenden (z.B. `buttons.*`, `cardsPage.*`).
-
----
-
-## Technologie-Stack
-
-| Technologie | Version | Zweck |
+| Baustein | Version | Zweck |
 |---|---|---|
-| React | 18 | UI-Framework |
-| Vite | 6 | Build-Tool + Dev-Server |
-| Tailwind CSS | v4 | Utility-First-CSS |
-| shadcn/ui | aktuell | Barrierefreie UI-Primitiven |
-| react-router-dom | 7 | Client-Side-Routing |
-| react-i18next | aktuell | Internationalisierung |
-| Geist Variable | — | Schriftart |
-| radix-ui | aktuell | shadcn/ui-Basis |
-| lucide-react | aktuell | Icons |
+| React | 18 | Komponenten |
+| Vite | 5 | Build und Entwicklungsserver |
+| Tailwind CSS | 4 | Utility-Klassen im Portal, ausschließlich auf `--medo-*`-Tokens |
+| react-router-dom | 6 | Routing im Portal |
+| react-i18next | 17 | Übersetzungen im Portal |
+| Vitest | 3 | Tests |
+| material-symbols | 0.44 | Icon-Schrift (Material Symbols Rounded, weight 300, FILL 0) |
+| DM Sans, DM Mono | — | Schriften, lokal ausgeliefert |
+
+Tailwind, Routing und Übersetzungen betreffen **nur das Portal**. Das
+ausgelieferte Paket enthält keine dieser Abhängigkeiten; der Paket-Build bricht
+ab, wenn eine davon hineingerät.
