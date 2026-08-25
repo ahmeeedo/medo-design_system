@@ -63,21 +63,41 @@ Das Paket wird als ES-Module ausgeliefert und importiert CSS aus JavaScript.
 Beides setzt einen Bundler voraus — Vite, webpack, Rspack, Parcel. Ein direkter
 Import im Browser oder in Node ohne Bundler funktioniert nicht.
 
-Die Probe lief mit **Vite 5 und React 18**. Andere Bundler sind nicht geprüft,
-aber es wird nichts verwendet, was über gewöhnliche ES-Module und CSS-Importe
+Geprüft sind zwei Aufbauten: **Vite 5 mit React 18** und **Next.js 16.3 mit
+App Router, Turbopack und React 19**. Weitere Bundler sind nicht geprüft, aber
+es wird nichts verwendet, was über gewöhnliche ES-Module und CSS-Importe
 hinausgeht.
 
 ### React Server Components: ein zusätzlicher Schritt ist nötig
 
-**Die Komponenten tragen keine `'use client'`-Direktive**, und 27 der 36 Module
-benutzen React-Hooks. In einer Umgebung, die standardmäßig auf dem Server
-rendert — **Next.js mit App Router**, ähnliche RSC-Aufbauten — schlägt ein
-direkter Import deshalb fehl, und zwar beim Bauen mit einer Meldung in der Art
-von *„You're importing a component that needs useState"*.
+**Die Komponenten tragen keine `'use client'`-Direktive.** Das ist kein Fehler
+des Pakets, sondern eine bewusst nicht getroffene Festlegung: die Direktive
+gehört dem Abnehmer, nicht der Bibliothek. Was daraus folgt, ist an Next.js 16.3
+mit App Router und React 19 gemessen.
 
-Das ist kein Fehler des Pakets, sondern eine bewusst nicht getroffene
-Festlegung: die Direktive gehört dem Abnehmer, nicht der Bibliothek. Der
-Ausweg ist eine eigene Datei, die die Grenze zieht:
+**26 der 36 Module benutzen React-Hooks, 10 nicht.** Die zehn hookfreien tragen
+zwölf Exporte, und die dürfen Sie **direkt in einer Server-Komponente**
+importieren:
+
+`Button`, `Field`, `Icon`, `InlineLoading`, `Link`, `List`, `KeyValueList`,
+`Loading`, `Skeleton`, `ProgressBar`, `ProgressIndicator`, `Tag`
+
+Sie rendern dort vollständiges Markup, und es landet **kein Byte
+Bibliotheks-JavaScript** im Browser-Bündel — gemessen an einer Seite, die alle
+zwölf gleichzeitig benutzt.
+
+**Alle übrigen Exporte scheitern**, und zwar später und undeutlicher als
+erwartet: Bündeln und Typprüfung laufen durch, der Build bricht erst beim
+Vorrendern ab, mit
+
+```
+TypeError: (0 , c.useState) is not a function or its return value is not iterable
+```
+
+Die Meldung nennt weder die Komponente noch `'use client'`. **Wenn Sie sie
+sehen, ist das hier die Ursache.**
+
+Der Ausweg ist eine eigene Datei, die die Grenze zieht — sie trägt, gemessen:
 
 ```jsx
 // src/ui.ts — Ihre Client-Grenze
@@ -87,32 +107,71 @@ export * from '@medo/design-system'
 
 Danach importieren Sie in Ihrer Anwendung aus `./ui` statt direkt aus dem Paket.
 
+Zwei Dinge kommen dabei mit:
+
+- **Was durch diese Grenze läuft, ist eine Client-Komponente** — auch die zwölf
+  oben. Wer deren Server-Rendern behalten will, importiert sie weiterhin direkt
+  aus dem Paket und nur den Rest aus `./ui`.
+- **Eine Server-Seite darf diesen Komponenten keine Rückrufe übergeben.** Der
+  Versuch endet mit *„Event handlers cannot be passed to Client Component
+  props"*. Da fast jede der 26 Komponenten einen Rückruf vorsieht — `onChange`,
+  `onClose`, `onConfirm` —, trägt in der Praxis auch die aufrufende Seite ein
+  `'use client'`.
+
 **In einer reinen Client-Anwendung** — Vite, Create React App, webpack ohne RSC
-— betrifft Sie das nicht.
+— betrifft Sie nichts davon.
 
 ### Serverseitiges Rendern
 
 `Modal`, `Popover` und `Tooltip` rendern ihren Inhalt über ein React-Portal.
-**Portale erzeugen serverseitig kein Markup.** Diese drei Komponenten liefern im
-Server-Durchgang leeres Markup und füllen sich erst im Browser. Für Dialoge und
-Überlagerungen ist das in aller Regel unerheblich; wenn Sie deren Inhalt
-indexiert oder ohne JavaScript sichtbar brauchen, ist es das nicht.
+**Portale erzeugen serverseitig kein Markup.** Am vorgerenderten HTML gemessen,
+mit `open` gesetzt:
 
-*Aus dem Quellcode abgeleitet, nicht in der Probe gemessen.*
+| Komponente | im Server-Durchgang |
+|---|---|
+| `Modal` | gar nichts — auch kein Platzhalter |
+| `Popover` | nur der Auslöser, der Inhalt fehlt |
+| `Tooltip` | nur der Auslöser, der Inhalt fehlt |
+
+Im Browser füllen sich alle drei nach der Hydratation; auch das ist gemessen,
+nicht geschlussfolgert.
+
+Zwei Folgen daraus:
+
+- Für Dialoge und Überlagerungen ist das in aller Regel unerheblich. Wenn Sie
+  deren Inhalt indexiert oder ohne JavaScript sichtbar brauchen, ist es das
+  nicht.
+- **Der Auslöser eines geöffneten `Popover` trägt serverseitig
+  `aria-expanded="true"` und ein `aria-controls`, das auf ein Element zeigt, das
+  im ausgelieferten HTML noch nicht existiert.** Ohne JavaScript bleibt dieser
+  Widerspruch stehen.
 
 ### Paketmanager
 
-Die Probe lief mit **npm**. Dabei landet die Abhängigkeit `material-symbols`
-flach in Ihrem `node_modules`, weshalb der Icon-Import aus Ihrem eigenen Code
-auflöst (siehe [Schrift und Icons](#6-schrift-und-icons)).
+Geprüft sind **npm 10** und **pnpm 10**.
 
-**Unter pnpm oder Yarn PnP** ist der Zugriff auf eine Abhängigkeit, die Sie
-nicht selbst deklariert haben, nicht garantiert. Nehmen Sie
-`material-symbols` dort in Ihre eigenen Abhängigkeiten auf:
+Unter npm landet die Abhängigkeit `material-symbols` flach in Ihrem
+`node_modules`, weshalb der Icon-Import aus Ihrem eigenen Code auflöst (siehe
+[Schrift und Icons](#6-schrift-und-icons)).
+
+**Unter pnpm tut er das nicht.** `material-symbols` liegt dort unter
+`node_modules/.pnpm/` statt auf oberster Ebene, und der Build bricht ab:
+
+```
+Module not found: Can't resolve 'material-symbols/rounded.css'
+```
+
+Das ist ein harter Fehler beim Bauen, kein stiller optischer Mangel — Sie
+übersehen ihn nicht. Die eigenen Stile des Pakets (`styles.css`, `tokens.css`)
+lösen unter pnpm unverändert auf; betroffen ist allein die Icon-Zeile. Nehmen
+Sie `material-symbols` in Ihre eigenen Abhängigkeiten auf, dann trägt es:
 
 ```bash
 pnpm add material-symbols
 ```
+
+**Unter Yarn PnP** ist derselbe Zugriff ebenfalls nicht garantiert; geprüft ist
+das nicht. Die Zeile oben ist dort die naheliegende Vorsichtsmaßnahme.
 
 ### Node
 
