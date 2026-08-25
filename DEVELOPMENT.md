@@ -616,17 +616,6 @@ deutlich:
   → expected [ '/pruefung' ] to deeply equal []
 ```
 
-> **Derzeit defekt.** `npm run search-index` bricht mit
-> `TypeError: window.matchMedia is not a function` ab und schreibt nichts
-> (Beendigungscode 1, das Arbeitsverzeichnis bleibt unberührt). Ursache: die
-> eingesetzte DOM-Nachbildung kennt `window.matchMedia` nicht, und
-> `installDomStubs()` in `scripts/buildSearchIndex.jsx` legt den Ersatz auf
-> `globalThis` ab. Unter der Testumgebung ist `globalThis` das Fenster, im
-> eigenständigen Generator ist `globalThis.window` dagegen ein anderes Objekt —
-> `resolveTheme()` in `src/docs/useTheme.js` greift daneben. Der Index selbst ist
-> in sich stimmig; die Testsuite belegt das. Wer eine Seite hinzufügt, kommt bis
-> zur Behebung nicht an einen grünen Lauf.
-
 ---
 
 ## 9. Tests schreiben
