@@ -70,6 +70,8 @@ APM_RULES {
 - `vitest` bleibt auf 3.x (4.x zieht Rolldown mit gebrochenem nativem Binding ein) und `jsdom` auf 26.x (30.x lädt ESM per `require` und bricht auf Node 20). Beide Deckel nicht arglos anheben.
 - Visueller Abgleich jeder portierten Komponente gegen ihre Spezifikationsseite in `design-reference/components/` (im Browser öffnen; sie ist eigenständig lauffähig und zeigt Varianten-, Zustands- und Größenmatrix). Die Vorschauen `design-reference/ui/*.card.html` rendern leer, weil das kompilierte Bündel `_ds_bundle.js` nicht übertragbar war — nicht als Abgleichsgrundlage verwenden.
 - Jede fertige Komponente/Seite wird dem Inhaber mit einer Prüf-Checkliste übergeben (was prüfen, unter welcher Route, welche Varianten/Zustände/Viewports). Der Task gilt erst nach Abnahme als abgeschlossen; Feedback wird vorher eingearbeitet.
+- **Die Prüf-Checkliste verlangt dem Inhaber nur Sichtbares und Ausführbares ab** — Oberfläche, Routen, Varianten, Zustände, Viewports, laufende Befehle. Der Inhaber ist kein Entwickler und bewertet keine Prosa: nie um eine fachliche Beurteilung von Entwicklerdokumentation, Fehlermeldungen, Code-Beispielen oder Verständlichkeit für Dritte bitten. Dass ein fremder Entwickler das Gelieferte versteht und daraus weiß, was zu tun ist, ist vor der Übergabe einzulösen, nicht abzufragen.
+- Anleitungen für Abnehmer stehen anweisungsgeführt: erst die auszuführenden Schritte mit vollständigen Dateien und richtigen Pfaden, darunter die tatsächlichen Fehlermeldungen mit jeweiliger Abhilfe, erst zuletzt Begründung und Feinheiten. Jedes gezeigte Code-Beispiel ist vor der Aufnahme gebaut und ausgeführt worden.
 
 ## Versionskontrolle
 
