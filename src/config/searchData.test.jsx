@@ -7,6 +7,7 @@ import { ROUTES } from '../App'
 import { NAV } from '../docs/DocsLayout'
 import i18n from '../i18n'
 import { buildSearchIndex, installDomStubs, LANGS } from '../../scripts/buildSearchIndex'
+import { installDomEnvironment } from '../../scripts/domEnvironment.mjs'
 
 /* Routes that are deliberately absent from the sidebar: the root redirect and
    the two legal pages, which are reachable from the footer. */
@@ -120,4 +121,33 @@ describe('stored anchors resolve on the rendered page', () => {
       container.remove()
     }, 60_000)
   }
+})
+
+/* The generator renders into a jsdom window that is a separate object from
+   globalThis; vitest's environment collapses the two, which is why a stub put
+   on the wrong one stays invisible in every other test here. This rebuilds the
+   generator's split and checks the stubs reach the window the pages read. */
+describe('generator dom environment', () => {
+  const STUBBED = ['matchMedia', 'ResizeObserver', 'IntersectionObserver']
+
+  it('reaches the window the pages read, not just the global scope', () => {
+    const scope = installDomEnvironment({})
+    installDomStubs(scope)
+
+    expect(scope.window).not.toBe(scope)
+    for (const api of STUBBED) {
+      expect(typeof scope.window[api]).toBe('function')
+      expect(typeof scope[api]).toBe('function')
+    }
+    expect(scope.window.matchMedia('(prefers-color-scheme: dark)').matches).toBe(false)
+    expect(typeof scope.Element.prototype.scrollIntoView).toBe('function')
+  })
+
+  it('covers the apis jsdom itself leaves out', () => {
+    const bare = installDomEnvironment({})
+
+    for (const api of STUBBED) {
+      expect(bare.window[api]).toBeUndefined()
+    }
+  })
 })

@@ -7,21 +7,9 @@
 import { writeFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { dirname, resolve } from 'node:path'
-import { JSDOM } from 'jsdom'
+import { installDomEnvironment } from './domEnvironment.mjs'
 
-const dom = new JSDOM('<!doctype html><html><body></body></html>', {
-  url: 'http://localhost/',
-  pretendToBeVisual: true,
-})
-
-globalThis.window = dom.window
-globalThis.document = dom.window.document
-for (const key of Object.getOwnPropertyNames(dom.window)) {
-  if (!key.startsWith('_') && !(key in globalThis)) {
-    globalThis[key] = dom.window[key]
-  }
-}
-globalThis.navigator = dom.window.navigator
+installDomEnvironment()
 
 const { buildSearchIndex, installDomStubs } = await import('./buildSearchIndex.jsx')
 installDomStubs()
