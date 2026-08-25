@@ -63,56 +63,198 @@ Das Paket wird als ES-Module ausgeliefert und importiert CSS aus JavaScript.
 Beides setzt einen Bundler voraus — Vite, webpack, Rspack, Parcel. Ein direkter
 Import im Browser oder in Node ohne Bundler funktioniert nicht.
 
-Die Probe lief mit **Vite 5 und React 18**. Andere Bundler sind nicht geprüft,
-aber es wird nichts verwendet, was über gewöhnliche ES-Module und CSS-Importe
+Geprüft sind zwei Aufbauten: **Vite 5 mit React 18** und **Next.js 16.3 mit
+App Router, Turbopack und React 19**. Weitere Bundler sind nicht geprüft, aber
+es wird nichts verwendet, was über gewöhnliche ES-Module und CSS-Importe
 hinausgeht.
 
-### React Server Components: ein zusätzlicher Schritt ist nötig
+### Next.js mit App Router: eine Client-Grenze ist nötig
 
-**Die Komponenten tragen keine `'use client'`-Direktive**, und 27 der 36 Module
-benutzen React-Hooks. In einer Umgebung, die standardmäßig auf dem Server
-rendert — **Next.js mit App Router**, ähnliche RSC-Aufbauten — schlägt ein
-direkter Import deshalb fehl, und zwar beim Bauen mit einer Meldung in der Art
-von *„You're importing a component that needs useState"*.
+Betrifft Next.js mit App Router und jeden anderen Aufbau mit React Server
+Components. Sie legen **eine zusätzliche Datei** an und setzen **eine Zeile** in
+Ihre Seiten. Ohne das bricht der Build. Die beiden Schritte stehen zuerst, die
+Begründung darunter.
 
-Das ist kein Fehler des Pakets, sondern eine bewusst nicht getroffene
-Festlegung: die Direktive gehört dem Abnehmer, nicht der Bibliothek. Der
-Ausweg ist eine eigene Datei, die die Grenze zieht:
+#### Schritt 1 — Client-Grenze anlegen
 
-```jsx
-// src/ui.ts — Ihre Client-Grenze
+Eine Datei, zwei Zeilen. Wo sie liegt, ist Ihre Wahl; die Beispiele hier
+benutzen `app/ui.ts`:
+
+```ts
+// app/ui.ts
 'use client'
 export * from '@medo/design-system'
 ```
 
-Danach importieren Sie in Ihrer Anwendung aus `./ui` statt direkt aus dem Paket.
+Die Typen des Pakets laufen durch diesen Re-Export unverändert mit; Sie
+brauchen keine eigene Deklaration.
+
+#### Schritt 2 — Aus dieser Datei importieren, Seite als Client kennzeichnen
+
+Das Beispiel aus [Ein vollständiges Beispiel](#4-ein-vollständiges-beispiel), auf
+den App Router übertragen. Genau dieser Aufbau lief in der Probe:
+
+```tsx
+// app/layout.tsx
+import type { Metadata } from 'next'
+
+import '@medo/design-system/styles.css'
+import 'material-symbols/rounded.css'
+import './app.css'
+
+export const metadata: Metadata = { title: 'Terminverwaltung' }
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="de">
+      <body>{children}</body>
+    </html>
+  )
+}
+```
+
+`app/app.css` enthält dieselben drei Zeilen wie im Beispiel in Abschnitt 4 — die
+Grundschrift, die das Paket bewusst nicht setzt.
+
+```tsx
+// app/page.tsx
+'use client'
+
+import { useState } from 'react'
+import { Button, TextInput, Modal } from './ui'
+
+export default function Page() {
+  const [open, setOpen] = useState(false)
+  const [reason, setReason] = useState('')
+
+  return (
+    <main style={{ padding: 24 }}>
+      <Button variant="primary" icon="calendar_month" onClick={() => setOpen(true)}>
+        Termin anlegen
+      </Button>
+
+      <Modal open={open} title="Termin anlegen" onClose={() => setOpen(false)}>
+        <TextInput
+          label="Anlass"
+          value={reason}
+          onChange={(event) => setReason(event.target.value)}
+        />
+      </Modal>
+    </main>
+  )
+}
+```
+
+Das `'use client'` in Schritt 2 ist kein Duplikat des `'use client'` aus
+Schritt 1: Schritt 1 macht die Komponenten überhaupt importierbar, Schritt 2
+erlaubt es, ihnen **Rückrufe** zu übergeben. Fast jede Komponente des Systems
+verlangt einen — `onChange`, `onClose`, `onConfirm` —, und eine Server-Seite
+darf einer Client-Komponente keine Funktion übergeben.
+
+#### Wenn Sie einen dieser beiden Fehler sehen
+
+```
+TypeError: (0 , c.useState) is not a function or its return value is not iterable
+```
+
+Sie importieren eine Komponente direkt aus `@medo/design-system` statt aus Ihrer
+Datei aus Schritt 1. Die Meldung nennt weder die betroffene Komponente noch
+`'use client'`, und sie erscheint erst beim Vorrendern — Bündeln und Typprüfung
+laufen vorher sauber durch. **Abhilfe: Schritt 1.**
+
+```
+Error: Event handlers cannot be passed to Client Component props
+```
+
+Die Seite, die die Komponente benutzt, ist noch eine Server-Komponente und
+übergibt einen Rückruf. **Abhilfe: Schritt 2** — `'use client'` in die erste
+Zeile dieser Seite.
+
+#### Warum das Paket die Direktive nicht selbst mitbringt
+
+Das ist eine bewusste Festlegung, kein Versäumnis: die Direktive gehört dem
+Abnehmer. Trüge die Bibliothek sie, würde **jede** Komponente zur
+Client-Komponente — auch die zwölf im nächsten Abschnitt, die heute ohne ein
+einziges Byte JavaScript serverseitig rendern. Gemessen kostete das 97 KB
+zusätzliches Browser-Bündel auf einer Seite, die keines davon braucht.
+
+#### Zwölf Exporte brauchen die Grenze nicht
+
+26 der 36 Module benutzen React-Hooks, 10 nicht. Deren zwölf Exporte importieren
+Sie **direkt aus dem Paket**, auch in einer Server-Komponente:
+
+`Button`, `Field`, `Icon`, `InlineLoading`, `Link`, `List`, `KeyValueList`,
+`Loading`, `Skeleton`, `ProgressBar`, `ProgressIndicator`, `Tag`
+
+Sie rendern dort vollständiges Markup, und es landet kein Byte
+Bibliotheks-JavaScript im Browser-Bündel — gemessen an einer Seite, die alle
+zwölf gleichzeitig benutzt.
+
+Das ist eine Optimierung, keine Pflicht. Über die Grenze aus Schritt 1
+funktionieren diese zwölf ebenso, nur eben als Client-Komponenten — so macht es
+das Beispiel oben mit `Button`. Wenn Sie mischen wollen: diese zwölf aus
+`@medo/design-system`, alles Übrige aus `./ui`.
 
 **In einer reinen Client-Anwendung** — Vite, Create React App, webpack ohne RSC
-— betrifft Sie das nicht.
+— betrifft Sie nichts aus diesem Abschnitt.
 
 ### Serverseitiges Rendern
 
 `Modal`, `Popover` und `Tooltip` rendern ihren Inhalt über ein React-Portal.
-**Portale erzeugen serverseitig kein Markup.** Diese drei Komponenten liefern im
-Server-Durchgang leeres Markup und füllen sich erst im Browser. Für Dialoge und
-Überlagerungen ist das in aller Regel unerheblich; wenn Sie deren Inhalt
-indexiert oder ohne JavaScript sichtbar brauchen, ist es das nicht.
+**Portale erzeugen serverseitig kein Markup.** Am vorgerenderten HTML gemessen,
+mit `open` gesetzt:
 
-*Aus dem Quellcode abgeleitet, nicht in der Probe gemessen.*
+| Komponente | im Server-Durchgang |
+|---|---|
+| `Modal` | gar nichts — auch kein Platzhalter |
+| `Popover` | nur der Auslöser, der Inhalt fehlt |
+| `Tooltip` | nur der Auslöser, der Inhalt fehlt |
+
+Im Browser füllen sich alle drei nach der Hydratation; auch das ist gemessen,
+nicht geschlussfolgert.
+
+**Was Sie tun müssen: in aller Regel nichts.** Dialoge und Überlagerungen sind
+für Inhalte gedacht, die erst auf eine Handlung hin erscheinen, und dafür ist
+das ohne Belang. Sie stoßen nur in zwei Fällen daran:
+
+- **Der Inhalt soll indexiert werden oder ohne JavaScript sichtbar sein.** Dann
+  taugen diese drei Komponenten dafür nicht — setzen Sie den Inhalt zusätzlich
+  in die Seite, statt ihn nur im Portal zu führen. Am Paket lässt sich das nicht
+  umstellen.
+- **Eine Barrierefreiheitsprüfung liest das ausgelieferte HTML statt des
+  fertigen DOM.** Der Auslöser eines geöffneten `Popover` trägt dort
+  `aria-expanded="true"` und ein `aria-controls` auf ein Element, das es zu
+  diesem Zeitpunkt noch nicht gibt. Im Browser löst sich das mit der
+  Hydratation auf; ein Prüfwerkzeug, das nur den Quelltext ansieht, meldet es
+  trotzdem. Rendern Sie `Popover` nicht mit `open` vor.
 
 ### Paketmanager
 
-Die Probe lief mit **npm**. Dabei landet die Abhängigkeit `material-symbols`
-flach in Ihrem `node_modules`, weshalb der Icon-Import aus Ihrem eigenen Code
-auflöst (siehe [Schrift und Icons](#6-schrift-und-icons)).
+Geprüft sind **npm 10** und **pnpm 10**. Unter npm ist nichts zu tun; **unter
+pnpm ergänzen Sie eine Abhängigkeit**, sonst bricht der Build.
 
-**Unter pnpm oder Yarn PnP** ist der Zugriff auf eine Abhängigkeit, die Sie
-nicht selbst deklariert haben, nicht garantiert. Nehmen Sie
-`material-symbols` dort in Ihre eigenen Abhängigkeiten auf:
+Unter npm landet die Abhängigkeit `material-symbols` flach in Ihrem
+`node_modules`, weshalb der Icon-Import aus Ihrem eigenen Code auflöst (siehe
+[Schrift und Icons](#6-schrift-und-icons)).
+
+**Unter pnpm tut er das nicht.** `material-symbols` liegt dort unter
+`node_modules/.pnpm/` statt auf oberster Ebene, und der Build bricht ab:
+
+```
+Module not found: Can't resolve 'material-symbols/rounded.css'
+```
+
+Das ist ein harter Fehler beim Bauen, kein stiller optischer Mangel — Sie
+übersehen ihn nicht. Die eigenen Stile des Pakets (`styles.css`, `tokens.css`)
+lösen unter pnpm unverändert auf; betroffen ist allein die Icon-Zeile. Nehmen
+Sie `material-symbols` in Ihre eigenen Abhängigkeiten auf, dann trägt es:
 
 ```bash
 pnpm add material-symbols
 ```
+
+**Unter Yarn PnP** ist derselbe Zugriff ebenfalls nicht garantiert; geprüft ist
+das nicht. Die Zeile oben ist dort die naheliegende Vorsichtsmaßnahme.
 
 ### Node
 
