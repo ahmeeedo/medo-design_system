@@ -108,14 +108,3 @@ Zwei Sätze, die man sich falsch merkt:
   tut das.
 
 → `DEVELOPMENT.md` Kapitel 3, 4, 5 und 9
-
----
-
-## Bekannter Defekt
-
-`npm run search-index` bricht derzeit ab (`window.matchMedia is not a
-function`, Beendigungscode 1) und schreibt nichts. Der vorhandene Index ist in
-sich stimmig, aber wer eine Seite hinzufügt oder eine Abschnittsüberschrift
-ändert, kommt bis zur Behebung nicht an einen grünen `npm test`.
-
-→ `DEVELOPMENT.md` Kapitel 8

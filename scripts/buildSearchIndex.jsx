@@ -8,21 +8,17 @@ import { TAB_BAR_MARKER } from '../src/docs/PageLayout'
 
 export const LANGS = ['de', 'en']
 
-/* jsdom lacks the layout and pointer APIs the pages touch on mount. */
-export function installDomStubs() {
+/* jsdom lacks the layout and pointer APIs the pages touch on mount. Under
+   vitest's jsdom environment window and globalThis are the same object; in
+   the standalone generator they are two objects, so a stub placed on only one
+   of them is invisible to code that reads the other. */
+export function installDomStubs(scope = globalThis) {
   class Observer {
     observe() {}
     unobserve() {}
     disconnect() {}
   }
-  globalThis.ResizeObserver ??= Observer
-  globalThis.IntersectionObserver ??= Observer
-  Element.prototype.scrollIntoView ??= function scrollIntoView() {}
-  Element.prototype.scrollBy ??= function scrollBy() {}
-  Element.prototype.hasPointerCapture ??= function hasPointerCapture() { return false }
-  Element.prototype.setPointerCapture ??= function setPointerCapture() {}
-  Element.prototype.releasePointerCapture ??= function releasePointerCapture() {}
-  globalThis.matchMedia ??= (query) => ({
+  const matchMedia = (query) => ({
     matches: false,
     media: query,
     addEventListener() {},
@@ -31,6 +27,18 @@ export function installDomStubs() {
     removeListener() {},
     dispatchEvent() { return false },
   })
+
+  for (const target of new Set([scope, scope.window].filter(Boolean))) {
+    target.ResizeObserver ??= Observer
+    target.IntersectionObserver ??= Observer
+    target.matchMedia ??= matchMedia
+  }
+
+  scope.Element.prototype.scrollIntoView ??= function scrollIntoView() {}
+  scope.Element.prototype.scrollBy ??= function scrollBy() {}
+  scope.Element.prototype.hasPointerCapture ??= function hasPointerCapture() { return false }
+  scope.Element.prototype.setPointerCapture ??= function setPointerCapture() {}
+  scope.Element.prototype.releasePointerCapture ??= function releasePointerCapture() {}
 }
 
 function renderAt(container, path, element) {
