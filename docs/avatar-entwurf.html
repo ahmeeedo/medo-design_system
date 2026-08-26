@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Avatar — Entwurf zur Freigabe</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,300,0,0" rel="stylesheet">
+<style>
+/* ---------------------------------------------------------------------------
+   Token-Werte, unveraendert aus src/styles/medo/*.css und medo-theme.css
+   uebernommen. Diese Vorschau laeuft eigenstaendig und kann die Stylesheets
+   des Projekts nicht laden, deshalb stehen die Definitionen hier.
+   --------------------------------------------------------------------------- */
+:root{
+  color-scheme: light dark;
+
+  /* brand-colors.css */
+  --medo-color-white:#ffffff;
+  --medo-color-teal-50:#f2f9f8;  --medo-color-teal-100:#e2efed;
+  --medo-color-teal-300:#adccc8; --medo-color-teal-600:#007265;
+  --medo-color-teal-800:#004b42; --medo-color-teal-900:#003b34;
+  --medo-color-teal-1000:#002b26;
+  --medo-color-amber-50:#fff5ec; --medo-color-amber-300:#ffc59a;
+  --medo-color-amber-900:#7c3500; --medo-color-amber-1000:#5b2800;
+  --medo-color-green-50:#f3f9f4; --medo-color-green-300:#b2cdb7;
+  --medo-color-green-700:#005f02; --medo-color-green-1000:#002c0b;
+  --medo-color-stone-50:#f7f7f6;  --medo-color-stone-100:#ececeb;
+  --medo-color-stone-200:#dbdad8; --medo-color-stone-300:#c6c4c2;
+  --medo-color-stone-500:#94908c; --medo-color-stone-700:#4f4840;
+  --medo-color-stone-800:#3f3933; --medo-color-stone-900:#312d28;
+  --medo-color-stone-1000:#24221e; --medo-color-stone-1100:#171513;
+
+  /* alias-colors.css */
+  --medo-primary-100: var(--medo-color-teal-100);
+  --medo-primary-800: var(--medo-color-teal-800);
+  --medo-warning-50:  var(--medo-color-amber-50);
+  --medo-warning-900: var(--medo-color-amber-900);
+  --medo-success-50:  var(--medo-color-green-50);
+  --medo-success-700: var(--medo-color-green-700);
+  --medo-neutral-alt-200: var(--medo-color-stone-200);
+  --medo-neutral-alt-900: var(--medo-color-stone-900);
+
+  /* medo-theme.css (Semantic, Hell/Dunkel) */
+  --medo-surface:                light-dark(var(--medo-color-white), var(--medo-color-stone-1100));
+  --medo-surface-container:      light-dark(var(--medo-color-stone-50), #1d1b19);
+  --medo-surface-container-high: light-dark(var(--medo-color-stone-100), var(--medo-color-stone-800));
+  --medo-surface-sunken:         light-dark(var(--medo-color-stone-100), var(--medo-color-stone-1100));
+  --medo-surface-hover:          light-dark(var(--medo-color-stone-100), var(--medo-color-stone-800));
+  --medo-text:                   light-dark(var(--medo-color-stone-1000), var(--medo-color-stone-50));
+  --medo-text-muted:             light-dark(#24221ead, #f7f7f6ad);
+  --medo-text-subtle:            light-dark(var(--medo-color-stone-800), var(--medo-color-stone-300));
+  --medo-icon-muted:             light-dark(#24221e8c, #f7f7f68c);
+  --medo-border:                 light-dark(var(--medo-color-stone-300), var(--medo-color-stone-700));
+  --medo-border-subtle:          light-dark(var(--medo-color-stone-200), var(--medo-color-stone-800));
+  --medo-divider:                light-dark(var(--medo-color-stone-200), var(--medo-color-stone-800));
+  --medo-action:                 var(--medo-color-teal-600);
+  --medo-focus-ring:             #00726559;
+  --medo-state-selected:         light-dark(var(--medo-color-teal-100), var(--medo-color-teal-900));
+  --medo-action-neutral-hover:   light-dark(var(--medo-color-stone-200), var(--medo-color-stone-700));
+  --medo-action-neutral-text:    light-dark(var(--medo-color-stone-1000), var(--medo-color-stone-50));
+  --medo-warning-surface:        light-dark(var(--medo-color-amber-50), var(--medo-color-amber-1000));
+  --medo-warning-text:           light-dark(var(--medo-color-amber-1000), var(--medo-color-amber-300));
+  --medo-success-surface:        light-dark(var(--medo-color-green-50), var(--medo-color-green-1000));
+  --medo-success-text:           light-dark(var(--medo-color-green-1000), var(--medo-color-green-300));
+
+  /* radii.css / typography.css */
+  --medo-radius-sm:4px; --medo-radius-md:8px; --medo-radius-lg:12px; --medo-radius-xl:18px;
+  --medo-radius-full:9999px;
+  --medo-font-sans:'DM Sans', system-ui, sans-serif;
+  --medo-font-mono:'DM Mono', ui-monospace, monospace;
+  --medo-text-xs:12px; --medo-text-sm:14px; --medo-text-base:16px;
+  --medo-text-lg:20px; --medo-text-xl:25px; --medo-text-2xl:31px;
+  --medo-weight-semibold:600; --medo-weight-bold:700;
+
+  /* spacing.css */
+  --medo-space-3xs:2px; --medo-space-2xs:4px; --medo-space-xs:8px; --medo-space-sm:12px;
+  --medo-space-md:16px; --medo-space-lg:24px; --medo-space-xl:32px; --medo-space-2xl:48px;
+}
+html[data-theme="light"]{ color-scheme: light; }
+html[data-theme="dark"]{ color-scheme: dark; }
+
+*{ box-sizing:border-box; }
+body{
+  margin:0;
+  background:var(--medo-surface-container);
+  color:var(--medo-text);
+  font-family:var(--medo-font-sans);
+  -webkit-font-smoothing:antialiased;
+  padding:var(--medo-space-2xl) var(--medo-space-xl) 120px;
+}
+.wrap{ max-width:1020px; margin:0 auto; }
+.msr{ font-family:'Material Symbols Rounded'; font-weight:300; line-height:1; display:inline-block; }
+.mono{ font-family:var(--medo-font-mono); }
+
+h1{ font-size:var(--medo-text-2xl); font-weight:var(--medo-weight-bold); margin:0 0 var(--medo-space-sm); letter-spacing:-0.02em; }
+h2{ font-size:var(--medo-text-lg); font-weight:var(--medo-weight-semibold); margin:0 0 var(--medo-space-xs); }
+.lead{ font-size:var(--medo-text-base); color:var(--medo-text-muted); margin:0 0 var(--medo-space-lg); max-width:70ch; line-height:1.6; }
+.eyebrow{
+  font-family:var(--medo-font-mono); font-size:11px; letter-spacing:0.12em;
+  text-transform:uppercase; color:var(--medo-text-muted);
+  margin:var(--medo-space-2xl) 0 var(--medo-space-md);
+}
+.eyebrow:first-of-type{ margin-top:var(--medo-space-lg); }
+.note{ font-size:var(--medo-text-sm); color:var(--medo-text-muted); margin:var(--medo-space-xs) 0 0; line-height:1.55; max-width:74ch; }
+.src{ font-family:var(--medo-font-mono); font-size:11px; color:var(--medo-text-muted); }
+
+.card{
+  background:var(--medo-surface);
+  border:1px solid var(--medo-border-subtle);
+  border-radius:var(--medo-radius-lg);
+  padding:var(--medo-space-lg);
+  margin-bottom:var(--medo-space-md);
+}
+.grid{ display:grid; gap:var(--medo-space-md); }
+.cols2{ grid-template-columns:1fr 1fr; }
+@media (max-width:768px){ .cols2{ grid-template-columns:1fr; } body{ padding:var(--medo-space-lg) var(--medo-space-md) 80px; } }
+
+.row{ display:flex; align-items:center; gap:var(--medo-space-md); flex-wrap:wrap; }
+.stack{ display:flex; flex-direction:column; align-items:center; gap:var(--medo-space-xs); }
+.cap{ font-family:var(--medo-font-mono); font-size:11px; color:var(--medo-text-muted); text-align:center; }
+
+.badge{
+  display:inline-block; font-family:var(--medo-font-mono); font-size:10px;
+  letter-spacing:0.08em; text-transform:uppercase; padding:3px var(--medo-space-xs);
+  border-radius:var(--medo-radius-full); vertical-align:middle; margin-left:var(--medo-space-xs);
+}
+.badge--proof{ background:var(--medo-success-surface); color:var(--medo-success-text); }
+.badge--add{ background:var(--medo-warning-surface); color:var(--medo-warning-text); }
+.badge--open{ background:var(--medo-state-selected); color:light-dark(var(--medo-color-teal-800), var(--medo-color-teal-300)); }
+
+/* --- Der Avatar selbst -------------------------------------------------- */
+.av{
+  flex:none;
+  display:inline-flex; align-items:center; justify-content:center;
+  border-radius:var(--medo-radius-full);
+  font-family:var(--medo-font-sans);
+  font-size:var(--medo-text-xs);
+  font-weight:var(--medo-weight-semibold);
+  letter-spacing:0.02em;
+  overflow:hidden;
+  background:var(--medo-state-selected);
+  color:light-dark(var(--medo-primary-800), var(--medo-color-teal-300));
+  user-select:none;
+}
+.av--sm{ width:30px; height:30px; }
+.av--md{ width:38px; height:38px; }
+.av img{ width:100%; height:100%; object-fit:cover; display:block; }
+.av .msr{ font-size:18px; }
+.av--md .msr{ font-size:22px; }
+
+/* Vier durchlaufende Farben, Hellwerte exakt aus Data-table.dc.html:269,
+   Dunkelwerte ueber die vorhandenen Hell/Dunkel-Paare des Systems (Weg 1). */
+.av--c1{ background:var(--medo-state-selected);       color:light-dark(var(--medo-primary-800), var(--medo-color-teal-300)); }
+.av--c2{ background:var(--medo-warning-surface);      color:var(--medo-warning-text); }
+.av--c3{ background:var(--medo-success-surface);      color:var(--medo-success-text); }
+.av--c4{ background:var(--medo-action-neutral-hover); color:var(--medo-action-neutral-text); }
+
+/* Weg 2: Werte der Fundstelle unveraendert, ohne Dunkelmodus-Entsprechung. */
+.av--r1{ background:var(--medo-primary-100);      color:var(--medo-primary-800); }
+.av--r2{ background:var(--medo-warning-50);       color:var(--medo-warning-900); }
+.av--r3{ background:var(--medo-success-50);       color:var(--medo-success-700); }
+.av--r4{ background:var(--medo-neutral-alt-200);  color:var(--medo-neutral-alt-900); }
+
+.av--icon{ background:var(--medo-surface-sunken); color:var(--medo-icon-muted); }
+.av--load{ background:var(--medo-surface-container-high); }
+
+/* Groessenvergleich fuer den offenen Punkt D1 */
+.av--tok-sm{ width:32px; height:32px; }
+.av--tok-md{ width:40px; height:40px; }
+
+/* --- Nachgebaute Umgebungen --------------------------------------------- */
+.tbl{ width:100%; border-collapse:collapse; font-size:var(--medo-text-sm); }
+.tbl th{
+  text-align:left; font-family:var(--medo-font-mono); font-size:11px; letter-spacing:0.08em;
+  text-transform:uppercase; color:var(--medo-text-muted); font-weight:400;
+  padding:var(--medo-space-xs) var(--medo-space-sm); border-bottom:1px solid var(--medo-divider);
+}
+.tbl td{ padding:var(--medo-space-sm); border-bottom:1px solid var(--medo-divider); vertical-align:middle; }
+.tbl tr:nth-child(even) td{ background:var(--medo-surface-container); }
+.tbl .num{ font-family:var(--medo-font-mono); text-align:right; }
+.person{ display:flex; align-items:center; gap:11px; }
+.person b{ font-weight:var(--medo-weight-semibold); display:block; }
+.person span{ font-size:var(--medo-text-xs); color:var(--medo-text-muted); }
+
+.clist{ border:1px solid var(--medo-border-subtle); border-radius:14px; overflow:hidden; background:var(--medo-surface); }
+.clist .r{ display:flex; align-items:center; gap:14px; padding:14px 16px; }
+.clist .r + .r{ border-top:1px solid var(--medo-divider); }
+.clist .r .t{ flex:1; min-width:0; }
+.clist .r .t b{ font-size:var(--medo-text-base); font-weight:var(--medo-weight-semibold); display:block; }
+.clist .r .t span{ font-size:13px; color:var(--medo-text-muted); }
+.clist .r .meta{ font-family:var(--medo-font-mono); font-size:var(--medo-text-xs); color:var(--medo-text-muted); }
+
+.skel{ background:var(--medo-surface-container-high); border-radius:var(--medo-radius-sm); height:13px; }
+
+/* --- Kopfzeile mit Umschalter ------------------------------------------- */
+.top{ display:flex; align-items:flex-start; justify-content:space-between; gap:var(--medo-space-md); flex-wrap:wrap; margin-bottom:var(--medo-space-lg); }
+.toggle{
+  display:inline-flex; align-items:center; gap:var(--medo-space-xs);
+  border:1px solid var(--medo-border); background:var(--medo-surface);
+  color:var(--medo-text); border-radius:var(--medo-radius-full);
+  padding:var(--medo-space-xs) var(--medo-space-md);
+  font-family:var(--medo-font-sans); font-size:var(--medo-text-sm); font-weight:var(--medo-weight-semibold);
+  cursor:pointer; flex:none;
+}
+.toggle:hover{ background:var(--medo-surface-hover); }
+.toggle:focus-visible{ outline:none; box-shadow:0 0 0 3px var(--medo-focus-ring); }
+.toggle .msr{ font-size:20px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="top">
+    <div>
+      <h1>Avatar — Entwurf zur Freigabe</h1>
+      <p class="lead">
+        So sähe die Komponente aus. Was hier steht, ist entweder aus dem heutigen System
+        <span class="badge badge--proof">belegt</span> abgeleitet oder ein
+        <span class="badge badge--add">Vorschlag</span>, den Sie einzeln annehmen oder verwerfen können.
+        Die schriftliche Fassung mit allen Fundstellen liegt daneben in <span class="mono">avatar-entwurf.md</span>.
+      </p>
+    </div>
+    <button class="toggle" id="themeBtn" type="button">
+      <span class="msr" id="themeIcon">dark_mode</span><span id="themeLabel">Dunkel</span>
+    </button>
+  </div>
+
+  <!-- ================================================================== -->
+  <div class="eyebrow">1 · Zwei Größen <span class="badge badge--proof">belegt</span></div>
+  <div class="card">
+    <div class="row" style="gap:var(--medo-space-2xl)">
+      <div class="stack">
+        <span class="av av--sm av--c1">AM</span>
+        <span class="cap">sm · 30 px<br>Tabellenzeile</span>
+      </div>
+      <div class="stack">
+        <span class="av av--md av--c1">AM</span>
+        <span class="cap">md · 38 px<br>Listenzeile</span>
+      </div>
+      <div style="flex:1;min-width:240px">
+        <p class="note" style="margin:0">
+          Mehr Größen gibt es nicht. Die kleine steht in Tabellen, die große in Listen — genau so,
+          wie es heute im System aussieht.
+        </p>
+        <p class="note src">Data-table.dc.html:40 · Contained-list.dc.html:67</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================================================================== -->
+  <div class="eyebrow">2 · Womit der Kreis gefüllt ist</div>
+  <div class="grid cols2">
+
+    <div class="card">
+      <h2>Zwei Buchstaben <span class="badge badge--proof">belegt</span></h2>
+      <p class="note" style="margin-bottom:var(--medo-space-md)">
+        Der Normalfall. Die Buchstaben entstehen aus dem Namen: erster Buchstabe je Wort, nach zwei ist Schluss.
+      </p>
+      <div class="row">
+        <div class="stack"><span class="av av--md av--c1">AM</span><span class="cap">Anna Müller</span></div>
+        <div class="stack"><span class="av av--md av--c2">BK</span><span class="cap">Ben Krüger</span></div>
+        <div class="stack"><span class="av av--md av--c3">CS</span><span class="cap">Clara Schmidt</span></div>
+        <div class="stack"><span class="av av--md av--c4">DM</span><span class="cap">Dr. Marie H.</span></div>
+      </div>
+      <p class="note src">Contained-list.dc.html:218 · Data-table.dc.html:283</p>
+    </div>
+
+    <div class="card">
+      <h2>Bild <span class="badge badge--add">Vorschlag</span></h2>
+      <p class="note" style="margin-bottom:var(--medo-space-md)">
+        Kommt im heutigen System nirgends vor. Wäre nötig, sobald eine Anwendung Profilbilder kennt.
+      </p>
+      <div class="row">
+        <div class="stack">
+          <span class="av av--md"><img id="demoPhoto" alt=""></span>
+          <span class="cap">geladen</span>
+        </div>
+        <div class="stack">
+          <span class="av av--md av--c1" id="failSlot">TW</span>
+          <span class="cap">Bild lädt nicht →<br>Buchstaben</span>
+        </div>
+      </div>
+      <p class="note">
+        Rechts sehen Sie den Fall, der im Betrieb regelmäßig eintritt: Das Bild kommt nicht an.
+        Der Anwender sieht dann keinen Fehler, sondern einfach die Buchstaben.
+      </p>
+    </div>
+
+    <div class="card">
+      <h2>Personen-Symbol <span class="badge badge--add">Vorschlag</span></h2>
+      <p class="note" style="margin-bottom:var(--medo-space-md)">
+        Für den Fall, dass gar kein Name da ist — gelöschtes Konto, offene Einladung, Systemvorgang.
+        Ohne diesen Fall bliebe der Kreis leer.
+      </p>
+      <div class="row">
+        <div class="stack"><span class="av av--sm av--icon"><span class="msr">person</span></span><span class="cap">sm</span></div>
+        <div class="stack"><span class="av av--md av--icon"><span class="msr">person</span></span><span class="cap">md</span></div>
+      </div>
+      <p class="note src">Form belegt durch Contained-list.dc.html:165 (Symbol im getönten Kreis)</p>
+    </div>
+
+    <div class="card">
+      <h2>Beim Laden <span class="badge badge--proof">belegt</span></h2>
+      <p class="note" style="margin-bottom:var(--medo-space-md)">
+        Solange die Daten unterwegs sind, steht ein grauer Kreis in derselben Größe. Nichts springt,
+        wenn die Namen ankommen.
+      </p>
+      <div class="row">
+        <div class="stack"><span class="av av--sm av--load"></span><span class="cap">sm</span></div>
+        <div class="stack"><span class="av av--md av--load"></span><span class="cap">md</span></div>
+      </div>
+      <p class="note src">Data-table.dc.html:144</p>
+    </div>
+
+  </div>
+
+  <!-- ================================================================== -->
+  <div class="eyebrow">3 · Farbe <span class="badge badge--proof">belegt</span></div>
+  <div class="grid cols2">
+    <div class="card">
+      <h2>Eine feste Farbe</h2>
+      <p class="note" style="margin-bottom:var(--medo-space-md)">
+        In Listen tragen alle Avatare dasselbe Teal. Die Liste soll ruhig wirken.
+      </p>
+      <div class="row">
+        <span class="av av--md av--c1">AM</span>
+        <span class="av av--md av--c1">BK</span>
+        <span class="av av--md av--c1">CS</span>
+        <span class="av av--md av--c1">TW</span>
+      </div>
+      <p class="note src">Contained-list.dc.html:343</p>
+    </div>
+    <div class="card">
+      <h2>Vier durchlaufende Farben</h2>
+      <p class="note" style="margin-bottom:var(--medo-space-md)">
+        In Tabellen wechseln vier Farben ab, damit sich die Personen auf einen Blick unterscheiden.
+      </p>
+      <div class="row">
+        <span class="av av--md av--c1">AM</span>
+        <span class="av av--md av--c2">BK</span>
+        <span class="av av--md av--c3">CS</span>
+        <span class="av av--md av--c4">TW</span>
+      </div>
+      <p class="note src">Data-table.dc.html:269</p>
+    </div>
+  </div>
+
+  <!-- ================================================================== -->
+  <div class="eyebrow">4 · Im Einsatz — so sieht es an den echten Stellen aus</div>
+
+  <div class="card">
+    <h2 style="margin-bottom:var(--medo-space-md)">Tabellenzeile — kleine Größe, vier Farben</h2>
+    <table class="tbl">
+      <thead><tr><th>Name</th><th>Rolle</th><th class="num">Vorgänge</th></tr></thead>
+      <tbody>
+        <tr><td><div class="person"><span class="av av--sm av--c1">AM</span><div><b>Anna Müller</b><span>anna@medo.de</span></div></div></td><td>Admin</td><td class="num">12</td></tr>
+        <tr><td><div class="person"><span class="av av--sm av--c2">BK</span><div><b>Ben Krüger</b><span>ben@medo.de</span></div></div></td><td>Bearbeiter</td><td class="num">8</td></tr>
+        <tr><td><div class="person"><span class="av av--sm av--c3">CS</span><div><b>Clara Schmidt</b><span>clara@medo.de</span></div></div></td><td>Betrachter</td><td class="num">5</td></tr>
+        <tr><td><div class="person"><span class="av av--sm av--c4">TW</span><div><b>Tim Weber</b><span>tim@medo.de</span></div></div></td><td>Bearbeiter</td><td class="num">3</td></tr>
+      </tbody>
+    </table>
+    <p class="note" style="margin-top:var(--medo-space-md)">Und dieselbe Tabelle, während sie lädt:</p>
+    <table class="tbl" style="margin-top:var(--medo-space-xs)">
+      <tbody>
+        <tr><td><div class="person"><span class="av av--sm av--load"></span><div class="skel" style="width:180px"></div></div></td><td><div class="skel" style="width:90px"></div></td><td><div class="skel" style="width:28px;margin-left:auto"></div></td></tr>
+        <tr><td><div class="person"><span class="av av--sm av--load"></span><div class="skel" style="width:140px"></div></div></td><td><div class="skel" style="width:90px"></div></td><td><div class="skel" style="width:28px;margin-left:auto"></div></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-bottom:var(--medo-space-md)">Listenzeile — große Größe, eine Farbe</h2>
+    <div class="clist" style="max-width:560px">
+      <div class="r"><span class="av av--md av--c1">AM</span><div class="t"><b>Anna Müller</b><span>anna@medo.de</span></div><span class="meta">Admin</span></div>
+      <div class="r"><span class="av av--md av--c1">BK</span><div class="t"><b>Ben Krüger</b><span>ben@medo.de</span></div><span class="meta">Bearbeiter</span></div>
+      <div class="r"><span class="av av--md av--c1">CS</span><div class="t"><b>Clara Schmidt</b><span>clara@medo.de</span></div><span class="meta">Betrachter</span></div>
+    </div>
+    <p class="note src">Nachgebaut aus Contained-list.dc.html:65–75</p>
+  </div>
+
+  <!-- ================================================================== -->
+  <div class="eyebrow">5 · Offener Punkt: Größe halten oder auf die Stufen ziehen? <span class="badge badge--open">Ihre Entscheidung</span></div>
+  <div class="card">
+    <p class="note" style="margin:0 0 var(--medo-space-md)">
+      Die heutigen Größen sind 30 und 38 Pixel. Die Stufen des Systems sind 32 und 40. Der Unterschied
+      beträgt je 2 Pixel. Links steht, wie es heute aussieht, rechts, wie es auf den Stufen aussähe.
+    </p>
+    <div class="row" style="gap:var(--medo-space-2xl)">
+      <div class="row">
+        <div class="stack"><span class="av av--sm av--c1">AM</span><span class="cap">30 px</span></div>
+        <div class="stack"><span class="av av--md av--c1">AM</span><span class="cap">38 px</span></div>
+        <span class="cap" style="align-self:center">heute</span>
+      </div>
+      <div class="row">
+        <div class="stack"><span class="av av--tok-sm av--c1">AM</span><span class="cap">32 px</span></div>
+        <div class="stack"><span class="av av--tok-md av--c1">AM</span><span class="cap">40 px</span></div>
+        <span class="cap" style="align-self:center">auf den Stufen</span>
+      </div>
+    </div>
+    <p class="note">
+      <b>Empfehlung: bei 30/38 bleiben.</b> Der Unterschied ist kaum zu sehen, aber die Umstellung
+      verlangte eine Änderung an Code, der bereits an andere Projekte ausgeliefert ist.
+    </p>
+  </div>
+
+  <!-- ================================================================== -->
+  <div class="eyebrow">6 · Offener Punkt: Dunkelmodus <span class="badge badge--open">Ihre Entscheidung</span></div>
+  <div class="card">
+    <p class="note" style="margin:0 0 var(--medo-space-md)">
+      <b>Schalten Sie oben rechts auf Dunkel um</b> — dann zeigt sich, worum es geht.
+      Im Hellmodus sehen beide Reihen fast gleich aus.
+    </p>
+    <div class="grid cols2">
+      <div>
+        <p class="note" style="margin:0 0 var(--medo-space-sm)"><b>Weg 1</b> — die fertigen Hell/Dunkel-Paare des Systems nutzen</p>
+        <div class="row">
+          <span class="av av--md av--c1">AM</span>
+          <span class="av av--md av--c2">BK</span>
+          <span class="av av--md av--c3">CS</span>
+          <span class="av av--md av--c4">TW</span>
+        </div>
+        <p class="note">Bleibt im Dunkeln lesbar. Im Hellen ist die Schrift in drei der vier Kreise eine Stufe dunkler als in der Vorlage.</p>
+      </div>
+      <div>
+        <p class="note" style="margin:0 0 var(--medo-space-sm)"><b>Weg 2</b> — die Werte der Vorlage exakt halten</p>
+        <div class="row">
+          <span class="av av--md av--r1">AM</span>
+          <span class="av av--md av--r2">BK</span>
+          <span class="av av--md av--r3">CS</span>
+          <span class="av av--md av--r4">TW</span>
+        </div>
+        <p class="note">Im Hellen exakt wie die Vorlage. Im Dunkeln fehlt die Entsprechung — und dafür fehlt mir die Vorgabe, ich erfinde sie nicht.</p>
+      </div>
+    </div>
+    <p class="note"><b>Empfehlung: Weg 1.</b> Er nutzt, was im System bereits entschieden ist.</p>
+  </div>
+
+  <!-- ================================================================== -->
+  <div class="eyebrow">7 · Was ich bewusst weglasse</div>
+  <div class="card">
+    <p class="note" style="margin:0">
+      Andere Designsysteme haben zusätzlich: sehr große Avatare für Profilseiten, eckige Varianten,
+      einen grünen Punkt für „ist online", Gruppen aus mehreren überlappenden Kreisen und einen
+      anklickbaren Avatar mit eigenem Hover-Zustand. <b>Nichts davon kommt im medo-System vor</b>,
+      deshalb schlage ich es nicht vor. Sagen Sie, dass Sie etwas davon brauchen, nehme ich es auf.
+    </p>
+    <p class="note">
+      Ein Punkt darunter ist mehr als Zurückhaltung: Rund und eckig bedeuten im medo-System heute
+      Verschiedenes — <b>rund ist eine Person, eckig ist eine Sache</b>. Diese Unterscheidung ist
+      durchgehend eingehalten; eine eckige Avatar-Variante würde sie aufweichen.
+    </p>
+    <div class="row" style="margin-top:var(--medo-space-md)">
+      <div class="stack">
+        <span class="av av--md av--c1">AM</span>
+        <span class="cap">Person</span>
+      </div>
+      <div class="stack">
+        <span class="av av--md av--icon" style="border-radius:9px"><span class="msr">folder</span></span>
+        <span class="cap">Sache</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+(function () {
+  // Ein kleines, im Dokument erzeugtes Bild - die Vorschau soll ohne Netz auskommen.
+  // Die Farben kommen aus den Tokens oben, damit hier kein Wert doppelt steht.
+  var tok = function (name) {
+    return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+  };
+  var bg = tok('--medo-color-teal-300'), fg = tok('--medo-color-teal-800');
+  var photo = 'data:image/svg+xml;utf8,' + encodeURIComponent(
+    '<svg xmlns="http://www.w3.org/2000/svg" width="76" height="76">' +
+      '<rect width="76" height="76" fill="' + bg + '"/>' +
+      '<circle cx="38" cy="29" r="13" fill="' + fg + '"/>' +
+      '<path d="M9 76c0-16 13-23 29-23s29 7 29 23z" fill="' + fg + '"/>' +
+    '</svg>'
+  );
+  document.getElementById('demoPhoto').src = photo;
+
+  // Der Rueckfall: ein Bild, das absichtlich nicht laedt.
+  var slot = document.getElementById('failSlot');
+  var img = new Image();
+  img.onerror = function () { /* Buchstaben bleiben stehen - genau das ist der Vorschlag. */ };
+  img.onload = function () { slot.textContent = ''; slot.appendChild(img); };
+  img.alt = '';
+  img.src = 'gibt-es-nicht.jpg';
+
+  // Hell/Dunkel
+  var root = document.documentElement;
+  var btn = document.getElementById('themeBtn');
+  var icon = document.getElementById('themeIcon');
+  var label = document.getElementById('themeLabel');
+  var dark = false;
+  btn.addEventListener('click', function () {
+    dark = !dark;
+    root.setAttribute('data-theme', dark ? 'dark' : 'light');
+    icon.textContent = dark ? 'light_mode' : 'dark_mode';
+    label.textContent = dark ? 'Hell' : 'Dunkel';
+  });
+})();
+</script>
+</body>
+</html>
