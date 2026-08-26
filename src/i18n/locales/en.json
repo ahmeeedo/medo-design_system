@@ -91,6 +91,7 @@
   },
   "demoPanel": {
     "title": "Live Demo",
+    "controls": "Controls",
     "hint": "This live demo provides only an overview of the features and designs available for this component."
   },
   "tokensTable": {
