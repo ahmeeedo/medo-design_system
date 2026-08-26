@@ -1,5 +1,9 @@
 import { useTranslation } from 'react-i18next'
 
+/* Currently not mounted: DocsLayout renders no language switcher, so the
+   English translation stays unreachable while parts of en.json still carry
+   German text. The component is kept intact — putting it back into the
+   header is the single change that returns the English version. */
 export function LanguageSwitcher() {
   const { i18n, t } = useTranslation()
   const toggle = () => i18n.changeLanguage(i18n.language === 'de' ? 'en' : 'de')

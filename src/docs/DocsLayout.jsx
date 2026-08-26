@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { NavLink, Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { LanguageSwitcher } from './LanguageSwitcher'
 import { ThemeSwitcher } from './ThemeSwitcher'
 import { MedoLogo } from './MedoLogo'
 import { ICON_BTN } from './chromeStyles'
@@ -163,7 +162,6 @@ export function DocsLayout({ children }) {
         </Link>
         <div className="flex-1" />
         <ThemeSwitcher />
-        <LanguageSwitcher />
         <button className={ICON_BTN} aria-label={t('header.aria.search')} onClick={() => setIsSearchOpen(true)}>
           <Icon name="search" size={24} />
         </button>
