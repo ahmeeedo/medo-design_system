@@ -2,7 +2,7 @@
 
 Geprüft am 26.08.2026 gegen WCAG 2.2 Level AA, mit dem bestehenden Kontrastwerkzeug unter `scripts/contrast/`.
 
-Dieses Dokument ist die Entscheidungsgrundlage. **Es wurde nichts geändert** — keine Farbe, keine Token-Datei, keine Komponente. Jeder Vorschlag unten wartet auf eine Entscheidung; die Umsetzung folgt getrennt und erst nach Freigabe.
+Dieses Dokument ist die Entscheidungsgrundlage und enthält in Abschnitt 9 die **getroffenen Entscheidungen des Inhabers**. **Geändert wurde nichts** — keine Farbe, keine Token-Datei, keine Komponente, nichts im Design-Projekt. Die Umsetzung folgt getrennt und stützt sich auf Abschnitt 9.
 
 ---
 
@@ -49,7 +49,7 @@ Die Befunde fallen in vier Gruppen:
 | **C — Textlink** | 2 (hell) + 1 (dunkel) | Der Link verfehlt die Schwelle auf zwei kräftigeren Flächen |
 | **D — Kräftige Rahmenlinie** | 1 (hell) | Verfehlt die Schwelle um 0,04 |
 
-**Zur Reichweite der späteren Umsetzung — die wichtigste Aussage dieses Berichts:** Bis auf einen einzigen Fall, bei dem zwei Wege zur Wahl stehen, kommt **kein Vorschlag ohne Verschiebung einer Brand-Palettenstufe aus**. Alle anderen Korrekturen lassen eine semantische Rolle auf eine bereits vorhandene Stufe zeigen. Die Umsetzung bliebe damit klein und würde nicht in alle 36 Komponenten kaskadieren.
+**Zur Reichweite der späteren Umsetzung — die wichtigste Aussage dieses Berichts:** Bis auf einen einzigen Fall kommt **jeder Vorschlag ohne Verschiebung einer Brand-Palettenstufe aus**; die Korrekturen lassen lediglich eine semantische Rolle auf eine bereits vorhandene Stufe zeigen. Nur bei der kräftigen Rahmenlinie (Gruppe D) steht eine Palettenverschiebung zur Wahl — die entschiedene Fassung steht in Abschnitt 9.
 
 ---
 
@@ -154,6 +154,8 @@ Dazu kommt ein zweiter Konflikt. Die Farbe des Zustands *überfahren* wird in de
 
 ### Vorschlag B — die Warnung an die anderen drei Statusfarben angleichen
 
+> **Geprüft, aber nicht gewählt.** Der Inhaber hat sich für die Trennung der Doppelrolle entschieden (siehe unten), weil sie als einzige die helle Warnfarbe erhält. Dieser Abschnitt bleibt als Beleg der Abwägung stehen.
+
 | Rolle | heute | Vorschlag |
 |---|---|---|
 | Füllfläche | amber-600 | **amber-800** |
@@ -184,6 +186,71 @@ Der Gewinn dabei: die Warnung hört auf, der Sonderfall zu sein. Die Ausnahmereg
 **Die Füllfläche heller machen statt dunkler** (überfahren auf amber-500, gedrückt auf amber-400). Repariert die zwei Schaltflächen-Fälle, macht aber die drei neu entdeckten Fälle deutlich schlimmer: der Aktionstext in der Meldung fiele von 3,99:1 auf 2,18:1. Außerdem würde die Warn-Schaltfläche als einzige im hellen Theme beim Drücken *heller*. **Nicht empfehlenswert.**
 
 **Die Amber-Stufen selbst nachdunkeln.** Erreicht dasselbe wie Vorschlag B, verschiebt dafür aber Stufen der Marken-Palette. Das erreicht jede Rolle, die dieselben Stufen verwendet, alle 36 Komponenten, beide Themes und die Token-Seiten des Portals. Da Vorschlag B dasselbe Ergebnis ohne diese Reichweite erzielt, gibt es keinen Grund dafür. **Nicht empfehlenswert.**
+
+### Drei weitere Wege, die der Inhaber vorgeschlagen hat — alle rechnerisch ausgeschlossen
+
+**Die Warnung auf die Orange-Skala umstellen.** Orange-600 sitzt in derselben Falle wie Amber-600, sogar tiefer: weiße Schrift 3,68:1, dunkle Schrift 4,31:1 — beides unter der Schwelle. Erst orange-700 trägt weiße Schrift (5,03:1), womit die Warnung zwar heller bliebe als bei Vorschlag B und sich besser vom Fehler-Rot abhöbe, aber es wäre ein **Farbtonwechsel** statt einer Helligkeitsänderung und berührte zusätzlich die Alias-Ebene. Nicht weiterverfolgt.
+
+**Die Amber-Skala heller und gesättigter machen.** Rechnerisch ausgeschlossen. Kontrast hängt allein an der Leuchtdichte, und die Füllfarbe muss drei Bedingungen gleichzeitig erfüllen:
+
+| Bedingung | Grenze für die Leuchtdichte |
+|---|---|
+| Dunkle Schrift darauf, 4,5:1 | mindestens 0,2476 |
+| 3:1 gegen die weiße Seite | höchstens 0,3000 |
+| Als Warn-Symbolkreis im Modal, 3:1 | höchstens 0,2754 |
+
+Amber-600 liegt bei 0,2775 und ist damit **0,8 % zu hell** — genau das ist die 2,98:1-Verfehlung des Symbolkreises. Die Richtung, die hilft, ist eine Spur *dunkler*. Sättigung bewegt daran fast nichts: ein deutlich gesättigteres `#d97706` liegt bei 0,2796, praktisch gleichauf. Ein wirklich helles `#ff8c00` erreichte 6,81:1 für dunkle Schrift, fiele aber auf 2,33:1 gegen die weiße Seite.
+
+**Die Beschriftung auf die Fließtextfarbe umstellen.** Wirkungslos — sie ist es bereits. `--medo-warning-on-solid` und `--medo-text` tragen im hellen Theme denselben Wert `#24221e`. Die gemessenen 3,70:1 und 2,59:1 sind schon mit dieser Farbe gemessen. Dunkler geht praktisch nichts mehr:
+
+| Schriftfarbe | Ruhe | überfahren | gedrückt |
+|---|---|---|---|
+| stone-1000 (Fließtext, heute) | 4,95 ✓ | 3,70 ✗ | 2,59 ✗ |
+| stone-1100 (dunkelste Stufe) | 5,68 ✓ | 4,25 ✗ | 2,97 ✗ |
+| reines Schwarz | 6,55 ✓ | 4,89 ✓ | **3,42 ✗** |
+
+Selbst reines Schwarz rettet den gedrückten Zustand nicht. Im dunklen Theme wäre die Umstellung zudem schädlich: dort ist die Fließtextfarbe hell, und helle Schrift auf hellem Amber ergäbe 2,19:1 statt der heutigen 7,76:1.
+
+### Der Kern: warum keine Farbwahl die Gruppe lösen kann
+
+Die Überfahren-Farbe muss als **Füllfläche unter dunkler Schrift** eine Leuchtdichte von mindestens 0,2476 haben und als **Akzentschrift auf der hellen Meldungsfläche** höchstens 0,1669. Diese beiden Fenster überschneiden sich nicht. **Kein Farbwert, kein Farbton und keine Sättigung erfüllen beides** — das ist keine Eigenschaft von Amber, sondern der Doppelrolle. Damit ist der Möglichkeitsraum über Farbwerte geschlossen.
+
+### Beschluss des Inhabers: die Doppelrolle wird getrennt
+
+Der Akzent bekommt ein **eigenes Token**, getrennt von der Füllfläche der Schaltfläche. Dadurch dürfen die Bedienzustände heller werden, und die helle Warnfarbe bleibt erhalten.
+
+| Rolle | heute | beschlossen |
+|---|---|---|
+| Füllfläche | amber-600 | amber-600 (unverändert) |
+| Füllfläche überfahren | amber-700 | **amber-500** |
+| Füllfläche gedrückt | amber-800 | **amber-400** |
+| Akzent in Meldung und Toast | *= überfahren* | **neues Token** auf amber-800 |
+| Symbolkreis im Modal | *= Füllfläche* | **dasselbe neue Token** |
+
+Nachgerechneter Endzustand, helles Theme — alle acht Prüfungen bestehen:
+
+| Prüfung | Ergebnis |
+|---|---|
+| Beschriftung Ruhe / überfahren / gedrückt | 4,95 / 6,77 / 8,74 ✓ |
+| Akzenttext in der Meldung / im Toast | 5,71 / 6,14 ✓ |
+| Symbolkreis im Modal | 5,71 ✓ |
+| Füllfläche gegen die Seite | 3,21 ✓ |
+| Meldungstext | 11,17 ✓ |
+
+Das dunkle Theme bleibt unverändert und durchgehend über den Schwellen (7,76 bis 11,89 für die Beschriftungen, 6,61 für den Akzent).
+
+**Was sich sichtbar ändert:** Die Warnfarbe bleibt das kräftige helle Orange, das sie heute ist. Die Warn-Schaltfläche wird beim Überfahren und Drücken **heller** statt dunkler — so, wie sie sich im dunklen Theme ohnehin schon verhält. Der Akzent in Warnmeldungen und der Symbolkreis im Modal werden deutlich dunkler und damit klar lesbar.
+
+**Eine Nebenwirkung, die heute niemand misst und die beim Abnehmen zu beurteilen ist.** Weil die Fläche beim Bedienen heller wird, verliert sie an Kante gegenüber der weißen Seite:
+
+| Zustand | heute | nach der Änderung |
+|---|---|---|
+| überfahren | 4,29:1 | 2,35:1 |
+| gedrückt | 6,14:1 | 1,82:1 |
+
+Die bestehende Prüfmatrix misst nur die Füllfläche im Ruhezustand gegen die Seite, deshalb schlägt hier nichts an. Ob die Schaltfläche im gedrückten Zustand noch genug Kante hat, ist am Bildschirm zu beurteilen und nicht auszurechnen.
+
+**Offene Frage für die Umsetzung: gilt die Trennung für alle vier Statusfarben?** Erfolg, Fehler und Information verwenden dieselbe Doppelrolle, verfehlen aber keine Schwelle — ihre 700er-Stufen tragen sowohl als Akzent (7,46 bis 8,79) als auch mit weißer Schrift als Füllung (7,96 bis 9,45). Ein neues Token nur für die Warnung macht die Warnung im Komponentencode zum Sonderfall; ein neues Token für alle vier hält das Muster einheitlich, ändert aber drei Rollen ohne fachliche Not. **Diese Entscheidung gehört ins Design-Projekt** und ist vor der Umsetzung zu klären.
 
 ---
 
@@ -266,9 +333,11 @@ Die Palettenstufe stone-500 wird um zwei Punkte je Farbkanal nachgedunkelt (`#94
 
 ## 8. Offene Punkte
 
-**Offener Punkt 1 — Deckung als Helligkeit.** Ob die Anhebung der Ring-Deckung (Gruppe A) unter Ihre Vorgabe „allenfalls die Helligkeit" fällt, ist Ihre Entscheidung. Fällt sie nicht darunter, ist der Fokusring über die zulässigen Mittel nicht auf 3:1 zu bringen — dann bleiben acht Kombinationen unter der Schwelle, und das sollte ausdrücklich so beschlossen werden.
+**Punkt 1 — Deckung als Helligkeit: entschieden.** Der Inhaber wertet die Anhebung der Ring-Deckung als Helligkeitsänderung; der hinterlegte Farbwert bleibt unverändert, nur seine Dichte steigt. Gruppe A wird umgesetzt.
 
-**Offener Punkt 2 — die doppelte Aufgabe der Warnfarbe.** Wenn das helle, leuchtende Orange erhalten bleiben soll, ist Gruppe B über Farbwerte nicht lösbar. Der strukturell richtige Weg wäre dann, die beiden Aufgaben der Überfahren-Farbe zu trennen: eine eigene Farbe für den Akzent in Meldungen, getrennt von der Füllfläche der Schaltfläche. **Das ist eine Vertragsänderung und gehört ins Design-Projekt**, nicht in eine Farbkorrektur. Ich habe sie nicht vorbereitet, sondern lege sie Ihnen hier vor.
+**Punkt 2 — die doppelte Aufgabe der Warnfarbe: entschieden.** Die Doppelrolle wird getrennt, das helle Orange bleibt erhalten. Einzelheiten und nachgerechneter Endzustand in Abschnitt 5. **Dies ist eine Vertragsänderung und gehört als eigene Aufgabe ins Design-Projekt**, nicht in eine Farbkorrektur — sie braucht ein neues Token und zwei Komponenten müssen darauf zeigen (`Notification`, `Modal`).
+
+**Offen geblieben — vor der Umsetzung von Gruppe B zu klären:** ob das neue Akzent-Token nur für die Warnung entsteht oder für alle vier Statusfarben. Siehe Abschnitt 5.
 
 **Beobachtung ohne Handlungsbedarf.** Die Prüfmatrix misst Rahmenlinien nur gegen die Grundfläche und die Kartenfläche, nicht gegen die gehobene Kartenfläche. Dort läge die kräftige Rahmenlinie bei 2,68:1. Ob diese Kombination auf dem Bildschirm überhaupt entsteht, habe ich nicht feststellen können; ich vermerke es, damit es nicht unbemerkt bleibt.
 
@@ -276,16 +345,24 @@ Die Palettenstufe stone-500 wird um zwei Punkte je Farbkanal nachgedunkelt (`#94
 
 ## 9. Ihre Entscheidungen
 
-Bitte entscheiden Sie je Fall. Ich trage Ihre Entscheidungen anschließend hier ein — dieser Bericht ist die Vorgabe für die spätere Umsetzung und muss allein tragen.
+Die Entscheidungen des Inhabers liegen vor und sind hier festgehalten. Dieser Bericht ist die Vorgabe für die spätere Umsetzung.
 
-| Nr. | Fall | Vorschlag | Reichweite | Entscheidung |
-|---|---|---|---|---|
-| **A** | Fokusring, 8 Kombinationen | Deckung 35 % → 75 %, beide Ringe | nur der Ring | _offen_ |
-| **B** | Warnfarbe, 5 Kombinationen | Füllflächen auf amber-800/900/1000, Beschriftung weiß | nur die Warn-Rollen | _offen_ |
-| **C1** | Textlink hell, 2 Kombinationen | teal-600 → teal-700 | eine Rolle | _offen_ |
-| **C2** | Textlink dunkel, 1 Kombination | teal-400 → teal-300, Überfahren → teal-200 | zwei Rollen | _offen_ |
-| **D** | Kräftige Rahmenlinie | D1 grob / D2 unsichtbar, aber Palettenstufe / D3 Ausnahme | D1 klein, D2 groß | _offen_ |
+| Nr. | Fall | Beschlossen | Reichweite |
+|---|---|---|---|
+| **A** | Fokusring, 8 Kombinationen | Deckung **35 % → 75 %**, beide Ringe gleich | nur der Ring, keine Kaskade |
+| **B** | Warnfarbe, 5 Kombinationen | **Doppelrolle trennen** — eigenes Akzent-Token auf amber-800, Bedienzustände auf amber-500/400, helle Warnfarbe bleibt | Vertragsänderung im Design-Projekt, neues Token, 2 Komponenten |
+| **C1** | Textlink hell, 2 Kombinationen | teal-600 → **teal-700** | eine Rolle |
+| **C2** | Textlink dunkel, 1 Kombination | teal-400 → **teal-300**, Überfahren → **teal-200** | zwei Rollen |
+| **D** | Kräftige Rahmenlinie | **D2** — stone-500 minimal nachdunkeln (`#94908c` → `#928e8a`) | **Palettenstufe**, kaskadiert in beide Themes und alle 36 Komponenten |
 
-**Zu Punkt A gehört zusätzlich die Frage aus Abschnitt 4**, ob eine Deckungsänderung unter Ihre Vorgabe fällt.
+### Was daraus für die Umsetzung folgt
 
-**Nur bei Wahl von D2 verschiebt sich eine Marken-Palettenstufe.** Alle übrigen Vorschläge kommen ohne aus.
+**Eine einzige Marken-Palettenstufe wird verschoben: stone-500 (Fall D).** Sie erreicht außer der kräftigen Rahmenlinie auch gesperrten Text, gesperrte Symbole und gesperrte Schaltflächen-Beschriftungen in beiden Themes. Die Änderung ist mit zwei Punkten je Farbkanal unter der Wahrnehmungsschwelle, die Reichweite aber real.
+
+**Alle übrigen Farbentscheidungen (A, C1, C2) kommen ohne Palettenänderung aus** und bewegen nur, worauf eine Rolle zeigt.
+
+**Fall B ist keine Farbkorrektur, sondern eine Vertragsänderung** und gehört als eigene Aufgabe behandelt. Vor ihrer Umsetzung ist die offene Frage aus Abschnitt 5 zu klären, ob das neue Akzent-Token für eine oder für alle vier Statusfarben entsteht.
+
+**Zwei Änderungen brauchen einen Blick am Bildschirm, weil keine Zahl sie entscheidet:** der deutlich kräftigere Fokusring (Fall A) und die Kante der Warn-Schaltfläche im gedrückten Zustand (Fall B, siehe Abschnitt 5).
+
+**Der Paar-Test bleibt von allen Entscheidungen unberührt.** Fall D verschiebt die Stufe stone-500 für beide Themes gemeinsam, die Gleichheit der vier betroffenen Rollen bleibt also bestehen. Der Weg D1, der sie aufgehoben hätte, wurde nicht gewählt.
