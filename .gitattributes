@@ -4,3 +4,9 @@ design-reference/** -text
 
 # Font binaries
 *.woff2 binary
+
+# Consumed by Linux tooling on deploy. A CR from autocrlf would end up in
+# the line continuation and in nginx directives.
+Dockerfile text eol=lf
+nginx.conf text eol=lf
+.dockerignore text eol=lf

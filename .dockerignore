@@ -1,0 +1,14 @@
+.git
+.gitattributes
+.gitignore
+node_modules
+dist
+dist-lib
+.apm
+.claude
+worktrees-backup
+design-reference
+docs
+*.md
+Dockerfile
+.dockerignore
