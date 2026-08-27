@@ -6,8 +6,7 @@ import { Select, Toggle } from '../components'
 /* Sort rule, identical on every documentation page: pickers before switches,
    inside each block by label, ties broken by the order the page declares them.
    Pages do not order their controls — the panel does, so a control sits in the
-   same place everywhere. The pickers land on top because they choose the
-   variant, the switches below because they refine it. */
+   same place everywhere. */
 const rank = control => (control.type === 'dropdown' ? 0 : 1)
 
 function sortControls(controls) {
@@ -48,54 +47,41 @@ export function DemoPanel({ component, controls }) {
       </h2>
       {/* No overflow-hidden: it clipped every popup that opens inside the preview.
           The children carry the corners instead. */}
-      <div className="border border-[var(--medo-border)] rounded-[var(--medo-radius-lg)] flex max-[768px]:flex-col">
-        {/* The preview leads. On a narrow screen the settings drop below it, so the
-            component is on screen before any of them. */}
-        <div
-          className={`bg-[var(--medo-surface)] flex-1 min-w-0 flex items-center justify-center min-h-[200px] p-[var(--medo-space-xl)] ${
-            hasControls
-              ? 'rounded-l-[var(--medo-radius-lg)] max-[768px]:rounded-l-none max-[768px]:rounded-t-[var(--medo-radius-lg)]'
-              : 'rounded-[var(--medo-radius-lg)]'
-          }`}
-        >
-          {component(values)}
-        </div>
-
+      <div className="border border-[var(--medo-border)] rounded-[var(--medo-radius-lg)]">
         {hasControls && (
-          <div className="w-[280px] shrink-0 max-[768px]:w-auto bg-[var(--medo-surface-container)] border-l border-[var(--medo-border-subtle)] max-[768px]:border-l-0 max-[768px]:border-t rounded-r-[var(--medo-radius-lg)] max-[768px]:rounded-r-none max-[768px]:rounded-b-[var(--medo-radius-lg)] p-[var(--medo-space-lg)]">
-            <h3 className="[font-size:var(--medo-text-sm)] [font-family:var(--medo-font-sans)] [font-weight:var(--medo-weight-semibold)] text-[var(--medo-text)] mb-[var(--medo-space-md)]">
-              {t('demoPanel.settings')}
-            </h3>
-            <div
-              role="group"
-              aria-label={t('demoPanel.settings')}
-              className="grid grid-cols-1 gap-[var(--medo-space-sm)]"
-            >
-              {shown.map(control =>
-                control.type === 'dropdown' ? (
-                  <Select
-                    key={control.id}
-                    size="sm"
-                    fullWidth
-                    label={control.label}
-                    value={values[control.id]}
-                    onChange={e => update(control.id, e.target.value)}
-                    options={control.options.map(opt => ({ value: opt, label: opt }))}
-                  />
-                ) : (
-                  <Toggle
-                    key={control.id}
-                    size="sm"
-                    labelPosition="left"
-                    label={control.label}
-                    checked={values[control.id]}
-                    onChange={next => update(control.id, next)}
-                  />
-                )
-              )}
-            </div>
+          <div
+            role="group"
+            aria-label={t('demoPanel.controls')}
+            className="grid grid-cols-[repeat(auto-fit,minmax(190px,1fr))] max-[768px]:grid-cols-1 items-end gap-x-[var(--medo-space-lg)] gap-y-[var(--medo-space-sm)] px-[var(--medo-space-lg)] py-[var(--medo-space-md)] border-b border-[var(--medo-border-subtle)] bg-[var(--medo-surface-container)] rounded-t-[var(--medo-radius-lg)]"
+          >
+            {shown.map(control =>
+              control.type === 'dropdown' ? (
+                <Select
+                  key={control.id}
+                  size="sm"
+                  fullWidth
+                  label={control.label}
+                  value={values[control.id]}
+                  onChange={e => update(control.id, e.target.value)}
+                  options={control.options.map(opt => ({ value: opt, label: opt }))}
+                />
+              ) : (
+                <Toggle
+                  key={control.id}
+                  size="sm"
+                  labelPosition="left"
+                  label={control.label}
+                  checked={values[control.id]}
+                  onChange={next => update(control.id, next)}
+                />
+              )
+            )}
           </div>
         )}
+
+        <div className={`bg-[var(--medo-surface)] flex items-center justify-center min-h-[200px] p-[var(--medo-space-xl)] rounded-b-[var(--medo-radius-lg)] ${hasControls ? '' : 'rounded-t-[var(--medo-radius-lg)]'}`}>
+          {component(values)}
+        </div>
       </div>
       <p className="mt-[var(--medo-space-sm)] text-sm [font-family:var(--medo-font-sans)] text-[var(--medo-text-muted)]">
         {t('demoPanel.hint')}

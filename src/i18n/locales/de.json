@@ -91,7 +91,7 @@
   },
   "demoPanel": {
     "title": "Live-Demo",
-    "settings": "Einstellungen",
+    "controls": "Steuerung",
     "hint": "Diese Live-Demo bietet lediglich einen Überblick über die Funktionen und Designs, die für diese Komponente verfügbar sind."
   },
   "tokensTable": {

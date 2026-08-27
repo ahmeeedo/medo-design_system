@@ -21,7 +21,7 @@ const gated = [
   { id: 'clearable', type: 'toggle', label: 'Clearable', default: false, visibleWhen: v => !v.disabled },
 ]
 
-const cells = () => Array.from(screen.getByRole('group', { name: 'Einstellungen' }).children)
+const cells = () => Array.from(screen.getByRole('group', { name: 'Steuerung' }).children)
 
 describe('DemoPanel controls', () => {
   it('puts pickers before switches and orders each block by label', () => {
