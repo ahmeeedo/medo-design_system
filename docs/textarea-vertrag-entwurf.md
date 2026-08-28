@@ -1,6 +1,6 @@
 # Textarea — Vertragsentwurf und Abweichungsliste
 
-**Stand:** 28.08.2026 · **Status:** wartet auf Freigabe
+**Stand:** 28.08.2026 · **Status:** **freigegeben**
 **Entwurf:** [`textarea-vertrag-entwurf.d.ts`](./textarea-vertrag-entwurf.d.ts) (bewusst **nicht** unter `src/types/` — dort abgelegt wäre er sofort wirksam)
 
 ---
@@ -210,6 +210,32 @@ Jede Angleichung ist eine eigene Aufgabe. **Nur was Sie freigeben, wird später 
 
 ## Freigabe
 
-> _Wird nach Ihrer Rückmeldung hier eingetragen: welche Punkte angeglichen werden und welche nicht._
+**Der Inhaber hat am 28.08.2026 alle Empfehlungen übernommen.** Damit gilt für die spätere Umsetzung:
 
-**Status:** offen
+| | Punkt | Entscheidung |
+|---|---|---|
+| 1 | Fokusrahmen verschwindet bei eigener Reaktion | **angleichen** |
+| 2 | Fehlermeldung wird für Vorleseprogramme unauffindbar | **angleichen** |
+| 3 | Feld gilt als fehlerfrei trotz sichtbarer Fehlermeldung | **angleichen** |
+| 4 | `lg` ist so groß wie `md` | **`lg` sichtbar machen** — nicht streichen |
+| 5 | Vorbelegung mit `0` kommt leer an | **angleichen** |
+| 6 | Text zwischen den Klammern verschwindet lautlos | **zurückgestellt** — gemeinsam mit `TextInput` zu entscheiden |
+| 7 | Strengere Prüfung nach Einführung des Vertrags | **so machen** |
+
+### Was das für die Umsetzung heißt
+
+Die Umsetzung ist **nicht** Teil dieser Aufgabe. Damit die spätere Aufgabe nicht raten muss, hier die Punkte in der Reihenfolge, in der sie zusammenhängen:
+
+1. **Die Punkte 1 bis 3 sind eine einzige Korrektur** an `src/components/Textarea/Textarea.jsx`: Die Angaben des Abnehmers müssen vor den eingebauten stehen, oder beide müssen zusammengeführt werden. Keine dieser drei Korrekturen bricht bestehende Einbindungen.
+
+2. **Punkt 5** ist eine eigene, kleine Korrektur in derselben Datei.
+
+3. **Punkt 4 zieht eine Vertragsänderung nach sich.** Der Entwurf beschreibt heute den Ist-Zustand („`md` und `lg` je 16px"). Sobald `lg` sichtbar größer wird, muss dieser Kommentar mitgeändert werden. **Beides gehört in denselben Arbeitsschritt** — sonst beschreibt der Vertrag etwas, das nicht mehr stimmt.
+
+4. **Punkt 7 besteht aus zwei Handgriffen, die zusammen geschehen müssen:** Der Vertrag wandert nach `src/types/Textarea.d.ts`, **und** der Ausnahmeeintrag in `scripts/build-package.mjs:159` wird entfernt. Bleibt er stehen, wird der Vertrag zwar mit ausgeliefert, aber nicht benutzt — und nichts von Punkt 7 tritt ein.
+
+5. **Punkt 6 bleibt unangetastet**, bis `TextInput` und `Textarea` gemeinsam entschieden werden.
+
+**Alle Änderungen betreffen bereits ausgeliefertem Code.** Nach der Umsetzung ist zusätzlich `npm run build:lib` fällig.
+
+**Status:** **freigegeben** am 28.08.2026
