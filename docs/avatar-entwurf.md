@@ -1,12 +1,12 @@
 # Avatar — Entwurf zur Freigabe
 
-**Fassung 4 · Stand:** 28.08.2026 · **Status:** wartet auf Freigabe · **Vorschau:** [`avatar-entwurf.html`](./avatar-entwurf.html) im Browser öffnen
+**Fassung 5 · Stand:** 28.08.2026 · **Status:** wartet auf Freigabe · **Vorschau:** [`avatar-entwurf.html`](./avatar-entwurf.html) im Browser öffnen
 
 ---
 
 ## Was entschieden ist
 
-Aus drei Rückmeldungen des Inhabers am 28.08.2026. Alles hier ist **festgelegt** und Grundlage der späteren Umsetzung:
+Aus vier Rückmeldungen des Inhabers am 28.08.2026. Alles hier ist **festgelegt** und Grundlage der späteren Umsetzung:
 
 | | Entscheidung | Ausgeführt in |
 |---|---|---|
@@ -21,6 +21,7 @@ Aus drei Rückmeldungen des Inhabers am 28.08.2026. Alles hier ist **festgelegt*
 | Contained-list | **umstellen, einfarbig** | [F7](#f7--was-das-für-die-contained-list-bedeutet) |
 | Kleine Größen | **30/38 px halten** (nicht auf 32/40 ziehen) | [D1](#d1--es-gibt-keine-token-für-komponentengrößen-30-px--38-px) |
 | Dunkelmodus | **gegenstandslos** — die kräftigen Flächen tragen sich selbst | [F6](#f6--der-dunkelmodus-löst-sich-von-selbst) |
+| Personen-Symbol | **angenommen** für den Fall ohne Bild und ohne Namen | [Ergänzung 2](#ergänzung-2--personen-symbol-wenn-kein-name-da-ist--angenommen) |
 
 ## Die Palette ist fertig
 
@@ -38,10 +39,9 @@ Amber muss auf 800 bleiben: Auf 900 rückt es so nah an Gelb, dass die beiden wi
 
 ## Was noch offen ist
 
-Zwei Kleinigkeiten aus Fassung 1, die bisher keine Antwort haben — beide in der Vorschau zu sehen:
+**Ein Punkt.** Bekommt eine Person ihre Farbe danach, **wer sie ist**, oder danach, **an welcher Stelle sie gerade in der Liste steht**?
 
-- **Personen-Symbol**, wenn es gar keinen Namen gibt (gelöschtes Konto, offene Einladung). Es ist das letzte Glied des Rückfalls, den Sie angenommen haben.
-- **Farbe aus dem Namen statt aus der Zeilennummer.** Sonst springt die Farbe einer Person, sobald jemand die Tabelle umsortiert. Mit fünfzehn Farben fällt das mehr auf als mit vier.
+Das war in Fassung 4 zu abstrakt beschrieben und ist deshalb zurückgestellt worden. **Abschnitt 7 der Vorschau zeigt es jetzt zum Ausprobieren**: zwei Tabellen mit denselben vier Personen und ein Knopf zum Umsortieren. Links wechseln alle die Farbe, rechts behält jeder seine. Die Einzelheiten stehen in [Ergänzung 3](#ergänzung-3--woher-die-farbe-einer-person-kommt).
 
 ---
 
@@ -244,7 +244,9 @@ Der Rückfall ist für den Anwender nicht als Fehler erkennbar — er sieht einf
 
 **Annehmen oder verwerfen?** Verwerfen Sie diese Ergänzung, bleibt der Avatar reine Buchstaben — was heute überall im System der Fall ist.
 
-### Ergänzung 2 · Personen-Symbol, wenn kein Name da ist
+### Ergänzung 2 · Personen-Symbol, wenn kein Name da ist — **angenommen**
+
+> **Entschieden am 28.08.2026: angenommen.** Der Avatar zeigt ein Personen-Symbol, wenn weder ein Bild noch ein Name vorliegt.
 
 **Kein direkter Beleg** — für die *Verwendung*. Für die *Darstellung* gibt es einen: Die Contained-list zeigt im Leerzustand ein Symbol in einem getönten Kreis.
 
@@ -254,9 +256,21 @@ Der Rückfall ist für den Anwender nicht als Fehler erkennbar — er sieht einf
 
 **Vorschlag:** Material-Symbol `person`, in getönter Fläche — Fläche `--medo-surface-sunken`, Symbol `--medo-icon-muted`, analog zur zitierten Fundstelle.
 
-### Ergänzung 3 · Farbe aus dem Namen statt aus der Zeilennummer
+### Ergänzung 3 · Woher die Farbe einer Person kommt
 
-Bereits unter [A6](#a6--farbe-fall-2-vier-durchlaufende-farben) beschrieben und dort begründet. Ich führe sie hier noch einmal auf, damit sie in der Liste der Einzelentscheidungen nicht untergeht. Mit fünfzehn Farben statt vier wiegt sie schwerer: Je mehr Farben im Umlauf sind, desto auffälliger ist ein Farbsprung beim Umsortieren.
+**Die Frage in einem Satz:** Bekommt eine Person ihre Farbe danach, **wer sie ist**, oder danach, **an welcher Stelle sie gerade in der Liste steht**?
+
+**Was die heutige Vorlage tut:** Sie zählt die Zeilen ab. Die erste Zeile bekommt Farbe 1, die zweite Farbe 2, und so weiter.
+
+> `Data-table.dc.html:282` — `const pal = avatarPalette[(r.id - 1) % avatarPalette.length];`
+
+**Warum das ein Problem ist:** Die Farbe klebt dann an der *Zeile*, nicht an der *Person*. Sobald jemand die Tabelle nach einer anderen Spalte sortiert, rutschen alle Personen an neue Plätze — und wechseln damit die Farbe. Dasselbe passiert, wenn eine Person hinzukommt, gelöscht wird oder ein Filter gesetzt wird.
+
+Damit verliert der Avatar genau das, wofür er da ist: Man soll eine Person am Kreis wiedererkennen, ohne den Namen zu lesen. Das geht nicht, wenn derselbe Mensch in der Tabelle rot ist, in der Liste daneben grün und nach dem Umsortieren gelb.
+
+**Vorschlag:** Die Farbe wird aus dem Namen berechnet. Aus „Andreas Müller" ergibt sich immer dieselbe Farbe — in jeder Tabelle, in jeder Liste, auf jeder Seite, in jeder Sortierung. Die Personen behalten ihre Farbe, auch wenn sie die Plätze tauschen.
+
+**In der Vorschau ausprobierbar:** Abschnitt 7 zeigt beide Varianten nebeneinander mit einem Knopf zum Umsortieren. Links wandern die Farben nicht mit, rechts schon.
 
 ---
 
@@ -427,12 +441,18 @@ Die letzten beiden Zeilen stehen hier der Vollständigkeit halber. Sie sind **ke
 
 Bitte öffnen Sie **[`docs/avatar-entwurf.html`](./avatar-entwurf.html)** im Browser (Doppelklick genügt, kein Entwicklungsserver nötig).
 
-**Zwei Punkte, dann ist der Entwurf fertig.**
+**Ein einziger Punkt ist noch offen.**
 
-1. **Die fertige Farbreihe** (Abschnitt 1 der Vorschau) — bitte einmal ansehen und im **Dunkelmodus** bestätigen. Orange, Gelb und Violett sind gegenüber der letzten Fassung nachgedunkelt, Amber ist bewusst geblieben, wo es war.
-2. **Zwei Kleinigkeiten, die noch keine Antwort haben:**
-   - **Personen-Symbol**, wenn es gar keinen Namen gibt — Abschnitt 4 der Vorschau.
-   - **Farbe aus dem Namen statt aus der Zeilennummer** — sonst springt die Farbe einer Person beim Umsortieren der Tabelle.
+Gehen Sie in der Vorschau zu **Abschnitt 7 („Woher die Farbe kommt")** und drücken Sie dort den Knopf **„Nach Vorgängen sortieren"**. Sie sehen zwei Tabellen mit denselben vier Personen:
+
+- **Links** bleiben die Farben an ihrem Platz stehen. Wer nach dem Sortieren oben steht, ist rot — egal wer es ist. **Jede Person wechselt die Farbe.**
+- **Rechts** wandert die Farbe mit der Person mit. Andreas Müller ist vorher und nachher blau.
+
+**Meine Frage:** Soll es die rechte Variante werden?
+
+Der Sinn des farbigen Kreises ist, dass man eine Person daran wiedererkennt, ohne den Namen zu lesen. Links funktioniert das nicht — derselbe Mensch ist in der Tabelle rot, nach dem Sortieren orange und in der Liste nebenan wieder anders. **Die heutige Vorlage im System macht es wie links**; das fällt dort nur nicht auf, weil sich die Beispieltabelle nie ändert.
+
+Drücken Sie den Knopf ein paarmal — dann sieht man es sofort.
 
 ---
 
@@ -467,11 +487,16 @@ Bitte öffnen Sie **[`docs/avatar-entwurf.html`](./avatar-entwurf.html)** im Bro
 | ✓ | Orange, Amber, Gelb eine Stufe höher? | **Orange 900 · Gelb 900 · Amber bleibt 800** — Amber auf 900 hätte Gelb zu nahe gelegen |
 | ✓ | Grau und Stein | **abgenommen** — Stein bleibt auf 900 |
 | ✓ | Indigo und Violett | **Violett auf 800** |
-| — | Personen-Symbol | noch offen |
-| — | Farbe aus dem Namen statt Zeilennummer | noch offen |
 
-### Rückmeldung 4
+### Rückmeldung 4 vom 28.08.2026
+
+| | Punkt | Entscheidung |
+|---|---|---|
+| ✓ | Personen-Symbol ohne Namen | **angenommen** |
+| — | Farbe nach Name statt nach Listenplatz | zurückgestellt — war zu abstrakt erklärt, jetzt in Abschnitt 7 der Vorschau zum Ausprobieren |
+
+### Rückmeldung 5
 
 > _Wird nach Ihrer Rückmeldung hier eingetragen._
 
-**Status:** offen
+**Status:** offen — ein Punkt

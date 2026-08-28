@@ -226,10 +226,10 @@ h2{ font-size:var(--medo-text-lg); font-weight:var(--medo-weight-semibold); marg
     <div>
       <h1>Avatar — Entwurf zur Freigabe</h1>
       <p class="lead">
-        <b>Fassung 4.</b> Die Palette ist fertig: fünfzehn Farben, überall weiße Schrift, keine zwei
-        gleich wirkend, keine durch ihre Helligkeit herausstechend. Auch Größe, Buchstaben-Regel und die
-        Contained-list sind entschieden. Nur die beiden Abschnitte mit
-        <span class="badge badge--ask">Ihre Wahl</span> brauchen noch eine Antwort — es sind Kleinigkeiten.
+        <b>Fassung 5.</b> Fast alles ist entschieden — Palette, Größen, Buchstaben-Regel,
+        Personen-Symbol, Contained-list. <b>Es fehlt eine einzige Antwort</b>, und zwar in
+        <b>Abschnitt 7</b>: dort steht ein Knopf zum Umsortieren, der den offenen Punkt in zwei
+        Tabellen nebeneinander vorführt. Bitte einmal draufdrücken.
         Die schriftliche Fassung liegt daneben in <span class="mono">avatar-entwurf.md</span>.
       </p>
     </div>
@@ -396,7 +396,7 @@ h2{ font-size:var(--medo-text-lg); font-weight:var(--medo-weight-semibold); marg
       <div class="row"><span class="av av--lg av--teal">AM</span></div>
     </div>
     <div class="card">
-      <h2>Symbol <span class="badge badge--ask">offen</span></h2>
+      <h2>Symbol <span class="badge badge--set">angenommen</span></h2>
       <p class="note" style="margin-bottom:var(--medo-space-md)">Wenn es gar keinen Namen gibt: gelöschtes Konto, offene Einladung.</p>
       <div class="row"><span class="av av--lg av--icon"><span class="msr">person</span></span></div>
     </div>
@@ -448,7 +448,56 @@ h2{ font-size:var(--medo-text-lg); font-weight:var(--medo-weight-semibold); marg
   </div>
 
   <!-- ================================================================== -->
-  <div class="eyebrow">7 · Was ich weiterhin weglasse</div>
+  <div class="eyebrow">7 · Woher die Farbe kommt — zum Ausprobieren <span class="badge badge--ask">Ihre Wahl</span></div>
+  <div class="card">
+    <p class="note" style="margin:0 0 var(--medo-space-md)">
+      Es gibt zwei Möglichkeiten, welche der fünfzehn Farben eine Person bekommt. Der Unterschied
+      fällt erst auf, <b>wenn jemand die Tabelle umsortiert</b> — also klicken Sie einmal auf den Knopf.
+    </p>
+    <div class="row" style="margin-bottom:var(--medo-space-lg)">
+      <button class="toggle" id="sortBtn" type="button">
+        <span class="msr">swap_vert</span><span id="sortLabel">Nach Vorgängen sortieren</span>
+      </button>
+    </div>
+
+    <div class="grid cols2">
+      <div>
+        <p class="note" style="margin:0 0 var(--medo-space-sm)"><b>A · Farbe nach Platz in der Liste</b></p>
+        <table class="tbl">
+          <thead><tr><th>Name</th><th class="num">Vorgänge</th></tr></thead>
+          <tbody id="tblA"></tbody>
+        </table>
+        <p class="note">
+          Die Farben bleiben, wo sie sind — die Personen wandern hindurch.
+          <b>Jeder wechselt beim Sortieren die Farbe.</b>
+        </p>
+      </div>
+      <div>
+        <p class="note" style="margin:0 0 var(--medo-space-sm)"><b>B · Farbe nach dem Namen</b></p>
+        <table class="tbl">
+          <thead><tr><th>Name</th><th class="num">Vorgänge</th></tr></thead>
+          <tbody id="tblB"></tbody>
+        </table>
+        <p class="note">
+          Die Farbe wandert mit der Person mit.
+          <b>Andreas Müller ist immer blau</b> — auch in einer anderen Liste, auf einer anderen Seite.
+        </p>
+      </div>
+    </div>
+
+    <p class="ask">
+      <b>Warum das zählt:</b> Der Sinn der farbigen Kreise ist, dass man eine Person wiedererkennt,
+      ohne den Namen zu lesen. Das funktioniert nur, wenn die Farbe zur Person gehört — nicht zur
+      Zeile, in der sie gerade steht. Bei A wechselt jemand die Farbe, sobald jemand anders sortiert
+      oder eine Person hinzukommt.
+      <br><br>
+      <b>Die heutige Vorlage im System macht es wie A.</b> Das fällt dort nicht auf, weil die
+      Beispieltabelle sich nie ändert. <b>Vorschlag: B.</b>
+    </p>
+  </div>
+
+  <!-- ================================================================== -->
+  <div class="eyebrow">8 · Was ich weiterhin weglasse</div>
   <div class="card">
     <p class="note" style="margin:0">
       Eckige Varianten, ein grüner Punkt für „ist online", Gruppen aus mehreren überlappenden Kreisen,
@@ -492,6 +541,44 @@ h2{ font-size:var(--medo-text-lg); font-weight:var(--medo-weight-semibold); marg
   probe.onload = function () { slot.textContent = ''; slot.appendChild(probe); };
   probe.alt = '';
   probe.src = 'gibt-es-nicht.jpg';
+
+  // Abschnitt 7: Farbe nach Listenplatz (A) gegen Farbe nach Name (B).
+  var farben = ['red','crimson','rose','orange','amber','yellow','green','teal','cyan',
+                'blue','indigo','violet','purple','grey','stone'];
+  var leute = [
+    { name: 'Andreas Müller', kurz: 'AM', vorgaenge: 12 },
+    { name: 'Peter Zeider',   kurz: 'PZ', vorgaenge: 3  },
+    { name: 'renatosanches',  kurz: 'RE', vorgaenge: 21 },
+    { name: 'Clara Schmidt',  kurz: 'CS', vorgaenge: 8  }
+  ];
+  // Stabile Zahl aus dem Namen - dieselbe Person bekommt ueberall dieselbe Farbe.
+  function ausName(s) {
+    var h = 0;
+    for (var i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) % 100000;
+    return farben[h % farben.length];
+  }
+  function zeile(person, farbe) {
+    return '<tr><td><div class="person"><span class="av av--sm av--' + farbe + '">' +
+      person.kurz + '</span><div><b>' + person.name + '</b></div></div></td>' +
+      '<td class="num">' + person.vorgaenge + '</td></tr>';
+  }
+  var nachName = true;
+  function zeichne() {
+    var liste = leute.slice().sort(function (a, b) {
+      return nachName ? a.name.localeCompare(b.name) : b.vorgaenge - a.vorgaenge;
+    });
+    document.getElementById('tblA').innerHTML =
+      liste.map(function (p, i) { return zeile(p, farben[i]); }).join('');
+    document.getElementById('tblB').innerHTML =
+      liste.map(function (p) { return zeile(p, ausName(p.name)); }).join('');
+    document.getElementById('sortLabel').textContent =
+      nachName ? 'Nach Vorgängen sortieren' : 'Nach Namen sortieren';
+  }
+  document.getElementById('sortBtn').addEventListener('click', function () {
+    nachName = !nachName;
+    zeichne();
+  });
+  zeichne();
 
   // Hell/Dunkel
   var root = document.documentElement;
