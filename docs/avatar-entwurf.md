@@ -1,43 +1,47 @@
 # Avatar — Entwurf zur Freigabe
 
-**Fassung 3 · Stand:** 28.08.2026 · **Status:** wartet auf Freigabe · **Vorschau:** [`avatar-entwurf.html`](./avatar-entwurf.html) im Browser öffnen
+**Fassung 4 · Stand:** 28.08.2026 · **Status:** wartet auf Freigabe · **Vorschau:** [`avatar-entwurf.html`](./avatar-entwurf.html) im Browser öffnen
 
 ---
 
 ## Was entschieden ist
 
-Aus zwei Rückmeldungen des Inhabers am 28.08.2026. Alles hier ist **festgelegt** und Grundlage der späteren Umsetzung:
+Aus drei Rückmeldungen des Inhabers am 28.08.2026. Alles hier ist **festgelegt** und Grundlage der späteren Umsetzung:
 
 | | Entscheidung | Ausgeführt in |
 |---|---|---|
 | Layout | freigegeben | — |
 | Bild-Variante | **angenommen**, mit Rückfall auf Buchstaben | [Ergänzung 1](#erganzung-1-bild-statt-initialen) |
 | Buchstaben | aus Vor-/Nachname, aus Binnengroßschreibung, sonst erste zwei Zeichen | [A4](#a4--füllung-zwei-buchstaben) |
-| Farbe | **alle Brand-Farben**, überall **weiße** Schrift, keine zwei gleich wirkend | [Teil F](#teil-f--farbe-fassung-3) |
+| Farbe | **15 Brand-Farben**, überall **weiße** Schrift, keine zwei gleich wirkend | [Teil F](#teil-f--farbe-fassung-4) |
+| Warme Farben | **Orange 900 · Amber 800 · Gelb 900** | [F3](#f3--warum-nicht-alle-drei-eine-stufe-hoch) |
+| Indigo/Violett | **Violett auf 800** | [F4](#f4--indigo-und-violett--getrennt) |
+| Grau/Stein | **Stein auf 900** — abgenommen | [F5](#f5--grau-und-stein--getrennt) |
 | Profil-Größe | **64 px** (96 px verworfen) | [A3b](#a3b--größe-lg--64-px-für-das-profilbild--angeordnet) |
-| Contained-list | **umstellen, einfarbig** | [F6](#f6--was-das-für-die-contained-list-bedeutet) |
+| Contained-list | **umstellen, einfarbig** | [F7](#f7--was-das-für-die-contained-list-bedeutet) |
 | Kleine Größen | **30/38 px halten** (nicht auf 32/40 ziehen) | [D1](#d1--es-gibt-keine-token-für-komponentengrößen-30-px--38-px) |
-| Dunkelmodus | **gegenstandslos** — die kräftigen Flächen tragen sich selbst | [F5](#f5--der-dunkelmodus-löst-sich-von-selbst) |
+| Dunkelmodus | **gegenstandslos** — die kräftigen Flächen tragen sich selbst | [F6](#f6--der-dunkelmodus-löst-sich-von-selbst) |
 
-## Was Fassung 3 daraus gemacht hat
+## Die Palette ist fertig
 
-Die Anweisung lautete: *„Bei den Farben, in der eine dunkle Schrift ist oder sie gleich wirken, die Farben so anpassen, dass die Schrift weiß wird bzw. die sich unterscheiden."*
+Die letzte Rückfrage lautete: *„Orange, Amber und Gelb evtl. noch eine Stufe hoch?"* — **Ja, aber nicht alle drei.**
 
-**Umgesetzt, ohne einen einzigen Farbwert zu erfinden.** Wo die 600er Stufe nicht genügte, steht jetzt eine **andere bereits vorhandene Stufe derselben Farbfamilie**:
+Ich habe alle 27 Kombinationen der drei Familien über die Stufen 700, 800 und 900 durchgerechnet. **Genau eine erfüllt alle drei Bedingungen** (weiße Schrift lesbar · kein Paar zu ähnlich · alle im Helligkeitsband der übrigen zwölf):
 
-| Familie | vorher | jetzt | warum |
-|---|---|---|---|
-| Orange | 600 | **700** | Weiß erreichte auf 600 nur 3,68 statt 4,5 |
-| Amber | 600 | **800** | 3,21 auf 600 · auf 700 immer noch nur 4,29 |
-| Gelb | 600 | **800** | 2,76 auf 600 · auf 700 immer noch nur 3,59 |
-| Stein | 600 | **900** | war von Grau nicht zu unterscheiden (Farbabstand 8,0 → jetzt 20,7) |
+> **Orange 900 · Amber 800 · Gelb 900**
 
-Die übrigen elf Familien bleiben auf 600. **Alle fünfzehn tragen jetzt weiße Schrift**, der schwächste Kontrast der Reihe ist 5,03.
+Amber muss auf 800 bleiben: Auf 900 rückt es so nah an Gelb, dass die beiden wieder gleich wirken — genau das Problem, das bei Grau und Stein beseitigt wurde, wäre an anderer Stelle neu entstanden. Die Begründung mit Zahlen steht in [F3](#f3--warum-nicht-alle-drei-eine-stufe-hoch).
 
-**Zwei Punkte sind noch offen** — beide klein, beide in der Vorschau zu sehen:
+**Die fertige Reihe in drei Zahlen:** schwächster Kontrast gegen Weiß **5,84** (gefordert 4,5) · engstes Farbpaar **16,2** (Schwelle 15) · alle fünfzehn im Helligkeitsband 19 bis 43.
 
-- Ob die vier angehobenen Farben **neben ihren Nachbarn stimmig wirken** (sie sind sichtbar dunkler).
-- Ein Randbefund, den ich beim Nachrechnen fand: **Indigo und Violett** liegen bei 14,5 knapp unter derselben Schwelle. Ich habe sie nicht angefasst, sondern lege sie Ihnen vor — siehe [F4](#f4--ein-randbefund-indigo-und-violett).
+> **Eine Korrektur zu Fassung 3:** Dort stand, Orange, Amber und Gelb seien „sichtbar dunkler als ihre Nachbarn". Das war falsch herum — sie waren die **hellsten** drei der Reihe und stachen als zu helle Flecken heraus. Ihre Rückfrage war damit genau richtig. Einzelheiten in [F2](#f2--eine-korrektur-zu-fassung-3).
+
+## Was noch offen ist
+
+Zwei Kleinigkeiten aus Fassung 1, die bisher keine Antwort haben — beide in der Vorschau zu sehen:
+
+- **Personen-Symbol**, wenn es gar keinen Namen gibt (gelöschtes Konto, offene Einladung). Es ist das letzte Glied des Rückfalls, den Sie angenommen haben.
+- **Farbe aus dem Namen statt aus der Zeilennummer.** Sonst springt die Farbe einer Person, sobald jemand die Tabelle umsortiert. Mit fünfzehn Farben fällt das mehr auf als mit vier.
 
 ---
 
@@ -161,7 +165,7 @@ Vorgeben lassen sich die Buchstaben weiterhin auch direkt, so wie es die Contain
 
 ### A5 · Farbe, Fall 1: eine feste Farbe
 
-> **Überholt durch Anordnung 2.** Was hier steht, beschreibt weiterhin richtig, wie das System heute aussieht — die Farbe des Entwurfs steht jetzt in [Teil F](#teil-f--farbe-fassung-3).
+> **Überholt durch Anordnung 2.** Was hier steht, beschreibt weiterhin richtig, wie das System heute aussieht — die Farbe des Entwurfs steht jetzt in [Teil F](#teil-f--farbe-fassung-4).
 
 Die Contained-list gibt allen Avataren dieselbe Farbe — helles Teal mit dunklem Teal als Schrift.
 
@@ -171,7 +175,7 @@ Die Contained-list gibt allen Avataren dieselbe Farbe — helles Teal mit dunkle
 
 ### A6 · Farbe, Fall 2: vier durchlaufende Farben
 
-> **Überholt durch Anordnung 2.** Der *Gedanke* — mehrere Farben reihum, damit sich Personen unterscheiden — bleibt und wird in [Teil F](#teil-f--farbe-fassung-3) auf fünfzehn Farben erweitert. Die *Werte* hier gelten nicht mehr.
+> **Überholt durch Anordnung 2.** Der *Gedanke* — mehrere Farben reihum, damit sich Personen unterscheiden — bleibt und wird in [Teil F](#teil-f--farbe-fassung-4) auf fünfzehn Farben erweitert. Die *Werte* hier gelten nicht mehr.
 
 Die Data-table verteilt vier Farbpaare reihum über die Zeilen, damit die Personen auf einen Blick unterscheidbar sind.
 
@@ -256,82 +260,81 @@ Bereits unter [A6](#a6--farbe-fall-2-vier-durchlaufende-farben) beschrieben und 
 
 ---
 
-## Teil F — Farbe (Fassung 3)
+## Teil F — Farbe (Fassung 4)
 
 **Angeordnet:** Der Hintergrund der Buchstaben-Variante nutzt **alle Brand-Farben**, und zwar so, dass **überall weiße Schrift steht** und **keine zwei Farben gleich wirken**.
 
 Das ist eine deutliche Abkehr von dem, was heute im System steht: Dort sind die Kreise **hell** getönt (Stufen 50 bis 200) und tragen **dunkle** Buchstaben. Jetzt ist es umgekehrt — kräftige Fläche, weiße Buchstaben. Der Avatar wird damit zu einem farbigen Punkt in der Zeile statt zu einer zurückhaltenden Tönung.
 
-### F1 · Die Palette — fünfzehn Farben, alle mit weißer Schrift
+### F1 · Die fertige Palette
 
-**Wichtig zum Vorgehen:** Wo die 600er Stufe nicht genügte, habe ich **keinen neuen Farbwert erfunden**, sondern eine **andere, bereits vorhandene Stufe derselben Farbfamilie** genommen. Jeder Wert unten ist ein Token, das es im System schon gibt.
+**Wichtig zum Vorgehen:** Wo die 600er Stufe nicht genügte, ist **kein neuer Farbwert erfunden** worden, sondern eine **andere, bereits vorhandene Stufe derselben Farbfamilie** genommen. Jeder Wert unten ist ein Token, das es im System schon gibt.
 
-| | Familie | Stufe | Kontrast gegen Weiß | |
-|---|---|---|---|---|
-| 1 | Rot | `--medo-color-red-600` | 7,55 | |
-| 2 | Karmin | `--medo-color-crimson-600` | 7,31 | |
-| 3 | Rosé | `--medo-color-rose-600` | 7,40 | |
-| 4 | Orange | `--medo-color-orange-`**`700`** | 5,03 | **angehoben** (600 lag bei 3,68) |
-| 5 | Amber | `--medo-color-amber-`**`800`** | 6,14 | **angehoben** (600 lag bei 3,21) |
-| 6 | Gelb | `--medo-color-yellow-`**`800`** | 5,18 | **angehoben** (600 lag bei 2,76) |
-| 7 | Grün | `--medo-color-green-600` | 6,06 | |
-| 8 | Teal | `--medo-color-teal-600` | 5,84 | |
-| 9 | Cyan | `--medo-color-cyan-600` | 5,94 | |
-| 10 | Blau | `--medo-color-blue-600` | 6,62 | |
-| 11 | Indigo | `--medo-color-indigo-600` | 7,29 | |
-| 12 | Violett | `--medo-color-violet-600` | 7,54 | |
-| 13 | Purpur | `--medo-color-purple-600` | 7,67 | |
-| 14 | Grau | `--medo-color-grey-600` | 6,81 | |
-| 15 | Stein | `--medo-color-stone-`**`900`** | 13,67 | **angehoben**, damit es sich von Grau löst |
+| | Familie | Stufe | Weiß-Kontrast | Helligkeit | |
+|---|---|---|---|---|---|
+| 1 | Rot | `--medo-color-red-600` | 7,55 | 36 | |
+| 2 | Karmin | `--medo-color-crimson-600` | 7,31 | 37 | |
+| 3 | Rosé | `--medo-color-rose-600` | 7,40 | 36 | |
+| 4 | Orange | `--medo-color-orange-`**`900`** | 9,82 | 29 | **angehoben** |
+| 5 | Amber | `--medo-color-amber-`**`800`** | 6,14 | 41 | **angehoben** |
+| 6 | Gelb | `--medo-color-yellow-`**`900`** | 7,59 | 36 | **angehoben** |
+| 7 | Grün | `--medo-color-green-600` | 6,06 | 42 | |
+| 8 | Teal | `--medo-color-teal-600` | 5,84 | 43 | |
+| 9 | Cyan | `--medo-color-cyan-600` | 5,94 | 42 | |
+| 10 | Blau | `--medo-color-blue-600` | 6,62 | 39 | |
+| 11 | Indigo | `--medo-color-indigo-600` | 7,29 | 37 | |
+| 12 | Violett | `--medo-color-violet-`**`800`** | 12,30 | 22 | **angehoben** |
+| 13 | Purpur | `--medo-color-purple-600` | 7,67 | 35 | |
+| 14 | Grau | `--medo-color-grey-600` | 6,81 | 39 | |
+| 15 | Stein | `--medo-color-stone-`**`900`** | 13,67 | 19 | **angehoben** |
 
-Die Schrift ist durchgehend `--medo-color-white`. **Keine Ausnahme, kein Sonderfall, keine dunkle Schrift mehr.** Der schwächste Kontrast der Reihe ist Orange mit 5,03 — deutlich über den geforderten 4,5.
+Die Schrift ist durchgehend `--medo-color-white`.
 
-### F2 · Warum drei Farben angehoben wurden
+**Die drei Kennzahlen der fertigen Reihe:**
 
-Auf der 600er Stufe waren Orange, Amber und Gelb zu hell, um weiße Buchstaben zu tragen: 3,68 · 3,21 · 2,76 gegen die geforderten 4,5 nach WCAG 2.2.
+- **Schwächster Kontrast gegen die weiße Schrift: 5,84** (Teal), gefordert sind 4,5 nach WCAG 2.2. Keine warme Farbe ist mehr der Engpass.
+- **Engstes Farbpaar: 16,2** (Karmin/Rosé), Schwelle 15. Das ist die natürliche Grenze der Palette selbst, kein Nebeneffekt der Anhebungen.
+- **Helligkeitsband: 19 bis 43.** Alle fünfzehn liegen darin; keine sticht heraus.
 
-Sie mussten unterschiedlich weit angehoben werden, weil die Familien unterschiedlich hell verlaufen:
+### F2 · Eine Korrektur zu Fassung 3
 
-- **Orange** genügt schon auf Stufe **700** (5,03).
-- **Amber** genügt auf 700 noch nicht (4,29) — erst auf **800** (6,14).
-- **Gelb** genügt auf 700 noch nicht (3,59) — erst auf **800** (5,18).
+In Fassung 3 stand hier, Orange, Amber und Gelb seien „sichtbar dunkler als ihre Nachbarn in der Reihe". **Das war falsch, und zwar in die verkehrte Richtung.** Gemessen an der Helligkeit waren sie die **hellsten** drei der Reihe — Orange lag bei 47 und Gelb bei 46, während die übrigen zwölf zwischen 19 und 43 lagen. Sie stachen als zu helle Flecken heraus, nicht als zu dunkle.
 
-Die drei sind damit sichtbar dunkler als ihre Nachbarn in der Reihe. **Das ist der Preis dafür, dass die Schrift überall weiß ist**, und in der Vorschau können Sie beurteilen, ob die Reihe damit noch stimmig wirkt.
+Die Rückfrage, ob sie „evtl. noch eine Stufe hoch" sollen, war damit genau richtig. Sie ist der Grund für Fassung 4.
 
-### F3 · Warum Stein angehoben wurde
+### F3 · Warum nicht alle drei eine Stufe hoch
 
-Grau und Stein lagen auf 600er Stufe so nah beieinander, dass sie in einer Reihe wie dieselbe Farbe wirkten. Gemessen als Farbabstand: **8,0** — alles unter 15 ist mit bloßem Auge kaum zu trennen.
+Ich habe alle **27 Kombinationen** der drei warmen Familien über die Stufen 700, 800 und 900 durchgerechnet und gegen drei Bedingungen geprüft: weiße Schrift überall lesbar, kein Paar unter der Ähnlichkeitsschwelle, alle im Helligkeitsband der übrigen zwölf.
 
-Ich habe alle zwölf Kombinationen der beiden Familien durchgerechnet. **Grau auf 600 und Stein auf 900** trennen am deutlichsten: Farbabstand **20,7**. Aus zwei fast gleichen Grautönen wird ein mittleres, kühles Grau neben einem sehr dunklen, warmen Braunschwarz.
+**Genau eine Kombination erfüllt alle drei: Orange 900 · Amber 800 · Gelb 900.**
 
-> **Bitte in der Vorschau ansehen.** Die beiden stehen dort nebeneinander. Überzeugt Sie die Trennung nicht, wäre die Alternative, eine der beiden Familien ganz aus der Reihenfolge zu nehmen.
+Alle drei gleichmäßig anzuheben hätte nicht funktioniert:
 
-### F4 · Ein Randbefund: Indigo und Violett
+- **Amber auf 900** rückt so nah an Gelb 900 heran, dass die beiden wieder gleich wirken — Abstand 13,8, unter der Schwelle von 15. Genau das Problem, das Sie bei Grau und Stein beseitigt haben wollten, wäre an anderer Stelle neu entstanden.
+- **Amber bleibt deshalb auf 800.** Es ist mit Helligkeit 41 die hellste der drei, liegt aber innerhalb des Bandes der übrigen Farben.
 
-Beim Nachrechnen ist mir ein zweites Paar aufgefallen, das ich vorher nicht gemeldet hatte: **Indigo und Violett** liegen bei einem Farbabstand von **14,5** — knapp unter der Schwelle von 15.
+Orange springt von 700 auf 900 damit **zwei** Stufen. Das wirkt unsystematisch, ist aber das Ergebnis der Messung: Auf 800 läge Orange bei Helligkeit 38 und wäre von Rot (36) nur noch 16,3 entfernt — noch zulässig, aber enger als nötig.
 
-Ich habe sie **nicht** angepasst, weil Ihre Anweisung die Farben betraf, die gleich *wirken*, und die beiden noch klar als Blau und als Lila lesbar sind. **In der Vorschau stehen sie direkt nebeneinander**, damit Sie selbst urteilen können. Soll auch dieses Paar getrennt werden, ginge Violett auf Stufe 800 — Farbabstand dann 23,0.
+### F4 · Indigo und Violett — getrennt
 
-Dasselbe gilt in abgeschwächter Form für **Orange/Amber** (15,4) und **Amber/Gelb** (15,3): knapp über der Schwelle, in der Vorschau nebeneinander zu sehen.
+**Entschieden: Violett geht auf Stufe 800.** Der Abstand zwischen Indigo und Violett steigt damit von 14,5 auf **23,0**.
 
-### F5 · Der Dunkelmodus löst sich von selbst
+Violett ist mit Helligkeit 22 danach eine der dunkleren Farben der Reihe — vergleichbar mit Stein (19). Die beiden sind farblich weit auseinander und deshalb trotzdem klar zu unterscheiden.
+
+### F5 · Grau und Stein — getrennt
+
+**Abgenommen.** Grau bleibt auf 600, Stein steht auf 900. Der Abstand steigt von 8,0 auf **20,7**.
+
+Ich hatte für diese Entscheidung alle zwölf Kombinationen der beiden Familien durchgerechnet; diese trennt am deutlichsten.
+
+### F6 · Der Dunkelmodus löst sich von selbst
 
 In Fassung 1 war der Dunkelmodus ein offener Punkt (D4): Die hellen Tönungen brauchten je eine dunkle Entsprechung, und für drei von vier Farbpaaren fehlte sie.
 
 **Das entfällt.** Eine kräftige Fläche bringt ihren eigenen Hintergrund mit und hängt nicht davon ab, worauf sie liegt. Der Kreis sieht im Dunkelmodus genauso aus wie im Hellmodus, und die gemessenen Kontraste gelten unverändert.
 
-> **Bitte prüfen Sie das trotzdem in der Vorschau** — der Umschalter oben rechts.
-
-### F3 · Der Dunkelmodus löst sich damit von selbst
-
-In Fassung 1 war der Dunkelmodus ein offener Punkt (D4): Die hellen Tönungen brauchten je eine dunkle Entsprechung, und für drei von vier fehlte sie.
-
-**Das entfällt.** Eine 600er Fläche bringt ihren eigenen Hintergrund mit und hängt nicht davon ab, worauf sie liegt. Der Kreis sieht im Dunkelmodus genauso aus wie im Hellmodus, und die gemessenen Kontraste gelten unverändert.
-
-> **Bitte prüfen Sie das trotzdem in der Vorschau** — der Umschalter oben rechts. Die Farben sollen im Dunkeln kräftig wirken, nicht grell.
-
-<a id="f6--was-das-für-die-contained-list-bedeutet"></a>
-### F6 · Was das für die Contained-list bedeutet — **entschieden**
+<a id="f7--was-das-für-die-contained-list-bedeutet"></a>
+### F7 · Was das für die Contained-list bedeutet — **entschieden**
 
 Die Contained-list hat den Kreis heute fest eingebaut, in der hellen Tönung: helles Teal mit dunklem Teal als Schrift. **Dieser Code ist bereits an andere Projekte ausgeliefert.**
 
@@ -424,14 +427,12 @@ Die letzten beiden Zeilen stehen hier der Vollständigkeit halber. Sie sind **ke
 
 Bitte öffnen Sie **[`docs/avatar-entwurf.html`](./avatar-entwurf.html)** im Browser (Doppelklick genügt, kein Entwicklungsserver nötig).
 
-**Nur noch vier Punkte sind offen.** Alles andere ist entschieden und oben festgehalten.
+**Zwei Punkte, dann ist der Entwurf fertig.**
 
-1. **Die fünfzehn Farben** (Abschnitt 1 der Vorschau). Alle tragen jetzt weiße Schrift. Orange, Amber, Gelb und Stein stehen dafür auf einer dunkleren Stufe und sind sichtbar dunkler als ihre Nachbarn. **Wirkt die Reihe so stimmig?** Bitte auch im **Dunkelmodus** ansehen — Umschalter oben rechts.
-2. **Grau und Stein** stehen in der Vorschau nebeneinander, jetzt mit dem größtmöglichen Abstand zwischen den beiden Familien. **Sind sie für Sie ausreichend getrennt?**
-3. **Indigo und Violett** stehen ebenfalls nebeneinander — der Randbefund aus [F4](#f4--ein-randbefund-indigo-und-violett). Sie liegen bei 14,5 knapp unter der Schwelle. **Soll ich sie ebenfalls trennen?** Violett ginge auf Stufe 800.
-4. **Zwei Kleinigkeiten aus Fassung 1, die noch keine Antwort haben:**
-   - **Personen-Symbol**, wenn es gar keinen Namen gibt (gelöschtes Konto, offene Einladung) — Abschnitt 4 der Vorschau. Es ist das letzte Glied des Rückfalls, den Sie angenommen haben.
-   - **Farbe aus dem Namen statt aus der Zeilennummer** — sonst springt die Farbe einer Person, sobald jemand die Tabelle umsortiert. Mit fünfzehn Farben fällt das mehr auf als mit vier.
+1. **Die fertige Farbreihe** (Abschnitt 1 der Vorschau) — bitte einmal ansehen und im **Dunkelmodus** bestätigen. Orange, Gelb und Violett sind gegenüber der letzten Fassung nachgedunkelt, Amber ist bewusst geblieben, wo es war.
+2. **Zwei Kleinigkeiten, die noch keine Antwort haben:**
+   - **Personen-Symbol**, wenn es gar keinen Namen gibt — Abschnitt 4 der Vorschau.
+   - **Farbe aus dem Namen statt aus der Zeilennummer** — sonst springt die Farbe einer Person beim Umsortieren der Tabelle.
 
 ---
 
@@ -452,17 +453,24 @@ Bitte öffnen Sie **[`docs/avatar-entwurf.html`](./avatar-entwurf.html)** im Bro
 
 | | Punkt | Entscheidung |
 |---|---|---|
-| ✓ | Farben mit dunkler Schrift | **anpassen, bis die Schrift weiß ist** → Orange 700, Amber 800, Gelb 800 |
-| ✓ | Farben, die gleich wirken | **anpassen, bis sie sich unterscheiden** → Stein 900 |
+| ✓ | Farben mit dunkler Schrift | **anpassen, bis die Schrift weiß ist** |
+| ✓ | Farben, die gleich wirken | **anpassen, bis sie sich unterscheiden** |
 | ✓ | Profil-Größe | **64 px** · 96 px verworfen |
 | ✓ | Buchstaben-Regel | **festgelegt** an `Andreas Müller` → AM · `PeterZeider` → PZ · `renatosanches` → RE |
 | ✓ | Contained-list | **umstellen, einfarbig** · die beiden anderen Wege verworfen |
 | ✓ | Kleine Größen 30/38 px | **halten** · 32/40 px verworfen |
+
+### Rückmeldung 3 vom 28.08.2026
+
+| | Punkt | Entscheidung |
+|---|---|---|
+| ✓ | Orange, Amber, Gelb eine Stufe höher? | **Orange 900 · Gelb 900 · Amber bleibt 800** — Amber auf 900 hätte Gelb zu nahe gelegen |
+| ✓ | Grau und Stein | **abgenommen** — Stein bleibt auf 900 |
+| ✓ | Indigo und Violett | **Violett auf 800** |
 | — | Personen-Symbol | noch offen |
 | — | Farbe aus dem Namen statt Zeilennummer | noch offen |
-| — | Indigo/Violett trennen | neu vorgelegt, noch offen |
 
-### Rückmeldung 3
+### Rückmeldung 4
 
 > _Wird nach Ihrer Rückmeldung hier eingetragen._
 
