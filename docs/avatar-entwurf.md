@@ -1,6 +1,6 @@
 # Avatar — Entwurf zur Freigabe
 
-**Fassung 6 · Stand:** 28.08.2026 · **Status:** vollständig — alle Punkte entschieden · **Vorschau:** [`avatar-entwurf.html`](./avatar-entwurf.html) im Browser öffnen
+**Fassung 6 · Stand:** 28.08.2026 · **Status:** **freigegeben** am 28.08.2026 · **Vorschau:** [`avatar-entwurf.html`](./avatar-entwurf.html) im Browser öffnen
 
 ---
 
@@ -519,6 +519,10 @@ Bitte **[`docs/avatar-entwurf.html`](./avatar-entwurf.html)** im Browser öffnen
 | ✓ | Farbe aus dem Namen berechnet | **verworfen** — eine berechnete Farbe ließe sich nicht ändern |
 | ✓ | Farbe als Sortiermerkmal | **ausgeschlossen** — die Farbe trägt keine Bedeutung |
 
+### Abnahme
+
+**Der Inhaber hat den Entwurf am 28.08.2026 freigegeben** („Passt"), nach Durchsicht der Vorschau.
+
 ---
 
-**Alle Punkte sind entschieden.** Es steht nur noch Ihre Abnahme der Vorschau aus. Danach ist die Entscheidungsgrundlage vollständig und die Umsetzung kann darauf aufsetzen — sie ist Gegenstand einer eigenen Aufgabe, nicht dieses Entwurfs.
+**Dieser Entwurf ist damit abgeschlossen und verbindlich.** Er ist die Entscheidungsgrundlage für die Umsetzung des Avatars; die Umsetzung selbst ist Gegenstand einer eigenen Aufgabe und hier nicht enthalten. Maßgeblich für sie ist ausschließlich, was in den Rückmeldungen 1 bis 5 oben protokolliert ist.
