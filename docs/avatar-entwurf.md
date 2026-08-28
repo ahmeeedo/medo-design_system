@@ -1,12 +1,12 @@
 # Avatar — Entwurf zur Freigabe
 
-**Fassung 5 · Stand:** 28.08.2026 · **Status:** wartet auf Freigabe · **Vorschau:** [`avatar-entwurf.html`](./avatar-entwurf.html) im Browser öffnen
+**Fassung 6 · Stand:** 28.08.2026 · **Status:** vollständig — alle Punkte entschieden · **Vorschau:** [`avatar-entwurf.html`](./avatar-entwurf.html) im Browser öffnen
 
 ---
 
 ## Was entschieden ist
 
-Aus vier Rückmeldungen des Inhabers am 28.08.2026. Alles hier ist **festgelegt** und Grundlage der späteren Umsetzung:
+Aus fünf Rückmeldungen des Inhabers am 28.08.2026. Alles hier ist **festgelegt** und Grundlage der späteren Umsetzung:
 
 | | Entscheidung | Ausgeführt in |
 |---|---|---|
@@ -22,6 +22,7 @@ Aus vier Rückmeldungen des Inhabers am 28.08.2026. Alles hier ist **festgelegt*
 | Kleine Größen | **30/38 px halten** (nicht auf 32/40 ziehen) | [D1](#d1--es-gibt-keine-token-für-komponentengrößen-30-px--38-px) |
 | Dunkelmodus | **gegenstandslos** — die kräftigen Flächen tragen sich selbst | [F6](#f6--der-dunkelmodus-löst-sich-von-selbst) |
 | Personen-Symbol | **angenommen** für den Fall ohne Bild und ohne Namen | [Ergänzung 2](#ergänzung-2--personen-symbol-wenn-kein-name-da-ist--angenommen) |
+| Herkunft der Farbe | **gespeicherter Wert der Person** — bei der Registrierung vergeben, von ihr änderbar | [Ergänzung 3](#ergänzung-3--woher-die-farbe-einer-person-kommt--entschieden) |
 
 ## Die Palette ist fertig
 
@@ -37,11 +38,15 @@ Amber muss auf 800 bleiben: Auf 900 rückt es so nah an Gelb, dass die beiden wi
 
 > **Eine Korrektur zu Fassung 3:** Dort stand, Orange, Amber und Gelb seien „sichtbar dunkler als ihre Nachbarn". Das war falsch herum — sie waren die **hellsten** drei der Reihe und stachen als zu helle Flecken heraus. Ihre Rückfrage war damit genau richtig. Einzelheiten in [F2](#f2--eine-korrektur-zu-fassung-3).
 
-## Was noch offen ist
+## Nichts mehr offen
 
-**Ein Punkt.** Bekommt eine Person ihre Farbe danach, **wer sie ist**, oder danach, **an welcher Stelle sie gerade in der Liste steht**?
+Der letzte Punkt ist mit der Rückmeldung vom 28.08.2026 geklärt — und zwar anders, als ich ihn gestellt hatte. Ich hatte gefragt, ob die Farbe **nach dem Listenplatz** oder **aus dem Namen berechnet** vergeben wird. Richtig ist keines von beiden:
 
-Das war in Fassung 4 zu abstrakt beschrieben und ist deshalb zurückgestellt worden. **Abschnitt 7 der Vorschau zeigt es jetzt zum Ausprobieren**: zwei Tabellen mit denselben vier Personen und ein Knopf zum Umsortieren. Links wechseln alle die Farbe, rechts behält jeder seine. Die Einzelheiten stehen in [Ergänzung 3](#ergänzung-3--woher-die-farbe-einer-person-kommt).
+> **Die Farbe wird bei der Registrierung vergeben und ist von der Person änderbar.** Sie ist ein gespeicherter Wert, keine Rechenregel.
+
+Das schließt beide von mir vorgeschlagenen Wege aus: Eine berechnete Farbe ließe sich nicht ändern, und eine Farbe nach Listenplatz gehörte zur Zeile statt zur Person. Ausgeführt in [Ergänzung 3](#ergänzung-3--woher-die-farbe-einer-person-kommt--entschieden).
+
+Zwei Punkte, die dabei ausdrücklich festgehalten sind: **Zwei Personen dürfen dieselbe Farbe haben**, und **es wird nicht nach Farbe sortiert** — die Farbe trägt keine Bedeutung.
 
 ---
 
@@ -256,21 +261,29 @@ Der Rückfall ist für den Anwender nicht als Fehler erkennbar — er sieht einf
 
 **Vorschlag:** Material-Symbol `person`, in getönter Fläche — Fläche `--medo-surface-sunken`, Symbol `--medo-icon-muted`, analog zur zitierten Fundstelle.
 
-### Ergänzung 3 · Woher die Farbe einer Person kommt
+### Ergänzung 3 · Woher die Farbe einer Person kommt — **entschieden**
 
-**Die Frage in einem Satz:** Bekommt eine Person ihre Farbe danach, **wer sie ist**, oder danach, **an welcher Stelle sie gerade in der Liste steht**?
+**Festgelegt am 28.08.2026 vom Inhaber:**
 
-**Was die heutige Vorlage tut:** Sie zählt die Zeilen ab. Die erste Zeile bekommt Farbe 1, die zweite Farbe 2, und so weiter.
+> Die Farbe des Avatars wird **vom System bei der Registrierung vergeben**. Die Person kann ihr Farbschema **später selbst ändern**.
 
-> `Data-table.dc.html:282` — `const pal = avatarPalette[(r.id - 1) % avatarPalette.length];`
+Damit ist die Frage anders beantwortet, als ich sie gestellt hatte. Ich hatte zwei Möglichkeiten zur Wahl gestellt — Farbe nach Listenplatz oder Farbe aus dem Namen berechnet. **Beide sind hinfällig:**
 
-**Warum das ein Problem ist:** Die Farbe klebt dann an der *Zeile*, nicht an der *Person*. Sobald jemand die Tabelle nach einer anderen Spalte sortiert, rutschen alle Personen an neue Plätze — und wechseln damit die Farbe. Dasselbe passiert, wenn eine Person hinzukommt, gelöscht wird oder ein Filter gesetzt wird.
+- **Farbe nach Listenplatz ist keine Option.** Sie würde sich beim Umsortieren ändern, obwohl die Farbe zur Person gehört.
+- **Farbe aus dem Namen berechnet ist es ebenso wenig.** Eine berechnete Farbe ließe sich nicht ändern — und genau das soll die Person können. Sie würde außerdem wechseln, wenn jemand heiratet und den Namen ändert.
 
-Damit verliert der Avatar genau das, wofür er da ist: Man soll eine Person am Kreis wiedererkennen, ohne den Namen zu lesen. Das geht nicht, wenn derselbe Mensch in der Tabelle rot ist, in der Liste daneben grün und nach dem Umsortieren gelb.
+**Die Farbe ist ein gespeicherter Wert der Person, keine Rechenregel.** Der Avatar bekommt sie mitgeteilt und stellt sie dar; er ermittelt sie nicht.
 
-**Vorschlag:** Die Farbe wird aus dem Namen berechnet. Aus „Andreas Müller" ergibt sich immer dieselbe Farbe — in jeder Tabelle, in jeder Liste, auf jeder Seite, in jeder Sortierung. Die Personen behalten ihre Farbe, auch wenn sie die Plätze tauschen.
+**Was daraus folgt:**
 
-**In der Vorschau ausprobierbar:** Abschnitt 7 zeigt beide Varianten nebeneinander mit einem Knopf zum Umsortieren. Links wandern die Farben nicht mit, rechts schon.
+- Die Person hat überall dieselbe Farbe — in jeder Tabelle, in jeder Liste, auf jeder Profilseite, in jeder Sortierung und in jedem Filter.
+- **Zwei Personen dürfen dieselbe Farbe haben.** Das Farbschema ist eine persönliche Einstellung, kein eindeutiges Erkennungszeichen; bei fünfzehn Farben und freier Wahl ließe sich Eindeutigkeit ohnehin nicht erzwingen. Das ist ausdrücklich kein Fehler und darf später nicht „repariert" werden.
+- **Die Farbe trägt keine Bedeutung.** Sie sagt nichts über Rolle, Status oder Rang und ist kein Ordnungsmerkmal — **es wird nicht nach Farbe sortiert.**
+- Alle fünfzehn Farben müssen als **Auswahl** taugen, nicht nur als Zuteilung. Das ist der Grund, warum die Palette in [Teil F](#teil-f--farbe-fassung-4) durchgehend lesbar und in sich unterscheidbar ist: Die Person wählt selbst, und keine Wahl darf schlecht aussehen.
+
+**In der Vorschau ausprobierbar:** Abschnitt 7 zeigt einen Farbwähler. Beim Klick wechselt dieselbe Person in Tabelle, Liste und Profilseite gleichzeitig die Farbe — die zweite Person daneben bleibt unberührt.
+
+**Offen für die Umsetzung, nicht für diesen Entwurf:** Wo die Farbe herkommt, wenn ausnahmsweise keine gespeichert ist — etwa bei Daten aus der Zeit vor dieser Regel. Das ist eine Frage an die Anwendung, die den Avatar einsetzt, nicht an die Komponente.
 
 ---
 
@@ -437,22 +450,24 @@ Die letzten beiden Zeilen stehen hier der Vollständigkeit halber. Sie sind **ke
 
 ---
 
-## Was ich von Ihnen zur Freigabe brauche
+## Prüf-Checkliste für die Abnahme
 
-Bitte öffnen Sie **[`docs/avatar-entwurf.html`](./avatar-entwurf.html)** im Browser (Doppelklick genügt, kein Entwicklungsserver nötig).
+Bitte **[`docs/avatar-entwurf.html`](./avatar-entwurf.html)** im Browser öffnen (Doppelklick genügt, kein Entwicklungsserver nötig) und die folgenden acht Punkte durchgehen. Alles davon ist sichtbar oder anklickbar.
 
-**Ein einziger Punkt ist noch offen.**
+| | Abschnitt | Was zu sehen ist |
+|---|---|---|
+| 1 | 1 · Farben | Fünfzehn Kreise, alle mit weißer Schrift |
+| 2 | 1b · Enge Paare | Grau/Stein und Indigo/Violett, je „vorher" und „jetzt" |
+| 3 | 2 · Tabelle | Wechselnde Farben in Zeilen, dazu der Ladezustand |
+| 4 | 3 · Größen | 30 · 38 · 64 px, je mit Buchstaben und mit Bild |
+| 5 | 4 · Buchstaben | Sieben Beispiele, darunter Ihre drei Vorgaben |
+| 6 | 5 · Füllungen | Bild · Buchstaben · Personen-Symbol, und der Rückfall live |
+| 7 | 6 · Contained-list | Heute gegen danach, einfarbig |
+| 8 | 7 · Farbwähler | Eine Farbe anklicken — die Person wechselt in allen drei Größen zugleich, die zweite Person bleibt unberührt |
 
-Gehen Sie in der Vorschau zu **Abschnitt 7 („Woher die Farbe kommt")** und drücken Sie dort den Knopf **„Nach Vorgängen sortieren"**. Sie sehen zwei Tabellen mit denselben vier Personen:
+**Zusätzlich einmal in beiden Darstellungen:** Umschalter oben rechts auf **Dunkel** stellen und die Punkte 1 und 8 wiederholen.
 
-- **Links** bleiben die Farben an ihrem Platz stehen. Wer nach dem Sortieren oben steht, ist rot — egal wer es ist. **Jede Person wechselt die Farbe.**
-- **Rechts** wandert die Farbe mit der Person mit. Andreas Müller ist vorher und nachher blau.
-
-**Meine Frage:** Soll es die rechte Variante werden?
-
-Der Sinn des farbigen Kreises ist, dass man eine Person daran wiedererkennt, ohne den Namen zu lesen. Links funktioniert das nicht — derselbe Mensch ist in der Tabelle rot, nach dem Sortieren orange und in der Liste nebenan wieder anders. **Die heutige Vorlage im System macht es wie links**; das fällt dort nur nicht auf, weil sich die Beispieltabelle nie ändert.
-
-Drücken Sie den Knopf ein paarmal — dann sieht man es sofort.
+**Auf dem Handy oder bei schmalem Fenster:** Die Seite ist auf schmale Breiten ausgelegt; die Spalten stellen sich untereinander. Bitte einmal das Fenster schmal ziehen.
 
 ---
 
@@ -493,10 +508,17 @@ Drücken Sie den Knopf ein paarmal — dann sieht man es sofort.
 | | Punkt | Entscheidung |
 |---|---|---|
 | ✓ | Personen-Symbol ohne Namen | **angenommen** |
-| — | Farbe nach Name statt nach Listenplatz | zurückgestellt — war zu abstrakt erklärt, jetzt in Abschnitt 7 der Vorschau zum Ausprobieren |
+| — | Farbe nach Name statt nach Listenplatz | zurückgestellt — zu abstrakt erklärt |
 
-### Rückmeldung 5
+### Rückmeldung 5 vom 28.08.2026
 
-> _Wird nach Ihrer Rückmeldung hier eingetragen._
+| | Punkt | Entscheidung |
+|---|---|---|
+| ✓ | Herkunft der Farbe | **Gespeicherter Wert der Person.** Bei der Registrierung vergeben, von der Person änderbar |
+| ✓ | Farbe nach Listenplatz | **verworfen** — die Farbe gehört zur Person, nicht zur Zeile |
+| ✓ | Farbe aus dem Namen berechnet | **verworfen** — eine berechnete Farbe ließe sich nicht ändern |
+| ✓ | Farbe als Sortiermerkmal | **ausgeschlossen** — die Farbe trägt keine Bedeutung |
 
-**Status:** offen — ein Punkt
+---
+
+**Alle Punkte sind entschieden.** Es steht nur noch Ihre Abnahme der Vorschau aus. Danach ist die Entscheidungsgrundlage vollständig und die Umsetzung kann darauf aufsetzen — sie ist Gegenstand einer eigenen Aufgabe, nicht dieses Entwurfs.
