@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Avatar — Entwurf zur Freigabe</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,300,0,0" rel="stylesheet">
+<style>
+/* ---------------------------------------------------------------------------
+   Token-Werte, unveraendert aus src/styles/medo/*.css und medo-theme.css
+   uebernommen. Diese Vorschau laeuft eigenstaendig und kann die Stylesheets
+   des Projekts nicht laden, deshalb stehen die Definitionen hier.
+   --------------------------------------------------------------------------- */
+:root{
+  color-scheme: light dark;
+
+  /* brand-colors.css - alle fuenfzehn Familien auf 600er Stufe */
+  --medo-color-red-600:#ab0913;     --medo-color-crimson-600:#af0034;
+  --medo-color-rose-600:#ab004c;    --medo-color-orange-600:#de5d2b;
+  --medo-color-amber-600:#dc7411;   --medo-color-yellow-600:#d48d09;
+  --medo-color-green-600:#007317;   --medo-color-teal-600:#007265;
+  --medo-color-cyan-600:#006d87;    --medo-color-blue-600:#0059be;
+  --medo-color-indigo-600:#3447c8;  --medo-color-violet-600:#6335be;
+  --medo-color-purple-600:#881f9e;  --medo-color-grey-600:#595b5e;
+  --medo-color-violet-800:#401b84;
+  --medo-color-orange-900:#7e2400; --medo-color-amber-800:#a04800;
+  --medo-color-yellow-900:#794900;  --medo-color-stone-900:#312d28;
+  --medo-color-stone-600:#615951;
+
+  --medo-color-white:#ffffff;
+  --medo-color-teal-100:#e2efed;   --medo-color-teal-300:#adccc8;
+  --medo-color-teal-800:#004b42;   --medo-color-teal-900:#003b34;
+  --medo-color-amber-300:#ffc59a;  --medo-color-amber-1000:#5b2800;
+  --medo-color-green-300:#b2cdb7;  --medo-color-green-1000:#002c0b;
+  --medo-color-stone-50:#f7f7f6;   --medo-color-stone-100:#ececeb;
+  --medo-color-stone-200:#dbdad8;  --medo-color-stone-300:#c6c4c2;
+  --medo-color-stone-700:#4f4840;  --medo-color-stone-800:#3f3933;
+  --medo-color-stone-1000:#24221e; --medo-color-stone-1100:#171513;
+
+  /* medo-theme.css (Semantic, Hell/Dunkel) */
+  --medo-surface:                light-dark(var(--medo-color-white), var(--medo-color-stone-1100));
+  --medo-surface-container:      light-dark(var(--medo-color-stone-50), #1d1b19);
+  --medo-surface-container-high: light-dark(var(--medo-color-stone-100), var(--medo-color-stone-800));
+  --medo-surface-sunken:         light-dark(var(--medo-color-stone-100), var(--medo-color-stone-1100));
+  --medo-surface-hover:          light-dark(var(--medo-color-stone-100), var(--medo-color-stone-800));
+  --medo-state-selected:         light-dark(var(--medo-color-teal-100), var(--medo-color-teal-900));
+  --medo-text:                   light-dark(var(--medo-color-stone-1000), var(--medo-color-stone-50));
+  --medo-text-muted:             light-dark(#24221ead, #f7f7f6ad);
+  --medo-icon-muted:             light-dark(#24221e8c, #f7f7f68c);
+  --medo-border:                 light-dark(var(--medo-color-stone-300), var(--medo-color-stone-700));
+  --medo-border-subtle:          light-dark(var(--medo-color-stone-200), var(--medo-color-stone-800));
+  --medo-divider:                light-dark(var(--medo-color-stone-200), var(--medo-color-stone-800));
+  --medo-warning-surface:        light-dark(#fff5ec, var(--medo-color-amber-1000));
+  --medo-warning-text:           light-dark(var(--medo-color-amber-1000), var(--medo-color-amber-300));
+  --medo-success-surface:        light-dark(#f3f9f4, var(--medo-color-green-1000));
+  --medo-success-text:           light-dark(var(--medo-color-green-1000), var(--medo-color-green-300));
+  --medo-focus-ring:             #00726559;
+  --medo-border-thick:           2px;
+
+  /* radii.css / typography.css / spacing.css */
+  --medo-radius-sm:4px; --medo-radius-md:8px; --medo-radius-lg:12px; --medo-radius-full:9999px;
+  --medo-font-sans:'DM Sans', system-ui, sans-serif;
+  --medo-font-mono:'DM Mono', ui-monospace, monospace;
+  --medo-text-xs:12px; --medo-text-sm:14px; --medo-text-base:16px;
+  --medo-text-lg:20px; --medo-text-xl:25px; --medo-text-2xl:31px; --medo-text-3xl:39px;
+  --medo-weight-semibold:600; --medo-weight-bold:700;
+  --medo-space-3xs:2px; --medo-space-2xs:4px; --medo-space-xs:8px; --medo-space-sm:12px;
+  --medo-space-md:16px; --medo-space-lg:24px; --medo-space-xl:32px;
+  --medo-space-2xl:48px; --medo-space-3xl:64px; --medo-space-4xl:96px;
+}
+html[data-theme="light"]{ color-scheme: light; }
+html[data-theme="dark"]{ color-scheme: dark; }
+
+*{ box-sizing:border-box; }
+body{
+  margin:0; background:var(--medo-surface-container); color:var(--medo-text);
+  font-family:var(--medo-font-sans); -webkit-font-smoothing:antialiased;
+  padding:var(--medo-space-2xl) var(--medo-space-xl) 120px;
+}
+.wrap{ max-width:1020px; margin:0 auto; }
+.msr{ font-family:'Material Symbols Rounded'; font-weight:300; line-height:1; display:inline-block; }
+.mono{ font-family:var(--medo-font-mono); }
+
+h1{ font-size:var(--medo-text-2xl); font-weight:var(--medo-weight-bold); margin:0 0 var(--medo-space-sm); letter-spacing:-0.02em; }
+h2{ font-size:var(--medo-text-lg); font-weight:var(--medo-weight-semibold); margin:0 0 var(--medo-space-xs); }
+.lead{ font-size:var(--medo-text-base); color:var(--medo-text-muted); margin:0 0 var(--medo-space-lg); max-width:70ch; line-height:1.6; }
+.eyebrow{
+  font-family:var(--medo-font-mono); font-size:11px; letter-spacing:0.12em;
+  text-transform:uppercase; color:var(--medo-text-muted);
+  margin:var(--medo-space-2xl) 0 var(--medo-space-md);
+}
+.note{ font-size:var(--medo-text-sm); color:var(--medo-text-muted); margin:var(--medo-space-xs) 0 0; line-height:1.55; max-width:76ch; }
+.src{ font-family:var(--medo-font-mono); font-size:11px; color:var(--medo-text-muted); }
+.ask{
+  border-left:3px solid var(--medo-color-teal-600); padding:var(--medo-space-xs) 0 var(--medo-space-xs) var(--medo-space-md);
+  margin:var(--medo-space-md) 0 0; font-size:var(--medo-text-sm); line-height:1.55; max-width:76ch;
+}
+
+.card{
+  background:var(--medo-surface); border:1px solid var(--medo-border-subtle);
+  border-radius:var(--medo-radius-lg); padding:var(--medo-space-lg); margin-bottom:var(--medo-space-md);
+}
+.grid{ display:grid; gap:var(--medo-space-md); }
+.cols2{ grid-template-columns:1fr 1fr; }
+.cols3{ grid-template-columns:repeat(3,1fr); }
+@media (max-width:768px){
+  .cols2,.cols3{ grid-template-columns:1fr; }
+  body{ padding:var(--medo-space-lg) var(--medo-space-md) 80px; }
+}
+
+.row{ display:flex; align-items:center; gap:var(--medo-space-md); flex-wrap:wrap; }
+.row--tight{ gap:var(--medo-space-sm); }
+.stack{ display:flex; flex-direction:column; align-items:center; gap:var(--medo-space-xs); }
+.cap{ font-family:var(--medo-font-mono); font-size:11px; color:var(--medo-text-muted); text-align:center; line-height:1.4; }
+.flag{ font-family:var(--medo-font-mono); font-size:10px; color:var(--medo-warning-text); background:var(--medo-warning-surface); border-radius:var(--medo-radius-full); padding:2px var(--medo-space-xs); }
+
+.badge{
+  display:inline-block; font-family:var(--medo-font-mono); font-size:10px;
+  letter-spacing:0.08em; text-transform:uppercase; padding:3px var(--medo-space-xs);
+  border-radius:var(--medo-radius-full); vertical-align:middle; margin-left:var(--medo-space-xs);
+}
+.badge--proof{ background:var(--medo-success-surface); color:var(--medo-success-text); }
+.badge--set{ background:var(--medo-state-selected); color:light-dark(var(--medo-color-teal-800), var(--medo-color-teal-300)); }
+.badge--ask{ background:var(--medo-warning-surface); color:var(--medo-warning-text); }
+
+/* --- Der Avatar ---------------------------------------------------------
+   Auf 600er Staerke traegt der Kreis seinen Hintergrund selbst. Er sieht im
+   Dunkelmodus aus wie im Hellmodus - deshalb gibt es hier keine light-dark()-
+   Paare mehr, anders als in Fassung 1.                                      */
+.av{
+  flex:none; display:inline-flex; align-items:center; justify-content:center;
+  border-radius:var(--medo-radius-full);
+  font-family:var(--medo-font-sans); font-weight:var(--medo-weight-semibold);
+  letter-spacing:0.02em; overflow:hidden; user-select:none;
+  color:var(--medo-color-white);
+  background:var(--medo-color-teal-600);
+}
+.av img{ width:100%; height:100%; object-fit:cover; display:block; }
+
+/* Groessen: Durchmesser, Schriftgroesse, Symbolgroesse (Verhaeltnis 1:2 wie
+   in Contained-list.dc.html:165 - 52px Kreis, 26px Symbol). */
+.av--sm{ width:30px; height:30px; font-size:var(--medo-text-xs); }
+.av--md{ width:38px; height:38px; font-size:var(--medo-text-xs); }
+.av--lg{ width:var(--medo-space-3xl); height:var(--medo-space-3xl); font-size:var(--medo-text-xl); }
+.av--sm .msr{ font-size:15px; }
+.av--md .msr{ font-size:19px; }
+.av--lg .msr{ font-size:32px; }
+
+/* Nur fuer den Groessenvergleich in Abschnitt 7 */
+.av--tok-sm{ width:32px; height:32px; font-size:var(--medo-text-xs); }
+.av--tok-md{ width:40px; height:40px; font-size:var(--medo-text-xs); }
+
+/* Die fuenfzehn Farben. Alle tragen weisse Schrift: wo die 600er Stufe dafuer
+   zu hell war (Orange, Amber, Gelb) oder zu nah an einer anderen Familie lag
+   (Stein neben Grau), steht eine dunklere Stufe derselben Familie. */
+.av--red{     background:var(--medo-color-red-600); }
+.av--crimson{ background:var(--medo-color-crimson-600); }
+.av--rose{    background:var(--medo-color-rose-600); }
+.av--orange{  background:var(--medo-color-orange-900); }
+.av--amber{   background:var(--medo-color-amber-800); }
+.av--yellow{  background:var(--medo-color-yellow-900); }
+.av--green{   background:var(--medo-color-green-600); }
+.av--teal{    background:var(--medo-color-teal-600); }
+.av--cyan{    background:var(--medo-color-cyan-600); }
+.av--blue{    background:var(--medo-color-blue-600); }
+.av--indigo{  background:var(--medo-color-indigo-600); }
+.av--violet{  background:var(--medo-color-violet-800); }
+.av--purple{  background:var(--medo-color-purple-600); }
+.av--grey{    background:var(--medo-color-grey-600); }
+.av--stone{   background:var(--medo-color-stone-900); }
+
+.swatch{
+  width:28px; height:28px; padding:0; flex:none; cursor:pointer;
+  border:var(--medo-border-thick) solid transparent;
+  border-radius:var(--medo-radius-full);
+  background-clip: padding-box;
+}
+.swatch[aria-pressed="true"]{ border-color:var(--medo-text); }
+.swatch:focus-visible{ outline:none; box-shadow:0 0 0 3px var(--medo-focus-ring); }
+
+.av--icon{ background:var(--medo-surface-sunken); color:var(--medo-icon-muted); }
+.av--load{ background:var(--medo-surface-container-high); }
+/* Die heutige, helle Tönung der Contained-list - nur zum Vergleich. */
+.av--alt{ background:var(--medo-state-selected); color:light-dark(var(--medo-color-teal-800), var(--medo-color-teal-300)); }
+
+/* --- Nachgebaute Umgebungen --------------------------------------------- */
+.tbl{ width:100%; border-collapse:collapse; font-size:var(--medo-text-sm); }
+.tbl th{
+  text-align:left; font-family:var(--medo-font-mono); font-size:11px; letter-spacing:0.08em;
+  text-transform:uppercase; color:var(--medo-text-muted); font-weight:400;
+  padding:var(--medo-space-xs) var(--medo-space-sm); border-bottom:1px solid var(--medo-divider);
+}
+.tbl td{ padding:var(--medo-space-sm); border-bottom:1px solid var(--medo-divider); vertical-align:middle; }
+.tbl tr:nth-child(even) td{ background:var(--medo-surface-container); }
+.tbl .num{ font-family:var(--medo-font-mono); text-align:right; }
+.person{ display:flex; align-items:center; gap:11px; }
+.person b{ font-weight:var(--medo-weight-semibold); display:block; }
+.person span{ font-size:var(--medo-text-xs); color:var(--medo-text-muted); }
+
+.clist{ border:1px solid var(--medo-border-subtle); border-radius:14px; overflow:hidden; background:var(--medo-surface); }
+.clist .r{ display:flex; align-items:center; gap:14px; padding:14px 16px; }
+.clist .r + .r{ border-top:1px solid var(--medo-divider); }
+.clist .r .t{ flex:1; min-width:0; }
+.clist .r .t b{ font-size:var(--medo-text-base); font-weight:var(--medo-weight-semibold); display:block; }
+.clist .r .t span{ font-size:13px; color:var(--medo-text-muted); }
+.clist .r .meta{ font-family:var(--medo-font-mono); font-size:var(--medo-text-xs); color:var(--medo-text-muted); }
+
+.skel{ background:var(--medo-surface-container-high); border-radius:var(--medo-radius-sm); height:13px; }
+
+.rule{ width:100%; border-collapse:collapse; font-size:var(--medo-text-sm); }
+.rule td{ padding:var(--medo-space-xs) var(--medo-space-sm); border-bottom:1px solid var(--medo-divider); vertical-align:middle; }
+.rule td:first-child{ font-family:var(--medo-font-mono); font-size:var(--medo-text-xs); }
+.rule td:last-child{ color:var(--medo-text-muted); }
+
+/* --- Kopfzeile ----------------------------------------------------------- */
+.top{ display:flex; align-items:flex-start; justify-content:space-between; gap:var(--medo-space-md); flex-wrap:wrap; margin-bottom:var(--medo-space-lg); }
+.toggle{
+  display:inline-flex; align-items:center; gap:var(--medo-space-xs);
+  border:1px solid var(--medo-border); background:var(--medo-surface); color:var(--medo-text);
+  border-radius:var(--medo-radius-full); padding:var(--medo-space-xs) var(--medo-space-md);
+  font-family:var(--medo-font-sans); font-size:var(--medo-text-sm); font-weight:var(--medo-weight-semibold);
+  cursor:pointer; flex:none;
+}
+.toggle:hover{ background:var(--medo-surface-hover); }
+.toggle:focus-visible{ outline:none; box-shadow:0 0 0 3px var(--medo-focus-ring); }
+.toggle .msr{ font-size:20px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="top">
+    <div>
+      <h1>Avatar — Entwurf zur Freigabe</h1>
+      <p class="lead">
+        <b>Fassung 6 — alles entschieden.</b> Palette, Größen, Buchstaben-Regel, Personen-Symbol,
+        Contained-list und die Herkunft der Farbe. Diese Seite ist jetzt die Abnahme: bitte einmal
+        durchgehen, den <b>Farbwähler in Abschnitt 7</b> ausprobieren und oben rechts auf
+        <b>Dunkel</b> umschalten.
+        Die schriftliche Fassung liegt daneben in <span class="mono">avatar-entwurf.md</span>.
+      </p>
+    </div>
+    <button class="toggle" id="themeBtn" type="button">
+      <span class="msr" id="themeIcon">dark_mode</span><span id="themeLabel">Dunkel</span>
+    </button>
+  </div>
+
+  <!-- ================================================================== -->
+  <div class="eyebrow">1 · Die fünfzehn Farben <span class="badge badge--set">entschieden</span></div>
+  <div class="card">
+    <p class="note" style="margin:0 0 var(--medo-space-lg)">
+      Die fertige Palette. Alle fünfzehn tragen weiße Schrift, keine zwei wirken gleich, und
+      keine sticht durch ihre Helligkeit heraus. Fünf Familien stehen dafür auf einer dunkleren
+      Stufe — sie sind unten gekennzeichnet.
+      <b>Bitte auch im Dunkelmodus ansehen</b>; die Kreise bringen ihren Hintergrund selbst mit.
+    </p>
+    <div class="row row--tight" style="gap:var(--medo-space-lg)">
+      <div class="stack"><span class="av av--md av--red">AM</span><span class="cap">Rot</span></div>
+      <div class="stack"><span class="av av--md av--crimson">BK</span><span class="cap">Karmin</span></div>
+      <div class="stack"><span class="av av--md av--rose">CS</span><span class="cap">Rosé</span></div>
+      <div class="stack"><span class="av av--md av--orange">DM</span><span class="cap">Orange<br><span class="flag">Stufe 900</span></span></div>
+      <div class="stack"><span class="av av--md av--amber">EF</span><span class="cap">Amber<br><span class="flag">Stufe 800</span></span></div>
+      <div class="stack"><span class="av av--md av--yellow">GH</span><span class="cap">Gelb<br><span class="flag">Stufe 900</span></span></div>
+      <div class="stack"><span class="av av--md av--green">IJ</span><span class="cap">Grün</span></div>
+      <div class="stack"><span class="av av--md av--teal">KL</span><span class="cap">Teal</span></div>
+      <div class="stack"><span class="av av--md av--cyan">MN</span><span class="cap">Cyan</span></div>
+      <div class="stack"><span class="av av--md av--blue">OP</span><span class="cap">Blau</span></div>
+      <div class="stack"><span class="av av--md av--indigo">QR</span><span class="cap">Indigo</span></div>
+      <div class="stack"><span class="av av--md av--violet">ST</span><span class="cap">Violett<br><span class="flag">Stufe 800</span></span></div>
+      <div class="stack"><span class="av av--md av--purple">UV</span><span class="cap">Purpur</span></div>
+      <div class="stack"><span class="av av--md av--grey">WX</span><span class="cap">Grau</span></div>
+      <div class="stack"><span class="av av--md av--stone">YZ</span><span class="cap">Stein<br><span class="flag">Stufe 900</span></span></div>
+    </div>
+    <p class="note" style="margin-top:var(--medo-space-lg)">
+      <b>Nachgerechnet:</b> Der schwächste Kontrast gegen die weiße Schrift ist jetzt Teal mit 5,84
+      (gefordert sind 4,5) — keine warme Farbe ist mehr der Engpass. Das engste Farbpaar der Reihe
+      ist Karmin/Rosé mit 16,2 (Schwelle 15). Alle fünfzehn liegen im selben Helligkeitsband.
+    </p>
+  </div>
+
+  <div class="eyebrow">1b · Die beiden Paare, die eng beieinander lagen <span class="badge badge--set">erledigt</span></div>
+  <div class="grid cols2">
+    <div class="card">
+      <h2>Grau und Stein</h2>
+      <p class="note" style="margin-bottom:var(--medo-space-md)">
+        Von Ihnen abgenommen. Stein steht auf Stufe 900.
+      </p>
+      <div class="row" style="gap:var(--medo-space-xl)">
+        <div class="stack">
+          <div class="row row--tight">
+            <span class="av av--md" style="background:var(--medo-color-grey-600)">WX</span>
+            <span class="av av--md" style="background:var(--medo-color-stone-600)">YZ</span>
+          </div>
+          <span class="cap">vorher · Abstand 8,0</span>
+        </div>
+        <div class="stack">
+          <div class="row row--tight">
+            <span class="av av--md av--grey">WX</span>
+            <span class="av av--md av--stone">YZ</span>
+          </div>
+          <span class="cap">jetzt · Abstand 20,7</span>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <h2>Indigo und Violett</h2>
+      <p class="note" style="margin-bottom:var(--medo-space-md)">
+        Wie entschieden: Violett steht jetzt auf Stufe 800.
+      </p>
+      <div class="row" style="gap:var(--medo-space-xl)">
+        <div class="stack">
+          <div class="row row--tight">
+            <span class="av av--md av--indigo">QR</span>
+            <span class="av av--md" style="background:var(--medo-color-violet-600)">ST</span>
+          </div>
+          <span class="cap">vorher · Abstand 14,5</span>
+        </div>
+        <div class="stack">
+          <div class="row row--tight">
+            <span class="av av--md av--indigo">QR</span>
+            <span class="av av--md av--violet">ST</span>
+          </div>
+          <span class="cap">jetzt · Abstand 23,0</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================================================================== -->
+  <div class="eyebrow">2 · Wie das in echten Zeilen wirkt</div>
+  <div class="card">
+    <h2 style="margin-bottom:var(--medo-space-md)">Tabelle — kleine Größe, wechselnde Farben</h2>
+    <table class="tbl">
+      <thead><tr><th>Name</th><th>Rolle</th><th class="num">Vorgänge</th></tr></thead>
+      <tbody>
+        <tr><td><div class="person"><span class="av av--sm av--teal">AM</span><div><b>Anna Müller</b><span>anna@medo.de</span></div></div></td><td>Admin</td><td class="num">12</td></tr>
+        <tr><td><div class="person"><span class="av av--sm av--rose">BK</span><div><b>Ben Krüger</b><span>ben@medo.de</span></div></div></td><td>Bearbeiter</td><td class="num">8</td></tr>
+        <tr><td><div class="person"><span class="av av--sm av--amber">CS</span><div><b>Clara Schmidt</b><span>clara@medo.de</span></div></div></td><td>Betrachter</td><td class="num">5</td></tr>
+        <tr><td><div class="person"><span class="av av--sm av--indigo">TW</span><div><b>Tim Weber</b><span>tim@medo.de</span></div></div></td><td>Bearbeiter</td><td class="num">3</td></tr>
+        <tr><td><div class="person"><span class="av av--sm av--green">MH</span><div><b>Dr. Marie Hoffmann</b><span>marie@medo.de</span></div></div></td><td>Admin</td><td class="num">21</td></tr>
+      </tbody>
+    </table>
+    <p class="note">Und dieselbe Tabelle, während sie lädt:</p>
+    <table class="tbl" style="margin-top:var(--medo-space-xs)">
+      <tbody>
+        <tr><td><div class="person"><span class="av av--sm av--load"></span><div class="skel" style="width:180px"></div></div></td><td><div class="skel" style="width:90px"></div></td><td><div class="skel" style="width:28px;margin-left:auto"></div></td></tr>
+        <tr><td><div class="person"><span class="av av--sm av--load"></span><div class="skel" style="width:140px"></div></div></td><td><div class="skel" style="width:90px"></div></td><td><div class="skel" style="width:28px;margin-left:auto"></div></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ================================================================== -->
+  <div class="eyebrow">3 · Größen <span class="badge badge--set">entschieden</span></div>
+  <div class="card">
+    <p class="note" style="margin:0 0 var(--medo-space-lg)">
+      Drei Größen, wie entschieden: 30 px in Tabellen, 38 px in Listen, 64 px fürs Profil.
+      Die zur Wahl gestellten Alternativen (96 px sowie 32/40 px) sind verworfen und hier nicht mehr zu sehen.
+    </p>
+    <div class="row" style="gap:var(--medo-space-2xl);align-items:flex-end">
+      <div class="stack"><span class="av av--sm av--teal">AM</span><span class="cap">sm · 30 px<br>Tabelle</span></div>
+      <div class="stack"><span class="av av--md av--teal">AM</span><span class="cap">md · 38 px<br>Liste</span></div>
+      <div class="stack"><span class="av av--lg av--teal">AM</span><span class="cap">lg · 64 px<br>Profil</span></div>
+    </div>
+    <p class="note" style="margin-top:var(--medo-space-lg)">Dieselben Größen mit einem Bild:</p>
+    <div class="row" style="gap:var(--medo-space-2xl);align-items:flex-end;margin-top:var(--medo-space-sm)">
+      <div class="stack"><span class="av av--sm"><img class="photo" alt=""></span><span class="cap">30 px</span></div>
+      <div class="stack"><span class="av av--md"><img class="photo" alt=""></span><span class="cap">38 px</span></div>
+      <div class="stack"><span class="av av--lg"><img class="photo" alt=""></span><span class="cap">64 px</span></div>
+    </div>
+  </div>
+
+  <!-- ================================================================== -->
+  <div class="eyebrow">4 · Woher die Buchstaben kommen <span class="badge badge--set">entschieden</span></div>
+  <div class="card">
+    <p class="note" style="margin:0 0 var(--medo-space-md)">
+      Nach Ihren drei Vorgaben. Die ersten drei Zeilen sind die Fälle, die Sie festgelegt haben;
+      die übrigen zeigen, was dieselbe Regel daraus macht.
+    </p>
+    <table class="rule">
+      <tbody>
+        <tr><td>Andreas Müller</td><td><span class="av av--md av--teal">AM</span></td><td><b>vorgegeben</b> · das Leerzeichen trennt</td></tr>
+        <tr><td>PeterZeider</td><td><span class="av av--md av--indigo">PZ</span></td><td><b>vorgegeben</b> · der große Buchstabe im Wort trennt</td></tr>
+        <tr><td>renatosanches</td><td><span class="av av--md av--rose">RE</span></td><td><b>vorgegeben</b> · kein Trenner → die ersten zwei Zeichen</td></tr>
+        <tr><td>Dr. Marie Hoffmann</td><td><span class="av av--md av--green">DM</span></td><td>nach zwei Teilen ist Schluss</td></tr>
+        <tr><td>anna.mueller</td><td><span class="av av--md av--blue">AM</span></td><td>Punkt, Bindestrich, Unterstrich trennen ebenfalls</td></tr>
+        <tr><td>anna@medo.de</td><td><span class="av av--md av--cyan">AN</span></td><td>ab dem @ abschneiden → <span class="mono">anna</span> → erste zwei Zeichen</td></tr>
+        <tr><td>Müller</td><td><span class="av av--md av--purple">MÜ</span></td><td>ein Wort ohne innere Großbuchstaben</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ================================================================== -->
+  <div class="eyebrow">5 · Bild, Buchstaben, Symbol — und was passiert, wenn ein Bild nicht lädt</div>
+  <div class="grid cols3">
+    <div class="card">
+      <h2>Bild <span class="badge badge--set">angeordnet</span></h2>
+      <p class="note" style="margin-bottom:var(--medo-space-md)">Kreisrund beschnitten.</p>
+      <div class="row"><span class="av av--lg"><img class="photo" alt=""></span></div>
+    </div>
+    <div class="card">
+      <h2>Buchstaben <span class="badge badge--proof">belegt</span></h2>
+      <p class="note" style="margin-bottom:var(--medo-space-md)">Wenn kein Bild da ist — oder es nicht lädt.</p>
+      <div class="row"><span class="av av--lg av--teal">AM</span></div>
+    </div>
+    <div class="card">
+      <h2>Symbol <span class="badge badge--set">angenommen</span></h2>
+      <p class="note" style="margin-bottom:var(--medo-space-md)">Wenn es gar keinen Namen gibt: gelöschtes Konto, offene Einladung.</p>
+      <div class="row"><span class="av av--lg av--icon"><span class="msr">person</span></span></div>
+    </div>
+  </div>
+  <div class="card">
+    <h2>Der Rückfall, live</h2>
+    <p class="note" style="margin-bottom:var(--medo-space-md)">
+      Rechts steht ein Avatar, dessen Bild absichtlich nicht existiert — der Fall, der im Betrieb
+      regelmäßig eintritt. Der Anwender sieht keinen Fehler, sondern die Buchstaben.
+    </p>
+    <div class="row" style="gap:var(--medo-space-2xl)">
+      <div class="stack"><span class="av av--lg"><img class="photo" alt=""></span><span class="cap">Bild lädt</span></div>
+      <span class="msr" style="font-size:28px;color:var(--medo-text-muted)">arrow_forward</span>
+      <div class="stack"><span class="av av--lg av--teal" id="failSlot">AM</span><span class="cap">Bild lädt nicht</span></div>
+      <span class="msr" style="font-size:28px;color:var(--medo-text-muted)">arrow_forward</span>
+      <div class="stack"><span class="av av--lg av--icon"><span class="msr">person</span></span><span class="cap">kein Name</span></div>
+    </div>
+  </div>
+
+  <!-- ================================================================== -->
+  <div class="eyebrow">6 · Die Contained-list <span class="badge badge--set">entschieden</span></div>
+  <div class="card">
+    <p class="note" style="margin:0 0 var(--medo-space-lg)">
+      Entschieden: <b>umstellen, und die Liste bleibt einfarbig.</b> Links, wie die Liste heute
+      aussieht — rechts, wie sie danach aussieht. Die wechselnden Farben bleiben der Tabelle vorbehalten.
+    </p>
+    <div class="grid cols2">
+      <div>
+        <p class="note" style="margin:0 0 var(--medo-space-sm)"><b>Heute</b> — hell getönt, fest eingebaut</p>
+        <div class="clist">
+          <div class="r"><span class="av av--md av--alt">AM</span><div class="t"><b>Andreas Müller</b><span>Admin</span></div></div>
+          <div class="r"><span class="av av--md av--alt">PZ</span><div class="t"><b>Peter Zeider</b><span>Bearbeiter</span></div></div>
+          <div class="r"><span class="av av--md av--alt">RE</span><div class="t"><b>renatosanches</b><span>Betrachter</span></div></div>
+        </div>
+      </div>
+      <div>
+        <p class="note" style="margin:0 0 var(--medo-space-sm)"><b>Danach</b> — umgestellt, einfarbig</p>
+        <div class="clist">
+          <div class="r"><span class="av av--md av--teal">AM</span><div class="t"><b>Andreas Müller</b><span>Admin</span></div></div>
+          <div class="r"><span class="av av--md av--teal">PZ</span><div class="t"><b>Peter Zeider</b><span>Bearbeiter</span></div></div>
+          <div class="r"><span class="av av--md av--teal">RE</span><div class="t"><b>renatosanches</b><span>Betrachter</span></div></div>
+        </div>
+      </div>
+    </div>
+    <p class="note">
+      Zur Einordnung: Dieser Code ist bereits an andere Projekte ausgeliefert. Die Umstellung ist
+      Gegenstand einer eigenen Aufgabe, nicht dieses Entwurfs.
+    </p>
+  </div>
+
+  <!-- ================================================================== -->
+  <div class="eyebrow">7 · Die Farbe gehört zur Person <span class="badge badge--set">entschieden</span></div>
+  <div class="card">
+    <p class="note" style="margin:0 0 var(--medo-space-lg)">
+      Die Farbe wird bei der Registrierung vergeben und kann von der Person später selbst geändert werden.
+      Sie kommt also mit den Daten der Person mit — der Avatar rechnet sie nicht aus.
+      <b>Klicken Sie eine Farbe an</b>, um zu sehen, wie sich das Farbschema einer Person auswirkt.
+    </p>
+
+    <div class="row row--tight" id="picker" style="gap:var(--medo-space-xs);margin-bottom:var(--medo-space-lg)"></div>
+
+    <div class="grid cols3">
+      <div>
+        <p class="note" style="margin:0 0 var(--medo-space-sm)"><b>In der Tabelle</b></p>
+        <table class="tbl">
+          <tbody>
+            <tr><td><div class="person"><span class="av av--sm pick">AM</span><div><b>Andreas Müller</b><span>andreas@medo.de</span></div></div></td></tr>
+            <tr><td><div class="person"><span class="av av--sm av--green">CS</span><div><b>Clara Schmidt</b><span>clara@medo.de</span></div></div></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <p class="note" style="margin:0 0 var(--medo-space-sm)"><b>In der Liste</b></p>
+        <div class="clist">
+          <div class="r"><span class="av av--md pick">AM</span><div class="t"><b>Andreas Müller</b><span>Admin</span></div></div>
+          <div class="r"><span class="av av--md av--green">CS</span><div class="t"><b>Clara Schmidt</b><span>Betrachter</span></div></div>
+        </div>
+      </div>
+      <div>
+        <p class="note" style="margin:0 0 var(--medo-space-sm)"><b>Auf der Profilseite</b></p>
+        <div class="row">
+          <span class="av av--lg pick">AM</span>
+          <div>
+            <div style="font-weight:var(--medo-weight-semibold)">Andreas Müller</div>
+            <div class="note" style="margin:0">Admin</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p class="ask">
+      <b>Dieselbe Person, überall dieselbe Farbe</b> — in der Tabelle, in der Liste, auf der Profilseite.
+      Umsortieren, Filtern oder ein neuer Eintrag ändern daran nichts, weil die Farbe zur Person gehört
+      und nicht zur Zeile.
+      <br><br>
+      <b>Zwei Personen dürfen dieselbe Farbe haben.</b> Die Farbe ist ein persönliches Farbschema, kein
+      Erkennungszeichen, das eindeutig sein müsste — bei fünfzehn Farben und freier Wahl lässt sich das
+      auch nicht erzwingen. Clara Schmidt behält oben ihr Grün, egal was Andreas Müller wählt.
+    </p>
+  </div>
+
+  <!-- ================================================================== -->
+  <div class="eyebrow">8 · Was ich weiterhin weglasse</div>
+  <div class="card">
+    <p class="note" style="margin:0">
+      Eckige Varianten, ein grüner Punkt für „ist online", Gruppen aus mehreren überlappenden Kreisen,
+      ein anklickbarer Avatar mit eigenem Hover-Zustand. Nichts davon kommt im medo-System vor.
+      <b>Die große Version haben Sie angeordnet, die ist jetzt drin.</b>
+    </p>
+    <p class="note">
+      Bei der eckigen Variante kommt ein Argument dazu: Rund und eckig bedeuten im medo-System heute
+      Verschiedenes — <b>rund ist eine Person, eckig ist eine Sache</b>.
+    </p>
+    <div class="row" style="margin-top:var(--medo-space-md)">
+      <div class="stack"><span class="av av--md av--teal">AM</span><span class="cap">Person</span></div>
+      <div class="stack"><span class="av av--md av--icon" style="border-radius:9px"><span class="msr">folder</span></span><span class="cap">Sache</span></div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+(function () {
+  // Ein im Dokument erzeugtes Bild - die Vorschau soll ohne Netz auskommen.
+  // Die Farben kommen aus den Tokens oben, damit hier kein Wert doppelt steht.
+  var tok = function (name) {
+    return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+  };
+  var bg = tok('--medo-color-teal-300'), fg = tok('--medo-color-teal-800');
+  var photo = 'data:image/svg+xml;utf8,' + encodeURIComponent(
+    '<svg xmlns="http://www.w3.org/2000/svg" width="192" height="192">' +
+      '<rect width="192" height="192" fill="' + bg + '"/>' +
+      '<circle cx="96" cy="73" r="33" fill="' + fg + '"/>' +
+      '<path d="M23 192c0-40 33-58 73-58s73 18 73 58z" fill="' + fg + '"/>' +
+    '</svg>'
+  );
+  var imgs = document.querySelectorAll('img.photo');
+  for (var i = 0; i < imgs.length; i++) imgs[i].src = photo;
+
+  // Der Rueckfall: ein Bild, das absichtlich nicht existiert. Laedt es nicht,
+  // bleiben die Buchstaben stehen - genau das ist der Vorschlag.
+  var slot = document.getElementById('failSlot');
+  var probe = new Image();
+  probe.onload = function () { slot.textContent = ''; slot.appendChild(probe); };
+  probe.alt = '';
+  probe.src = 'gibt-es-nicht.jpg';
+
+  // Abschnitt 7: Das Farbschema gehoert zur Person und ist von ihr aenderbar.
+  var farben = [
+    ['red','Rot'], ['crimson','Karmin'], ['rose','Rosé'], ['orange','Orange'],
+    ['amber','Amber'], ['yellow','Gelb'], ['green','Grün'], ['teal','Teal'],
+    ['cyan','Cyan'], ['blue','Blau'], ['indigo','Indigo'], ['violet','Violett'],
+    ['purple','Purpur'], ['grey','Grau'], ['stone','Stein']
+  ];
+  var gewaehlt = 'blue';
+  var picker = document.getElementById('picker');
+  picker.innerHTML = farben.map(function (f) {
+    return '<button type="button" class="swatch av--' + f[0] + '" data-farbe="' + f[0] +
+           '" title="' + f[1] + '" aria-label="Farbschema ' + f[1] + '"></button>';
+  }).join('');
+  function setzeFarbe(neu) {
+    gewaehlt = neu;
+    var ziele = document.querySelectorAll('.av.pick');
+    for (var i = 0; i < ziele.length; i++) {
+      for (var j = 0; j < farben.length; j++) ziele[i].classList.remove('av--' + farben[j][0]);
+      ziele[i].classList.add('av--' + neu);
+    }
+    var knoepfe = picker.querySelectorAll('.swatch');
+    for (var k = 0; k < knoepfe.length; k++)
+      knoepfe[k].setAttribute('aria-pressed', knoepfe[k].dataset.farbe === neu ? 'true' : 'false');
+  }
+  picker.addEventListener('click', function (e) {
+    var b = e.target.closest('.swatch');
+    if (b) setzeFarbe(b.dataset.farbe);
+  });
+  setzeFarbe(gewaehlt);
+
+  // Hell/Dunkel
+  var root = document.documentElement;
+  var btn = document.getElementById('themeBtn');
+  var icon = document.getElementById('themeIcon');
+  var label = document.getElementById('themeLabel');
+  var dark = false;
+  btn.addEventListener('click', function () {
+    dark = !dark;
+    root.setAttribute('data-theme', dark ? 'dark' : 'light');
+    icon.textContent = dark ? 'light_mode' : 'dark_mode';
+    label.textContent = dark ? 'Hell' : 'Dunkel';
+  });
+})();
+</script>
+</body>
+</html>
