@@ -25,6 +25,9 @@
   --medo-color-cyan-600:#006d87;    --medo-color-blue-600:#0059be;
   --medo-color-indigo-600:#3447c8;  --medo-color-violet-600:#6335be;
   --medo-color-purple-600:#881f9e;  --medo-color-grey-600:#595b5e;
+  --medo-color-violet-800:#401b84;
+  --medo-color-orange-700:#c2460e; --medo-color-amber-800:#a04800;
+  --medo-color-yellow-800:#9c5f00;  --medo-color-stone-900:#312d28;
   --medo-color-stone-600:#615951;
 
   --medo-color-white:#ffffff;
@@ -141,23 +144,23 @@ h2{ font-size:var(--medo-text-lg); font-weight:var(--medo-weight-semibold); marg
 .av--sm{ width:30px; height:30px; font-size:var(--medo-text-xs); }
 .av--md{ width:38px; height:38px; font-size:var(--medo-text-xs); }
 .av--lg{ width:var(--medo-space-3xl); height:var(--medo-space-3xl); font-size:var(--medo-text-xl); }
-.av--xl{ width:var(--medo-space-4xl); height:var(--medo-space-4xl); font-size:var(--medo-text-3xl); }
 .av--sm .msr{ font-size:15px; }
 .av--md .msr{ font-size:19px; }
 .av--lg .msr{ font-size:32px; }
-.av--xl .msr{ font-size:48px; }
 
 /* Nur fuer den Groessenvergleich in Abschnitt 7 */
 .av--tok-sm{ width:32px; height:32px; font-size:var(--medo-text-xs); }
 .av--tok-md{ width:40px; height:40px; font-size:var(--medo-text-xs); }
 
-/* Die fuenfzehn Farben. Zwoelf tragen weisse Schrift, drei dunkle. */
+/* Die fuenfzehn Farben. Alle tragen weisse Schrift: wo die 600er Stufe dafuer
+   zu hell war (Orange, Amber, Gelb) oder zu nah an einer anderen Familie lag
+   (Stein neben Grau), steht eine dunklere Stufe derselben Familie. */
 .av--red{     background:var(--medo-color-red-600); }
 .av--crimson{ background:var(--medo-color-crimson-600); }
 .av--rose{    background:var(--medo-color-rose-600); }
-.av--orange{  background:var(--medo-color-orange-600); color:var(--medo-color-stone-1100); }
-.av--amber{   background:var(--medo-color-amber-600);  color:var(--medo-color-stone-1100); }
-.av--yellow{  background:var(--medo-color-yellow-600); color:var(--medo-color-stone-1100); }
+.av--orange{  background:var(--medo-color-orange-700); }
+.av--amber{   background:var(--medo-color-amber-800); }
+.av--yellow{  background:var(--medo-color-yellow-800); }
 .av--green{   background:var(--medo-color-green-600); }
 .av--teal{    background:var(--medo-color-teal-600); }
 .av--cyan{    background:var(--medo-color-cyan-600); }
@@ -166,7 +169,7 @@ h2{ font-size:var(--medo-text-lg); font-weight:var(--medo-weight-semibold); marg
 .av--violet{  background:var(--medo-color-violet-600); }
 .av--purple{  background:var(--medo-color-purple-600); }
 .av--grey{    background:var(--medo-color-grey-600); }
-.av--stone{   background:var(--medo-color-stone-600); }
+.av--stone{   background:var(--medo-color-stone-900); }
 
 .av--icon{ background:var(--medo-surface-sunken); color:var(--medo-icon-muted); }
 .av--load{ background:var(--medo-surface-container-high); }
@@ -223,9 +226,11 @@ h2{ font-size:var(--medo-text-lg); font-weight:var(--medo-weight-semibold); marg
     <div>
       <h1>Avatar — Entwurf zur Freigabe</h1>
       <p class="lead">
-        <b>Fassung 2.</b> Ihre drei Anordnungen sind eingearbeitet: Bild-Variante, Buchstaben aus
-        Name oder Benutzername, Farben auf 600er Stärke und eine große Version fürs Profilbild.
-        Abschnitte mit <span class="badge badge--ask">Ihre Wahl</span> brauchen noch eine Entscheidung.
+        <b>Fassung 3.</b> Die Farben tragen jetzt überall weiße Schrift, und keine zwei wirken mehr
+        gleich — dafür stehen vier Familien auf einer dunkleren Stufe. Größe, Buchstaben-Regel und die
+        Contained-list sind entschieden und mit <span class="badge badge--set">entschieden</span>
+        gekennzeichnet. Nur die Abschnitte mit <span class="badge badge--ask">Ihre Wahl</span> brauchen
+        noch eine Antwort.
         Die schriftliche Fassung liegt daneben in <span class="mono">avatar-entwurf.md</span>.
       </p>
     </div>
@@ -235,19 +240,20 @@ h2{ font-size:var(--medo-text-lg); font-weight:var(--medo-weight-semibold); marg
   </div>
 
   <!-- ================================================================== -->
-  <div class="eyebrow">1 · Die fünfzehn Farben auf 600er Stärke <span class="badge badge--ask">Ihre Wahl</span></div>
+  <div class="eyebrow">1 · Die fünfzehn Farben — alle mit weißer Schrift <span class="badge badge--ask">Ihre Wahl</span></div>
   <div class="card">
     <p class="note" style="margin:0 0 var(--medo-space-lg)">
-      Alle Brand-Farben des Systems, wie angeordnet. <b>Bitte auch im Dunkelmodus ansehen</b> —
-      die Kreise bringen ihren Hintergrund selbst mit und sehen dort genauso aus.
+      Wie angeordnet: keine dunkle Schrift mehr, keine zwei Farben, die gleich wirken.
+      Vier Familien stehen dafür auf einer dunkleren Stufe — sie sind unten gekennzeichnet.
+      <b>Bitte auch im Dunkelmodus ansehen</b>; die Kreise bringen ihren Hintergrund selbst mit.
     </p>
     <div class="row row--tight" style="gap:var(--medo-space-lg)">
       <div class="stack"><span class="av av--md av--red">AM</span><span class="cap">Rot</span></div>
       <div class="stack"><span class="av av--md av--crimson">BK</span><span class="cap">Karmin</span></div>
       <div class="stack"><span class="av av--md av--rose">CS</span><span class="cap">Rosé</span></div>
-      <div class="stack"><span class="av av--md av--orange">DM</span><span class="cap">Orange<br><span class="flag">dunkle Schrift</span></span></div>
-      <div class="stack"><span class="av av--md av--amber">EF</span><span class="cap">Amber<br><span class="flag">dunkle Schrift</span></span></div>
-      <div class="stack"><span class="av av--md av--yellow">GH</span><span class="cap">Gelb<br><span class="flag">dunkle Schrift</span></span></div>
+      <div class="stack"><span class="av av--md av--orange">DM</span><span class="cap">Orange<br><span class="flag">Stufe 700</span></span></div>
+      <div class="stack"><span class="av av--md av--amber">EF</span><span class="cap">Amber<br><span class="flag">Stufe 800</span></span></div>
+      <div class="stack"><span class="av av--md av--yellow">GH</span><span class="cap">Gelb<br><span class="flag">Stufe 800</span></span></div>
       <div class="stack"><span class="av av--md av--green">IJ</span><span class="cap">Grün</span></div>
       <div class="stack"><span class="av av--md av--teal">KL</span><span class="cap">Teal</span></div>
       <div class="stack"><span class="av av--md av--cyan">MN</span><span class="cap">Cyan</span></div>
@@ -255,20 +261,65 @@ h2{ font-size:var(--medo-text-lg); font-weight:var(--medo-weight-semibold); marg
       <div class="stack"><span class="av av--md av--indigo">QR</span><span class="cap">Indigo</span></div>
       <div class="stack"><span class="av av--md av--violet">ST</span><span class="cap">Violett</span></div>
       <div class="stack"><span class="av av--md av--purple">UV</span><span class="cap">Purpur</span></div>
-      <div class="stack"><span class="av av--md av--grey">WX</span><span class="cap">Grau<br><span class="flag">fast gleich</span></span></div>
-      <div class="stack"><span class="av av--md av--stone">YZ</span><span class="cap">Stein<br><span class="flag">fast gleich</span></span></div>
+      <div class="stack"><span class="av av--md av--grey">WX</span><span class="cap">Grau</span></div>
+      <div class="stack"><span class="av av--md av--stone">YZ</span><span class="cap">Stein<br><span class="flag">Stufe 900</span></span></div>
     </div>
+    <p class="ask">
+      <b>Wirkt die Reihe so stimmig?</b> Orange, Amber, Gelb und Stein sind sichtbar dunkler als ihre
+      Nachbarn — das ist der Preis dafür, dass die Schrift überall weiß ist. Der schwächste Kontrast
+      der Reihe liegt jetzt bei 5,03 gegen die geforderten 4,5.
+    </p>
+  </div>
 
-    <p class="ask">
-      <b>Drei tragen keine weiße Schrift.</b> Bei Orange, Amber und Gelb ist Weiß nach WCAG 2.2 nicht
-      lesbar — gemessen: 3,68 · 3,21 · 2,76 gegen die geforderten 4,5. Mit dunkler Schrift erreichen
-      sie 4,95 · 5,68 · 6,60. <b>Geht das für Sie so durch?</b>
-    </p>
-    <p class="ask">
-      <b>Grau und Stein sehen fast gleich aus</b> (die beiden letzten). In einer Reihe, die Personen
-      unterscheidbar machen soll, bringen zwei fast gleiche Grautöne nichts.
-      <b>Vorschlag: Stein aus der Reihenfolge nehmen</b> — es blieben vierzehn.
-    </p>
+  <div class="eyebrow">1b · Die beiden Paare, die eng beieinander lagen</div>
+  <div class="grid cols2">
+    <div class="card">
+      <h2>Grau und Stein — getrennt <span class="badge badge--set">erledigt</span></h2>
+      <p class="note" style="margin-bottom:var(--medo-space-md)">
+        Vorher beide auf Stufe 600 und praktisch nicht zu unterscheiden. Stein steht jetzt auf 900.
+      </p>
+      <div class="row" style="gap:var(--medo-space-xl)">
+        <div class="stack">
+          <div class="row row--tight">
+            <span class="av av--md" style="background:var(--medo-color-grey-600)">WX</span>
+            <span class="av av--md" style="background:var(--medo-color-stone-600)">YZ</span>
+          </div>
+          <span class="cap">vorher · Abstand 8,0</span>
+        </div>
+        <div class="stack">
+          <div class="row row--tight">
+            <span class="av av--md av--grey">WX</span>
+            <span class="av av--md av--stone">YZ</span>
+          </div>
+          <span class="cap">jetzt · Abstand 20,7</span>
+        </div>
+      </div>
+      <p class="ask"><b>Sind sie für Sie ausreichend getrennt?</b></p>
+    </div>
+    <div class="card">
+      <h2>Indigo und Violett <span class="badge badge--ask">Ihre Wahl</span></h2>
+      <p class="note" style="margin-bottom:var(--medo-space-md)">
+        Beim Nachrechnen aufgefallen: Abstand 14,5 — knapp unter derselben Schwelle.
+        Ich habe sie <b>nicht</b> angefasst, weil sie noch klar als Blau und als Lila lesbar sind.
+      </p>
+      <div class="row" style="gap:var(--medo-space-xl)">
+        <div class="stack">
+          <div class="row row--tight">
+            <span class="av av--md av--indigo">QR</span>
+            <span class="av av--md av--violet">ST</span>
+          </div>
+          <span class="cap">jetzt · Abstand 14,5</span>
+        </div>
+        <div class="stack">
+          <div class="row row--tight">
+            <span class="av av--md av--indigo">QR</span>
+            <span class="av av--md" style="background:var(--medo-color-violet-800)">ST</span>
+          </div>
+          <span class="cap">Violett auf 800 · 23,0</span>
+        </div>
+      </div>
+      <p class="ask"><b>Soll ich sie ebenfalls trennen?</b> Rechts sähe es dann so aus.</p>
+    </div>
   </div>
 
   <!-- ================================================================== -->
@@ -295,49 +346,43 @@ h2{ font-size:var(--medo-text-lg); font-weight:var(--medo-weight-semibold); marg
   </div>
 
   <!-- ================================================================== -->
-  <div class="eyebrow">3 · Größen <span class="badge badge--ask">Ihre Wahl</span></div>
+  <div class="eyebrow">3 · Größen <span class="badge badge--set">entschieden</span></div>
   <div class="card">
+    <p class="note" style="margin:0 0 var(--medo-space-lg)">
+      Drei Größen, wie entschieden: 30 px in Tabellen, 38 px in Listen, 64 px fürs Profil.
+      Die zur Wahl gestellten Alternativen (96 px sowie 32/40 px) sind verworfen und hier nicht mehr zu sehen.
+    </p>
     <div class="row" style="gap:var(--medo-space-2xl);align-items:flex-end">
       <div class="stack"><span class="av av--sm av--teal">AM</span><span class="cap">sm · 30 px<br>Tabelle</span></div>
       <div class="stack"><span class="av av--md av--teal">AM</span><span class="cap">md · 38 px<br>Liste</span></div>
       <div class="stack"><span class="av av--lg av--teal">AM</span><span class="cap">lg · 64 px<br>Profil</span></div>
-      <div class="stack"><span class="av av--xl av--teal">AM</span><span class="cap">xl · 96 px<br>Profil, größer</span></div>
     </div>
     <p class="note" style="margin-top:var(--medo-space-lg)">Dieselben Größen mit einem Bild:</p>
     <div class="row" style="gap:var(--medo-space-2xl);align-items:flex-end;margin-top:var(--medo-space-sm)">
       <div class="stack"><span class="av av--sm"><img class="photo" alt=""></span><span class="cap">30 px</span></div>
       <div class="stack"><span class="av av--md"><img class="photo" alt=""></span><span class="cap">38 px</span></div>
       <div class="stack"><span class="av av--lg"><img class="photo" alt=""></span><span class="cap">64 px</span></div>
-      <div class="stack"><span class="av av--xl"><img class="photo" alt=""></span><span class="cap">96 px</span></div>
     </div>
-    <p class="ask">
-      <b>Welche große Version möchten Sie — 64 px oder 96 px?</b> Beide liegen exakt auf einer Stufe
-      des Systems, ich muss bei keiner etwas erfinden. <b>Vorschlag: 64 px</b> — deutlich größer als
-      alles Bestehende, passt aber noch in eine Kopfzeile oder Seitenleiste.
-    </p>
   </div>
 
   <!-- ================================================================== -->
-  <div class="eyebrow">4 · Woher die Buchstaben kommen <span class="badge badge--ask">Ihre Wahl</span></div>
+  <div class="eyebrow">4 · Woher die Buchstaben kommen <span class="badge badge--set">entschieden</span></div>
   <div class="card">
     <p class="note" style="margin:0 0 var(--medo-space-md)">
-      Angeordnet: aus Vor- und Nachname, sonst aus dem Benutzernamen. So sähe die Regel aus:
+      Nach Ihren drei Vorgaben. Die ersten drei Zeilen sind die Fälle, die Sie festgelegt haben;
+      die übrigen zeigen, was dieselbe Regel daraus macht.
     </p>
     <table class="rule">
       <tbody>
-        <tr><td>Anna Müller</td><td><span class="av av--md av--teal">AM</span></td><td>zwei Wörter → erster Buchstabe je Wort</td></tr>
-        <tr><td>Dr. Marie Hoffmann</td><td><span class="av av--md av--green">DM</span></td><td>wie oben, nach zwei ist Schluss</td></tr>
-        <tr><td>anna.mueller</td><td><span class="av av--md av--blue">AM</span></td><td>Punkt, Bindestrich, Unterstrich trennen wie ein Leerzeichen</td></tr>
-        <tr><td>amueller</td><td><span class="av av--md av--violet">AM</span></td><td>nur ein Wort → die ersten <b>zwei</b> Buchstaben</td></tr>
-        <tr><td>anna@medo.de</td><td><span class="av av--md av--cyan">AM</span></td><td>alles ab dem @ wird abgeschnitten, dann wie oben</td></tr>
-        <tr><td>Müller</td><td><span class="av av--md av--rose">MÜ</span></td><td>nur ein Wort → die ersten zwei Buchstaben</td></tr>
+        <tr><td>Andreas Müller</td><td><span class="av av--md av--teal">AM</span></td><td><b>vorgegeben</b> · das Leerzeichen trennt</td></tr>
+        <tr><td>PeterZeider</td><td><span class="av av--md av--indigo">PZ</span></td><td><b>vorgegeben</b> · der große Buchstabe im Wort trennt</td></tr>
+        <tr><td>renatosanches</td><td><span class="av av--md av--rose">RE</span></td><td><b>vorgegeben</b> · kein Trenner → die ersten zwei Zeichen</td></tr>
+        <tr><td>Dr. Marie Hoffmann</td><td><span class="av av--md av--green">DM</span></td><td>nach zwei Teilen ist Schluss</td></tr>
+        <tr><td>anna.mueller</td><td><span class="av av--md av--blue">AM</span></td><td>Punkt, Bindestrich, Unterstrich trennen ebenfalls</td></tr>
+        <tr><td>anna@medo.de</td><td><span class="av av--md av--cyan">AN</span></td><td>ab dem @ abschneiden → <span class="mono">anna</span> → erste zwei Zeichen</td></tr>
+        <tr><td>Müller</td><td><span class="av av--md av--purple">MÜ</span></td><td>ein Wort ohne innere Großbuchstaben</td></tr>
       </tbody>
     </table>
-    <p class="ask">
-      <b>Stimmt das für Ihre Fälle?</b> Besonders die vierte Zeile: Aus einem Benutzernamen ohne
-      Trennzeichen würde die heutige Regel im System nur <b>einen</b> Buchstaben machen.
-      <b>Vorschlag: die ersten zwei nehmen.</b>
-    </p>
   </div>
 
   <!-- ================================================================== -->
@@ -375,71 +420,38 @@ h2{ font-size:var(--medo-text-lg); font-weight:var(--medo-weight-semibold); marg
   </div>
 
   <!-- ================================================================== -->
-  <div class="eyebrow">6 · Was mit der Contained-list geschieht <span class="badge badge--ask">Ihre Wahl</span></div>
+  <div class="eyebrow">6 · Die Contained-list <span class="badge badge--set">entschieden</span></div>
   <div class="card">
     <p class="note" style="margin:0 0 var(--medo-space-lg)">
-      Die Liste hat den Kreis heute fest eingebaut, in heller Tönung — <b>dieser Code ist bereits an
-      andere Projekte ausgeliefert.</b> Stellt man sie auf die neue Komponente um, sieht sie anders aus.
+      Entschieden: <b>umstellen, und die Liste bleibt einfarbig.</b> Links, wie die Liste heute
+      aussieht — rechts, wie sie danach aussieht. Die wechselnden Farben bleiben der Tabelle vorbehalten.
     </p>
-    <div class="grid cols3">
+    <div class="grid cols2">
       <div>
-        <p class="note" style="margin:0 0 var(--medo-space-sm)"><b>Heute</b> — hell getönt, eingebaut</p>
+        <p class="note" style="margin:0 0 var(--medo-space-sm)"><b>Heute</b> — hell getönt, fest eingebaut</p>
         <div class="clist">
-          <div class="r"><span class="av av--md av--alt">AM</span><div class="t"><b>Anna Müller</b><span>Admin</span></div></div>
-          <div class="r"><span class="av av--md av--alt">BK</span><div class="t"><b>Ben Krüger</b><span>Bearbeiter</span></div></div>
-          <div class="r"><span class="av av--md av--alt">CS</span><div class="t"><b>Clara Schmidt</b><span>Betrachter</span></div></div>
+          <div class="r"><span class="av av--md av--alt">AM</span><div class="t"><b>Andreas Müller</b><span>Admin</span></div></div>
+          <div class="r"><span class="av av--md av--alt">PZ</span><div class="t"><b>Peter Zeider</b><span>Bearbeiter</span></div></div>
+          <div class="r"><span class="av av--md av--alt">RE</span><div class="t"><b>renatosanches</b><span>Betrachter</span></div></div>
         </div>
       </div>
       <div>
-        <p class="note" style="margin:0 0 var(--medo-space-sm)"><b>Weg 1</b> — umstellen, bunt</p>
+        <p class="note" style="margin:0 0 var(--medo-space-sm)"><b>Danach</b> — umgestellt, einfarbig</p>
         <div class="clist">
-          <div class="r"><span class="av av--md av--teal">AM</span><div class="t"><b>Anna Müller</b><span>Admin</span></div></div>
-          <div class="r"><span class="av av--md av--rose">BK</span><div class="t"><b>Ben Krüger</b><span>Bearbeiter</span></div></div>
-          <div class="r"><span class="av av--md av--amber">CS</span><div class="t"><b>Clara Schmidt</b><span>Betrachter</span></div></div>
-        </div>
-      </div>
-      <div>
-        <p class="note" style="margin:0 0 var(--medo-space-sm)"><b>Weg 3</b> — umstellen, einfarbig</p>
-        <div class="clist">
-          <div class="r"><span class="av av--md av--teal">AM</span><div class="t"><b>Anna Müller</b><span>Admin</span></div></div>
-          <div class="r"><span class="av av--md av--teal">BK</span><div class="t"><b>Ben Krüger</b><span>Bearbeiter</span></div></div>
-          <div class="r"><span class="av av--md av--teal">CS</span><div class="t"><b>Clara Schmidt</b><span>Betrachter</span></div></div>
+          <div class="r"><span class="av av--md av--teal">AM</span><div class="t"><b>Andreas Müller</b><span>Admin</span></div></div>
+          <div class="r"><span class="av av--md av--teal">PZ</span><div class="t"><b>Peter Zeider</b><span>Bearbeiter</span></div></div>
+          <div class="r"><span class="av av--md av--teal">RE</span><div class="t"><b>renatosanches</b><span>Betrachter</span></div></div>
         </div>
       </div>
     </div>
-    <p class="ask">
-      <b>Weg 2 wäre: gar nicht umstellen</b> — dann bliebe die linke Liste, wie sie ist, und im System
-      gäbe es zwei verschieden aussehende Avatare. <b>Meine Empfehlung: Weg 3.</b> Ein Avatar überall,
-      und die Liste bleibt ruhig, während die Tabelle bunt ist.
+    <p class="note">
+      Zur Einordnung: Dieser Code ist bereits an andere Projekte ausgeliefert. Die Umstellung ist
+      Gegenstand einer eigenen Aufgabe, nicht dieses Entwurfs.
     </p>
   </div>
 
   <!-- ================================================================== -->
-  <div class="eyebrow">7 · Kleine Größen halten oder auf die Stufen ziehen? <span class="badge badge--ask">Ihre Wahl</span></div>
-  <div class="card">
-    <p class="note" style="margin:0 0 var(--medo-space-md)">
-      Unverändert aus Fassung 1. Heute sind es 30 und 38 Pixel, die Stufen des Systems sind 32 und 40.
-    </p>
-    <div class="row" style="gap:var(--medo-space-2xl)">
-      <div class="row">
-        <div class="stack"><span class="av av--sm av--teal">AM</span><span class="cap">30 px</span></div>
-        <div class="stack"><span class="av av--md av--teal">AM</span><span class="cap">38 px</span></div>
-        <span class="cap" style="align-self:center">heute</span>
-      </div>
-      <div class="row">
-        <div class="stack"><span class="av av--tok-sm av--teal">AM</span><span class="cap">32 px</span></div>
-        <div class="stack"><span class="av av--tok-md av--teal">AM</span><span class="cap">40 px</span></div>
-        <span class="cap" style="align-self:center">auf den Stufen</span>
-      </div>
-    </div>
-    <p class="ask">
-      <b>Empfehlung: bei 30/38 bleiben.</b> Der Unterschied ist kaum zu sehen, aber die Umstellung
-      verlangte eine Änderung an bereits ausgeliefertem Code.
-    </p>
-  </div>
-
-  <!-- ================================================================== -->
-  <div class="eyebrow">8 · Was ich weiterhin weglasse</div>
+  <div class="eyebrow">7 · Was ich weiterhin weglasse</div>
   <div class="card">
     <p class="note" style="margin:0">
       Eckige Varianten, ein grüner Punkt für „ist online", Gruppen aus mehreren überlappenden Kreisen,

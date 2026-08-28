@@ -1,24 +1,43 @@
 # Avatar — Entwurf zur Freigabe
 
-**Fassung 2 · Stand:** 28.08.2026 · **Status:** wartet auf Freigabe · **Vorschau:** [`avatar-entwurf.html`](./avatar-entwurf.html) im Browser öffnen
+**Fassung 3 · Stand:** 28.08.2026 · **Status:** wartet auf Freigabe · **Vorschau:** [`avatar-entwurf.html`](./avatar-entwurf.html) im Browser öffnen
 
 ---
 
-## Was sich gegenüber Fassung 1 geändert hat
+## Was entschieden ist
 
-Der Inhaber hat das Layout freigegeben und drei Änderungen angeordnet. Sie sind eingearbeitet:
+Aus zwei Rückmeldungen des Inhabers am 28.08.2026. Alles hier ist **festgelegt** und Grundlage der späteren Umsetzung:
 
-| | Anordnung | Folge |
+| | Entscheidung | Ausgeführt in |
 |---|---|---|
-| 1 | **Bild-Variante und Buchstaben-Variante**, Buchstaben aus Vor- und Nachname beziehungsweise aus dem Benutzernamen | [Ergänzung 1](#erganzung-1-bild-statt-initialen) angenommen · Ableitungsregel neu in [A4](#a4--füllung-zwei-buchstaben) |
-| 2 | **Hintergrund der Buchstaben-Variante: alle Brand-Farben auf 600er Stärke** | ersetzt [A5](#a5--farbe-fall-1-eine-feste-farbe) und [A6](#a6--farbe-fall-2-vier-durchlaufende-farben) · neuer Abschnitt [F](#teil-f--farbe-fassung-2) |
-| 3 | **Große Version für ein Profilbild** mitbedenken | neue Größe `lg` in [A3](#a3--größe-md--38-px-für-listenzeilen) · in der Vorschau in zwei Stufen gezeigt |
+| Layout | freigegeben | — |
+| Bild-Variante | **angenommen**, mit Rückfall auf Buchstaben | [Ergänzung 1](#erganzung-1-bild-statt-initialen) |
+| Buchstaben | aus Vor-/Nachname, aus Binnengroßschreibung, sonst erste zwei Zeichen | [A4](#a4--füllung-zwei-buchstaben) |
+| Farbe | **alle Brand-Farben**, überall **weiße** Schrift, keine zwei gleich wirkend | [Teil F](#teil-f--farbe-fassung-3) |
+| Profil-Größe | **64 px** (96 px verworfen) | [A3b](#a3b--größe-lg--64-px-für-das-profilbild--angeordnet) |
+| Contained-list | **umstellen, einfarbig** | [F6](#f6--was-das-für-die-contained-list-bedeutet) |
+| Kleine Größen | **30/38 px halten** (nicht auf 32/40 ziehen) | [D1](#d1--es-gibt-keine-token-für-komponentengrößen-30-px--38-px) |
+| Dunkelmodus | **gegenstandslos** — die kräftigen Flächen tragen sich selbst | [F5](#f5--der-dunkelmodus-löst-sich-von-selbst) |
 
-**Die 600er-Stärke bringt drei Punkte mit, die Sie noch entscheiden müssen** — sie stehen in [Teil F](#teil-f--farbe-fassung-2) und in der Vorschau. Kurz:
+## Was Fassung 3 daraus gemacht hat
 
-- **Drei der fünfzehn Farben tragen keine weiße Schrift** (Orange, Amber, Gelb). Sie bekommen dunkle Buchstaben. Geprüft, nicht geschätzt — die Messwerte stehen in [F2](#f2--wo-die-weiße-schrift-nicht-reicht).
-- **Der Dunkelmodus löst sich damit von selbst.** Der offene Punkt D4 aus Fassung 1 entfällt.
-- **Die Contained-list würde sichtbar anders aussehen**, wenn sie später auf die Komponente umgestellt wird. Das ist ausgelieferter Code — siehe [F4](#f4--was-das-für-die-contained-list-bedeutet).
+Die Anweisung lautete: *„Bei den Farben, in der eine dunkle Schrift ist oder sie gleich wirken, die Farben so anpassen, dass die Schrift weiß wird bzw. die sich unterscheiden."*
+
+**Umgesetzt, ohne einen einzigen Farbwert zu erfinden.** Wo die 600er Stufe nicht genügte, steht jetzt eine **andere bereits vorhandene Stufe derselben Farbfamilie**:
+
+| Familie | vorher | jetzt | warum |
+|---|---|---|---|
+| Orange | 600 | **700** | Weiß erreichte auf 600 nur 3,68 statt 4,5 |
+| Amber | 600 | **800** | 3,21 auf 600 · auf 700 immer noch nur 4,29 |
+| Gelb | 600 | **800** | 2,76 auf 600 · auf 700 immer noch nur 3,59 |
+| Stein | 600 | **900** | war von Grau nicht zu unterscheiden (Farbabstand 8,0 → jetzt 20,7) |
+
+Die übrigen elf Familien bleiben auf 600. **Alle fünfzehn tragen jetzt weiße Schrift**, der schwächste Kontrast der Reihe ist 5,03.
+
+**Zwei Punkte sind noch offen** — beide klein, beide in der Vorschau zu sehen:
+
+- Ob die vier angehobenen Farben **neben ihren Nachbarn stimmig wirken** (sie sind sichtbar dunkler).
+- Ein Randbefund, den ich beim Nachrechnen fand: **Indigo und Violett** liegen bei 14,5 knapp unter derselben Schwelle. Ich habe sie nicht angefasst, sondern lege sie Ihnen vor — siehe [F4](#f4--ein-randbefund-indigo-und-violett).
 
 ---
 
@@ -53,8 +72,8 @@ Das ändert die Gewichtung des Entwurfs:
 | **Drei Größen** | 30 px (Tabelle) · 38 px (Liste) · 64 px (Profil) | 30/38 belegt · 64 **angeordnet** |
 | **Füllung, Fall 1** | Bild, kreisrund beschnitten | **angeordnet** |
 | **Füllung, Fall 2** | Zwei Buchstaben, halbfett | belegt |
-| **Herkunft der Buchstaben** | Vor- und Nachname, sonst Benutzername | **angeordnet** |
-| **Hintergrund der Buchstaben** | Brand-Farben auf 600er Stärke, weiße Schrift | **angeordnet** |
+| **Herkunft der Buchstaben** | Vor-/Nachname · Binnengroßschreibung · sonst erste zwei Zeichen | **entschieden** |
+| **Hintergrund der Buchstaben** | 15 Brand-Farben, überall weiße Schrift | **entschieden** |
 | **Rückfall** | Bild lädt nicht → Buchstaben → Personen-Symbol | **Ergänzung** |
 | **Ladezustand** | Grauer Kreis ohne Inhalt | belegt |
 | **Für Vorleseprogramme** | Unsichtbar — der Name steht ja daneben | belegt |
@@ -99,11 +118,11 @@ Der Abstand zum Text beträgt hier 14 px (`gap:14px`).
 
 **Kein Beleg** — im System kommt heute keine Größe über 38 px vor. Der Inhaber hat sie angeordnet, damit ein Profilbild einen Platz hat.
 
-Ich schlage **64 px** vor, und zwar aus einem Grund, der nicht Geschmack ist: **64 px ist eine exakte Stufe des Systems** (`--medo-space-3xl`), und die passende Schriftgröße für die Buchstaben ist es ebenfalls — **25 px** (`--medo-text-xl`). Beide Maße liegen damit auf Tokens; ich muss nichts erfinden und nichts ausrechnen.
+**Entschieden am 28.08.2026: 64 px.** Die zur Wahl gestellte Alternative (96 px) ist verworfen und aus der Vorschau entfernt.
 
-Zum Vergleich zeigt die Vorschau daneben **96 px** (`--medo-space-4xl`, Buchstaben `--medo-text-3xl` = 39 px) — ebenfalls token-genau, falls Ihnen 64 px für eine Profilseite zu klein ist.
+**64 px ist eine exakte Stufe des Systems** (`--medo-space-3xl`), und die passende Schriftgröße für die Buchstaben ist es ebenfalls — **25 px** (`--medo-text-xl`). Beide Maße liegen damit auf Tokens; es ist nichts erfunden und nichts ausgerechnet.
 
-> **Bitte wählen Sie eine der beiden.** Ich schlage 64 px vor: Es ist deutlich größer als alles Bestehende, bleibt aber in einer Kopfzeile oder einer Seitenleiste noch unterzubringen.
+Damit hat der Avatar drei Größen: **30 px** (Tabelle) · **38 px** (Liste) · **64 px** (Profil).
 
 ### A4 · Füllung: zwei Buchstaben
 
@@ -116,24 +135,33 @@ Die zweite Fundstelle zeigt zusätzlich, **woher** die Buchstaben kommen: aus de
 
 **Angeordnet:** Die Buchstaben kommen aus Vor- und Nachname — **und wenn es keinen Namen gibt, aus dem Benutzernamen.** Der zweite Fall steht in der Referenz nicht; die dortige Regel liefert bei einem Benutzernamen ohne Leerzeichen nur **einen** Buchstaben.
 
-**Vorschlag für die Regel**, die beides abdeckt:
+**Die Regel, aus den drei vorgegebenen Fällen abgeleitet.** Der Inhaber hat sie am 28.08.2026 an drei Beispielen festgelegt: `Andreas Müller` → **AM**, `PeterZeider` → **PZ**, `renatosanches` → **RE**. Daraus ergeben sich drei Stufen, die nacheinander greifen:
 
-| Eingabe | Ergebnis | warum |
+1. **Trennzeichen suchen** — Leerzeichen, Punkt, Bindestrich, Unterstrich. Bei einer E-Mail-Adresse wird vorher alles ab dem `@` abgeschnitten.
+2. **Sonst: Großbuchstaben im Wortinneren suchen.** Sie trennen genauso. Das ist der Fall `PeterZeider`.
+3. **Sonst: die ersten zwei Buchstaben nehmen.** Das ist der Fall `renatosanches`.
+
+Bei zwei oder mehr Teilen zählt der erste Buchstabe der ersten beiden Teile. Das Ergebnis wird immer groß dargestellt.
+
+| Eingabe | Ergebnis | welche Stufe greift |
 |---|---|---|
-| `Anna Müller` | **AM** | zwei Wörter → erster Buchstabe je Wort |
-| `Dr. Marie Hoffmann` | **DM** | wie oben, nach zwei ist Schluss |
-| `anna.mueller` | **AM** | Punkt, Bindestrich und Unterstrich trennen wie ein Leerzeichen |
-| `amueller` | **AM** | nur ein Wort → die ersten **zwei** Buchstaben |
-| `anna@medo.de` | **AM** | alles ab dem `@` wird abgeschnitten, dann wie oben |
-| `Müller` | **MÜ** | nur ein Wort → die ersten zwei Buchstaben |
+| `Andreas Müller` | **AM** | 1 — Leerzeichen trennt · **vorgegeben** |
+| `PeterZeider` | **PZ** | 2 — der Großbuchstabe im Wortinneren trennt · **vorgegeben** |
+| `renatosanches` | **RE** | 3 — kein Trennzeichen, keine Großbuchstaben → erste zwei · **vorgegeben** |
+| `Dr. Marie Hoffmann` | **DM** | 1 — nach zwei Teilen ist Schluss |
+| `anna.mueller` | **AM** | 1 — der Punkt trennt |
+| `anna@medo.de` | **AN** | 1 — `@` abschneiden → `anna` → Stufe 3 greift |
+| `Müller` | **MÜ** | 3 — ein Wort ohne innere Großbuchstaben |
 
-Die Buchstaben werden immer groß dargestellt, egal wie sie hereinkommen. Vorgeben lassen sie sich weiterhin auch direkt, so wie es die Contained-list heute tut.
+> **Korrektur zu Fassung 2:** Dort stand in dieser Tabelle für `anna@medo.de` das Ergebnis „AM". Das war falsch — nach dem Abschneiden bleibt `anna` übrig, daraus werden die ersten zwei Buchstaben, also **AN**. Die Regel selbst hat sich nicht geändert, nur mein Beispiel war verrechnet.
+
+Vorgeben lassen sich die Buchstaben weiterhin auch direkt, so wie es die Contained-list heute tut.
 
 **Schriftgewicht:** halbfett, Token `--medo-weight-semibold` (= 600). Passt exakt.
 
 ### A5 · Farbe, Fall 1: eine feste Farbe
 
-> **Überholt durch Anordnung 2.** Was hier steht, beschreibt weiterhin richtig, wie das System heute aussieht — die Farbe des Entwurfs steht jetzt in [Teil F](#teil-f--farbe-fassung-2).
+> **Überholt durch Anordnung 2.** Was hier steht, beschreibt weiterhin richtig, wie das System heute aussieht — die Farbe des Entwurfs steht jetzt in [Teil F](#teil-f--farbe-fassung-3).
 
 Die Contained-list gibt allen Avataren dieselbe Farbe — helles Teal mit dunklem Teal als Schrift.
 
@@ -143,7 +171,7 @@ Die Contained-list gibt allen Avataren dieselbe Farbe — helles Teal mit dunkle
 
 ### A6 · Farbe, Fall 2: vier durchlaufende Farben
 
-> **Überholt durch Anordnung 2.** Der *Gedanke* — mehrere Farben reihum, damit sich Personen unterscheiden — bleibt und wird in [Teil F](#teil-f--farbe-fassung-2) auf fünfzehn Farben erweitert. Die *Werte* hier gelten nicht mehr.
+> **Überholt durch Anordnung 2.** Der *Gedanke* — mehrere Farben reihum, damit sich Personen unterscheiden — bleibt und wird in [Teil F](#teil-f--farbe-fassung-3) auf fünfzehn Farben erweitert. Die *Werte* hier gelten nicht mehr.
 
 Die Data-table verteilt vier Farbpaare reihum über die Zeilen, damit die Personen auf einen Blick unterscheidbar sind.
 
@@ -228,59 +256,71 @@ Bereits unter [A6](#a6--farbe-fall-2-vier-durchlaufende-farben) beschrieben und 
 
 ---
 
-## Teil F — Farbe (Fassung 2)
+## Teil F — Farbe (Fassung 3)
 
-**Angeordnet:** Der Hintergrund der Buchstaben-Variante nutzt **alle Brand-Farben auf 600er Stärke**.
+**Angeordnet:** Der Hintergrund der Buchstaben-Variante nutzt **alle Brand-Farben**, und zwar so, dass **überall weiße Schrift steht** und **keine zwei Farben gleich wirken**.
 
-Das ist eine deutliche Abkehr von dem, was heute im System steht: Dort sind die Kreise **hell** getönt (Stufen 50 bis 200) und tragen **dunkle** Buchstaben. Auf 600er Stärke ist es umgekehrt — kräftige Fläche, **weiße** Buchstaben. Der Avatar wird damit zu einem farbigen Punkt in der Zeile statt zu einer zurückhaltenden Tönung.
+Das ist eine deutliche Abkehr von dem, was heute im System steht: Dort sind die Kreise **hell** getönt (Stufen 50 bis 200) und tragen **dunkle** Buchstaben. Jetzt ist es umgekehrt — kräftige Fläche, weiße Buchstaben. Der Avatar wird damit zu einem farbigen Punkt in der Zeile statt zu einer zurückhaltenden Tönung.
 
-### F1 · Die Palette
+### F1 · Die Palette — fünfzehn Farben, alle mit weißer Schrift
 
-Das System führt **fünfzehn** Brand-Farbfamilien. Alle haben eine 600er Stufe:
+**Wichtig zum Vorgehen:** Wo die 600er Stufe nicht genügte, habe ich **keinen neuen Farbwert erfunden**, sondern eine **andere, bereits vorhandene Stufe derselben Farbfamilie** genommen. Jeder Wert unten ist ein Token, das es im System schon gibt.
 
-| | Familie | 600er Wert | Buchstaben |
-|---|---|---|---|
-| 1 | Rot | `--medo-color-red-600` | weiß |
-| 2 | Karmin | `--medo-color-crimson-600` | weiß |
-| 3 | Rosé | `--medo-color-rose-600` | weiß |
-| 4 | **Orange** | `--medo-color-orange-600` | **dunkel** |
-| 5 | **Amber** | `--medo-color-amber-600` | **dunkel** |
-| 6 | **Gelb** | `--medo-color-yellow-600` | **dunkel** |
-| 7 | Grün | `--medo-color-green-600` | weiß |
-| 8 | Teal | `--medo-color-teal-600` | weiß |
-| 9 | Cyan | `--medo-color-cyan-600` | weiß |
-| 10 | Blau | `--medo-color-blue-600` | weiß |
-| 11 | Indigo | `--medo-color-indigo-600` | weiß |
-| 12 | Violett | `--medo-color-violet-600` | weiß |
-| 13 | Purpur | `--medo-color-purple-600` | weiß |
-| 14 | Grau | `--medo-color-grey-600` | weiß |
-| 15 | Stein | `--medo-color-stone-600` | weiß |
+| | Familie | Stufe | Kontrast gegen Weiß | |
+|---|---|---|---|---|
+| 1 | Rot | `--medo-color-red-600` | 7,55 | |
+| 2 | Karmin | `--medo-color-crimson-600` | 7,31 | |
+| 3 | Rosé | `--medo-color-rose-600` | 7,40 | |
+| 4 | Orange | `--medo-color-orange-`**`700`** | 5,03 | **angehoben** (600 lag bei 3,68) |
+| 5 | Amber | `--medo-color-amber-`**`800`** | 6,14 | **angehoben** (600 lag bei 3,21) |
+| 6 | Gelb | `--medo-color-yellow-`**`800`** | 5,18 | **angehoben** (600 lag bei 2,76) |
+| 7 | Grün | `--medo-color-green-600` | 6,06 | |
+| 8 | Teal | `--medo-color-teal-600` | 5,84 | |
+| 9 | Cyan | `--medo-color-cyan-600` | 5,94 | |
+| 10 | Blau | `--medo-color-blue-600` | 6,62 | |
+| 11 | Indigo | `--medo-color-indigo-600` | 7,29 | |
+| 12 | Violett | `--medo-color-violet-600` | 7,54 | |
+| 13 | Purpur | `--medo-color-purple-600` | 7,67 | |
+| 14 | Grau | `--medo-color-grey-600` | 6,81 | |
+| 15 | Stein | `--medo-color-stone-`**`900`** | 13,67 | **angehoben**, damit es sich von Grau löst |
 
-Weiß ist `--medo-color-white`, das Dunkel ist `--medo-color-stone-1100`. **Alle Angaben sind Tokens; nichts davon ist ein erfundener Wert.**
+Die Schrift ist durchgehend `--medo-color-white`. **Keine Ausnahme, kein Sonderfall, keine dunkle Schrift mehr.** Der schwächste Kontrast der Reihe ist Orange mit 5,03 — deutlich über den geforderten 4,5.
 
-<a id="f2--wo-die-weiße-schrift-nicht-reicht"></a>
-### F2 · Wo die weiße Schrift nicht reicht — gemessen, nicht geschätzt
+### F2 · Warum drei Farben angehoben wurden
 
-Ich habe für alle fünfzehn Farben den Kontrast gegen weiße Schrift nach WCAG 2.2 berechnet. Buchstaben in 12 px halbfett zählen als normaler Text und brauchen **4,5:1**.
+Auf der 600er Stufe waren Orange, Amber und Gelb zu hell, um weiße Buchstaben zu tragen: 3,68 · 3,21 · 2,76 gegen die geforderten 4,5 nach WCAG 2.2.
 
-**Zwölf Farben bestehen. Drei nicht:**
+Sie mussten unterschiedlich weit angehoben werden, weil die Familien unterschiedlich hell verlaufen:
 
-| Farbe | weiße Schrift | dunkle Schrift (`stone-1100`) |
-|---|---|---|
-| Orange | 3,68 ✗ | **4,95 ✓** |
-| Amber | 3,21 ✗ | **5,68 ✓** |
-| Gelb | 2,76 ✗ | **6,60 ✓** |
+- **Orange** genügt schon auf Stufe **700** (5,03).
+- **Amber** genügt auf 700 noch nicht (4,29) — erst auf **800** (6,14).
+- **Gelb** genügt auf 700 noch nicht (3,59) — erst auf **800** (5,18).
 
-Zum Vergleich die schwächste der bestehenden zwölf: Teal mit 5,84 ✓, die stärkste Purpur mit 7,67 ✓.
+Die drei sind damit sichtbar dunkler als ihre Nachbarn in der Reihe. **Das ist der Preis dafür, dass die Schrift überall weiß ist**, und in der Vorschau können Sie beurteilen, ob die Reihe damit noch stimmig wirkt.
 
-**Vorschlag:** Diese drei bekommen dunkle Buchstaben, die anderen zwölf weiße. Eine Regel, drei Ausnahmen, alle geprüft.
+### F3 · Warum Stein angehoben wurde
 
-**Zwei Wege wurden geprüft und verworfen** — damit Sie wissen, dass ich nicht bei der ersten Lösung stehengeblieben bin:
+Grau und Stein lagen auf 600er Stufe so nah beieinander, dass sie in einer Reihe wie dieselbe Farbe wirkten. Gemessen als Farbabstand: **8,0** — alles unter 15 ist mit bloßem Auge kaum zu trennen.
 
-- *Die drei warmen Farben weglassen.* Dann wären es zwölf statt fünfzehn Farben, aber die Palette hätte ein Loch im warmen Bereich.
-- *Die drei auf eine dunklere Stufe ziehen, damit überall Weiß steht.* Funktioniert nicht sauber: Orange bräuchte Stufe 700, Amber und Gelb erst Stufe 800. Das wäre keine „600er Stärke" mehr, und die drei Farben stünden sichtbar dunkler neben den übrigen zwölf.
+Ich habe alle zwölf Kombinationen der beiden Familien durchgerechnet. **Grau auf 600 und Stein auf 900** trennen am deutlichsten: Farbabstand **20,7**. Aus zwei fast gleichen Grautönen wird ein mittleres, kühles Grau neben einem sehr dunklen, warmen Braunschwarz.
 
-> **In der Vorschau sehen Sie alle fünfzehn nebeneinander.** Die drei mit dunkler Schrift sind dort gekennzeichnet. Bitte urteilen Sie danach, ob die Reihe stimmig aussieht.
+> **Bitte in der Vorschau ansehen.** Die beiden stehen dort nebeneinander. Überzeugt Sie die Trennung nicht, wäre die Alternative, eine der beiden Familien ganz aus der Reihenfolge zu nehmen.
+
+### F4 · Ein Randbefund: Indigo und Violett
+
+Beim Nachrechnen ist mir ein zweites Paar aufgefallen, das ich vorher nicht gemeldet hatte: **Indigo und Violett** liegen bei einem Farbabstand von **14,5** — knapp unter der Schwelle von 15.
+
+Ich habe sie **nicht** angepasst, weil Ihre Anweisung die Farben betraf, die gleich *wirken*, und die beiden noch klar als Blau und als Lila lesbar sind. **In der Vorschau stehen sie direkt nebeneinander**, damit Sie selbst urteilen können. Soll auch dieses Paar getrennt werden, ginge Violett auf Stufe 800 — Farbabstand dann 23,0.
+
+Dasselbe gilt in abgeschwächter Form für **Orange/Amber** (15,4) und **Amber/Gelb** (15,3): knapp über der Schwelle, in der Vorschau nebeneinander zu sehen.
+
+### F5 · Der Dunkelmodus löst sich von selbst
+
+In Fassung 1 war der Dunkelmodus ein offener Punkt (D4): Die hellen Tönungen brauchten je eine dunkle Entsprechung, und für drei von vier Farbpaaren fehlte sie.
+
+**Das entfällt.** Eine kräftige Fläche bringt ihren eigenen Hintergrund mit und hängt nicht davon ab, worauf sie liegt. Der Kreis sieht im Dunkelmodus genauso aus wie im Hellmodus, und die gemessenen Kontraste gelten unverändert.
+
+> **Bitte prüfen Sie das trotzdem in der Vorschau** — der Umschalter oben rechts.
 
 ### F3 · Der Dunkelmodus löst sich damit von selbst
 
@@ -290,28 +330,20 @@ In Fassung 1 war der Dunkelmodus ein offener Punkt (D4): Die hellen Tönungen br
 
 > **Bitte prüfen Sie das trotzdem in der Vorschau** — der Umschalter oben rechts. Die Farben sollen im Dunkeln kräftig wirken, nicht grell.
 
-<a id="f4--was-das-für-die-contained-list-bedeutet"></a>
-### F4 · Was das für die Contained-list bedeutet — **bitte entscheiden**
+<a id="f6--was-das-für-die-contained-list-bedeutet"></a>
+### F6 · Was das für die Contained-list bedeutet — **entschieden**
 
 Die Contained-list hat den Kreis heute fest eingebaut, in der hellen Tönung: helles Teal mit dunklem Teal als Schrift. **Dieser Code ist bereits an andere Projekte ausgeliefert.**
 
 Stellt man die Contained-list später auf die neue Komponente um, **ändert sich dort das Aussehen sichtbar** — aus dem zurückhaltenden hellen Kreis wird ein kräftiger farbiger. Das bricht nichts und erzeugt keine Fehlermeldung, aber wer die Liste heute im Einsatz hat, sieht sie danach anders.
 
-**Drei Wege:**
+**Entschieden am 28.08.2026: umstellen, und die Liste bleibt einfarbig.**
 
-1. **Umstellen.** Ein Avatar, überall gleich. Die Listen sehen künftig farbiger aus als heute.
-2. **Nicht umstellen.** Die Contained-list behält ihren eingebauten hellen Kreis, die neue Komponente steht daneben. Dann gibt es im System **zwei verschieden aussehende Avatare**.
-3. **Umstellen, aber die Liste bleibt einfarbig** — alle Kreise in Teal 600, weiße Schrift. Die Liste bleibt ruhig, ist aber trotzdem auf eine Komponente umgestellt.
+Alle Kreise einer Liste tragen damit dieselbe Farbe (Teal) mit weißer Schrift; die wechselnden Farben bleiben der Tabelle vorbehalten. Es gibt künftig **einen** Avatar im System statt zwei, und die Liste wirkt weiterhin ruhiger als eine Tabelle.
 
-> **Meine Empfehlung: Weg 3.** Er beseitigt den doppelten Avatar und behält gleichzeitig, dass eine Liste ruhig aussehen soll und eine Tabelle bunt. Die Vorschau zeigt in Abschnitt 4 beides nebeneinander.
+Die beiden verworfenen Wege, der Vollständigkeit halber: gar nicht umstellen (hätte zwei verschieden aussehende Avatare hinterlassen) oder umstellen mit wechselnden Farben (hätte die Liste so bunt gemacht wie die Tabelle).
 
-### F5 · Grau und Stein sind kaum zu unterscheiden
-
-Zwei der fünfzehn Familien liegen auf 600er Stärke sehr nah beieinander — Grau (`#595b5e`) und Stein (`#615951`). In einer Reihe von Avataren, die Personen unterscheidbar machen soll, wirken sie wie dieselbe Farbe.
-
-Dazu kommt: Beide lesen sich als „keine Farbe". Ein grauer Avatar in einer bunten Reihe sieht schnell nach „deaktiviert" oder „unbekannt" aus.
-
-> **Vorschlag: Stein aus der Reihenfolge nehmen** — es blieben vierzehn. Grau und Stein bleiben verfügbar, wenn jemand sie ausdrücklich wählt. **In der Vorschau sind beide markiert**, damit Sie sie nebeneinander sehen und selbst urteilen können.
+> **Folge, die bei der Umsetzung anfällt:** Die Umstellung berührt ausgelieferten Code (`src/components/ContainedList/`). Sie ist Gegenstand einer eigenen Aufgabe, nicht dieses Entwurfs.
 
 ---
 
@@ -339,12 +371,11 @@ Die Abstands-Stufen des Systems sind 24, 32 und 48 Pixel (`src/styles/medo/spaci
 
 Die Regel des Projekts trennt hier: Bei einer 1:1 portierten Komponente bleiben die Zahlen der Referenz unangetastet. Der Avatar ist aber **kein Port, sondern ein Neuentwurf** — und für neu geschriebenes CSS gilt, dass Zwischenwerte aus Tokens berechnet statt hingeschrieben werden.
 
-**Was ich brauche:** eine Entscheidung, welcher der beiden Wege gilt.
+**Entschieden am 28.08.2026: die Zahlen bleiben bei 30 und 38 px.** Die Alternative — auf 32/40 px ziehen — ist verworfen und aus der Vorschau entfernt.
 
-- **Weg 1 — Zahlen übernehmen (30/38).** Der Avatar sieht überall exakt so aus wie heute. Bricht die Zwischenwert-Regel für neuen Code.
-- **Weg 2 — auf Token-Stufen ziehen (32/40).** Regelkonform, aber der Avatar wird in der Tabelle 2 px größer und in der Liste 2 px größer als heute. Die ausgelieferte Contained-list müsste mitgezogen werden, sonst stehen zwei verschiedene Avatare im System.
+Der Avatar sieht damit überall exakt so aus wie heute, und an bereits ausgeliefertem Code muss nichts angefasst werden. Die Zwischenwert-Regel für neu geschriebenes CSS tritt hier zurück; das ist die bewusste Entscheidung des Inhabers und bei der Umsetzung so zu übernehmen.
 
-> **Meine Empfehlung: Weg 1.** Der Unterschied ist mit bloßem Auge nicht zu sehen, aber Weg 2 verlangt eine Änderung an bereits ausgeliefertem Code. Das steht in keinem Verhältnis.
+**Die dritte Größe ist davon nicht betroffen:** 64 px liegt exakt auf `--medo-space-3xl`.
 
 ### D2 · Es gibt keine Schriftgrößen-Stufe 13 px
 
@@ -391,40 +422,47 @@ Die letzten beiden Zeilen stehen hier der Vollständigkeit halber. Sie sind **ke
 
 ## Was ich von Ihnen zur Freigabe brauche
 
-Bitte öffnen Sie **[`docs/avatar-entwurf.html`](./avatar-entwurf.html)** im Browser (Doppelklick genügt, kein Entwicklungsserver nötig) und sehen Sie sich die Matrix an. Dann bitte Rückmeldung zu diesen Punkten:
+Bitte öffnen Sie **[`docs/avatar-entwurf.html`](./avatar-entwurf.html)** im Browser (Doppelklick genügt, kein Entwicklungsserver nötig).
 
-**Erledigt aus Fassung 1** — hier ist nichts mehr zu tun: Layout freigegeben · Bild-Variante angenommen · Dunkelmodus (D4) durch die 600er Stärke gegenstandslos.
+**Nur noch vier Punkte sind offen.** Alles andere ist entschieden und oben festgehalten.
 
-**Offen — dazu brauche ich Ihre Rückmeldung:**
-
-1. **Die fünfzehn Farben auf 600er Stärke** (Abschnitt 2 der Vorschau): Sieht die Reihe stimmig aus? Bitte auch im **Dunkelmodus** ansehen — Umschalter oben rechts.
-2. **Orange, Amber und Gelb tragen dunkle statt weißer Buchstaben** (in der Vorschau gekennzeichnet). Weiß ist dort nicht lesbar — gemessen, siehe [F2](#f2--wo-die-weiße-schrift-nicht-reicht). Geht das für Sie so durch?
-3. **Grau und Stein** sehen fast gleich aus (in der Vorschau nebeneinander markiert). *Vorschlag: Stein aus der Reihenfolge nehmen.*
-4. **Große Version: 64 px oder 96 px?** Beide in Abschnitt 3 der Vorschau, nebeneinander mit einem Bild und mit Buchstaben. *Vorschlag: 64 px.*
-5. **Die Buchstaben-Regel** (Abschnitt 4 der Vorschau, mit Beispielen): Stimmt sie für Ihre Fälle? Besonders: Was soll aus einem Benutzernamen wie `amueller` werden — *Vorschlag: `AM`.*
-6. **Was mit der Contained-list geschieht** ([F4](#f4--was-das-für-die-contained-list-bedeutet), Abschnitt 6 der Vorschau): Sie sieht nach einer Umstellung anders aus als heute. *Vorschlag: umstellen, aber die Liste bleibt einfarbig.*
-7. **Größe 30/38 px halten oder auf 32/40 px ziehen?** (Abschnitt 7, unverändert aus Fassung 1.) *Vorschlag: halten.*
-8. **Teil C:** Fehlt Ihnen noch etwas, das ich bewusst weggelassen habe?
+1. **Die fünfzehn Farben** (Abschnitt 1 der Vorschau). Alle tragen jetzt weiße Schrift. Orange, Amber, Gelb und Stein stehen dafür auf einer dunkleren Stufe und sind sichtbar dunkler als ihre Nachbarn. **Wirkt die Reihe so stimmig?** Bitte auch im **Dunkelmodus** ansehen — Umschalter oben rechts.
+2. **Grau und Stein** stehen in der Vorschau nebeneinander, jetzt mit dem größtmöglichen Abstand zwischen den beiden Familien. **Sind sie für Sie ausreichend getrennt?**
+3. **Indigo und Violett** stehen ebenfalls nebeneinander — der Randbefund aus [F4](#f4--ein-randbefund-indigo-und-violett). Sie liegen bei 14,5 knapp unter der Schwelle. **Soll ich sie ebenfalls trennen?** Violett ginge auf Stufe 800.
+4. **Zwei Kleinigkeiten aus Fassung 1, die noch keine Antwort haben:**
+   - **Personen-Symbol**, wenn es gar keinen Namen gibt (gelöschtes Konto, offene Einladung) — Abschnitt 4 der Vorschau. Es ist das letzte Glied des Rückfalls, den Sie angenommen haben.
+   - **Farbe aus dem Namen statt aus der Zeilennummer** — sonst springt die Farbe einer Person, sobald jemand die Tabelle umsortiert. Mit fünfzehn Farben fällt das mehr auf als mit vier.
 
 ---
 
 ## Freigabe
 
-### Fassung 1 — Rückmeldung vom 28.08.2026
+### Rückmeldung 1 vom 28.08.2026
 
 | | Punkt | Entscheidung |
 |---|---|---|
 | ✓ | Layout und Aufbau | **angenommen** — „Layout passt" |
-| ✓ | Ergänzung 1 · Bild-Variante mit Rückfall | **angenommen** |
-| ✓ | Buchstaben aus Vor- und Nachname beziehungsweise Benutzername | **angeordnet** — Regel in [A4](#a4--füllung-zwei-buchstaben) |
-| ✓ | Hintergrund: alle Brand-Farben auf 600er Stärke | **angeordnet** — ersetzt A5/A6, ausgeführt in [Teil F](#teil-f--farbe-fassung-2) |
-| ✓ | Große Version für ein Profilbild | **angeordnet** — [A3b](#a3b--größe-lg--64-px-für-das-profilbild--angeordnet), Größe noch zu wählen |
-| — | Ergänzung 2 · Personen-Symbol | noch nicht entschieden, bleibt im Entwurf |
-| — | Ergänzung 3 · Farbe aus dem Namen | noch nicht entschieden, bleibt im Entwurf |
-| — | Offener Punkt D1 · 30/38 px oder 32/40 px | noch nicht entschieden |
-| ✓ | Offener Punkt D4 · Dunkelmodus | **gegenstandslos** durch die 600er Stärke |
+| ✓ | Bild-Variante mit Rückfall | **angenommen** |
+| ✓ | Buchstaben aus Name beziehungsweise Benutzername | **angeordnet** |
+| ✓ | Hintergrund: Brand-Farben auf 600er Stärke | **angeordnet** |
+| ✓ | Große Version für ein Profilbild | **angeordnet** |
+| ✓ | Dunkelmodus (D4 aus Fassung 1) | **gegenstandslos** geworden |
 
-### Fassung 2 — Rückmeldung
+### Rückmeldung 2 vom 28.08.2026
+
+| | Punkt | Entscheidung |
+|---|---|---|
+| ✓ | Farben mit dunkler Schrift | **anpassen, bis die Schrift weiß ist** → Orange 700, Amber 800, Gelb 800 |
+| ✓ | Farben, die gleich wirken | **anpassen, bis sie sich unterscheiden** → Stein 900 |
+| ✓ | Profil-Größe | **64 px** · 96 px verworfen |
+| ✓ | Buchstaben-Regel | **festgelegt** an `Andreas Müller` → AM · `PeterZeider` → PZ · `renatosanches` → RE |
+| ✓ | Contained-list | **umstellen, einfarbig** · die beiden anderen Wege verworfen |
+| ✓ | Kleine Größen 30/38 px | **halten** · 32/40 px verworfen |
+| — | Personen-Symbol | noch offen |
+| — | Farbe aus dem Namen statt Zeilennummer | noch offen |
+| — | Indigo/Violett trennen | neu vorgelegt, noch offen |
+
+### Rückmeldung 3
 
 > _Wird nach Ihrer Rückmeldung hier eingetragen._
 
