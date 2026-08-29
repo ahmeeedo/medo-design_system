@@ -18,40 +18,42 @@ Dieses Dokument ist für die KI im medo-Design-Projekt geschrieben. Der Inhaber 
 
 **Die einzige sichtbare Änderung an etwas Bestehendem ist die dritte.** Personenlisten sehen danach farbiger aus als heute. Das bricht nichts und erzeugt keine Fehlermeldung — aber wer die Liste im Einsatz hat, sieht sie danach anders. Sie haben das am 28.08.2026 so freigegeben; ich benenne es hier noch einmal, weil es der einzige Punkt ist, an dem sich ohne Zutun etwas verändert.
 
-### Vier Punkte brauchen Ihre Entscheidung, bevor Sie das Dokument anwenden
+### Vier Punkte, die beim Ausschreiben zu klären waren — alle entschieden
 
-Beim Ausschreiben bin ich auf vier Stellen gestoßen, an denen die Vorgaben nicht zusammenpassen. **Ich habe nichts davon eigenmächtig entschieden.** Sie stehen ausführlich im nächsten Abschnitt; hier die Kurzfassung:
+Beim Ausschreiben bin ich auf vier Stellen gestoßen, an denen die Vorgaben nicht zusammenpassten. **Alle vier sind am 29.08.2026 vom Inhaber entschieden** und unten eingearbeitet:
 
-1. **Ein gelockter Beschluss verbietet, was für die Textarea freigegeben wurde.** Im Design-Projekt ist festgehalten: Feldtext ist bei `md` und `lg` gleich groß. Genau das sollte bei der Textarea aufgehoben werden. **Ich habe einen Weg gefunden, der beides erfüllt** — er macht `lg` spürbar größer, ohne die Schriftgröße anzufassen.
-2. **Die Aufgabenstellung nennt eine Ausnahme, die es nicht gibt.** Von einer Schriftgröße 13 px war die Rede. Der von Ihnen freigegebene Avatar-Entwurf enthält keine 13 px — und ein gelockter Beschluss verbietet sie ausdrücklich.
-3. **Dem Design-Projekt fehlen Angaben, die die Spezifikationsseite bräuchte.** Für 9 der 15 Farbfamilien ist nicht dokumentiert, wie ihre Farbwerte erzeugt werden. Ich habe die fertigen Werte eingesetzt statt sie zu erfinden.
-4. **Zwei zusätzliche Dateien gehören dazu**, die in der Aufgabenstellung fehlten — im Design-Projekt hat jede Komponente eine Vorschaukarte. Ich habe sie mitgeschrieben.
+1. **Die Textarea hat keine Größen mehr.** Ein gelockter Beschluss stand der freigegebenen Vergrößerung von `lg` entgegen. Der Inhaber hat den Konflikt aufgelöst, indem er die Größen ganz gestrichen hat: **eine Größe, und der Anwender zieht das Feld selbst — ausschließlich in der Höhe.**
+2. **Die Schriftgröße 13 px ist keine Ausnahme, sondern gibt es nicht.** Der freigegebene Avatar-Entwurf enthält keine, und ein gelockter Beschluss verbietet sie ausdrücklich.
+3. **Für 9 der 15 Farbfamilien fehlen die Erzeugungsangaben.** Ich habe die fertigen Werte eingesetzt statt sie zu erfinden.
+4. **Es sind zehn Dateien, nicht acht** — im Design-Projekt hat jede Komponente eine Vorschaukarte.
 
 ---
 
 ## Die vier Punkte im Einzelnen
 
-### Punkt 1 · Ein gelockter Beschluss steht der freigegebenen Textarea-Änderung entgegen
+### Punkt 1 · Die Textarea hat nur noch **eine** Größe
 
-**Der gelockte Beschluss** (`design-reference/CLAUDE.md`, Abschnitt „Build conventions"):
+**Der Konflikt, der zur Klärung führte.** Ein gelockter Beschluss (`design-reference/CLAUDE.md`, „Build conventions") hält fest:
 
 > *„Rule: field horizontal padding is space-sm 12px, field text sm=14 / md=16 / lg=16."*
 
-**Was freigegeben wurde** (Abweichungsliste Punkt 4, 28.08.2026): Bei der Textarea wirkt `lg` heute wie `md`. Entschieden wurde: **`lg` sichtbar größer machen**, nicht streichen.
+Bei einzeiligen Feldern unterscheiden sich `md` und `lg` nicht durch die Schrift, sondern durch die **Höhe** (40 px gegen 48 px). Die Textarea hebt die feste Höhe auf, weil ihre Höhe von der Zeilenzahl kommt — damit verlor `lg` sein einziges Unterscheidungsmerkmal. Es über die Schriftgröße zurückzuholen hätte den gelockten Beschluss gebrochen.
 
-**Warum das kollidiert.** Bei einzeiligen Feldern unterscheiden sich `md` und `lg` nicht durch die Schrift, sondern durch die **Höhe** (40 px gegen 48 px). Die Textarea hebt die feste Höhe auf, weil ihre Höhe von der Zeilenzahl kommt — damit verliert `lg` sein einziges Unterscheidungsmerkmal. Es über die Schriftgröße zurückzuholen hieße, den gelockten Beschluss zu brechen.
+**Entschieden am 29.08.2026 vom Inhaber:**
 
-**Mein Vorschlag — er erfüllt beides.** `lg` wird über den **Innenabstand** größer statt über die Schrift:
+> Keine verschiedenen Größen für die Textarea. **Eine Größe.** Der Anwender vergrößert das Feld selbst durch Ziehen — **ausschließlich in der Höhe.**
 
-| Größe | Schriftgröße | Innenabstand oben/unten |
-|---|---|---|
-| `sm` | `--medo-text-sm` (14 px) | `--medo-space-2xs` (4 px) |
-| `md` | `--medo-text-base` (16 px) | `--medo-space-xs` (8 px) |
-| `lg` | `--medo-text-base` (16 px) | `--medo-space-sm` (12 px) |
+Damit löst sich der Konflikt an der Wurzel, statt umgangen zu werden. Es gibt keine Größenstufen mehr, also auch keine Frage, wie sie sich unterscheiden.
 
-Die Schriftgrößen bleiben exakt bei 14/16/16 — der gelockte Beschluss ist unangetastet. Ein `lg`-Feld wird trotzdem sichtbar luftiger. Alle drei Abstände liegen auf Token-Stufen; nichts ist ausgerechnet.
+**Was daraus folgt:**
 
-> **Ihre Entscheidung:** Ist das der Weg? Falls Sie stattdessen die Schriftgröße ändern wollen, wäre das eine Änderung an einem gelockten Beschluss und müsste dort zuerst aufgehoben werden.
+- **`size` entfällt** als Einstellung. Das Feld hat eine Schriftgröße: `--medo-text-base` (16 px), der Wert, den der gelockte Beschluss für `md` und `lg` ohnehin vorschreibt. Der Innenabstand ist einheitlich `--medo-space-xs` (8 px).
+- **`resize` entfällt** ebenfalls. Das Ziehen ist keine Einstellung mehr, sondern eine Systemregel: **immer vertikal, nie horizontal.** Das entspricht dem bisherigen Standardwert; die Breite bleibt beim Layout, damit nichts bricht.
+- **Die Höhe kommt weiterhin von `rows`**, und der Anwender kann sie ziehend ändern.
+
+Damit reiht sich die Textarea neben die anderen festen Systemregeln — „Chips sind immer vollrund", „Feldrahmen sind immer 1 px" — und ist eine Entscheidung weniger für den Aufrufer.
+
+> **Was das für Abnehmer bedeutet.** **In diesem Repository bricht nichts:** `size` und `resize` werden nirgends verwendet, auch nicht in den Tests. Außerhalb sieht es anders aus — ein fremdes Projekt, das heute `size="sm"` oder `resize="none"` übergibt, bekommt nach Einführung des Vertrags eine Fehlermeldung beim Bauen, und sein Feld verhält sich anders: `sm`-Text wächst von 14 px auf 16 px, ein festgestelltes Feld wird ziehbar. Beides ist die gewollte Folge der Entscheidung; ich benenne es, damit es nicht überrascht.
 
 ### Punkt 2 · Die Schriftgröße 13 px ist keine Ausnahme, sondern gibt es nicht
 
@@ -900,12 +902,11 @@ Oben neu zu entwerfen und den ausgelieferten Code daran anzupassen könnte fremd
 | 1 | Gibt der Aufrufer eine eigene Reaktion auf das Hineinklicken mit, **verschwindet der Fokusrahmen** | beide laufen nebeneinander |
 | 2 | Eine eigene Verknüpfung zu einem Hinweistext **verdrängt die Fehlermeldung** für Vorleseprogramme | beide Verknüpfungen stehen nebeneinander |
 | 3 | Eine eigene Fehlerkennzeichnung **überschreibt** die eingebaute, obwohl die rote Meldung sichtbar bleibt | die eingebaute bleibt bestehen |
-| 4 | `lg` wirkt genau wie `md` | `lg` wird über den Innenabstand sichtbar größer |
+| 4 | Drei Größen, von denen zwei gleich wirken | **eine Größe**, `size` entfällt |
 | 5 | Eine Vorbelegung mit der Zahl `0` **kommt leer an** | die `0` erscheint |
+| 6 | `resize` lässt auch `none` und `both` zu | **immer vertikal**, `resize` entfällt |
 
-**Nicht enthalten ist Punkt 6** aus der Abweichungsliste (Text zwischen den Klammern verschwindet lautlos). Der ist zurückgestellt und soll gemeinsam mit `TextInput` entschieden werden — **bitte hier nicht mitziehen.**
-
-> **Zur Erinnerung an Punkt 1 der Klärungen oben:** Die Lösung für `lg` läuft über den Innenabstand, **nicht über die Schriftgröße**. Der gelockte Beschluss „field text sm=14 / md=16 / lg=16" bleibt damit unangetastet.
+**Nicht enthalten ist Punkt 6 der Abweichungsliste vom 28.08.2026** (Text zwischen den Klammern verschwindet lautlos — nicht zu verwechseln mit Zeile 6 der Tabelle oben). Der ist zurückgestellt und soll gemeinsam mit `TextInput` entschieden werden — **bitte hier nicht mitziehen.**
 
 ---
 
@@ -924,36 +925,26 @@ window.MedoUI.injectCss = window.MedoUI.injectCss || function (id, css) {
 
 const MEDO_TEXTAREA_CSS = `
 /* Die einzeilige Feldhülle legt eine feste Höhe fest und zentriert ihren Inhalt.
-   Beides muss hier weichen: die Höhe kommt von der Zeilenzahl. */
+   Beides muss hier weichen: die Höhe kommt von der Zeilenzahl.
+
+   Die Textarea hat genau EINE Größe — deshalb steht keine Größenklasse auf der
+   Hülle, und die Schriftgröße kommt von hier statt von .medo-field__box--md.
+   text-base ist der Wert, den die Systemregel für md und lg ohnehin vorschreibt. */
 .medo-ta__box{
   height: auto;
   align-items: flex-start;
-}
-
-/* Weil die feste Höhe entfällt, verliert die Größe bei einzeiligen Feldern ihr
-   Unterscheidungsmerkmal. Sie kommt hier über den Innenabstand zurück — nicht
-   über die Schriftgröße, denn die ist gelockt auf sm=14 / md=16 / lg=16. */
-.medo-ta__box.medo-field__box--sm{
-  padding-top: var(--medo-space-2xs);
-  padding-bottom: var(--medo-space-2xs);
-}
-.medo-ta__box.medo-field__box--md{
+  font-size: var(--medo-text-base);
   padding-top: var(--medo-space-xs);
   padding-bottom: var(--medo-space-xs);
-}
-.medo-ta__box.medo-field__box--lg{
-  padding-top: var(--medo-space-sm);
-  padding-bottom: var(--medo-space-sm);
 }
 
 .medo-ta__control{
   line-height: var(--medo-leading-normal);
   font-family: var(--medo-font-sans);
+  /* Feste Systemregel: der Anwender zieht das Feld höher, nie breiter.
+     Die Breite gehört dem Layout — würde sie ziehbar, bräche die Maske. */
+  resize: vertical;
 }
-
-.medo-ta__control--vertical{ resize: vertical; }
-.medo-ta__control--none{ resize: none; }
-.medo-ta__control--both{ resize: both; }
 
 .medo-ta__counter{ align-self: flex-end; }
 `;
@@ -965,7 +956,6 @@ const Textarea = ({
   defaultValue,
   placeholder,
   rows = 3,
-  size = "md",
   required = false,
   optional = false,
   disabled = false,
@@ -975,7 +965,6 @@ const Textarea = ({
   success,
   maxLength,
   showCounter = false,
-  resize = "vertical",
   onChange,
   onFocus,
   onBlur,
@@ -1028,7 +1017,6 @@ const Textarea = ({
 
   const boxClasses = [
     "medo-field__box",
-    "medo-field__box--" + size,
     "medo-ta__box",
     focused && !disabled ? "medo-field__box--focus" : null,
     error ? "medo-field__box--error" : null,
@@ -1060,8 +1048,7 @@ const Textarea = ({
         "textarea",
         Object.assign({}, rest, {
           id: fieldId,
-          className:
-            "medo-field__control medo-ta__control medo-ta__control--" + resize,
+          className: "medo-field__control medo-ta__control",
           rows: rows,
           value: current,
           placeholder: placeholder,
@@ -1109,10 +1096,6 @@ export interface TextareaProps
   extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
   /** Immer sichtbares Label über dem Feld. Ein Platzhalter ersetzt es nicht. */
   label?: string;
-  /** Schriftgröße wie bei allen Feldern: `sm` 14px, `md` und `lg` je 16px.
-   *  Die Höhe kommt von `rows`; `lg` unterscheidet sich vom `md` deshalb über
-   *  den Innenabstand, nicht über die Schrift. */
-  size?: "sm" | "md" | "lg";
   /** Setzt den roten Stern hinter das Label und zugleich das native `required`. */
   required?: boolean;
   /** Setzt „(optional)" hinter das Label. Zusammen mit `required` wirkungslos. */
@@ -1124,12 +1107,11 @@ export interface TextareaProps
   error?: string;
   /** Bestätigung unter dem Feld. Wird von `error` verdrängt. */
   success?: string;
-  /** Sichtbare Zeilen und damit die Höhe des Feldes. Standard 3. */
+  /** Sichtbare Zeilen und damit die Anfangshöhe des Feldes. Standard 3.
+   *  Der Anwender kann die Höhe danach selbst ziehend ändern. */
   rows?: number;
   /** Zeigt „24/100" am unteren Rand des Feldes. Ohne `maxLength` wirkungslos. */
   showCounter?: boolean;
-  /** Ob der Anwender das Feld ziehen darf. Standard `vertical`. */
-  resize?: "vertical" | "none" | "both";
   /** Feld nimmt die volle Breite des Elternelements ein. */
   fullWidth?: boolean;
   /** Liegt auf der äußeren Hülle des Feldes, nicht auf dem Eingabeelement. */
@@ -1141,7 +1123,9 @@ export interface TextareaProps
 export const Textarea: React.FC<TextareaProps>;
 ```
 
-> **Namensprüfung:** `TextareaProps` kommt in keinem bestehenden Vertrag vor. Der Vertrag deklariert `size` **inline** statt den Typ `FieldSize` erneut zu exportieren — `FieldSize` exportiert heute nur `TextInput.d.ts`, und ein zweiter Export desselben Namens bräche den Paketbau. Kein Prop-Name kollidiert mit einem gleichnamigen HTML-Attribut anderen Typs; nachgewiesen im Prüfabschnitt am Ende.
+> **Namensprüfung:** `TextareaProps` kommt in keinem bestehenden Vertrag vor. Der Vertrag exportiert **keinen** weiteren Typnamen — insbesondere nicht `FieldSize`, den heute ausschließlich `TextInput.d.ts` exportiert; ein zweiter Export desselben Namens bräche den Paketbau. Kein Prop-Name kollidiert mit einem gleichnamigen HTML-Attribut anderen Typs; nachgewiesen im Prüfabschnitt am Ende.
+>
+> **Zu `size` und `resize`:** Beide sind **nicht** deklariert, weil es sie nicht mehr gibt. `React.TextareaHTMLAttributes` bringt keines der beiden mit — ein Aufrufer, der sie übergibt, bekommt daher eine Fehlermeldung. Genau das ist gewollt.
 
 ---
 
@@ -1156,21 +1140,18 @@ Hilfetext, Fehler- und Erfolgsmeldung kommen aus `Field`.
 Nimm die Textarea, wenn die Antwort **mehrere Sätze** sein darf: Befund, Notiz, Begründung,
 Kommentar. Passt die Antwort in eine Zeile, gehört dorthin ein `TextInput`.
 
-## Höhe und Größe
+## Eine Größe, und der Anwender zieht selbst
 
-Die Höhe kommt von **`rows`**, nicht von der Größe — Standard sind 3 Zeilen. Setze so viele
-Zeilen, wie die erwartete Antwort ungefähr braucht: Ein Feld, das drei Sätze erwartet, aber eine
-Zeile hoch ist, sieht aus, als wäre eine Zeile genug.
+Die Textarea hat **keine Größenstufen.** Anders als `TextInput` und `Select` gibt es kein
+`sm`/`md`/`lg` — die Schrift ist immer `text-base` 16px.
 
-Die **Größe** wirkt bei einzeiligen Feldern über die Höhe. Weil die hier von `rows` kommt,
-unterscheidet sich `lg` über den **Innenabstand**: `sm` ist knapp, `md` normal, `lg` luftig.
-Die Schriftgröße folgt der Systemregel und bleibt bei `sm` 14px, bei `md` und `lg` 16px.
+Die **Anfangshöhe** kommt von `rows`, Standard sind 3 Zeilen. Setze so viele Zeilen, wie die
+erwartete Antwort ungefähr braucht: Ein Feld, das drei Sätze erwartet, aber eine Zeile hoch ist,
+sieht aus, als wäre eine Zeile genug.
 
-## Ziehen
-
-`resize` steht auf `vertical` — der Anwender darf das Feld höher ziehen, aber nicht breiter,
-damit das Layout nicht bricht. `none` gehört in enge Masken, in denen jede Höhenänderung etwas
-verschiebt. `both` nur dort, wo wirklich breite Eingaben vorkommen.
+Danach **zieht der Anwender selbst** — feste Systemregel: **immer in der Höhe, nie in der Breite.**
+Die Breite gehört dem Layout; würde sie ziehbar, bräche die Maske. Das ist keine Einstellung und
+lässt sich nicht abschalten.
 
 ## Zeichenzähler
 
@@ -1189,6 +1170,8 @@ Eine Fehlermeldung nennt **Ursache und nächsten Schritt**, nicht nur den Zustan
 ## Nicht tun
 
 - Die Textarea für einzeilige Antworten nehmen.
+- Eine Größe erwarten — es gibt nur eine.
+- Das Ziehen abschalten oder in die Breite zulassen wollen.
 - Den Zähler ohne `maxLength` erwarten.
 - `hint` und `error` gleichzeitig erwarten — es erscheint nur eines.
 - Auf den Innenabstand des Feldes über `className` zugreifen; `className` liegt auf der Hülle,
@@ -1207,7 +1190,7 @@ Eine Fehlermeldung nennt **Ursache und nächsten Schritt**, nicht nur den Zustan
   error="Bitte einen Befund eintragen"
 />
 
-<Textarea label="Notiz" size="lg" resize="none" fullWidth />
+<Textarea label="Notiz" rows={2} fullWidth />
 ```
 
 ## Abhängigkeiten
@@ -1360,21 +1343,25 @@ Die Spezifikationsseite. Sie läuft eigenständig und **rechnet ihre Farben aus*
       <p class="note">Der Feldrahmen ist in jedem Zustand 1px stark — der Fokus wird vom 3px-Ring getragen, nicht von einem dickeren Rahmen, damit beim Hineinklicken nichts springt. Im Fehlerzustand nimmt der Ring die Fehlerfarbe.</p>
     </div>
 
-    <!-- GRÖSSEN -->
-    <div class="eyebrow">Größen · Innenabstand, nicht Schriftgröße</div>
+    <!-- EINE GRÖSSE -->
+    <div class="eyebrow">Eine Größe · der Anwender zieht selbst</div>
     <div class="card">
-      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px">
-        <sc-for list="{{ sizes }}" as="z" hint-placeholder-count="3">
-          <div>
-            <span class="lab">{{ z.name }}</span>
-            <div class="box" style="padding-top:{{ z.pad }};padding-bottom:{{ z.pad }}">
-              <textarea class="ta" rows="3" style="font-size:{{ z.fs }}">Patient klagt über Beschwerden seit drei Tagen.</textarea>
-            </div>
-            <div style="font-family:'DM Mono',monospace;font-size:11px;color:#a49d92;margin-top:8px">Schrift {{ z.fs }} · Innenabstand {{ z.pad }}</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:28px">
+        <div>
+          <span class="lab">So sieht das Feld aus</span>
+          <div class="box"><textarea class="ta" rows="3">Patient klagt über Beschwerden seit drei Tagen.</textarea></div>
+          <div style="font-family:'DM Mono',monospace;font-size:11px;color:#a49d92;margin-top:8px">Schrift 16px · Innenabstand 8px · Höhe aus rows</div>
+        </div>
+        <div>
+          <span class="lab">Ziehen · nur in der Höhe</span>
+          <div class="box"><textarea class="ta" rows="3">An der unteren rechten Ecke ziehen — das Feld wird höher, nie breiter.</textarea></div>
+          <div style="display:flex;gap:8px;align-items:flex-start;margin-top:10px;font-size:13px;color:#6f6a63">
+            <span class="msr" style="font-size:18px;flex:none;margin-top:1px">height</span>
+            <span>Feste Systemregel. Keine Einstellung, nicht abschaltbar.</span>
           </div>
-        </sc-for>
+        </div>
       </div>
-      <p class="note">Bei einzeiligen Feldern unterscheiden sich die Größen über die Höhe. Hier kommt die Höhe von der Zeilenzahl, deshalb unterscheidet sie sich über den Innenabstand. Die Schriftgröße folgt unverändert der Systemregel: sm 14px, md und lg je 16px.</p>
+      <p class="note">Die Textarea hat keine Größenstufen — anders als TextInput und Select gibt es kein sm, md oder lg. Die Schrift ist immer text-base 16px, der Wert, den die Systemregel für md und lg ohnehin vorschreibt. Die Anfangshöhe kommt von rows; danach zieht der Anwender selbst, ausschließlich in der Höhe. Die Breite gehört dem Layout — würde sie ziehbar, bräche die Maske.</p>
     </div>
 
     <!-- ZEILENZAHL -->
@@ -1391,8 +1378,8 @@ Die Spezifikationsseite. Sie läuft eigenständig und **rechnet ihre Farben aus*
       <p class="note">Setze so viele Zeilen, wie die erwartete Antwort ungefähr braucht. Ein Feld, das drei Sätze erwartet, aber eine Zeile hoch ist, sieht aus, als wäre eine Zeile genug.</p>
     </div>
 
-    <!-- ZÄHLER UND ZIEHEN -->
-    <div class="eyebrow">Zeichenzähler · Ziehen</div>
+    <!-- ZÄHLER -->
+    <div class="eyebrow">Zeichenzähler</div>
     <div class="card">
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:28px">
         <div>
@@ -1401,18 +1388,13 @@ Die Spezifikationsseite. Sie läuft eigenständig und **rechnet ihre Farben aus*
             <textarea class="ta" rows="3" style="width:100%">Patient klagt über Beschwerden seit drei Tagen.</textarea>
             <span class="cnt">46/500</span>
           </div>
-          <div class="msg" style="color:#6f6a63"><span>Braucht maxLength — ohne bleibt der Zähler aus.</span></div>
         </div>
         <div>
-          <span class="lab">Ziehen</span>
-          <sc-for list="{{ resizes }}" as="rz" hint-placeholder-count="3">
-            <div style="margin-bottom:10px">
-              <div class="box"><textarea class="ta" rows="2" style="resize:{{ rz.value }}">{{ rz.name }}</textarea></div>
-            </div>
-          </sc-for>
+          <span class="lab">Ohne maxLength</span>
+          <div class="box"><textarea class="ta" rows="3">Patient klagt über Beschwerden seit drei Tagen.</textarea></div>
         </div>
       </div>
-      <p class="note">Standard ist vertical: der Anwender darf höher ziehen, aber nicht breiter, damit das Layout nicht bricht. none gehört in enge Masken, both nur dort, wo wirklich breite Eingaben vorkommen.</p>
+      <p class="note">Der Zähler braucht maxLength — ohne bleibt er aus. Setze ihn, wenn die Grenze für den Anwender wichtig ist; ein Zähler ohne echte Grenze verunsichert nur.</p>
     </div>
 
     <!-- NUTZUNG -->
@@ -1427,7 +1409,7 @@ Die Spezifikationsseite. Sie läuft eigenständig und **rechnet ihre Farben aus*
         </div>
         <div>
           <div style="font-size:13px;font-weight:600;color:{{ badColor }};margin-bottom:12px">Nicht so</div>
-          <sc-for list="{{ donts }}" as="d" hint-placeholder-count="4">
+          <sc-for list="{{ donts }}" as="d" hint-placeholder-count="6">
             <div style="display:flex;gap:10px;align-items:flex-start;margin-bottom:9px"><span class="msr" style="font-size:18px;color:{{ badColor }};flex:none">close</span><span style="font-size:14px;line-height:1.55">{{ d }}</span></div>
           </sc-for>
         </div>
@@ -1485,22 +1467,10 @@ class Component extends DCLogic {
       { label: 'Gesperrt', border: stone[200], bg: stone[100], ring: 'none', text: stone[500], value: 'Nicht bearbeitbar', placeholder: '', disabled: 'true', msg: '', msgIcon: '', msgColor: muted }
     ];
 
-    const sizes = [
-      { name: 'sm', fs: '14px', pad: '4px' },
-      { name: 'md · Standard', fs: '16px', pad: '8px' },
-      { name: 'lg', fs: '16px', pad: '12px' }
-    ];
-
     const rowsDemo = [
       { n: '2', text: 'Kurze Notiz.' },
       { n: '3', text: 'Patient klagt über Beschwerden seit drei Tagen.' },
       { n: '6', text: 'Ausführlicher Befund über mehrere Sätze. Setze so viele Zeilen, wie die erwartete Antwort ungefähr braucht.' }
-    ];
-
-    const resizes = [
-      { name: 'vertical · Standard', value: 'vertical' },
-      { name: 'none', value: 'none' },
-      { name: 'both', value: 'both' }
     ];
 
     const dos = [
@@ -1511,12 +1481,14 @@ class Component extends DCLogic {
     ];
     const donts = [
       'Die Textarea für einzeilige Antworten nehmen.',
+      'Eine Größe erwarten — es gibt nur eine.',
+      'Das Ziehen abschalten oder in die Breite zulassen wollen.',
       'Den Zähler ohne maxLength erwarten.',
       'Hilfetext und Fehlermeldung gleichzeitig erwarten — es erscheint nur eines.',
       'Über className an den Innenabstand des Feldes wollen — className liegt auf der Hülle.'
     ];
 
-    return { states, sizes, rowsDemo, resizes, dos, donts,
+    return { states, rowsDemo, dos, donts,
              okColor: success[700], badColor: error[600], text, muted };
   }
 }
@@ -1643,7 +1615,7 @@ checkFill, avatarBg: primary[600],
 | Beschluss | Status |
 |---|---|
 | *„600 = main/solid color"* | **Berührt.** Der Avatar nutzt für fünf Familien 800 oder 900. Die Ausnahme gilt **nur für den Avatar** und nur, weil die Person ihr Schema selbst wählt. Für Tags, Schaltflächen und Statusfarben bleibt 600 unangetastet. |
-| *„field text sm=14 / md=16 / lg=16"* | **Nicht gebrochen.** Die freigegebene Vergrößerung von `lg` läuft über den Innenabstand. Siehe Punkt 1 der Klärungen. |
+| *„field text sm=14 / md=16 / lg=16"* | **Nicht gebrochen — und nicht mehr berührt.** Die Textarea hat keine Größenstufen mehr; ihre Schrift ist `text-base` 16px, der Wert, den der Beschluss für `md` und `lg` ohnehin vorschreibt. Siehe Punkt 1 der Klärungen. |
 | *„No in-between values like 13px anywhere"* | **Nicht gebrochen.** Der Avatar nutzt 12px. Die Contained-list-Seite verliert ihre 13px sogar. |
 | *„field borders are ALWAYS border-thin 1px"* | **Eingehalten.** Der Textarea-Rahmen bleibt in jedem Zustand 1px. |
 | *„focus-ring is primary-600 … Error-state fields use the same danger ring"* | **Eingehalten.** |
@@ -1673,18 +1645,22 @@ Beide Verträge, gegen beide React-Fassungen, die das Paket zulässt, mit **eing
   tsc: keine Fehler
 ```
 
-**Gegenproben, damit ein grüner Lauf etwas belegt.** Beide Male den Vertrag absichtlich aufgeweicht:
+**Gegenproben, damit ein grüner Lauf etwas belegt.** Jedes Mal den Vertrag absichtlich aufgeweicht:
 
 ```
 === AvatarColor um "tuerkis" erweitert ===
 verwendung.tsx(56,8): error TS2578: Unused '@ts-expect-error' directive.
 === name von string auf any aufgeweicht ===
 verwendung.tsx(60,8): error TS2578: Unused '@ts-expect-error' directive.
+=== size in der Textarea wieder zugelassen ===
+verwendung.tsx(48,8): error TS2578: Unused '@ts-expect-error' directive.
 === wiederhergestellt, Kontrolllauf ===
   tsc: keine Fehler
 ```
 
 Die Prüfung kann also rot werden. Neun `@ts-expect-error`-Fälle sind Teil der Verwendungsdatei — bliebe einer davon fehlerfrei, meldete `tsc` es.
+
+**Zwei davon sichern die Entscheidung vom 29.08.2026 ab:** Sowohl `size` als auch `resize` werden vom Vertrag abgelehnt. Damit ist belegt, dass die Einstellungen nicht nur aus der Beschreibung verschwunden sind, sondern auch tatsächlich nicht mehr durchgehen.
 
 ## Buchstabenregel — an 17 Fällen gemessen
 
@@ -1714,6 +1690,26 @@ Für **9 der 15 Brand-Farbfamilien** sind die Erzeugungsangaben nicht im Spiegel
 
 # Freigabe
 
-> _Wird nach Rückmeldung des Inhabers hier eingetragen._
+**Der Inhaber hat das Dokument am 29.08.2026 freigegeben.**
 
-**Status:** offen
+| | Punkt | Entscheidung |
+|---|---|---|
+| 1 | Größen der Textarea | **Keine Größenstufen. Eine Größe.** Der Anwender zieht selbst — ausschließlich in der Höhe. `size` und `resize` entfallen |
+| 2 | Schriftgröße 13 px als Ausnahme | **erledigt** — gibt es nicht, wird nicht eingeführt |
+| 3 | Fehlende Erzeugungsangaben für 9 Farbfamilien | **so belassen** — Ergebniswerte fest eingesetzt, als offener Punkt gemeldet |
+| 4 | Rangfolge der Trennzeichen bei den Buchstaben | **angenommen** |
+
+**Das Dokument ist damit fertig und kann angewandt werden.**
+
+---
+
+## Nach dem Anwenden
+
+Die weiteren Schritte gehören nicht mehr zu diesem Dokument, aber sie hängen daran:
+
+1. **Neuspiegelung** des Design-Projekts nach `design-reference/`.
+2. **Abgleich** des Spiegels gegen die Dateiliste oben — zehn neue, vier geänderte.
+3. **Port** nach `src/components/` nach den Konventionen dieses Repositories: `React.createElement` wird zu JSX, der `MEDO_*_CSS`-String wird zu `<Name>.css`, `window.MedoUI` weicht ES-Importen.
+4. **Tests** und Doku-Seiten.
+
+**Status:** **freigegeben** am 29.08.2026
