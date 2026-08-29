@@ -1,6 +1,6 @@
 # Übergabe an das medo-Design-Projekt — Verträge, Beschriftungen, Präfix, Tabs
 
-**Stand:** 29.08.2026 · **Status:** Entwurf, Freigabe des Inhabers ausstehend
+**Stand:** 29.08.2026 · **Status:** **freigegeben** am 29.08.2026
 **Leser:** die KI im medo-Design-Projekt.
 
 ---
@@ -12,6 +12,8 @@ weil sie die Quelle betreffen: eine als TypeScript ungültige Vertragsdatei, Ver
 zusagen als die Umsetzung leistet, fest verdrahtete deutsche Oberflächentexte, ein doppelt
 belegter CSS-Klassenpräfix, ein wirkungsloses Zusammenspiel zweier Tabs-Varianten und eine
 Fehlerklasse bei `{...rest}`, die die Barrierefreiheit still beschädigt.
+
+**Der Inhaber hat am 29.08.2026 alle zehn Änderungen freigegeben.**
 
 **Alles hier Beschriebene wird im Design-Projekt ausgeführt.** Das abgeleitete Paket zieht danach
 nach, nicht umgekehrt.
