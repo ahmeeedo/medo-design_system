@@ -21,6 +21,8 @@ APM_RULES {
 - **Portierte Komponenten werden nicht additiv erweitert.** Eine Prop, die die `.d.ts` nicht kennt, gehört nicht in den Port — auch nicht als „dokumentierte Abweichung", auch nicht, wenn sie einen echten Bedarf löst. Der Weg für einen echten Bedarf führt über den Vertrag im Design-Projekt (siehe „Schreiben ins Design-Projekt"), nie am Vertrag vorbei.
 - Das Referenzmaterial enthält echte Implementierungsfehler: bedingte Hooks hinter `||`, Hooks ohne `use`-Präfix, veraltete Closure-Werte in Timern und Drag-Handlern, `Math.random()`-IDs, `aria-describedby` auf nicht gerenderte IDs, Element-Arrays ohne `key`. Portieren heißt prüfen, nicht abschreiben.
 - Behauptet eine Aufgabenbeschreibung eine interne Abhängigkeit, die der Referenzcode nicht hat, gilt das Material. Die `.d.ts` beschreibt den Vertrag nach außen, nicht den Aufbau innen.
+- **Die gelockten Beschlüsse in `design-reference/CLAUDE.md` gehören in die Erhebung, nicht erst in die Umsetzung.** Ein Entwurf, der sie erst beim Ausschreiben zu Gesicht bekommt, kollidiert mit ihnen — und zwar erst, nachdem der Inhaber ihn bereits freigegeben hat. Wer einen Vertrag, eine Komponente oder einen Farbwert entwirft, liest sie vorher vollständig.
+- **Die Rangfolge gilt auch dann, wenn der Port dadurch „mehr kann" als der Referenzcode.** Steht eine Eigenschaft in `components/<Name>.dc.html`, aber nicht in `ui/<Name>.jsx`, folgt der Port der Spezifikationsseite — das ist keine unerlaubte Erweiterung, sondern der Vorrang der höheren Autorität. Belegt an `Select`.
 - Fehlt ein Token oder eine Angabe, oder widerspricht sich Material: an den Manager eskalieren und auf Klärung warten. Nie Werte erfinden, nachrechnen oder improvisieren.
 
 ## Schreiben ins Design-Projekt
