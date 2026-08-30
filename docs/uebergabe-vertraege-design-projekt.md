@@ -1,6 +1,8 @@
 # Übergabe an das medo-Design-Projekt — Verträge, Beschriftungen, Präfix, Tabs
 
-**Stand:** 29.08.2026 · **Status:** **freigegeben** am 29.08.2026
+**Stand:** 30.08.2026 · **Status:** **freigegeben** — Änderungen 1–10 am 29.08.2026,
+**Nachträge (Änderungen 11 und 12) freigegeben am 30.08.2026**
+
 **Leser:** die KI im medo-Design-Projekt.
 
 ---
@@ -13,13 +15,31 @@ zusagen als die Umsetzung leistet, fest verdrahtete deutsche Oberflächentexte, 
 belegter CSS-Klassenpräfix, ein wirkungsloses Zusammenspiel zweier Tabs-Varianten und eine
 Fehlerklasse bei `{...rest}`, die die Barrierefreiheit still beschädigt.
 
-**Der Inhaber hat am 29.08.2026 alle zehn Änderungen freigegeben.**
+**Der Inhaber hat am 29.08.2026 die Änderungen 1 bis 10 freigegeben. Die Änderungen 11 und 12
+kamen danach hinzu und sind am 30.08.2026 gesondert freigegeben worden** — nachdem er ihr
+Verhalten in einer eigens gebauten Vorschau geprüft hatte.
+
+> **Was seit der ersten Freigabe neu ist** — für den zweiten Durchgang, damit die 1300 Zeilen
+> nicht erneut gelesen werden müssen:
+>
+> - **Änderung 11 ist ganz neu** (`Tabs` mit `fullWidth`).
+> - **Änderung 12 ist ganz neu** und wiegt schwerer: der **Normalfall** von `Tabs` — ganz ohne
+>   `scrollable` und ohne `fullWidth` — schiebt die Seite seitlich auf. Am laufenden Portal
+>   gemessen und vom Inhaber gemeldet.
+> - **Die Änderungen 1 bis 10 sind wortgleich unverändert** — auch Änderung 9, die dieselbe
+>   Datei anfasst. Nachgemessen: Änderung 11 braucht von Änderung 9 nichts und ändert an ihrem
+>   Verhalten nichts.
 
 **Alles hier Beschriebene wird im Design-Projekt ausgeführt.** Das abgeleitete Paket zieht danach
 nach, nicht umgekehrt.
 
-Zehn Änderungen, in der Reihenfolge unten auszuführen. Die Reihenfolge ist nicht beliebig:
-Änderung 10 setzt Änderung 5 voraus, weil beide dieselbe Datei anfassen.
+Elf Änderungen, in der Reihenfolge unten auszuführen. Die Reihenfolge ist nicht beliebig:
+
+- **Änderung 10 setzt Änderung 5 voraus** — beide fassen `ui/Select.jsx` an.
+- **Die Änderungen 9, 11 und 12 in dieser Reihenfolge** — alle drei fassen `ui/Tabs.jsx` an.
+  Änderung 11 betrifft eine andere Stelle als die beiden anderen. **Änderung 12 ändert eine
+  Zeile, die Änderung 9 anlegt** — sie ist deshalb zwingend nach ihr auszuführen, nicht statt
+  ihrer.
 
 | # | Änderung | Berührte Dateien |
 |---|---|---|
@@ -33,6 +53,8 @@ Zehn Änderungen, in der Reihenfolge unten auszuführen. Die Reihenfolge ist nic
 | 8 | `ContainedList`: fest verdrahteter Text der Zeilenaktion | `ui/ContainedList.d.ts`, `ui/ContainedList.jsx`, `ui/ContainedList.prompt.md` |
 | 9 | `Tabs`: `contained` + `scrollable` wirkungslos | `ui/Tabs.jsx`, `ui/Tabs.d.ts`, `ui/Tabs.prompt.md` |
 | 10 | `{...rest}` verdrängt eingebaute Attribute (7 Komponenten) | `ui/TextInput.jsx`, `ui/Select.jsx`, `ui/Search.jsx`, `ui/NumberInput.jsx`, `ui/Checkbox.jsx`, `ui/Radio.jsx`, `ui/Toggle.jsx` |
+| **11** | **Nachtrag:** `Tabs` mit `fullWidth` läuft seitlich über | `ui/Tabs.jsx`, `ui/Tabs.d.ts`, `ui/Tabs.prompt.md` — **dieselben drei wie Änderung 9, keine zusätzliche Datei** |
+| **12** | **Nachtrag:** `Tabs` läuft auch ohne jede Angabe seitlich über | `ui/Tabs.jsx`, `ui/Tabs.d.ts`, `ui/Tabs.prompt.md` — **wieder dieselben drei** |
 
 **Nach allen Änderungen ist `_ds_bundle.js` neu zu bauen.** Ohne das wirkt keine der
 Codeänderungen in den Vorschaukarten.
@@ -1222,6 +1244,520 @@ keinen Unterschied.
 
 ---
 
+## 11 · `Tabs` mit `fullWidth` läuft seitlich über — Nachtrag
+
+> **Dieser Abschnitt ist nach der ersten Freigabe hinzugekommen** und am 30.08.2026 gesondert
+> freigegeben worden. Nach Änderung 9 auszuführen — dieselbe Datei, andere Stellen.
+
+**Dateien:** `ui/Tabs.jsx`, `ui/Tabs.d.ts`, `ui/Tabs.prompt.md` — **dieselben drei wie
+Änderung 9, keine zusätzliche Datei.**
+
+### Der Befund, gemessen
+
+`fullWidth` verspricht gleich breite Tabs. Umgesetzt ist das als `flex: 1 1 0` je Tab. Ein
+Flex-Element schrumpft aber nicht unter seine Mindestbreite, und die bestimmt bei
+`.medo-tabs__tab` das `white-space: nowrap` — sie ist so breit wie die ganze Beschriftung.
+
+Daraus folgt zweierlei, und das Erste ist das Schlimmere:
+
+1. **`fullWidth` gibt sein Versprechen still auf**, sobald es eng wird. Die Tabs stehen dann in
+   ihren natürlichen, ungleichen Breiten da — ohne Fehler, ohne Warnung.
+2. **Danach läuft die Seite seitlich über.**
+
+Gemessen in Chromium, die vier Tabs „Übersicht · Verwendung · Code · Barrierefreiheit",
+`fullWidth` gesetzt:
+
+| Stil | Breite | Tabbreiten | gleich breit? | Seite läuft über? |
+|---|---|---|---|---|
+| `underline` | 600 | 129/129/129/129 | ja | nein |
+| `underline` | 380 | 72/93/42/109 | **nein** | nein |
+| `underline` | 320 | 72/93/42/109 | **nein** | **ja** |
+| `contained` | 600 | 145/145/145/145 | ja | nein |
+| `contained` | 380 | 100/121/70/137 | **nein** | **ja** |
+| `contained` | 320 | 100/121/70/137 | **nein** | **ja** |
+
+`contained` trifft es früher, weil die Leiste zusätzlich Innenabstand trägt.
+
+### Die Vorgabe: Material Design 3
+
+**Der Inhaber hat entschieden, dass sich `Tabs` hier nach Material Design 3 richtet.** Dessen
+Richtlinie regelt genau diesen Fall, und zwar in zwei Sätzen:
+
+> *„Labels can use a second line if needed, with truncated text."*
+>
+> *„Labels should be wrapped before truncating them, as truncating labels too early can impede
+> comprehension."*
+>
+> — Material Design 3, Tabs · Guidelines
+
+Dazu die Rollenteilung, die M3 zwischen seinen beiden Tab-Arten zieht: **feste Tabs sind gleich
+breit und rollen nie.** Wer rollen will, nimmt rollende Tabs — bei uns `scrollable`. Die beiden
+Arten entsprechen genau unseren beiden Angaben, und die Regel „ist beides gesetzt, gewinnt
+`scrollable`" aus Änderung 9 bildet dieselbe Teilung ab.
+
+**Daraus folgt die Lösung:** die Beschriftung bricht auf eine zweite Zeile um; erst wenn auch
+zwei Zeilen nicht reichen, wird gekürzt. Gerollt wird bei `fullWidth` nicht.
+
+### 11a · `ui/Tabs.jsx` — CSS
+
+Alt
+
+```css
+.medo-tabs__tab--full{ flex: 1 1 0; }
+```
+
+Neu
+
+```css
+/* Material Design 3: „Labels can use a second line if needed, with truncated text" —
+   und „labels should be wrapped before truncating them". Gleich breite Tabs rollen nie;
+   wer rollen will, nimmt `scrollable`.
+   `min-width: 0` hebt die Mindestbreite auf, die sonst aus `white-space: nowrap` folgt und
+   die Seite seitlich überlaufen lässt. Der Selektor spart Icon und Zähler aus — umbrochen
+   und gekürzt wird die Beschriftung, nicht das Beiwerk. */
+.medo-tabs__tab--full{ flex: 1 1 0; min-width: 0; }
+.medo-tabs__tab--full .medo-tabs__inner{ min-width: 0; max-width: 100%; }
+.medo-tabs__tab--full .medo-tabs__inner > span:not(.medo-icon):not(.medo-tabs__badge){
+  min-width: 0;
+  white-space: normal;
+  overflow-wrap: break-word;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow: hidden;
+}
+```
+
+Dazu die bestehende Regel `.medo-tabs__badge` um eine Zeile ergänzen:
+
+```css
+.medo-tabs__badge{
+  /* … bestehende Deklarationen unverändert … */
+  flex: none;
+}
+```
+
+Ohne dieses `flex: none` schrumpft der Zähler mit, sobald es eng wird, und die Zahl darin wird
+abgeschnitten.
+
+**Warum dieser Selektor und nicht `span:last-child`:** innerhalb von `.medo-tabs__inner` stehen
+bis zu drei Elemente — Icon (`span.medo-icon`), Beschriftung (ein `<span>` ohne Klasse) und
+Zähler (`span.medo-tabs__badge`). Trägt ein Tab einen Zähler, ist **er** das letzte Kind, nicht
+die Beschriftung. `:last-child` würde dann den Zähler umbrechen und die Beschriftung unangetastet
+überlaufen lassen. Der Ausschluss beider Klassen trifft die Beschriftung in allen vier
+Kombinationen. Gemessen mit Icon und Zähler gleichzeitig: Icon bleibt 16 px breit, Zähler bleibt
+28 px, nur die Beschriftung bricht um.
+
+**`overflow-wrap: break-word`, nicht `anywhere`:** beide wurden gemessen und verhalten sich hier
+gleich; `break-word` ist die zurückhaltendere Regel — sie bricht ein Wort nur auf, wenn es allein
+auf keiner Zeile Platz hat. Bei deutschen Zusammensetzungen wie „Barrierefreiheit" ist genau das
+der Fall, und der Umbruch mitten im Wort ist immer noch lesbarer als ein früh gekürztes „Barr…" —
+das ist der Punkt, den der zweite M3-Satz macht.
+
+### 11b · `ui/Tabs.jsx` — Aufbau
+
+**Nichts zu tun.** Die Änderung wirkt allein über CSS. Die bestehende Bedingung
+`fullWidth && !vertical`, die `medo-tabs__tab--full` und die Inline-Breite setzt, bleibt
+unangetastet — und damit auch alles, was Änderung 9 an dieser Datei beschreibt.
+
+### 11c · `ui/Tabs.d.ts`
+
+Alt
+
+```ts
+  /** Tabs teilen die Breite gleichmäßig. Nur horizontal. */
+  fullWidth?: boolean;
+```
+
+Neu
+
+```ts
+  /** Tabs teilen die Breite gleichmäßig. Nur horizontal. Passt eine Beschriftung nicht,
+   *  bricht sie auf eine zweite Zeile um und wird erst danach gekürzt; die Leiste wird
+   *  dabei höher. Gleich breite Tabs rollen nie — dafür ist `scrollable` da, das zusammen
+   *  mit `fullWidth` gewinnt. */
+  fullWidth?: boolean;
+```
+
+### 11d · `ui/Tabs.prompt.md`
+
+Im Abschnitt „Aufbau", die bestehende Aussage zu `fullWidth`:
+
+Alt
+
+> `fullWidth` nur, wenn die Tabs eine Karte oder ein Sheet vollständig überspannen — auf breiten
+> Seiten laufen die Labels sonst weit auseinander.
+
+Neu
+
+> `fullWidth` nur, wenn die Tabs eine Karte oder ein Sheet vollständig überspannen — auf breiten
+> Seiten laufen die Labels sonst weit auseinander. Wird es eng, bricht eine Beschriftung auf eine
+> zweite Zeile um und wird erst gekürzt, wenn auch zwei Zeilen nicht reichen. Die Leiste wird
+> dabei höher; sie rollt nicht — gleich breite Tabs und Rollen schließen einander aus.
+>
+> Das ist die Regel aus Material Design 3: umbrechen vor kürzen, weil zu frühes Kürzen das
+> Verstehen behindert. Sie greift selten, wenn die Beschriftungen der Vorgabe oben folgen — ein
+> bis zwei kurze Wörter. Vier lange Wörter mit Icon **und** Zähler brauchen auf einem schmalen
+> Gerät dagegen mehr Platz, als vier gleiche Spalten hergeben; dort ist `scrollable` oder die
+> vertikale Form (`orientation="vertical"`) die ehrlichere Lösung.
+
+### Was danach anders ist
+
+**Wo heute alles in eine Zeile passt, ändert sich nichts** — gemessen, gleiche Tabbreiten,
+gleiche Höhe, gleicher Text. Wo es eng wird, bleiben die Tabs gleich breit statt still ungleich
+zu werden, die Beschriftung rückt auf zwei Zeilen, und die Seite läuft nicht mehr über.
+
+**Die sichtbare Änderung ist die Höhe der Leiste**: sie wächst von 44 auf 62 px (`underline`)
+beziehungsweise von 42 auf 60 px (`contained`), sobald eine Beschriftung umbricht.
+
+Vier Tabs, `underline`, `fullWidth`, nach der Änderung:
+
+| Breite | Tabbreiten | gleich breit? | Zeilen | alle Beschriftungen vollständig? | Leistenhöhe | Seite läuft über? |
+|---|---|---|---|---|---|---|
+| 700 | 154 × 4 | ja | 1 | ja | 44 px | nein |
+| 600 | 129 × 4 | ja | 1 | ja | 44 px | nein |
+| 480 | 99 × 4 | ja | 2 | ja | 62 px | nein |
+| 380 | 74 × 4 | ja | 2 | ja | 62 px | nein |
+| 320 | 59 × 4 | ja | 2 | eine gekürzt | 62 px | nein |
+
+Die Zeile bei 380 px ist die aufschlussreichste: **alle vier Beschriftungen bleiben vollständig
+lesbar**, verteilt auf zwei Zeilen. Gekürzt wird erst bei 320 px, und dann nur die längste.
+
+Mit weniger Tabs — dem eigentlichen Einsatzfall — greift die Regel noch später:
+
+| Tabs | 380 px | 320 px |
+|---|---|---|
+| drei („Übersicht · Verwendung · Code") | eine Zeile, 44 px | zwei Zeilen, 62 px, vollständig |
+| zwei („Monat · Jahr") | eine Zeile, 44 px | eine Zeile, 44 px |
+
+### Verhältnis zu Änderung 9
+
+**Änderung 9 bleibt wortgleich.** Das war nicht selbstverständlich — der naheliegende Weg wäre
+gewesen, `fullWidth` in dieselbe rollende Hülle zu legen. **Gemessen: das nimmt `fullWidth` jede
+Wirkung**, auch dort, wo heute alles passt (bei 600 px fielen die Tabs von 129/129/129/129 auf
+72/93/42/109 zurück). Material Design 3 verlangt an dieser Stelle ohnehin das Gegenteil von
+Rollen, und so löst sich beides auf.
+
+Nachgemessen, nachdem Änderung 11 dazukam — dieselben Werte wie bei Änderung 9 beschrieben:
+
+| Fall | Leiste | rollt? | Seite läuft über? |
+|---|---|---|---|
+| `underline` + `scrollable`, acht Tabs, 380 px | 805 | ja | nein |
+| `contained` + `scrollable`, acht Tabs, 380 px | 869 | ja | nein |
+| `contained` + `scrollable`, drei Tabs, 380 px | 307 | nein | nein |
+| `underline` + `scrollable`, drei Tabs, 380 px | 263 | nein | nein |
+
+Und die Kombination beider Angaben, ebenfalls gemessen: ist `scrollable` gesetzt, greift
+`fullWidth` nicht — die Tabs behalten ihre natürliche Breite, die Leiste rollt. Das ist genau,
+was Änderung 9 in `ui/Tabs.prompt.md` bereits zusagt.
+
+### Die Grenze dieser Lösung, ausdrücklich benannt
+
+Zwei Zeilen sind das Ende der Fahnenstange. Trägt ein Tab neben der Beschriftung noch ein Icon
+und einen Zähler, gehen davon rund 50 px für Beiwerk und Abstände ab; bei vier gleichen Spalten
+auf einem schmalen Gerät wird dann auch die zweite Zeile knapp, und es wird gekürzt.
+
+**Das ist keine Fehlfunktion, sondern die Grenze des Musters** — und Material Design 3 benennt
+sie selbst, indem es für lange Beschriftungen und viele Tabs auf die rollende Art verweist. Die
+Regel dazu steht in 11d. Behoben ist der stille Teil des Fehlers: dass `fullWidth` sein
+Versprechen aufgibt und die Seite überläuft, ohne dass jemand es merkt.
+
+---
+## 12 · `Tabs` läuft auch ganz ohne Angabe seitlich über — Nachtrag
+
+> **Dieser Abschnitt ist nach der ersten Freigabe hinzugekommen** und am 30.08.2026 gesondert
+> freigegeben worden. **Zwingend nach Änderung 9 auszuführen** — er ändert eine Zeile, die
+> Änderung 9 anlegt.
+
+**Dateien:** `ui/Tabs.jsx`, `ui/Tabs.d.ts`, `ui/Tabs.prompt.md` — wieder dieselben drei.
+
+### Der Befund, am laufenden Portal gemessen
+
+Die Änderungen 9 und 11 behandeln je einen Sonderfall: 9 greift nur bei gesetztem `scrollable`,
+11 nur bei gesetztem `fullWidth`. **Der Normalfall — weder das eine noch das andere — blieb
+dabei unbehandelt, und er ist der häufigste.**
+
+Gemessen an der laufenden Dokumentationsseite `/tabs` bei 390 px Fensterbreite:
+
+| | |
+|---|---|
+| Fensterbreite | 390 px |
+| tatsächliche Seitenbreite | **529 px** |
+| Überlauf | **139 px** |
+
+Drei Tab-Leisten der Seite sind gewöhnliche `underline`-Leisten mit vier Tabs, ohne jede Angabe.
+Ihr Inhalt ist breiter als ihr Kasten, und da nichts abschneidet oder rollt, wandern die
+Schaltflächen nach rechts heraus und ziehen die ganze Seite mit:
+
+| Leiste | Klassen | Kasten | Inhalt | fängt jemand den Überhang? |
+|---|---|---|---|---|
+| Nr. 1 | `underline md` | 260 px | 464 px | **nein** |
+| Nr. 2 | `underline md` | 326 px | 464 px | **nein** |
+| Nr. 4 | `underline md` | 326 px | 464 px | **nein** |
+
+Im Prüfgerüst nachgestellt, vier Tabs bei 390 px: `underline` läuft um **36 px** über,
+`contained` um **84 px**.
+
+### Die Entscheidung des Inhabers
+
+**Die Leiste soll nicht vom Anwender gerollt werden.** Stattdessen läuft sie von selbst mit: wird
+ein Tab gewählt, schiebt sich die Leiste so, dass er vollständig im Bild liegt — **und darüber
+hinaus so weit, dass der benachbarte Tab hereinlugt.**
+
+Der zweite Teil ist der ausdrücklich verlangte: Es genügt nicht, erst zu rollen, wenn jemand
+einen halb verdeckten Tab wählt. **Schon beim Tab davor muss sich die Leiste bewegen**, sonst ist
+ihr nicht anzusehen, dass sie überhaupt weitergeht.
+
+Verworfen wurden: Navigationspfeile am Rand (kosten Platz und zusätzliche Bedienelemente) und
+eine sichtbare Rollleiste.
+
+### Der Rahmen, in dem das steht
+
+Material Design 3 kennt genau **zwei** Arten von Tab-Leisten, und keine von beiden läuft über:
+
+| M3 | bei uns | Verhalten |
+|---|---|---|
+| feste Tabs | `fullWidth` | gleich breit, umbrechen dann kürzen, rollen nie |
+| rollende Tabs | alles übrige Waagerechte | natürliche Breite, Leiste läuft mit der Auswahl mit |
+
+**Unser Normalfall war bisher eine dritte Art, die es in M3 nicht gibt** — natürliche Breite ohne
+jede Behandlung des Überhangs. Genau daraus entsteht der Überlauf.
+
+### 12a · `ui/Tabs.jsx` — CSS
+
+Die Hülle aus Änderung 9a bekommt einen Randabstand. Er bestimmt zweierlei: den Abstand, den der
+gewählte Tab zum Rand hält, und damit zugleich, wie weit der nächste hereinlugt.
+
+Alt — der Stand **nach** Änderung 9
+
+```css
+.medo-tabs__scroller{
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+```
+
+Neu
+
+```css
+.medo-tabs__scroller{
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  /* Hält den gewählten Tab vom Rand frei und gibt zugleich das Maß, um das der
+     benachbarte Tab hereinlugt. Gemessen über die Stufen der Abstandsskala: `md`
+     ergibt in der Unterstrich-Form nur 4–33px und damit einen unzuverlässigen
+     Vorausblick, `xl` gleichmäßige 36px (underline) und 60px (contained). */
+  scroll-padding-inline: var(--medo-space-xl);
+}
+```
+
+Die übrigen Regeln aus 9a bleiben unverändert.
+
+### 12b · `ui/Tabs.jsx` — Aufbau
+
+Änderung 9 legt die Hülle bereits an. Hier wird ihre Bedingung geweitet und die Hülle bekommt
+einen Bezug, über den die Logik unten sie erreicht.
+
+Alt — der Stand **nach** Änderung 9
+
+```js
+const listOrScroller =
+  scrollable && !vertical
+    ? React.createElement("div", { className: "medo-tabs__scroller" }, list)
+    : list;
+```
+
+Neu
+
+```js
+/* Jede waagerechte Leiste bekommt die Hülle — ausgenommen `fullWidth`, wo die Tabs sich
+   die Breite teilen und deshalb nichts überhängen kann (Änderung 11). Ohne diese Weitung
+   schiebt eine Leiste, deren Tabs nicht nebeneinanderpassen, die ganze Seite auf. */
+const scrollerRef = React.useRef(null);      // oben bei den übrigen Refs anlegen
+
+const listOrScroller =
+  !vertical && !fullWidth
+    ? React.createElement("div", { className: "medo-tabs__scroller", ref: scrollerRef }, list)
+    : list;
+```
+
+### 12c · `ui/Tabs.jsx` — die Leiste läuft mit
+
+Neuer Effekt, unmittelbar hinter den bestehenden. Er ist der Kern dieser Änderung.
+
+```js
+/* Der gewählte Tab wird ins Bild geholt — und darüber hinaus so weit, dass der
+   benachbarte Tab hereinlugt. Ohne diesen Nachlauf ist der Leiste nicht anzusehen,
+   dass sie weitergeht; mit ihm bewegt sie sich schon beim Tab davor.
+   Der Nachlauf ist nach beiden Seiten begrenzt, damit der gewählte Tab dabei nie
+   aus seinem Randabstand rutscht.
+   Gerollt wird die Hülle unmittelbar statt über `scrollIntoView`: das würde jeden
+   rollenden Vorfahren mitbewegen und in einer Seite mit haftendem Kopf den Inhalt
+   darunter wegziehen.
+   Beide Anteile werden gerechnet und in EINEM Ruck gerollt, damit die Bewegung weich
+   laufen kann; nachgemessen landet das auf demselben Wert wie zwei getrennte Rucke. */
+React.useEffect(() => {
+  const box = scrollerRef.current;
+  if (!box || active == null) return;
+  const btn = box.querySelector('[data-val="' + active + '"]');
+  if (!btn) return;
+
+  const pad = parseFloat(getComputedStyle(box).scrollPaddingInlineStart) || 0;
+  const rahmen = box.getBoundingClientRect();
+  const fehlt = (links, rechts) => {
+    const kurz = links - (rahmen.left + pad);
+    const drueber = rechts - (rahmen.right - pad);
+    return kurz < 0 ? kurz : drueber > 0 ? drueber : 0;
+  };
+
+  const roh = btn.getBoundingClientRect();
+  const ersterAnteil = fehlt(roh.left, roh.right);
+
+  /* Nach dem ersten Anteil liegen alle Kanten um genau diesen Betrag weiter links. */
+  const b = { left: roh.left - ersterAnteil, right: roh.right - ersterAnteil };
+  const davor = btn.previousElementSibling;
+  const danach = btn.nextElementSibling;
+  const links = davor
+    ? Math.max(davor.getBoundingClientRect().left - ersterAnteil, b.left - pad)
+    : b.left;
+  const rechts = danach
+    ? Math.min(danach.getBoundingClientRect().right - ersterAnteil, b.right + pad)
+    : b.right;
+  const tiefst = b.right - (rahmen.right - pad);
+  const hoechst = b.left - (rahmen.left + pad);
+  const zweiterAnteil = Math.min(Math.max(fehlt(links, rechts), tiefst), hoechst);
+
+  const delta = ersterAnteil + zweiterAnteil;
+  if (delta) box.scrollBy({ left: delta, behavior: "smooth" });
+}, [active]);
+```
+
+Das Attribut `data-val` trägt jeder Tab bereits — die bestehende Tastaturbedienung sucht ihre
+Ziele darüber. Es ist nichts hinzuzufügen.
+
+### Was das mit `scrollable` macht — ausdrücklich benannt
+
+**`scrollable` verliert seine Wirkung**: was die Angabe bisher einschaltete, ist jetzt das
+Verhalten aller waagerechten Leisten außer `fullWidth`.
+
+**Die Angabe bleibt trotzdem im Vertrag und im Code.** Das Paket ist in fremden Projekten
+eingebunden; sie zu entfernen würde dort den Bau anhalten. Sie wird als das beschrieben, was sie
+danach ist.
+
+### 12d · `ui/Tabs.d.ts`
+
+Alt — der Stand **nach** Änderung 9
+
+```ts
+  /** Waagerecht scrollbar statt Umbruch, ohne sichtbare Scrollbar. Wirkt in beiden
+   *  Stilen; bei `contained` behält die Leiste dabei ihre Breite und rollt in einer
+   *  eigenen Hülle. Ohne Wirkung bei `orientation="vertical"`. */
+  scrollable?: boolean;
+```
+
+Neu
+
+```ts
+  /** Ohne Wirkung. Passen die Tabs nicht nebeneinander, läuft die Leiste ohnehin mit der
+   *  Auswahl mit — das gilt für jede Leiste außer `fullWidth` und `orientation="vertical"`.
+   *  Die Angabe bleibt für bestehende Einbindungen erhalten. */
+  scrollable?: boolean;
+```
+
+### 12e · `ui/Tabs.prompt.md`
+
+Im Abschnitt „Aufbau" tritt an die Stelle des Satzes, den Änderung 9 dort ergänzt hat:
+
+Alt — der Stand **nach** Änderung 9
+
+> Ab etwa sieben Tabs `scrollable` setzen; bei sehr vielen Bereichen ist die vertikale Form
+> (`orientation="vertical"`) die ruhigere Lösung.
+>
+> Das gilt für beide Stile. Bei `contained` bleibt die graue Leiste dabei so breit wie ihre Tabs
+> und rollt innerhalb des verfügbaren Platzes — sie dehnt sich nicht auf die volle Breite.
+> `fullWidth` und `scrollable` schließen einander aus: gleich breite Tabs setzen voraus, dass alle
+> gleichzeitig sichtbar sind. Ist beides gesetzt, gewinnt `scrollable`.
+
+Neu
+
+> Passen die Tabs nicht nebeneinander, **läuft die Leiste mit der Auswahl mit** — von selbst, in
+> beiden Stilen, ohne dass etwas gesetzt werden muss. Der gewählte Tab steht dabei immer
+> vollständig im Bild, und der benachbarte lugt herein, damit erkennbar bleibt, dass die Leiste
+> weitergeht. Bei `contained` bleibt die graue Leiste so breit wie ihre Tabs; sie dehnt sich
+> nicht auf die volle Breite.
+>
+> **Eine Rollleiste zum Ziehen gibt es bewusst nicht.** Zu den verdeckten Tabs führt die
+> Auswahl selbst: Pfeiltasten, oder ein Klick auf den hereinlugenden Nachbarn. Ab etwa sieben
+> Bereichen ist die vertikale Form (`orientation="vertical"`) trotzdem die ruhigere Lösung —
+> dort ist alles gleichzeitig sichtbar.
+>
+> Die einzige Leiste, die nicht mitläuft, ist `fullWidth`: dort teilen sich die Tabs die Breite
+> und brechen ihre Beschriftung um. `scrollable` hat keine Wirkung mehr und bleibt nur für
+> bestehende Einbindungen erhalten.
+
+### Was danach anders ist
+
+Der Überlauf, gemessen mit vier Tabs:
+
+| Stil | Fenster | heute | nach Änderung 12 |
+|---|---|---|---|
+| `underline` | 390 px | Seite läuft um **36 px** über | **kein Überlauf** |
+| `contained` | 390 px | Seite läuft um **84 px** über | **kein Überlauf** |
+| `underline` | 1200 px | passt | **unverändert** |
+| `contained` | 1200 px | passt | **unverändert** |
+
+**Die Breiten der einzelnen Tabs sind in allen vier Fällen Zeichen für Zeichen dieselben**
+(72/93/109/69 bzw. 100/121/137/97). Es wird nichts schmaler und nichts verschiebt sich — die
+Leiste hört nur auf, über ihren Platz hinauszuwachsen.
+
+Das Mitlaufen, gemessen mit acht Tabs bei 390 px Fenster (805 px Inhalt). Jede Zeile: diesen Tab
+wählen, dann nachsehen, was zu sehen ist.
+
+| gewählter Tab | gewählter Tab sichtbar | nächster Tab lugt herein |
+|---|---|---|
+| 1 · Übersicht | vollständig | ja |
+| 2 · Verwendung | vollständig | ja |
+| 3 · Barrierefreiheit | vollständig | ja |
+| 4 · Beispiele | vollständig | ja |
+| 5 · Varianten | vollständig | ja |
+| 6 · Zustände | vollständig | ja |
+| 7 · Tokens | vollständig | ja |
+| 8 · Migration | vollständig | — (letzter) |
+
+**In jeder Zeile lugt der nächste Tab herein** — 36 px in der Unterstrich-Form, 60 px in der
+Kachel-Form. Ohne den Nachlauf stünde der gewählte Tab ab Nummer 4 bündig am Rand und der
+nächste wäre unsichtbar; das ist gemessen und der Grund, warum der Nachlauf nicht nur im
+Sonderfall läuft.
+
+### Zwei Punkte, die zu dieser Wahl gehören
+
+**Mit der Maus allein kommt man nicht an einen ganz verdeckten Tab.** Das ist der bewusst in Kauf
+genommene Preis dafür, auf Pfeile und Rollleiste zu verzichten. Erreichbar sind sie über die
+Pfeiltasten, über einen Klick auf den hereinlugenden Nachbarn und auf Zeigegeräten mit
+waagerechter Wischgeste. Wo mehr als etwa sieben Bereiche zusammenkommen, verweist die
+Entwicklerdokumentation deshalb auf die vertikale Form.
+
+**Der Randabstand ist der eine gewählte Wert dieser Änderung.** `--medo-space-xl` ist eine
+bestehende Stufe der Abstandsskala, kein ausgerechneter Zwischenwert. Die Wahl fiel messend:
+`md` ergibt in der Unterstrich-Form nur 4–33 px Vorausblick und damit ein unzuverlässiges Bild,
+`lg` 20–33 px, `xl` gleichmäßige 36 px. Es ist zugleich der Wert, den das Doku-Portal in seiner
+eigenen Kopfleiste von Hand gewählt hatte.
+
+### Ein Hinweis für die abnehmende Seite
+
+Im Doku-Portal liegt die Kopfleiste heute in einer selbst gebauten rollenden Hülle mit einer
+eigenen Logik, die den gewählten Tab ins Bild schiebt — genau der Logik, die mit dieser Änderung
+in die Komponente wandert. **Nach der Übernahme kann das Portal seine eigene abgeben.**
+
+Solange es sie behält, bleibt sie funktionsfähig: nachgemessen wird die innere Hülle so breit wie
+ihr Inhalt und hat selbst nichts zu rollen, der äußere Rahmen rollt weiter. **Für das
+Design-Projekt folgt daraus nichts** — es ist hier nur festgehalten, damit die abnehmende Seite
+es nicht erst suchen muss.
+
+---
 ## Was ausdrücklich unberührt bleibt
 
 - **`components/*.dc.html`** — mit einer Ausnahme, die keine ist: `components/Select.dc.html` ist
@@ -1237,6 +1773,13 @@ keinen Unterschied.
 - **`ContainedList.emptyText`** — bekommt keinen Vorgabewert (siehe Änderung 8).
 - **Die Namen der CSS-Konstanten und der `injectCss`-Kennungen** in Änderung 6.
 - **`onChange` in allen acht Feldkomponenten** — nicht betroffen, nicht anfassen.
+- **Kein neues Token.** Änderung 11 legt keine Stufe an, ändert keine und rechnet keinen
+  Zwischenwert aus — sie besteht ausschließlich aus Layout-Regeln ohne Maßangabe.
+- **Die Höhe der Tabs bei einzeiliger Beschriftung.** Änderung 11 lässt sie unangetastet
+  (gemessen: 44 px `underline`, 42 px `contained`, vor und nach der Änderung gleich). Höher
+  wird die Leiste nur dort, wo eine Beschriftung tatsächlich umbricht.
+- **Die Bedingung `fullWidth && !vertical`** in `ui/Tabs.jsx`. Änderung 11 wirkt allein über
+  CSS; am Aufbau ändert sie nichts.
 - **`ContainedListItem.actionLabel`** — bleibt, wie es ist; die neue Angabe an der Liste ist nur
   der Rückfallwert.
 
@@ -1257,13 +1800,30 @@ Ebenfalls geprüft und nicht berührt: die Regel zur Feldrahmenstärke (`border-
 Regel zu Chips (`radius-full`), die Regel zum Fokusring (`primary-600`), die Icon-Regel (nur
 Material Symbols Rounded; die neuen Icons sind `search` und `check`).
 
+Für den Nachtrag (Änderung 11) gesondert geprüft:
+
+- *„border-thick 2px stays reserved for selected/active indicators (tab underline, stepper
+  rail)"* — der Indikator unter dem aktiven Tab wird nicht angefasst. Er sitzt am unteren Rand
+  des Tabs und wandert bei zwei Zeilen mit nach unten, ohne seine Stärke zu ändern.
+- *„Hit targets ≥44px where relevant"* — die Trefffläche wird durch den Umbruch größer, nie
+  kleiner.
+- *„No in-between values like 13px anywhere in the system"* — es wird keine Schriftgröße
+  geändert. Umbrochen wird der Text, nicht verkleinert.
+- Die Spezifikationsseite `components/Tabs.dc.html` zeigt unter „Full-width · Tabs füllen die
+  Breite gleichmäßig" keine feste Höhe und keine Regel für lange Beschriftungen — sie
+  widerspricht dem Nachtrag also nicht.
+
 ## Nach dem Anwenden
 
 1. `_ds_bundle.js` neu bauen. Ohne das wirkt keine der Codeänderungen in den Karten.
 2. `ui/CodeSnippet.card.html` und `ui/ContentSwitcher.card.html` im Browser öffnen — beide müssen
    aussehen wie zuvor.
 3. `ui/Select.card.html` öffnen und `searchable` an einem Beispiel setzen.
-4. Danach wird der Spiegel im abgeleiteten Projekt neu gezogen und gegen die Dateiliste oben
+4. `ui/Tabs.card.html` öffnen und das Fenster schmal ziehen — einmal mit `scrollable`, einmal
+   mit `fullWidth`. In beiden Fällen darf **die Seite selbst keinen waagerechten Rollbalken**
+   bekommen. Mit `fullWidth` müssen die Tabs gleich breit bleiben und die Beschriftung auf eine
+   zweite Zeile umbrechen, statt früh zu kürzen; die Leiste wird dabei höher und rollt nicht.
+5. Danach wird der Spiegel im abgeleiteten Projekt neu gezogen und gegen die Dateiliste oben
    abgeglichen.
 
 ---
@@ -1324,9 +1884,35 @@ bestehender Schnittstellen.
 
 ### Browsermessung
 
-Chromium 1208 (Playwright), Fenster 420 px, Elternfeld 380 px, acht beziehungsweise drei Tabs,
-gemessen an `clientWidth`, `scrollWidth` und `documentElement.scrollWidth`. Die Tabellen stehen bei
-Änderung 9. Beide Lösungswege wurden gemessen, bevor einer vorgeschlagen wurde.
+Chromium 1208 (Playwright), gemessen an `clientWidth`, `scrollWidth`,
+`documentElement.scrollWidth`, `scrollHeight` der Beschriftung und den Rechtecken der einzelnen
+Tabs. Die Tabellen stehen bei den Änderungen 9 und 11.
+
+**Zu Änderung 9** (`contained` + `scrollable`): Fenster 420 px, Elternfeld 380 px, acht
+beziehungsweise drei Tabs. Beide Lösungswege wurden gemessen, bevor einer vorgeschlagen wurde.
+
+**Zum Nachtrag** (`fullWidth`): vier, drei und zwei Tabs mit echten deutschen Beschriftungen bei
+700, 600, 480, 380, 320 und 280 px, in beiden Stilen, mit und ohne Icon, mit und ohne Zähler.
+Gemessen wurde neben dem Überlauf auch die Höhe der Leiste und ob eine Beschriftung nach dem
+Umbruch noch gekürzt werden musste. Vier Lösungswege wurden gemessen:
+
+| Weg | Ergebnis |
+|---|---|
+| Rollhülle wie Änderung 9 | verworfen — nimmt `fullWidth` **auch bei 600 px** jede Wirkung |
+| Umbruch der ganzen Leiste in eine zweite Zeile | verworfen — der letzte Tab springt auf volle Breite, Tabs ungleich |
+| kürzen ohne Umbruch | verworfen — widerspricht Material Design 3 („wrapped before truncating"); bei 320 px mit Icons nur noch 15–42 % des Wortes |
+| **umbrechen auf zwei Zeilen, dann kürzen** | **gewählt — die Regel aus Material Design 3** |
+
+Nach der Entscheidung wurde die Endfassung gegengeprüft: dass Änderung 9 dieselben Werte liefert
+wie vor dem Nachtrag (805, 869, 307, 263), dass ohne beide Angaben der Aufbau unverändert bleibt,
+dass bei gesetztem `scrollable` **und** `fullWidth` das erste gewinnt, und dass Icon und Zähler
+ihre Breite behalten, während nur die Beschriftung umbricht.
+
+**Herkunft der Vorgabe:** Material Design 3, Tabs · Guidelines
+(<https://m3.material.io/components/tabs/guidelines>). Die Seite ist eine JavaScript-Anwendung
+und gibt ihren Text nicht unmittelbar heraus; die beiden zitierten Sätze stammen aus der
+Wiedergabe derselben Richtlinie über die Websuche und decken sich mit der Fassung im Archiv
+(<https://material.io/archive/guidelines/components/tabs.html>).
 
 ### Herkunft der `{...rest}`-Fälle
 
