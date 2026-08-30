@@ -1,7 +1,7 @@
 # Übergabe an das medo-Design-Projekt — Verträge, Beschriftungen, Präfix, Tabs
 
-**Stand:** 29.08.2026 · **Status:** **freigegeben** am 29.08.2026,
-**Nachtrag (Änderungen 11 und 12) freigegeben am 29.08.2026**
+**Stand:** 30.08.2026 · **Status:** **freigegeben** — Änderungen 1–10 am 29.08.2026,
+**Nachträge (Änderungen 11 und 12) freigegeben am 30.08.2026**
 
 **Leser:** die KI im medo-Design-Projekt.
 
@@ -15,8 +15,9 @@ zusagen als die Umsetzung leistet, fest verdrahtete deutsche Oberflächentexte, 
 belegter CSS-Klassenpräfix, ein wirkungsloses Zusammenspiel zweier Tabs-Varianten und eine
 Fehlerklasse bei `{...rest}`, die die Barrierefreiheit still beschädigt.
 
-**Der Inhaber hat am 29.08.2026 alle zehn Änderungen freigegeben. Die Änderungen 11 und 12 kamen
-nach dieser ersten Freigabe hinzu und sind am selben Tag gesondert freigegeben worden.**
+**Der Inhaber hat am 29.08.2026 die Änderungen 1 bis 10 freigegeben. Die Änderungen 11 und 12
+kamen danach hinzu und sind am 30.08.2026 gesondert freigegeben worden** — nachdem er ihr
+Verhalten in einer eigens gebauten Vorschau geprüft hatte.
 
 > **Was seit der ersten Freigabe neu ist** — für den zweiten Durchgang, damit die 1300 Zeilen
 > nicht erneut gelesen werden müssen:
@@ -1245,7 +1246,7 @@ keinen Unterschied.
 
 ## 11 · `Tabs` mit `fullWidth` läuft seitlich über — Nachtrag
 
-> **Dieser Abschnitt ist nach der ersten Freigabe hinzugekommen** und am 29.08.2026 gesondert
+> **Dieser Abschnitt ist nach der ersten Freigabe hinzugekommen** und am 30.08.2026 gesondert
 > freigegeben worden. Nach Änderung 9 auszuführen — dieselbe Datei, andere Stellen.
 
 **Dateien:** `ui/Tabs.jsx`, `ui/Tabs.d.ts`, `ui/Tabs.prompt.md` — **dieselben drei wie
@@ -1465,7 +1466,7 @@ Versprechen aufgibt und die Seite überläuft, ohne dass jemand es merkt.
 ---
 ## 12 · `Tabs` läuft auch ganz ohne Angabe seitlich über — Nachtrag
 
-> **Dieser Abschnitt ist nach der ersten Freigabe hinzugekommen** und am 29.08.2026 gesondert
+> **Dieser Abschnitt ist nach der ersten Freigabe hinzugekommen** und am 30.08.2026 gesondert
 > freigegeben worden. **Zwingend nach Änderung 9 auszuführen** — er ändert eine Zeile, die
 > Änderung 9 anlegt.
 
