@@ -1485,8 +1485,9 @@ Gemessen an der laufenden Dokumentationsseite `/tabs` bei 390 px Fensterbreite:
 | tatsächliche Seitenbreite | **529 px** |
 | Überlauf | **139 px** |
 
-Der Verursacher ist eindeutig zuzuordnen. Drei Tab-Leisten der Seite sind gewöhnliche
-`underline`-Leisten mit vier Tabs, ohne jede Angabe:
+Drei Tab-Leisten der Seite sind gewöhnliche `underline`-Leisten mit vier Tabs, ohne jede Angabe.
+Ihr Inhalt ist breiter als ihr Kasten, und da nichts abschneidet oder rollt, wandern die
+Schaltflächen nach rechts heraus und ziehen die ganze Seite mit:
 
 | Leiste | Klassen | Kasten | Inhalt | fängt jemand den Überhang? |
 |---|---|---|---|---|
@@ -1494,32 +1495,70 @@ Der Verursacher ist eindeutig zuzuordnen. Drei Tab-Leisten der Seite sind gewöh
 | Nr. 2 | `underline md` | 326 px | 464 px | **nein** |
 | Nr. 4 | `underline md` | 326 px | 464 px | **nein** |
 
-Der Inhalt ist breiter als der Kasten, und da nichts abschneidet oder rollt, wandern die
-Schaltflächen einfach nach rechts aus dem Kasten heraus — bis auf 529 px — und ziehen die ganze
-Seite mit. Dasselbe im Prüfgerüst nachgestellt, vier Tabs bei 390 px:
+Im Prüfgerüst nachgestellt, vier Tabs bei 390 px: `underline` läuft um **36 px** über,
+`contained` um **84 px**.
 
-| Stil | heute | Seite läuft über? |
-|---|---|---|
-| `underline` | Leiste 390, Schaltflächen bis 426 | **um 36 px** |
-| `contained` | Leiste 474 in einem 390er Feld | **um 84 px** |
+### Die Entscheidung des Inhabers
 
-### Warum das nach Material Design 3 gar nicht vorkommen darf
+**Die Leiste soll nicht vom Anwender gerollt werden.** Stattdessen läuft sie von selbst mit: wird
+ein Tab gewählt, schiebt sich die Leiste so, dass er vollständig im Bild liegt — **und darüber
+hinaus so weit, dass der benachbarte Tab hereinlugt.**
 
-M3 kennt genau **zwei** Arten von Tab-Leisten, und keine von beiden läuft über:
+Der zweite Teil ist der ausdrücklich verlangte: Es genügt nicht, erst zu rollen, wenn jemand
+einen halb verdeckten Tab wählt. **Schon beim Tab davor muss sich die Leiste bewegen**, sonst ist
+ihr nicht anzusehen, dass sie überhaupt weitergeht.
+
+Verworfen wurden: Navigationspfeile am Rand (kosten Platz und zusätzliche Bedienelemente) und
+eine sichtbare Rollleiste.
+
+### Der Rahmen, in dem das steht
+
+Material Design 3 kennt genau **zwei** Arten von Tab-Leisten, und keine von beiden läuft über:
 
 | M3 | bei uns | Verhalten |
 |---|---|---|
 | feste Tabs | `fullWidth` | gleich breit, umbrechen dann kürzen, rollen nie |
-| rollende Tabs | `scrollable` | natürliche Breite, rollen bei Bedarf |
+| rollende Tabs | alles übrige Waagerechte | natürliche Breite, Leiste läuft mit der Auswahl mit |
 
-**Unser Normalfall ist eine dritte Art, die es in M3 nicht gibt** — natürliche Breite ohne
-Rollen. Genau daraus entsteht der Überlauf. Die Auflösung ist deshalb keine neue Erfindung,
-sondern das Schließen einer Lücke: **jede waagerechte Leiste, die nicht `fullWidth` ist,
-verhält sich wie die rollende Art.**
+**Unser Normalfall war bisher eine dritte Art, die es in M3 nicht gibt** — natürliche Breite ohne
+jede Behandlung des Überhangs. Genau daraus entsteht der Überlauf.
 
-### 12a · `ui/Tabs.jsx` — Aufbau
+### 12a · `ui/Tabs.jsx` — CSS
 
-Änderung 9 legt die Hülle bereits an. Hier wird nur ihre Bedingung geweitet.
+Die Hülle aus Änderung 9a bekommt einen Randabstand. Er bestimmt zweierlei: den Abstand, den der
+gewählte Tab zum Rand hält, und damit zugleich, wie weit der nächste hereinlugt.
+
+Alt — der Stand **nach** Änderung 9
+
+```css
+.medo-tabs__scroller{
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+```
+
+Neu
+
+```css
+.medo-tabs__scroller{
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  /* Hält den gewählten Tab vom Rand frei und gibt zugleich das Maß, um das der
+     benachbarte Tab hereinlugt. Gemessen über die Stufen der Abstandsskala: `md`
+     ergibt in der Unterstrich-Form nur 4–33px und damit einen unzuverlässigen
+     Vorausblick, `xl` gleichmäßige 36px (underline) und 60px (contained). */
+  scroll-padding-inline: var(--medo-space-xl);
+}
+```
+
+Die übrigen Regeln aus 9a bleiben unverändert.
+
+### 12b · `ui/Tabs.jsx` — Aufbau
+
+Änderung 9 legt die Hülle bereits an. Hier wird ihre Bedingung geweitet und die Hülle bekommt
+einen Bezug, über den die Logik unten sie erreicht.
 
 Alt — der Stand **nach** Änderung 9
 
@@ -1536,24 +1575,78 @@ Neu
 /* Jede waagerechte Leiste bekommt die Hülle — ausgenommen `fullWidth`, wo die Tabs sich
    die Breite teilen und deshalb nichts überhängen kann (Änderung 11). Ohne diese Weitung
    schiebt eine Leiste, deren Tabs nicht nebeneinanderpassen, die ganze Seite auf. */
+const scrollerRef = React.useRef(null);      // oben bei den übrigen Refs anlegen
+
 const listOrScroller =
   !vertical && !fullWidth
-    ? React.createElement("div", { className: "medo-tabs__scroller" }, list)
+    ? React.createElement("div", { className: "medo-tabs__scroller", ref: scrollerRef }, list)
     : list;
 ```
 
-Das CSS aus Änderung 9a bleibt unverändert. Sonst ändert sich an der Datei nichts.
+### 12c · `ui/Tabs.jsx` — die Leiste läuft mit
+
+Neuer Effekt, unmittelbar hinter den bestehenden. Er ist der Kern dieser Änderung.
+
+```js
+/* Der gewählte Tab wird ins Bild geholt — und darüber hinaus so weit, dass der
+   benachbarte Tab hereinlugt. Ohne diesen Nachlauf ist der Leiste nicht anzusehen,
+   dass sie weitergeht; mit ihm bewegt sie sich schon beim Tab davor.
+   Der Nachlauf ist nach beiden Seiten begrenzt, damit der gewählte Tab dabei nie
+   aus seinem Randabstand rutscht.
+   Gerollt wird die Hülle unmittelbar statt über `scrollIntoView`: das würde jeden
+   rollenden Vorfahren mitbewegen und in einer Seite mit haftendem Kopf den Inhalt
+   darunter wegziehen.
+   Beide Anteile werden gerechnet und in EINEM Ruck gerollt, damit die Bewegung weich
+   laufen kann; nachgemessen landet das auf demselben Wert wie zwei getrennte Rucke. */
+React.useEffect(() => {
+  const box = scrollerRef.current;
+  if (!box || active == null) return;
+  const btn = box.querySelector('[data-val="' + active + '"]');
+  if (!btn) return;
+
+  const pad = parseFloat(getComputedStyle(box).scrollPaddingInlineStart) || 0;
+  const rahmen = box.getBoundingClientRect();
+  const fehlt = (links, rechts) => {
+    const kurz = links - (rahmen.left + pad);
+    const drueber = rechts - (rahmen.right - pad);
+    return kurz < 0 ? kurz : drueber > 0 ? drueber : 0;
+  };
+
+  const roh = btn.getBoundingClientRect();
+  const ersterAnteil = fehlt(roh.left, roh.right);
+
+  /* Nach dem ersten Anteil liegen alle Kanten um genau diesen Betrag weiter links. */
+  const b = { left: roh.left - ersterAnteil, right: roh.right - ersterAnteil };
+  const davor = btn.previousElementSibling;
+  const danach = btn.nextElementSibling;
+  const links = davor
+    ? Math.max(davor.getBoundingClientRect().left - ersterAnteil, b.left - pad)
+    : b.left;
+  const rechts = danach
+    ? Math.min(danach.getBoundingClientRect().right - ersterAnteil, b.right + pad)
+    : b.right;
+  const tiefst = b.right - (rahmen.right - pad);
+  const hoechst = b.left - (rahmen.left + pad);
+  const zweiterAnteil = Math.min(Math.max(fehlt(links, rechts), tiefst), hoechst);
+
+  const delta = ersterAnteil + zweiterAnteil;
+  if (delta) box.scrollBy({ left: delta, behavior: "smooth" });
+}, [active]);
+```
+
+Das Attribut `data-val` trägt jeder Tab bereits — die bestehende Tastaturbedienung sucht ihre
+Ziele darüber. Es ist nichts hinzuzufügen.
 
 ### Was das mit `scrollable` macht — ausdrücklich benannt
 
-**`scrollable` verliert damit seine zusätzliche Wirkung**: was die Angabe bisher einschaltete,
-ist jetzt das Verhalten aller waagerechten Leisten außer `fullWidth`.
+**`scrollable` verliert seine Wirkung**: was die Angabe bisher einschaltete, ist jetzt das
+Verhalten aller waagerechten Leisten außer `fullWidth`.
 
 **Die Angabe bleibt trotzdem im Vertrag und im Code.** Das Paket ist in fremden Projekten
 eingebunden; sie zu entfernen würde dort den Bau anhalten. Sie wird als das beschrieben, was sie
-danach ist: ohne zusätzliche Wirkung, erhalten für bestehende Einbindungen.
+danach ist.
 
-### 12b · `ui/Tabs.d.ts`
+### 12d · `ui/Tabs.d.ts`
 
 Alt — der Stand **nach** Änderung 9
 
@@ -1567,14 +1660,13 @@ Alt — der Stand **nach** Änderung 9
 Neu
 
 ```ts
-  /** Ohne zusätzliche Wirkung. Waagerechtes Rollen ist das Standardverhalten jeder Leiste,
-   *  die nicht `fullWidth` ist: passen die Tabs nicht nebeneinander, rollt die Leiste in
-   *  einer eigenen Hülle, ohne sichtbare Scrollbar. Die Angabe bleibt für bestehende
-   *  Einbindungen erhalten. */
+  /** Ohne Wirkung. Passen die Tabs nicht nebeneinander, läuft die Leiste ohnehin mit der
+   *  Auswahl mit — das gilt für jede Leiste außer `fullWidth` und `orientation="vertical"`.
+   *  Die Angabe bleibt für bestehende Einbindungen erhalten. */
   scrollable?: boolean;
 ```
 
-### 12c · `ui/Tabs.prompt.md`
+### 12e · `ui/Tabs.prompt.md`
 
 Im Abschnitt „Aufbau" tritt an die Stelle des Satzes, den Änderung 9 dort ergänzt hat:
 
@@ -1590,42 +1682,79 @@ Alt — der Stand **nach** Änderung 9
 
 Neu
 
-> Passen die Tabs nicht nebeneinander, rollt die Leiste waagerecht — von selbst, in beiden
-> Stilen, ohne dass etwas gesetzt werden muss. Bei `contained` bleibt die graue Leiste dabei so
-> breit wie ihre Tabs und rollt innerhalb des verfügbaren Platzes; sie dehnt sich nicht auf die
-> volle Breite. Ab etwa sieben Bereichen ist die vertikale Form (`orientation="vertical"`)
-> trotzdem die ruhigere Lösung.
+> Passen die Tabs nicht nebeneinander, **läuft die Leiste mit der Auswahl mit** — von selbst, in
+> beiden Stilen, ohne dass etwas gesetzt werden muss. Der gewählte Tab steht dabei immer
+> vollständig im Bild, und der benachbarte lugt herein, damit erkennbar bleibt, dass die Leiste
+> weitergeht. Bei `contained` bleibt die graue Leiste so breit wie ihre Tabs; sie dehnt sich
+> nicht auf die volle Breite.
 >
-> Die einzige Leiste, die **nicht** rollt, ist `fullWidth`: dort teilen sich die Tabs die Breite
-> und brechen ihre Beschriftung um. Ist zusätzlich `scrollable` gesetzt, ändert das nichts —
-> die Angabe hat keine Wirkung mehr und bleibt nur für bestehende Einbindungen erhalten.
+> **Eine Rollleiste zum Ziehen gibt es bewusst nicht.** Zu den verdeckten Tabs führt die
+> Auswahl selbst: Pfeiltasten, oder ein Klick auf den hereinlugenden Nachbarn. Ab etwa sieben
+> Bereichen ist die vertikale Form (`orientation="vertical"`) trotzdem die ruhigere Lösung —
+> dort ist alles gleichzeitig sichtbar.
+>
+> Die einzige Leiste, die nicht mitläuft, ist `fullWidth`: dort teilen sich die Tabs die Breite
+> und brechen ihre Beschriftung um. `scrollable` hat keine Wirkung mehr und bleibt nur für
+> bestehende Einbindungen erhalten.
 
 ### Was danach anders ist
 
-Gemessen, vier Tabs, vorher und nachher:
+Der Überlauf, gemessen mit vier Tabs:
 
 | Stil | Fenster | heute | nach Änderung 12 |
 |---|---|---|---|
-| `underline` | 390 px | Seite läuft um **36 px** über | Leiste rollt, **kein Überlauf** |
-| `contained` | 390 px | Seite läuft um **84 px** über | Leiste rollt, **kein Überlauf** |
-| `underline` | 1200 px | passt | **unverändert**, nichts rollt |
-| `contained` | 1200 px | passt | **unverändert**, nichts rollt |
+| `underline` | 390 px | Seite läuft um **36 px** über | **kein Überlauf** |
+| `contained` | 390 px | Seite läuft um **84 px** über | **kein Überlauf** |
+| `underline` | 1200 px | passt | **unverändert** |
+| `contained` | 1200 px | passt | **unverändert** |
 
 **Die Breiten der einzelnen Tabs sind in allen vier Fällen Zeichen für Zeichen dieselben**
-(72/93/109/69 bzw. 100/121/137/97). Es verschiebt sich nichts, es wird nichts schmaler — die
+(72/93/109/69 bzw. 100/121/137/97). Es wird nichts schmaler und nichts verschiebt sich — die
 Leiste hört nur auf, über ihren Platz hinauszuwachsen.
+
+Das Mitlaufen, gemessen mit acht Tabs bei 390 px Fenster (805 px Inhalt). Jede Zeile: diesen Tab
+wählen, dann nachsehen, was zu sehen ist.
+
+| gewählter Tab | gewählter Tab sichtbar | nächster Tab lugt herein |
+|---|---|---|
+| 1 · Übersicht | vollständig | ja |
+| 2 · Verwendung | vollständig | ja |
+| 3 · Barrierefreiheit | vollständig | ja |
+| 4 · Beispiele | vollständig | ja |
+| 5 · Varianten | vollständig | ja |
+| 6 · Zustände | vollständig | ja |
+| 7 · Tokens | vollständig | ja |
+| 8 · Migration | vollständig | — (letzter) |
+
+**In jeder Zeile lugt der nächste Tab herein** — 36 px in der Unterstrich-Form, 60 px in der
+Kachel-Form. Ohne den Nachlauf stünde der gewählte Tab ab Nummer 4 bündig am Rand und der
+nächste wäre unsichtbar; das ist gemessen und der Grund, warum der Nachlauf nicht nur im
+Sonderfall läuft.
+
+### Zwei Punkte, die zu dieser Wahl gehören
+
+**Mit der Maus allein kommt man nicht an einen ganz verdeckten Tab.** Das ist der bewusst in Kauf
+genommene Preis dafür, auf Pfeile und Rollleiste zu verzichten. Erreichbar sind sie über die
+Pfeiltasten, über einen Klick auf den hereinlugenden Nachbarn und auf Zeigegeräten mit
+waagerechter Wischgeste. Wo mehr als etwa sieben Bereiche zusammenkommen, verweist die
+Entwicklerdokumentation deshalb auf die vertikale Form.
+
+**Der Randabstand ist der eine gewählte Wert dieser Änderung.** `--medo-space-xl` ist eine
+bestehende Stufe der Abstandsskala, kein ausgerechneter Zwischenwert. Die Wahl fiel messend:
+`md` ergibt in der Unterstrich-Form nur 4–33 px Vorausblick und damit ein unzuverlässiges Bild,
+`lg` 20–33 px, `xl` gleichmäßige 36 px. Es ist zugleich der Wert, den das Doku-Portal in seiner
+eigenen Kopfleiste von Hand gewählt hatte.
 
 ### Ein Hinweis für die abnehmende Seite
 
-Im Doku-Portal liegt die Kopfleiste in einer selbst gebauten rollenden Hülle mit einer eigenen
-Logik, die den gewählten Tab ins Bild schiebt. Diese Hülle bekommt durch Änderung 12 eine zweite,
-komponenteneigene Hülle in sich.
+Im Doku-Portal liegt die Kopfleiste heute in einer selbst gebauten rollenden Hülle mit einer
+eigenen Logik, die den gewählten Tab ins Bild schiebt — genau der Logik, die mit dieser Änderung
+in die Komponente wandert. **Nach der Übernahme kann das Portal seine eigene abgeben.**
 
-**Nachgemessen: die Kopfleiste bleibt bedienbar.** Weil das Portal der Komponente `w-max`
-mitgibt, wird die innere Hülle so breit wie ihr Inhalt und hat selbst nichts zu rollen; der
-äußere Rahmen rollt weiter, und der Aufruf, mit dem das Portal ihn bewegt, wirkt unverändert.
-**Für das Design-Projekt folgt daraus nichts** — es ist hier nur festgehalten, damit die
-abnehmende Seite es nicht erst suchen muss.
+Solange es sie behält, bleibt sie funktionsfähig: nachgemessen wird die innere Hülle so breit wie
+ihr Inhalt und hat selbst nichts zu rollen, der äußere Rahmen rollt weiter. **Für das
+Design-Projekt folgt daraus nichts** — es ist hier nur festgehalten, damit die abnehmende Seite
+es nicht erst suchen muss.
 
 ---
 ## Was ausdrücklich unberührt bleibt
