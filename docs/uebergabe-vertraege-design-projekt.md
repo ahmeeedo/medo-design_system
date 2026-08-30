@@ -1,7 +1,7 @@
 # Übergabe an das medo-Design-Projekt — Verträge, Beschriftungen, Präfix, Tabs
 
 **Stand:** 29.08.2026 · **Status:** **freigegeben** am 29.08.2026,
-**Nachtrag (Änderung 11) freigegeben am 29.08.2026**
+**Nachtrag (Änderungen 11 und 12) freigegeben am 29.08.2026**
 
 **Leser:** die KI im medo-Design-Projekt.
 
@@ -15,13 +15,16 @@ zusagen als die Umsetzung leistet, fest verdrahtete deutsche Oberflächentexte, 
 belegter CSS-Klassenpräfix, ein wirkungsloses Zusammenspiel zweier Tabs-Varianten und eine
 Fehlerklasse bei `{...rest}`, die die Barrierefreiheit still beschädigt.
 
-**Der Inhaber hat am 29.08.2026 alle zehn Änderungen freigegeben. Änderung 11 kam nach dieser
-ersten Freigabe hinzu und ist am selben Tag gesondert freigegeben worden.**
+**Der Inhaber hat am 29.08.2026 alle zehn Änderungen freigegeben. Die Änderungen 11 und 12 kamen
+nach dieser ersten Freigabe hinzu und sind am selben Tag gesondert freigegeben worden.**
 
 > **Was seit der ersten Freigabe neu ist** — für den zweiten Durchgang, damit die 1300 Zeilen
 > nicht erneut gelesen werden müssen:
 >
 > - **Änderung 11 ist ganz neu** (`Tabs` mit `fullWidth`).
+> - **Änderung 12 ist ganz neu** und wiegt schwerer: der **Normalfall** von `Tabs` — ganz ohne
+>   `scrollable` und ohne `fullWidth` — schiebt die Seite seitlich auf. Am laufenden Portal
+>   gemessen und vom Inhaber gemeldet.
 > - **Die Änderungen 1 bis 10 sind wortgleich unverändert** — auch Änderung 9, die dieselbe
 >   Datei anfasst. Nachgemessen: Änderung 11 braucht von Änderung 9 nichts und ändert an ihrem
 >   Verhalten nichts.
@@ -32,8 +35,10 @@ nach, nicht umgekehrt.
 Elf Änderungen, in der Reihenfolge unten auszuführen. Die Reihenfolge ist nicht beliebig:
 
 - **Änderung 10 setzt Änderung 5 voraus** — beide fassen `ui/Select.jsx` an.
-- **Änderung 11 nach Änderung 9** — beide fassen `ui/Tabs.jsx` an, allerdings verschiedene
-  Stellen. Sie greifen nicht ineinander; die Reihenfolge hält nur die Bearbeitung sauber.
+- **Die Änderungen 9, 11 und 12 in dieser Reihenfolge** — alle drei fassen `ui/Tabs.jsx` an.
+  Änderung 11 betrifft eine andere Stelle als die beiden anderen. **Änderung 12 ändert eine
+  Zeile, die Änderung 9 anlegt** — sie ist deshalb zwingend nach ihr auszuführen, nicht statt
+  ihrer.
 
 | # | Änderung | Berührte Dateien |
 |---|---|---|
@@ -48,6 +53,7 @@ Elf Änderungen, in der Reihenfolge unten auszuführen. Die Reihenfolge ist nich
 | 9 | `Tabs`: `contained` + `scrollable` wirkungslos | `ui/Tabs.jsx`, `ui/Tabs.d.ts`, `ui/Tabs.prompt.md` |
 | 10 | `{...rest}` verdrängt eingebaute Attribute (7 Komponenten) | `ui/TextInput.jsx`, `ui/Select.jsx`, `ui/Search.jsx`, `ui/NumberInput.jsx`, `ui/Checkbox.jsx`, `ui/Radio.jsx`, `ui/Toggle.jsx` |
 | **11** | **Nachtrag:** `Tabs` mit `fullWidth` läuft seitlich über | `ui/Tabs.jsx`, `ui/Tabs.d.ts`, `ui/Tabs.prompt.md` — **dieselben drei wie Änderung 9, keine zusätzliche Datei** |
+| **12** | **Nachtrag:** `Tabs` läuft auch ohne jede Angabe seitlich über | `ui/Tabs.jsx`, `ui/Tabs.d.ts`, `ui/Tabs.prompt.md` — **wieder dieselben drei** |
 
 **Nach allen Änderungen ist `_ds_bundle.js` neu zu bauen.** Ohne das wirkt keine der
 Codeänderungen in den Vorschaukarten.
@@ -1455,6 +1461,171 @@ auf einem schmalen Gerät wird dann auch die zweite Zeile knapp, und es wird gek
 sie selbst, indem es für lange Beschriftungen und viele Tabs auf die rollende Art verweist. Die
 Regel dazu steht in 11d. Behoben ist der stille Teil des Fehlers: dass `fullWidth` sein
 Versprechen aufgibt und die Seite überläuft, ohne dass jemand es merkt.
+
+---
+## 12 · `Tabs` läuft auch ganz ohne Angabe seitlich über — Nachtrag
+
+> **Dieser Abschnitt ist nach der ersten Freigabe hinzugekommen** und am 29.08.2026 gesondert
+> freigegeben worden. **Zwingend nach Änderung 9 auszuführen** — er ändert eine Zeile, die
+> Änderung 9 anlegt.
+
+**Dateien:** `ui/Tabs.jsx`, `ui/Tabs.d.ts`, `ui/Tabs.prompt.md` — wieder dieselben drei.
+
+### Der Befund, am laufenden Portal gemessen
+
+Die Änderungen 9 und 11 behandeln je einen Sonderfall: 9 greift nur bei gesetztem `scrollable`,
+11 nur bei gesetztem `fullWidth`. **Der Normalfall — weder das eine noch das andere — blieb
+dabei unbehandelt, und er ist der häufigste.**
+
+Gemessen an der laufenden Dokumentationsseite `/tabs` bei 390 px Fensterbreite:
+
+| | |
+|---|---|
+| Fensterbreite | 390 px |
+| tatsächliche Seitenbreite | **529 px** |
+| Überlauf | **139 px** |
+
+Der Verursacher ist eindeutig zuzuordnen. Drei Tab-Leisten der Seite sind gewöhnliche
+`underline`-Leisten mit vier Tabs, ohne jede Angabe:
+
+| Leiste | Klassen | Kasten | Inhalt | fängt jemand den Überhang? |
+|---|---|---|---|---|
+| Nr. 1 | `underline md` | 260 px | 464 px | **nein** |
+| Nr. 2 | `underline md` | 326 px | 464 px | **nein** |
+| Nr. 4 | `underline md` | 326 px | 464 px | **nein** |
+
+Der Inhalt ist breiter als der Kasten, und da nichts abschneidet oder rollt, wandern die
+Schaltflächen einfach nach rechts aus dem Kasten heraus — bis auf 529 px — und ziehen die ganze
+Seite mit. Dasselbe im Prüfgerüst nachgestellt, vier Tabs bei 390 px:
+
+| Stil | heute | Seite läuft über? |
+|---|---|---|
+| `underline` | Leiste 390, Schaltflächen bis 426 | **um 36 px** |
+| `contained` | Leiste 474 in einem 390er Feld | **um 84 px** |
+
+### Warum das nach Material Design 3 gar nicht vorkommen darf
+
+M3 kennt genau **zwei** Arten von Tab-Leisten, und keine von beiden läuft über:
+
+| M3 | bei uns | Verhalten |
+|---|---|---|
+| feste Tabs | `fullWidth` | gleich breit, umbrechen dann kürzen, rollen nie |
+| rollende Tabs | `scrollable` | natürliche Breite, rollen bei Bedarf |
+
+**Unser Normalfall ist eine dritte Art, die es in M3 nicht gibt** — natürliche Breite ohne
+Rollen. Genau daraus entsteht der Überlauf. Die Auflösung ist deshalb keine neue Erfindung,
+sondern das Schließen einer Lücke: **jede waagerechte Leiste, die nicht `fullWidth` ist,
+verhält sich wie die rollende Art.**
+
+### 12a · `ui/Tabs.jsx` — Aufbau
+
+Änderung 9 legt die Hülle bereits an. Hier wird nur ihre Bedingung geweitet.
+
+Alt — der Stand **nach** Änderung 9
+
+```js
+const listOrScroller =
+  scrollable && !vertical
+    ? React.createElement("div", { className: "medo-tabs__scroller" }, list)
+    : list;
+```
+
+Neu
+
+```js
+/* Jede waagerechte Leiste bekommt die Hülle — ausgenommen `fullWidth`, wo die Tabs sich
+   die Breite teilen und deshalb nichts überhängen kann (Änderung 11). Ohne diese Weitung
+   schiebt eine Leiste, deren Tabs nicht nebeneinanderpassen, die ganze Seite auf. */
+const listOrScroller =
+  !vertical && !fullWidth
+    ? React.createElement("div", { className: "medo-tabs__scroller" }, list)
+    : list;
+```
+
+Das CSS aus Änderung 9a bleibt unverändert. Sonst ändert sich an der Datei nichts.
+
+### Was das mit `scrollable` macht — ausdrücklich benannt
+
+**`scrollable` verliert damit seine zusätzliche Wirkung**: was die Angabe bisher einschaltete,
+ist jetzt das Verhalten aller waagerechten Leisten außer `fullWidth`.
+
+**Die Angabe bleibt trotzdem im Vertrag und im Code.** Das Paket ist in fremden Projekten
+eingebunden; sie zu entfernen würde dort den Bau anhalten. Sie wird als das beschrieben, was sie
+danach ist: ohne zusätzliche Wirkung, erhalten für bestehende Einbindungen.
+
+### 12b · `ui/Tabs.d.ts`
+
+Alt — der Stand **nach** Änderung 9
+
+```ts
+  /** Waagerecht scrollbar statt Umbruch, ohne sichtbare Scrollbar. Wirkt in beiden
+   *  Stilen; bei `contained` behält die Leiste dabei ihre Breite und rollt in einer
+   *  eigenen Hülle. Ohne Wirkung bei `orientation="vertical"`. */
+  scrollable?: boolean;
+```
+
+Neu
+
+```ts
+  /** Ohne zusätzliche Wirkung. Waagerechtes Rollen ist das Standardverhalten jeder Leiste,
+   *  die nicht `fullWidth` ist: passen die Tabs nicht nebeneinander, rollt die Leiste in
+   *  einer eigenen Hülle, ohne sichtbare Scrollbar. Die Angabe bleibt für bestehende
+   *  Einbindungen erhalten. */
+  scrollable?: boolean;
+```
+
+### 12c · `ui/Tabs.prompt.md`
+
+Im Abschnitt „Aufbau" tritt an die Stelle des Satzes, den Änderung 9 dort ergänzt hat:
+
+Alt — der Stand **nach** Änderung 9
+
+> Ab etwa sieben Tabs `scrollable` setzen; bei sehr vielen Bereichen ist die vertikale Form
+> (`orientation="vertical"`) die ruhigere Lösung.
+>
+> Das gilt für beide Stile. Bei `contained` bleibt die graue Leiste dabei so breit wie ihre Tabs
+> und rollt innerhalb des verfügbaren Platzes — sie dehnt sich nicht auf die volle Breite.
+> `fullWidth` und `scrollable` schließen einander aus: gleich breite Tabs setzen voraus, dass alle
+> gleichzeitig sichtbar sind. Ist beides gesetzt, gewinnt `scrollable`.
+
+Neu
+
+> Passen die Tabs nicht nebeneinander, rollt die Leiste waagerecht — von selbst, in beiden
+> Stilen, ohne dass etwas gesetzt werden muss. Bei `contained` bleibt die graue Leiste dabei so
+> breit wie ihre Tabs und rollt innerhalb des verfügbaren Platzes; sie dehnt sich nicht auf die
+> volle Breite. Ab etwa sieben Bereichen ist die vertikale Form (`orientation="vertical"`)
+> trotzdem die ruhigere Lösung.
+>
+> Die einzige Leiste, die **nicht** rollt, ist `fullWidth`: dort teilen sich die Tabs die Breite
+> und brechen ihre Beschriftung um. Ist zusätzlich `scrollable` gesetzt, ändert das nichts —
+> die Angabe hat keine Wirkung mehr und bleibt nur für bestehende Einbindungen erhalten.
+
+### Was danach anders ist
+
+Gemessen, vier Tabs, vorher und nachher:
+
+| Stil | Fenster | heute | nach Änderung 12 |
+|---|---|---|---|
+| `underline` | 390 px | Seite läuft um **36 px** über | Leiste rollt, **kein Überlauf** |
+| `contained` | 390 px | Seite läuft um **84 px** über | Leiste rollt, **kein Überlauf** |
+| `underline` | 1200 px | passt | **unverändert**, nichts rollt |
+| `contained` | 1200 px | passt | **unverändert**, nichts rollt |
+
+**Die Breiten der einzelnen Tabs sind in allen vier Fällen Zeichen für Zeichen dieselben**
+(72/93/109/69 bzw. 100/121/137/97). Es verschiebt sich nichts, es wird nichts schmaler — die
+Leiste hört nur auf, über ihren Platz hinauszuwachsen.
+
+### Ein Hinweis für die abnehmende Seite
+
+Im Doku-Portal liegt die Kopfleiste in einer selbst gebauten rollenden Hülle mit einer eigenen
+Logik, die den gewählten Tab ins Bild schiebt. Diese Hülle bekommt durch Änderung 12 eine zweite,
+komponenteneigene Hülle in sich.
+
+**Nachgemessen: die Kopfleiste bleibt bedienbar.** Weil das Portal der Komponente `w-max`
+mitgibt, wird die innere Hülle so breit wie ihr Inhalt und hat selbst nichts zu rollen; der
+äußere Rahmen rollt weiter, und der Aufruf, mit dem das Portal ihn bewegt, wirkt unverändert.
+**Für das Design-Projekt folgt daraus nichts** — es ist hier nur festgehalten, damit die
+abnehmende Seite es nicht erst suchen muss.
 
 ---
 ## Was ausdrücklich unberührt bleibt
