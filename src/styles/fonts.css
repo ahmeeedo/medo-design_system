@@ -1,6 +1,7 @@
 /* medo Design System · Lokale Schriften (offline-fähig)
    DM Sans v17 und DM Mono v16, Subset latin, woff2.
-   Material Symbols Rounded liegt nicht lokal vor und kommt weiterhin vom CDN. */
+   Material Symbols Rounded wird hier nicht deklariert: die Schrift kommt aus
+   dem npm-Paket material-symbols und wird mit ausgeliefert. */
 
 @font-face {
   font-family: "DM Sans";
