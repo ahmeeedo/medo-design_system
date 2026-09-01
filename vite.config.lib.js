@@ -11,7 +11,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url))
    Two entries. 'index' is the component barrel; the component stylesheets ride
    in as side-effect imports and the bundler lifts them out into index.css.
    'tokens' is the foundation — token layers, theme, icon axes.
-   scripts/build-package-styles.mjs joins the two CSS assets and the component
+   scripts/build-package.mjs joins the two CSS assets and the component
    theme overrides into the single styles.css the package ships.
 
    Not build.lib: library mode inlines every asset as a data URI regardless of
