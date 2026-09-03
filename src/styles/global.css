@@ -29,10 +29,6 @@
   --docs-header-height: calc(var(--medo-space-2xl) + var(--medo-space-xs));
   --docs-hit-target:    calc(var(--medo-space-xl) + var(--medo-space-sm));
 
-  /* Brand mark. The wordmark rides on --medo-text, whose pair is exactly the
-     stone step the asset uses; only the dot needs its own. Inverted on dark
-     ground per design-reference/guidelines/10-marke-1-logo.card.html. */
-  --medo-logo-dot: light-dark(var(--medo-color-teal-600), var(--medo-color-teal-500));
 
   /* Code panels stay dark in both themes. In dark they would otherwise share
      stone-900 with the page behind them and lose both their frame and the
