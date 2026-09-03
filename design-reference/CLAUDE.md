@@ -26,6 +26,8 @@ chromaIntensity ci = 1.25. Scale hues & chroma peaks:
 Peak chroma passed to makeScale = c * ci.
 Yellow/orange/amber use lighter custom ramps to avoid brown (yellow anchor #d48d09 at 600).
 
+Exception: stone-500 is #928e8a, one step darker than the default lRamp produces. Required so border-strong reaches WCAG AA 3:1 on surface-container (2.96:1 → 3.03:1). Approved exception — do not regenerate this step from the ramp.
+
 ### Key semantic tokens (Ebene 3)
 - surface=white, surface-container=stone-50, surface-container-high=stone-100, surface-sunken=stone-100, surface-hover=stone-100, surface-selected=primary-100, overlay=white
 - text=stone-1000, text-muted=stone-1000 @68% (transparent!), text-subtle=stone-800, text-on-primary=white, text-disabled=stone-500, text-link=primary-600, text-link-hover=primary-800
@@ -34,7 +36,7 @@ Yellow/orange/amber use lighter custom ramps to avoid brown (yellow anchor #d48d
 - input-bg=white, input-bg-disabled=stone-100, input-text=stone-1000, input-placeholder=stone-600, input-border=stone-400 (user chose light on purpose), input-border-hover=stone-600, input-border-focus=primary-600, input-border-error=error-600, input-border-disabled=stone-200
 - action=primary-600, action-hover=primary-700, action-active=primary-800, action-disabled=stone-200, action-text=white, action-text-disabled=stone-500
 - action-neutral=stone-100, action-neutral-hover=stone-200, action-neutral-active=stone-300, action-neutral-text=stone-1000
-- focus-ring=primary-600 (rendered as 3px ring at ~35% alpha, hex+59), state-hover=stone-100, state-pressed=stone-200, state-selected=primary-100, selection=primary-200
+- focus-ring=primary-600 (rendered as 3px ring at ~75% alpha, hex+bf), state-hover=stone-100, state-pressed=stone-200, state-selected=primary-100, selection=primary-200
 - Status sets (success/warning/error/info): -surface=50, -text=1000, -border=300, -solid=600, -solid-hover=700, -solid-active=800, -on-solid: white EXCEPT warning-on-solid=stone-1000 (amber too light for white text)
 - divider=stone-200, scrim=rgba(23,21,19,0.5)
 
@@ -69,7 +71,7 @@ In React: `<Icon name="search" size={18} />` aus `ui/Icon.jsx`.
 - Rule: Link hover/active changes COLOR only (text-link → text-link-hover). Underline presence never changes on hover (standalone stays without, inline stays with), and underline thickness stays 1px in every state.
 - Rule: Button labels are font-weight 400 (Regular) — all variants and sizes. Applies to every button-shaped control.
 - Rule: Button sizes stay on the type scale — sm = text-xs 12, md = text-sm 14, lg = text-base 16. No in-between values like 13px anywhere in the system.
-- Rule: focus-ring is primary-600 everywhere, EXCEPT the danger/destructive variant, which uses error-600 at the same 35% alpha (token `--medo-focus-ring-danger`). Approved exception. Error-state fields use the same danger ring on focus.
+- Rule: focus-ring is primary-600 everywhere, EXCEPT the danger/destructive variant, which uses error-600 at the same 75% alpha (token `--medo-focus-ring-danger`). Approved exception. Error-state fields use the same danger ring on focus.
 - Rule: field borders are ALWAYS border-thin 1px — resting and focus alike, so nothing shifts; focus is carried by the 3px ring, not by a thicker border. Applies to TextInput, Select, Checkbox, Radio, Search, NumberInput, list checkboxes. 1.5px is gone project-wide. border-thick 2px stays reserved for selected/active indicators (tab underline, stepper rail).
 - Rule: field horizontal padding is space-sm 12px, field text sm=14 / md=16 / lg=16.
 - Rule: Checkbox uses radius-sm 4px. Checkbox/Radio box 18px (sm) / 20px (md), Radio dot 9px / 10px. Labels text-sm 14. No half-pixel type sizes anywhere; mono micro-labels sit at 11px or 12px.
