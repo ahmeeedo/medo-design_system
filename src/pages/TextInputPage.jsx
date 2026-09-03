@@ -72,15 +72,28 @@ export default function TextInputPage() {
               { id: 'message', type: 'dropdown', label: 'Message', options: ['keine', 'hint', 'error', 'success'], default: 'hint' },
               { id: 'floatingLabel', type: 'toggle', label: 'Floating Label', default: false },
               { id: 'icon', type: 'toggle', label: 'Icon', default: false },
-              { id: 'clearable', type: 'toggle', label: 'Clearable', default: false },
+              { id: 'clearable', type: 'toggle', label: 'Clearable', default: false, visibleWhen: v => !v.disabled && !v.readOnly },
               { id: 'counter', type: 'toggle', label: 'Counter', default: false },
               { id: 'affixes', type: 'toggle', label: 'Prefix/Suffix', default: false },
               { id: 'placeholder', type: 'toggle', label: 'Placeholder', default: false },
               { id: 'required', type: 'toggle', label: 'Required', default: false },
-              { id: 'optional', type: 'toggle', label: 'Optional', default: false },
-              { id: 'readOnly', type: 'toggle', label: 'Readonly', default: false },
+              { id: 'optional', type: 'toggle', label: 'Optional', default: false, visibleWhen: v => !v.required && !v.floatingLabel },
+              { id: 'readOnly', type: 'toggle', label: 'Readonly', default: false, visibleWhen: v => !v.disabled },
               { id: 'disabled', type: 'toggle', label: 'Disabled', default: false },
               { id: 'fullWidth', type: 'toggle', label: 'Full Width', default: false },
+            ]}
+            presets={[
+              { id: 'default', label: t('textInput.presets.default'), values: {} },
+              { id: 'required', label: t('textInput.presets.required'), values: { required: true } },
+              { id: 'error', label: t('textInput.presets.error'), values: { message: 'error' } },
+              { id: 'success', label: t('textInput.presets.success'), values: { message: 'success' } },
+              { id: 'readonly', label: t('textInput.presets.readonly'), values: { readOnly: true } },
+              { id: 'disabled', label: t('textInput.presets.disabled'), values: { disabled: true } },
+              { id: 'float', label: t('textInput.presets.float'), values: { floatingLabel: true } },
+              { id: 'clearable', label: t('textInput.presets.clearable'), values: { clearable: true } },
+              { id: 'password', label: t('textInput.presets.password'), values: { type: 'password' } },
+              { id: 'counter', label: t('textInput.presets.counter'), values: { counter: true, optional: true } },
+              { id: 'affix', label: t('textInput.presets.affix'), values: { affixes: true } },
             ]}
           />
 

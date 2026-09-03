@@ -91,6 +91,10 @@
   },
   "demoPanel": {
     "title": "Live-Demo",
+    "controls": "Steuerung",
+    "example": "Beispiel",
+    "custom": "Angepasst",
+    "settings": "Alle Einstellungen",
     "hint": "Diese Live-Demo bietet lediglich einen Überblick über die Funktionen und Designs, die für diese Komponente verfügbar sind."
   },
   "tokensTable": {
@@ -273,6 +277,19 @@
       "hint": "Wir verwenden die Adresse nur für Terminbestätigungen.",
       "error": "Die Adresse ist unvollständig. Ergänzen Sie den Teil nach dem @.",
       "success": "Adresse bestätigt."
+    },
+    "presets": {
+      "default": "Standard",
+      "required": "Pflichtfeld",
+      "error": "Mit Fehlermeldung",
+      "success": "Mit Erfolgsmeldung",
+      "readonly": "Schreibgeschützt",
+      "disabled": "Gesperrt",
+      "float": "Floating Label",
+      "clearable": "Mit Leeren-Schaltfläche",
+      "password": "Passwort",
+      "counter": "Mit Zeichenzähler",
+      "affix": "Mit Präfix und Suffix"
     },
     "overview": {
       "anatomyTitle": "Anatomie",

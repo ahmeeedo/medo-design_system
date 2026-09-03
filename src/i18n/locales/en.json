@@ -91,6 +91,10 @@
   },
   "demoPanel": {
     "title": "Live Demo",
+    "controls": "Controls",
+    "example": "Example",
+    "custom": "Customized",
+    "settings": "All settings",
     "hint": "This live demo provides only an overview of the features and designs available for this component."
   },
   "tokensTable": {
@@ -273,6 +277,19 @@
       "hint": "We only use the address for appointment confirmations.",
       "error": "The address is incomplete. Add the part after the @.",
       "success": "Address confirmed."
+    },
+    "presets": {
+      "default": "Default",
+      "required": "Required",
+      "error": "With error message",
+      "success": "With success message",
+      "readonly": "Read-only",
+      "disabled": "Disabled",
+      "float": "Floating label",
+      "clearable": "With clear button",
+      "password": "Password",
+      "counter": "With character counter",
+      "affix": "With prefix and suffix"
     },
     "overview": {
       "anatomyTitle": "Anatomy",
