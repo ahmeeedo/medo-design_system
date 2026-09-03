@@ -153,3 +153,31 @@ Diese Prüfsumme ist der Bezugspunkt. Trägt die Datei nach der Vertragsanwendun
 2. **Der Ausnahme-Eintrag für `stone-500`** ist der einzige Punkt, dessen Auslassung stillschweigend wirkt. Er gehört bei der Wiederholung ausdrücklich abgehakt.
 
 **Für die beiden weiteren Übergabedokumente**, die nach demselben Verfahren angewandt werden: das Verfahren hat hier **nicht** an der Genauigkeit der Anweisungen gescheitert, sondern daran, dass die Anwendung das Projekt gar nicht erreicht hat. Eine Rückmeldung der anwendenden Seite über das, was sie tatsächlich geschrieben hat, würde diesen Fall künftig sofort sichtbar machen — und ein Blick auf den Zeitstempel des Projekts genügt als Sekundenprüfung, bevor eine Abgleichsarbeit überhaupt beginnt.
+
+---
+
+## 6. Warum auch die Arbeit im Repository nicht vorgezogen werden kann
+
+Die Aufgabe hätte nach dem Abgleich vier Dinge im Repository nachgezogen. Alle vier hängen an der ausgebliebenen Anwendung — auch die, die auf den ersten Blick unabhängig aussehen.
+
+**Die neun neuen Token** brauchen ihren hellen Wert aus dem Spiegel. Dort stehen sie nicht. Sie aus dem Dokument abzuschreiben, würde die festgelegte Richtung umkehren: der Spiegel folgt der Quelle, nicht dem Entwurf.
+
+**Die acht Token-Dateien unter `src/styles/medo/`** sind ein Spiegel des neu gezogenen Stands. Der ist unverändert, also gibt es nichts nachzuziehen.
+
+**Das Begründungstor für das helle Theme** ist der Punkt, der am ehesten unabhängig wirkt — die Mechanik im Werkzeug ließe sich ausweiten, ohne das Design-Projekt anzufassen. Nachgerechnet am heutigen Code liegt der Fall aber anders. Es bestehen **14 helle Unterschreitungen**:
+
+| Gruppe | Zahl | Wird beseitigt durch |
+|---|---|---|
+| Fokusring (4) und Gefahren-Fokusring (4) | 8 | Fall A |
+| Textlink auf gedrückter Fläche und auf Textmarkierung | 2 | Fall C1 |
+| Warn-Beschriftung überfahren und gedrückt | 2 | Fall B |
+| Kräftige Rahmenlinie auf Kartenfläche | 1 | Fall D |
+| **Feldkante im Ruhezustand** | **1** | **bleibt — gelockte Absicht** |
+
+Nach der Anwendung bleibt **eine** Unterschreitung übrig, und für die gibt es einen Grund. Heute verlangte das Tor **vierzehn** Begründungen — dreizehn davon für Unterschreitungen, die der Inhaber beseitigen wollte. Eine Begründung schreiben heißt, eine Unterschreitung für vertretbar zu erklären. Für diese dreizehn wäre das die Umkehrung der getroffenen Entscheidung, und die Einträge müssten unmittelbar nach der Anwendung wieder gelöscht werden.
+
+Das Tor wird deshalb ausgeweitet, **nachdem** die Anwendung vorliegt — dann trägt es genau einen Eintrag, und die Zusicherung „nie eine stille Unterschreitung" ist ab dem ersten Tag wahr, statt mit dreizehn Einträgen zu beginnen, die sie aushöhlen.
+
+**Fall C2** (Textlink dunkel) existiert im Design-Projekt nicht und wäre allein umsetzbar. Er ist aber mit dem Begründungstor verzahnt: seine Umsetzung entfernt die dunkle Unterschreitung `medo-text-link|medo-state-pressed` und macht damit den Eintrag in `APPROVED_SHORTFALLS` und in `scripts/contrast/shortfalls.mjs` hinfällig. Ihn getrennt zu machen, hieße den Kontrastbericht zweimal umzubauen. Er gehört in denselben Durchgang.
+
+**Zwischenstand:** Am Repository wurde nichts geändert. `design-reference/` ist unverändert, weil die Neuspiegelung nichts Neues ergeben hat. Der einzige neue Inhalt auf dem Branch ist dieser Bericht. Ein Neustart nach der Anwendung setzt ohne Zusatzwissen an: Bericht lesen, Dokument erneut anwenden lassen, Abgleich wiederholen, dann Abschnitte 4 bis 7 der Aufgabe abarbeiten.
