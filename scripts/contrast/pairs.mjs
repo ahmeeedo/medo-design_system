@@ -64,6 +64,10 @@ export const CONTEXT_PAIRS = [
     { fg: `medo-${role}-solid`, bg: 'medo-surface', kind: 'ui', group: 'Statusfarben' },
     { fg: `medo-${role}-border`, bg: `medo-${role}-surface`, kind: 'none', group: 'Statusfarben' },
     { fg: `medo-${role}-border`, bg: 'medo-surface', kind: 'none', group: 'Statusfarben' },
+    /* Symbol, Aktionstext und Randstreifen liegen als Vordergrund auf der
+       weichen Meldungsfläche und auf der schwebenden Kurzmeldung. */
+    { fg: `medo-${role}-accent`, bg: `medo-${role}-surface`, kind: 'text', group: 'Statusfarben' },
+    { fg: `medo-${role}-accent`, bg: 'medo-overlay', kind: 'text', group: 'Statusfarben' },
   ]),
 
   ...['medo-border', 'medo-border-strong', 'medo-border-subtle', 'medo-border-disabled', 'medo-divider']
@@ -86,6 +90,23 @@ export const CONTEXT_PAIRS = [
   { fg: 'medo-overlay', bg: 'medo-surface', kind: 'none', group: 'Flächenabsetzung' },
   { fg: 'medo-overlay', bg: 'medo-scrim', kind: 'none', group: 'Flächenabsetzung' },
   { fg: 'medo-input-bg', bg: 'medo-surface-container', kind: 'none', group: 'Flächenabsetzung' },
+
+  /* Der neutrale Meldungsakzent trägt dieselbe Vordergrundrolle wie die vier
+     Statusakzente, nur ohne Statusfläche darunter. */
+  { fg: 'medo-accent-neutral', bg: 'medo-surface-container', kind: 'text', group: 'Akzente und Marken' },
+  { fg: 'medo-accent-neutral', bg: 'medo-overlay', kind: 'text', group: 'Akzente und Marken' },
+  /* Teilstriche des Schiebereglers, je auf ihrer eigenen Bahnhälfte. Sie sind
+     Ergänzung: Lage und Zustand des Reglers tragen Füllung und Griff. Wie die
+     zurückhaltenden Linien werden sie berichtet, aber nicht bewertet — in
+     beiden Themes liegen sie unter 3:1, und die Werte stammen unverändert
+     aus der Referenz. */
+  { fg: 'medo-control-mark', bg: 'medo-border-subtle', kind: 'none', group: 'Akzente und Marken' },
+  { fg: 'medo-control-mark-on-primary', bg: 'medo-action', kind: 'none', group: 'Akzente und Marken' },
+  /* Zwei Rollen ohne messbare Paarung: das Schaltersymbol liegt auf dem stets
+     weissen Griff, den die Semantic-Ebene nicht führt, und der Punkt der
+     Wortmarke ist Logobestandteil. Beide werden berichtet, nie bewertet. */
+  { fg: 'medo-icon-on-light', bg: 'medo-surface', kind: 'none', group: 'Akzente und Marken' },
+  { fg: 'medo-logo-dot', bg: 'medo-surface', kind: 'none', group: 'Akzente und Marken' },
 ]
 
 /** Full text/icon-on-surface matrix, generated so nothing can be forgotten. */

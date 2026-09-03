@@ -165,10 +165,12 @@ function collectShortfalls(light, dark) {
   return out
 }
 
-/* The same run against the existing light palette. Not part of this task's
-   scope to fix — recorded so the two themes can be compared honestly. */
+/* The same run against the light palette, under the same gate. A light
+   shortfall used to be recorded and waved through; it now has to carry a
+   justification exactly like a dark one, so neither theme can acquire a
+   silent one. */
 function collectLightShortfalls(light, dark) {
-  return [...matrixPairs(), ...CONTEXT_PAIRS]
+  const out = [...matrixPairs(), ...CONTEXT_PAIRS]
     .filter((pair) => pair.kind !== 'none')
     .map((pair) => ({ pair, light: evaluate(light, pair), dark: evaluate(dark, pair) }))
     .filter(({ light: l }) => !l.passes)
@@ -180,7 +182,18 @@ function collectLightShortfalls(light, dark) {
       lightRatio: l.ratio,
       darkRatio: d.ratio,
       darkPasses: d.passes,
+      justification: JUSTIFICATIONS[`${pair.fg}|${pair.bg}`] ?? null,
     }))
+
+  const unexplained = out.filter((row) => !row.justification)
+  if (unexplained.length) {
+    throw new Error(
+      `Unterschreitung im hellen Theme ohne Begründung:\n${unexplained
+        .map((r) => `  ${r.key} — ${r.lightRatio}:1 (Schwelle ${r.threshold})`)
+        .join('\n')}`,
+    )
+  }
+  return out
 }
 
 /**
@@ -272,9 +285,9 @@ function buildFocusAlternative(dark) {
     return { surface: name, ratio: round2(contrastRatio(hex, surface, surface)) }
   })
   const options = [
-    { label: 'teal-300 @35 % (Deckkraft wie hell)', value: '#adccc859', role: 'focus-ring' },
+    { label: 'teal-300 @35 % (die frühere Deckkraft)', value: '#adccc859', role: 'focus-ring' },
     { label: 'teal-300 @55 % (Vorschlag)', value: '#adccc88c', role: 'focus-ring' },
-    { label: 'red-300 @35 % (Deckkraft wie hell)', value: '#e1bab559', role: 'focus-ring-danger' },
+    { label: 'red-300 @35 % (die frühere Deckkraft)', value: '#e1bab559', role: 'focus-ring-danger' },
     { label: 'red-300 @55 % (Vorschlag)', value: '#e1bab58c', role: 'focus-ring-danger' },
   ]
   return options.map((option) => ({ ...option, per: measure(option.value) }))

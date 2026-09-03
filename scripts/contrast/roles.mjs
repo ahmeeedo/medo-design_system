@@ -54,6 +54,8 @@ export const ROLES = new Map([
     note: 'Folgt text-on-primary.' }],
   ['medo-icon-disabled', { ref: 'medo-surface', kind: 'none',
     note: 'Folgt text-disabled.' }],
+  ['medo-icon-on-light', { ref: 'medo-surface', kind: 'none',
+    note: 'Liegt auf dem Schaltergriff, der in beiden Themes weiß bleibt — nicht auf der Grundfläche. Die Matrix kennt keine Rolle für einen Grund, der nicht mitwechselt, deshalb ist die Zeile informativ; gemessen gehört das Symbol gegen Weiß, und dort steht es in beiden Themes gleich.' }],
 
   // --- borders ------------------------------------------------------------
   ['medo-border', { ref: 'medo-surface', kind: 'none',
@@ -127,6 +129,16 @@ export const ROLES = new Map([
   ['medo-scrim', { ref: 'medo-overlay', kind: 'none',
     note: 'Deckkraft bleibt bei 50 %, nur die Grundfarbe wechselt auf Schwarz — siehe Sonderfall 5.' }],
 
+  // --- accents and control marks ------------------------------------------
+  ['medo-accent-neutral', { ref: 'medo-surface-container', kind: 'text',
+    note: 'Akzent der neutralen Meldung. Im Dunkeln bewusst an das helle Ende der Skala statt an die gespiegelte Stufe — die Rolle trägt Text, und die Spiegelung hätte sie fast unlesbar gelassen.' }],
+  ['medo-control-mark', { ref: 'medo-border-subtle', kind: 'none',
+    note: 'Teilstriche auf der ungefüllten Bahn. Der Wert stammt unverändert aus der Referenz; die Marken sind Ergänzung, die Lage tragen Füllung und Griff.' }],
+  ['medo-control-mark-on-primary', { ref: 'medo-action', kind: 'none',
+    note: 'Dieselben Teilstriche auf der gefüllten Bahn. Ein Wert für beide Themes, weil die Füllung in beiden ein Teal ist.' }],
+  ['medo-logo-dot', { ref: 'medo-surface', kind: 'none',
+    note: 'Der Punkt der Wortmarke. Bestandteil eines Logos und damit von der Kontrastanforderung ausgenommen; die Stufe folgt der Primärfarbe.' }],
+
   // --- status sets --------------------------------------------------------
   ...statusSet('success'),
   ...statusSet('warning'),
@@ -148,6 +160,8 @@ function statusSet(role) {
       note: 'Hover heller statt dunkler.' }],
     [`medo-${role}-solid-active`, { ref: 'medo-surface', kind: 'ui',
       note: 'Aktiv noch eine Stufe heller.' }],
+    [`medo-${role}-accent`, { ref: `medo-${role}-surface`, kind: 'text',
+      note: 'Vordergrundrolle auf der weichen Meldungsfläche — Symbol, Aktionstext und Randstreifen. Getrennt von der Füllfläche, weil beide Aufgaben in entgegengesetzte Richtungen ziehen.' }],
     [`medo-${role}-on-solid`, { ref: `medo-${role}-solid`, kind: 'text',
       note: 'Alle vier Füllfarben tragen im Dunkeln dunkle Schrift — die helle Sonderregel für Warnung entfällt damit.' }],
   ]
