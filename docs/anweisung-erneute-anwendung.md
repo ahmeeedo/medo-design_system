@@ -1,45 +1,76 @@
-# Anweisung an das Design-Projekt — erneute Anwendung von „Farbe und Tokens"
+# Anweisung an das Design-Projekt — Anwendung von „Farbe und Tokens"
 
 Dieser Text ist zum Einfügen in das Gespräch mit der KI im medo-Design-Projekt gedacht, zusammen mit dem Dokument `uebergabe-farbe-und-tokens.md`.
 
-**Hintergrund:** Ein erster Anlauf hat das Projekt nicht erreicht — keine der 68 Anweisungen ist angekommen, keine Datei wurde geschrieben. Der Abgleich steht in `abgleich-farbe-und-tokens.md`. Die wahrscheinlichste Ursache: das Dokument ändert zwei Beschlüsse, die `CLAUDE.md` als `LOCKED` führt. Ohne ausdrückliche Freigabe wird eine sorgfältige Umsetzung dort anhalten. Genau das hebt der folgende Text auf.
+## Vor dem Einfügen: das richtige Projekt öffnen
+
+**Das Zielprojekt ist:**
+
+```
+medo Design System
+https://claude.ai/design/p/9bff25e1-b01d-4339-ac16-a6e8fc26cdd3
+```
+
+Ein erster Anlauf ist in einem **anderen** Projekt gelandet — einem, in dem der medo-Bestand als Unterordner `design_handoff_medo/` liegt. Dort sind alle 68 Anweisungen umgesetzt; im Design System selbst ist keine einzige angekommen. Belegt in `abgleich-farbe-und-tokens.md`.
+
+Woran die Verwechslung erkennbar ist: das Design System führt seine Farbkarten unter deutschen Namen (`guidelines/40-farben3-9-status.card.html`, `20-farben1-01-stone.card.html`), das andere Projekt unter englischen (`colors-status`, `colors-action`, `colors-border`). Hat das Projekt einen Ordner `design_handoff_medo/`, ist es das falsche.
 
 ---
 
 ## Der Prompt
 
 ```text
-Ich gebe Dir das Dokument „Übergabe an das medo-Design-Projekt — Farbe und Tokens".
-Es beschreibt 68 Einzelanweisungen in 10 Dateien dieses Projekts. Wende sie an —
-schreibe die Dateien tatsächlich, nicht nur einen Plan oder eine Zusammenfassung.
+Wir arbeiten im Projekt „medo Design System"
+(9bff25e1-b01d-4339-ac16-a6e8fc26cdd3). Ich gebe Dir das Dokument „Übergabe an
+das medo-Design-Projekt — Farbe und Tokens". Es beschreibt 68 Einzelanweisungen
+in 10 Dateien. Wende sie an — schreibe die Dateien tatsächlich, nicht nur einen
+Plan oder eine Zusammenfassung.
 
-Ein erster Anlauf ist ohne jede Änderung geblieben. Bitte lies deshalb zuerst die
-folgenden vier Punkte, bevor Du anfängst.
+SCHRITT 0: PRÜFE ZUERST, WO DU BIST UND WAS SCHON DA IST
+
+Ein früherer Anlauf ist in einem anderen Projekt gelandet. Bevor Du etwas
+änderst, sieh an genau diesen drei Stellen nach und sage mir, was Du findest:
+
+  1. tokens/semantic-colors.css, Zeile 46
+     erwartet, wenn NICHT angewandt:  --medo-focus-ring: #00726559;
+     wenn dort #007265bf steht, ist Fall A schon umgesetzt
+
+  2. tokens/brand-colors.css, Zeile 192
+     erwartet, wenn NICHT angewandt:  --medo-color-stone-500: #94908c;
+     wenn dort #928e8a steht, ist Fall D schon umgesetzt
+
+  3. Existiert die Datei guidelines/40-farben3-9-status.card.html?
+     Wenn ja, bist Du im richtigen Projekt.
+     Wenn dort stattdessen guidelines/colors-status.card.html liegt oder es
+     einen Ordner design_handoff_medo/ gibt, bist Du im FALSCHEN Projekt —
+     halte an und sage es mir, ohne etwas zu ändern.
+
+Findest Du bei 1 und 2 die alten Werte und bei 3 die deutsche Kartendatei:
+alles in Ordnung, arbeite weiter. Findest Du etwas anderes, halte an.
 
 1) ZWEI GELOCKTE BESCHLÜSSE SIND AUSDRÜCKLICH FREIGEGEBEN
 
-Das Dokument ändert zwei Dinge, die CLAUDE.md als LOCKED führt. Beides ist von mir
-als Inhaber geprüft und freigegeben. Halte deswegen nicht an und frage nicht nach:
+Das Dokument ändert zwei Dinge, die CLAUDE.md als LOCKED führt. Beides ist von
+mir als Inhaber geprüft und freigegeben. Halte deswegen nicht an:
 
   a) Die Deckkraft beider Fokusringe: 35 % → 75 % (hex-Endung 59 → bf).
-     Grund: der Ring erreicht heute auf keiner Fläche die WCAG-Schwelle von 3:1
-     (1,65:1 bis 2,00:1) und ist in 26 Komponenten der alleinige Fokusanzeiger.
-     Farbton und Sättigung bleiben unberührt — nur die Deckkraft ändert sich.
+     Grund: der Ring erreicht heute auf keiner Fläche die WCAG-Schwelle von
+     3:1 (1,65:1 bis 2,00:1) und ist in 26 Komponenten der alleinige
+     Fokusanzeiger. Farbton und Sättigung bleiben unberührt.
 
   b) Die Palettenstufe stone-500: #94908c → #928e8a.
      Grund: die kräftige Rahmenlinie erreicht auf der Kartenfläche 2,96:1
-     statt 3:1. Der Wert weicht bewusst von dem ab, was der Erzeugungs-
-     algorithmus liefert.
+     statt 3:1.
 
-Ändere für (b) NICHT den geteilten `default lRamp`. Er wird von stone, grey, teal,
-red, green, blue und weiteren Skalen benutzt; ihn zu verschieben würde die
-500er-Stufe jeder dieser Skalen verändern. Das ist nicht gewollt. Trage den Wert
-stattdessen direkt ein und halte ihn als Ausnahme in CLAUDE.md fest, wie in
-Abschnitt 4.4 des Dokuments beschrieben.
+Ändere für (b) NICHT den geteilten `default lRamp`. Er wird von stone, grey,
+teal, red, green, blue und weiteren Skalen benutzt; ihn zu verschieben würde
+die 500er-Stufe jeder dieser Skalen verändern. Das ist nicht gewollt. Trage den
+Wert direkt ein und halte ihn als Ausnahme in CLAUDE.md fest, wie in Abschnitt
+4.4 des Dokuments beschrieben.
 
-Dieser Ausnahme-Eintrag ist der wichtigste Einzelschritt des ganzen Auftrags:
-ohne ihn erzeugt der nächste Lauf des Algorithmus #94908c zurück und die
-Korrektur ist stillschweigend verloren.
+Dieser Ausnahme-Eintrag ist der wichtigste Einzelschritt des Auftrags: ohne ihn
+erzeugt der nächste Lauf des Algorithmus #94908c zurück und die Korrektur ist
+stillschweigend verloren.
 
 2) EIN NACHTRAG, DER IM DOKUMENT FEHLT
 
@@ -52,17 +83,15 @@ Abschnitt 2.3 nur die eine:
     „focus-ring=primary-600 (rendered as 3px ring at ~35% alpha, hex+59)"
     → im Dokument NICHT erfasst
 
-Ändere beide auf 75 % beziehungsweise „hex+bf". Bleibt die zweite Stelle stehen,
-widerspricht CLAUDE.md sich danach selbst.
+Ändere beide auf 75 % beziehungsweise „hex+bf". Bleibt die zweite Stelle
+stehen, widerspricht CLAUDE.md sich danach selbst.
 
 3) DAS PROJEKT BLEIBT HELL-ONLY
 
-Führe KEINE dunklen Werte ein, kein light-dark(), keine Theme-Umschaltung. Wo das
-Dokument ein neues Token anlegt, bekommt es hier nur seinen hellen Wert. Der
-Beschluss „Light mode only" bleibt bestehen.
+Führe KEINE dunklen Werte ein, kein light-dark(), keine Theme-Umschaltung. Wo
+das Dokument ein neues Token anlegt, bekommt es hier nur seinen hellen Wert.
 
-Fall C2 (Textlink im dunklen Theme) betrifft dieses Projekt gar nicht — dort ist
-nichts zu tun. Er ist im Dokument nur der Vollständigkeit halber genannt.
+Fall C2 (Textlink im dunklen Theme) betrifft dieses Projekt gar nicht.
 
 4) NICHTS ÜBER DAS DOKUMENT HINAUS
 
@@ -77,13 +106,10 @@ Umformatierung. Insbesondere:
     Textlink wechselt auf teal-700 (Abschnitt 4.1)
   - warning bleibt der Amber-Skala zugeordnet (Abschnitt 7.2)
 
-Fällt Dir beim Arbeiten etwas auf, das geändert werden sollte und nicht im
-Dokument steht: schreibe es unten in Deinen Bericht, aber ändere es nicht.
+Fällt Dir etwas auf, das geändert werden sollte und nicht im Dokument steht:
+schreibe es in Deinen Bericht, aber ändere es nicht.
 
 REIHENFOLGE
-
-Arbeite die Kaskade in dieser Reihenfolge durch, sie ist im Dokument in
-Abschnitt 1.3 begründet:
 
   1. tokens/brand-colors.css
   2. tokens/alias-colors.css — nur prüfen, nicht ändern
@@ -97,35 +123,36 @@ Schritt 4 ist nicht optional. tokens.css spiegelt die Quellstruktur mit
 var()-Verweisen, tokens.json hält dagegen aufgelöste Hex-Werte — eine Änderung
 auf Brand-Ebene zieht dort NICHT von selbst nach.
 
-Vergiss die 13 Seiten aus Abschnitt 8 nicht. Sie zeigen geänderte Werte an; eine
-Änderung, die nur in den Token-Dateien steht, hinterlässt dort falsche Angaben.
+Die 13 Seiten aus Abschnitt 8 gehören dazu. Ihre Namen im Dokument
+(guidelines/40-farben3-*, 20-farben1-*, Semantic-Palette.dc.html,
+components/Notification.dc.html und weitere) sind aus diesem Projekt
+entnommen und müssen dort alle existieren. Findest Du einen dieser Pfade
+nicht, sage es mir, statt einen ähnlich benannten zu nehmen.
 
 WAS ICH DANACH VON DIR BRAUCHE
 
-Wenn Du fertig bist, gib mir bitte in dieser Form Auskunft:
-
   a) Die Liste der Dateien, die Du TATSÄCHLICH GESCHRIEBEN hast — jeder Pfad
-     einzeln, nicht „die Token-Dateien". Wenn Du eine Datei gelesen, aber nicht
-     geändert hast, führe sie getrennt auf.
+     einzeln, nicht „die Token-Dateien". Gelesen-aber-nicht-geändert bitte
+     getrennt auflisten.
   b) Je Abschnitt des Dokuments (2, 3, 4, 5, 6, 8): umgesetzt oder nicht.
   c) Jede Stelle, an der Du von der Anweisung abgewichen bist, und warum.
   d) Jede Anweisung, die Du nicht ausführen konntest, mit dem Grund.
   e) Alles, was Du geändert hast, was NICHT im Dokument steht.
+  f) Das Ergebnis von Schritt 0, wörtlich.
 
 Zu Abschnitt 6 des Dokuments („Neu entdeckter Befund", --medo-focus-ring-danger
-fehlt in beiden flachen Exporten): den bitte MIT anwenden. Ohne ihn bleibt Fall A
-in tokens.css und tokens.json nur zur Hälfte umgesetzt — der Gefahren-Fokusring
-fehlt dort dann weiterhin ganz.
+fehlt in beiden flachen Exporten): den bitte MIT anwenden. Ohne ihn bleibt
+Fall A in tokens.css und tokens.json nur zur Hälfte umgesetzt.
 ```
 
 ---
 
-## Warum der Prompt so gebaut ist
+## Was gegenüber dem ersten Prompt geändert ist
 
-**Punkt 1 steht ganz oben**, weil er die wahrscheinlichste Ursache des ersten Fehlschlags auflöst. `CLAUDE.md` beginnt mit „Locked Decisions" und dem Satz, jede Entscheidung sei einzeln bestätigt. Eine Umsetzung, die diese Datei ernst nimmt, hält bei Fall A und Fall D an — zu Recht. Nur der Inhaber kann das aufheben, und es muss im Auftrag stehen, nicht im Anhang.
+**Schritt 0 ist neu und der eigentliche Fix.** Der erste Prompt behauptete „ein erster Anlauf ist ohne jede Änderung geblieben". Aus Sicht der KI im anderen Projekt war das falsch — sie hat nachgesehen, die Änderungen vorgefunden und widersprochen, statt zu arbeiten. Das war richtig von ihr. Ein Prompt, der eine Prämisse setzt, die der Empfänger überprüfen kann, muss ihn diese Prämisse überprüfen lassen, statt sie zu behaupten.
 
-**Punkt 4 ist die Gegenrichtung zu Punkt 1.** Wer eine Freigabe für zwei gelockte Beschlüsse erhält, könnte sie als allgemeine Öffnung lesen. Die vier ausdrücklich genannten Nicht-Änderungen sind genau die, die beim Arbeiten am nächsten liegen — die Feldkante sieht wie ein Fehler aus, und die Alias-Ebene liegt mitten in der Kaskade.
+**Die dritte Prüfung stellt die Projektidentität fest.** Sie ist der wichtigere Teil: `guidelines/40-farben3-9-status.card.html` existiert nur im Design System, `colors-status.card.html` und `design_handoff_medo/` nur im anderen Projekt. Damit erkennt die KI eine Verwechslung selbst, bevor sie schreibt.
 
-**Die Rückmeldung unter „Was ich danach brauche"** ist der Teil, der den ersten Fehlschlag sofort sichtbar gemacht hätte. Die Frage „welche Dateien hast Du geschrieben" lässt sich nicht mit „ist erledigt" beantworten. Punkt (a) verlangt Pfade, Punkt (e) fragt nach Zutaten — beides ist im Nachhinein gegen den Spiegel prüfbar.
+**Der Hinweis zu den 13 Seiten ist geschärft.** Die KI im anderen Projekt hat die Pfade aus Abschnitt 8 nicht gefunden und sinngemäß den nächstliegenden genommen. Im richtigen Projekt existieren sie alle; ein nicht gefundener Pfad ist dort ein Warnzeichen, kein Anlass zum Ersetzen.
 
-**Was der Prompt bewusst nicht enthält:** die 68 Anweisungen selbst. Sie stehen im Dokument, mit Zeilennummern, die alle noch stimmen. Sie hier zu wiederholen, schüfe eine zweite Quelle, die von der ersten abweichen kann.
+**Punkt (f) macht Schritt 0 berichtspflichtig.** Sonst bleibt offen, ob er ausgeführt wurde.

@@ -181,3 +181,49 @@ Das Tor wird deshalb ausgeweitet, **nachdem** die Anwendung vorliegt — dann tr
 **Fall C2** (Textlink dunkel) existiert im Design-Projekt nicht und wäre allein umsetzbar. Er ist aber mit dem Begründungstor verzahnt: seine Umsetzung entfernt die dunkle Unterschreitung `medo-text-link|medo-state-pressed` und macht damit den Eintrag in `APPROVED_SHORTFALLS` und in `scripts/contrast/shortfalls.mjs` hinfällig. Ihn getrennt zu machen, hieße den Kontrastbericht zweimal umzubauen. Er gehört in denselben Durchgang.
 
 **Zwischenstand:** Am Repository wurde nichts geändert. `design-reference/` ist unverändert, weil die Neuspiegelung nichts Neues ergeben hat. Der einzige neue Inhalt auf dem Branch ist dieser Bericht. Ein Neustart nach der Anwendung setzt ohne Zusatzwissen an: Bericht lesen, Dokument erneut anwenden lassen, Abgleich wiederholen, dann Abschnitte 4 bis 7 der Aufgabe abarbeiten.
+
+---
+
+## 7. Nachtrag: die Anwendung ist in einem anderen Projekt gelandet
+
+Nach Abschluss des Abgleichs hat die KI im Design-Projekt auf Nachfrage berichtet, sie habe alle 68 Anweisungen bereits umgesetzt — in zwei Durchgängen, mit ausdrücklicher Freigabe der beiden gelockten Beschlüsse. Beide Aussagen sind wahr. Sie betreffen **verschiedene Projekte**.
+
+### Der Beleg
+
+Der berichtete Dateibestand passt nicht auf `9bff25e1-b01d-4339-ac16-a6e8fc26cdd3`:
+
+| Merkmal | `9bff25e1…` (live gezogen) | Projekt der Anwendung (aus dem Bericht) |
+|---|---|---|
+| Farbkarten | `guidelines/40-farben3-9-status.card.html`, `20-farben1-01-stone.card.html` | `guidelines/colors-status.card.html`, `colors-action`, `colors-border`, `colors-stone` |
+| Handoff-Ordner | existiert nicht | `design_handoff_medo/` mit `reference/` |
+| `stone-500` | `#94908c` | `#928e8a` |
+| Fokusring | `#00726559` | `#007265bf` |
+
+Der Bericht ist dabei **nicht erfunden**. Seine Zeilennummern sind genau um die Zeilen verschoben, die das Einfügen neuer Token erzeugt: `semantic-colors.css` 47/48 statt 46/47, `tokens.css` 335/336 statt 334, `tokens.json` 368/369 statt 367, `CLAUDE.md` 38 statt 37 und 78 statt 72 — und `brand-colors.css` **192 unverschoben**, weil Fall D nur einen Wert ändert und keine Zeile einfügt. Eine solche Konsistenz entsteht nicht durch Raten.
+
+Zwei weitere Punkte des Berichts bestätigen die Verwechslung von der anderen Seite:
+
+1. Er nennt `design_handoff_medo/` einen „veralteten Export" mit `tokens.css` (`stone-500 #94908c`, `--medo-focus-ring: #00726559`), `CLAUDE.md` und sechs Seiten unter `reference/`, darunter `Handoff.dc.html` mit „primary @35%". Das sind genau die Werte von `9bff25e1…`. Der Ordner ist eine Kopie des Projekts, das dieses Repository als Quelle führt.
+2. Er meldet, die 13 Seiten aus Abschnitt 8 des Übergabedokuments existierten dort nicht. Diese Pfade stammen aus dem Spiegel von `9bff25e1…`, wo sie sämtlich existieren. Das Dokument wurde für ein Projekt geschrieben und in einem anderen angewandt.
+
+### Die Quelle der Wahrheit ist bestätigt
+
+Der Inhaber hat auf Rückfrage bestätigt: `medo Design System`, `9bff25e1-b01d-4339-ac16-a6e8fc26cdd3`, erreichbar unter `https://claude.ai/design/p/9bff25e1-b01d-4339-ac16-a6e8fc26cdd3`. Dieses Projekt trägt auch Spec, Plan, die Sicherung aus Task 1.1 (250 byteweise belegte Dateien) und `design-reference/`.
+
+Das Projekt, in dem die Anwendung landete, ist über `list_projects` nicht erreichbar — die Auflistung liefert nur `medo Design System` und `Organic` (geprüft: ein völlig anderes System). Vermutlich ist es kein Projekt vom Typ Design-System, auf den die Auflistung filtert.
+
+### Was das am Befund ändert
+
+**Am Zustand von `9bff25e1…` nichts.** Die Zahlen in Abschnitt 1 und die Prüfung in Abschnitt 3 gelten unverändert: 0 von 68 Anweisungen angekommen, das Projekt unversehrt, das Dokument unverändert anwendbar.
+
+**An der Ursache alles.** Der Fehlschlag lag nicht an der Genauigkeit des Dokuments, nicht an einer Verweigerung wegen der gelockten Beschlüsse und nicht an einer stummen Übertragung — sondern daran, dass das Dokument im falschen Projekt eingefügt wurde. Die Anwendung selbst war nach eigenem Bericht sorgfältig.
+
+### Folgerung für die beiden weiteren Übergabedokumente
+
+Die Projektidentität ist vor jeder Anwendung festzustellen, nicht nach ihr. Die billigste Prüfung dafür ist ein Pfad, der nur im richtigen Projekt existiert: `guidelines/40-farben3-9-status.card.html`. Liegt dort stattdessen `colors-status.card.html` oder ein Ordner `design_handoff_medo/`, ist es das falsche Projekt.
+
+Diese Prüfung steht als Schritt 0 in `anweisung-erneute-anwendung.md`. Der erste Prompt hatte stattdessen behauptet, es sei nichts geschrieben worden — eine Prämisse, die die empfangende KI überprüfen konnte und zu Recht zurückgewiesen hat. Wer eine überprüfbare Prämisse setzt, lässt sie überprüfen, statt sie zu behaupten.
+
+### Die vorhandene Anwendung ist nicht wertlos
+
+Im anderen Projekt liegt ein vollständig angewandter Stand. Als **Wertquelle** ist er unbrauchbar — die Werte kommen aus dem Dokument, nicht aus einem dritten Projekt, sonst entsteht eine zweite Quelle. Als **Gegenprobe** taugt er: weicht das Ergebnis der Anwendung in `9bff25e1…` von ihm ab, ist eine der beiden Anwendungen ungenau, und die Stelle ist benannt.
