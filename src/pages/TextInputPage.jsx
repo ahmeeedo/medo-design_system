@@ -82,6 +82,19 @@ export default function TextInputPage() {
               { id: 'disabled', type: 'toggle', label: 'Disabled', default: false },
               { id: 'fullWidth', type: 'toggle', label: 'Full Width', default: false },
             ]}
+            presets={[
+              { id: 'default', label: t('textInput.presets.default'), values: {} },
+              { id: 'required', label: t('textInput.presets.required'), values: { required: true } },
+              { id: 'error', label: t('textInput.presets.error'), values: { message: 'error' } },
+              { id: 'success', label: t('textInput.presets.success'), values: { message: 'success' } },
+              { id: 'readonly', label: t('textInput.presets.readonly'), values: { readOnly: true } },
+              { id: 'disabled', label: t('textInput.presets.disabled'), values: { disabled: true } },
+              { id: 'float', label: t('textInput.presets.float'), values: { floatingLabel: true } },
+              { id: 'clearable', label: t('textInput.presets.clearable'), values: { clearable: true } },
+              { id: 'password', label: t('textInput.presets.password'), values: { type: 'password' } },
+              { id: 'counter', label: t('textInput.presets.counter'), values: { counter: true, optional: true } },
+              { id: 'affix', label: t('textInput.presets.affix'), values: { affixes: true } },
+            ]}
           />
 
           <Section title={t('textInput.overview.anatomyTitle')}>

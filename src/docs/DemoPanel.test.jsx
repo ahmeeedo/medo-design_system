@@ -21,7 +21,20 @@ const gated = [
   { id: 'clearable', type: 'toggle', label: 'Clearable', default: false, visibleWhen: v => !v.disabled },
 ]
 
+const examples = [
+  { id: 'plain', label: 'Schlicht', values: {} },
+  { id: 'loud', label: 'Laut', values: { zebra: true, mode: 'b' } },
+]
+
 const cells = () => Array.from(screen.getByRole('group', { name: 'Steuerung' }).children)
+
+const picker = () => screen.getByRole('combobox', { name: 'Beispiel' })
+const details = () => screen.getByRole('button', { name: 'Alle Einstellungen' })
+
+const pick = async (user, label) => {
+  await user.click(picker())
+  await user.click(screen.getByRole('option', { name: label }))
+}
 
 describe('DemoPanel controls', () => {
   it('puts pickers before switches and orders each block by label', () => {
@@ -76,6 +89,67 @@ describe('DemoPanel controls', () => {
 
     expect(cells()).toHaveLength(mixed.length)
   })
+
+  it('leaves the controls in the open on a panel that declares no examples', () => {
+    render(<DemoPanel component={state} controls={mixed} />)
+
+    expect(cells()).toHaveLength(mixed.length)
+    expect(screen.queryByRole('combobox', { name: 'Beispiel' })).not.toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: 'Alle Einstellungen' })).not.toBeInTheDocument()
+  })
+})
+
+describe('DemoPanel examples', () => {
+  const panel = () => render(<DemoPanel component={state} controls={mixed} presets={examples} />)
+
+  it('leaves the example picker as the only control at rest', () => {
+    panel()
+
+    expect(picker()).toBeInTheDocument()
+    expect(screen.getAllByRole('combobox')).toHaveLength(1)
+    expect(screen.queryAllByRole('switch')).toHaveLength(0)
+    expect(details()).toHaveAttribute('aria-expanded', 'false')
+  })
+
+  it('opens the detail area and reaches every individual control', async () => {
+    const user = userEvent.setup()
+    panel()
+
+    await user.click(details())
+
+    expect(details()).toHaveAttribute('aria-expanded', 'true')
+    expect(cells()).toHaveLength(mixed.length)
+    expect(screen.getByRole('switch', { name: 'Zebra' })).toBeInTheDocument()
+    expect(screen.getByRole('combobox', { name: 'Mode' })).toBeInTheDocument()
+  })
+
+  it('sets the values of the individual controls from the chosen example', async () => {
+    const user = userEvent.setup()
+    panel()
+
+    await pick(user, 'Laut')
+    await user.click(details())
+
+    expect(screen.getByRole('switch', { name: 'Zebra' })).toHaveAttribute('aria-checked', 'true')
+    expect(screen.getByRole('combobox', { name: 'Mode' })).toHaveTextContent('b')
+    expect(screen.getByRole('switch', { name: 'Alpha' })).toHaveAttribute('aria-checked', 'false')
+  })
+
+  it('stops claiming the example once an individual control is moved, and claims it again on the way back', async () => {
+    const user = userEvent.setup()
+    panel()
+
+    await pick(user, 'Laut')
+    expect(picker()).toHaveTextContent('Laut')
+
+    await user.click(details())
+    await user.click(screen.getByRole('switch', { name: 'Alpha' }))
+    expect(picker()).toHaveTextContent('Angepasst')
+    expect(picker()).not.toHaveTextContent('Laut')
+
+    await user.click(screen.getByRole('switch', { name: 'Alpha' }))
+    expect(picker()).toHaveTextContent('Laut')
+  })
 })
 
 /* The mechanism above is generic; this pins the wiring on the page that ships it. */
@@ -95,9 +169,54 @@ describe('TextInput page controls', () => {
 
   const page = () => render(<MemoryRouter><TextInputPage /></MemoryRouter>)
 
+  it('opens with the example picker alone and the detail area shut', () => {
+    page()
+
+    expect(picker()).toHaveTextContent('Standard')
+    expect(screen.getAllByRole('combobox')).toHaveLength(1)
+    expect(screen.queryAllByRole('switch')).toHaveLength(0)
+    expect(details()).toHaveAttribute('aria-expanded', 'false')
+  })
+
+  it('reaches all fourteen controls through the detail area', async () => {
+    const user = userEvent.setup()
+    page()
+
+    await user.click(details())
+
+    expect(cells()).toHaveLength(14)
+  })
+
+  it('carries a chosen example into the individual controls', async () => {
+    const user = userEvent.setup()
+    page()
+
+    await pick(user, 'Schreibgeschützt')
+    await user.click(details())
+    expect(screen.getByRole('switch', { name: 'Readonly' })).toHaveAttribute('aria-checked', 'true')
+
+    await pick(user, 'Passwort')
+    expect(screen.getByRole('combobox', { name: 'Type' })).toHaveTextContent('password')
+    expect(screen.getByRole('switch', { name: 'Readonly' })).toHaveAttribute('aria-checked', 'false')
+  })
+
+  it('drops the example name once a control is moved by hand', async () => {
+    const user = userEvent.setup()
+    page()
+
+    await pick(user, 'Passwort')
+    expect(picker()).toHaveTextContent('Passwort')
+
+    await user.click(details())
+    await user.click(screen.getByRole('switch', { name: 'Icon' }))
+    expect(picker()).toHaveTextContent('Angepasst')
+    expect(picker()).not.toHaveTextContent('Passwort')
+  })
+
   it('drops Optional while Required is on', async () => {
     const user = userEvent.setup()
     page()
+    await user.click(details())
 
     expect(screen.getByRole('switch', { name: 'Optional' })).toBeInTheDocument()
 
@@ -111,6 +230,7 @@ describe('TextInput page controls', () => {
   it('drops Clearable and Readonly while Disabled is on', async () => {
     const user = userEvent.setup()
     page()
+    await user.click(details())
 
     await user.click(screen.getByRole('switch', { name: 'Disabled' }))
 
