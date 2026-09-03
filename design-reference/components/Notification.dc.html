@@ -159,11 +159,11 @@
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: { &quot;width&quot;: 1040, &quot;height&quot;: 900 }}">
 class Component extends DCLogic {
   sets = {
-    info:    { icon: 'info',         50: '#f3f8fd', 100: '#e3edf8', 300: '#afc8e1', 600: '#0059be', 700: '#0045a3', 1000: '#002248', onSolid: '#ffffff' },
-    success: { icon: 'check_circle', 50: '#f3f9f4', 100: '#e4efe6', 300: '#b2cdb7', 600: '#007317', 700: '#005f02', 1000: '#002c0b', onSolid: '#ffffff' },
-    warning: { icon: 'warning',      50: '#fff5ec', 100: '#ffe9d7', 300: '#ffc59a', 600: '#dc7411', 700: '#c25e00', 1000: '#5b2800', onSolid: '#24221e' },
-    error:   { icon: 'error',        50: '#fdf5f4', 100: '#f8e7e5', 300: '#e1bab5', 600: '#ab0913', 700: '#920000', 1000: '#420b09', onSolid: '#ffffff' },
-    neutral: { icon: 'notifications',50: '#f7f7f6', 100: '#ececeb', 300: '#c6c4c2', 600: '#615951', 700: '#4f4840', 1000: '#24221e', onSolid: '#ffffff' }
+    info:    { icon: 'info',         50: '#f3f8fd', 100: '#e3edf8', 300: '#afc8e1', 600: '#0059be', 700: '#0045a3', 1000: '#002248', accent: '#0045a3', onSolid: '#ffffff' },
+    success: { icon: 'check_circle', 50: '#f3f9f4', 100: '#e4efe6', 300: '#b2cdb7', 600: '#007317', 700: '#005f02', 1000: '#002c0b', accent: '#005f02', onSolid: '#ffffff' },
+    warning: { icon: 'warning',      50: '#fff5ec', 100: '#ffe9d7', 300: '#ffc59a', 600: '#dc7411', 700: '#c25e00', 1000: '#5b2800', accent: '#a04800', onSolid: '#24221e' },
+    error:   { icon: 'error',        50: '#fdf5f4', 100: '#f8e7e5', 300: '#e1bab5', 600: '#ab0913', 700: '#920000', 1000: '#420b09', accent: '#920000', onSolid: '#ffffff' },
+    neutral: { icon: 'notifications',50: '#f7f7f6', 100: '#ececeb', 300: '#c6c4c2', 600: '#615951', 700: '#4f4840', 1000: '#24221e', accent: '#4f4840', onSolid: '#ffffff' }
   };
   content = {
     info:    { title: 'Neue Version verfügbar', desc: 'Lade die Seite neu, um die neueste Version zu verwenden.', action: 'Neu laden' },
@@ -187,7 +187,7 @@ class Component extends DCLogic {
   renderVals() {
     const S = this.sets, C = this.content;
     const inlineLow = this.order.map(k => ({
-      icon: S[k].icon, bg: S[k][50], border: S[k][300], accent: S[k][700],
+      icon: S[k].icon, bg: S[k][50], border: S[k][300], accent: S[k].accent,
       title: S[k][1000], body: S[k][1000], titleText: C[k].title, desc: C[k].desc, action: C[k].action
     }));
     const inlineHigh = this.order.map(k => ({
@@ -195,18 +195,18 @@ class Component extends DCLogic {
     }));
     const triggers = this.order.slice(0, 4).map(k => ({
       icon: S[k].icon, label: { info: 'Info', success: 'Erfolg', warning: 'Warnung', error: 'Fehler' }[k],
-      bg: S[k][50], border: S[k][300], accent: S[k][700],
+      bg: S[k][50], border: S[k][300], accent: S[k].accent,
       onClick: () => this.push(k)
     }));
     const toasts = this.state.toasts.map(t => ({
-      id: t.id, icon: S[t.kind].icon, accent: S[t.kind][700], border: S[t.kind][300],
+      id: t.id, icon: S[t.kind].icon, accent: S[t.kind].accent, border: S[t.kind][300],
       titleColor: this.sets.neutral[1000], bodyColor: '#6f6a63',
       titleText: t.titleText, desc: t.desc, onClose: () => this.dismiss(t.id)
     }));
     return {
       inlineLow, inlineHigh, triggers, toasts,
-      successBg: S.success[50], successBorder: S.success[300], successAccent: S.success[700], successText: S.success[1000],
-      text: S.neutral[1000], subtle: '#3f3b36', muted: S.neutral[1000] + 'ad', accent: S.info[700]
+      successBg: S.success[50], successBorder: S.success[300], successAccent: S.success.accent, successText: S.success[1000],
+      text: S.neutral[1000], subtle: '#3f3b36', muted: S.neutral[1000] + 'ad', accent: S.info.accent
     };
   }
 }

@@ -120,6 +120,9 @@ class Component extends DCLogic {
     const amberL = [0.978, 0.952, 0.914, 0.872, 0.818, 0.746, 0.665, 0.592, 0.505, 0.418, 0.342, 0.280];
     const amberCM = [0.12, 0.24, 0.40, 0.58, 0.76, 0.90, 1.00, 0.98, 0.90, 0.75, 0.58, 0.45];
     const stone = this.makeScale(70, 0.013 * ci);
+    /* Ausnahme (Fall D): eine Stufe dunkler als der geteilte default lRamp liefert,
+       damit border-strong 3:1 auf surface-container erreicht. Nicht zurückrechnen. */
+    stone[500] = { css: '#928e8a', hex: '#928e8a' };
     const primary = this.makeScale(185, 0.115 * ci);
     const error = this.makeScale(27, 0.15 * ci);
     const warning = this.makeScale(55, 0.128 * ci, amberL, amberCM);
@@ -136,6 +139,7 @@ class Component extends DCLogic {
       if (ref === 'white') return { css: '#ffffff', hex: '#ffffff' };
       if (ref === 'black') return { css: '#000000', hex: '#000000' };
       if (ref === 'scrim') return { css: 'rgba(23,21,19,0.5)', hex: 'black · 50%' };
+      if (ref === 'white-75') return { css: 'rgba(255,255,255,0.75)', hex: 'white · 75%' };
       const i = ref.lastIndexOf('-');
       const name = ref.slice(0, i), step = +ref.slice(i + 1);
       return scales[name][step];
@@ -159,7 +163,7 @@ class Component extends DCLogic {
         mk('text-subtle', 'stone-800'),
         mk('text-on-primary', 'white'),
         mk('text-disabled', 'stone-500'),
-        mk('text-link', 'primary-600'),
+        mk('text-link', 'primary-700'),
         mk('text-link-hover', 'primary-800')
       ]},
       { title: 'Rahmen', items: [
@@ -172,7 +176,8 @@ class Component extends DCLogic {
         mk('icon', 'stone-900'),
         mk('icon-muted', 'stone-1000@0.55'),
         mk('icon-on-primary', 'white'),
-        mk('icon-disabled', 'stone-500')
+        mk('icon-disabled', 'stone-500'),
+        mk('icon-on-light', 'stone-600')
       ]},
       { title: 'Eingabefelder', items: [
         mk('input-bg', 'white'),
@@ -200,7 +205,7 @@ class Component extends DCLogic {
         mk('action-neutral-text', 'stone-1000')
       ]},
       { title: 'Zustände', items: [
-        mk('focus-ring', 'primary-600'),
+        mk('focus-ring', 'primary-600@0.75'),
         mk('state-hover', 'stone-100'),
         mk('state-pressed', 'stone-200'),
         mk('state-selected', 'primary-100'),
@@ -213,6 +218,7 @@ class Component extends DCLogic {
         mk('success-solid', 'success-600'),
         mk('success-solid-hover', 'success-700'),
         mk('success-solid-active', 'success-800'),
+        mk('success-accent', 'success-700'),
         mk('success-on-solid', 'white')
       ]},
       { title: 'Status · Warnung', items: [
@@ -220,8 +226,9 @@ class Component extends DCLogic {
         mk('warning-text', 'warning-1000'),
         mk('warning-border', 'warning-300'),
         mk('warning-solid', 'warning-600'),
-        mk('warning-solid-hover', 'warning-700'),
-        mk('warning-solid-active', 'warning-800'),
+        mk('warning-solid-hover', 'warning-500'),
+        mk('warning-solid-active', 'warning-400'),
+        mk('warning-accent', 'warning-800'),
         mk('warning-on-solid', 'stone-1000')
       ]},
       { title: 'Status · Fehler', items: [
@@ -231,6 +238,7 @@ class Component extends DCLogic {
         mk('error-solid', 'error-600'),
         mk('error-solid-hover', 'error-700'),
         mk('error-solid-active', 'error-800'),
+        mk('error-accent', 'error-700'),
         mk('error-on-solid', 'white')
       ]},
       { title: 'Status · Info', items: [
@@ -240,11 +248,16 @@ class Component extends DCLogic {
         mk('info-solid', 'info-600'),
         mk('info-solid-hover', 'info-700'),
         mk('info-solid-active', 'info-800'),
+        mk('info-accent', 'info-700'),
         mk('info-on-solid', 'white')
       ]},
       { title: 'Sonstiges', items: [
         mk('divider', 'stone-200'),
-        mk('scrim', 'scrim')
+        mk('scrim', 'scrim'),
+        mk('accent-neutral', 'stone-700'),
+        mk('control-mark', 'stone-400'),
+        mk('control-mark-on-primary', 'white-75'),
+        mk('logo-dot', 'primary-600')
       ]}
     ];
 
@@ -257,7 +270,7 @@ class Component extends DCLogic {
       body: val('stone-1000@0.68').css,
       subtle: val('stone-800').css,
       divider: val('stone-300').css,
-      link: val('primary-600').css,
+      link: val('primary-700').css,
       actionBg: val('primary-600').css,
       actionText: '#ffffff',
       neutralBg: val('stone-100').css,
