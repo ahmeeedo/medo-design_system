@@ -114,7 +114,7 @@ const Toggle = ({
     if (onChange) onChange(!on);
   };
 
-  const iconColor = on ? "var(--medo-action)" : "var(--medo-color-stone-600)";
+  const iconColor = on ? "var(--medo-action)" : "var(--medo-icon-on-light)";
 
   const control = React.createElement(
     "span",
