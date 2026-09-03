@@ -100,6 +100,7 @@ export const SEMANTIC_GROUPS = [
       { name: 'icon-muted' },
       { name: 'icon-on-primary' },
       { name: 'icon-disabled' },
+      { name: 'icon-on-light' },
     ],
   },
   {
@@ -159,6 +160,15 @@ export const SEMANTIC_GROUPS = [
     ],
   },
   {
+    id: 'accents',
+    tokens: [
+      { name: 'accent-neutral' },
+      { name: 'control-mark' },
+      { name: 'control-mark-on-primary' },
+      { name: 'logo-dot' },
+    ],
+  },
+  {
     id: 'statusSuccess',
     tokens: [
       { name: 'success-surface' },
@@ -167,6 +177,7 @@ export const SEMANTIC_GROUPS = [
       { name: 'success-solid' },
       { name: 'success-solid-hover' },
       { name: 'success-solid-active' },
+      { name: 'success-accent' },
       { name: 'success-on-solid' },
     ],
   },
@@ -179,6 +190,7 @@ export const SEMANTIC_GROUPS = [
       { name: 'warning-solid' },
       { name: 'warning-solid-hover' },
       { name: 'warning-solid-active' },
+      { name: 'warning-accent' },
       { name: 'warning-on-solid' },
     ],
   },
@@ -191,6 +203,7 @@ export const SEMANTIC_GROUPS = [
       { name: 'error-solid' },
       { name: 'error-solid-hover' },
       { name: 'error-solid-active' },
+      { name: 'error-accent' },
       { name: 'error-on-solid' },
     ],
   },
@@ -203,6 +216,7 @@ export const SEMANTIC_GROUPS = [
       { name: 'info-solid' },
       { name: 'info-solid-hover' },
       { name: 'info-solid-active' },
+      { name: 'info-accent' },
       { name: 'info-on-solid' },
     ],
   },

@@ -2946,6 +2946,7 @@
       "actionPrimary": "Action · primary",
       "actionNeutral": "Action · neutral",
       "states": "States and focus",
+      "accents": "Accents and marks",
       "statusSuccess": "Status · success",
       "statusWarning": "Status · warning",
       "statusError": "Status · error",
