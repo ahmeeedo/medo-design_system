@@ -40,7 +40,9 @@ export function Toggle({
     if (onChange) onChange(!on)
   }
 
-  const iconColor = on ? 'var(--medo-action)' : 'var(--medo-color-stone-600)'
+  const iconColor = on ? 'var(--medo-action)' : 'var(--medo-icon-on-light)'
+  /* stone-400 ist der gesperrte Zustand und in der Referenz unveraendert. */
+  const spinnerColor = disabled ? 'var(--medo-color-stone-400)' : iconColor
 
   const control = (
     <span
@@ -55,7 +57,10 @@ export function Toggle({
               width: s.spin + 'px',
               height: s.spin + 'px',
               borderWidth: '2px',
-              borderColor: disabled ? 'var(--medo-color-stone-400)' : iconColor,
+              borderTopColor: spinnerColor,
+              borderRightColor: spinnerColor,
+              borderBottomColor: spinnerColor,
+              borderLeftColor: spinnerColor,
             }}
           />
         ) : icons ? (

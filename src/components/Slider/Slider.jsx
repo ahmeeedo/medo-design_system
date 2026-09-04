@@ -117,9 +117,12 @@ export function Slider({
                 vertical
                   ? {
                       bottom: p + '%', left: '50%', top: 'auto', transform: 'translate(-50%, 50%)',
-                      background: t <= val ? 'rgba(255,255,255,0.75)' : 'var(--medo-color-stone-400)',
+                      backgroundColor: t <= val ? 'var(--medo-control-mark-on-primary)' : 'var(--medo-control-mark)',
                     }
-                  : { left: p + '%', background: t <= val ? 'rgba(255,255,255,0.75)' : 'var(--medo-color-stone-400)' }
+                  : {
+                      left: p + '%',
+                      backgroundColor: t <= val ? 'var(--medo-control-mark-on-primary)' : 'var(--medo-control-mark)',
+                    }
               }
             />
           )
