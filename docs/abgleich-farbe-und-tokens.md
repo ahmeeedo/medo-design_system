@@ -227,3 +227,33 @@ Diese Prüfung steht als Schritt 0 in `anweisung-erneute-anwendung.md`. Der erst
 ### Die vorhandene Anwendung ist nicht wertlos
 
 Im anderen Projekt liegt ein vollständig angewandter Stand. Als **Wertquelle** ist er unbrauchbar — die Werte kommen aus dem Dokument, nicht aus einem dritten Projekt, sonst entsteht eine zweite Quelle. Als **Gegenprobe** taugt er: weicht das Ergebnis der Anwendung in `9bff25e1…` von ihm ab, ist eine der beiden Anwendungen ungenau, und die Stelle ist benannt.
+
+---
+
+## 8. Eine benannte Ausnahme im Spiegel: `logo-medo.svg`
+
+**Der Spiegel dieser einen Datei führt den Designinhalt, aber nicht den Herkunftsblock.** Das ist eine bewusste, hier festgehaltene Ausnahme von der Regel „der Spiegel ist byteweise die Quelle". Wer sie nicht kennt, hält den Unterschied für einen Spiegelungsfehler — deshalb steht sie hier.
+
+### Was passiert ist
+
+Die Datei hat beim Schreiben einen eingebetteten C2PA-Herkunftsnachweis erhalten: das Attribut `xmlns:c2pa` im `<svg>`-Tag und ein `<metadata><c2pa:manifest>`-Element mit rund 14 KB base64. Die Datei wächst dadurch von 3.937 auf etwa 11.700 Bytes.
+
+Der Inhaber hat versucht, den Block im Design-Projekt zu entfernen. Das Löschen selbst gelang (Datei danach 3.978 Bytes, sauber), **beim Zurücklesen stand der Block wieder da** — mit neuer Manifest-UUID. Er wird also nach dem Speichern neu angehängt. Nachgeprüft: die UUID wechselte von `e9c5dbe9-…` auf `89bc2257-…`. Jeder weitere Versuch erzeugt nur eine frische UUID.
+
+### Warum der Spiegel ihn nicht führt
+
+Drei Gründe, jeder für sich ausreichend:
+
+1. **Er ist kein Designinhalt.** Der Block ist Werkzeug-Provenienz und wird von nichts gelesen, was aus diesem Spiegel portiert wird.
+2. **Er ist nicht stabil.** Er ändert sich bei jedem Speichern. Ein Spiegel, der ihn mitführte, wäre schon beim nächsten Schreibvorgang wieder falsch — und jede Neuspiegelung erzeugte einen Diff, der nichts bedeutet.
+3. **Er ist von Hand nicht zuverlässig übertragbar.** Das `cpad`-Feld enthält rund 3.500 Null-Bytes, base64 also einen Lauf von etwa 4.600 gleichen Zeichen. Ein Verzähler wäre im Spiegel nicht auffindbar.
+
+### Was der Spiegel führt
+
+Die fünf Anweisungen aus §5.5, byteweise gegen den Vorstand belegt — vier Schriftzug-Pfade auf `currentColor`, der Punkt-Pfad auf `var(--medo-logo-dot, #007265)`. Der Diff umfasst **genau fünf Zeilen**; die Pfaddaten sind nachweislich unberührt.
+
+Nach dem Löschversuch des Inhabers wurde die Datei erneut gezogen und geprüft: der Designinhalt hat den Bearbeitungsdurchgang unversehrt überstanden.
+
+### Reichweite
+
+`logo-medo.svg` ist die **einzige** SVG-Datei des Design-Projekts. Die Token-, Komponenten- und Seitendateien tragen keinen solchen Block — bei ihnen ist der Spiegel byteweise die Quelle. Kommt später ein weiteres Bild hinzu, gilt für es dasselbe.
