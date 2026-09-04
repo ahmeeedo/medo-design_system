@@ -95,7 +95,13 @@ Betroffen: `Breadcrumb`, `Button`, `Checkbox`, `Content-switcher`, `Link`, `Numb
 
 17 Vorkommen in 11 Dateien, als `#0e9d9159`.
 
-**Diese Stellen bitte noch nicht anfassen.** Hier ist nicht nur die Deckkraft alt, sondern auch die Grundfarbe falsch — siehe §6. Erst wenn dort entschieden ist, steht fest, was einzusetzen ist.
+Hier ist nicht nur die Deckkraft alt, sondern auch die Grundfarbe falsch. Der Inhaber hat entschieden, **beides in einem Zug zu korrigieren**; die Herleitung steht in §6.
+
+| alt | neu |
+|---|---|
+| `#0e9d9159` | `#007265bf` |
+
+Ersetzt wird die vollständige Zeichenfolge, nicht nur die Endung — Grundfarbe und Deckkraft ändern sich gemeinsam.
 
 | Datei (unter `components/`) | Vorkommen |
 |---|---|
@@ -111,9 +117,9 @@ Betroffen: `Breadcrumb`, `Button`, `Checkbox`, `Content-switcher`, `Link`, `Numb
 | `Slider.dc.html` | 1 |
 | `Tabs.dc.html` | 1 |
 
-Vier Dateien tragen **beide** Schreibweisen (`Breadcrumb`, `Content-switcher`, `Slider`, `Tabs`). Dort ist §3.1 anzuwenden und §3.2 zurückzustellen.
+Vier Dateien tragen **beide** Schreibweisen (`Breadcrumb`, `Content-switcher`, `Slider`, `Tabs`). Dort sind §3.1 und §3.2 beide anzuwenden.
 
-**Sichtbar:** Nach §3.1 zeigen 14 Seiten den satten Ring, den das System seit Fall A hat. Die 11 Seiten aus §3.2 zeigen bis zur Entscheidung weiter den alten. Wer die Seiten heute nebeneinanderlegt, sieht ohnehin schon zwei verschiedene Ringe — die Uneinheitlichkeit ist nicht neu, sie wird nur sichtbar benannt.
+**Sichtbar:** Der Fokusring wird auf allen 22 Seiten von einem zarten Schimmer zu einem satten Ring — genau die Änderung, die im Rest des Systems seit Fall A eingetreten ist. Auf den 11 Seiten aus §3.2 wechselt zusätzlich der Farbton: von einem helleren, stärker gesättigten Teal auf die Primärfarbe des Systems. Wer die Seiten heute nebeneinanderlegt, sieht drei verschiedene Fokusringe; danach einen.
 
 ---
 
@@ -160,7 +166,7 @@ Der Unterschied liegt an der Wahrnehmungsgrenze, und keiner der Werte erreicht 3
 
 ## 6. Ein Befund ohne Anweisung — die Grundfarbe `#0e9d91`
 
-> **Dieser Abschnitt ist kein Beschluss.** Er ist abgesetzt, damit er nicht versehentlich als freigegebene Korrektur gelesen wird.
+> Dieser Befund stammt **nicht** aus den freigegebenen AA-Korrekturen. Er wurde beim Abgleich entdeckt, dem Inhaber getrennt vorgelegt und von ihm entschieden. Er steht abgesetzt, weil seine Herleitung nichts mit Fall A zu tun hat.
 
 Die 17 Stellen aus §3.2 tragen den Fokusring als `#0e9d9159`. Die Deckkraft `59` ist der bekannte Fall A. **Die Grundfarbe `#0e9d91` ist aber nicht `teal-600`** — die Primärfarbe des Systems ist `#007265`.
 
@@ -168,15 +174,11 @@ Die 17 Stellen aus §3.2 tragen den Fokusring als `#0e9d9159`. Die Deckkraft `59
 
 **Ein verwandter Fall:** `Übersicht.dc.html` trägt einmal `#0e9d9126` — dieselbe falsche Grundfarbe bei 15 % Deckkraft, an einer Feldvorschau. Ob das ein dritter Ring-Zustand sein soll oder derselbe Fehler mit anderer Deckkraft, ist von außen nicht zu entscheiden.
 
-**Zur Entscheidung stehen drei Wege:**
+**Drei Wege standen zur Wahl:** beides zusammen korrigieren (`#007265bf`); nur die Deckkraft anheben und den fremden Farbton behalten (`#0e9d91bf`); oder zurückstellen, bis jemand klären kann, woher der Wert stammt.
 
-1. **Beides zusammen korrigieren** — die 17 Stellen auf `#007265bf` setzen. Behebt Deckkraft und Grundfarbe in einem Zug. Die Seiten zeigen danach denselben Ring wie das System.
-2. **Nur die Deckkraft** — `#0e9d91bf` setzen. Die Seiten werden untereinander einheitlich, behalten aber eine Farbe, die es im System nicht gibt.
-3. **Zurückstellen** — die 17 Stellen bleiben, wie sie sind, bis jemand klären kann, woher `#0e9d91` stammt.
+**Die Entscheidung des Inhabers: beides zusammen korrigieren.** Der Wert lässt sich keiner Palettenstufe zuordnen, steht in keiner Token-Datei, und die Spezifikationsseiten sollen zeigen, was das System tatsächlich tut. Die Anweisung dazu steht in §3.2.
 
-Ich rate zu **Weg 1**: der Wert lässt sich keiner Stufe zuordnen, und die Seiten sollen zeigen, was das System tut. Aber es ist eine eigene Entscheidung, und sie berührt 17 Stellen — deshalb steht sie hier und nicht in §3.
-
-**Solange sie aussteht, bleiben die 17 Stellen unangetastet.** §3.1 ist davon unabhängig und kann sofort angewandt werden.
+**Ein Rest bleibt offen:** das einzelne `#0e9d9126` in `Übersicht.dc.html`. Es trägt dieselbe fremde Grundfarbe, aber eine dritte Deckkraft (15 %) an einer Feldvorschau. Ob das ein eigener, gewollter Zustand ist oder derselbe Fehler mit anderer Deckkraft, ist von außen nicht zu entscheiden — es war nicht Teil der Entscheidung und **bleibt unangetastet**. Wer die Seite ohnehin anfasst, sollte es klären.
 
 ---
 
