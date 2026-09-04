@@ -1,5 +1,9 @@
 import { useState } from 'react'
 import { act, fireEvent, render, screen } from '@testing-library/react'
+import { readFileSync } from 'node:fs'
+import path from 'node:path'
+import { fileURLToPath } from 'node:url'
+
 import { Modal } from './Modal'
 
 /* Template: focus management in an overlay that owns its own trap.
@@ -111,5 +115,47 @@ describe('Modal · Fokusverwaltung', () => {
     fireEvent.keyDown(document, { key: 'Escape' })
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
     expect(trigger).toHaveFocus()
+  })
+})
+
+/* Fall B: der Symbolkreis liegt auf der hellen Meldungsflaeche und ist damit
+   ein Akzent, keine Fuellflaeche. Gemessen im hellen Theme auf der eigenen
+   Statusflaeche: Warnung 2,98:1 -> 5,71:1 (Schwelle 3), Fehler 7,03 -> 8,79,
+   Erfolg 5,68 -> 7,46, Info 6,18 -> 8,24. Nur die Warnung verfehlte eine
+   Schwelle; die uebrigen drei aendern sich sichtbar, damit keine der vier im
+   Komponentencode ein Sonderfall bleibt. */
+describe('Modal · Symbolkreis', () => {
+  const css = readFileSync(path.join(path.dirname(fileURLToPath(import.meta.url)), 'Modal.css'), 'utf8')
+
+  it.each([
+    ['danger', 'error'],
+    ['warning', 'warning'],
+    ['success', 'success'],
+  ])('faerbt den Kreis fuer %s ueber das Akzent-Token', (tone, rolle) => {
+    const zeile = css
+      .split('\n')
+      .find((l) => l.includes(`.medo-mod__ic--${tone}{`))
+
+    expect(zeile, `keine Regel fuer ${tone}`).toBeTruthy()
+    expect(zeile).toContain(`color: var(--medo-${rolle}-accent)`)
+    expect(zeile).not.toContain(`var(--medo-${rolle}-solid)`)
+  })
+
+  /* Die Fuellflaeche der zerstoerenden Schaltflaeche bleibt die
+     Bedienzustandsfarbe — dort ist sie Flaeche, nicht Vordergrund. */
+  it('laesst die Fuellflaeche der Schaltflaeche unberuehrt', () => {
+    expect(css).toContain('.medo-mod__btn--danger{ background: var(--medo-error-solid);')
+  })
+
+  /* Ueber echtes Client-Rendering gelesen: das Modal rendert in ein Portal,
+     serverseitig kaeme leeres Markup zurueck. */
+  it('traegt die Tonart als Klasse am gerenderten Kreis', () => {
+    render(
+      <Modal open title="Datei loeschen?" tone="danger" icon="delete" onClose={vi.fn()}>
+        Text
+      </Modal>,
+    )
+
+    expect(document.body.querySelector('.medo-mod__ic--danger')).toBeInTheDocument()
   })
 })

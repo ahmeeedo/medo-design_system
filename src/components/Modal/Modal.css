@@ -41,9 +41,9 @@
   background: var(--medo-surface-sunken);
   color: var(--medo-icon);
 }
-.medo-mod__ic--danger{ background: var(--medo-error-surface); color: var(--medo-error-solid); }
-.medo-mod__ic--warning{ background: var(--medo-warning-surface); color: var(--medo-warning-solid); }
-.medo-mod__ic--success{ background: var(--medo-success-surface); color: var(--medo-success-solid); }
+.medo-mod__ic--danger{ background: var(--medo-error-surface); color: var(--medo-error-accent); }
+.medo-mod__ic--warning{ background: var(--medo-warning-surface); color: var(--medo-warning-accent); }
+.medo-mod__ic--success{ background: var(--medo-success-surface); color: var(--medo-success-accent); }
 .medo-mod__htext{ flex: 1; min-width: 0; }
 .medo-mod__title{ font-size: var(--medo-text-lg); font-weight: 600; letter-spacing: -0.01em; line-height: 1.35; }
 .medo-mod--sm .medo-mod__title{ font-size: var(--medo-text-base); }

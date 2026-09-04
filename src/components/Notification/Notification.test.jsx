@@ -6,9 +6,9 @@
    Gemessen: --medo-color-stone-700 lag im dunklen Theme bei 1,52:1 auf der
    Meldungsfläche. --medo-accent-neutral erreicht dort 12,75:1, im hellen
    Theme bleibt der Wert bei 8,4:1 unverändert. */
-import { render, screen } from '@testing-library/react'
+import { act, render, screen } from '@testing-library/react'
 
-import { Notification } from './Notification'
+import { Notification, ToastHost, toast } from './Notification'
 import { themePair } from '../../docs/themeTokens'
 
 describe('Notification · neutraler Akzent', () => {
@@ -52,10 +52,63 @@ describe('Notification · neutraler Akzent', () => {
     expect(themePair('--medo-accent-neutral').light.ref).toBe('stone-700')
   })
 
-  it('laesst die vier Statusarten unberuehrt', () => {
-    render(<Notification kind="warning" title="Speicher fast voll">Text</Notification>)
+})
+
+/* Fall B: die Bedienzustandsfarbe hatte zwei entgegengesetzte Aufgaben — als
+   Fuellflaeche unter dunkler Schrift und als Akzentschrift auf der hellen
+   Meldungsflaeche. Die Leuchtdichte-Fenster ueberschneiden sich nicht, kein
+   Farbwert erfuellt beides. Deshalb ein eigenes Akzent-Token.
+
+   Gemessen im hellen Theme, auf der Meldungsflaeche der Warnung: der
+   Aktionstext lag bei 2,18:1 und erreicht jetzt 5,71:1; im Toast auf der
+   Overlay-Flaeche 2,35:1 auf 6,14:1. Die Werte davor waren schlechter als
+   urspruenglich erhoben, weil Fall B die Bedienzustandsfarbe aufgehellt hat
+   und die Komponente sie noch als Vordergrund benutzte. */
+describe('Notification · Akzente der vier Statusfarben', () => {
+  const arten = [
+    ['info', '--medo-info-accent'],
+    ['success', '--medo-success-accent'],
+    ['warning', '--medo-warning-accent'],
+    ['error', '--medo-error-accent'],
+  ]
+
+  it.each(arten)('faerbt %s ueber sein Akzent-Token', (kind, token) => {
+    render(
+      <Notification kind={kind} title="Titel" action={{ label: 'Aktion' }}>
+        Text
+      </Notification>,
+    )
+
+    expect(document.querySelector('.medo-nt__icon').getAttribute('style')).toContain(`var(${token})`)
+    expect(screen.getByRole('button', { name: 'Aktion' }).getAttribute('style')).toContain(`var(${token})`)
+  })
+
+  it.each(arten)('benutzt fuer %s nicht mehr die Bedienzustandsfarbe', (kind) => {
+    render(<Notification kind={kind} title="Titel">Text</Notification>)
 
     expect(document.querySelector('.medo-nt__icon').getAttribute('style'))
-      .toContain('var(--medo-warning-solid-hover)')
+      .not.toMatch(/-solid-hover\)/)
+  })
+
+  /* Der Randstreifen der Kurzmeldung traegt denselben Akzent — und in einer
+     Laengsform, weil Kurzformen mit var()-Werten stumm unvollstaendig
+     ankommen. */
+  it.each(arten)('faerbt den Randstreifen der Kurzmeldung fuer %s mit', (kind, token) => {
+    render(<ToastHost />)
+    act(() => { toast({ kind, title: 'Titel' }) })
+
+    const streifen = document.querySelector('.medo-toast').getAttribute('style')
+    expect(streifen).toContain(`var(${token})`)
+    expect(streifen).toMatch(/border-left-color:/)
+  })
+
+  /* Keine der vier darf ein Sonderfall sein: alle vier Rollen sind nach
+     demselben Muster gebaut und tragen ein Paar. */
+  it('haelt alle vier Akzente auf demselben Muster', () => {
+    for (const [, token] of arten) {
+      const pair = themePair(token)
+      expect(pair, `${token} fehlt in medo-theme.css`).toBeTruthy()
+      expect(pair.light.value).not.toBe(pair.dark.value)
+    }
   })
 })
