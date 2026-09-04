@@ -86,8 +86,8 @@ export function runVerification() {
   const derivations = [
     ['medo-text-muted', 'stone-1000', 0.68, 'stone-1000 @68 %'],
     ['medo-icon-muted', 'stone-1000', 0.55, 'stone-1000 @55 %'],
-    ['medo-focus-ring', 'teal-600', 0.35, 'primary-600 @35 %'],
-    ['medo-focus-ring-danger', 'red-600', 0.35, 'error-600 @35 %'],
+    ['medo-focus-ring', 'teal-600', 0.75, 'primary-600 @75 %'],
+    ['medo-focus-ring-danger', 'red-600', 0.75, 'error-600 @75 %'],
     ['medo-scrim', 'stone-1100', 0.5, 'stone-1100 @50 %'],
   ]
 

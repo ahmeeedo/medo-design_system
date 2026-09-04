@@ -42,15 +42,15 @@ stone-1000 trägt. Ein Werkzeug, das dieses Urteil nicht reproduziert, taugt fü
 | Die Leuchtdichte steigt entlang der stone-Skala monoton | 0.0077 … 0.9295 |
 | --medo-text-muted ist stone-1000 @68 % | #24221ead = stone-1000 @ 67.8 % |
 | --medo-icon-muted ist stone-1000 @55 % | #24221e8c = stone-1000 @ 54.9 % |
-| --medo-focus-ring ist primary-600 @35 % | #00726559 = teal-600 @ 34.9 % |
-| --medo-focus-ring-danger ist error-600 @35 % | #ab091359 = red-600 @ 34.9 % |
+| --medo-focus-ring ist primary-600 @75 % | #007265bf = teal-600 @ 74.9 % |
+| --medo-focus-ring-danger ist error-600 @75 % | #ab0913bf = red-600 @ 74.9 % |
 | --medo-scrim ist stone-1100 @50 % | rgba(23,21,19,0.5) = stone-1100 @ 50 % |
 | Weiß auf warning-solid verfehlt AA — der Grund für die Sonderregel | 3.21:1 — unter 4,5 |
 | warning-on-solid löst die Sonderregel ein | 4.95:1 — über 4,5 |
 | Fließtext erreicht AA auf allen Grundflächen | 13.43:1 … 15.88:1 |
 | Statustext erreicht AA auf der eigenen Statusfläche | 11.17:1 … 15.23:1 |
 | Beschriftung auf gefüllten Statusflächen erreicht AA | 4.95:1 … 7.55:1 |
-| Der Textlink erreicht AA auf der Grundfläche | 5.84:1 |
+| Der Textlink erreicht AA auf der Grundfläche | 7.7:1 |
 
 Gegenprobe: mit verfälschtem Luminanz-Koeffizienten und mit vertauschter Kompositionsrichtung schlägt
 der Lauf jeweils fehl. Die Prüfung kann also rot werden.
@@ -77,7 +77,7 @@ Zwei Abweichungen von der reinen Spiegelung stecken darin, beide unvermeidlich:
   den Schatten. Auf dunklem Grund trägt kein Schatten mehr (Abschnitt 7). Das Menü muss selbst heller
   sein, sonst ist es nicht da.
 
-## 4. Alle 77 Token der Semantic-Ebene
+## 4. Alle 86 Token der Semantic-Ebene
 
 Vollständig und in der Reihenfolge der Quelldatei. Die Spalte „Gemessen gegen" nennt den Partner, auf
 den sich die beiden Kontrastspalten beziehen — bei Flächen also der Text darauf, bei Text die Fläche
@@ -96,15 +96,16 @@ darunter.
 | `--medo-text-muted` | `#24221ead` | `#f7f7f6ad` | — | 5,48:1 | 7,53:1 | `--medo-surface` | stone-50 bei 68 % — dieselbe Deckkraft wie hell, gespiegelte Grundfarbe. |
 | `--medo-text-subtle` | `#3f3933` | `#c6c4c2` | `stone-300` | 11,39:1 | 9,13:1 | `--medo-surface` | Eine Spur unter der Textfarbe, so wie hell stone-800 eine Spur über stone-1000 liegt. |
 | `--medo-text-on-primary` | `#ffffff` | `#171513` | `stone-1100` | 5,84:1 | 5,93:1 | `--medo-action` | Kehrt sich um: die Primärfläche wird hell, ihre Beschriftung dunkel. |
-| `--medo-text-disabled` | `#94908c` | `#94908c` | `stone-500` | 3,17:1 | 5,01:1 | `--medo-surface` | stone-500 bleibt in beiden Themes stehen — die Mitte der Skala trägt auf hellem wie auf dunklem Grund. Entscheidend ist die Dämpfung gegenüber dem Fließtext, nicht die absolute Zahl. |
-| `--medo-text-link` | `#007265` | `#8bb8b1` | `teal-400` | 5,84:1 | 7,25:1 | `--medo-surface` | teal-600 verschwindet auf dunklem Grund; die 400er-Stufe hält Farbton und Lesbarkeit. |
-| `--medo-text-link-hover` | `#004b42` | `#adccc8` | `teal-300` | 10,07:1 | 9,26:1 | `--medo-surface` | Hover geht im Dunkeln heller, nicht dunkler. |
+| `--medo-text-disabled` | `#928e8a` | `#928e8a` | `stone-500` | 3,25:1 | 4,88:1 | `--medo-surface` | stone-500 bleibt in beiden Themes stehen — die Mitte der Skala trägt auf hellem wie auf dunklem Grund. Entscheidend ist die Dämpfung gegenüber dem Fließtext, nicht die absolute Zahl. |
+| `--medo-text-link` | `#005e53` | `#adccc8` | `teal-300` | 7,70:1 | 9,26:1 | `--medo-surface` | teal-600 verschwindet auf dunklem Grund; die 400er-Stufe hält Farbton und Lesbarkeit. |
+| `--medo-text-link-hover` | `#004b42` | `#cadfdc` | `teal-200` | 10,07:1 | 11,42:1 | `--medo-surface` | Hover geht im Dunkeln heller, nicht dunkler. |
 | `--medo-icon` | `#312d28` | `#ececeb` | `stone-100` | 13,67:1 | 13,43:1 | `--medo-surface` | Wie hell: eine Stufe neben der Textfarbe. |
 | `--medo-icon-muted` | `#24221e8c` | `#f7f7f68c` | — | 3,65:1 | 5,43:1 | `--medo-surface` | stone-50 bei 55 % — dieselbe Deckkraft wie hell, gespiegelte Grundfarbe. |
 | `--medo-icon-on-primary` | `#ffffff` | `#171513` | `stone-1100` | 5,84:1 | 5,93:1 | `--medo-action` | Folgt text-on-primary. |
-| `--medo-icon-disabled` | `#94908c` | `#94908c` | `stone-500` | 3,17:1 | 5,01:1 | `--medo-surface` | Folgt text-disabled. |
+| `--medo-icon-disabled` | `#928e8a` | `#928e8a` | `stone-500` | 3,25:1 | 4,88:1 | `--medo-surface` | Folgt text-disabled. |
+| `--medo-icon-on-light` | `#615951` | `#615951` | `stone-600` | 6,87:1 | 2,31:1 | `--medo-surface` | Liegt auf dem Schaltergriff, der in beiden Themes weiß bleibt — nicht auf der Grundfläche. Die Matrix kennt keine Rolle für einen Grund, der nicht mitwechselt, deshalb ist die Zeile informativ; gemessen gehört das Symbol gegen Weiß, und dort steht es in beiden Themes gleich. |
 | `--medo-border` | `#c6c4c2` | `#4f4840` | `stone-700` | 1,74:1 | 1,76:1 | `--medo-surface` | Trifft die Zurückhaltung, die stone-300 auf Weiß hat — siehe die beiden Kontrastspalten. |
-| `--medo-border-strong` | `#94908c` | `#94908c` | `stone-500` | 3,17:1 | 5,01:1 | `--medo-surface` | stone-500 trägt auf beiden Gründen. Im Dunkeln deutlicher als hell, wo die Kante knapp unter 3:1 bleibt. |
+| `--medo-border-strong` | `#928e8a` | `#928e8a` | `stone-500` | 3,25:1 | 4,88:1 | `--medo-surface` | stone-500 trägt auf beiden Gründen. Im Dunkeln deutlicher als hell, wo die Kante knapp unter 3:1 bleibt. |
 | `--medo-border-subtle` | `#dbdad8` | `#3f3933` | `stone-800` | 1,40:1 | 1,39:1 | `--medo-surface` | Trifft die Zurückhaltung von stone-200 auf Weiß nahezu exakt. |
 | `--medo-border-disabled` | `#dbdad8` | `#3f3933` | `stone-800` | 1,40:1 | 1,39:1 | `--medo-surface` | Folgt border-subtle, wie hell. |
 | `--medo-input-bg` | `#ffffff` | `#171513` | `stone-1100` | 15,88:1 | 16,99:1 | `--medo-input-text` | Das Feld sitzt am äußeren Ende der Flächenleiter — hell am hellen Ende, dunkel am dunklen. |
@@ -121,32 +122,38 @@ darunter.
 | `--medo-action-active` | `#004b42` | `#adccc8` | `teal-300` | 10,07:1 | 9,26:1 | `--medo-surface` | Aktiv noch eine Stufe heller. |
 | `--medo-action-disabled` | `#dbdad8` | `#3f3933` | `stone-800` | 1,40:1 | 1,39:1 | `--medo-surface` | Spiegelt stone-200 auf Weiß. |
 | `--medo-action-text` | `#ffffff` | `#171513` | `stone-1100` | 5,84:1 | 5,93:1 | `--medo-action` | Folgt text-on-primary. |
-| `--medo-action-text-disabled` | `#94908c` | `#94908c` | `stone-500` | 2,27:1 | 3,59:1 | `--medo-action-disabled` | Folgt text-disabled. |
+| `--medo-action-text-disabled` | `#928e8a` | `#928e8a` | `stone-500` | 2,33:1 | 3,50:1 | `--medo-action-disabled` | Folgt text-disabled. |
 | `--medo-action-neutral` | `#ececeb` | `#3f3933` | `stone-800` | 13,43:1 | 10,62:1 | `--medo-action-neutral-text` | Gleiche Stufe wie surface-hover — dieselbe Gleichsetzung wie hell. |
 | `--medo-action-neutral-hover` | `#dbdad8` | `#4f4840` | `stone-700` | 11,37:1 | 8,40:1 | `--medo-action-neutral-text` | Eine Stufe heller. |
 | `--medo-action-neutral-active` | `#c6c4c2` | `#615951` | `stone-600` | 9,13:1 | 6,41:1 | `--medo-action-neutral-text` | Zwei Stufen heller. |
 | `--medo-action-neutral-text` | `#24221e` | `#f7f7f6` | `stone-50` | 13,43:1 | 10,62:1 | `--medo-action-neutral` | Folgt text. |
-| `--medo-focus-ring` | `#00726559` | `#adccc88c` | — | 1,71:1 | 3,80:1 | `--medo-surface` | teal-300 bei 55 %. Die einzige Stelle, an der die Deckkraft steigt — siehe Sonderfall 3. |
-| `--medo-focus-ring-danger` | `#ab091359` | `#e1bab58c` | — | 2,00:1 | 3,72:1 | `--medo-surface` | red-300 bei 55 %, gleiche Herleitung wie focus-ring. |
+| `--medo-focus-ring` | `#007265bf` | `#adccc88c` | — | 3,55:1 | 3,80:1 | `--medo-surface` | teal-300 bei 55 %. Die einzige Stelle, an der die Deckkraft steigt — siehe Sonderfall 3. |
+| `--medo-focus-ring-danger` | `#ab0913bf` | `#e1bab58c` | — | 4,94:1 | 3,72:1 | `--medo-surface` | red-300 bei 55 %, gleiche Herleitung wie focus-ring. |
 | `--medo-state-hover` | `#ececeb` | `#3f3933` | `stone-800` | 13,43:1 | 10,62:1 | `--medo-text` | Folgt surface-hover. |
 | `--medo-state-pressed` | `#dbdad8` | `#4f4840` | `stone-700` | 11,37:1 | 8,40:1 | `--medo-text` | Eine Stufe über hover, wie hell stone-200 über stone-100. |
 | `--medo-state-selected` | `#e2efed` | `#003b34` | `teal-900` | 13,46:1 | 11,69:1 | `--medo-text` | Folgt surface-selected. |
 | `--medo-selection` | `#cadfdc` | `#004b42` | `teal-800` | 11,42:1 | 9,40:1 | `--medo-text` | Textmarkierung eine Stufe kräftiger als state-selected, wie hell teal-200 über teal-100. |
 | `--medo-divider` | `#dbdad8` | `#3f3933` | `stone-800` | 1,40:1 | 1,39:1 | `--medo-surface` | Folgt border-subtle, wie hell. |
 | `--medo-scrim` | `rgba(23,21,19,0.5)` | `rgba(0,0,0,0.5)` | — | 3,45:1 | 1,31:1 | `--medo-overlay` | Deckkraft bleibt bei 50 %, nur die Grundfarbe wechselt auf Schwarz — siehe Sonderfall 5. |
+| `--medo-accent-neutral` | `#4f4840` | `#f7f7f6` | `stone-50` | 8,40:1 | 12,75:1 | `--medo-surface-container` | Akzent der neutralen Meldung. Im Dunkeln bewusst an das helle Ende der Skala statt an die gespiegelte Stufe — die Rolle trägt Text, und die Spiegelung hätte sie fast unlesbar gelassen. |
+| `--medo-control-mark` | `#b0adaa` | `#615951` | `stone-600` | 1,60:1 | 1,66:1 | `--medo-border-subtle` | Teilstriche auf der ungefüllten Bahn. Der Wert stammt unverändert aus der Referenz; die Marken sind Ergänzung, die Lage tragen Füllung und Griff. |
+| `--medo-control-mark-on-primary` | `rgba(255,255,255,0.75)` | `rgba(255,255,255,0.75)` | — | 4,01:1 | 2,40:1 | `--medo-action` | Dieselben Teilstriche auf der gefüllten Bahn. Ein Wert für beide Themes, weil die Füllung in beiden ein Teal ist. |
+| `--medo-logo-dot` | `#007265` | `#619e96` | `teal-500` | 5,84:1 | 5,17:1 | `--medo-surface` | Der Punkt der Wortmarke. Bestandteil eines Logos und damit von der Kontrastanforderung ausgenommen; die Stufe folgt der Primärfarbe. |
 | `--medo-success-surface` | `#f3f9f4` | `#002c0b` | `green-1000` | 14,41:1 | 9,02:1 | `--medo-success-text` | Meldungsfläche auf der tiefsten Tonstufe der eigenen Skala. |
 | `--medo-success-text` | `#002c0b` | `#b2cdb7` | `green-300` | 14,41:1 | 9,02:1 | `--medo-success-surface` | Heller Ton der eigenen Skala — behält den Farbton als Bedeutungsträger, statt ins Weiße zu gehen. |
 | `--medo-success-border` | `#b2cdb7` | `#005f02` | `green-700` | 1,71:1 | 1,99:1 | `--medo-surface` | Spiegelt die Zurückhaltung der 300er-Kante im hellen Theme. |
 | `--medo-success-solid` | `#007317` | `#6d9f77` | `green-500` | 6,06:1 | 5,20:1 | `--medo-surface` | Wie action: die 600er-Stufe verfehlt auf dunklem Grund die 3:1-Grenze. |
 | `--medo-success-solid-hover` | `#005f02` | `#93b89a` | `green-400` | 7,96:1 | 7,23:1 | `--medo-surface` | Hover heller statt dunkler. |
 | `--medo-success-solid-active` | `#004c04` | `#b2cdb7` | `green-300` | 10,32:1 | 9,31:1 | `--medo-surface` | Aktiv noch eine Stufe heller. |
+| `--medo-success-accent` | `#005f02` | `#93b89a` | `green-400` | 7,46:1 | 7,01:1 | `--medo-success-surface` | Vordergrundrolle auf der weichen Meldungsfläche — Symbol, Aktionstext und Randstreifen. Getrennt von der Füllfläche, weil beide Aufgaben in entgegengesetzte Richtungen ziehen. |
 | `--medo-success-on-solid` | `#ffffff` | `#171513` | `stone-1100` | 6,06:1 | 5,96:1 | `--medo-success-solid` | Alle vier Füllfarben tragen im Dunkeln dunkle Schrift — die helle Sonderregel für Warnung entfällt damit. |
 | `--medo-warning-surface` | `#fff5ec` | `#5b2800` | `amber-1000` | 11,17:1 | 7,84:1 | `--medo-warning-text` | Meldungsfläche auf der tiefsten Tonstufe der eigenen Skala. |
 | `--medo-warning-text` | `#5b2800` | `#ffc59a` | `amber-300` | 11,17:1 | 7,84:1 | `--medo-warning-surface` | Heller Ton der eigenen Skala — behält den Farbton als Bedeutungsträger, statt ins Weiße zu gehen. |
 | `--medo-warning-border` | `#ffc59a` | `#c25e00` | `amber-700` | 1,53:1 | 3,70:1 | `--medo-surface` | Spiegelt die Zurückhaltung der 300er-Kante im hellen Theme. |
 | `--medo-warning-solid` | `#dc7411` | `#f1924a` | `amber-500` | 3,21:1 | 6,77:1 | `--medo-surface` | Wie action: die 600er-Stufe verfehlt auf dunklem Grund die 3:1-Grenze. |
-| `--medo-warning-solid-hover` | `#c25e00` | `#ffae74` | `amber-400` | 4,29:1 | 8,74:1 | `--medo-surface` | Hover heller statt dunkler. |
-| `--medo-warning-solid-active` | `#a04800` | `#ffc59a` | `amber-300` | 6,14:1 | 10,36:1 | `--medo-surface` | Aktiv noch eine Stufe heller. |
+| `--medo-warning-solid-hover` | `#f1924a` | `#ffae74` | `amber-400` | 2,35:1 | 8,74:1 | `--medo-surface` | Hover heller statt dunkler. |
+| `--medo-warning-solid-active` | `#ffae74` | `#ffc59a` | `amber-300` | 1,82:1 | 10,36:1 | `--medo-surface` | Aktiv noch eine Stufe heller. |
+| `--medo-warning-accent` | `#a04800` | `#ffae74` | `amber-400` | 5,71:1 | 6,61:1 | `--medo-warning-surface` | Vordergrundrolle auf der weichen Meldungsfläche — Symbol, Aktionstext und Randstreifen. Getrennt von der Füllfläche, weil beide Aufgaben in entgegengesetzte Richtungen ziehen. |
 | `--medo-warning-on-solid` | `#24221e` | `#171513` | `stone-1100` | 4,95:1 | 7,76:1 | `--medo-warning-solid` | Alle vier Füllfarben tragen im Dunkeln dunkle Schrift — die helle Sonderregel für Warnung entfällt damit. |
 | `--medo-error-surface` | `#fdf5f4` | `#420b09` | `red-1000` | 15,23:1 | 9,27:1 | `--medo-error-text` | Meldungsfläche auf der tiefsten Tonstufe der eigenen Skala. |
 | `--medo-error-text` | `#420b09` | `#e1bab5` | `red-300` | 15,23:1 | 9,27:1 | `--medo-error-surface` | Heller Ton der eigenen Skala — behält den Farbton als Bedeutungsträger, statt ins Weiße zu gehen. |
@@ -154,6 +161,7 @@ darunter.
 | `--medo-error-solid` | `#ab0913` | `#bf7d75` | `red-500` | 7,55:1 | 4,84:1 | `--medo-surface` | Wie action: die 600er-Stufe verfehlt auf dunklem Grund die 3:1-Grenze. |
 | `--medo-error-solid-hover` | `#920000` | `#d39e98` | `red-400` | 9,45:1 | 6,89:1 | `--medo-surface` | Hover heller statt dunkler. |
 | `--medo-error-solid-active` | `#750002` | `#e1bab5` | `red-300` | 11,95:1 | 8,99:1 | `--medo-surface` | Aktiv noch eine Stufe heller. |
+| `--medo-error-accent` | `#920000` | `#d39e98` | `red-400` | 8,79:1 | 7,10:1 | `--medo-error-surface` | Vordergrundrolle auf der weichen Meldungsfläche — Symbol, Aktionstext und Randstreifen. Getrennt von der Füllfläche, weil beide Aufgaben in entgegengesetzte Richtungen ziehen. |
 | `--medo-error-on-solid` | `#ffffff` | `#171513` | `stone-1100` | 7,55:1 | 5,56:1 | `--medo-error-solid` | Alle vier Füllfarben tragen im Dunkeln dunkle Schrift — die helle Sonderregel für Warnung entfällt damit. |
 | `--medo-info-surface` | `#f2f8fd` | `#002248` | `blue-1000` | 14,84:1 | 9,20:1 | `--medo-info-text` | Meldungsfläche auf der tiefsten Tonstufe der eigenen Skala. |
 | `--medo-info-text` | `#002248` | `#afc8e1` | `blue-300` | 14,84:1 | 9,20:1 | `--medo-info-surface` | Heller Ton der eigenen Skala — behält den Farbton als Bedeutungsträger, statt ins Weiße zu gehen. |
@@ -161,6 +169,7 @@ darunter.
 | `--medo-info-solid` | `#0059be` | `#6895c3` | `blue-500` | 6,62:1 | 5,05:1 | `--medo-surface` | Wie action: die 600er-Stufe verfehlt auf dunklem Grund die 3:1-Grenze. |
 | `--medo-info-solid-hover` | `#0045a3` | `#8fb1d5` | `blue-400` | 8,82:1 | 7,12:1 | `--medo-surface` | Hover heller statt dunkler. |
 | `--medo-info-solid-active` | `#003783` | `#afc8e1` | `blue-300` | 11,20:1 | 9,20:1 | `--medo-surface` | Aktiv noch eine Stufe heller. |
+| `--medo-info-accent` | `#0045a3` | `#8fb1d5` | `blue-400` | 8,24:1 | 7,12:1 | `--medo-info-surface` | Vordergrundrolle auf der weichen Meldungsfläche — Symbol, Aktionstext und Randstreifen. Getrennt von der Füllfläche, weil beide Aufgaben in entgegengesetzte Richtungen ziehen. |
 | `--medo-info-on-solid` | `#ffffff` | `#171513` | `stone-1100` | 6,62:1 | 5,79:1 | `--medo-info-solid` | Alle vier Füllfarben tragen im Dunkeln dunkle Schrift — die helle Sonderregel für Warnung entfällt damit. |
 
 ## 5. Text und Icon auf Fläche
@@ -175,12 +184,12 @@ Tabelle wird erzeugt, nicht gepflegt — es kann keine Zeile fehlen.
 | `--medo-text` | 14,81 | 12,75 | 10,62 | 16,99 | 10,62 | 11,69 | 12,75 | 10,62 | 8,40 | 11,69 | 9,40 |
 | `--medo-text-muted` | 7,53 | 6,75 | 5,87 | 8,24 | 5,87 | 6,22 | 6,75 | 5,87 | 4,89 | 6,22 | 5,23 |
 | `--medo-text-subtle` | 9,13 | 7,86 | 6,55 | 10,47 | 6,55 | 7,21 | 7,86 | 6,55 | 5,18 | 7,21 | 5,79 |
-| `--medo-text-link` | 7,25 | 6,24 | 5,20 | 8,32 | 5,20 | 5,72 | 6,24 | 5,20 | 4,11 ⚠ | 5,72 | 4,60 |
-| `--medo-text-link-hover` | 9,26 | 7,97 | 6,64 | 10,62 | 6,64 | 7,31 | 7,97 | 6,64 | 5,25 | 7,31 | 5,87 |
+| `--medo-text-link` | 9,26 | 7,97 | 6,64 | 10,62 | 6,64 | 7,31 | 7,97 | 6,64 | 5,25 | 7,31 | 5,87 |
+| `--medo-text-link-hover` | 11,42 | 9,83 | 8,19 | 13,09 | 8,19 | 9,01 | 9,83 | 8,19 | 6,47 | 9,01 | 7,24 |
 | `--medo-icon` | 13,43 | 11,56 | 9,63 | 15,41 | 9,63 | 10,60 | 11,56 | 9,63 | 7,61 | 10,60 | 8,52 |
 | `--medo-icon-muted` | 5,43 | 4,98 | 4,44 | 5,79 | 4,44 | 4,61 | 4,98 | 4,44 | 3,81 | 4,61 | 3,98 |
-| `--medo-text-disabled` | 5,01 | 4,31 | 3,59 | 5,75 | 3,59 | 3,96 | 4,31 | 3,59 | 2,84 | 3,96 | 3,18 |
-| `--medo-icon-disabled` | 5,01 | 4,31 | 3,59 | 5,75 | 3,59 | 3,96 | 4,31 | 3,59 | 2,84 | 3,96 | 3,18 |
+| `--medo-text-disabled` | 4,88 | 4,20 | 3,50 | 5,60 | 3,50 | 3,86 | 4,20 | 3,50 | 2,77 | 3,86 | 3,10 |
+| `--medo-icon-disabled` | 4,88 | 4,20 | 3,50 | 5,60 | 3,50 | 3,86 | 4,20 | 3,50 | 2,77 | 3,86 | 3,10 |
 
 **Heller Bestand zum Vergleich:**
 
@@ -189,12 +198,12 @@ Tabelle wird erzeugt, nicht gepflegt — es kann keine Zeile fehlen.
 | `--medo-text` | 15,88 | 14,81 | 13,43 | 13,43 | 13,43 | 13,46 | 15,88 | 13,43 | 11,37 | 13,46 | 11,42 |
 | `--medo-text-muted` | 5,48 | 5,31 | 5,08 | 5,08 | 5,08 | 5,09 | 5,48 | 5,08 | 4,69 | 5,09 | 4,71 |
 | `--medo-text-subtle` | 11,39 | 10,62 | 9,63 | 9,63 | 9,63 | 9,65 | 11,39 | 9,63 | 8,15 | 9,65 | 8,19 |
-| `--medo-text-link` | 5,84 | 5,45 | 4,94 | 4,94 | 4,94 | 4,95 | 5,84 | 4,94 | 4,18 ⚠ | 4,95 | 4,20 ⚠ |
+| `--medo-text-link` | 7,70 | 7,19 | 6,52 | 6,52 | 6,52 | 6,53 | 7,70 | 6,52 | 5,51 | 6,53 | 5,54 |
 | `--medo-text-link-hover` | 10,07 | 9,40 | 8,52 | 8,52 | 8,52 | 8,54 | 10,07 | 8,52 | 7,21 | 8,54 | 7,24 |
 | `--medo-icon` | 13,67 | 12,75 | 11,56 | 11,56 | 11,56 | 11,59 | 13,67 | 11,56 | 9,78 | 11,59 | 9,83 |
 | `--medo-icon-muted` | 3,65 | 3,58 | 3,48 | 3,48 | 3,48 | 3,48 | 3,65 | 3,48 | 3,29 | 3,48 | 3,30 |
-| `--medo-text-disabled` | 3,17 | 2,96 | 2,68 | 2,68 | 2,68 | 2,69 | 3,17 | 2,68 | 2,27 | 2,69 | 2,28 |
-| `--medo-icon-disabled` | 3,17 | 2,96 | 2,68 | 2,68 | 2,68 | 2,69 | 3,17 | 2,68 | 2,27 | 2,69 | 2,28 |
+| `--medo-text-disabled` | 3,25 | 3,03 | 2,75 | 2,75 | 2,75 | 2,76 | 3,25 | 2,75 | 2,33 | 2,76 | 2,34 |
+| `--medo-icon-disabled` | 3,25 | 3,03 | 2,75 | 2,75 | 2,75 | 2,76 | 3,25 | 2,75 | 2,33 | 2,76 | 2,34 |
 
 ## 6. Kontextgebundene Paarungen
 
@@ -214,7 +223,7 @@ Feldinhalte, Statusfarben, Rahmen, Fokusring, Flächenabsetzungen.
 | `--medo-text-on-primary` | `--medo-action-active` | 4,50:1 | 10,07 | 10,62 |
 | `--medo-icon-on-primary` | `--medo-action-active` | 3,00:1 | 10,07 | 10,62 |
 | `--medo-action-text` | `--medo-action-active` | 4,50:1 | 10,07 | 10,62 |
-| `--medo-action-text-disabled` | `--medo-action-disabled` | — (informativ) | 2,27 | 3,59 |
+| `--medo-action-text-disabled` | `--medo-action-disabled` | — (informativ) | 2,33 | 3,50 |
 
 ### Neutrale Aktion
 
@@ -250,15 +259,19 @@ Feldinhalte, Statusfarben, Rahmen, Fokusring, Flächenabsetzungen.
 | `--medo-success-solid` | `--medo-surface` | 3,00:1 | 6,06 | 5,20 |
 | `--medo-success-border` | `--medo-success-surface` | — (informativ) | 1,60 | 1,93 |
 | `--medo-success-border` | `--medo-surface` | — (informativ) | 1,71 | 1,99 |
+| `--medo-success-accent` | `--medo-success-surface` | 4,50:1 | 7,46 | 7,01 |
+| `--medo-success-accent` | `--medo-overlay` | 4,50:1 | 7,96 | 6,22 |
 | `--medo-warning-text` | `--medo-warning-surface` | 4,50:1 | 11,17 | 7,84 |
 | `--medo-warning-text` | `--medo-surface` | 4,50:1 | 12,01 | 10,36 |
 | `--medo-warning-text` | `--medo-surface-container` | 4,50:1 | 11,20 | 8,92 |
 | `--medo-warning-on-solid` | `--medo-warning-solid` | 4,50:1 | 4,95 | 7,76 |
-| `--medo-warning-on-solid` | `--medo-warning-solid-hover` | 4,50:1 | 3,70 ⚠ | 10,02 |
-| `--medo-warning-on-solid` | `--medo-warning-solid-active` | 4,50:1 | 2,59 ⚠ | 11,89 |
+| `--medo-warning-on-solid` | `--medo-warning-solid-hover` | 4,50:1 | 6,77 | 10,02 |
+| `--medo-warning-on-solid` | `--medo-warning-solid-active` | 4,50:1 | 8,74 | 11,89 |
 | `--medo-warning-solid` | `--medo-surface` | 3,00:1 | 3,21 | 6,77 |
 | `--medo-warning-border` | `--medo-warning-surface` | — (informativ) | 1,42 | 2,80 |
 | `--medo-warning-border` | `--medo-surface` | — (informativ) | 1,53 | 3,70 |
+| `--medo-warning-accent` | `--medo-warning-surface` | 4,50:1 | 5,71 | 6,61 |
+| `--medo-warning-accent` | `--medo-overlay` | 4,50:1 | 6,14 | 7,52 |
 | `--medo-error-text` | `--medo-error-surface` | 4,50:1 | 15,23 | 9,27 |
 | `--medo-error-text` | `--medo-surface` | 4,50:1 | 16,36 | 8,99 |
 | `--medo-error-text` | `--medo-surface-container` | 4,50:1 | 15,26 | 7,74 |
@@ -268,6 +281,8 @@ Feldinhalte, Statusfarben, Rahmen, Fokusring, Flächenabsetzungen.
 | `--medo-error-solid` | `--medo-surface` | 3,00:1 | 7,55 | 4,84 |
 | `--medo-error-border` | `--medo-error-surface` | — (informativ) | 1,64 | 1,73 |
 | `--medo-error-border` | `--medo-surface` | — (informativ) | 1,77 | 1,68 |
+| `--medo-error-accent` | `--medo-error-surface` | 4,50:1 | 8,79 | 7,10 |
+| `--medo-error-accent` | `--medo-overlay` | 4,50:1 | 9,45 | 5,93 |
 | `--medo-info-text` | `--medo-info-surface` | 4,50:1 | 14,84 | 9,20 |
 | `--medo-info-text` | `--medo-surface` | 4,50:1 | 15,88 | 9,20 |
 | `--medo-info-text` | `--medo-surface-container` | 4,50:1 | 14,81 | 7,92 |
@@ -277,6 +292,8 @@ Feldinhalte, Statusfarben, Rahmen, Fokusring, Flächenabsetzungen.
 | `--medo-info-solid` | `--medo-surface` | 3,00:1 | 6,62 | 5,05 |
 | `--medo-info-border` | `--medo-info-surface` | — (informativ) | 1,61 | 1,80 |
 | `--medo-info-border` | `--medo-surface` | — (informativ) | 1,73 | 1,80 |
+| `--medo-info-accent` | `--medo-info-surface` | 4,50:1 | 8,24 | 7,12 |
+| `--medo-info-accent` | `--medo-overlay` | 4,50:1 | 8,82 | 6,13 |
 
 ### Rahmen und Linien
 
@@ -284,8 +301,8 @@ Feldinhalte, Statusfarben, Rahmen, Fokusring, Flächenabsetzungen.
 |---|---|---|---|---|
 | `--medo-border` | `--medo-surface` | — (informativ) | 1,74 | 1,76 |
 | `--medo-border` | `--medo-surface-container` | — (informativ) | 1,62 | 1,52 |
-| `--medo-border-strong` | `--medo-surface` | 3,00:1 | 3,17 | 5,01 |
-| `--medo-border-strong` | `--medo-surface-container` | 3,00:1 | 2,96 ⚠ | 4,31 |
+| `--medo-border-strong` | `--medo-surface` | 3,00:1 | 3,25 | 4,88 |
+| `--medo-border-strong` | `--medo-surface-container` | 3,00:1 | 3,03 | 4,20 |
 | `--medo-border-subtle` | `--medo-surface` | — (informativ) | 1,40 | 1,39 |
 | `--medo-border-subtle` | `--medo-surface-container` | — (informativ) | 1,30 | 1,20 |
 | `--medo-border-disabled` | `--medo-surface` | — (informativ) | 1,40 | 1,39 |
@@ -297,14 +314,14 @@ Feldinhalte, Statusfarben, Rahmen, Fokusring, Flächenabsetzungen.
 
 | Vordergrund | Fläche | Schwelle | Kontrast hell | Kontrast dunkel |
 |---|---|---|---|---|
-| `--medo-focus-ring` | `--medo-surface` | 3,00:1 | 1,71 ⚠ | 3,80 |
-| `--medo-focus-ring` | `--medo-surface-container` | 3,00:1 | 1,69 ⚠ | 3,50 |
-| `--medo-focus-ring` | `--medo-surface-container-high` | 3,00:1 | 1,65 ⚠ | 3,15 |
-| `--medo-focus-ring` | `--medo-overlay` | 3,00:1 | 1,71 ⚠ | 3,50 |
-| `--medo-focus-ring-danger` | `--medo-surface` | 3,00:1 | 2,00 ⚠ | 3,72 |
-| `--medo-focus-ring-danger` | `--medo-surface-container` | 3,00:1 | 1,97 ⚠ | 3,44 |
-| `--medo-focus-ring-danger` | `--medo-surface-container-high` | 3,00:1 | 1,94 ⚠ | 3,09 |
-| `--medo-focus-ring-danger` | `--medo-overlay` | 3,00:1 | 2,00 ⚠ | 3,44 |
+| `--medo-focus-ring` | `--medo-surface` | 3,00:1 | 3,55 | 3,80 |
+| `--medo-focus-ring` | `--medo-surface-container` | 3,00:1 | 3,40 | 3,50 |
+| `--medo-focus-ring` | `--medo-surface-container-high` | 3,00:1 | 3,19 | 3,15 |
+| `--medo-focus-ring` | `--medo-overlay` | 3,00:1 | 3,55 | 3,50 |
+| `--medo-focus-ring-danger` | `--medo-surface` | 3,00:1 | 4,94 | 3,72 |
+| `--medo-focus-ring-danger` | `--medo-surface-container` | 3,00:1 | 4,73 | 3,44 |
+| `--medo-focus-ring-danger` | `--medo-surface-container-high` | 3,00:1 | 4,45 | 3,09 |
+| `--medo-focus-ring-danger` | `--medo-overlay` | 3,00:1 | 4,94 | 3,44 |
 
 ### Flächenabsetzung
 
@@ -320,6 +337,17 @@ Feldinhalte, Statusfarben, Rahmen, Fokusring, Flächenabsetzungen.
 | `--medo-overlay` | `--medo-surface` | — (informativ) | 1,00 | 1,16 |
 | `--medo-overlay` | `--medo-scrim` | — (informativ) | 3,45 | 1,38 |
 | `--medo-input-bg` | `--medo-surface-container` | — (informativ) | 1,07 | 1,33 |
+
+### Akzente und Marken
+
+| Vordergrund | Fläche | Schwelle | Kontrast hell | Kontrast dunkel |
+|---|---|---|---|---|
+| `--medo-accent-neutral` | `--medo-surface-container` | 4,50:1 | 8,40 | 12,75 |
+| `--medo-accent-neutral` | `--medo-overlay` | 4,50:1 | 9,00 | 12,75 |
+| `--medo-control-mark` | `--medo-border-subtle` | — (informativ) | 1,60 | 1,66 |
+| `--medo-control-mark-on-primary` | `--medo-action` | — (informativ) | 4,01 | 2,40 |
+| `--medo-icon-on-light` | `--medo-surface` | — (informativ) | 6,87 | 2,31 |
+| `--medo-logo-dot` | `--medo-surface` | — (informativ) | 5,84 | 5,17 |
 
 ## 7. Die neun Sonderfälle
 
@@ -447,17 +475,11 @@ Höchste Ebene. Mit 0,64 in der zweiten Schicht bereits nahe an einem sichtbaren
 
 ## 8. Unterschreitungen im Einzelnen
 
-### Textlink auf gedrückter Fläche
-
-`--medo-text-link` auf `--medo-state-pressed` — **4,11:1** bei einer Schwelle von 4,50:1. Im hellen Theme: 4,18:1 (dort ebenfalls unter der Schwelle).
-
-Der Link liegt hier auf stone-700, der hellsten der allgemeinen Flächen. Das helle Theme hat dieselbe Eigenschaft: teal-600 auf stone-200 erreicht dort 4,18:1 und damit ebenfalls keine 4,5. Der Vorschlag übernimmt diese Eigenschaft, statt eine neue einzuführen, und liegt beim verwandten Fall — Link auf Textmarkierung — mit 4,60:1 sogar über dem hellen Bestand, der dort bei 4,20:1 liegt. Hinzu kommt, dass state-pressed der Zustand während des Mausdrucks ist und nicht der Ruhezustand einer Zeile; die Kombination steht also nur für den Moment des Klicks. Wer die Unterschreitung dennoch nicht will, hebt text-link auf teal-300 — das bringt 5,25:1 auf der gedrückten Fläche, kostet aber Farbigkeit im Ruhezustand. Die Abwägung steht in Abschnitt 9.
-
 ### Feldrahmen im Ruhezustand
 
 `--medo-input-border` auf `--medo-input-bg` — **2,65:1** bei einer Schwelle von 3,00:1. Im hellen Theme: 2,23:1 (dort ebenfalls unter der Schwelle).
 
-Die zurückhaltende Feldkante ist eine gelockte Entscheidung des hellen Themes: design-reference/CLAUDE.md hält zu input-border=stone-400 ausdrücklich fest „user chose light on purpose". Dort erreicht die Kante 2,23:1. Der Vorschlag spiegelt diese Absicht mit stone-600 und landet bei 2,65:1, also näher an der Grenze als das helle Theme. In beiden Themes trägt die Kante die Feldgrenze praktisch allein — die Fläche des Feldes hebt sich kaum ab (hell Weiß gegen stone-50 ergibt 1,07:1, dunkel stone-1100 gegen stone-900 ergibt 1,33:1). Im Fokus übernimmt ohnehin der Ring. Eine Anhebung auf stone-500 ergäbe 5,75:1, gäbe aber die gelockte Zurückhaltung auf; das wäre eine Änderung am hellen Beschluss und gehört damit als Änderungswunsch ins Design-Projekt, nicht in diesen Vorschlag.
+Die zurückhaltende Feldkante ist eine gelockte Entscheidung des Design-Projekts: design-reference/CLAUDE.md hält zu input-border=stone-400 ausdrücklich fest „user chose light on purpose". Im hellen Theme erreicht die Kante damit 2,23:1. Das dunkle Theme spiegelt dieselbe Absicht mit stone-600 und landet bei 2,65:1 — es steht der Schwelle also näher als das helle, dem es folgt. In beiden Themes trägt die Kante die Feldgrenze praktisch allein, weil sich die Fläche des Feldes kaum abhebt (hell Weiß gegen stone-50 ergibt 1,07:1, dunkel stone-1100 gegen stone-900 ergibt 1,33:1). Sobald das Feld bedient wird, übernimmt der Fokusring, der seit der Anhebung auf 75 % Deckkraft in beiden Themes deutlich über der Schwelle liegt. Eine Anhebung der Ruhekante auf stone-500 ergäbe im Dunkeln 5,75:1, gäbe aber die gelockte Zurückhaltung auf. Das wäre eine Änderung am hellen Beschluss und gehört als Änderungswunsch ins Design-Projekt, nicht in dieses Repository.
 
 ## 9. Drei Abwägungen
 
@@ -469,39 +491,26 @@ Die Gegenrechnung: teal-600 mit weißer Schrift ergäbe 5,84:1 für die Beschrif
 
 ### 2. Deckkraft des Fokusrings
 
-Der Vorschlag hebt die Deckkraft von 35 auf 55 %. Nur so trägt der Ring auf allen vier Trägerflächen über 3:1. Bei unveränderten 35 % bliebe er darunter:
+Der dunkle Ring trägt 55 %. Nur so kommt er auf allen vier Trägerflächen über 3:1; bei den früheren 35 % bliebe er darunter. Das helle Theme hat denselben Weg genommen und liegt seit Fall A bei 75 % — beide Themes lösen dasselbe Problem über die Deckkraft, nur von verschiedenen Gründen aus und deshalb mit verschiedenen Werten:
 
 | Variante | Wert | surface | container | container-high | overlay |
 |---|---|---|---|---|---|
-| teal-300 @35 % (Deckkraft wie hell) | `#adccc859` | 2,34 | 2,26 | 2,12 | 2,26 |
+| teal-300 @35 % (die frühere Deckkraft) | `#adccc859` | 2,34 | 2,26 | 2,12 | 2,26 |
 | teal-300 @55 % (Vorschlag) | `#adccc88c` | 3,80 | 3,50 | 3,15 | 3,50 |
-| red-300 @35 % (Deckkraft wie hell) | `#e1bab559` | 2,31 | 2,23 | 2,09 | 2,23 |
+| red-300 @35 % (die frühere Deckkraft) | `#e1bab559` | 2,31 | 2,23 | 2,09 | 2,23 |
 | red-300 @55 % (Vorschlag) | `#e1bab58c` | 3,72 | 3,44 | 3,09 | 3,44 |
 
-### 3. Textlink auf gedrückter Fläche
+### 3. Textlink auf gedrückter Fläche — entschieden
 
-teal-400 erreicht dort 4,11:1. Eine Anhebung auf teal-300 brächte 5,25:1 und räumte die letzte AA-Unterschreitung bei Text aus, macht den Link im Ruhezustand aber spürbar blasser (9,26:1 statt 7,25:1 — bei Links ist ein Zuviel an Kontrast ein Verlust an Farbigkeit). Der Vorschlag bleibt bei teal-400.
+Diese Abwägung ist inzwischen aufgelöst. teal-400 erreichte auf der gedrückten Fläche 4,11:1 und war damit die letzte AA-Unterschreitung bei Text. Der Inhaber hat die Anhebung auf teal-300 freigegeben; der Überfahren-Zustand rückt auf teal-200 nach. Der Link erreicht dort jetzt 5,25:1 und im Ruhezustand 9,26:1 statt 7,25:1 — er ist also, wie vorhergesagt, eine Spur blasser geworden. Das helle Theme hat dieselbe Bewegung eine Stufe tiefer gemacht (teal-600 auf teal-700) und steht auf der gedrückten Fläche bei 5,51:1.
 
-## 10. Was die Prüfung nebenbei am hellen Theme gefunden hat
+## 10. Das helle Theme unter demselben Tor
 
-Die Prüfung lief zuerst über die bestehende helle Palette. Dabei sind 14 Kombinationen aufgefallen, die schon heute unter ihrer Schwelle liegen. Das ist nicht Gegenstand dieser Aufgabe und wird hier nur festgehalten. Der dunkle Vorschlag hebt 12 davon über die Schwelle und erbt 2.
+Die Prüfung läuft über beide Paletten, und beide stehen unter derselben Bedingung: jede Unterschreitung braucht einen Begründungseintrag, sonst verweigert das Werkzeug den Bericht. Im hellen Theme bleibt eine Kombination unter der Schwelle; sie ist in Abschnitt 8 begründet. Der dunkle Vorschlag hebt 0 davon über die Schwelle und erbt 1.
 
 | Vordergrund | Fläche | Schwelle | Hell | Dunkel |
 |---|---|---|---|---|
-| `--medo-text-link` | `--medo-state-pressed` | 4,50:1 | 4,18 ⚠ | 4,11 ⚠ |
-| `--medo-text-link` | `--medo-selection` | 4,50:1 | 4,20 ⚠ | 4,60 |
 | `--medo-input-border` | `--medo-input-bg` | 3,00:1 | 2,23 ⚠ | 2,65 ⚠ |
-| `--medo-warning-on-solid` | `--medo-warning-solid-hover` | 4,50:1 | 3,70 ⚠ | 10,02 |
-| `--medo-warning-on-solid` | `--medo-warning-solid-active` | 4,50:1 | 2,59 ⚠ | 11,89 |
-| `--medo-border-strong` | `--medo-surface-container` | 3,00:1 | 2,96 ⚠ | 4,31 |
-| `--medo-focus-ring` | `--medo-surface` | 3,00:1 | 1,71 ⚠ | 3,80 |
-| `--medo-focus-ring` | `--medo-surface-container` | 3,00:1 | 1,69 ⚠ | 3,50 |
-| `--medo-focus-ring` | `--medo-surface-container-high` | 3,00:1 | 1,65 ⚠ | 3,15 |
-| `--medo-focus-ring` | `--medo-overlay` | 3,00:1 | 1,71 ⚠ | 3,50 |
-| `--medo-focus-ring-danger` | `--medo-surface` | 3,00:1 | 2,00 ⚠ | 3,72 |
-| `--medo-focus-ring-danger` | `--medo-surface-container` | 3,00:1 | 1,97 ⚠ | 3,44 |
-| `--medo-focus-ring-danger` | `--medo-surface-container-high` | 3,00:1 | 1,94 ⚠ | 3,09 |
-| `--medo-focus-ring-danger` | `--medo-overlay` | 3,00:1 | 2,00 ⚠ | 3,44 |
 
 ## 11. Freigabe
 

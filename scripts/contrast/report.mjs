@@ -177,10 +177,12 @@ function lightBaselineSection(data) {
       + `${num(row.lightRatio)} ⚠ | ${num(row.darkRatio)}${row.darkPasses ? '' : ' ⚠'} |`),
   ]
   return [
-    `Die Prüfung lief zuerst über die bestehende helle Palette. Dabei sind ${data.lightShortfalls.length} `
-      + 'Kombinationen aufgefallen, die schon heute unter ihrer Schwelle liegen. Das ist nicht Gegenstand '
-      + `dieser Aufgabe und wird hier nur festgehalten. Der dunkle Vorschlag hebt ${fixed.length} davon `
-      + `über die Schwelle und erbt ${data.lightShortfalls.length - fixed.length}.`,
+    `Die Prüfung läuft über beide Paletten, und beide stehen unter derselben Bedingung: jede `
+      + `Unterschreitung braucht einen Begründungseintrag, sonst verweigert das Werkzeug den Bericht. `
+      + `Im hellen Theme ${data.lightShortfalls.length === 1 ? 'bleibt eine Kombination' : `bleiben ${data.lightShortfalls.length} Kombinationen`} `
+      + `unter der Schwelle; ${data.lightShortfalls.length === 1 ? 'sie ist' : 'sie sind'} in Abschnitt 8 begründet. `
+      + `Der dunkle Vorschlag hebt ${fixed.length} davon über die Schwelle und erbt `
+      + `${data.lightShortfalls.length - fixed.length}.`,
     '',
     lines.join('\n'),
   ].join('\n')
@@ -213,17 +215,21 @@ function tradeoffSection(data) {
     '',
     '### 2. Deckkraft des Fokusrings',
     '',
-    'Der Vorschlag hebt die Deckkraft von 35 auf 55 %. Nur so trägt der Ring auf allen vier '
-      + 'Trägerflächen über 3:1. Bei unveränderten 35 % bliebe er darunter:',
+    'Der dunkle Ring trägt 55 %. Nur so kommt er auf allen vier Trägerflächen über 3:1; bei den '
+      + 'früheren 35 % bliebe er darunter. Das helle Theme hat denselben Weg genommen und liegt seit '
+      + 'Fall A bei 75 % — beide Themes lösen dasselbe Problem über die Deckkraft, nur von '
+      + 'verschiedenen Gründen aus und deshalb mit verschiedenen Werten:',
     '',
     ringTable,
     '',
-    '### 3. Textlink auf gedrückter Fläche',
+    '### 3. Textlink auf gedrückter Fläche — entschieden',
     '',
-    'teal-400 erreicht dort 4,11:1. Eine Anhebung auf teal-300 brächte 5,25:1 und räumte die letzte '
-      + 'AA-Unterschreitung bei Text aus, macht den Link im Ruhezustand aber spürbar blasser '
-      + '(9,26:1 statt 7,25:1 — bei Links ist ein Zuviel an Kontrast ein Verlust an Farbigkeit). '
-      + 'Der Vorschlag bleibt bei teal-400.',
+    'Diese Abwägung ist inzwischen aufgelöst. teal-400 erreichte auf der gedrückten Fläche 4,11:1 und '
+      + 'war damit die letzte AA-Unterschreitung bei Text. Der Inhaber hat die Anhebung auf teal-300 '
+      + 'freigegeben; der Überfahren-Zustand rückt auf teal-200 nach. Der Link erreicht dort jetzt '
+      + '5,25:1 und im Ruhezustand 9,26:1 statt 7,25:1 — er ist also, wie vorhergesagt, eine Spur '
+      + 'blasser geworden. Das helle Theme hat dieselbe Bewegung eine Stufe tiefer gemacht '
+      + '(teal-600 auf teal-700) und steht auf der gedrückten Fläche bei 5,51:1.',
   ].join('\n')
 }
 
@@ -344,7 +350,7 @@ ${shortfallSection(data)}
 
 ${tradeoffSection(data)}
 
-## 10. Was die Prüfung nebenbei am hellen Theme gefunden hat
+## 10. Das helle Theme unter demselben Tor
 
 ${lightBaselineSection(data)}
 

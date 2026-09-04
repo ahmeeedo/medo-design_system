@@ -16,8 +16,11 @@ import { JUSTIFICATIONS } from '../../scripts/contrast/shortfalls.mjs'
 /* Approved in Task 1.1 and argued in docs/dark-palette-vorschlag.md. Both
    inherit a shortfall the light theme already has; neither may turn the run
    red, and neither may quietly disappear either. */
+/* Der Textlink stand hier, solange er im Dunkeln auf der gedrückten Fläche
+   unter 4,5:1 lag. Seit er auf teal-300 sitzt, tut er das nicht mehr, und
+   ein Eintrag ohne Unterschreitung würde später eine echte Regression
+   zudecken. */
 const APPROVED_SHORTFALLS = [
-  'medo-text-link|medo-state-pressed',
   'medo-input-border|medo-input-bg',
 ]
 
@@ -42,15 +45,19 @@ describe('medo-theme.css', () => {
   it('liefert für jedes Token zwei verschiedene Zweige oder eine bewusste Gleichheit', () => {
     const light = makeTheme(tokens, 'light')
     const dark = makeTheme(tokens, 'dark')
-    /* stone-500 steht in beiden Themes — die einzige gewollte Gleichheit. */
+    /* Zwei Gruppen stehen in beiden Themes: die stone-500-Rollen, und die
+       beiden Marken, deren Grund nicht mitwechselt — der Schaltergriff ist
+       immer weiß, die gefüllte Reglerbahn immer ein Teal. */
     const sameInBoth = tokens.semantic
       .map(([name]) => name)
       .filter((name) => light(name) === dark(name))
     expect(sameInBoth).toEqual([
       'medo-text-disabled',
       'medo-icon-disabled',
+      'medo-icon-on-light',
       'medo-border-strong',
       'medo-action-text-disabled',
+      'medo-control-mark-on-primary',
     ])
   })
 
@@ -89,7 +96,7 @@ describe('Kontrast der dunklen Palette', () => {
 
   it('erzeugt die Auswertung vollstaendig und ohne unbegruendete Unterschreitung', () => {
     const data = analyse()
-    expect(data.rows).toHaveLength(77)
+    expect(data.rows).toHaveLength(86)
     expect(data.shadows).toHaveLength(4)
     expect(data.shortfalls.every((row) => row.justification)).toBe(true)
   })

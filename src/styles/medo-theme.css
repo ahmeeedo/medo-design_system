@@ -45,14 +45,17 @@
   --medo-text-subtle: light-dark(var(--medo-color-stone-800), var(--medo-color-stone-300));
   --medo-text-on-primary: light-dark(var(--medo-color-white), var(--medo-color-stone-1100));
   --medo-text-disabled: light-dark(var(--medo-color-stone-500), var(--medo-color-stone-500));
-  --medo-text-link: light-dark(var(--medo-color-teal-600), var(--medo-color-teal-400));
-  --medo-text-link-hover: light-dark(var(--medo-color-teal-800), var(--medo-color-teal-300));
+  --medo-text-link: light-dark(var(--medo-color-teal-700), var(--medo-color-teal-300));
+  --medo-text-link-hover: light-dark(var(--medo-color-teal-800), var(--medo-color-teal-200));
 
   /* Icons */
   --medo-icon: light-dark(var(--medo-color-stone-900), var(--medo-color-stone-100));
   --medo-icon-muted: light-dark(#24221e8c, #f7f7f68c);
   --medo-icon-on-primary: light-dark(var(--medo-color-white), var(--medo-color-stone-1100));
   --medo-icon-disabled: light-dark(var(--medo-color-stone-500), var(--medo-color-stone-500));
+  /* The toggle knob is white in both themes, so the icon on it must stay
+     dark in both. Every other icon role flips and would vanish there. */
+  --medo-icon-on-light: light-dark(var(--medo-color-stone-600), var(--medo-color-stone-600));
 
   /* Borders */
   --medo-border: light-dark(var(--medo-color-stone-300), var(--medo-color-stone-700));
@@ -84,8 +87,8 @@
   --medo-action-neutral-text: light-dark(var(--medo-color-stone-1000), var(--medo-color-stone-50));
 
   /* Focus */
-  --medo-focus-ring: light-dark(#00726559, #adccc88c);
-  --medo-focus-ring-danger: light-dark(#ab091359, #e1bab58c);
+  --medo-focus-ring: light-dark(#007265bf, #adccc88c);
+  --medo-focus-ring-danger: light-dark(#ab0913bf, #e1bab58c);
 
   /* States, selection, scrim */
   --medo-state-hover: light-dark(var(--medo-color-stone-100), var(--medo-color-stone-800));
@@ -95,6 +98,22 @@
   --medo-divider: light-dark(var(--medo-color-stone-200), var(--medo-color-stone-800));
   --medo-scrim: light-dark(rgba(23,21,19,0.5), rgba(0,0,0,0.5));
 
+  /* Accents and control marks */
+  /* The neutral notification accent. stone-700 on the light surface, and in
+     dark the owner chose stone-50 — the role carries text weight, and the
+     mirrored stone-300 would have left it at 1.52:1 on stone-900. */
+  --medo-accent-neutral: light-dark(var(--medo-color-stone-700), var(--medo-color-stone-50));
+  /* Slider ticks on the unfilled track. The track is --medo-border-subtle,
+     so the mark follows the same stone-400 -> stone-600 step the input
+     border uses to stay readable against it in both themes. */
+  --medo-control-mark: light-dark(var(--medo-color-stone-400), var(--medo-color-stone-600));
+  /* Ticks on the filled part. The fill is --medo-action, a teal in both
+     themes, so one value serves both. */
+  --medo-control-mark-on-primary: light-dark(rgba(255,255,255,0.75), rgba(255,255,255,0.75));
+  /* The dot in the wordmark. Moved here from global.css now that the source
+     carries the token; the dark step is the one the inverted mark uses. */
+  --medo-logo-dot: light-dark(var(--medo-color-teal-600), var(--medo-color-teal-500));
+
   /* Status — success */
   --medo-success-surface: light-dark(var(--medo-color-green-50), var(--medo-color-green-1000));
   --medo-success-text: light-dark(var(--medo-color-green-1000), var(--medo-color-green-300));
@@ -102,6 +121,7 @@
   --medo-success-solid: light-dark(var(--medo-color-green-600), var(--medo-color-green-500));
   --medo-success-solid-hover: light-dark(var(--medo-color-green-700), var(--medo-color-green-400));
   --medo-success-solid-active: light-dark(var(--medo-color-green-800), var(--medo-color-green-300));
+  --medo-success-accent: light-dark(var(--medo-color-green-700), var(--medo-color-green-400));
   --medo-success-on-solid: light-dark(var(--medo-color-white), var(--medo-color-stone-1100));
 
   /* Status — warning */
@@ -109,8 +129,9 @@
   --medo-warning-text: light-dark(var(--medo-color-amber-1000), var(--medo-color-amber-300));
   --medo-warning-border: light-dark(var(--medo-color-amber-300), var(--medo-color-amber-700));
   --medo-warning-solid: light-dark(var(--medo-color-amber-600), var(--medo-color-amber-500));
-  --medo-warning-solid-hover: light-dark(var(--medo-color-amber-700), var(--medo-color-amber-400));
-  --medo-warning-solid-active: light-dark(var(--medo-color-amber-800), var(--medo-color-amber-300));
+  --medo-warning-solid-hover: light-dark(var(--medo-color-amber-500), var(--medo-color-amber-400));
+  --medo-warning-solid-active: light-dark(var(--medo-color-amber-400), var(--medo-color-amber-300));
+  --medo-warning-accent: light-dark(var(--medo-color-amber-800), var(--medo-color-amber-400));
   --medo-warning-on-solid: light-dark(var(--medo-color-stone-1000), var(--medo-color-stone-1100));
 
   /* Status — error */
@@ -120,6 +141,7 @@
   --medo-error-solid: light-dark(var(--medo-color-red-600), var(--medo-color-red-500));
   --medo-error-solid-hover: light-dark(var(--medo-color-red-700), var(--medo-color-red-400));
   --medo-error-solid-active: light-dark(var(--medo-color-red-800), var(--medo-color-red-300));
+  --medo-error-accent: light-dark(var(--medo-color-red-700), var(--medo-color-red-400));
   --medo-error-on-solid: light-dark(var(--medo-color-white), var(--medo-color-stone-1100));
 
   /* Status — info */
@@ -129,6 +151,7 @@
   --medo-info-solid: light-dark(var(--medo-color-blue-600), var(--medo-color-blue-500));
   --medo-info-solid-hover: light-dark(var(--medo-color-blue-700), var(--medo-color-blue-400));
   --medo-info-solid-active: light-dark(var(--medo-color-blue-800), var(--medo-color-blue-300));
+  --medo-info-accent: light-dark(var(--medo-color-blue-700), var(--medo-color-blue-400));
   --medo-info-on-solid: light-dark(var(--medo-color-white), var(--medo-color-stone-1100));
 
   /* Elevation — geometry identical, only the shadow colour swaps */

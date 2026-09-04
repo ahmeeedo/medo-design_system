@@ -149,7 +149,7 @@ class Component extends DCLogic {
     const ring = `0 0 0 3px ${primary[600]}59`;
 
     const on = (extra) => ({ track: primary[600], thumb: '#ffffff', justify: 'flex-end', icon: 'check', iconColor: primary[600], spinner: false, ring: 'none', cursor: 'pointer', ...extra });
-    const off = (extra) => ({ track: stone[300], thumb: '#ffffff', justify: 'flex-start', icon: 'close', iconColor: stone[600], spinner: false, ring: 'none', cursor: 'pointer', ...extra });
+    const off = (extra) => ({ track: stone[300], thumb: '#ffffff', justify: 'flex-start', icon: 'close', iconColor: stone[600] /* --medo-icon-on-light */, spinner: false, ring: 'none', cursor: 'pointer', ...extra });
 
     const matrix = [
       { name: 'An', cells: [
@@ -173,7 +173,7 @@ class Component extends DCLogic {
     const rows = [
       { label: 'Benachrichtigungen', desc: 'Push-Mitteilungen auf dieses Gerät', track: primary[600], thumb: '#fff', justify: 'flex-end', icon: 'check', iconColor: primary[600], spinner: false, divider: stone[200] },
       { label: 'Standort teilen', desc: 'Wird gerade gespeichert …', track: primary[600], thumb: '#fff', justify: 'flex-end', icon: '', iconColor: primary[600], spinner: true, divider: stone[200] },
-      { label: 'Dunkelmodus', desc: 'Später verfügbar', track: stone[300], thumb: '#fff', justify: 'flex-start', icon: 'close', iconColor: stone[600], spinner: false, divider: 'transparent' }
+      { label: 'Dunkelmodus', desc: 'Später verfügbar', track: stone[300], thumb: '#fff', justify: 'flex-start', icon: 'close', iconColor: stone[600] /* --medo-icon-on-light */, spinner: false, divider: 'transparent' }
     ];
 
     return {

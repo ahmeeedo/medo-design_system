@@ -18,15 +18,24 @@ import { describe, it, expect } from 'vitest'
 
 import { loadTokens } from '../../scripts/contrast/tokens.mjs'
 
-/* The roles that carry one value in both themes. All four are the disabled and
-   strong-border greys: stone-500 sits far enough from both extremes to read as
-   "switched off" on white and on stone-1000 alike, so splitting the pair would
-   buy nothing and cost the shared meaning. */
+/* The roles that carry one value in both themes.
+
+   The first four are the disabled and strong-border greys: stone-500 sits far
+   enough from both extremes to read as "switched off" on white and on
+   stone-1000 alike, so splitting the pair would buy nothing and cost the
+   shared meaning.
+
+   The last two are alike for a different reason — they sit on a ground that
+   does not flip. The toggle knob is white in every theme and the slider fill
+   is a teal in every theme, so a mark on either keeps one value. Splitting
+   them would make the mark follow a theme its background never follows. */
 const ALIKE = [
   'medo-text-disabled',
   'medo-icon-disabled',
   'medo-border-strong',
   'medo-action-text-disabled',
+  'medo-icon-on-light',
+  'medo-control-mark-on-primary',
 ]
 
 describe('Hell/Dunkel-Paare der Semantic-Ebene', () => {
@@ -72,7 +81,7 @@ describe('Hell/Dunkel-Paare der Semantic-Ebene', () => {
      prefixes of each other, so a text count reads quietly high. */
   it('zaehlt die Paare wie bei der Aufnahme des Musters', () => {
     const alike = declaredNames.filter((name) => tokens.light(name) === tokens.dark(name))
-    expect(alike).toHaveLength(4)
-    expect(declaredNames.filter((name) => !alike.includes(name))).toHaveLength(77)
+    expect(alike).toHaveLength(6)
+    expect(declaredNames.filter((name) => !alike.includes(name))).toHaveLength(84)
   })
 })

@@ -84,11 +84,11 @@ const MEDO_NOTIFICATION_CSS = `
 
 /* Farbrollen. neutral nutzt die warme Neutralskala, die vier übrigen ihre Statustokens. */
 const MEDO_NT_KINDS = {
-  info:    { icon: "info",          surface: "--medo-info-surface",    border: "--medo-info-border",    text: "--medo-info-text",    accent: "--medo-info-solid-hover",    solid: "--medo-info-solid",    onSolid: "--medo-info-on-solid" },
-  success: { icon: "check_circle",  surface: "--medo-success-surface", border: "--medo-success-border", text: "--medo-success-text", accent: "--medo-success-solid-hover", solid: "--medo-success-solid", onSolid: "--medo-success-on-solid" },
-  warning: { icon: "warning",       surface: "--medo-warning-surface", border: "--medo-warning-border", text: "--medo-warning-text", accent: "--medo-warning-solid-hover", solid: "--medo-warning-solid", onSolid: "--medo-warning-on-solid" },
-  error:   { icon: "error",         surface: "--medo-error-surface",   border: "--medo-error-border",   text: "--medo-error-text",   accent: "--medo-error-solid-hover",   solid: "--medo-error-solid",   onSolid: "--medo-error-on-solid" },
-  neutral: { icon: "notifications", surface: "--medo-surface-container", border: "--medo-border", text: "--medo-text", accent: "--medo-color-stone-700", solid: "--medo-color-stone-700", onSolid: "--medo-color-white" },
+  info:    { icon: "info",          surface: "--medo-info-surface",    border: "--medo-info-border",    text: "--medo-info-text",    accent: "--medo-info-accent",    solid: "--medo-info-solid",    onSolid: "--medo-info-on-solid" },
+  success: { icon: "check_circle",  surface: "--medo-success-surface", border: "--medo-success-border", text: "--medo-success-text", accent: "--medo-success-accent", solid: "--medo-success-solid", onSolid: "--medo-success-on-solid" },
+  warning: { icon: "warning",       surface: "--medo-warning-surface", border: "--medo-warning-border", text: "--medo-warning-text", accent: "--medo-warning-accent", solid: "--medo-warning-solid", onSolid: "--medo-warning-on-solid" },
+  error:   { icon: "error",         surface: "--medo-error-surface",   border: "--medo-error-border",   text: "--medo-error-text",   accent: "--medo-error-accent",   solid: "--medo-error-solid",   onSolid: "--medo-error-on-solid" },
+  neutral: { icon: "notifications", surface: "--medo-surface-container", border: "--medo-border", text: "--medo-text", accent: "--medo-accent-neutral", solid: "--medo-color-stone-700", onSolid: "--medo-color-white" },
 };
 
 const Notification = ({
