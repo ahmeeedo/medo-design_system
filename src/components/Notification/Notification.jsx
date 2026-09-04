@@ -14,7 +14,7 @@ const MEDO_NT_KINDS = {
   success: { icon: 'check_circle',  surface: '--medo-success-surface', border: '--medo-success-border', text: '--medo-success-text', accent: '--medo-success-solid-hover', solid: '--medo-success-solid', onSolid: '--medo-success-on-solid' },
   warning: { icon: 'warning',       surface: '--medo-warning-surface', border: '--medo-warning-border', text: '--medo-warning-text', accent: '--medo-warning-solid-hover', solid: '--medo-warning-solid', onSolid: '--medo-warning-on-solid' },
   error:   { icon: 'error',         surface: '--medo-error-surface',   border: '--medo-error-border',   text: '--medo-error-text',   accent: '--medo-error-solid-hover',   solid: '--medo-error-solid',   onSolid: '--medo-error-on-solid' },
-  neutral: { icon: 'notifications', surface: '--medo-surface-container', border: '--medo-border', text: '--medo-text', accent: '--medo-color-stone-700', solid: '--medo-color-stone-700', onSolid: '--medo-color-white' },
+  neutral: { icon: 'notifications', surface: '--medo-surface-container', border: '--medo-border', text: '--medo-text', accent: '--medo-accent-neutral', solid: '--medo-color-stone-700', onSolid: '--medo-color-white' },
 }
 
 export function Notification({
