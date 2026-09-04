@@ -146,7 +146,7 @@ class Component extends DCLogic {
     const stone = this.makeScale(70, 0.013 * ci);
     const primary = this.makeScale(185, 0.115 * ci);
     const text = stone[1000], muted = `${stone[1000]}ad`;
-    const ring = `0 0 0 3px ${primary[600]}59`;
+    const ring = `0 0 0 3px ${primary[600]}bf`;
 
     const on = (extra) => ({ track: primary[600], thumb: '#ffffff', justify: 'flex-end', icon: 'check', iconColor: primary[600], spinner: false, ring: 'none', cursor: 'pointer', ...extra });
     const off = (extra) => ({ track: stone[300], thumb: '#ffffff', justify: 'flex-start', icon: 'close', iconColor: stone[600] /* --medo-icon-on-light */, spinner: false, ring: 'none', cursor: 'pointer', ...extra });

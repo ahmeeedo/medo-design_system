@@ -30,15 +30,16 @@ Exception: stone-500 is #928e8a, one step darker than the default lRamp produces
 
 ### Key semantic tokens (Ebene 3)
 - surface=white, surface-container=stone-50, surface-container-high=stone-100, surface-sunken=stone-100, surface-hover=stone-100, surface-selected=primary-100, overlay=white
-- text=stone-1000, text-muted=stone-1000 @68% (transparent!), text-subtle=stone-800, text-on-primary=white, text-disabled=stone-500, text-link=primary-600, text-link-hover=primary-800
-- icon=stone-900, icon-muted=stone-1000 @55% (transparent!), icon-on-primary=white, icon-disabled=stone-500
+- text=stone-1000, text-muted=stone-1000 @68% (transparent!), text-subtle=stone-800, text-on-primary=white, text-disabled=stone-500, text-link=primary-700, text-link-hover=primary-800
+- icon=stone-900, icon-muted=stone-1000 @55% (transparent!), icon-on-primary=white, icon-disabled=stone-500, icon-on-light=stone-600
 - border=stone-300, border-strong=stone-500, border-subtle=stone-200, border-disabled=stone-200
 - input-bg=white, input-bg-disabled=stone-100, input-text=stone-1000, input-placeholder=stone-600, input-border=stone-400 (user chose light on purpose), input-border-hover=stone-600, input-border-focus=primary-600, input-border-error=error-600, input-border-disabled=stone-200
 - action=primary-600, action-hover=primary-700, action-active=primary-800, action-disabled=stone-200, action-text=white, action-text-disabled=stone-500
 - action-neutral=stone-100, action-neutral-hover=stone-200, action-neutral-active=stone-300, action-neutral-text=stone-1000
 - focus-ring=primary-600 (rendered as 3px ring at ~75% alpha, hex+bf), state-hover=stone-100, state-pressed=stone-200, state-selected=primary-100, selection=primary-200
-- Status sets (success/warning/error/info): -surface=50, -text=1000, -border=300, -solid=600, -solid-hover=700, -solid-active=800, -on-solid: white EXCEPT warning-on-solid=stone-1000 (amber too light for white text)
+- Status sets (success/warning/error/info): -surface=50, -text=1000, -border=300, -solid=600, -solid-hover=700, -solid-active=800, -accent=700, -on-solid: white. EXCEPTIONS for warning: -solid-hover=500 and -solid-active=400 (the fill lightens when operated so its dark label stays readable), -accent=800 (the accent goes darker where the fill goes lighter), -on-solid=stone-1000 (amber too light for white text)
 - divider=stone-200, scrim=rgba(23,21,19,0.5)
+- accent-neutral=stone-700, control-mark=stone-400, control-mark-on-primary=white @75% (transparent!), logo-dot=primary-600
 
 ## Typography — LOCKED
 - Fonts: DM Sans (sans, body/UI/headings) + DM Mono (mono, code/data/labels). Max 2 families.

@@ -140,7 +140,7 @@ gedrückt geht eine Stufe tiefer (stone-200); ausgewählt wechselt in `state-sel
 Farbige Aktionen wandern in der Skala nach unten: `action` 600 → hover 700 → active 800. Es gibt
 keine Deckkraft-Hovers und keine Skalierungssprünge.
 
-**Fokus.** Immer sichtbar, immer gleich: ein 3px-Ring in primary-600 mit rund 35 % Alpha
+**Fokus.** Immer sichtbar, immer gleich: ein 3px-Ring in primary-600 mit rund 75 % Alpha
 (`--medo-focus-ring`), außen am Element. Fokus wird nie entfernt, auch nicht bei Mausbedienung.
 
 **Bewegung.** Sehr zurückhaltend. Zustandswechsel 120–180ms mit `ease-out`, Ein- und Ausblenden von

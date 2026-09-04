@@ -17,7 +17,7 @@
   body{margin:0}
   ::selection{background:#e6e1d8}
   .msr{font-family:'Material Symbols Rounded';font-weight:300;line-height:1;display:inline-block}
-  [role=tab]:focus-visible{outline:none;box-shadow:0 0 0 3px #0e9d9159;border-radius:6px}
+  [role=tab]:focus-visible{outline:none;box-shadow:0 0 0 3px #007265bf;border-radius:6px}
   .no-sb{scrollbar-width:none;-ms-overflow-style:none}
   .no-sb::-webkit-scrollbar{display:none;width:0;height:0}
 </style>
@@ -415,7 +415,7 @@ class Component extends DCLogic {
       panelBg: stone[50],
       track: stone[100],
       text: st.text, muted: st.muted, subtle: st.subtle, disabled: st.disabled,
-      stone200: stone[200], focusRing: primary[600] + '59',
+      stone200: stone[200], focusRing: primary[600] + 'bf',
       panelIcon: panel.icon, panelTitle: panel.title, panelBody: panel.body,
       mainTabs: this.buildTabs('main', defsMain, st),
       smTabs: this.buildTabs('sm', defsSm, st),
