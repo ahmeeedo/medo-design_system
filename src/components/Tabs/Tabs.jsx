@@ -1,4 +1,4 @@
-import { useId, useRef, useState } from 'react'
+import { useEffect, useId, useRef, useState } from 'react'
 import { Icon } from '../Icon/Icon'
 import './Tabs.css'
 
@@ -30,6 +30,7 @@ export function Tabs({
   const [inner, setInner] = useState(defaultValue !== undefined ? defaultValue : first.value)
   const active = controlled ? value : inner
   const listRef = useRef(null)
+  const scrollerRef = useRef(null)
   const vertical = orientation === 'vertical'
 
   const select = (v) => {
@@ -59,6 +60,126 @@ export function Tabs({
     if (el) el.focus()
   }
 
+  /* Der gewählte Tab wird ins Bild geholt — und darüber hinaus so weit, dass der
+     benachbarte Tab hereinlugt. Ohne diesen Nachlauf ist der Leiste nicht anzusehen,
+     dass sie weitergeht; mit ihm bewegt sie sich schon beim Tab davor.
+     Der Nachlauf ist nach beiden Seiten begrenzt, damit der gewählte Tab dabei nie
+     aus seinem Randabstand rutscht.
+     Gerollt wird die Hülle unmittelbar statt über scrollIntoView: das würde jeden
+     rollenden Vorfahren mitbewegen und in einer Seite mit haftendem Kopf den Inhalt
+     darunter wegziehen.
+     Beide Anteile werden gerechnet und in EINEM Ruck gerollt, damit die Bewegung weich
+     laufen kann; nachgemessen landet das auf demselben Wert wie zwei getrennte Rucke.
+
+     Abhängigkeiten: `active`, `fullWidth` und `vertical` — vollständig. Die beiden letzteren
+     entscheiden, OB die Hülle gerendert wird. Wird sie dabei neu eingehängt, steht sie auf
+     Rollposition 0, und der gewählte Tab kann außerhalb des Bildes liegen; ohne die beiden
+     Angaben liefe der Effekt dann nicht und die Leiste bliebe stehen. Gemessen, siehe
+     Tabs.test.jsx. Ein Lauf in die andere Richtung — die Hülle verschwindet — bricht an
+     `scrollerRef.current === null` folgenlos ab. Das Ref selbst gehört nicht in die Liste:
+     seine Identität ist stabil. */
+  useEffect(() => {
+    const box = scrollerRef.current
+    if (!box || active == null) return
+    const btn = box.querySelector('[data-val="' + active + '"]')
+    if (!btn) return
+
+    const pad = parseFloat(getComputedStyle(box).scrollPaddingInlineStart) || 0
+    const rahmen = box.getBoundingClientRect()
+    const fehlt = (links, rechts) => {
+      const kurz = links - (rahmen.left + pad)
+      const drueber = rechts - (rahmen.right - pad)
+      return kurz < 0 ? kurz : drueber > 0 ? drueber : 0
+    }
+
+    const roh = btn.getBoundingClientRect()
+    const ersterAnteil = fehlt(roh.left, roh.right)
+
+    /* Nach dem ersten Anteil liegen alle Kanten um genau diesen Betrag weiter links. */
+    const b = { left: roh.left - ersterAnteil, right: roh.right - ersterAnteil }
+    const davor = btn.previousElementSibling
+    const danach = btn.nextElementSibling
+    const links = davor
+      ? Math.max(davor.getBoundingClientRect().left - ersterAnteil, b.left - pad)
+      : b.left
+    const rechts = danach
+      ? Math.min(danach.getBoundingClientRect().right - ersterAnteil, b.right + pad)
+      : b.right
+    const tiefst = b.right - (rahmen.right - pad)
+    const hoechst = b.left - (rahmen.left + pad)
+    const zweiterAnteil = Math.min(Math.max(fehlt(links, rechts), tiefst), hoechst)
+
+    const delta = ersterAnteil + zweiterAnteil
+    if (delta) box.scrollBy({ left: delta, behavior: 'smooth' })
+  }, [active, fullWidth, vertical])
+
+  const list = (
+    <div
+      ref={listRef}
+      role="tablist"
+      aria-label={ariaLabel}
+      aria-orientation={vertical ? 'vertical' : 'horizontal'}
+      onKeyDown={onKeyDown}
+      className={[
+        'medo-tabs__list',
+        'medo-tabs__list--' + (vertical ? 'vertical' : variant),
+        'medo-tabs__list--' + size,
+      ]
+        .filter(Boolean)
+        .join(' ')}
+      style={fullWidth && !vertical ? { display: 'flex' } : undefined}
+    >
+      {items.map((t) => {
+        const selected = t.value === active
+        const glyph = size === 'sm' ? 17 : variant === 'contained' ? 18 : 19
+        return (
+          <button
+            key={t.value}
+            type="button"
+            role="tab"
+            id={uid + '-tab-' + t.value}
+            data-val={t.value}
+            aria-selected={selected ? 'true' : 'false'}
+            aria-controls={children ? uid + '-panel' : undefined}
+            tabIndex={selected ? 0 : -1}
+            disabled={!!t.disabled}
+            onClick={() => !t.disabled && select(t.value)}
+            className={[
+              'medo-tabs__tab',
+              'medo-tabs__tab--' + (vertical ? 'vertical' : variant),
+              fullWidth && !vertical ? 'medo-tabs__tab--full' : null,
+            ]
+              .filter(Boolean)
+              .join(' ')}
+          >
+            <span className="medo-tabs__inner">
+              {t.icon ? <Icon name={t.icon} size={glyph} /> : null}
+              <span>{t.label}</span>
+              {t.badge !== undefined && t.badge !== null ? (
+                <span className="medo-tabs__badge">{t.badge}</span>
+              ) : null}
+            </span>
+            {variant === 'underline' || vertical ? (
+              <span className="medo-tabs__ind" aria-hidden="true" />
+            ) : null}
+          </button>
+        )
+      })}
+    </div>
+  )
+
+  /* Jede waagerechte Leiste bekommt die Hülle — ausgenommen fullWidth, wo die Tabs sich
+     die Breite teilen und deshalb nichts überhängen kann. Ohne diese Weitung schiebt eine
+     Leiste, deren Tabs nicht nebeneinanderpassen, die ganze Seite auf. */
+  const listOrScroller =
+    !vertical && !fullWidth ? (
+      <div className="medo-tabs__scroller" ref={scrollerRef}>
+        {list}
+      </div>
+    ) : (
+      list
+    )
+
   return (
     <div
       className={['medo-tabs', vertical ? 'medo-tabs--vertical' : null, className]
@@ -67,59 +188,7 @@ export function Tabs({
       style={style}
       {...rest}
     >
-      <div
-        ref={listRef}
-        role="tablist"
-        aria-label={ariaLabel}
-        aria-orientation={vertical ? 'vertical' : 'horizontal'}
-        onKeyDown={onKeyDown}
-        className={[
-          'medo-tabs__list',
-          'medo-tabs__list--' + (vertical ? 'vertical' : variant),
-          'medo-tabs__list--' + size,
-          scrollable && !vertical ? 'medo-tabs__list--scroll' : null,
-        ]
-          .filter(Boolean)
-          .join(' ')}
-        style={fullWidth && !vertical ? { display: 'flex' } : undefined}
-      >
-        {items.map((t) => {
-          const selected = t.value === active
-          const glyph = size === 'sm' ? 17 : variant === 'contained' ? 18 : 19
-          return (
-            <button
-              key={t.value}
-              type="button"
-              role="tab"
-              id={uid + '-tab-' + t.value}
-              data-val={t.value}
-              aria-selected={selected ? 'true' : 'false'}
-              aria-controls={children ? uid + '-panel' : undefined}
-              tabIndex={selected ? 0 : -1}
-              disabled={!!t.disabled}
-              onClick={() => !t.disabled && select(t.value)}
-              className={[
-                'medo-tabs__tab',
-                'medo-tabs__tab--' + (vertical ? 'vertical' : variant),
-                fullWidth && !vertical ? 'medo-tabs__tab--full' : null,
-              ]
-                .filter(Boolean)
-                .join(' ')}
-            >
-              <span className="medo-tabs__inner">
-                {t.icon ? <Icon name={t.icon} size={glyph} /> : null}
-                <span>{t.label}</span>
-                {t.badge !== undefined && t.badge !== null ? (
-                  <span className="medo-tabs__badge">{t.badge}</span>
-                ) : null}
-              </span>
-              {variant === 'underline' || vertical ? (
-                <span className="medo-tabs__ind" aria-hidden="true" />
-              ) : null}
-            </button>
-          )
-        })}
-      </div>
+      {listOrScroller}
       {children ? (
         <div
           role="tabpanel"

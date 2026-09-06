@@ -63,43 +63,6 @@ export function PageLayout({ title, description, tabs = [] }) {
     [tabs],
   )
 
-  /* Scrolls the tab bar itself rather than calling scrollIntoView, which would
-     walk every scrollable ancestor and can move the page under a sticky
-     element. The gap stays in CSS as scroll-padding and is read back here. */
-  useEffect(() => {
-    const bar = tabBarRef.current
-    if (!bar || !active) return
-    const btn = bar.querySelector(`[data-val="${active}"]`)
-    if (!btn) return
-
-    const pad = parseFloat(getComputedStyle(bar).scrollPaddingInlineStart) || 0
-    const barBox = bar.getBoundingClientRect()
-    const box = btn.getBoundingClientRect()
-
-    const shortOf = (left, right) => {
-      const short = left - (barBox.left + pad)
-      const over = right - (barBox.right - pad)
-      return short < 0 ? short : over > 0 ? over : 0
-    }
-
-    let delta = shortOf(box.left, box.right)
-
-    /* The tab itself is in view, so nudge on until the neighbouring tab peeks
-       in — otherwise nothing signals that the bar continues. Clamped so the
-       selected tab never leaves its padded area. */
-    if (!delta) {
-      const prev = btn.previousElementSibling
-      const next = btn.nextElementSibling
-      const left = prev ? Math.max(prev.getBoundingClientRect().left, box.left - pad) : box.left
-      const right = next ? Math.min(next.getBoundingClientRect().right, box.right + pad) : box.right
-      const lowest = box.right - (barBox.right - pad)
-      const highest = box.left - (barBox.left + pad)
-      delta = Math.min(Math.max(shortOf(left, right), lowest), highest)
-    }
-
-    if (delta) bar.scrollBy({ left: delta, behavior: 'smooth' })
-  }, [active])
-
   useEffect(() => {
     setHeadings([])
     setActiveId('')
@@ -163,15 +126,14 @@ export function PageLayout({ title, description, tabs = [] }) {
         )}
       </div>
 
-      {/* The contained list is inline-flex with labels that never wrap, so it is
-          sized to its own min-content and cannot scroll itself. The scroll
-          container has to be this wrapper, otherwise the page overflows
-          sideways on narrow viewports. scroll-padding keeps the tab that is
-          scrolled into view off the edge instead of flush against it. */}
+      {/* Sticky chrome only. Scrolling and the scroll-along belong to the Tabs
+          component itself since it grew its own scroller — keeping a second one
+          here would have the two fight each other. The ref stays: the resize
+          observer above measures this bar to offset anchor navigation. */}
       <div
         ref={tabBarRef}
         {...{ [TAB_BAR_MARKER]: '' }}
-        className="sticky z-20 bg-[var(--medo-surface)] border-b border-[var(--medo-border)] mb-[var(--medo-space-2xl)] px-[var(--medo-space-xl)] py-[var(--medo-space-sm)] overflow-x-auto [scroll-padding-inline:var(--medo-space-xl)] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        className="sticky z-20 bg-[var(--medo-surface)] border-b border-[var(--medo-border)] mb-[var(--medo-space-2xl)] px-[var(--medo-space-xl)] py-[var(--medo-space-sm)]"
         style={{ top: HEADER_H }}
       >
         <Tabs
@@ -180,7 +142,6 @@ export function PageLayout({ title, description, tabs = [] }) {
           onChange={handleTabClick}
           variant="contained"
           ariaLabel={title}
-          className="w-max"
         />
       </div>
 

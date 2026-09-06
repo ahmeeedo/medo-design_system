@@ -86,3 +86,86 @@ describe('Tabs', () => {
     expect(screen.getByRole('tab', { name: 'Usage' })).not.toHaveAttribute('aria-controls')
   })
 })
+
+/* Die mitlaufende Leiste. jsdom rechnet kein Layout, deshalb wird die Geometrie
+   gestellt: Sichtfeld 0–300, der gewaehlte Tab liegt bei 320–400 also rechts daneben. */
+describe('Tabs — die Leiste laeuft mit', () => {
+  const rahmen = { left: 0, right: 300, top: 0, bottom: 44, width: 300, height: 44 }
+  const lagen = {
+    overview: { left: 0, right: 80 },
+    usage: { left: 240, right: 320 },
+    code: { left: 320, right: 400 },
+    accessibility: { left: 420, right: 500 },
+  }
+
+  let zurueck
+  let gerollt
+
+  beforeEach(() => {
+    gerollt = vi.fn()
+    const origRect = Element.prototype.getBoundingClientRect
+    const origScroll = Element.prototype.scrollBy
+    Element.prototype.getBoundingClientRect = function () {
+      if (this.classList.contains('medo-tabs__scroller')) return rahmen
+      const v = this.getAttribute && this.getAttribute('data-val')
+      if (v && lagen[v]) return lagen[v]
+      return origRect.call(this)
+    }
+    Element.prototype.scrollBy = gerollt
+    zurueck = () => {
+      Element.prototype.getBoundingClientRect = origRect
+      Element.prototype.scrollBy = origScroll
+    }
+  })
+
+  afterEach(() => zurueck())
+
+  it('holt den gewaehlten Tab ins Bild, wenn er rechts daneben liegt', () => {
+    render(<Tabs items={items} value="code" onChange={() => {}} />)
+
+    expect(gerollt).toHaveBeenCalledWith({ left: 100, behavior: 'smooth' })
+  })
+
+  it('laesst die Leiste stehen, solange der gewaehlte Tab vollstaendig sichtbar ist', () => {
+    render(<Tabs items={items} value="overview" onChange={() => {}} />)
+
+    expect(gerollt).not.toHaveBeenCalled()
+  })
+
+  /* Messung zur Abhaengigkeitsliste: faellt `fullWidth` weg, wird die Huelle neu
+     eingehaengt und steht auf Rollposition 0. Ohne `fullWidth` in der Liste liefe der
+     Effekt hier nicht — der gewaehlte Tab bliebe ausserhalb des Bildes. */
+  it('holt den Tab auch dann ins Bild, wenn die Huelle erst durch fullWidth-Wegfall entsteht', () => {
+    const { rerender } = render(<Tabs items={items} value="code" fullWidth onChange={() => {}} />)
+    expect(gerollt).not.toHaveBeenCalled()
+
+    rerender(<Tabs items={items} value="code" onChange={() => {}} />)
+
+    expect(gerollt).toHaveBeenCalledWith({ left: 100, behavior: 'smooth' })
+  })
+
+  /* Die Gegenrichtung: die Huelle verschwindet. Der Effekt laeuft, findet aber nichts
+     und bricht folgenlos ab. */
+  it('bricht folgenlos ab, wenn die Huelle durch fullWidth verschwindet', () => {
+    const { rerender } = render(<Tabs items={items} value="overview" onChange={() => {}} />)
+    rerender(<Tabs items={items} value="overview" fullWidth onChange={() => {}} />)
+
+    expect(gerollt).not.toHaveBeenCalled()
+  })
+
+  it('legt bei orientation=vertical keine Huelle an', () => {
+    const { container } = render(
+      <Tabs items={items} value="code" orientation="vertical" onChange={() => {}} />
+    )
+
+    expect(container.querySelector('.medo-tabs__scroller')).toBeNull()
+    expect(gerollt).not.toHaveBeenCalled()
+  })
+
+  /* scrollable ist seit der Aenderung wirkungslos: die Huelle entsteht ohnehin. */
+  it('legt die Huelle auch ohne scrollable an', () => {
+    const { container } = render(<Tabs items={items} value="overview" onChange={() => {}} />)
+
+    expect(container.querySelector('.medo-tabs__scroller')).not.toBeNull()
+  })
+})
