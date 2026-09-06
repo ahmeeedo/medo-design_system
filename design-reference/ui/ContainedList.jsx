@@ -91,17 +91,6 @@ const MEDO_CLIST_CSS = `
 }
 .medo-clist__row[aria-selected="true"] .medo-clist__box--radio{ background: var(--medo-input-bg, #fff); }
 .medo-clist__dot{ width: 10px; height: 10px; border-radius: var(--medo-radius-full); background: var(--medo-action); }
-.medo-clist__avatar{
-  flex: none;
-  width: 38px; height: 38px;
-  border-radius: var(--medo-radius-full);
-  background: var(--medo-primary-100);
-  color: var(--medo-primary-800);
-  display: inline-flex; align-items: center; justify-content: center;
-  font-size: var(--medo-text-xs);
-  font-weight: 600;
-  letter-spacing: 0.02em;
-}
 .medo-clist__iconbox{
   flex: none;
   width: 40px; height: 40px;
@@ -157,6 +146,7 @@ const ContainedList = ({
   title,
   count,
   emptyText,
+  actionLabel = "Weitere Aktionen",
   ariaLabel,
   className,
   style,
@@ -165,6 +155,7 @@ const ContainedList = ({
   window.MedoUI.injectCss("medo-contained-list-css", MEDO_CLIST_CSS);
 
   const IconCmp = window.MedoUI && window.MedoUI.Icon;
+  const AvatarCmp = window.MedoUI && window.MedoUI.Avatar;
   const multiple = mode === "multiple";
   const selectable = multiple || mode === "single";
   const controlled = value !== undefined;
@@ -242,8 +233,8 @@ const ContainedList = ({
               : null
           )
         : null,
-      it.avatar
-        ? React.createElement("span", { className: "medo-clist__avatar", "aria-hidden": "true" }, it.avatar)
+      it.avatar && AvatarCmp
+        ? React.createElement(AvatarCmp, { initials: it.avatar, size: "md", color: "teal" })
         : it.icon && IconCmp
         ? React.createElement(
             "span",
@@ -267,7 +258,7 @@ const ContainedList = ({
               className: "medo-clist__act",
               role: "button",
               tabIndex: -1,
-              "aria-label": it.actionLabel || "Weitere Aktionen",
+              "aria-label": it.actionLabel || actionLabel,
               onClick: (e) => {
                 e.stopPropagation();
                 if (onAction) onAction(it.value, it);

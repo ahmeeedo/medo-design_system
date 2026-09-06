@@ -5,8 +5,9 @@ Auswahl aus einer bekannten, geschlossenen Liste.
 ## Wann nicht
 
 Bei zwei bis drei kurzen, gleichrangigen Optionen ist `RadioGroup` besser — alles ist sofort
-sichtbar, ohne Klick. Bei mehr als etwa fünfzehn Einträgen oder wenn der Nutzer suchen können soll,
-ist `Search` oder ein Kombinationsfeld richtig. Für Aktionen statt Werte: `Menu`.
+sichtbar, ohne Klick. Ab etwa zehn Einträgen gehört `searchable` gesetzt — die Suche filtert dann die Liste im Panel.
+Erst wenn nicht aus einer bekannten Liste gewählt, sondern in einem offenen Bestand gesucht
+wird, ist `Search` richtig. Für Aktionen statt Werte: `Menu`.
 
 ## Zwei Betriebsarten
 
@@ -31,6 +32,9 @@ Die Liste bleibt beim Wählen **offen**, jeder Eintrag trägt sein Häkchen. Ges
 Klick außerhalb oder Tab. Sind es mehr als etwa acht Werte gleichzeitig, ist eine Liste mit
 Checkboxen (`ContainedList mode="multiple"`) übersichtlicher als ein Feld voller Chips.
 
+Das Panel trägt bei Mehrfachauswahl eine Kopfzeile mit der Anzahl und „Zurücksetzen", und jeder
+Eintrag ein Kontrollkästchen links statt des Häkchens rechts.
+
 ## Tastatur
 
 Die gestaltete Variante ist vollständig bedienbar: Pfeile bewegen, `Home`/`End` springen,
@@ -42,7 +46,9 @@ zum ersten passenden Eintrag. Das Panel klappt nach oben, wenn unten kein Platz 
 
 `options` nimmt ein Array. Gruppen entstehen über verschachtelte `options` und erscheinen als
 Mono-Überschrift in Versalien. Jede Option kann ein `icon` tragen (Material Symbols Rounded) und
-`disabled` sein. Wenn `name` gesetzt ist, wird ein verstecktes Feld mitgeschrieben, damit ein
+`disabled` sein. Eine Option kann eine `description` als zweite Zeile tragen und ein `flag` — ein
+farbiges Kennzeichen links im Eintrag, das einen freien CSS-Hintergrundwert nimmt (Farbe, Verlauf
+oder `url(...)`), etwa für Landesflaggen. Wenn `name` gesetzt ist, wird ein verstecktes Feld mitgeschrieben, damit ein
 normales Formular den Wert abschickt.
 
 `onChange` bekommt `{ target: { value, name } }` — bewusst wie ein natives Ereignis, damit der
@@ -51,6 +57,17 @@ Aufrufer beide Varianten gleich behandeln kann.
 `defaultOpen` startet mit offenem Panel. Das ist ausschließlich für Dokumentationskarten und Tests
 gedacht, damit das Aufklappmenü in einer statischen Vorschau sichtbar ist — in einer echten
 Oberfläche gehört es nicht gesetzt.
+
+## Suche
+
+`searchable` setzt ein Suchfeld über die Liste. Es übernimmt beim Öffnen den Fokus; die Pfeiltasten
+wandern weiter durch die gefilterte Liste. Gesucht wird in `label` und `description`. Eine
+Gruppenüberschrift bleibt stehen, solange unter ihr noch ein Eintrag übrig ist. Beim Schließen wird
+der Suchbegriff verworfen — beim nächsten Öffnen steht die Liste wieder vollständig da.
+
+Ist `options` leer, steht dort `emptyText` („Keine Einträge"). Trifft nur der Suchbegriff nichts,
+steht dort `noResultsText` („Keine Treffer") — die Unterscheidung sagt dem Nutzer, ob er seinen
+Begriff ändern soll oder ob es nichts zu wählen gibt.
 
 ## Vorauswahl
 
@@ -62,7 +79,8 @@ Option die sichere Voreinstellung ist — sonst keine, und dann `required`.
 - Ein `Select` mit zwei Optionen, wo Radios hingehören.
 - Aktionen in die Liste legen — das ist ein `Menu`.
 - `native` als Standard verwenden, nur weil es weniger Code ist.
-- Die Liste als Suchfeld missbrauchen.
+- Die Liste als Suchfeld missbrauchen — `searchable` filtert die vorhandenen Optionen, es
+  sucht nicht in einem offenen Bestand.
 
 ## Beispiel
 

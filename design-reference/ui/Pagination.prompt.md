@@ -30,6 +30,17 @@ Seitenwechsel bleibt die Scrollposition am Anfang der Liste — die Seite spring
 `<nav aria-label>`; jede Nummer ist eine Schaltfläche mit `aria-label="Seite 4"`, die Auslassung ist
 `aria-hidden`. Trefferflächen sind 40px (md) bzw. 32px (sm) — auf Touch-Oberflächen md verwenden.
 
+## Beschriftungen
+
+Alle Texte der Komponente sind einstellbar und stehen vorbelegt auf Deutsch: `pageLabel`,
+`firstLabel`, `previousLabel`, `nextLabel`, `lastLabel`, `backLabel`, `forwardLabel`,
+`pageOfLabel`, `pageSizeLabel`, `rangeLabel`, `jumpLabel`, `jumpAriaLabel`. Wer die Komponente in
+einer anderen Sprache einsetzt, übergibt sie; wer nichts übergibt, bekommt die deutschen Texte.
+
+Wo eine Zahl im Text steht, ist die Angabe eine Funktion: `pageLabel(page)`,
+`pageOfLabel(page, pageCount)`, `rangeLabel(from, to, totalItems)`. Die drei `aria-label`-Angaben
+nehmen nur reinen Text — ein Element darin bliebe für Vorleseprogramme stumm.
+
 ## Nicht tun
 
 - Die aktive Seite nur durch Fettung markieren.

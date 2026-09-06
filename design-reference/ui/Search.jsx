@@ -118,6 +118,10 @@ const Search = ({
   onRemoveRecent,
   className,
   style,
+  onFocus,
+  onBlur,
+  onKeyDown: onKeyDownProp,
+  "aria-invalid": ariaInvalid,
   ...rest
 }) => {
   window.MedoUI.injectCss("medo-field-css", window.MedoUI.MEDO_FIELD_CSS);
@@ -285,12 +289,12 @@ const Search = ({
       "aria-expanded": panelVisible ? "true" : "false",
       "aria-controls": panelVisible ? fieldId + "-list" : undefined,
       "aria-autocomplete": "list",
-      "aria-invalid": error ? "true" : undefined,
+      "aria-invalid": error ? "true" : ariaInvalid,
       style: compact ? { fontSize: "var(--medo-text-sm)" } : undefined,
       onChange: handleChange,
-      onKeyDown,
-      onFocus: () => { setFocused(true); setOpen(true); },
-      onBlur: () => setFocused(false),
+      onKeyDown: (e) => { onKeyDown(e); if (onKeyDownProp) onKeyDownProp(e); },
+      onFocus: (e) => { setFocused(true); setOpen(true); if (onFocus) onFocus(e); },
+      onBlur: (e) => { setFocused(false); if (onBlur) onBlur(e); },
       ...rest,
     }),
     current && !disabled && IconCmp

@@ -131,6 +131,7 @@ const Radio = ({
   id,
   className,
   style,
+  "aria-invalid": ariaInvalid,
   ...rest
 }) => {
   window.MedoUI.injectCss("medo-radio-css", MEDO_RADIO_CSS);
@@ -158,7 +159,7 @@ const Radio = ({
       name,
       value,
       onChange,
-      "aria-invalid": error ? "true" : undefined,
+      "aria-invalid": error ? "true" : ariaInvalid,
       ...rest,
     }),
     React.createElement(

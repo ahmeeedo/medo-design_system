@@ -5,6 +5,11 @@ export interface SelectOption {
   label: string;
   /** Ligaturname eines Material Symbols Rounded Glyphs, links im Eintrag. */
   icon?: string;
+  /** Zweite Zeile unter der Bezeichnung — erklärt den Eintrag, wiederholt ihn nicht. */
+  description?: React.ReactNode;
+  /** Farbiges Kennzeichen links im Eintrag, 20×14 px. Nimmt einen freien
+   *  CSS-Hintergrundwert: Farbe, Verlauf oder `url(...)`. */
+  flag?: string;
   disabled?: boolean;
 }
 export interface SelectOptionGroup {
@@ -43,8 +48,25 @@ export interface SelectProps {
   /** Harte Obergrenze sichtbarer Chips. Standard 0 = automatisch: es werden so viele Chips
    *  gezeigt, wie in eine Zeile passen, der Rest erscheint als „+N". */
   maxChips?: number;
+  /** Blendet ein Suchfeld über der Liste ein und filtert die Einträge. Ab etwa zehn Optionen. */
+  searchable?: boolean;
+  /** Platzhalter und `aria-label` des Suchfelds. Standard „Suchen …". */
+  searchPlaceholder?: string;
   /** Startet mit offenem Panel. Nur für Dokumentation und Tests — nicht in Produktion. */
   defaultOpen?: boolean;
+  /** `aria-label` des Kreuzes an einem Chip. Standard `Auswahl entfernen: ${label}`. */
+  removeChipLabel?: (label: string) => string;
+  /** Anzahl der Auswahl — in der Kopfzeile des Panels und im Feld bei
+   *  `multipleDisplay="count"`. Standard `${count} ausgewählt`. */
+  selectedCountLabel?: (count: number) => React.ReactNode;
+  /** Schaltfläche in der Kopfzeile des Panels. Standard „Zurücksetzen". */
+  resetLabel?: React.ReactNode;
+  /** Text, wenn `options` leer ist. Standard „Keine Einträge". */
+  emptyText?: React.ReactNode;
+  /** Text, wenn der Suchbegriff nichts trifft. Standard „Keine Treffer". */
+  noResultsText?: React.ReactNode;
+  /** Nur bei `native`: eigene `<option>`-Elemente statt `options`. */
+  children?: React.ReactNode;
   className?: string;
   style?: React.CSSProperties;
 }

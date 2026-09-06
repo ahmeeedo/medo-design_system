@@ -21,9 +21,14 @@ export interface TabsProps {
   size?: "sm" | "md";
   /** `vertical` erzwingt die Listenform links neben dem Panel (immer underline-Logik). */
   orientation?: "horizontal" | "vertical";
-  /** Tabs teilen die Breite gleichmäßig. Nur horizontal. */
+  /** Tabs teilen die Breite gleichmäßig. Nur horizontal. Passt eine Beschriftung nicht,
+   *  bricht sie auf eine zweite Zeile um und wird erst danach gekürzt; die Leiste wird
+   *  dabei höher. Gleich breite Tabs rollen nie — dafür ist `scrollable` da, das zusammen
+   *  mit `fullWidth` gewinnt. */
   fullWidth?: boolean;
-  /** Waagerecht scrollbar statt Umbruch, ohne sichtbare Scrollbar. */
+  /** Ohne Wirkung. Passen die Tabs nicht nebeneinander, läuft die Leiste ohnehin mit der
+   *  Auswahl mit — das gilt für jede Leiste außer `fullWidth` und `orientation="vertical"`.
+   *  Die Angabe bleibt für bestehende Einbindungen erhalten. */
   scrollable?: boolean;
   /** Beschriftung der Tabliste für Screenreader. */
   ariaLabel?: string;

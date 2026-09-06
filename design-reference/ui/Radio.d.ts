@@ -30,6 +30,10 @@ export interface RadioGroupProps {
   /** Kurzform statt einzelner `<Radio>`-Kinder. */
   options?: RadioGroupOption[];
   children?: React.ReactNode;
+  /** Liegt auf dem `<fieldset>` der Gruppe. */
+  className?: string;
+  /** Liegt auf dem `<fieldset>` der Gruppe. */
+  style?: React.CSSProperties;
 }
 
 export const Radio: React.FC<RadioProps>;
