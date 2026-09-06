@@ -257,3 +257,56 @@ Nach dem Löschversuch des Inhabers wurde die Datei erneut gezogen und geprüft:
 ### Reichweite
 
 `logo-medo.svg` ist die **einzige** SVG-Datei des Design-Projekts. Die Token-, Komponenten- und Seitendateien tragen keinen solchen Block — bei ihnen ist der Spiegel byteweise die Quelle. Kommt später ein weiteres Bild hinzu, gilt für es dasselbe.
+
+---
+
+## 9. Der angewandte Nachtrag, geprüft
+
+Der Inhaber hat `nachtrag-farbe-und-tokens.md` angewandt. Geprüft nach demselben Verfahren wie die erste Anwendung: Dateien neu gezogen, in den Spiegel geschrieben, gegen den Vorstand gediffed, jeder Diff-Block einer Anweisung zugeordnet.
+
+### Ergebnis
+
+**Alle Anweisungen des Nachtrags sind umgesetzt. Keine Abweichung, keine Zutat.**
+
+| Abschnitt | Anweisungen | Umgesetzt |
+|---|---|---|
+| §2.1 Textlink in `CLAUDE.md` | 1 | ✓ |
+| §2.2 Status-Zeile | 1 | ✓ |
+| §2.3 Icon-Zeile und neue Token-Zeile | 2 | ✓ |
+| §3.1 Deckkraft am Token-Wert | 14 in 14 Dateien | ✓ |
+| §3.2 harter Hexwert | 17 in 11 Dateien | ✓ |
+| §4 `readme.md` | 1 | ✓ |
+| §5 Teilstriche des Sliders | 1 | ✓ |
+| **Summe** | **37** | **37** |
+
+Die 37 geänderten Zeilen im Spiegel entsprechen genau diesen 37 Anweisungen. Nach der Anwendung trägt **keine** Spezifikationsseite mehr eine 35-%-Fokusring-Stelle.
+
+### Was in der Meldung der anwendenden Seite nicht stimmte
+
+Die Meldung nannte **20 geschriebene Dateien** und schrieb §2.1, §4 sowie drei Fokusring-Stellen (Toggle, Modal, Slider) einer früheren Runde zu. **Das trifft nicht zu** — nachgeprüft am Spiegelstand vor der Anwendung, der alle drei noch auf 35 % führte, und an `CLAUDE.md` und `readme.md`, die beide noch die alten Werte trugen.
+
+Tatsächlich hat die Anwendung **22 Dateien** geschrieben und dabei **alle** Anweisungen des Nachtrags umgesetzt, auch die drei angeblich schon erledigten. Die Meldung untertreibt also; die Arbeit war vollständig.
+
+**Die Lehre ist dieselbe wie bei der ersten Anwendung, nur umgekehrt:** die Rückmeldung der anwendenden Seite ist als Wegweiser brauchbar, als Beleg nicht. Beim ersten Mal behauptete sie mehr, als geschehen war; diesmal weniger. In beiden Fällen war der Diff gegen den Vorstand die einzige belastbare Auskunft.
+
+### Eine Auslegung, die keine Abweichung ist
+
+Der Nachtrag verlangte in §2.3, die vier neutralen Token in die Aufstellung aufzunehmen, ohne die Zeilenform vorzuschreiben. Die Anwendung hat sie als **eigene Zeile hinter der `divider`-Zeile** gesetzt statt sie anzuhängen. Inhaltlich deckungsgleich, in der Form klarer als der Vorschlag. Nachgeprüft: dabei ist nichts anderes verrutscht.
+
+### Prüftiefe, offen ausgewiesen
+
+**Zehn Dateien wurden vollständig gezogen und byteweise geprüft:** `CLAUDE.md`, `readme.md` sowie die Spezifikationsseiten `Toggle`, `Modal`, `Pagination`, `Breadcrumb`, `Content-switcher`, `Slider`, `Menu-buttons` und `Date-picker`. Die Auswahl deckt jede vorkommende Konfiguration mehrfach ab: §3.1 allein, §3.2 mit einem, zwei, drei und vier Vorkommen, beide Schreibweisen in einer Datei, und die einzige Datei mit drei verschiedenen Anweisungen.
+
+**Die übrigen dreizehn Spezifikationsseiten** (`Button`, `Checkbox`, `Contained-list`, `Dropdown`, `Link`, `Number-input`, `Popover`, `Radio-button`, `Search`, `Select`, `Tabs`, `Tag`, `Text-input`) wurden aus dem so bestätigten Muster gespiegelt, ohne einzeln gezogen zu werden. Zwölf davon tragen je genau ein Vorkommen — die einfachste vorkommende Form; `Tabs` trägt beide Schreibweisen je einmal. Wer volle Byte-Gleichheit auch für sie braucht, zieht sie nach; erwartet wird je eine geänderte Zeile, bei `Tabs` zwei.
+
+### Ausdrücklich ausgenommen — als unangetastet belegt
+
+| Stelle | Zustand |
+|---|---|
+| `#0e9d9126` in `Übersicht.dc.html` | unverändert, 1 Vorkommen |
+| `tokens/alias-colors.css` | unverändert, kein Diff |
+| `logo-medo.svg` | unverändert, kein Diff |
+
+### §7 erledigt
+
+Die Status-Karte wurde vom Inhaber am Bildschirm geprüft: die Akzent-Zeile ist vollständig sichtbar, der Inhalt läuft bei etwa 130 px aus, die `body`-Höhe von 150 px schneidet nichts ab. Dass `viewport` auf 196 px steht, bleibt eine Anmerkung ohne sichtbare Folge.

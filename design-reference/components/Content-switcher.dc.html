@@ -17,7 +17,7 @@
   body{margin:0}
   ::selection{background:#e6e1d8}
   .msr{font-family:'Material Symbols Rounded';font-weight:300;line-height:1;display:inline-block}
-  [role=tab]:focus-visible{outline:none;box-shadow:0 0 0 3px #0e9d9159}
+  [role=tab]:focus-visible{outline:none;box-shadow:0 0 0 3px #007265bf}
   .seg{position:relative}
   .seg .tip{opacity:0;visibility:hidden;pointer-events:none;transition:opacity .12s ease, visibility .12s ease, transform .12s ease;transform:translateX(-50%) translateY(3px);transition-delay:0s}
   .seg:hover .tip{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0);transition-delay:.4s}
@@ -344,7 +344,7 @@ class Component extends DCLogic {
     return {
       dark: stone[1000], primary: primary[600], panelBg: stone[50], track: stone[100],
       block: stone[200], borderStrong: stone[300],
-      text: st.text, muted: st.muted, subtle: st.subtle, disabled: st.disabled, focusRing: primary[600] + '59',
+      text: st.text, muted: st.muted, subtle: st.subtle, disabled: st.disabled, focusRing: primary[600] + 'bf',
       viewTabs: this.buildSegs('view', views, st),
       viewSmTabs: this.buildSegs('viewSm', views, st),
       chartTabs: this.buildSegs('chart', charts, st),

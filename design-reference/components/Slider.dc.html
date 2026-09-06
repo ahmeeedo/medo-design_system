@@ -18,7 +18,7 @@
   ::selection{background:#e6e1d8}
   .msr{font-family:'Material Symbols Rounded';font-weight:300;line-height:1;display:inline-block}
   [role=slider]{outline:none}
-  [role=slider]:focus-visible{box-shadow:0 0 0 3px #0e9d9159, 0 1px 2px rgba(31,29,26,0.12)}
+  [role=slider]:focus-visible{box-shadow:0 0 0 3px #007265bf, 0 1px 2px rgba(31,29,26,0.12)}
   .sl-area{touch-action:none;cursor:pointer}
 </style>
 </helmet>
@@ -333,7 +333,7 @@ class Component extends DCLogic {
       o.stepLabels = [];
       for (let i = c.min; i <= c.max; i += c.step) {
         const tp = ((i - c.min) / (c.max - c.min)) * 100;
-        o.ticks.push({ pos: tp + '%', color: i <= v ? '#ffffffcc' : this._tickIdle });
+        o.ticks.push({ pos: tp + '%', color: i <= v ? 'rgba(255,255,255,0.75)' : this._tickIdle });
         o.stepLabels.push({ label: c.labels[i], color: i === v ? this._text : this._muted });
       }
     }
@@ -375,7 +375,7 @@ class Component extends DCLogic {
     return {
       dark: stone[1000], icon: stone[900], muted: stone[1000] + 'ad', text: stone[1000],
       trackBg: stone[200], fill: primary[600], handleBorder: stone[400], primary: primary[600],
-      handleBorderHover: stone[600], focusRing: primary[600] + '59',
+      handleBorderHover: stone[600], focusRing: primary[600] + 'bf',
       disTrack: stone[200], disFill: stone[400], disBorder: stone[300],
       errorFill: error[600], warnFill: warning[600], errorText: error[700], warnText: warning[900],
       sVolume: this.build('volume'),

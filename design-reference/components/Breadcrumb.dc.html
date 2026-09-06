@@ -17,7 +17,7 @@
   body{margin:0}
   ::selection{background:#e6e1d8}
   .msr{font-family:'Material Symbols Rounded';font-weight:300;line-height:1;display:inline-block}
-  .bc-el:focus-visible,.bc-mi:focus-visible,.bc-lnk:focus-visible,.bc-ico:focus-visible{outline:none;box-shadow:0 0 0 3px #0e9d9159;border-radius:6px}
+  .bc-el:focus-visible,.bc-mi:focus-visible,.bc-lnk:focus-visible,.bc-ico:focus-visible{outline:none;box-shadow:0 0 0 3px #007265bf;border-radius:6px}
   .bc-lnk:hover{color:#004b42 !important;text-decoration:underline;text-underline-offset:3px}
   .bc-ico:hover{color:#004b42 !important}
   .bc-el:hover{background:#dbdad8 !important}
@@ -234,7 +234,7 @@ class Component extends DCLogic {
     return {
       link: primary[600], linkHover: primary[800],
       sep: stone[500], muted: stone[1000] + 'ad', text: stone[1000], icon: stone[900],
-      disabledLink: stone[400], focusRing: primary[600] + '59', primary: primary[600],
+      disabledLink: stone[400], focusRing: primary[600] + 'bf', primary: primary[600],
       elBg: stone[100], elBgHover: stone[200],
       menuBorder: stone[200], menuShadow: '0 2px 4px rgba(31,29,26,0.06),0 6px 16px rgba(31,29,26,0.07)',
       menuOpen: this.state.menuOpen,
