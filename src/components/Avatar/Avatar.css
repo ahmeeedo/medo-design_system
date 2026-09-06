@@ -1,0 +1,58 @@
+.medo-av{
+  box-sizing: border-box;
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: var(--medo-radius-full);
+  font-family: var(--medo-font-sans);
+  font-weight: var(--medo-weight-semibold);
+  /* 0.02em sits on no tracking step. A deliberate exception, decided by the
+     owner: the value already ships this way. Do not align it. */
+  letter-spacing: 0.02em;
+  color: var(--medo-color-white);
+  user-select: none;
+}
+.medo-av__img{ width: 100%; height: 100%; object-fit: cover; display: block; }
+
+/* 30px and 38px sit on no spacing step (24/32/48). A deliberate exception,
+   decided by the owner: both sizes already ship this way, and changing them
+   would touch third-party integrations. Do not pull them onto tokens.
+   The third size is unaffected — 64px is space-3xl. */
+.medo-av--sm{ width: 30px; height: 30px; font-size: var(--medo-text-xs); }
+.medo-av--md{ width: 38px; height: 38px; font-size: var(--medo-text-xs); }
+.medo-av--lg{
+  width: var(--medo-space-3xl);
+  height: var(--medo-space-3xl);
+  font-size: var(--medo-text-xl);
+}
+
+/* The fifteen colour schemes. White type throughout — checked against WCAG 2.2,
+   the weakest of the row 5.84 (teal) against the required 4.5.
+   Five families do not sit on 600: orange, amber and yellow carry no white type
+   there, violet would sit too close to indigo, stone too close to grey.
+   A deliberate departure from the "600 = main/solid colour" principle that
+   applies to the avatar alone — the person picks their own scheme, and no
+   choice may look bad. For tags, buttons and status colours 600 stands. */
+.medo-av--red{     background: var(--medo-color-red-600); }
+.medo-av--crimson{ background: var(--medo-color-crimson-600); }
+.medo-av--rose{    background: var(--medo-color-rose-600); }
+.medo-av--orange{  background: var(--medo-color-orange-900); }
+.medo-av--amber{   background: var(--medo-color-amber-800); }
+.medo-av--yellow{  background: var(--medo-color-yellow-900); }
+.medo-av--green{   background: var(--medo-color-green-600); }
+.medo-av--teal{    background: var(--medo-color-teal-600); }
+.medo-av--cyan{    background: var(--medo-color-cyan-600); }
+.medo-av--blue{    background: var(--medo-color-blue-600); }
+.medo-av--indigo{  background: var(--medo-color-indigo-600); }
+.medo-av--violet{  background: var(--medo-color-violet-800); }
+.medo-av--purple{  background: var(--medo-color-purple-600); }
+.medo-av--grey{    background: var(--medo-color-grey-600); }
+.medo-av--stone{   background: var(--medo-color-stone-900); }
+
+/* No name available: person symbol on a tinted surface. */
+.medo-av--symbol{ background: var(--medo-surface-sunken); color: var(--medo-icon-muted); }
+/* While the data is still on its way: an empty grey circle at the same size,
+   so nothing jumps when it arrives. */
+.medo-av--loading{ background: var(--medo-surface-container-high); }

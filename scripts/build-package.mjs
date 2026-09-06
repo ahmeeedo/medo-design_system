@@ -152,12 +152,6 @@ if (!manifest.dependencies?.['material-symbols']) {
    three exports the MenuButtons module ships. */
 const CONTRACT_ALIASES = { MenuButtons: 'MenuButton' }
 
-/* Ported and exported, but the reference carries no contract for it at all —
-   no .d.ts, no .jsx, no specification page of its own. Declared permissively so
-   the export resolves, and reported as a gap on every build until the design
-   project supplies the contract. Nothing about its props is asserted here. */
-const WITHOUT_CONTRACT = { Textarea: 'no contract in design-reference' }
-
 const typesOut = path.join(out, 'types')
 fs.mkdirSync(typesOut, { recursive: true })
 
@@ -186,19 +180,8 @@ const lines = [
   '   are verbatim copies of the contracts in the design project. */',
   '',
 ]
-const gaps = []
 
 for (const { name, exports } of modules) {
-  if (WITHOUT_CONTRACT[name]) {
-    gaps.push(`${name} (${WITHOUT_CONTRACT[name]})`)
-    lines.push(
-      `/* ${name}: ${WITHOUT_CONTRACT[name]}. Props are not described. */`,
-      `export declare const ${exports.join(', ')}: import('react').FC<Record<string, unknown>>`,
-      ''
-    )
-    continue
-  }
-
   const contract = CONTRACT_ALIASES[name] ?? name
   if (!fs.existsSync(path.join(typesOut, `${contract}.d.ts`))) {
     throw new Error(`No contract file for ${name} — expected src/types/${contract}.d.ts.`)
@@ -225,4 +208,4 @@ console.log(`package build: ${fs.readdirSync(out).sort().join(', ')}`)
 console.log(`  no portal dependencies in ${javascript.map(({ name }) => name).join(', ')}`)
 console.log(`  style entry point complete: ${required.length} stylesheets, ${fontUrls.length} font faces`)
 console.log(`  types: ${contracts.length} contracts covering ${modules.length} modules`)
-console.log(gaps.length > 0 ? `  without a contract: ${gaps.join(', ')}` : '  every module has a contract')
+console.log('  every module has a contract')

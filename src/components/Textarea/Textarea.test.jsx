@@ -59,4 +59,50 @@ describe('Textarea', () => {
     rerender(<Textarea label="Notiz" readOnly />)
     expect(screen.getByRole('textbox', { name: 'Notiz' })).toHaveAttribute('readonly')
   })
+
+  it('keeps a default of the number zero', () => {
+    render(<Textarea label="Notiz" defaultValue={0} />)
+    expect(screen.getByRole('textbox', { name: 'Notiz' })).toHaveValue('0')
+  })
+
+  it('runs the caller onFocus and onBlur without losing the focus state', async () => {
+    const onFocus = vi.fn()
+    const onBlur = vi.fn()
+    const user = userEvent.setup()
+    const { container } = render(<Textarea label="Notiz" onFocus={onFocus} onBlur={onBlur} />)
+    const field = screen.getByRole('textbox', { name: 'Notiz' })
+    const box = container.querySelector('.medo-field__box')
+
+    await user.click(field)
+    expect(onFocus).toHaveBeenCalled()
+    expect(box).toHaveClass('medo-field__box--focus')
+
+    await user.tab()
+    expect(onBlur).toHaveBeenCalled()
+    expect(box).not.toHaveClass('medo-field__box--focus')
+  })
+
+  it('joins a caller description with the one pointing at the message', () => {
+    render(<Textarea label="Notiz" hint="Hilfe" aria-describedby="extern" />)
+    const described = screen.getByRole('textbox', { name: 'Notiz' }).getAttribute('aria-describedby')
+
+    expect(described.split(' ')).toContain('extern')
+    expect(described.split(' ').length).toBe(2)
+  })
+
+  it('leaves aria-invalid to the caller until an error displaces it', () => {
+    const { rerender } = render(<Textarea label="Notiz" aria-invalid="true" />)
+    expect(screen.getByRole('textbox', { name: 'Notiz' })).toHaveAttribute('aria-invalid', 'true')
+
+    rerender(<Textarea label="Notiz" aria-invalid="false" error="Bitte einen Befund eintragen" />)
+    expect(screen.getByRole('textbox', { name: 'Notiz' })).toHaveAttribute('aria-invalid', 'true')
+  })
+
+  it('does not let a passed-through attribute displace the field id', () => {
+    render(<Textarea label="Notiz" id="fest" data-testid="ta" />)
+    const field = screen.getByRole('textbox', { name: 'Notiz' })
+
+    expect(field).toHaveAttribute('id', 'fest')
+    expect(field).toHaveAttribute('data-testid', 'ta')
+  })
 })
