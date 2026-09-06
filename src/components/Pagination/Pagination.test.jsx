@@ -68,3 +68,118 @@ describe('Pagination · Rückrufe', () => {
     expect(onPageSizeChange.mock.calls[0][0]).toBeTypeOf('number')
   })
 })
+
+/* Beschriftungen. Der Vertrag sagt fuer jede Angabe einen Vorgabewert zu; das Paket
+   ist ausgeliefert, eine Angabe ohne Vorgabewert liesse bestehende Einbindungen mit
+   leeren Beschriftungen zurueck. Beide Richtungen werden geprueft. */
+describe('Pagination · Beschriftungen', () => {
+  it('traegt ohne gesetzte Angaben weiterhin die deutschen Texte', () => {
+    render(
+      <Pagination
+        variant="bar"
+        page={3}
+        pageCount={12}
+        totalItems={312}
+        pageSize={20}
+        showFirstLast
+        showJump
+        onPageSizeChange={() => {}}
+        onPageChange={() => {}}
+      />
+    )
+
+    expect(screen.getByRole('button', { name: 'Seite 3' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Erste Seite' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Vorherige Seite' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Nächste Seite' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Letzte Seite' })).toBeInTheDocument()
+    expect(screen.getByRole('combobox', { name: 'Einträge pro Seite' })).toBeInTheDocument()
+    expect(screen.getByRole('textbox', { name: 'Zu Seite springen' })).toBeInTheDocument()
+    expect(screen.getByText('Einträge pro Seite')).toBeInTheDocument()
+    expect(screen.getByText('41–60 von 312')).toBeInTheDocument()
+    expect(screen.getByText('Gehe zu')).toBeInTheDocument()
+  })
+
+  it('traegt in der kompakten Form ohne gesetzte Angaben die deutschen Texte', () => {
+    const { container } = render(
+      <Pagination variant="compact" page={3} pageCount={12} onPageChange={() => {}} />
+    )
+
+    expect(screen.getByRole('button', { name: /Zurück/ })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: /Weiter/ })).toBeInTheDocument()
+    /* Der Vorgabewert setzt die Zahl in ein <b>, der Text liegt also ueber mehrere Knoten. */
+    expect(container.querySelector('.medo-pag__info')).toHaveTextContent('Seite 3 von 12')
+  })
+
+  it('nimmt uebergebene Beschriftungen an — auch die drei mit eingesetztem Wert', () => {
+    render(
+      <Pagination
+        variant="bar"
+        page={3}
+        pageCount={12}
+        totalItems={312}
+        pageSize={20}
+        showFirstLast
+        showJump
+        onPageSizeChange={() => {}}
+        onPageChange={() => {}}
+        pageLabel={(page) => `Page ${page}`}
+        firstLabel="First page"
+        previousLabel="Previous page"
+        nextLabel="Next page"
+        lastLabel="Last page"
+        pageSizeLabel="Rows per page"
+        rangeLabel={(from, to, total) => `${from}-${to} of ${total}`}
+        jumpLabel="Go to"
+        jumpAriaLabel="Jump to page"
+      />
+    )
+
+    expect(screen.getByRole('button', { name: 'Page 3' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'First page' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Previous page' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Next page' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Last page' })).toBeInTheDocument()
+    expect(screen.getByRole('combobox', { name: 'Rows per page' })).toBeInTheDocument()
+    expect(screen.getByRole('textbox', { name: 'Jump to page' })).toBeInTheDocument()
+    expect(screen.getByText('41-60 of 312')).toBeInTheDocument()
+    expect(screen.getByText('Go to')).toBeInTheDocument()
+    expect(screen.queryByText('Einträge pro Seite')).not.toBeInTheDocument()
+  })
+
+  it('nimmt die sichtbaren Beschriftungen der kompakten Form an', () => {
+    render(
+      <Pagination
+        variant="compact"
+        page={3}
+        pageCount={12}
+        onPageChange={() => {}}
+        backLabel="Back"
+        forwardLabel="Forward"
+        pageOfLabel={(page, count) => `Page ${page} of ${count}`}
+      />
+    )
+
+    expect(screen.getByRole('button', { name: /Back/ })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: /Forward/ })).toBeInTheDocument()
+    expect(screen.getByText('Page 3 of 12')).toBeInTheDocument()
+    expect(screen.queryByText(/Zurück/)).not.toBeInTheDocument()
+  })
+
+  /* Der Schluessel je Schaltflaeche haengt nicht mehr an der Beschriftung: zwei gleiche
+     Beschriftungen wuerden sonst denselben React-Schluessel tragen. */
+  it('rendert beide Randschaltflaechen auch bei gleicher Beschriftung', () => {
+    render(
+      <Pagination
+        page={3}
+        pageCount={12}
+        showFirstLast
+        onPageChange={() => {}}
+        firstLabel="Rand"
+        lastLabel="Rand"
+      />
+    )
+
+    expect(screen.getAllByRole('button', { name: 'Rand' })).toHaveLength(2)
+  })
+})

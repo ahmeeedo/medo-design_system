@@ -51,6 +51,11 @@ export function Select({
   searchable = false,
   searchPlaceholder = 'Suchen …',
   defaultOpen = false,
+  removeChipLabel = (label) => 'Auswahl entfernen: ' + label,
+  selectedCountLabel = (count) => count + ' ausgewählt',
+  resetLabel = 'Zurücksetzen',
+  emptyText = 'Keine Einträge',
+  noResultsText = 'Keine Treffer',
   className,
   style,
   children,
@@ -275,7 +280,7 @@ export function Select({
       <span
         className="medo-select__chipx"
         role="button"
-        aria-label={'Auswahl entfernen: ' + o.label}
+        aria-label={removeChipLabel(o.label)}
         onMouseDown={(e) => e.preventDefault()}
         onClick={(e) => {
           e.stopPropagation()
@@ -381,7 +386,7 @@ export function Select({
         <div className="medo-select__top">
           {multiple ? (
             <div className="medo-select__head">
-              <span className="medo-select__count">{chosen.length + ' ausgewählt'}</span>
+              <span className="medo-select__count">{selectedCountLabel(chosen.length)}</span>
               {chosen.length ? (
                 <button
                   type="button"
@@ -389,7 +394,7 @@ export function Select({
                   onMouseDown={(e) => e.preventDefault()}
                   onClick={reset}
                 >
-                  Zurücksetzen
+                  {resetLabel}
                 </button>
               ) : null}
             </div>
@@ -417,9 +422,9 @@ export function Select({
         </div>
       ) : null}
       {flat.length === 0 ? (
-        <div className="medo-select__empty">Keine Einträge</div>
+        <div className="medo-select__empty">{emptyText}</div>
       ) : shown.length === 0 ? (
-        <div className="medo-select__empty">Keine Treffer</div>
+        <div className="medo-select__empty">{noResultsText}</div>
       ) : (
         shown.map((o, i) =>
           o.group ? (
@@ -531,7 +536,7 @@ export function Select({
             {multiple ? (
               chosen.length ? (
                 multipleDisplay === 'count' ? (
-                  <span className="medo-select__value">{chosen.length + ' ausgewählt'}</span>
+                  <span className="medo-select__value">{selectedCountLabel(chosen.length)}</span>
                 ) : (
                   <span className="medo-select__chips medo-select__chips--single" ref={chipsRef}>
                     {chosen

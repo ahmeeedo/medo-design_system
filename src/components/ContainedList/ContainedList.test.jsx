@@ -97,3 +97,46 @@ describe('ContainedList · Tastatur', () => {
     expect(onChange).toHaveBeenLastCalledWith(['c'])
   })
 })
+
+/* Beschriftung der Zeilenaktion. Die Zeile schlaegt die Liste, die Liste schlaegt den
+   Vorgabewert — wer zwanzig Zeilen in einer anderen Sprache zeigt, setzt die Angabe
+   einmal an der Liste statt zwanzigmal an der Zeile. */
+describe('ContainedList · Beschriftung der Zeilenaktion', () => {
+  const MIT_AKTION = [
+    { value: 'a', label: 'Praxis Nord', action: 'more_vert' },
+    { value: 'b', label: 'Praxis Süd', action: 'more_vert', actionLabel: 'Termin absagen' },
+  ]
+
+  it('traegt ohne gesetzte Angabe weiterhin den deutschen Vorgabewert', () => {
+    render(<ContainedList items={MIT_AKTION} ariaLabel="Praxen" onAction={() => {}} />)
+
+    expect(screen.getByRole('button', { name: 'Weitere Aktionen' })).toBeInTheDocument()
+  })
+
+  it('nimmt eine an der Liste gesetzte Beschriftung als Rueckfallwert', () => {
+    render(
+      <ContainedList
+        items={MIT_AKTION}
+        ariaLabel="Praxen"
+        actionLabel="More actions"
+        onAction={() => {}}
+      />
+    )
+
+    expect(screen.getByRole('button', { name: 'More actions' })).toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: 'Weitere Aktionen' })).not.toBeInTheDocument()
+  })
+
+  it('laesst die Beschriftung der Zeile die der Liste schlagen', () => {
+    render(
+      <ContainedList
+        items={MIT_AKTION}
+        ariaLabel="Praxen"
+        actionLabel="More actions"
+        onAction={() => {}}
+      />
+    )
+
+    expect(screen.getByRole('button', { name: 'Termin absagen' })).toBeInTheDocument()
+  })
+})
