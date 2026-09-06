@@ -13,7 +13,6 @@ export function Textarea({
   defaultValue,
   placeholder,
   rows = 3,
-  size = 'md',
   required = false,
   optional = false,
   disabled = false,
@@ -23,16 +22,19 @@ export function Textarea({
   success,
   maxLength,
   showCounter = false,
-  resize = 'vertical',
   onChange,
+  onFocus,
+  onBlur,
   fullWidth = false,
   name,
   className,
   style,
   ...rest
 }) {
+  /* A default of the number 0 is a valid value. `defaultValue || ''` swallowed
+     it, because 0 is falsy. */
+  const [internal, setInternal] = useState(defaultValue != null ? String(defaultValue) : '')
   const [focused, setFocused] = useState(false)
-  const [internal, setInternal] = useState(defaultValue || '')
 
   const isControlled = value !== undefined
   const current = isControlled ? value : internal
@@ -43,10 +45,28 @@ export function Textarea({
     if (!isControlled) setInternal(e.target.value)
     if (onChange) onChange(e)
   }
+  /* The caller's own handler does not displace the built-in one — otherwise the
+     focus ring would silently disappear as soon as anyone passes onFocus. */
+  const handleFocus = (e) => {
+    setFocused(true)
+    if (onFocus) onFocus(e)
+  }
+  const handleBlur = (e) => {
+    setFocused(false)
+    if (onBlur) onBlur(e)
+  }
+
+  const msgId = error || success || hint ? fieldId + '-msg' : null
+  /* A description the caller supplies joins the one pointing at the message
+     instead of replacing it. aria-describedby takes several space-separated
+     references; that is exactly the intended route. */
+  const describedBy = [rest['aria-describedby'], msgId].filter(Boolean).join(' ') || undefined
+  /* The built-in error marking stands: a field with a red message under it is
+     invalid, whatever the caller passes. Without an error the caller decides. */
+  const invalid = error ? 'true' : rest['aria-invalid']
 
   const boxClasses = [
     'medo-field__box',
-    'medo-field__box--' + size,
     'medo-ta__box',
     focused && !disabled ? 'medo-field__box--focus' : null,
     error ? 'medo-field__box--error' : null,
@@ -72,8 +92,9 @@ export function Textarea({
     >
       <div className={boxClasses}>
         <textarea
+          {...rest}
           id={fieldId}
-          className={'medo-field__control medo-ta__control medo-ta__control--' + resize}
+          className="medo-field__control medo-ta__control"
           rows={rows}
           value={current}
           placeholder={placeholder}
@@ -82,12 +103,11 @@ export function Textarea({
           required={required}
           maxLength={maxLength}
           name={name}
-          aria-invalid={error ? 'true' : undefined}
-          aria-describedby={error || success || hint ? fieldId + '-msg' : undefined}
+          aria-invalid={invalid}
+          aria-describedby={describedBy}
           onChange={handleChange}
-          onFocus={() => setFocused(true)}
-          onBlur={() => setFocused(false)}
-          {...rest}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
         />
         {showCounter && maxLength ? (
           <span className="medo-field__counter medo-ta__counter">

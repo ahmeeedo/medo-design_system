@@ -1,0 +1,70 @@
+<!-- @dsCard group="Komponenten" viewport="700x400" name="Avatar" subtitle="Bild, Buchstaben oder Symbol — fünfzehn Farbschemata, drei Größen" -->
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  html,body{margin:0}
+  body{padding:20px 22px;font-family:var(--medo-font-sans);background:var(--medo-surface);color:var(--medo-text);min-height:400px;box-sizing:border-box}
+  .lbl{font-family:var(--medo-font-mono);font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:var(--medo-color-stone-500);margin-bottom:10px}
+  .grp{margin-bottom:18px}
+  .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+  .sub{font-size:12px;font-weight:600;margin-bottom:8px}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+<script src="../_ds_bundle.js"></script>
+<script>
+  var h = React.createElement;
+  var MedoAvatar = window.MedoUI.Avatar;
+
+  var schemata = ['red','crimson','rose','orange','amber','yellow','green','teal',
+                  'cyan','blue','indigo','violet','purple','grey','stone'];
+
+  function App() {
+    return h('div', null,
+      h('div', { className: 'grp' },
+        h('div', { className: 'lbl' }, 'Fünfzehn Farbschemata'),
+        h('div', { className: 'row' },
+          schemata.map(function (s, i) {
+            return h(MedoAvatar, { key: s, color: s, name: 'Andreas Müller', size: 'md' });
+          })
+        )
+      ),
+      h('div', { className: 'grp' },
+        h('div', { className: 'lbl' }, 'Drei Größen'),
+        h('div', { className: 'row', style: { alignItems: 'flex-end' } },
+          h(MedoAvatar, { color: 'blue', name: 'Andreas Müller', size: 'sm' }),
+          h(MedoAvatar, { color: 'blue', name: 'Andreas Müller', size: 'md' }),
+          h(MedoAvatar, { color: 'blue', name: 'Andreas Müller', size: 'lg' })
+        )
+      ),
+      h('div', { className: 'grp' },
+        h('div', { className: 'lbl' }, 'Buchstaben aus Name oder Benutzername'),
+        h('div', { className: 'row' },
+          h(MedoAvatar, { color: 'teal', name: 'Andreas Müller' }),
+          h(MedoAvatar, { color: 'indigo', name: 'PeterZeider' }),
+          h(MedoAvatar, { color: 'rose', name: 'renatosanches' }),
+          h(MedoAvatar, { color: 'green', name: 'Dr. Marie Hoffmann' }),
+          h(MedoAvatar, { color: 'cyan', name: 'Anna-Lena Schmidt' })
+        )
+      ),
+      h('div', { className: 'grp' },
+        h('div', { className: 'lbl' }, 'Ohne Namen · Beim Laden'),
+        h('div', { className: 'row' },
+          h(MedoAvatar, { label: 'Gelöschtes Konto' }),
+          h(MedoAvatar, { loading: true }),
+          h(MedoAvatar, { loading: true, size: 'sm' })
+        )
+      )
+    );
+  }
+
+  ReactDOM.createRoot(document.getElementById('root')).render(h(App));
+</script>
+</body>
+</html>

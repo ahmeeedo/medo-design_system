@@ -1,8 +1,13 @@
 /* Multi-line variant of the shared field box: the single-line box fixes a
-   height and centres its content, both of which have to give way here. */
+   height and centres its content, both of which have to give way here.
+
+   The textarea has exactly ONE size — so no size class sits on the box, and the
+   font size comes from here instead of .medo-field__box--md. text-base is the
+   value the system rule prescribes for md and lg anyway. */
 .medo-ta__box{
   height: auto;
   align-items: flex-start;
+  font-size: var(--medo-text-base);
   padding-top: var(--medo-space-xs);
   padding-bottom: var(--medo-space-xs);
 }
@@ -10,10 +15,9 @@
 .medo-ta__control{
   line-height: var(--medo-leading-normal);
   font-family: var(--medo-font-sans);
+  /* Fixed system rule: the user drags the field taller, never wider. The width
+     belongs to the layout — were it draggable, the form would break. */
+  resize: vertical;
 }
-
-.medo-ta__control--vertical{ resize: vertical; }
-.medo-ta__control--none{ resize: none; }
-.medo-ta__control--both{ resize: both; }
 
 .medo-ta__counter{ align-self: flex-end; }
