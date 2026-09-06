@@ -66,6 +66,10 @@ const TextInput = ({
   name,
   className,
   style,
+  onFocus,
+  onBlur,
+  "aria-invalid": ariaInvalid,
+  "aria-describedby": ariaDescribedBy,
   ...rest
 }) => {
   window.MedoUI.injectCss("medo-field-css", window.MedoUI.MEDO_FIELD_CSS);
@@ -131,11 +135,14 @@ const TextInput = ({
       inputMode,
       autoComplete,
       name,
-      "aria-invalid": error ? "true" : undefined,
-      "aria-describedby": error || success || hint ? fieldId + "-msg" : undefined,
+      "aria-invalid": error ? "true" : ariaInvalid,
+      "aria-describedby":
+        [ariaDescribedBy, error || success || hint ? fieldId + "-msg" : null]
+          .filter(Boolean)
+          .join(" ") || undefined,
       onChange: handleChange,
-      onFocus: () => setFocused(true),
-      onBlur: () => setFocused(false),
+      onFocus: (e) => { setFocused(true); if (onFocus) onFocus(e); },
+      onBlur: (e) => { setFocused(false); if (onBlur) onBlur(e); },
       ...rest,
     }),
     suffix ? React.createElement("span", { className: "medo-field__affix" }, suffix) : null,

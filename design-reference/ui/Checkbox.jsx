@@ -94,6 +94,7 @@ const Checkbox = ({
   id,
   className,
   style,
+  "aria-invalid": ariaInvalid,
   ...rest
 }) => {
   window.MedoUI.injectCss("medo-checkbox-css", MEDO_CHECKBOX_CSS);
@@ -130,7 +131,7 @@ const Checkbox = ({
       name,
       value,
       onChange,
-      "aria-invalid": error ? "true" : undefined,
+      "aria-invalid": error ? "true" : ariaInvalid,
       ...rest,
     }),
     React.createElement(

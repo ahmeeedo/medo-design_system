@@ -19,6 +19,18 @@ Titel ist Pflicht, alles andere optional: `description` erklärt die Zeile (sie 
 liegt in einer getönten Fläche. Eine Zeilenaktion (`action: "more_vert"`) ersetzt das Chevron und
 sieht wie eine kleine Schaltfläche aus — sie stoppt den Klick, öffnet also nicht die Zeile.
 
+Der Avatar in der Liste ist **einfarbig** — alle Kreise tragen Teal. Die fünfzehn Farbschemata
+bleiben Tabellen vorbehalten, in denen sich Personen auf einen Blick unterscheiden sollen. Eine
+Liste soll ruhiger wirken.
+
+`avatar` trägt weiterhin die zwei Buchstaben. Wer stattdessen ein Bild zeigen will, setzt den
+`Avatar` selbst in eine eigene Zeilendarstellung; die Liste nimmt keine Bildadresse entgegen.
+
+Trägt eine Zeile eine Aktion, braucht sie eine Beschriftung — ein Icon allein sagt einem
+Vorleseprogramm nichts. `actionLabel` an der Zeile beschreibt die einzelne Aktion („Termin
+absagen"); `actionLabel` an der Liste setzt den gemeinsamen Rückfallwert für alle Zeilen, die
+keinen eigenen tragen. Vorbelegt ist „Weitere Aktionen".
+
 Titel und Erklärung kürzen mit Auslassungspunkten; eine Zeile bleibt eine Zeile.
 
 ## Gruppen
@@ -66,5 +78,5 @@ unter oder neben der Karte, nicht als leere Zeile darin.
 
 ## Abhängigkeiten
 
-Ladereihenfolge: `ui/inject.js`, `ui/Icon.jsx`, dann `ui/ContainedList.jsx`. Tokens aus
+Ladereihenfolge: `ui/inject.js`, `ui/Icon.jsx`, `ui/Avatar.jsx`, dann `ui/ContainedList.jsx`. Tokens aus
 `styles.css`.

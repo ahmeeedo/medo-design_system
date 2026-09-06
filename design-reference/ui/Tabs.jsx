@@ -14,12 +14,21 @@ const MEDO_TABS_CSS = `
 .medo-tabs{ font-family: var(--medo-font-sans); }
 .medo-tabs--vertical{ display: flex; gap: var(--medo-space-lg); align-items: flex-start; }
 .medo-tabs__list{ display: flex; }
-.medo-tabs__list--scroll{
+/* Gerollt wird die Hülle, nicht die Leiste: „contained“ ist inline-flex und misst sich am
+   eigenen Inhalt, hätte also nie etwas zu rollen. „max-content“ hält die Leiste in ihrer
+   natürlichen Breite, damit die Hülle überhaupt einen Überhang bekommt. */
+.medo-tabs__scroller{
   overflow-x: auto;
   scrollbar-width: none;
   -ms-overflow-style: none;
+  /* Hält den gewählten Tab vom Rand frei und gibt zugleich das Maß, um das der
+     benachbarte Tab hereinlugt. Gemessen über die Stufen der Abstandsskala: „md“
+     ergibt in der Unterstrich-Form nur 4–33px und damit einen unzuverlässigen
+     Vorausblick, „xl“ gleichmäßige 36px (underline) und 60px (contained). */
+  scroll-padding-inline: var(--medo-space-xl);
 }
-.medo-tabs__list--scroll::-webkit-scrollbar{ display: none; width: 0; height: 0; }
+.medo-tabs__scroller::-webkit-scrollbar{ display: none; width: 0; height: 0; }
+.medo-tabs__scroller > .medo-tabs__list{ width: max-content; }
 .medo-tabs__tab{
   box-sizing: border-box;
   position: relative;
@@ -92,7 +101,24 @@ const MEDO_TABS_CSS = `
   font-weight: 600;
 }
 
-.medo-tabs__tab--full{ flex: 1 1 0; }
+/* Material Design 3: „Labels can use a second line if needed, with truncated text" —
+   und „labels should be wrapped before truncating them". Gleich breite Tabs rollen nie;
+   wer rollen will, nimmt „scrollable“.
+   „min-width: 0“ hebt die Mindestbreite auf, die sonst aus „white-space: nowrap“ folgt und
+   die Seite seitlich überlaufen lässt. Der Selektor spart Icon und Zähler aus — umbrochen
+   und gekürzt wird die Beschriftung, nicht das Beiwerk. */
+.medo-tabs__tab--full{ flex: 1 1 0; min-width: 0; }
+.medo-tabs__tab--full .medo-tabs__inner{ min-width: 0; max-width: 100%; }
+.medo-tabs__tab--full .medo-tabs__inner > span:not(.medo-icon):not(.medo-tabs__badge){
+  min-width: 0;
+  white-space: normal;
+  overflow-wrap: break-word;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow: hidden;
+}
 .medo-tabs__inner{ display: inline-flex; align-items: center; gap: 8px; }
 .medo-tabs__list--sm .medo-tabs__inner{ gap: 7px; }
 .medo-tabs__badge{
@@ -103,6 +129,7 @@ const MEDO_TABS_CSS = `
   font-size: 11px; font-weight: 500;
   background: var(--medo-surface-sunken);
   color: var(--medo-text-subtle);
+  flex: none;
 }
 .medo-tabs__tab[aria-selected="true"] .medo-tabs__badge{ background: var(--medo-primary-100); color: var(--medo-primary-1000); }
 .medo-tabs__panel{ flex: 1; min-width: 0; }
@@ -134,6 +161,7 @@ const Tabs = ({
   const [inner, setInner] = React.useState(defaultValue !== undefined ? defaultValue : first.value);
   const active = controlled ? value : inner;
   const listRef = React.useRef(null);
+  const scrollerRef = React.useRef(null);
   const vertical = orientation === "vertical";
 
   const select = (v) => {
@@ -175,7 +203,6 @@ const Tabs = ({
         "medo-tabs__list",
         "medo-tabs__list--" + (vertical ? "vertical" : variant),
         "medo-tabs__list--" + size,
-        scrollable && !vertical ? "medo-tabs__list--scroll" : null,
       ]
         .filter(Boolean)
         .join(" "),
@@ -221,6 +248,59 @@ const Tabs = ({
     })
   );
 
+/* Jede waagerechte Leiste bekommt die Hülle — ausgenommen `fullWidth`, wo die Tabs sich
+   die Breite teilen und deshalb nichts überhängen kann (Änderung 11). Ohne diese Weitung
+   schiebt eine Leiste, deren Tabs nicht nebeneinanderpassen, die ganze Seite auf. */
+  const listOrScroller =
+    !vertical && !fullWidth
+      ? React.createElement("div", { className: "medo-tabs__scroller", ref: scrollerRef }, list)
+      : list;
+
+  /* Der gewählte Tab wird ins Bild geholt — und darüber hinaus so weit, dass der
+     benachbarte Tab hereinlugt. Ohne diesen Nachlauf ist der Leiste nicht anzusehen,
+     dass sie weitergeht; mit ihm bewegt sie sich schon beim Tab davor.
+     Der Nachlauf ist nach beiden Seiten begrenzt, damit der gewählte Tab dabei nie
+     aus seinem Randabstand rutscht.
+     Gerollt wird die Hülle unmittelbar statt über `scrollIntoView`: das würde jeden
+     rollenden Vorfahren mitbewegen und in einer Seite mit haftendem Kopf den Inhalt
+     darunter wegziehen.
+     Beide Anteile werden gerechnet und in EINEM Ruck gerollt, damit die Bewegung weich
+     laufen kann; nachgemessen landet das auf demselben Wert wie zwei getrennte Rucke. */
+  React.useEffect(() => {
+    const box = scrollerRef.current;
+    if (!box || active == null) return;
+    const btn = box.querySelector('[data-val="' + active + '"]');
+    if (!btn) return;
+
+    const pad = parseFloat(getComputedStyle(box).scrollPaddingInlineStart) || 0;
+    const rahmen = box.getBoundingClientRect();
+    const fehlt = (links, rechts) => {
+      const kurz = links - (rahmen.left + pad);
+      const drueber = rechts - (rahmen.right - pad);
+      return kurz < 0 ? kurz : drueber > 0 ? drueber : 0;
+    };
+
+    const roh = btn.getBoundingClientRect();
+    const ersterAnteil = fehlt(roh.left, roh.right);
+
+    /* Nach dem ersten Anteil liegen alle Kanten um genau diesen Betrag weiter links. */
+    const b = { left: roh.left - ersterAnteil, right: roh.right - ersterAnteil };
+    const davor = btn.previousElementSibling;
+    const danach = btn.nextElementSibling;
+    const links = davor
+      ? Math.max(davor.getBoundingClientRect().left - ersterAnteil, b.left - pad)
+      : b.left;
+    const rechts = danach
+      ? Math.min(danach.getBoundingClientRect().right - ersterAnteil, b.right + pad)
+      : b.right;
+    const tiefst = b.right - (rahmen.right - pad);
+    const hoechst = b.left - (rahmen.left + pad);
+    const zweiterAnteil = Math.min(Math.max(fehlt(links, rechts), tiefst), hoechst);
+
+    const delta = ersterAnteil + zweiterAnteil;
+    if (delta) box.scrollBy({ left: delta, behavior: "smooth" });
+  }, [active]);
+
   const panel = children
     ? React.createElement(
         "div",
@@ -244,7 +324,7 @@ const Tabs = ({
       style,
       ...rest,
     },
-    list,
+    listOrScroller,
     panel
   );
 };

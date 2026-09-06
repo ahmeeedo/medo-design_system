@@ -17,11 +17,33 @@ Kanban), ist es ein `ContentSwitcher`. Geht es um Schritte einer Abfolge, ein
 ## Aufbau
 
 Ein bis zwei Wörter pro Label, keine Sätze, kein Title Case. Ein `badge` trägt nur eine Anzahl —
-kein Statuswort und kein „neu". Ab etwa sieben Tabs `scrollable` setzen; bei sehr vielen Bereichen
-ist die vertikale Form (`orientation="vertical"`) die ruhigere Lösung.
+kein Statuswort und kein „neu".
+
+Passen die Tabs nicht nebeneinander, **läuft die Leiste mit der Auswahl mit** — von selbst, in
+beiden Stilen, ohne dass etwas gesetzt werden muss. Der gewählte Tab steht dabei immer
+vollständig im Bild, und der benachbarte lugt herein, damit erkennbar bleibt, dass die Leiste
+weitergeht. Bei `contained` bleibt die graue Leiste so breit wie ihre Tabs; sie dehnt sich
+nicht auf die volle Breite.
+
+**Eine Rollleiste zum Ziehen gibt es bewusst nicht.** Zu den verdeckten Tabs führt die
+Auswahl selbst: Pfeiltasten, oder ein Klick auf den hereinlugenden Nachbarn. Ab etwa sieben
+Bereichen ist die vertikale Form (`orientation="vertical"`) trotzdem die ruhigere Lösung —
+dort ist alles gleichzeitig sichtbar.
+
+Die einzige Leiste, die nicht mitläuft, ist `fullWidth`: dort teilen sich die Tabs die Breite
+und brechen ihre Beschriftung um. `scrollable` hat keine Wirkung mehr und bleibt nur für
+bestehende Einbindungen erhalten.
 
 `fullWidth` nur, wenn die Tabs eine Karte oder ein Sheet vollständig überspannen — auf breiten
-Seiten laufen die Labels sonst weit auseinander.
+Seiten laufen die Labels sonst weit auseinander. Wird es eng, bricht eine Beschriftung auf eine
+zweite Zeile um und wird erst gekürzt, wenn auch zwei Zeilen nicht reichen. Die Leiste wird
+dabei höher; sie rollt nicht — gleich breite Tabs und Rollen schließen einander aus.
+
+Das ist die Regel aus Material Design 3: umbrechen vor kürzen, weil zu frühes Kürzen das
+Verstehen behindert. Sie greift selten, wenn die Beschriftungen der Vorgabe oben folgen — ein
+bis zwei kurze Wörter. Vier lange Wörter mit Icon **und** Zähler brauchen auf einem schmalen
+Gerät dagegen mehr Platz, als vier gleiche Spalten hergeben; dort ist `scrollable` oder die
+vertikale Form (`orientation="vertical"`) die ehrlichere Lösung.
 
 ## Panel
 

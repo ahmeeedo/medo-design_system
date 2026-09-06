@@ -70,6 +70,10 @@ const NumberInput = ({
   onChange,
   className,
   style,
+  onFocus,
+  onBlur,
+  onKeyDown: onKeyDownProp,
+  "aria-invalid": ariaInvalid,
   ...rest
 }) => {
   window.MedoUI.injectCss("medo-field-css", window.MedoUI.MEDO_FIELD_CSS);
@@ -215,15 +219,15 @@ const NumberInput = ({
       "aria-valuenow": hasNum ? num : undefined,
       "aria-valuemin": min,
       "aria-valuemax": max,
-      "aria-invalid": error ? "true" : undefined,
+      "aria-invalid": error ? "true" : ariaInvalid,
       style: {
         textAlign: align || (isPlusMinus ? "center" : "left"),
         ...(isPlusMinus ? { padding: "0 8px" } : null),
       },
       onChange: (e) => commit(e.target.value),
-      onKeyDown,
-      onFocus: () => setFocused(true),
-      onBlur: () => setFocused(false),
+      onKeyDown: (e) => { onKeyDown(e); if (onKeyDownProp) onKeyDownProp(e); },
+      onFocus: (e) => { setFocused(true); if (onFocus) onFocus(e); },
+      onBlur: (e) => { setFocused(false); if (onBlur) onBlur(e); },
       ...rest,
     }),
     suffix ? React.createElement("span", { className: "medo-num__unit" }, suffix) : null,

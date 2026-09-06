@@ -122,6 +122,95 @@ const MEDO_SELECT_CSS = `
 .medo-select__opt--selected.medo-select__opt--active{ background: var(--medo-color-teal-200); }
 .medo-select__opt--disabled{ color: var(--medo-text-disabled); cursor: not-allowed; }
 .medo-select__opt-label{ flex: 1; min-width: 0; }
+.medo-select__opt-desc{
+  display: block;
+  font-size: var(--medo-text-xs);
+  color: var(--medo-text-muted);
+  font-weight: 400;
+}
+/* Freier CSS-Hintergrundwert: Farbe oder Bild. */
+.medo-select__flag{
+  flex: none;
+  width: calc(var(--medo-space-md) + var(--medo-space-2xs));
+  height: calc(var(--medo-space-sm) + var(--medo-space-3xs));
+  border-radius: calc(var(--medo-radius-sm) / 2);
+  background-size: cover;
+  background-position: center;
+}
+
+/* Kopfzeile und Suchfeld sitzen in einem gemeinsamen Band, das beim Scrollen oben
+   stehen bleibt. Die negativen Ränder heben den 6px-Innenabstand des Panels auf,
+   damit das Band randlos aufliegt; das Padding stellt den Abstand innen wieder her. */
+.medo-select__top{
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  margin: calc(var(--medo-space-xs) * -0.75) calc(var(--medo-space-xs) * -0.75) 0;
+  padding: calc(var(--medo-space-xs) * 0.75);
+  background: var(--medo-overlay);
+}
+
+.medo-select__head{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--medo-space-xs);
+  padding: calc(var(--medo-space-xs) * 0.75) var(--medo-space-xs);
+  border-bottom: var(--medo-border-thin) solid var(--medo-border-subtle);
+}
+.medo-select__count{ font-size: var(--medo-text-sm); color: var(--medo-text-muted); }
+.medo-select__reset{
+  border: none;
+  background: transparent;
+  padding: 0;
+  font-family: var(--medo-font-sans);
+  font-size: var(--medo-text-sm);
+  font-weight: 600;
+  color: var(--medo-action);
+  cursor: pointer;
+  border-radius: var(--medo-radius-sm);
+}
+.medo-select__reset:hover{ color: var(--medo-action-hover); }
+.medo-select__reset:focus-visible{ outline: none; box-shadow: 0 0 0 3px var(--medo-focus-ring); }
+
+/* Kontrollkästchen je Eintrag bei Mehrfachauswahl. */
+.medo-select__check{
+  box-sizing: border-box;
+  flex: none;
+  width: calc(var(--medo-space-md) + var(--medo-space-2xs));
+  height: calc(var(--medo-space-md) + var(--medo-space-2xs));
+  border-radius: var(--medo-radius-sm);
+  background: var(--medo-input-bg);
+  border: var(--medo-border-thin) solid var(--medo-input-border);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 120ms ease-out, border-color 120ms ease-out;
+}
+.medo-select__check--on{ background: var(--medo-action); border-color: var(--medo-action); }
+
+.medo-select__search{
+  display: flex;
+  align-items: center;
+  gap: var(--medo-space-xs);
+  height: calc(var(--medo-space-xl) + var(--medo-space-3xs));
+  padding: 0 calc(var(--medo-space-xs) + var(--medo-space-3xs));
+  background: var(--medo-surface-container);
+  border-radius: var(--medo-radius-md);
+}
+.medo-select__head + .medo-select__search{ margin-top: calc(var(--medo-space-xs) * 0.75); }
+.medo-select__searchctl{
+  flex: 1;
+  min-width: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: var(--medo-font-sans);
+  font-size: var(--medo-text-sm);
+  color: var(--medo-input-text);
+  padding: 0;
+}
+.medo-select__searchctl::placeholder{ color: var(--medo-input-placeholder); }
 .medo-select__empty{ padding: 12px 10px; font-size: var(--medo-text-sm); color: var(--medo-text-muted); }
 
 .medo-select__nativectl{
@@ -176,16 +265,30 @@ const Select = ({
   multiple = false,
   multipleDisplay = "chips",
   maxChips = 0,
+  searchable = false,
+  searchPlaceholder = "Suchen …",
   defaultOpen = false,
+  removeChipLabel = (label) => "Auswahl entfernen: " + label,
+  selectedCountLabel = (count) => count + " ausgewählt",
+  resetLabel = "Zurücksetzen",
+  emptyText = "Keine Einträge",
+  noResultsText = "Keine Treffer",
   className,
   style,
   children,
+  onFocus,
+  onBlur,
+  onClick,
+  onKeyDown: onKeyDownProp,
+  "aria-invalid": ariaInvalid,
   ...rest
 }) => {
   window.MedoUI.injectCss("medo-field-css", window.MedoUI.MEDO_FIELD_CSS);
   window.MedoUI.injectCss("medo-select-css", MEDO_SELECT_CSS);
 
   const [open, setOpen] = React.useState(defaultOpen);
+  const [query, setQuery] = React.useState("");
+  const searchRef = React.useRef(null);
   const [focused, setFocused] = React.useState(false);
   const [activeIndex, setActiveIndex] = React.useState(-1);
   const [dropUp, setDropUp] = React.useState(false);
@@ -259,6 +362,22 @@ const Select = ({
     return () => ro.disconnect();
   }, [multiple, multipleDisplay, maxChips, chipKey, size]);
 
+  /* Gefilterte Liste. Eine Gruppenüberschrift bleibt nur stehen, solange unter ihr noch
+     ein Eintrag übrig ist. Ohne Suchbegriff ist das die unveränderte Liste. */
+  const shown = React.useMemo(() => {
+    const q = query.trim().toLowerCase();
+    if (!q) return flat;
+    const hit = (o) =>
+      String(o.label).toLowerCase().includes(q) ||
+      (o.description ? String(o.description).toLowerCase().includes(q) : false);
+    const out = [];
+    flat.forEach((o) => {
+      if (o.group) out.push(o);
+      else if (hit(o)) out.push(o);
+    });
+    return out.filter((o, i) => !o.group || (out[i + 1] && !out[i + 1].group));
+  }, [flat, query]);
+
   const toggle = (val) => {
     const next = many.indexOf(val) === -1 ? many.concat([val]) : many.filter((v) => v !== val);
     if (!isControlled) setInternal(next);
@@ -268,6 +387,11 @@ const Select = ({
   const commit = (val) => {
     if (!isControlled) setInternal(val);
     if (onChange) onChange({ target: { value: val, name } });
+  };
+
+  const reset = () => {
+    if (!isControlled) setInternal([]);
+    if (onChange) onChange({ target: { value: [], name } });
   };
 
   /* Klick außerhalb schließt */
@@ -287,6 +411,21 @@ const Select = ({
     setDropUp(window.innerHeight - r.bottom < 280 && r.top > 280);
   }, [open]);
 
+  /* Suchfeld übernimmt den Fokus, solange das Panel offen ist; beim Schließen wird
+     der Suchbegriff verworfen, damit das Panel beim nächsten Öffnen vollständig ist. */
+  React.useEffect(() => {
+    if (!searchable) return;
+    if (open) searchRef.current && searchRef.current.focus();
+    else setQuery("");
+  }, [open, searchable]);
+
+  /* Der aktive Eintrag muss beim Tippen mitwandern, sonst zeigt er ins Leere —
+     auch beim Zurücksetzen des Suchbegriffs, weil sich die Indizes dann wieder ändern. */
+  React.useEffect(() => {
+    if (!open) return;
+    setActiveIndex(shown.findIndex((o) => !o.group && !o.disabled));
+  }, [query]);
+
   /* Aktiven Eintrag in Sicht halten */
   React.useEffect(() => {
     if (!open || !panelRef.current || activeIndex < 0) return;
@@ -299,18 +438,18 @@ const Select = ({
   }, [open, activeIndex]);
 
   const openPanel = () => {
-    const i = selected ? flat.indexOf(selected) : flat.findIndex((o) => !o.group && !o.disabled);
+    const i = selected ? shown.indexOf(selected) : shown.findIndex((o) => !o.group && !o.disabled);
     setActiveIndex(i);
     setOpen(true);
   };
 
   const step = (dir) => {
     let i = activeIndex;
-    for (let n = 0; n < flat.length; n++) {
+    for (let n = 0; n < shown.length; n++) {
       i += dir;
-      if (i < 0) i = flat.length - 1;
-      if (i >= flat.length) i = 0;
-      const o = flat[i];
+      if (i < 0) i = shown.length - 1;
+      if (i >= shown.length) i = 0;
+      const o = shown[i];
       if (o && !o.group && !o.disabled) break;
     }
     setActiveIndex(i);
@@ -318,6 +457,9 @@ const Select = ({
 
   const onKeyDown = (e) => {
     if (disabled) return;
+    /* Im Suchfeld tippt der Nutzer — Leertaste und Buchstaben gehören dort dem Text. */
+    const imSuchfeld = e.target === searchRef.current;
+    if (imSuchfeld && (e.key === " " || (e.key.length === 1 && e.key !== " "))) return;
     if (!open) {
       if (["ArrowDown", "ArrowUp", "Enter", " "].includes(e.key)) {
         e.preventDefault();
@@ -327,14 +469,14 @@ const Select = ({
     }
     if (e.key === "ArrowDown") { e.preventDefault(); step(1); }
     else if (e.key === "ArrowUp") { e.preventDefault(); step(-1); }
-    else if (e.key === "Home") { e.preventDefault(); setActiveIndex(flat.findIndex((o) => !o.group && !o.disabled)); }
+    else if (e.key === "Home") { e.preventDefault(); setActiveIndex(shown.findIndex((o) => !o.group && !o.disabled)); }
     else if (e.key === "End") {
       e.preventDefault();
-      for (let i = flat.length - 1; i >= 0; i--) if (!flat[i].group && !flat[i].disabled) { setActiveIndex(i); break; }
+      for (let i = shown.length - 1; i >= 0; i--) if (!shown[i].group && !shown[i].disabled) { setActiveIndex(i); break; }
     }
     else if (e.key === "Enter" || e.key === " ") {
       e.preventDefault();
-      const o = flat[activeIndex];
+      const o = shown[activeIndex];
       if (o && !o.group && !o.disabled) {
         if (multiple) toggle(o.value);
         else { commit(o.value); setOpen(false); }
@@ -344,7 +486,7 @@ const Select = ({
     else if (e.key.length === 1) {
       const q = e.key.toLowerCase();
       const hit = selectable.find((o) => String(o.label).toLowerCase().startsWith(q));
-      if (hit) setActiveIndex(flat.indexOf(hit));
+      if (hit) setActiveIndex(shown.indexOf(hit));
     }
   };
 
@@ -358,7 +500,7 @@ const Select = ({
         {
           className: "medo-select__chipx",
           role: "button",
-          "aria-label": "Auswahl entfernen: " + o.label,
+          "aria-label": removeChipLabel(o.label),
           onMouseDown: (e) => e.preventDefault(),
           onClick: (e) => { e.stopPropagation(); toggle(o.value); },
         },
@@ -424,10 +566,10 @@ const Select = ({
             value: current,
             disabled,
             required,
-            "aria-invalid": error ? "true" : undefined,
+            "aria-invalid": error ? "true" : ariaInvalid,
             onChange: (e) => commit(e.target.value),
-            onFocus: () => setFocused(true),
-            onBlur: () => setFocused(false),
+            onFocus: (e) => { setFocused(true); if (onFocus) onFocus(e); },
+            onBlur: (e) => { setFocused(false); if (onBlur) onBlur(e); },
             ...rest,
           },
           placeholder ? React.createElement("option", { value: "" }, placeholder) : null,
@@ -455,9 +597,67 @@ const Select = ({
           id: fieldId + "-list",
           "aria-labelledby": fieldId,
         },
+        multiple || searchable
+          ? React.createElement(
+              "div",
+              { className: "medo-select__top" },
+              multiple
+                ? React.createElement(
+                    "div",
+                    { className: "medo-select__head" },
+                    React.createElement(
+                      "span",
+                      { className: "medo-select__count" },
+                      selectedCountLabel(chosen.length)
+                    ),
+                    chosen.length
+                      ? React.createElement(
+                          "button",
+                          {
+                            className: "medo-select__reset",
+                            type: "button",
+                            onMouseDown: (e) => e.preventDefault(),
+                            onClick: reset,
+                          },
+                          resetLabel
+                        )
+                      : null
+                  )
+                : null,
+              searchable
+                ? React.createElement(
+                    "div",
+                    { className: "medo-select__search" },
+                    IconCmp
+                      ? React.createElement(IconCmp, {
+                          name: "search",
+                          size: 18,
+                          color: "var(--medo-icon-muted)",
+                        })
+                      : null,
+                    React.createElement("input", {
+                      ref: searchRef,
+                      className: "medo-select__searchctl",
+                      type: "text",
+                      value: query,
+                      placeholder: searchPlaceholder,
+                      "aria-label": searchPlaceholder,
+                      "aria-controls": fieldId + "-list",
+                      "aria-autocomplete": "list",
+                      "aria-activedescendant":
+                        open && activeIndex >= 0 ? fieldId + "-opt-" + activeIndex : undefined,
+                      onChange: (e) => setQuery(e.target.value),
+                      onKeyDown,
+                    })
+                  )
+                : null
+            )
+          : null,
         flat.length === 0
-          ? React.createElement("div", { className: "medo-select__empty" }, "Keine Einträge")
-          : flat.map((o, i) =>
+          ? React.createElement("div", { className: "medo-select__empty" }, emptyText)
+          : shown.length === 0
+          ? React.createElement("div", { className: "medo-select__empty" }, noResultsText)
+          : shown.map((o, i) =>
               o.group
                 ? React.createElement("div", { key: "g" + i, className: "medo-select__group" }, o.group)
                 : React.createElement(
@@ -486,11 +686,42 @@ const Select = ({
                         setOpen(false);
                       },
                     },
+                    o.flag
+                      ? React.createElement("span", {
+                          className: "medo-select__flag",
+                          "aria-hidden": "true",
+                          style: { background: o.flag },
+                        })
+                      : null,
+                    multiple
+                      ? React.createElement(
+                          "span",
+                          {
+                            className:
+                              "medo-select__check" + (isOn(o.value) ? " medo-select__check--on" : ""),
+                            "aria-hidden": "true",
+                          },
+                          isOn(o.value) && IconCmp
+                            ? React.createElement(IconCmp, {
+                                name: "check",
+                                size: 16,
+                                color: "var(--medo-action-text)",
+                              })
+                            : null
+                        )
+                      : null,
                     o.icon && IconCmp
                       ? React.createElement(IconCmp, { name: o.icon, size: 18, color: "var(--medo-icon-muted)" })
                       : null,
-                    React.createElement("span", { className: "medo-select__opt-label" }, o.label),
-                    isOn(o.value) && IconCmp
+                    React.createElement(
+                      "span",
+                      { className: "medo-select__opt-label" },
+                      o.label,
+                      o.description
+                        ? React.createElement("span", { className: "medo-select__opt-desc" }, o.description)
+                        : null
+                    ),
+                    !multiple && isOn(o.value) && IconCmp
                       ? React.createElement(IconCmp, { name: "check", size: 18, color: "var(--medo-action)" })
                       : null
                   )
@@ -524,18 +755,21 @@ const Select = ({
             "aria-controls": open ? fieldId + "-list" : undefined,
             "aria-activedescendant":
               open && activeIndex >= 0 ? fieldId + "-opt-" + activeIndex : undefined,
-            "aria-invalid": error ? "true" : undefined,
+            "aria-invalid": error ? "true" : ariaInvalid,
             "aria-required": required ? "true" : undefined,
-            onClick: () => (disabled ? null : open ? setOpen(false) : openPanel()),
-            onKeyDown,
-            onFocus: () => setFocused(true),
-            onBlur: () => setFocused(false),
+            onClick: (e) => {
+              if (!disabled) { open ? setOpen(false) : openPanel(); }
+              if (onClick) onClick(e);
+            },
+            onKeyDown: (e) => { onKeyDown(e); if (onKeyDownProp) onKeyDownProp(e); },
+            onFocus: (e) => { setFocused(true); if (onFocus) onFocus(e); },
+            onBlur: (e) => { setFocused(false); if (onBlur) onBlur(e); },
             ...rest,
           },
           multiple
             ? chosen.length
               ? multipleDisplay === "count"
-                ? React.createElement("span", { className: "medo-select__value" }, chosen.length + " ausgewählt")
+                ? React.createElement("span", { className: "medo-select__value" }, selectedCountLabel(chosen.length))
                 : React.createElement(
                     "span",
                     { className: "medo-select__chips medo-select__chips--single", ref: chipsRef },

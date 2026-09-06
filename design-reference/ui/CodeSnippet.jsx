@@ -11,7 +11,7 @@ window.MedoUI.injectCss = window.MedoUI.injectCss || function (id, css) {
    Block und Terminal stehen auf dunklem Grund #211f1c — die einzige dunkle Fläche im System. */
 
 const MEDO_CODE_CSS = `
-.medo-cs-inline{
+.medo-cds-inline{
   font-family: var(--medo-font-mono);
   font-size: 0.9em;
   background: #ececeb;
@@ -20,30 +20,30 @@ const MEDO_CODE_CSS = `
   border-radius: 5px;
   border: var(--medo-border-thin) solid #e0ddd8;
 }
-.medo-cs{
+.medo-cds{
   background: #211f1c;
   border: var(--medo-border-thin) solid #322f2b;
   border-radius: var(--medo-radius-lg);
   overflow: hidden;
   font-family: var(--medo-font-mono);
 }
-.medo-cs__bar{
+.medo-cds__bar{
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 9px 12px 9px 16px;
   border-bottom: var(--medo-border-thin) solid #322f2b;
 }
-.medo-cs__lang{
+.medo-cds__lang{
   font-family: var(--medo-font-mono);
   font-size: 11px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: #8f887e;
 }
-.medo-cs__dots{ display: flex; gap: 7px; align-items: center; }
-.medo-cs__dots span{ width: 11px; height: 11px; border-radius: var(--medo-radius-full); background: #4a4642; }
-.medo-cs__copy{
+.medo-cds__dots{ display: flex; gap: 7px; align-items: center; }
+.medo-cds__dots span{ width: 11px; height: 11px; border-radius: var(--medo-radius-full); background: #4a4642; }
+.medo-cds__copy{
   appearance: none;
   border: var(--medo-border-thin) solid #3a3733;
   background: #2a2724;
@@ -59,10 +59,10 @@ const MEDO_CODE_CSS = `
   align-items: center;
   gap: 6px;
 }
-.medo-cs__copy:hover{ background: #332f2b; }
-.medo-cs__copy:focus-visible{ outline: none; box-shadow: 0 0 0 3px var(--medo-focus-ring); }
-.medo-cs__copy--done{ border-color: #0e6f63; color: #5fd0be; }
-.medo-cs__code{
+.medo-cds__copy:hover{ background: #332f2b; }
+.medo-cds__copy:focus-visible{ outline: none; box-shadow: 0 0 0 3px var(--medo-focus-ring); }
+.medo-cds__copy--done{ border-color: #0e6f63; color: #5fd0be; }
+.medo-cds__code{
   margin: 0;
   padding: 16px 18px;
   overflow-x: auto;
@@ -70,29 +70,29 @@ const MEDO_CODE_CSS = `
   line-height: 1.65;
   color: #e4e0d8;
 }
-.medo-cs--terminal .medo-cs__code{ line-height: 1.9; }
-.medo-cs__gutter{
+.medo-cds--terminal .medo-cds__code{ line-height: 1.9; }
+.medo-cds__gutter{
   color: #5c574f;
   user-select: none;
   text-align: right;
   padding-right: 16px;
   white-space: nowrap;
 }
-.medo-cs__body{ display: flex; align-items: flex-start; overflow: hidden; transition: max-height 250ms ease; }
-.medo-cs__single{
+.medo-cds__body{ display: flex; align-items: flex-start; overflow: hidden; transition: max-height 250ms ease; }
+.medo-cds__single{
   display: flex;
   align-items: center;
   gap: 12px;
   padding: 12px 12px 12px 16px;
 }
-.medo-cs__sline{
+.medo-cds__sline{
   flex: 1;
   font-size: 13px;
   color: #e4e0d8;
   overflow-x: auto;
   white-space: nowrap;
 }
-.medo-cs__more{
+.medo-cds__more{
   width: 100%;
   appearance: none;
   border: none;
@@ -109,9 +109,9 @@ const MEDO_CODE_CSS = `
   justify-content: center;
   gap: 6px;
 }
-.medo-cs__more:hover{ color: #e4e0d8; }
-.medo-cs__more:focus-visible{ outline: none; box-shadow: inset 0 0 0 3px var(--medo-focus-ring); }
-.medo-cs__live{ position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.medo-cds__more:hover{ color: #e4e0d8; }
+.medo-cds__more:focus-visible{ outline: none; box-shadow: inset 0 0 0 3px var(--medo-focus-ring); }
+.medo-cds__live{ position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 .tk-key{ color: #57b7c9; }
 .tk-str{ color: #c99a5b; }
 .tk-num{ color: #7fb682; }
@@ -184,7 +184,7 @@ const CodeSnippet = ({
   if (variant === "inline")
     return React.createElement(
       "code",
-      { className: ["medo-cs-inline", className].filter(Boolean).join(" "), style, ...rest },
+      { className: ["medo-cds-inline", className].filter(Boolean).join(" "), style, ...rest },
       text
     );
 
@@ -203,7 +203,7 @@ const CodeSnippet = ({
     "button",
     {
       type: "button",
-      className: ["medo-cs__copy", copied ? "medo-cs__copy--done" : null].filter(Boolean).join(" "),
+      className: ["medo-cds__copy", copied ? "medo-cds__copy--done" : null].filter(Boolean).join(" "),
       onClick: copy,
     },
     IconCmp ? React.createElement(IconCmp, { name: copied ? "check" : "content_copy", size: 16 }) : null,
@@ -212,20 +212,20 @@ const CodeSnippet = ({
 
   const live = React.createElement(
     "span",
-    { className: "medo-cs__live", role: "status", "aria-live": "polite" },
+    { className: "medo-cds__live", role: "status", "aria-live": "polite" },
     copied ? copiedLabel : ""
   );
 
   if (variant === "single")
     return React.createElement(
       "div",
-      { className: ["medo-cs", className].filter(Boolean).join(" "), style, ...rest },
+      { className: ["medo-cds", className].filter(Boolean).join(" "), style, ...rest },
       React.createElement(
         "div",
-        { className: "medo-cs__single" },
+        { className: "medo-cds__single" },
         React.createElement(
           "code",
-          { className: "medo-cs__sline" },
+          { className: "medo-cds__sline" },
           highlight ? medoTokenize(text, "s") : text
         ),
         copyBtn
@@ -242,46 +242,46 @@ const CodeSnippet = ({
   return React.createElement(
     "div",
     {
-      className: ["medo-cs", terminal ? "medo-cs--terminal" : null, className].filter(Boolean).join(" "),
+      className: ["medo-cds", terminal ? "medo-cds--terminal" : null, className].filter(Boolean).join(" "),
       style,
       ...rest,
     },
     React.createElement(
       "div",
-      { className: "medo-cs__bar" },
+      { className: "medo-cds__bar" },
       terminal
         ? React.createElement(
             "div",
-            { className: "medo-cs__dots", "aria-hidden": "true" },
+            { className: "medo-cds__dots", "aria-hidden": "true" },
             React.createElement("span"),
             React.createElement("span"),
             React.createElement("span")
           )
-        : React.createElement("span", { className: "medo-cs__lang" }, language || ""),
+        : React.createElement("span", { className: "medo-cds__lang" }, language || ""),
       copyBtn
     ),
     terminal
       ? React.createElement(
           "div",
-          { className: "medo-cs__code" },
+          { className: "medo-cds__code" },
           lines.map((l, i) => React.createElement("div", { key: i }, highlight ? render(l, "t" + i) : l))
         )
       : React.createElement(
           "div",
           {
-            className: "medo-cs__body",
+            className: "medo-cds__body",
             style: { maxHeight: collapsed ? collapseAfter * 21.45 + 32 + "px" : "1600px" },
           },
           showLineNumbers
             ? React.createElement(
                 "div",
-                { className: "medo-cs__code medo-cs__gutter", "aria-hidden": "true" },
+                { className: "medo-cds__code medo-cds__gutter", "aria-hidden": "true" },
                 lines.map((_, i) => React.createElement("div", { key: i }, i + 1))
               )
             : null,
           React.createElement(
             "pre",
-            { className: "medo-cs__code", style: { flex: 1, margin: 0 } },
+            { className: "medo-cds__code", style: { flex: 1, margin: 0 } },
             React.createElement(
               "code",
               null,
@@ -296,7 +296,7 @@ const CodeSnippet = ({
     overflow && !terminal
       ? React.createElement(
           "button",
-          { type: "button", className: "medo-cs__more", onClick: () => setOpen(!open) },
+          { type: "button", className: "medo-cds__more", onClick: () => setOpen(!open) },
           IconCmp
             ? React.createElement(IconCmp, { name: open ? "expand_less" : "expand_more", size: 17 })
             : null,

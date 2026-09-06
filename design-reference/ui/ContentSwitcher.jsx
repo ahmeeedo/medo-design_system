@@ -10,30 +10,30 @@ window.MedoUI.injectCss = window.MedoUI.injectCss || function (id, css) {
    aktives Segment gefüllt). Segmente sind gleich breit, damit die Leiste beim Wechsel stillsteht. */
 
 const MEDO_CS_CSS = `
-.medo-cs{
+.medo-ctsw{
   box-sizing: border-box;
   font-family: var(--medo-font-sans);
   display: inline-flex;
 }
-.medo-cs--neutral{
+.medo-ctsw--neutral{
   gap: 4px;
   padding: 4px;
   background: var(--medo-surface-sunken);
   border-radius: var(--medo-radius-lg);
 }
-.medo-cs--neutral.medo-cs--sm{ gap: 3px; padding: 3px; border-radius: 9px; }
-.medo-cs--outline{
+.medo-ctsw--neutral.medo-ctsw--sm{ gap: 3px; padding: 3px; border-radius: 9px; }
+.medo-ctsw--outline{
   border: var(--medo-border-thin) solid var(--medo-border-strong);
   border-radius: var(--medo-radius-md);
 }
-.medo-cs--outline .medo-cs__seg:first-child{ border-radius: 7px 0 0 7px; }
-.medo-cs--outline .medo-cs__seg:last-child{ border-radius: 0 7px 7px 0; }
-.medo-cs--outline.medo-cs--sm{ border-radius: 6px; }
-.medo-cs--outline.medo-cs--sm .medo-cs__seg:first-child{ border-radius: 5px 0 0 5px; }
-.medo-cs--outline.medo-cs--sm .medo-cs__seg:last-child{ border-radius: 0 5px 5px 0; }
-.medo-cs--full{ display: flex; width: 100%; }
+.medo-ctsw--outline .medo-ctsw__seg:first-child{ border-radius: 7px 0 0 7px; }
+.medo-ctsw--outline .medo-ctsw__seg:last-child{ border-radius: 0 7px 7px 0; }
+.medo-ctsw--outline.medo-ctsw--sm{ border-radius: 6px; }
+.medo-ctsw--outline.medo-ctsw--sm .medo-ctsw__seg:first-child{ border-radius: 5px 0 0 5px; }
+.medo-ctsw--outline.medo-ctsw--sm .medo-ctsw__seg:last-child{ border-radius: 0 5px 5px 0; }
+.medo-ctsw--full{ display: flex; width: 100%; }
 
-.medo-cs__seg{
+.medo-ctsw__seg{
   box-sizing: border-box;
   position: relative;
   appearance: none;
@@ -53,21 +53,21 @@ const MEDO_CS_CSS = `
   cursor: pointer;
   transition: background-color 120ms ease-out, color 120ms ease-out;
 }
-.medo-cs--sm .medo-cs__seg{ height: 32px; padding: 0 12px; font-size: var(--medo-text-xs); gap: 6px; }
-.medo-cs__seg--equal{ flex: 1 1 0; }
-.medo-cs__seg--iconOnly{ min-width: 44px; padding: 0 10px; }
-.medo-cs--sm .medo-cs__seg--iconOnly{ min-width: 36px; padding: 0 8px; }
-.medo-cs__seg:focus-visible{ outline: none; box-shadow: 0 0 0 3px var(--medo-focus-ring); z-index: 2; }
-.medo-cs__seg:disabled{ color: var(--medo-text-disabled); cursor: not-allowed; }
+.medo-ctsw--sm .medo-ctsw__seg{ height: 32px; padding: 0 12px; font-size: var(--medo-text-xs); gap: 6px; }
+.medo-ctsw__seg--equal{ flex: 1 1 0; }
+.medo-ctsw__seg--iconOnly{ min-width: 44px; padding: 0 10px; }
+.medo-ctsw--sm .medo-ctsw__seg--iconOnly{ min-width: 36px; padding: 0 8px; }
+.medo-ctsw__seg:focus-visible{ outline: none; box-shadow: 0 0 0 3px var(--medo-focus-ring); z-index: 2; }
+.medo-ctsw__seg:disabled{ color: var(--medo-text-disabled); cursor: not-allowed; }
 
 /* Neutral */
-.medo-cs--neutral .medo-cs__seg{ border-radius: var(--medo-radius-md); }
-.medo-cs--neutral.medo-cs--sm .medo-cs__seg{ border-radius: 6px; }
-.medo-cs--neutral .medo-cs__seg:hover:not(:disabled):not([aria-selected="true"]){
+.medo-ctsw--neutral .medo-ctsw__seg{ border-radius: var(--medo-radius-md); }
+.medo-ctsw--neutral.medo-ctsw--sm .medo-ctsw__seg{ border-radius: 6px; }
+.medo-ctsw--neutral .medo-ctsw__seg:hover:not(:disabled):not([aria-selected="true"]){
   background: var(--medo-state-hover);
   color: var(--medo-text);
 }
-.medo-cs--neutral .medo-cs__seg[aria-selected="true"]{
+.medo-ctsw--neutral .medo-ctsw__seg[aria-selected="true"]{
   background: var(--medo-surface);
   box-shadow: var(--medo-shadow-sm);
   color: var(--medo-text);
@@ -75,23 +75,23 @@ const MEDO_CS_CSS = `
 }
 
 /* Outline */
-.medo-cs--outline .medo-cs__seg + .medo-cs__seg{
+.medo-ctsw--outline .medo-ctsw__seg + .medo-ctsw__seg{
   border-left: var(--medo-border-thin) solid var(--medo-border-strong);
 }
-.medo-cs--outline .medo-cs__seg:hover:not(:disabled):not([aria-selected="true"]){
+.medo-ctsw--outline .medo-ctsw__seg:hover:not(:disabled):not([aria-selected="true"]){
   background: var(--medo-state-hover);
   color: var(--medo-text);
 }
-.medo-cs--outline .medo-cs__seg[aria-selected="true"]{
+.medo-ctsw--outline .medo-ctsw__seg[aria-selected="true"]{
   background: var(--medo-action);
   color: var(--medo-action-text);
   font-weight: 600;
 }
-.medo-cs--outline .medo-cs__seg[aria-selected="true"] + .medo-cs__seg{ border-left-color: var(--medo-action); }
-.medo-cs--outline .medo-cs__seg:disabled{ background: var(--medo-surface-container); }
+.medo-ctsw--outline .medo-ctsw__seg[aria-selected="true"] + .medo-ctsw__seg{ border-left-color: var(--medo-action); }
+.medo-ctsw--outline .medo-ctsw__seg:disabled{ background: var(--medo-surface-container); }
 
 /* Icon-only: das Label erscheint als dunkler Hinweis über dem Segment. */
-.medo-cs__tip{
+.medo-ctsw__tip{
   position: absolute;
   bottom: calc(100% + 8px);
   left: 50%;
@@ -111,8 +111,8 @@ const MEDO_CS_CSS = `
   box-shadow: var(--medo-shadow-md);
   z-index: 5;
 }
-.medo-cs__seg:hover .medo-cs__tip,
-.medo-cs__seg:focus-visible .medo-cs__tip{ opacity: 1; }
+.medo-ctsw__seg:hover .medo-ctsw__tip,
+.medo-ctsw__seg:focus-visible .medo-ctsw__tip{ opacity: 1; }
 `;
 
 const ContentSwitcher = ({
@@ -173,10 +173,10 @@ const ContentSwitcher = ({
       "aria-orientation": "horizontal",
       onKeyDown,
       className: [
-        "medo-cs",
-        "medo-cs--" + variant,
-        "medo-cs--" + size,
-        fullWidth ? "medo-cs--full" : null,
+        "medo-ctsw",
+        "medo-ctsw--" + variant,
+        "medo-ctsw--" + size,
+        fullWidth ? "medo-ctsw--full" : null,
         className,
       ]
         .filter(Boolean)
@@ -199,9 +199,9 @@ const ContentSwitcher = ({
           disabled: !!s.disabled,
           onClick: () => !s.disabled && select(s.value),
           className: [
-            "medo-cs__seg",
-            equalWidth || fullWidth ? "medo-cs__seg--equal" : null,
-            iconOnly ? "medo-cs__seg--iconOnly" : null,
+            "medo-ctsw__seg",
+            equalWidth || fullWidth ? "medo-ctsw__seg--equal" : null,
+            iconOnly ? "medo-ctsw__seg--iconOnly" : null,
           ]
             .filter(Boolean)
             .join(" "),
@@ -211,7 +211,7 @@ const ContentSwitcher = ({
           : null,
         iconOnly ? null : React.createElement("span", null, s.label),
         iconOnly
-          ? React.createElement("span", { className: "medo-cs__tip", "aria-hidden": "true" }, s.label)
+          ? React.createElement("span", { className: "medo-ctsw__tip", "aria-hidden": "true" }, s.label)
           : null
       );
     })
