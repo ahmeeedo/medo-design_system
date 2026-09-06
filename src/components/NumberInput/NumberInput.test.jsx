@@ -1,4 +1,5 @@
 import { act, fireEvent, render, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import { NumberInput } from './NumberInput'
 
 /* Template: timers and repeat-on-hold.
@@ -78,5 +79,55 @@ describe('NumberInput · Zeitgeber', () => {
     fireEvent.keyDown(field, { key: 'ArrowDown' })
     fireEvent.keyDown(field, { key: 'ArrowDown' })
     expect(lastValue(onChange)).toBe('0.5')
+  })
+})
+
+/* Uebergebene Angaben treten hinzu, sie ersetzen nicht. An onKeyDown haengen hier die
+   Pfeiltasten, die den Wert veraendern — ein ersetzender Handler nimmt sie stumm weg. */
+describe('NumberInput · uebergebene Angaben treten hinzu', () => {
+  it('laesst ein uebergebenes onFocus zusaetzlich laufen und behaelt den Fokusrahmen', async () => {
+    const user = userEvent.setup()
+    const onFocus = vi.fn()
+    const { container } = render(<NumberInput label="Anzahl" onFocus={onFocus} />)
+
+    await user.click(screen.getByRole('spinbutton', { name: 'Anzahl' }))
+
+    expect(onFocus).toHaveBeenCalledTimes(1)
+    expect(container.querySelector('.medo-field__box--focus')).not.toBeNull()
+  })
+
+  it('laesst ein uebergebenes onBlur zusaetzlich laufen', async () => {
+    const user = userEvent.setup()
+    const onBlur = vi.fn()
+    render(<NumberInput label="Anzahl" onBlur={onBlur} />)
+
+    await user.click(screen.getByRole('spinbutton', { name: 'Anzahl' }))
+    await user.tab()
+
+    expect(onBlur).toHaveBeenCalledTimes(1)
+  })
+
+  it('laesst ein uebergebenes onKeyDown laufen, ohne die Pfeiltasten zu ersetzen', async () => {
+    const user = userEvent.setup()
+    const onKeyDown = vi.fn()
+    const onChange = vi.fn()
+    render(
+      <NumberInput label="Anzahl" defaultValue={3} onKeyDown={onKeyDown} onChange={onChange} />
+    )
+
+    await user.click(screen.getByRole('spinbutton', { name: 'Anzahl' }))
+    await user.keyboard('{ArrowUp}')
+
+    expect(onKeyDown).toHaveBeenCalled()
+    expect(onChange).toHaveBeenCalledWith(expect.objectContaining({ target: { value: '4', name: undefined } }))
+  })
+
+  it('laesst den eigenen Fehlerzustand vor einem uebergebenen aria-invalid stehen', () => {
+    render(<NumberInput label="Anzahl" error="Bitte eine Zahl eintragen" aria-invalid="false" />)
+
+    expect(screen.getByRole('spinbutton', { name: 'Anzahl' })).toHaveAttribute(
+      'aria-invalid',
+      'true'
+    )
   })
 })

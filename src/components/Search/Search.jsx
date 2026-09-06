@@ -34,6 +34,10 @@ export function Search({
   onRemoveRecent,
   className,
   style,
+  onFocus,
+  onBlur,
+  onKeyDown: onKeyDownProp,
+  'aria-invalid': ariaInvalid,
   ...rest
 }) {
   const [focused, setFocused] = useState(false)
@@ -197,15 +201,22 @@ export function Search({
         aria-expanded={panelVisible ? 'true' : 'false'}
         aria-controls={panelVisible ? fieldId + '-list' : undefined}
         aria-autocomplete="list"
-        aria-invalid={error ? 'true' : undefined}
+        aria-invalid={error ? 'true' : ariaInvalid}
         style={compact ? { fontSize: 'var(--medo-text-sm)' } : undefined}
         onChange={handleChange}
-        onKeyDown={onKeyDown}
-        onFocus={() => {
+        onKeyDown={(e) => {
+          onKeyDown(e)
+          if (onKeyDownProp) onKeyDownProp(e)
+        }}
+        onFocus={(e) => {
           setFocused(true)
           setOpen(true)
+          if (onFocus) onFocus(e)
         }}
-        onBlur={() => setFocused(false)}
+        onBlur={(e) => {
+          setFocused(false)
+          if (onBlur) onBlur(e)
+        }}
         {...rest}
       />
       {current && !disabled ? (
