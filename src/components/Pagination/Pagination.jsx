@@ -39,6 +39,22 @@ export function Pagination({
   showFirstLast = false,
   showJump = false,
   ariaLabel = 'Seitennummerierung',
+  pageLabel = (page) => 'Seite ' + page,
+  firstLabel = 'Erste Seite',
+  previousLabel = 'Vorherige Seite',
+  nextLabel = 'Nächste Seite',
+  lastLabel = 'Letzte Seite',
+  backLabel = 'Zurück',
+  forwardLabel = 'Weiter',
+  pageOfLabel = (page, pageCount) => (
+    <>
+      Seite <b>{page}</b> von {pageCount}
+    </>
+  ),
+  pageSizeLabel = 'Einträge pro Seite',
+  rangeLabel = (from, to, totalItems) => from + '–' + to + ' von ' + totalItems,
+  jumpLabel = 'Gehe zu',
+  jumpAriaLabel = 'Zu Seite springen',
   className,
   style,
   ...rest
@@ -60,9 +76,9 @@ export function Pagination({
   const atStart = current <= 1
   const atEnd = current >= count
 
-  const iconBtn = (glyphName, label, disabled, onClick) => (
+  const iconBtn = (glyphName, label, disabled, onClick, key) => (
     <button
-      key={label}
+      key={key || glyphName}
       type="button"
       className="medo-pag__btn medo-pag__btn--icon"
       aria-label={label}
@@ -85,7 +101,7 @@ export function Pagination({
         className={['medo-pag__btn', p === current ? 'medo-pag__btn--active' : null]
           .filter(Boolean)
           .join(' ')}
-        aria-label={'Seite ' + p}
+        aria-label={pageLabel(p)}
         aria-current={p === current ? 'page' : undefined}
         onClick={() => go(p)}
       >
@@ -101,11 +117,11 @@ export function Pagination({
       style={extra ? undefined : style}
       {...(extra ? {} : rest)}
     >
-      {showFirstLast ? iconBtn('first_page', 'Erste Seite', atStart, () => go(1)) : null}
-      {iconBtn('chevron_left', 'Vorherige Seite', atStart, () => go(current - 1))}
+      {showFirstLast ? iconBtn('first_page', firstLabel, atStart, () => go(1)) : null}
+      {iconBtn('chevron_left', previousLabel, atStart, () => go(current - 1))}
       {numbers}
-      {iconBtn('chevron_right', 'Nächste Seite', atEnd, () => go(current + 1))}
-      {showFirstLast ? iconBtn('last_page', 'Letzte Seite', atEnd, () => go(count)) : null}
+      {iconBtn('chevron_right', nextLabel, atEnd, () => go(current + 1))}
+      {showFirstLast ? iconBtn('last_page', lastLabel, atEnd, () => go(count)) : null}
     </nav>
   )
 
@@ -124,18 +140,16 @@ export function Pagination({
           onClick={() => go(current - 1)}
         >
           <Icon name="chevron_left" size={20} />
-          Zurück
+          {backLabel}
         </button>
-        <span className="medo-pag__info">
-          Seite <b>{current}</b> von {count}
-        </span>
+        <span className="medo-pag__info">{pageOfLabel(current, count)}</span>
         <button
           type="button"
           className="medo-pag__btn medo-pag__btn--wide"
           disabled={atEnd}
           onClick={() => go(current + 1)}
         >
-          Weiter
+          {forwardLabel}
           <Icon name="chevron_right" size={20} />
         </button>
       </nav>
@@ -154,11 +168,11 @@ export function Pagination({
         <div className="medo-pag__side">
           {onPageSizeChange ? (
             <Fragment>
-              <span className="medo-pag__label">Einträge pro Seite</span>
+              <span className="medo-pag__label">{pageSizeLabel}</span>
               <select
                 className="medo-pag__select"
                 value={pageSize}
-                aria-label="Einträge pro Seite"
+                aria-label={pageSizeLabel}
                 onChange={(e) => onPageSizeChange(Number(e.target.value))}
               >
                 {pageSizeOptions.map((o) => (
@@ -174,7 +188,7 @@ export function Pagination({
               className="medo-pag__info"
               style={{ marginLeft: onPageSizeChange ? '8px' : 0 }}
             >
-              {from + '–' + to + ' von ' + totalItems}
+              {rangeLabel(from, to, totalItems)}
             </span>
           ) : null}
         </div>
@@ -182,12 +196,12 @@ export function Pagination({
           {nav(true)}
           {showJump ? (
             <div className="medo-pag__side" style={{ marginLeft: '8px' }}>
-              <span className="medo-pag__label">Gehe zu</span>
+              <span className="medo-pag__label">{jumpLabel}</span>
               <input
                 className="medo-pag__jump"
                 type="text"
                 inputMode="numeric"
-                aria-label="Zu Seite springen"
+                aria-label={jumpAriaLabel}
                 value={jump}
                 onChange={(e) => setJump(e.target.value.replace(/[^0-9]/g, ''))}
                 onKeyDown={(e) => {

@@ -20,6 +20,7 @@ export function ContainedList({
   title,
   count,
   emptyText,
+  actionLabel = 'Weitere Aktionen',
   ariaLabel,
   className,
   style,
@@ -124,7 +125,7 @@ export function ContainedList({
             className="medo-clist__act"
             role="button"
             tabIndex={-1}
-            aria-label={it.actionLabel || 'Weitere Aktionen'}
+            aria-label={it.actionLabel || actionLabel}
             onClick={(e) => {
               e.stopPropagation()
               if (onAction) onAction(it.value, it)

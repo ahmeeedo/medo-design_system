@@ -1,12 +1,21 @@
 .medo-tabs{ font-family: var(--medo-font-sans); }
 .medo-tabs--vertical{ display: flex; gap: var(--medo-space-lg); align-items: flex-start; }
 .medo-tabs__list{ display: flex; }
-.medo-tabs__list--scroll{
+/* Gerollt wird die Hülle, nicht die Leiste: „contained“ ist inline-flex und misst sich am
+   eigenen Inhalt, hätte also nie etwas zu rollen. „max-content“ hält die Leiste in ihrer
+   natürlichen Breite, damit die Hülle überhaupt einen Überhang bekommt. */
+.medo-tabs__scroller{
   overflow-x: auto;
   scrollbar-width: none;
   -ms-overflow-style: none;
+  /* Hält den gewählten Tab vom Rand frei und gibt zugleich das Maß, um das der
+     benachbarte Tab hereinlugt. Gemessen über die Stufen der Abstandsskala: „md“
+     ergibt in der Unterstrich-Form nur 4–33px und damit einen unzuverlässigen
+     Vorausblick, „xl“ gleichmäßige 36px (underline) und 60px (contained). */
+  scroll-padding-inline: var(--medo-space-xl);
 }
-.medo-tabs__list--scroll::-webkit-scrollbar{ display: none; width: 0; height: 0; }
+.medo-tabs__scroller::-webkit-scrollbar{ display: none; width: 0; height: 0; }
+.medo-tabs__scroller > .medo-tabs__list{ width: max-content; }
 .medo-tabs__tab{
   box-sizing: border-box;
   position: relative;
@@ -79,7 +88,24 @@
   font-weight: 600;
 }
 
-.medo-tabs__tab--full{ flex: 1 1 0; }
+/* Material Design 3: „Labels can use a second line if needed, with truncated text" —
+   und „labels should be wrapped before truncating them". Gleich breite Tabs rollen nie;
+   wer rollen will, nimmt „scrollable“.
+   „min-width: 0“ hebt die Mindestbreite auf, die sonst aus „white-space: nowrap“ folgt und
+   die Seite seitlich überlaufen lässt. Der Selektor spart Icon und Zähler aus — umbrochen
+   und gekürzt wird die Beschriftung, nicht das Beiwerk. */
+.medo-tabs__tab--full{ flex: 1 1 0; min-width: 0; }
+.medo-tabs__tab--full .medo-tabs__inner{ min-width: 0; max-width: 100%; }
+.medo-tabs__tab--full .medo-tabs__inner > span:not(.medo-icon):not(.medo-tabs__badge){
+  min-width: 0;
+  white-space: normal;
+  overflow-wrap: break-word;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow: hidden;
+}
 .medo-tabs__inner{ display: inline-flex; align-items: center; gap: 8px; }
 .medo-tabs__list--sm .medo-tabs__inner{ gap: 7px; }
 .medo-tabs__badge{
@@ -90,6 +116,7 @@
   font-size: 11px; font-weight: 500;
   background: var(--medo-surface-sunken);
   color: var(--medo-text-subtle);
+  flex: none;
 }
 .medo-tabs__tab[aria-selected="true"] .medo-tabs__badge{ background: var(--medo-primary-100); color: var(--medo-primary-1000); }
 .medo-tabs__panel{ flex: 1; min-width: 0; }
