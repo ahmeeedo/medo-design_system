@@ -9,7 +9,8 @@ export interface ContainedListItem {
   meta?: React.ReactNode;
   /** Ligaturname eines Material Symbols Rounded in getönter Fläche. */
   icon?: string;
-  /** Kürzel für den Avatar-Kreis, z. B. "MH". Schlägt `icon`. */
+  /** Kürzel für den Avatar, z. B. "MH". Schlägt `icon`.
+   *  Wird an die Avatar-Komponente gereicht; die Liste bleibt einfarbig. */
   avatar?: React.ReactNode;
   /** Icon einer Zeilenaktion (z. B. "more_vert"). Ersetzt das Chevron. */
   action?: string;
@@ -45,6 +46,9 @@ export interface ContainedListProps {
   count?: React.ReactNode;
   /** Text, wenn die Liste leer ist. */
   emptyText?: React.ReactNode;
+  /** `aria-label` der Zeilenaktion, wenn die Zeile selbst keines mitbringt.
+   *  Standard „Weitere Aktionen". */
+  actionLabel?: string;
   ariaLabel?: string;
   className?: string;
   style?: React.CSSProperties;

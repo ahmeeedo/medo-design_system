@@ -16,6 +16,10 @@ export interface CheckboxGroupProps {
   legend?: string;
   direction?: "vertical" | "horizontal";
   children?: React.ReactNode;
+  /** Liegt auf dem `<fieldset>` der Gruppe. */
+  className?: string;
+  /** Liegt auf dem `<fieldset>` der Gruppe. */
+  style?: React.CSSProperties;
 }
 
 export const Checkbox: React.FC<CheckboxProps>;

@@ -2,8 +2,12 @@ import type * as React from "react";
 
 export type FieldSize = "sm" | "md" | "lg";
 
+/* `size` und `prefix` sind am `<input>` bereits belegt: `size` als Zahl, `prefix` als
+   RDFa-Zeichenkette. Beide Namen trägt diese Komponente mit eigener Bedeutung, deshalb
+   werden sie ausgeschlossen. Ohne den Ausschluss von `prefix` meldet TypeScript TS2430
+   und zwingt Abnehmer zu `skipLibCheck: true`. Geprüft gegen @types/react 18 und 19. */
 export interface TextInputProps
-  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "size"> {
+  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "size" | "prefix"> {
   /** Immer sichtbares Label. Ein Platzhalter ersetzt es nicht. */
   label?: string;
   /** Label liegt im Feld und schwebt bei Fokus oder Inhalt nach oben. Feld wird 52px hoch. */

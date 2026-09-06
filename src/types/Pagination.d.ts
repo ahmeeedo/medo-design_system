@@ -22,6 +22,33 @@ export interface PaginationProps {
   /** Eingabefeld „Gehe zu" (nur `variant="bar"`). */
   showJump?: boolean;
   ariaLabel?: string;
+  /** `aria-label` je Seitenschaltfläche. Standard `Seite ${page}`. */
+  pageLabel?: (page: number) => string;
+  /** `aria-label` der Schaltfläche „erste Seite" (`showFirstLast`). Standard „Erste Seite". */
+  firstLabel?: string;
+  /** `aria-label` der Schaltfläche „vorherige Seite". Standard „Vorherige Seite". */
+  previousLabel?: string;
+  /** `aria-label` der Schaltfläche „nächste Seite". Standard „Nächste Seite". */
+  nextLabel?: string;
+  /** `aria-label` der Schaltfläche „letzte Seite" (`showFirstLast`). Standard „Letzte Seite". */
+  lastLabel?: string;
+  /** Sichtbare Beschriftung der Zurück-Schaltfläche (`variant="compact"`). Standard „Zurück". */
+  backLabel?: React.ReactNode;
+  /** Sichtbare Beschriftung der Weiter-Schaltfläche (`variant="compact"`). Standard „Weiter". */
+  forwardLabel?: React.ReactNode;
+  /** Seitenanzeige (`variant="compact"`). Standard `Seite <b>${page}</b> von ${pageCount}`. */
+  pageOfLabel?: (page: number, pageCount: number) => React.ReactNode;
+  /** Beschriftung der Auswahl „Einträge pro Seite" (`variant="bar"`). Steht sichtbar
+   *  daneben und zugleich als `aria-label` am Auswahlfeld, deshalb reiner Text.
+   *  Standard „Einträge pro Seite". */
+  pageSizeLabel?: string;
+  /** Bereichsanzeige (`variant="bar"`, braucht `totalItems`).
+   *  Standard `${from}–${to} von ${totalItems}`. */
+  rangeLabel?: (from: number, to: number, totalItems: number) => React.ReactNode;
+  /** Sichtbare Beschriftung des Direktsprungfelds (`showJump`). Standard „Gehe zu". */
+  jumpLabel?: React.ReactNode;
+  /** `aria-label` des Direktsprungfelds (`showJump`). Standard „Zu Seite springen". */
+  jumpAriaLabel?: string;
   className?: string;
   style?: React.CSSProperties;
 }

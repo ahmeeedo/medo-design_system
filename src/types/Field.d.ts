@@ -10,6 +10,10 @@ export interface FieldProps {
   success?: string;
   fullWidth?: boolean;
   children?: React.ReactNode;
+  /** Liegt auf der äußeren Hülle des Feldes. */
+  className?: string;
+  /** Liegt auf der äußeren Hülle des Feldes. */
+  style?: React.CSSProperties;
 }
 
 /** Hülle für eigene Eingabeelemente: Label, Rahmen, Meldung. */
