@@ -1,0 +1,69 @@
+<!-- @dsCard group="Komponenten" viewport="700x400" name="Textarea" subtitle="Mehrzeilig — eine Größe, ziehbar in der Höhe, Zähler, Hilfetext, Fehler und Erfolg" -->
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  html,body{margin:0}
+  body{padding:20px 22px;font-family:var(--medo-font-sans);background:var(--medo-surface);color:var(--medo-text);min-height:400px;box-sizing:border-box}
+  .lbl{font-family:var(--medo-font-mono);font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:var(--medo-color-stone-500);margin-bottom:10px}
+  .grp{margin-bottom:18px}
+  .row{display:flex;gap:16px;flex-wrap:wrap;align-items:flex-start}
+  .col{flex:1;min-width:220px}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+<script src="../_ds_bundle.js"></script>
+<script>
+  var h = React.createElement;
+  var MedoTextarea = window.MedoUI.Textarea;
+
+  function App() {
+    var s = React.useState('Patient klagt über Beschwerden seit drei Tagen.');
+    var wert = s[0], setWert = s[1];
+
+    return h('div', null,
+      h('div', { className: 'grp' },
+        h('div', { className: 'lbl' }, 'Ruhe · Hilfetext · Zähler'),
+        h('div', { className: 'row' },
+          h('div', { className: 'col' },
+            h(MedoTextarea, {
+              label: 'Befund', rows: 3, value: wert,
+              onChange: function (e) { setWert(e.target.value); },
+              maxLength: 500, showCounter: true,
+              hint: 'Wird in den Bericht übernommen', fullWidth: true
+            })
+          ),
+          h('div', { className: 'col' },
+            h(MedoTextarea, {
+              label: 'Begründung', rows: 3, required: true, fullWidth: true,
+              error: 'Bitte einen Befund eintragen'
+            })
+          )
+        )
+      ),
+      h('div', { className: 'grp' },
+        h('div', { className: 'lbl' }, 'Erfolg · Gesperrt · Schreibgeschützt'),
+        h('div', { className: 'row' },
+          h('div', { className: 'col' },
+            h(MedoTextarea, { label: 'Notiz', rows: 2, defaultValue: 'Gespeichert am 04.08.2026', success: 'Gespeichert', fullWidth: true })
+          ),
+          h('div', { className: 'col' },
+            h(MedoTextarea, { label: 'Gesperrt', rows: 2, disabled: true, defaultValue: 'Nicht bearbeitbar', fullWidth: true })
+          ),
+          h('div', { className: 'col' },
+            h(MedoTextarea, { label: 'Schreibgeschützt', rows: 2, readOnly: true, defaultValue: 'Nur lesen', fullWidth: true })
+          )
+        )
+      )
+    );
+  }
+
+  ReactDOM.createRoot(document.getElementById('root')).render(h(App));
+</script>
+</body>
+</html>
