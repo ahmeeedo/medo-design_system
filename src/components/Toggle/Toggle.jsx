@@ -26,6 +26,7 @@ export function Toggle({
   id,
   className,
   style,
+  onClick,
   ...rest
 }) {
   const controlled = checked !== undefined
@@ -87,10 +88,11 @@ export function Toggle({
       type="button"
       role="switch"
       id={id}
-      aria-checked={on ? 'true' : 'false'}
-      aria-busy={loading ? 'true' : undefined}
       disabled={blocked}
-      onClick={toggle}
+      onClick={(e) => {
+        toggle()
+        if (onClick) onClick(e)
+      }}
       className={[
         'medo-tg',
         'medo-tg--' + size,
@@ -103,6 +105,10 @@ export function Toggle({
         .join(' ')}
       style={style}
       {...rest}
+      /* Zustand der Komponente — steht bewusst hinter {...rest}, damit ein Aufrufer
+         ihn nicht ueberschreiben kann. */
+      aria-checked={on ? 'true' : 'false'}
+      aria-busy={loading ? 'true' : undefined}
     >
       {labelPosition === 'left' ? text : control}
       {labelPosition === 'left' ? control : text}

@@ -21,6 +21,7 @@ export function Checkbox({
   id,
   className,
   style,
+  'aria-invalid': ariaInvalid,
   ...rest
 }) {
   const ref = useRef(null)
@@ -48,7 +49,7 @@ export function Checkbox({
         name={name}
         value={value}
         onChange={onChange}
-        aria-invalid={error ? 'true' : undefined}
+        aria-invalid={error ? 'true' : ariaInvalid}
         {...rest}
       />
       <span className={'medo-cb__box medo-cb__box--' + size} aria-hidden="true">

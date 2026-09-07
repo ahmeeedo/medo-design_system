@@ -110,3 +110,85 @@ describe('Select · Beschriftungen', () => {
     expect(screen.getByText('2 selected')).toBeInTheDocument()
   })
 })
+
+/* Uebergebene Angaben treten hinzu, sie ersetzen nicht. Am gestalteten Ausloeser haengen
+   ausser Fokus und Unschaerfe auch onClick (oeffnen/schliessen) und onKeyDown (Pfeile,
+   Home/End, Typeahead) — ein ersetzender Handler nimmt die Bedienung stumm weg. */
+describe('Select · uebergebene Angaben treten hinzu', () => {
+  const OPT = [
+    { value: 'kranken', label: 'Krankenversicherung' },
+    { value: 'leben', label: 'Lebensversicherung' },
+  ]
+
+  it('laesst ein uebergebenes onClick laufen, ohne das Panel am Oeffnen zu hindern', async () => {
+    const user = userEvent.setup()
+    const onClick = vi.fn()
+    render(<Select label="Schwerpunkt" options={OPT} onClick={onClick} />)
+
+    await user.click(screen.getByRole('combobox', { name: /Schwerpunkt/ }))
+
+    expect(onClick).toHaveBeenCalledTimes(1)
+    expect(screen.getByRole('listbox')).toBeInTheDocument()
+  })
+
+  it('laesst ein uebergebenes onKeyDown laufen, ohne die eingebaute Bedienung zu ersetzen', async () => {
+    const user = userEvent.setup()
+    const onKeyDown = vi.fn()
+    render(<Select label="Schwerpunkt" options={OPT} onKeyDown={onKeyDown} />)
+
+    const ausloeser = screen.getByRole('combobox', { name: /Schwerpunkt/ })
+    ausloeser.focus()
+    await user.keyboard('{ArrowDown}')
+
+    expect(onKeyDown).toHaveBeenCalled()
+    expect(screen.getByRole('listbox')).toBeInTheDocument()
+  })
+
+  it('laesst ein uebergebenes onFocus zusaetzlich laufen und behaelt den Fokusrahmen', async () => {
+    const user = userEvent.setup()
+    const onFocus = vi.fn()
+    const { container } = render(<Select label="Schwerpunkt" options={OPT} onFocus={onFocus} />)
+
+    await user.tab()
+
+    expect(onFocus).toHaveBeenCalledTimes(1)
+    expect(container.querySelector('.medo-field__box--focus')).not.toBeNull()
+  })
+
+  it('laesst ein uebergebenes onBlur zusaetzlich laufen', async () => {
+    const user = userEvent.setup()
+    const onBlur = vi.fn()
+    render(<Select label="Schwerpunkt" options={OPT} onBlur={onBlur} />)
+
+    await user.tab()
+    await user.tab()
+
+    expect(onBlur).toHaveBeenCalledTimes(1)
+  })
+
+  it('laesst den eigenen Fehlerzustand vor einem uebergebenen aria-invalid stehen', () => {
+    render(
+      <Select label="Schwerpunkt" options={OPT} error="Bitte waehlen" aria-invalid="false" />
+    )
+
+    expect(screen.getByRole('combobox', { name: /Schwerpunkt/ })).toHaveAttribute(
+      'aria-invalid',
+      'true'
+    )
+  })
+
+  /* Dieselbe Zusammenfuehrung gilt in der nativen Betriebsart. */
+  it('fuehrt onFocus und aria-invalid auch bei native zusammen', async () => {
+    const user = userEvent.setup()
+    const onFocus = vi.fn()
+    render(
+      <Select label="Schwerpunkt" native options={OPT} onFocus={onFocus} aria-invalid="true" />
+    )
+
+    const feld = screen.getByRole('combobox', { name: /Schwerpunkt/ })
+    expect(feld).toHaveAttribute('aria-invalid', 'true')
+
+    await user.click(feld)
+    expect(onFocus).toHaveBeenCalledTimes(1)
+  })
+})

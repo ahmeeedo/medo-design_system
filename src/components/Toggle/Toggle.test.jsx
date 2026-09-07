@@ -2,7 +2,8 @@
    deshalb in beiden Themes dunkel bleiben — jede andere Icon-Rolle kippt im
    dunklen Theme ins Helle und wäre auf dem weißen Griff unsichtbar. Genau
    dafür trägt --medo-icon-on-light in beiden Zweigen denselben Wert. */
-import { render } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 
 import { Toggle } from './Toggle'
 import { themePair } from '../../docs/themeTokens'
@@ -45,5 +46,44 @@ describe('Toggle · Symbolfarbe', () => {
     expect(style).toMatch(/border-bottom-color:/)
     expect(style).toMatch(/border-left-color:/)
     expect(style).not.toMatch(/(^|;)\s*border-color:/)
+  })
+})
+
+/* Uebergebene Angaben treten hinzu, sie ersetzen nicht. Der Zustand der Komponente
+   dagegen muss unueberschreibbar bleiben: aria-checked und aria-busy stehen deshalb
+   hinter {...rest}. */
+describe('Toggle · uebergebene Angaben treten hinzu', () => {
+  it('laesst ein uebergebenes onClick laufen, ohne das Umschalten zu ersetzen', async () => {
+    const user = userEvent.setup()
+    const onClick = vi.fn()
+    const onChange = vi.fn()
+    render(<Toggle label="Benachrichtigungen" onClick={onClick} onChange={onChange} />)
+
+    await user.click(screen.getByRole('switch', { name: 'Benachrichtigungen' }))
+
+    expect(onClick).toHaveBeenCalledTimes(1)
+    expect(onChange).toHaveBeenCalledWith(true)
+    expect(screen.getByRole('switch', { name: 'Benachrichtigungen' })).toHaveAttribute(
+      'aria-checked',
+      'true'
+    )
+  })
+
+  it('laesst den eigenen Zustand vor einem uebergebenen aria-checked stehen', () => {
+    render(<Toggle label="Benachrichtigungen" checked aria-checked="false" />)
+
+    expect(screen.getByRole('switch', { name: 'Benachrichtigungen' })).toHaveAttribute(
+      'aria-checked',
+      'true'
+    )
+  })
+
+  it('laesst den Ladezustand vor einem uebergebenen aria-busy stehen', () => {
+    render(<Toggle label="Benachrichtigungen" loading aria-busy="false" />)
+
+    expect(screen.getByRole('switch', { name: 'Benachrichtigungen' })).toHaveAttribute(
+      'aria-busy',
+      'true'
+    )
   })
 })

@@ -59,6 +59,11 @@ export function Select({
   className,
   style,
   children,
+  onFocus,
+  onBlur,
+  onClick,
+  onKeyDown: onKeyDownProp,
+  'aria-invalid': ariaInvalid,
   ...rest
 }) {
   const [open, setOpen] = useState(defaultOpen)
@@ -352,10 +357,16 @@ export function Select({
             value={current}
             disabled={disabled}
             required={required}
-            aria-invalid={error ? 'true' : undefined}
+            aria-invalid={error ? 'true' : ariaInvalid}
             onChange={(e) => commit(e.target.value)}
-            onFocus={() => setFocused(true)}
-            onBlur={() => setFocused(false)}
+            onFocus={(e) => {
+              setFocused(true)
+              if (onFocus) onFocus(e)
+            }}
+            onBlur={(e) => {
+              setFocused(false)
+              if (onBlur) onBlur(e)
+            }}
             {...rest}
           >
             {placeholder ? <option value="">{placeholder}</option> : null}
@@ -525,12 +536,27 @@ export function Select({
             aria-activedescendant={
               open && activeIndex >= 0 ? fieldId + '-opt-' + activeIndex : undefined
             }
-            aria-invalid={error ? 'true' : undefined}
+            aria-invalid={error ? 'true' : ariaInvalid}
             aria-required={required ? 'true' : undefined}
-            onClick={() => (disabled ? null : open ? setOpen(false) : openPanel())}
-            onKeyDown={onKeyDown}
-            onFocus={() => setFocused(true)}
-            onBlur={() => setFocused(false)}
+            onClick={(e) => {
+              if (!disabled) {
+                if (open) setOpen(false)
+                else openPanel()
+              }
+              if (onClick) onClick(e)
+            }}
+            onKeyDown={(e) => {
+              onKeyDown(e)
+              if (onKeyDownProp) onKeyDownProp(e)
+            }}
+            onFocus={(e) => {
+              setFocused(true)
+              if (onFocus) onFocus(e)
+            }}
+            onBlur={(e) => {
+              setFocused(false)
+              if (onBlur) onBlur(e)
+            }}
             {...rest}
           >
             {multiple ? (

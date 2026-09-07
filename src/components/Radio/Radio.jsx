@@ -19,6 +19,7 @@ export function Radio({
   id,
   className,
   style,
+  'aria-invalid': ariaInvalid,
   ...rest
 }) {
   return (
@@ -38,7 +39,7 @@ export function Radio({
         name={name}
         value={value}
         onChange={onChange}
-        aria-invalid={error ? 'true' : undefined}
+        aria-invalid={error ? 'true' : ariaInvalid}
         {...rest}
       />
       <span className={'medo-rb__circle medo-rb__circle--' + size} aria-hidden="true">
