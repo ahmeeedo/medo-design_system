@@ -1,4 +1,5 @@
 import { Fragment, useRef, useState } from 'react'
+import { Avatar } from '../Avatar/Avatar'
 import { Icon } from '../Icon/Icon'
 import './ContainedList.css'
 
@@ -101,9 +102,8 @@ export function ContainedList({
           </span>
         ) : null}
         {it.avatar ? (
-          <span className="medo-clist__avatar" aria-hidden="true">
-            {it.avatar}
-          </span>
+          /* The avatar marks itself aria-hidden: the name stands right beside it. */
+          <Avatar initials={it.avatar} size="md" color="teal" />
         ) : it.icon ? (
           <span className="medo-clist__iconbox" aria-hidden="true">
             <Icon name={it.icon} size={size === 'sm' ? 19 : 21} />

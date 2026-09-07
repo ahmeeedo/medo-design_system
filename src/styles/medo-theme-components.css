@@ -117,13 +117,6 @@
   background: var(--medo-selection);
 }
 
-/* teal-100 is the light value of --medo-state-selected; the initials follow the
-   800 -> 300 mapping, because teal-800 on a teal surface is unreadable. */
-:root .medo-clist__avatar{
-  background: var(--medo-state-selected);
-  color: light-dark(var(--medo-primary-800), var(--medo-color-teal-300));
-}
-
 /* ---------------------------------------------------------------------------
    ContentSwitcher (.medo-ctsw)
    ---------------------------------------------------------------------------
