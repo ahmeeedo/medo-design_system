@@ -23,6 +23,7 @@ const Menu = ({
   disabled = false,
   className,
   style,
+  onContextMenu: onContextMenuProp,
   ...rest
 }) => {
   window.MedoUI.injectCss("medo-context-menu-css", MEDO_CTX_CSS);
@@ -66,7 +67,7 @@ const Menu = ({
     "div",
     {
       className: ["medo-ctx", className].filter(Boolean).join(" "),
-      onContextMenu,
+      onContextMenu: (e) => { onContextMenu(e); if (onContextMenuProp) onContextMenuProp(e); },
       style,
       ...rest,
     },

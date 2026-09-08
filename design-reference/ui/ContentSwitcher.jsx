@@ -128,6 +128,7 @@ const ContentSwitcher = ({
   ariaLabel,
   className,
   style,
+  onKeyDown: onKeyDownProp,
   ...rest
 }) => {
   window.MedoUI.injectCss("medo-content-switcher-css", MEDO_CS_CSS);
@@ -171,7 +172,7 @@ const ContentSwitcher = ({
       role: "tablist",
       "aria-label": ariaLabel,
       "aria-orientation": "horizontal",
-      onKeyDown,
+      onKeyDown: (e) => { onKeyDown(e); if (onKeyDownProp) onKeyDownProp(e); },
       className: [
         "medo-ctsw",
         "medo-ctsw--" + variant,

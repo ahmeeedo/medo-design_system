@@ -182,3 +182,76 @@ describe('MenuList · Auswahl', () => {
     expect(screen.getByRole('menuitemcheckbox', { name: 'Praxis Nord' })).toHaveAttribute('aria-checked', 'true')
   })
 })
+
+/* Ein uebergebenes onKeyDown darf die eingebaute Tastaturbedienung nicht ersetzen.
+   Geprueft wird deshalb die Bedienung selbst — Pfeile, Home/End, Escape, Enter —
+   jeweils MIT einem uebergebenen Handler. Dass der Handler laeuft, ist die kleinere
+   Haelfte; dass die Bedienung ueberlebt, die groessere. */
+describe('MenuList · uebergebenes onKeyDown ersetzt die Bedienung nicht', () => {
+  it('bewegt den Fokus mit den Pfeiltasten und ruft den uebergebenen Handler', async () => {
+    const user = userEvent.setup()
+    const onKeyDown = vi.fn()
+    render(<MenuList items={ITEMS} ariaLabel="Aktionen" onKeyDown={onKeyDown} />)
+
+    expect(screen.getByRole('menuitem', { name: 'Öffnen' })).toHaveFocus()
+
+    await user.keyboard('{ArrowDown}')
+    expect(screen.getByRole('menuitem', { name: 'Umbenennen' })).toHaveFocus()
+
+    await user.keyboard('{ArrowUp}')
+    expect(screen.getByRole('menuitem', { name: 'Öffnen' })).toHaveFocus()
+
+    expect(onKeyDown).toHaveBeenCalled()
+  })
+
+  it('springt mit Home und End an die Raender, auch mit uebergebenem Handler', async () => {
+    const user = userEvent.setup()
+    const onKeyDown = vi.fn()
+    render(<MenuList items={ITEMS} ariaLabel="Aktionen" onKeyDown={onKeyDown} />)
+
+    await user.keyboard('{End}')
+    expect(screen.getByRole('menuitem', { name: 'Archivieren' })).toHaveFocus()
+
+    await user.keyboard('{Home}')
+    expect(screen.getByRole('menuitem', { name: 'Öffnen' })).toHaveFocus()
+
+    expect(onKeyDown).toHaveBeenCalled()
+  })
+
+  it('schliesst mit Escape, auch mit uebergebenem Handler', async () => {
+    const user = userEvent.setup()
+    const onKeyDown = vi.fn()
+    const onClose = vi.fn()
+    render(<MenuList items={ITEMS} ariaLabel="Aktionen" onClose={onClose} onKeyDown={onKeyDown} />)
+
+    await user.keyboard('{Escape}')
+
+    expect(onClose).toHaveBeenCalledTimes(1)
+    expect(onKeyDown).toHaveBeenCalled()
+  })
+
+  it('waehlt mit Enter, auch mit uebergebenem Handler', async () => {
+    const user = userEvent.setup()
+    const onKeyDown = vi.fn()
+    const onSelect = vi.fn()
+    render(<MenuList items={ITEMS} ariaLabel="Aktionen" onSelect={onSelect} onKeyDown={onKeyDown} />)
+
+    await user.keyboard('{ArrowDown}')
+    await user.keyboard('{Enter}')
+
+    expect(onSelect).toHaveBeenCalledWith('rename', expect.objectContaining({ value: 'rename' }))
+    expect(onKeyDown).toHaveBeenCalled()
+  })
+
+  /* Die Anfangsbuchstaben-Suche haengt am selben Handler. */
+  it('springt beim Tippen zum passenden Eintrag, auch mit uebergebenem Handler', async () => {
+    const user = userEvent.setup()
+    const onKeyDown = vi.fn()
+    render(<MenuList items={ITEMS} ariaLabel="Aktionen" onKeyDown={onKeyDown} />)
+
+    await user.keyboard('a')
+
+    expect(screen.getByRole('menuitem', { name: 'Archivieren' })).toHaveFocus()
+    expect(onKeyDown).toHaveBeenCalled()
+  })
+})
