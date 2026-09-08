@@ -20,6 +20,7 @@ export function ContentSwitcher({
   ariaLabel,
   className,
   style,
+  onKeyDown: onKeyDownProp,
   ...rest
 }) {
   const controlled = value !== undefined
@@ -59,7 +60,10 @@ export function ContentSwitcher({
       role="tablist"
       aria-label={ariaLabel}
       aria-orientation="horizontal"
-      onKeyDown={onKeyDown}
+      onKeyDown={(e) => {
+        onKeyDown(e)
+        if (onKeyDownProp) onKeyDownProp(e)
+      }}
       className={[
         'medo-ctsw',
         'medo-ctsw--' + variant,

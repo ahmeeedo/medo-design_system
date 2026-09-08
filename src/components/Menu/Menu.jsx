@@ -15,6 +15,7 @@ export function Menu({
   disabled = false,
   className,
   style,
+  onContextMenu: onContextMenuProp,
   ...rest
 }) {
   const [pos, setPos] = useState(null)
@@ -54,7 +55,10 @@ export function Menu({
   return (
     <div
       className={['medo-ctx', className].filter(Boolean).join(' ')}
-      onContextMenu={onContextMenu}
+      onContextMenu={(e) => {
+        onContextMenu(e)
+        if (onContextMenuProp) onContextMenuProp(e)
+      }}
       style={style}
       {...rest}
     >
