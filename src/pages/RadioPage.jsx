@@ -97,6 +97,12 @@ export default function RadioPage() {
               { id: 'size', type: 'dropdown', label: t('radio.controls.size'), options: ['sm', 'md'], default: 'md' },
               { id: 'disabled', type: 'toggle', label: t('radio.controls.disabled'), default: false },
             ]}
+            presets={[
+              { id: 'standard', label: t('radio.presets.standard'), values: {} },
+              { id: 'horizontal', label: t('radio.presets.horizontal'), values: { direction: 'horizontal' } },
+              { id: 'card', label: t('radio.presets.card'), values: { variant: 'card' } },
+              { id: 'disabled', label: t('radio.presets.disabled'), values: { disabled: true } },
+            ]}
           />
 
           <Section title={t('radio.overview.statesTitle')}>

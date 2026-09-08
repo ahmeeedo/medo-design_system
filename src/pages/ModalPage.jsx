@@ -124,6 +124,14 @@ export default function ModalPage() {
               { id: 'body', type: 'toggle', label: t('modal.controls.body'), default: true },
               { id: 'secondary', type: 'toggle', label: t('modal.controls.secondary'), default: false },
             ]}
+            presets={[
+              { id: 'standard', label: t('modal.presets.standard'), values: {} },
+              { id: 'danger', label: t('modal.presets.danger'), values: { tone: 'danger' } },
+              { id: 'warning', label: t('modal.presets.warning'), values: { tone: 'warning' } },
+              { id: 'success', label: t('modal.presets.success'), values: { tone: 'success' } },
+              { id: 'secondary', label: t('modal.presets.secondary'), values: { secondary: true } },
+              { id: 'plain', label: t('modal.presets.plain'), values: { icon: false, subtitle: false } },
+            ]}
           />
 
           <Section title={t('modal.overview.sizesTitle')}>

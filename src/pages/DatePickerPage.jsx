@@ -80,7 +80,7 @@ function DatePickerDemo({ values, t }) {
         clearable={values.clearable}
         required={values.required}
         disabled={values.disabled}
-        presets={values.presets ? presets : undefined}
+        presets={values.quickSelect ? presets : undefined}
         summaryLabel={t('datePicker.demo.summary')}
       />
     </div>
@@ -114,12 +114,21 @@ export default function DatePickerPage() {
               { id: 'mode', type: 'dropdown', label: 'Mode', options: ['single', 'range'], default: 'single' },
               { id: 'inline', type: 'toggle', label: 'Inline', default: false },
               { id: 'label', type: 'toggle', label: 'Label', default: true },
-              { id: 'helper', type: 'toggle', label: 'Helper', default: true },
-              { id: 'presets', type: 'toggle', label: 'Presets', default: false },
+              { id: 'helper', type: 'toggle', label: 'Helper', default: true, visibleWhen: v => !v.error },
+              { id: 'quickSelect', type: 'toggle', label: 'Schnellauswahl', default: false },
               { id: 'clearable', type: 'toggle', label: 'Clearable', default: true },
               { id: 'required', type: 'toggle', label: 'Required', default: false },
               { id: 'error', type: 'toggle', label: 'Error', default: false },
               { id: 'disabled', type: 'toggle', label: 'Disabled', default: false },
+            ]}
+            presets={[
+              { id: 'standard', label: t('datePicker.presets.standard'), values: {} },
+              { id: 'inline', label: t('datePicker.presets.inline'), values: { inline: true } },
+              { id: 'range', label: t('datePicker.presets.range'), values: { mode: 'range' } },
+              { id: 'quickSelect', label: t('datePicker.presets.quickSelect'), values: { mode: 'range', inline: true, quickSelect: true } },
+              { id: 'required', label: t('datePicker.presets.required'), values: { required: true } },
+              { id: 'error', label: t('datePicker.presets.error'), values: { error: true } },
+              { id: 'disabled', label: t('datePicker.presets.disabled'), values: { disabled: true } },
             ]}
           />
 

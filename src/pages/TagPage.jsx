@@ -120,15 +120,25 @@ export default function TagPage() {
               )
             }
             controls={[
-              { id: 'color', type: 'dropdown', label: t('tag.controls.color'), options: COLORS, default: 'neutral' },
-              { id: 'emphasis', type: 'dropdown', label: t('tag.controls.emphasis'), options: ['soft', 'solid'], default: 'soft' },
+              { id: 'color', type: 'dropdown', label: t('tag.controls.color'), options: COLORS, default: 'neutral', visibleWhen: v => !v.selectable },
+              { id: 'emphasis', type: 'dropdown', label: t('tag.controls.emphasis'), options: ['soft', 'solid'], default: 'soft', visibleWhen: v => !v.selectable },
               { id: 'size', type: 'dropdown', label: t('tag.controls.size'), options: ['sm', 'md'], default: 'md' },
-              { id: 'dot', type: 'toggle', label: t('tag.controls.dot'), default: false },
+              { id: 'dot', type: 'toggle', label: t('tag.controls.dot'), default: false, visibleWhen: v => !v.selectable },
               { id: 'icon', type: 'toggle', label: t('tag.controls.icon'), default: false },
-              { id: 'removable', type: 'toggle', label: t('tag.controls.removable'), default: false },
+              { id: 'removable', type: 'toggle', label: t('tag.controls.removable'), default: false, visibleWhen: v => !v.selectable },
               { id: 'selectable', type: 'toggle', label: t('tag.controls.selectable'), default: false },
-              { id: 'selected', type: 'toggle', label: t('tag.controls.selected'), default: false },
+              { id: 'selected', type: 'toggle', label: t('tag.controls.selected'), default: false, visibleWhen: v => v.selectable },
               { id: 'disabled', type: 'toggle', label: t('tag.controls.disabled'), default: false },
+            ]}
+            presets={[
+              { id: 'standard', label: t('tag.presets.standard'), values: {} },
+              { id: 'solid', label: t('tag.presets.solid'), values: { emphasis: 'solid' } },
+              { id: 'dot', label: t('tag.presets.dot'), values: { dot: true } },
+              { id: 'icon', label: t('tag.presets.icon'), values: { icon: true } },
+              { id: 'removable', label: t('tag.presets.removable'), values: { removable: true } },
+              { id: 'selectable', label: t('tag.presets.selectable'), values: { selectable: true } },
+              { id: 'selected', label: t('tag.presets.selected'), values: { selectable: true, selected: true } },
+              { id: 'disabled', label: t('tag.presets.disabled'), values: { disabled: true } },
             ]}
           />
 

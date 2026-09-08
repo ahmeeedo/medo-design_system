@@ -60,12 +60,23 @@ export default function ButtonPage() {
             controls={[
               { id: 'variant', type: 'dropdown', label: t('button.controls.variant'), options: ['primary', 'secondary', 'ghost', 'danger'], default: 'primary' },
               { id: 'size', type: 'dropdown', label: t('button.controls.size'), options: ['sm', 'md', 'lg'], default: 'md' },
-              { id: 'iconPosition', type: 'dropdown', label: t('button.controls.iconPosition'), options: ['leading', 'trailing'], default: 'leading' },
+              { id: 'iconPosition', type: 'dropdown', label: t('button.controls.iconPosition'), options: ['leading', 'trailing'], default: 'leading', visibleWhen: v => v.icon && !v.iconOnly },
               { id: 'icon', type: 'toggle', label: t('button.controls.icon'), default: true },
-              { id: 'iconOnly', type: 'toggle', label: t('button.controls.iconOnly'), default: false },
+              { id: 'iconOnly', type: 'toggle', label: t('button.controls.iconOnly'), default: false, visibleWhen: v => v.icon },
               { id: 'loading', type: 'toggle', label: t('button.controls.loading'), default: false },
               { id: 'disabled', type: 'toggle', label: t('button.controls.disabled'), default: false },
               { id: 'fullWidth', type: 'toggle', label: t('button.controls.fullWidth'), default: false },
+            ]}
+            presets={[
+              { id: 'standard', label: t('button.presets.standard'), values: {} },
+              { id: 'secondary', label: t('button.presets.secondary'), values: { variant: 'secondary' } },
+              { id: 'ghost', label: t('button.presets.ghost'), values: { variant: 'ghost' } },
+              { id: 'danger', label: t('button.presets.danger'), values: { variant: 'danger' } },
+              { id: 'trailing', label: t('button.presets.trailing'), values: { iconPosition: 'trailing' } },
+              { id: 'iconOnly', label: t('button.presets.iconOnly'), values: { iconOnly: true } },
+              { id: 'loading', label: t('button.presets.loading'), values: { loading: true } },
+              { id: 'disabled', label: t('button.presets.disabled'), values: { disabled: true } },
+              { id: 'fullWidth', label: t('button.presets.fullWidth'), values: { fullWidth: true } },
             ]}
           />
 

@@ -56,14 +56,23 @@ export default function ProgressBarPage() {
               </div>
             )}
             controls={[
-              { id: 'value', type: 'dropdown', label: 'Value', options: ['0', '42', '88', '100'], default: '42' },
+              { id: 'value', type: 'dropdown', label: 'Value', options: ['0', '42', '88', '100'], default: '42', visibleWhen: v => !v.unbestimmt },
               { id: 'status', type: 'dropdown', label: 'Status', options: ['normal', 'success', 'warning', 'error'], default: 'normal' },
               { id: 'size', type: 'dropdown', label: 'Size', options: ['standard', 'thin'], default: 'standard' },
               { id: 'unbestimmt', type: 'toggle', label: 'Unbestimmt', default: false },
               { id: 'label', type: 'toggle', label: 'Label', default: true },
               { id: 'helper', type: 'toggle', label: 'Helper', default: true },
-              { id: 'showValue', type: 'toggle', label: 'Show Value', default: true },
+              { id: 'showValue', type: 'toggle', label: 'Show Value', default: true, visibleWhen: v => !v.unbestimmt },
               { id: 'statusText', type: 'toggle', label: 'Status Text', default: false },
+            ]}
+            presets={[
+              { id: 'standard', label: t('progressBar.presets.standard'), values: {} },
+              { id: 'indeterminate', label: t('progressBar.presets.indeterminate'), values: { unbestimmt: true } },
+              { id: 'success', label: t('progressBar.presets.success'), values: { status: 'success', value: '100' } },
+              { id: 'warning', label: t('progressBar.presets.warning'), values: { status: 'warning' } },
+              { id: 'error', label: t('progressBar.presets.error'), values: { status: 'error' } },
+              { id: 'statusText', label: t('progressBar.presets.statusText'), values: { statusText: true } },
+              { id: 'plain', label: t('progressBar.presets.plain'), values: { label: false, helper: false, showValue: false } },
             ]}
           />
 

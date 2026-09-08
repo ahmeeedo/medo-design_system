@@ -66,10 +66,23 @@ export default function NumberInputPage() {
               { id: 'limits', type: 'toggle', label: 'Min/Max', default: false },
               { id: 'decimals', type: 'toggle', label: 'Nachkommastellen', default: false },
               { id: 'required', type: 'toggle', label: 'Required', default: false },
-              { id: 'optional', type: 'toggle', label: 'Optional', default: false },
-              { id: 'readOnly', type: 'toggle', label: 'Readonly', default: false },
+              { id: 'optional', type: 'toggle', label: 'Optional', default: false, visibleWhen: v => !v.required },
+              { id: 'readOnly', type: 'toggle', label: 'Readonly', default: false, visibleWhen: v => !v.disabled },
               { id: 'disabled', type: 'toggle', label: 'Disabled', default: false },
               { id: 'fullWidth', type: 'toggle', label: 'Full Width', default: false },
+            ]}
+            presets={[
+              { id: 'standard', label: t('numberInput.presets.standard'), values: {} },
+              { id: 'plusminus', label: t('numberInput.presets.plusminus'), values: { variant: 'plusminus' } },
+              { id: 'prefix', label: t('numberInput.presets.prefix'), values: { unit: 'prefix' } },
+              { id: 'suffix', label: t('numberInput.presets.suffix'), values: { unit: 'suffix' } },
+              { id: 'limits', label: t('numberInput.presets.limits'), values: { limits: true } },
+              { id: 'decimals', label: t('numberInput.presets.decimals'), values: { decimals: true } },
+              { id: 'error', label: t('numberInput.presets.error'), values: { message: 'error' } },
+              { id: 'success', label: t('numberInput.presets.success'), values: { message: 'success' } },
+              { id: 'required', label: t('numberInput.presets.required'), values: { required: true } },
+              { id: 'readonly', label: t('numberInput.presets.readonly'), values: { readOnly: true } },
+              { id: 'disabled', label: t('numberInput.presets.disabled'), values: { disabled: true } },
             ]}
           />
 

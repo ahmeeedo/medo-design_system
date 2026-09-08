@@ -157,6 +157,15 @@ export default function DataTablePage() {
               { id: 'empty', type: 'toggle', label: 'Leer', default: false },
               { id: 'rowClick', type: 'toggle', label: 'Zeilen klickbar', default: false },
             ]}
+            presets={[
+              { id: 'standard', label: t('dataTable.presets.standard'), values: {} },
+              { id: 'noSelection', label: t('dataTable.presets.noSelection'), values: { selectable: false } },
+              { id: 'rowClick', label: t('dataTable.presets.rowClick'), values: { rowClick: true } },
+              { id: 'loading', label: t('dataTable.presets.loading'), values: { loading: true } },
+              { id: 'empty', label: t('dataTable.presets.empty'), values: { empty: true } },
+              { id: 'noFooter', label: t('dataTable.presets.noFooter'), values: { footer: false } },
+              { id: 'fixedHeight', label: t('dataTable.presets.fixedHeight'), values: { sticky: true } },
+            ]}
           />
 
           <Section title={t('dataTable.overview.columnsTitle')}>

@@ -86,10 +86,18 @@ export default function ProgressIndicatorPage() {
             controls={[
               { id: 'orientation', type: 'dropdown', label: 'Orientation', options: ['horizontal', 'vertical'], default: 'horizontal' },
               { id: 'current', type: 'dropdown', label: 'Current', options: ['0', '1', '2', '3'], default: '1' },
-              { id: 'subtitles', type: 'toggle', label: 'Subtitles', default: true },
+              { id: 'subtitles', type: 'toggle', label: 'Subtitles', default: true, visibleWhen: v => !v.fehler },
               { id: 'fehler', type: 'toggle', label: 'Fehler-Schritt', default: false },
               { id: 'clickable', type: 'toggle', label: 'On Step Click', default: false },
-              { id: 'clickableDone', type: 'toggle', label: 'Clickable Done', default: true },
+              { id: 'clickableDone', type: 'toggle', label: 'Clickable Done', default: true, visibleWhen: v => v.clickable },
+            ]}
+            presets={[
+              { id: 'standard', label: t('progressIndicator.presets.standard'), values: {} },
+              { id: 'vertical', label: t('progressIndicator.presets.vertical'), values: { orientation: 'vertical' } },
+              { id: 'error', label: t('progressIndicator.presets.error'), values: { fehler: true } },
+              { id: 'clickable', label: t('progressIndicator.presets.clickable'), values: { clickable: true } },
+              { id: 'noSubtitles', label: t('progressIndicator.presets.noSubtitles'), values: { subtitles: false } },
+              { id: 'lastStep', label: t('progressIndicator.presets.lastStep'), values: { current: '3' } },
             ]}
           />
 

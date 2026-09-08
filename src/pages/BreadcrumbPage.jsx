@@ -93,11 +93,18 @@ export default function BreadcrumbPage() {
             )}
             controls={[
               { id: 'size', type: 'dropdown', label: 'Size', options: ['sm', 'md'], default: 'sm' },
-              { id: 'maxItems', type: 'dropdown', label: 'Max Items', options: ['3', '4', '5'], default: '4' },
+              { id: 'maxItems', type: 'dropdown', label: 'Max Items', options: ['3', '4', '5'], default: '4', visibleWhen: v => v.kollabieren },
               { id: 'tief', type: 'toggle', label: 'Fünf Ebenen', default: true },
               { id: 'kollabieren', type: 'toggle', label: 'Kollabieren', default: true },
               { id: 'homeIcon', type: 'toggle', label: 'Home Icon', default: false },
-              { id: 'icons', type: 'toggle', label: 'Stufen-Icons', default: false },
+              { id: 'icons', type: 'toggle', label: 'Stufen-Icons', default: false, visibleWhen: v => !v.tief },
+            ]}
+            presets={[
+              { id: 'standard', label: t('breadcrumb.presets.standard'), values: {} },
+              { id: 'shallow', label: t('breadcrumb.presets.shallow'), values: { tief: false } },
+              { id: 'noCollapse', label: t('breadcrumb.presets.noCollapse'), values: { kollabieren: false } },
+              { id: 'homeIcon', label: t('breadcrumb.presets.homeIcon'), values: { homeIcon: true } },
+              { id: 'stepIcons', label: t('breadcrumb.presets.stepIcons'), values: { tief: false, icons: true } },
             ]}
           />
 

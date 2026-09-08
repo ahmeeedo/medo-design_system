@@ -47,7 +47,7 @@ const laender = [
   { value: 'at', label: 'Österreich',  description: 'AT · +43',
     flag: 'linear-gradient(180deg, #ed2939 33%, #fff 33% 66%, #ed2939 66%)' },
   { value: 'ch', label: 'Schweiz',     description: 'CH · +41',
-    flag: 'url(/flags/ch.svg)' },
+    flag: '#d52b1e' },
 ]
 
 <Select label="Land" searchable options={laender} placeholder="Land wählen" />`
@@ -168,17 +168,28 @@ export default function SelectPage() {
             controls={[
               { id: 'data', type: 'dropdown', label: 'Daten', options: ['einfach', 'gruppen', 'laender', 'orte'], default: 'einfach' },
               { id: 'size', type: 'dropdown', label: 'Size', options: ['sm', 'md', 'lg'], default: 'md' },
-              { id: 'multipleDisplay', type: 'dropdown', label: 'Multiple Display', options: ['chips', 'count'], default: 'chips' },
+              { id: 'multipleDisplay', type: 'dropdown', label: 'Multiple Display', options: ['chips', 'count'], default: 'chips', visibleWhen: v => v.multiple },
               { id: 'message', type: 'dropdown', label: 'Message', options: ['keine', 'hint', 'error', 'success'], default: 'hint' },
-              { id: 'searchable', type: 'toggle', label: 'Searchable', default: false },
+              { id: 'searchable', type: 'toggle', label: 'Searchable', default: false, visibleWhen: v => !v.native },
               { id: 'multiple', type: 'toggle', label: 'Multiple', default: false },
-              { id: 'maxChips', type: 'toggle', label: 'Max Chips (2)', default: false },
+              { id: 'maxChips', type: 'toggle', label: 'Max Chips (2)', default: false, visibleWhen: v => v.multiple && v.multipleDisplay === 'chips' },
               { id: 'native', type: 'toggle', label: 'Native', default: false },
               { id: 'icon', type: 'toggle', label: 'Icon', default: false },
               { id: 'required', type: 'toggle', label: 'Required', default: false },
-              { id: 'optional', type: 'toggle', label: 'Optional', default: false },
+              { id: 'optional', type: 'toggle', label: 'Optional', default: false, visibleWhen: v => !v.required },
               { id: 'disabled', type: 'toggle', label: 'Disabled', default: false },
               { id: 'fullWidth', type: 'toggle', label: 'Full Width', default: false },
+            ]}
+            presets={[
+              { id: 'standard', label: t('select.presets.standard'), values: {} },
+              { id: 'multiple', label: t('select.presets.multiple'), values: { multiple: true } },
+              { id: 'count', label: t('select.presets.count'), values: { multiple: true, multipleDisplay: 'count' } },
+              { id: 'searchable', label: t('select.presets.searchable'), values: { searchable: true, data: 'laender' } },
+              { id: 'groups', label: t('select.presets.groups'), values: { data: 'gruppen' } },
+              { id: 'native', label: t('select.presets.native'), values: { native: true } },
+              { id: 'error', label: t('select.presets.error'), values: { message: 'error' } },
+              { id: 'required', label: t('select.presets.required'), values: { required: true } },
+              { id: 'disabled', label: t('select.presets.disabled'), values: { disabled: true } },
             ]}
           />
 

@@ -111,6 +111,15 @@ export default function SliderPage() {
               { id: 'icons', type: 'toggle', label: t('slider.controls.icons'), default: false },
               { id: 'disabled', type: 'toggle', label: t('slider.controls.disabled'), default: false },
             ]}
+            presets={[
+              { id: 'standard', label: t('slider.presets.standard'), values: {} },
+              { id: 'discrete', label: t('slider.presets.discrete'), values: { showTicks: true } },
+              { id: 'minMax', label: t('slider.presets.minMax'), values: { showMinMax: true } },
+              { id: 'icons', label: t('slider.presets.icons'), values: { icons: true } },
+              { id: 'vertical', label: t('slider.presets.vertical'), values: { orientation: 'vertical' } },
+              { id: 'noValue', label: t('slider.presets.noValue'), values: { showValue: false } },
+              { id: 'disabled', label: t('slider.presets.disabled'), values: { disabled: true } },
+            ]}
           />
 
           <Section title={t('slider.overview.basicTitle')}>

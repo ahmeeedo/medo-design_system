@@ -106,13 +106,23 @@ export default function ListPage() {
             )}
             controls={[
               { id: 'komponente', type: 'dropdown', label: 'Komponente', options: ['List', 'KeyValueList'], default: 'List' },
-              { id: 'variant', type: 'dropdown', label: 'Variant', options: ['unordered', 'ordered', 'content'], default: 'unordered' },
-              { id: 'size', type: 'dropdown', label: 'Size', options: ['sm', 'md'], default: 'md' },
-              { id: 'layout', type: 'dropdown', label: 'Layout (KeyValueList)', options: ['columns', 'stacked'], default: 'columns' },
-              { id: 'verschachtelt', type: 'toggle', label: 'Verschachtelt', default: false },
-              { id: 'flush', type: 'toggle', label: 'Flush', default: false },
-              { id: 'monoValues', type: 'toggle', label: 'Mono Values', default: true },
-              { id: 'leer', type: 'toggle', label: 'Leer', default: false },
+              { id: 'variant', type: 'dropdown', label: 'Variant', options: ['unordered', 'ordered', 'content'], default: 'unordered', visibleWhen: v => v.komponente === 'List' },
+              { id: 'size', type: 'dropdown', label: 'Size', options: ['sm', 'md'], default: 'md', visibleWhen: v => v.komponente === 'List' },
+              { id: 'layout', type: 'dropdown', label: 'Layout (KeyValueList)', options: ['columns', 'stacked'], default: 'columns', visibleWhen: v => v.komponente === 'KeyValueList' },
+              { id: 'verschachtelt', type: 'toggle', label: 'Verschachtelt', default: false, visibleWhen: v => v.komponente === 'List' && v.variant !== 'content' && !v.leer },
+              { id: 'flush', type: 'toggle', label: 'Flush', default: false, visibleWhen: v => v.komponente === 'List' },
+              { id: 'monoValues', type: 'toggle', label: 'Mono Values', default: true, visibleWhen: v => v.komponente === 'KeyValueList' },
+              { id: 'leer', type: 'toggle', label: 'Leer', default: false, visibleWhen: v => v.komponente === 'List' },
+            ]}
+            presets={[
+              { id: 'standard', label: t('list.presets.standard'), values: {} },
+              { id: 'ordered', label: t('list.presets.ordered'), values: { variant: 'ordered' } },
+              { id: 'content', label: t('list.presets.content'), values: { variant: 'content' } },
+              { id: 'nested', label: t('list.presets.nested'), values: { verschachtelt: true } },
+              { id: 'flush', label: t('list.presets.flush'), values: { flush: true } },
+              { id: 'empty', label: t('list.presets.empty'), values: { leer: true } },
+              { id: 'keyValue', label: t('list.presets.keyValue'), values: { komponente: 'KeyValueList' } },
+              { id: 'keyValueStacked', label: t('list.presets.keyValueStacked'), values: { komponente: 'KeyValueList', layout: 'stacked' } },
             ]}
           />
 

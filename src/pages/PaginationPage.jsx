@@ -74,11 +74,19 @@ export default function PaginationPage() {
             controls={[
               { id: 'variant', type: 'dropdown', label: 'Variant', options: ['numbers', 'compact', 'bar'], default: 'numbers' },
               { id: 'size', type: 'dropdown', label: 'Size', options: ['sm', 'md'], default: 'md' },
-              { id: 'seiten', type: 'dropdown', label: 'Seiten', options: ['5', '12', '40'], default: '12' },
-              { id: 'siblings', type: 'dropdown', label: 'Siblings', options: ['0', '1', '2'], default: '1' },
-              { id: 'showFirstLast', type: 'toggle', label: 'First / Last', default: false },
-              { id: 'pageSize', type: 'toggle', label: 'Einträge pro Seite', default: true },
-              { id: 'showJump', type: 'toggle', label: 'Gehe zu', default: false },
+              { id: 'seiten', type: 'dropdown', label: 'Seiten', options: ['5', '12', '40'], default: '12', visibleWhen: v => v.variant !== 'bar' },
+              { id: 'siblings', type: 'dropdown', label: 'Siblings', options: ['0', '1', '2'], default: '1', visibleWhen: v => v.variant === 'numbers' },
+              { id: 'showFirstLast', type: 'toggle', label: 'First / Last', default: false, visibleWhen: v => v.variant === 'numbers' },
+              { id: 'pageSize', type: 'toggle', label: 'Einträge pro Seite', default: true, visibleWhen: v => v.variant === 'bar' },
+              { id: 'showJump', type: 'toggle', label: 'Gehe zu', default: false, visibleWhen: v => v.variant === 'bar' },
+            ]}
+            presets={[
+              { id: 'standard', label: t('pagination.presets.standard'), values: {} },
+              { id: 'compact', label: t('pagination.presets.compact'), values: { variant: 'compact' } },
+              { id: 'bar', label: t('pagination.presets.bar'), values: { variant: 'bar' } },
+              { id: 'firstLast', label: t('pagination.presets.firstLast'), values: { showFirstLast: true } },
+              { id: 'jump', label: t('pagination.presets.jump'), values: { variant: 'bar', showJump: true } },
+              { id: 'narrow', label: t('pagination.presets.narrow'), values: { siblings: '0' } },
             ]}
           />
 

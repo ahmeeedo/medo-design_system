@@ -104,8 +104,16 @@ export default function AccordionPage() {
               { id: 'size', type: 'dropdown', label: 'Size', options: ['sm', 'md'], default: 'md' },
               { id: 'marker', type: 'dropdown', label: 'Marker', options: ['plusminus', 'chevron'], default: 'plusminus' },
               { id: 'multiple', type: 'toggle', label: 'Multiple', default: true },
-              { id: 'showToggleAll', type: 'toggle', label: 'Toggle All', default: true },
+              { id: 'showToggleAll', type: 'toggle', label: 'Toggle All', default: true, visibleWhen: v => v.multiple },
               { id: 'icons', type: 'toggle', label: 'Icons', default: true },
+            ]}
+            presets={[
+              { id: 'standard', label: t('accordion.presets.standard'), values: {} },
+              { id: 'separated', label: t('accordion.presets.separated'), values: { variant: 'separated' } },
+              { id: 'plain', label: t('accordion.presets.plain'), values: { variant: 'plain' } },
+              { id: 'single', label: t('accordion.presets.single'), values: { multiple: false } },
+              { id: 'chevron', label: t('accordion.presets.chevron'), values: { marker: 'chevron' } },
+              { id: 'noIcons', label: t('accordion.presets.noIcons'), values: { icons: false } },
             ]}
           />
 

@@ -67,14 +67,25 @@ export default function SearchPage() {
               { id: 'message', type: 'dropdown', label: 'Message', options: ['keine', 'hint', 'error'], default: 'hint' },
               { id: 'compact', type: 'toggle', label: 'Compact', default: false },
               { id: 'filled', type: 'toggle', label: 'Gefüllt', default: false },
-              { id: 'suggestions', type: 'toggle', label: 'Suggestions', default: true },
-              { id: 'recent', type: 'toggle', label: 'Recent', default: true },
-              { id: 'removable', type: 'toggle', label: 'Verlauf entfernbar', default: false },
+              { id: 'suggestions', type: 'toggle', label: 'Suggestions', default: true, visibleWhen: v => v.showPanel },
+              { id: 'recent', type: 'toggle', label: 'Recent', default: true, visibleWhen: v => v.showPanel },
+              { id: 'removable', type: 'toggle', label: 'Verlauf entfernbar', default: false, visibleWhen: v => v.showPanel && v.recent },
               { id: 'showPanel', type: 'toggle', label: 'Show Panel', default: true },
-              { id: 'defaultOpen', type: 'toggle', label: 'Default Open', default: false },
+              { id: 'defaultOpen', type: 'toggle', label: 'Default Open', default: false, visibleWhen: v => v.showPanel },
               { id: 'loading', type: 'toggle', label: 'Loading', default: false },
               { id: 'disabled', type: 'toggle', label: 'Disabled', default: false },
               { id: 'fullWidth', type: 'toggle', label: 'Full Width', default: false },
+            ]}
+            presets={[
+              { id: 'standard', label: t('searchField.presets.standard'), values: {} },
+              { id: 'compact', label: t('searchField.presets.compact'), values: { compact: true } },
+              { id: 'filled', label: t('searchField.presets.filled'), values: { filled: true } },
+              { id: 'panelOpen', label: t('searchField.presets.panelOpen'), values: { defaultOpen: true } },
+              { id: 'emptyPanel', label: t('searchField.presets.emptyPanel'), values: { defaultOpen: true, suggestions: false, recent: false } },
+              { id: 'removableHistory', label: t('searchField.presets.removableHistory'), values: { defaultOpen: true, removable: true } },
+              { id: 'loading', label: t('searchField.presets.loading'), values: { loading: true } },
+              { id: 'error', label: t('searchField.presets.error'), values: { message: 'error' } },
+              { id: 'disabled', label: t('searchField.presets.disabled'), values: { disabled: true } },
             ]}
           />
 

@@ -88,6 +88,14 @@ export default function TogglePage() {
               { id: 'loading', type: 'toggle', label: t('toggle.controls.loading'), default: false },
               { id: 'disabled', type: 'toggle', label: t('toggle.controls.disabled'), default: false },
             ]}
+            presets={[
+              { id: 'standard', label: t('toggle.presets.standard'), values: {} },
+              { id: 'description', label: t('toggle.presets.description'), values: { description: true } },
+              { id: 'labelLeft', label: t('toggle.presets.labelLeft'), values: { labelPosition: 'left', description: true } },
+              { id: 'noIcons', label: t('toggle.presets.noIcons'), values: { icons: false } },
+              { id: 'loading', label: t('toggle.presets.loading'), values: { loading: true } },
+              { id: 'disabled', label: t('toggle.presets.disabled'), values: { disabled: true } },
+            ]}
           />
 
           <Section title={t('toggle.overview.statesTitle')}>

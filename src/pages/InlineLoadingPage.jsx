@@ -74,6 +74,14 @@ export default function InlineLoadingPage() {
               { id: 'inButton', type: 'toggle', label: 'In Schaltfläche', default: false },
               { id: 'inherit', type: 'toggle', label: 'Inherit', default: false },
             ]}
+            presets={[
+              { id: 'standard', label: t('inlineLoading.presets.standard'), values: {} },
+              { id: 'success', label: t('inlineLoading.presets.success'), values: { status: 'success' } },
+              { id: 'error', label: t('inlineLoading.presets.error'), values: { status: 'error' } },
+              { id: 'inactive', label: t('inlineLoading.presets.inactive'), values: { status: 'inactive' } },
+              { id: 'inButton', label: t('inlineLoading.presets.inButton'), values: { inButton: true, inherit: true } },
+              { id: 'noLabel', label: t('inlineLoading.presets.noLabel'), values: { label: false } },
+            ]}
           />
 
           <Section title={t('inlineLoading.overview.statesTitle')}>

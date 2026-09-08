@@ -107,6 +107,15 @@ export default function TabsPage() {
               { id: 'fullWidth', type: 'toggle', label: 'Full Width', default: false },
               { id: 'scrollable', type: 'toggle', label: 'Scrollable', default: false },
             ]}
+            presets={[
+              { id: 'standard', label: t('tabsPage.presets.standard'), values: {} },
+              { id: 'contained', label: t('tabsPage.presets.contained'), values: { variant: 'contained' } },
+              { id: 'vertical', label: t('tabsPage.presets.vertical'), values: { orientation: 'vertical' } },
+              { id: 'scrollable', label: t('tabsPage.presets.scrollable'), values: { scrollable: true } },
+              { id: 'fullWidth', label: t('tabsPage.presets.fullWidth'), values: { fullWidth: true } },
+              { id: 'noPanel', label: t('tabsPage.presets.noPanel'), values: { panel: false } },
+              { id: 'plain', label: t('tabsPage.presets.plain'), values: { icons: false, badges: false } },
+            ]}
           />
 
           <Section title={t('tabsPage.overview.variantsTitle')}>
