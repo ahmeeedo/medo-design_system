@@ -125,6 +125,7 @@ const MenuList = ({
   selectionMode,
   className,
   style,
+  onKeyDown: onKeyDownProp,
   ...rest
 }) => {
   window.MedoUI.injectCss("medo-menu-css", MEDO_MENU_CSS);
@@ -264,7 +265,7 @@ const MenuList = ({
       role: "menu",
       "aria-label": ariaLabel,
       tabIndex: -1,
-      onKeyDown,
+      onKeyDown: (e) => { onKeyDown(e); if (onKeyDownProp) onKeyDownProp(e); },
       className: ["medo-menu", className].filter(Boolean).join(" "),
       style: minWidth ? { minWidth: minWidth, ...style } : style,
       ...rest,
