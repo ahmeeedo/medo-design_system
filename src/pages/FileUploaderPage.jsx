@@ -99,8 +99,17 @@ export default function FileUploaderPage() {
               { id: 'maxSize', type: 'toggle', label: 'Max size', default: true },
               { id: 'multiple', type: 'toggle', label: 'Multiple', default: true },
               { id: 'withFiles', type: 'toggle', label: 'Mit Dateien', default: true },
-              { id: 'removable', type: 'toggle', label: 'Entfernbar', default: true },
+              { id: 'removable', type: 'toggle', label: 'Entfernbar', default: true, visibleWhen: v => v.withFiles },
               { id: 'disabled', type: 'toggle', label: 'Disabled', default: false },
+            ]}
+            presets={[
+              { id: 'standard', label: t('fileUploader.presets.standard'), values: {} },
+              { id: 'compact', label: t('fileUploader.presets.compact'), values: { compact: true } },
+              { id: 'noFiles', label: t('fileUploader.presets.noFiles'), values: { withFiles: false } },
+              { id: 'singleFile', label: t('fileUploader.presets.singleFile'), values: { multiple: false } },
+              { id: 'noRemove', label: t('fileUploader.presets.noRemove'), values: { removable: false } },
+              { id: 'noLimits', label: t('fileUploader.presets.noLimits'), values: { accept: false, maxSize: false } },
+              { id: 'disabled', label: t('fileUploader.presets.disabled'), values: { disabled: true } },
             ]}
           />
 

@@ -74,11 +74,20 @@ export default function LoadingPage() {
             )}
             controls={[
               { id: 'komponente', type: 'dropdown', label: 'Komponente', options: ['Loading', 'Skeleton'], default: 'Loading' },
-              { id: 'size', type: 'dropdown', label: 'Size', options: ['sm', 'md', 'lg'], default: 'md' },
-              { id: 'variant', type: 'dropdown', label: 'Variant', options: ['inline', 'overlay'], default: 'inline' },
-              { id: 'skeletonVariant', type: 'dropdown', label: 'Skeleton', options: ['lines', 'block', 'card', 'table'], default: 'lines' },
-              { id: 'lines', type: 'dropdown', label: 'Lines / Rows', options: ['2', '3', '5'], default: '3' },
-              { id: 'label', type: 'toggle', label: 'Label', default: true },
+              { id: 'size', type: 'dropdown', label: 'Size', options: ['sm', 'md', 'lg'], default: 'md', visibleWhen: v => v.komponente !== 'Skeleton' },
+              { id: 'variant', type: 'dropdown', label: 'Variant', options: ['inline', 'overlay'], default: 'inline', visibleWhen: v => v.komponente !== 'Skeleton' },
+              { id: 'skeletonVariant', type: 'dropdown', label: 'Skeleton', options: ['lines', 'block', 'card', 'table'], default: 'lines', visibleWhen: v => v.komponente === 'Skeleton' },
+              { id: 'lines', type: 'dropdown', label: 'Lines / Rows', options: ['2', '3', '5'], default: '3', visibleWhen: v => v.komponente === 'Skeleton' },
+              { id: 'label', type: 'toggle', label: 'Label', default: true, visibleWhen: v => v.komponente !== 'Skeleton' },
+            ]}
+            presets={[
+              { id: 'standard', label: t('loading.presets.standard'), values: {} },
+              { id: 'overlay', label: t('loading.presets.overlay'), values: { variant: 'overlay' } },
+              { id: 'skeletonLines', label: t('loading.presets.skeletonLines'), values: { komponente: 'Skeleton' } },
+              { id: 'skeletonBlock', label: t('loading.presets.skeletonBlock'), values: { komponente: 'Skeleton', skeletonVariant: 'block' } },
+              { id: 'skeletonCard', label: t('loading.presets.skeletonCard'), values: { komponente: 'Skeleton', skeletonVariant: 'card' } },
+              { id: 'skeletonTable', label: t('loading.presets.skeletonTable'), values: { komponente: 'Skeleton', skeletonVariant: 'table' } },
+              { id: 'noLabel', label: t('loading.presets.noLabel'), values: { label: false } },
             ]}
           />
 

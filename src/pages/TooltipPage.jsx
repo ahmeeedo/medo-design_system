@@ -55,6 +55,15 @@ export default function TooltipPage() {
               { id: 'instant', type: 'toggle', label: t('tooltip.controls.instant'), default: false },
               { id: 'disabled', type: 'toggle', label: t('tooltip.controls.disabled'), default: false },
             ]}
+            presets={[
+              { id: 'standard', label: t('tooltip.presets.standard'), values: {} },
+              { id: 'bottom', label: t('tooltip.presets.bottom'), values: { placement: 'bottom' } },
+              { id: 'left', label: t('tooltip.presets.left'), values: { placement: 'left' } },
+              { id: 'right', label: t('tooltip.presets.right'), values: { placement: 'right' } },
+              { id: 'title', label: t('tooltip.presets.title'), values: { title: true } },
+              { id: 'instant', label: t('tooltip.presets.instant'), values: { instant: true } },
+              { id: 'disabled', label: t('tooltip.presets.disabled'), values: { disabled: true } },
+            ]}
           />
 
           <Section title={t('tooltip.overview.placementTitle')}>

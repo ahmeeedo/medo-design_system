@@ -154,6 +154,15 @@ export default function DropdownPage() {
               { id: 'icon', type: 'toggle', label: t('dropdown.controls.icon'), default: false },
               { id: 'disabled', type: 'toggle', label: t('dropdown.controls.disabled'), default: false },
             ]}
+            presets={[
+              { id: 'standard', label: t('dropdown.presets.standard'), values: {} },
+              { id: 'kebab', label: t('dropdown.presets.kebab'), values: { trigger: 'kebab' } },
+              { id: 'icon', label: t('dropdown.presets.icon'), values: { icon: true } },
+              { id: 'alignEnd', label: t('dropdown.presets.alignEnd'), values: { align: 'end' } },
+              { id: 'single', label: t('dropdown.presets.single'), values: { selectionMode: 'single' } },
+              { id: 'multiple', label: t('dropdown.presets.multiple'), values: { selectionMode: 'multiple' } },
+              { id: 'disabled', label: t('dropdown.presets.disabled'), values: { disabled: true } },
+            ]}
           />
 
           <Section title={t('dropdown.overview.triggerTitle')}>

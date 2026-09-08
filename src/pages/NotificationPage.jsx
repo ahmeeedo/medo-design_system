@@ -70,6 +70,16 @@ export default function NotificationPage() {
               { id: 'action', type: 'toggle', label: t('notification.controls.action'), default: false },
               { id: 'closable', type: 'toggle', label: t('notification.controls.closable'), default: false },
             ]}
+            presets={[
+              { id: 'standard', label: t('notification.presets.standard'), values: {} },
+              { id: 'success', label: t('notification.presets.success'), values: { kind: 'success' } },
+              { id: 'warning', label: t('notification.presets.warning'), values: { kind: 'warning' } },
+              { id: 'error', label: t('notification.presets.error'), values: { kind: 'error' } },
+              { id: 'solid', label: t('notification.presets.solid'), values: { emphasis: 'solid' } },
+              { id: 'single', label: t('notification.presets.single'), values: { description: false } },
+              { id: 'action', label: t('notification.presets.action'), values: { action: true } },
+              { id: 'closable', label: t('notification.presets.closable'), values: { closable: true } },
+            ]}
           />
 
           <Section title={t('notification.overview.kindsTitle')}>

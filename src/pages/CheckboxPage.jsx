@@ -100,6 +100,13 @@ export default function CheckboxPage() {
               { id: 'error', type: 'toggle', label: t('checkbox.controls.error'), default: false },
               { id: 'disabled', type: 'toggle', label: t('checkbox.controls.disabled'), default: false },
             ]}
+            presets={[
+              { id: 'standard', label: t('checkbox.presets.standard'), values: {} },
+              { id: 'hint', label: t('checkbox.presets.hint'), values: { hint: true } },
+              { id: 'indeterminate', label: t('checkbox.presets.indeterminate'), values: { indeterminate: true } },
+              { id: 'error', label: t('checkbox.presets.error'), values: { error: true } },
+              { id: 'disabled', label: t('checkbox.presets.disabled'), values: { disabled: true } },
+            ]}
           />
 
           <Section title={t('checkbox.overview.statesTitle')}>

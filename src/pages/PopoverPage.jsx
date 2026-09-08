@@ -123,6 +123,14 @@ export default function PopoverPage() {
               { id: 'title', type: 'toggle', label: t('popover.controls.title'), default: true },
               { id: 'wide', type: 'toggle', label: t('popover.controls.wide'), default: false },
             ]}
+            presets={[
+              { id: 'standard', label: t('popover.presets.standard'), values: {} },
+              { id: 'top', label: t('popover.presets.top'), values: { placement: 'top' } },
+              { id: 'left', label: t('popover.presets.left'), values: { placement: 'left' } },
+              { id: 'right', label: t('popover.presets.right'), values: { placement: 'right' } },
+              { id: 'noTitle', label: t('popover.presets.noTitle'), values: { title: false } },
+              { id: 'wide', label: t('popover.presets.wide'), values: { wide: true } },
+            ]}
           />
 
           <Section title={t('popover.overview.placementTitle')}>

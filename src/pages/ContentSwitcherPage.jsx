@@ -97,10 +97,18 @@ export default function ContentSwitcherPage() {
             controls={[
               { id: 'variant', type: 'dropdown', label: 'Variant', options: ['neutral', 'outline'], default: 'neutral' },
               { id: 'size', type: 'dropdown', label: 'Size', options: ['sm', 'md'], default: 'md' },
-              { id: 'icons', type: 'toggle', label: 'Icons', default: true },
+              { id: 'icons', type: 'toggle', label: 'Icons', default: true, visibleWhen: v => !v.iconOnly },
               { id: 'iconOnly', type: 'toggle', label: 'Icon Only', default: false },
               { id: 'equalWidth', type: 'toggle', label: 'Equal Width', default: true },
               { id: 'fullWidth', type: 'toggle', label: 'Full Width', default: false },
+            ]}
+            presets={[
+              { id: 'standard', label: t('contentSwitcher.presets.standard'), values: {} },
+              { id: 'outline', label: t('contentSwitcher.presets.outline'), values: { variant: 'outline' } },
+              { id: 'noIcons', label: t('contentSwitcher.presets.noIcons'), values: { icons: false } },
+              { id: 'iconOnly', label: t('contentSwitcher.presets.iconOnly'), values: { iconOnly: true } },
+              { id: 'fullWidth', label: t('contentSwitcher.presets.fullWidth'), values: { fullWidth: true } },
+              { id: 'contentWidth', label: t('contentSwitcher.presets.contentWidth'), values: { equalWidth: false } },
             ]}
           />
 

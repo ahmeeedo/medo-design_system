@@ -97,11 +97,20 @@ export default function CodeSnippetPage() {
             )}
             controls={[
               { id: 'variant', type: 'dropdown', label: 'Variant', options: ['block', 'inline', 'single', 'terminal'], default: 'block' },
-              { id: 'collapseAfter', type: 'dropdown', label: 'Collapse After', options: ['4', '8', '20'], default: '8' },
-              { id: 'sprache', type: 'toggle', label: 'Language', default: true },
-              { id: 'showLineNumbers', type: 'toggle', label: 'Line Numbers', default: true },
-              { id: 'highlight', type: 'toggle', label: 'Highlight', default: true },
-              { id: 'lang', type: 'toggle', label: 'Langes Beispiel', default: true },
+              { id: 'collapseAfter', type: 'dropdown', label: 'Collapse After', options: ['4', '8', '20'], default: '8', visibleWhen: v => v.variant !== 'inline' },
+              { id: 'sprache', type: 'toggle', label: 'Language', default: true, visibleWhen: v => v.variant !== 'inline' },
+              { id: 'showLineNumbers', type: 'toggle', label: 'Line Numbers', default: true, visibleWhen: v => v.variant !== 'inline' },
+              { id: 'highlight', type: 'toggle', label: 'Highlight', default: true, visibleWhen: v => v.variant !== 'inline' },
+              { id: 'lang', type: 'toggle', label: 'Langes Beispiel', default: true, visibleWhen: v => v.variant === 'block' },
+            ]}
+            presets={[
+              { id: 'standard', label: t('codeSnippet.presets.standard'), values: {} },
+              { id: 'single', label: t('codeSnippet.presets.single'), values: { variant: 'single' } },
+              { id: 'inline', label: t('codeSnippet.presets.inline'), values: { variant: 'inline' } },
+              { id: 'terminal', label: t('codeSnippet.presets.terminal'), values: { variant: 'terminal' } },
+              { id: 'noHighlight', label: t('codeSnippet.presets.noHighlight'), values: { highlight: false } },
+              { id: 'noNumbers', label: t('codeSnippet.presets.noNumbers'), values: { showLineNumbers: false } },
+              { id: 'short', label: t('codeSnippet.presets.short'), values: { lang: false } },
             ]}
           />
 

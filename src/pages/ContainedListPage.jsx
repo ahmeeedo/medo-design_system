@@ -142,13 +142,23 @@ export default function ContainedListPage() {
               { id: 'mode', type: 'dropdown', label: 'Mode', options: ['navigation', 'single', 'multiple'], default: 'navigation' },
               { id: 'size', type: 'dropdown', label: 'Size', options: ['sm', 'md'], default: 'md' },
               { id: 'kopfzeile', type: 'toggle', label: 'Kopfzeile', default: true },
-              { id: 'avatare', type: 'toggle', label: 'Avatare', default: false },
-              { id: 'beschreibung', type: 'toggle', label: 'Beschreibung', default: true },
-              { id: 'meta', type: 'toggle', label: 'Meta', default: true },
-              { id: 'aktion', type: 'toggle', label: 'Zeilenaktion', default: false },
-              { id: 'chevron', type: 'toggle', label: 'Chevron', default: true },
-              { id: 'gruppen', type: 'toggle', label: 'Gruppen', default: false },
+              { id: 'avatare', type: 'toggle', label: 'Avatare', default: false, visibleWhen: v => !v.leer && !v.gruppen },
+              { id: 'beschreibung', type: 'toggle', label: 'Beschreibung', default: true, visibleWhen: v => !v.leer && !v.gruppen },
+              { id: 'meta', type: 'toggle', label: 'Meta', default: true, visibleWhen: v => !v.leer && !v.gruppen },
+              { id: 'aktion', type: 'toggle', label: 'Zeilenaktion', default: false, visibleWhen: v => !v.leer && !v.gruppen },
+              { id: 'chevron', type: 'toggle', label: 'Chevron', default: true, visibleWhen: v => !v.leer && !v.gruppen },
+              { id: 'gruppen', type: 'toggle', label: 'Gruppen', default: false, visibleWhen: v => !v.leer },
               { id: 'leer', type: 'toggle', label: 'Leer', default: false },
+            ]}
+            presets={[
+              { id: 'standard', label: t('containedList.presets.standard'), values: {} },
+              { id: 'single', label: t('containedList.presets.single'), values: { mode: 'single' } },
+              { id: 'multiple', label: t('containedList.presets.multiple'), values: { mode: 'multiple' } },
+              { id: 'avatars', label: t('containedList.presets.avatars'), values: { avatare: true } },
+              { id: 'action', label: t('containedList.presets.action'), values: { aktion: true } },
+              { id: 'groups', label: t('containedList.presets.groups'), values: { gruppen: true } },
+              { id: 'empty', label: t('containedList.presets.empty'), values: { leer: true } },
+              { id: 'plain', label: t('containedList.presets.plain'), values: { beschreibung: false, meta: false, chevron: false } },
             ]}
           />
 

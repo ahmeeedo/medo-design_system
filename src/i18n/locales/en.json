@@ -133,6 +133,17 @@
       "finish": "Anmeldung abschließen",
       "toLink": "Zur Link-Komponente"
     },
+    "presets": {
+      "standard": "Primary",
+      "secondary": "Secondary",
+      "ghost": "Ghost",
+      "danger": "Danger",
+      "trailing": "Icon on the right",
+      "iconOnly": "Icon only",
+      "loading": "Loading",
+      "disabled": "Disabled",
+      "fullWidth": "Full width"
+    },
     "overview": {
       "variantsTitle": "Variants",
       "variantsBody": "Four variants express how important an action is. Exactly one primary action per view.",
@@ -219,6 +230,14 @@
       "next": "Zu den Rechnungen",
       "export": "Export starten",
       "external": "WCAG 2.2 öffnen"
+    },
+    "presets": {
+      "standard": "Standalone",
+      "inline": "Inline",
+      "icon": "With icon",
+      "iconLeading": "Icon on the left",
+      "external": "External target",
+      "disabled": "Disabled"
     },
     "overview": {
       "variantsTitle": "Two patterns",
@@ -385,6 +404,19 @@
       "error": "The value exceeds the stock. Order at most 10 packs.",
       "success": "Quantity accepted."
     },
+    "presets": {
+      "standard": "Default",
+      "plusminus": "Plus and minus",
+      "prefix": "With prefix",
+      "suffix": "With suffix",
+      "limits": "With min and max",
+      "decimals": "With decimals",
+      "error": "With error message",
+      "success": "With success message",
+      "required": "Required",
+      "readonly": "Read-only",
+      "disabled": "Disabled"
+    },
     "overview": {
       "variantsTitle": "Variants",
       "variantsBody": "chevrons puts both buttons on the right — the normal case at a desk. plusminus places minus on the left and plus on the right with a centred value; that is the touch variant with a larger hit target.",
@@ -464,6 +496,17 @@
       "hint": "Determines which forms are offered in the next step.",
       "error": "Without a specialty the appointment cannot be assigned. Choose an entry.",
       "success": "Specialty accepted."
+    },
+    "presets": {
+      "standard": "Single selection",
+      "multiple": "Multiple selection",
+      "count": "Multiple with count",
+      "searchable": "Search in list",
+      "groups": "Groups",
+      "native": "Native mode",
+      "error": "With error message",
+      "required": "Required",
+      "disabled": "Disabled"
     },
     "overview": {
       "singleTitle":  "Single selection",
@@ -574,6 +617,17 @@
       "hint": "The search starts automatically as soon as you pause briefly.",
       "error": "The search is currently unreachable. Try again in a few minutes."
     },
+    "presets": {
+      "standard": "Default",
+      "compact": "Compact",
+      "filled": "Filled",
+      "panelOpen": "Suggestion panel open",
+      "emptyPanel": "Empty panel",
+      "removableHistory": "History removable",
+      "loading": "Loading",
+      "error": "With error message",
+      "disabled": "Disabled"
+    },
     "overview": {
       "anatomyTitle": "Anatomy",
       "anatomyBody": "The search field is a text field with a fixed division of roles:",
@@ -683,6 +737,14 @@
         "loading":     "Wird gespeichert"
       }
     },
+    "presets": {
+      "standard": "Default",
+      "description": "With description",
+      "labelLeft": "Label on the left",
+      "noIcons": "Without handle icons",
+      "loading": "Loading",
+      "disabled": "Disabled"
+    },
     "overview": {
       "statesTitle":      "States",
       "statesBody":       "Off is stone-300, on is the action colour. The thumb is always white and carries a check or a cross so the state does not hang on colour alone.",
@@ -768,6 +830,13 @@
         "disabled":        "Deaktiviert",
         "disabledChecked": "Deaktiviert und ausgewählt"
       }
+    },
+    "presets": {
+      "standard": "Default",
+      "hint": "With hint",
+      "indeterminate": "Indeterminate",
+      "error": "With error message",
+      "disabled": "Disabled"
     },
     "overview": {
       "statesTitle":     "States",
@@ -856,6 +925,12 @@
         "disabledSelected": "Deaktiviert und gewählt"
       }
     },
+    "presets": {
+      "standard": "Default",
+      "horizontal": "Horizontal",
+      "card": "Selection cards",
+      "disabled": "Disabled"
+    },
     "overview": {
       "statesTitle":     "States",
       "statesBody":      "At rest the circle carries the input border colour, selected the action colour, on hover one step darker. Disabled and selected shows a stone-400 dot in a muted circle — not the action colour.",
@@ -941,6 +1016,16 @@
       "pending": "In Prüfung",
       "appointment": "Termin",
       "expired": "Abgelaufen"
+    },
+    "presets": {
+      "standard": "Default",
+      "solid": "Solid emphasis",
+      "dot": "With dot",
+      "icon": "With icon",
+      "removable": "Removable",
+      "selectable": "Selectable",
+      "selected": "Selected",
+      "disabled": "Disabled"
     },
     "overview": {
       "colorsTitle": "Colour roles",
@@ -1032,6 +1117,16 @@
         "neutral": "Zwei neue Nachrichten im Postfach"
       }
     },
+    "presets": {
+      "standard": "Info",
+      "success": "Success",
+      "warning": "Warning",
+      "error": "Error",
+      "solid": "Solid emphasis",
+      "single": "Single line",
+      "action": "With action",
+      "closable": "Closable"
+    },
     "overview": {
       "kindsTitle":    "Kinds",
       "kindsBody":     "Five kinds with a fixed glyph and a fixed colour role. The kind also determines how screen readers announce the message: errors interrupt, everything else is read out in passing.",
@@ -1101,6 +1196,15 @@
       "states": {
         "loading": "Loading state with skeleton rows",
         "empty": "Empty state with a reason"
+      },
+      "presets": {
+        "standard": "Default",
+        "noSelection": "Without selection",
+        "rowClick": "Clickable rows",
+        "loading": "Loading",
+        "empty": "Empty state",
+        "noFooter": "Without footer",
+        "fixedHeight": "Fixed height"
       },
       "overview": {
         "columnsTitle": "Columns and alignment",
@@ -1179,6 +1283,15 @@
     "full": {
       "a": "Overview",
       "b": "History"
+    },
+    "presets": {
+      "standard": "Underline",
+      "contained": "Contained",
+      "vertical": "Vertical",
+      "scrollable": "Scrollable",
+      "fullWidth": "Full width",
+      "noPanel": "Without panel",
+      "plain": "Without icons and badges"
     },
     "overview": {
       "variantsTitle":  "Variants",
@@ -1263,6 +1376,14 @@
       "uneven": "equalWidth={false}",
       "full":   "fullWidth"
     },
+    "presets": {
+      "standard": "Default",
+      "outline": "Outlined",
+      "noIcons": "Without icons",
+      "iconOnly": "Icons only",
+      "fullWidth": "Full width",
+      "contentWidth": "Width follows content"
+    },
     "overview": {
       "variantsTitle": "Styles",
       "variantsBody":  "neutral rests on a stone-100 bar, the active segment is white with shadow-sm — the default case, calm enough for toolbars. outline shares a border and fills the active segment with primary-600; useful when the bar sits on an already tinted surface where the neutral track disappears.",
@@ -1332,6 +1453,13 @@
       "off": "Five levels without collapsing",
       "on":  "maxItems={4}"
     },
+    "presets": {
+      "standard": "Default",
+      "shallow": "Three levels",
+      "noCollapse": "Without collapsing",
+      "homeIcon": "With home icon",
+      "stepIcons": "With level icons"
+    },
     "overview": {
       "anatomyTitle":  "Anatomy",
       "anatomyBody":   "The first level is the root, the last one the current page:",
@@ -1391,6 +1519,15 @@
       "inlineAfter":  "in the project directory.",
       "copyLabel":    "Copy command",
       "copiedLabel":  "In the clipboard"
+    },
+    "presets": {
+      "standard": "Block",
+      "single": "Single line",
+      "inline": "Inline",
+      "terminal": "Terminal",
+      "noHighlight": "Without syntax colours",
+      "noNumbers": "Without line numbers",
+      "short": "Short sample"
     },
     "overview": {
       "variantsTitle":  "Forms",
@@ -1493,6 +1630,14 @@
         "neutralConfirm": "Termin verschieben"
       }
     },
+    "presets": {
+      "standard": "Default",
+      "danger": "Danger",
+      "warning": "Warning",
+      "success": "Success",
+      "secondary": "With secondary action",
+      "plain": "Without icon and subtitle"
+    },
     "overview": {
       "sizesTitle":     "Sizes",
       "sizesBody":      "sm at 420px for confirmations, md at 560px as the standard with a form, lg at 760px for a lot of content. The body scrolls when it gets too tall — header and footer stay put.",
@@ -1577,6 +1722,14 @@
         "right":  "Rechts"
       }
     },
+    "presets": {
+      "standard": "Default",
+      "top": "Top",
+      "left": "Left",
+      "right": "Right",
+      "noTitle": "Without title",
+      "wide": "Wide"
+    },
     "overview": {
       "placementTitle":  "Placements",
       "placementBody":   "Four placements with an arrow pointing at the trigger. The surface measures itself after mounting and stays inside the viewport.",
@@ -1646,6 +1799,14 @@
       "a2": "The confirmation is available in your inbox no later than two working days after conclusion.",
       "q3": "Can I register several locations?",
       "a3": "Yes. Add further locations in the practice details; each location receives its own number."
+    },
+    "presets": {
+      "standard": "Default",
+      "separated": "Separated",
+      "plain": "Plain",
+      "single": "One at a time",
+      "chevron": "Chevron marker",
+      "noIcons": "Without icons"
     },
     "overview": {
       "anatomyTitle":   "Anatomy",
@@ -1743,6 +1904,15 @@
         "doctor":  "Behandelnde Person"
       }
     },
+    "presets": {
+      "standard": "Default",
+      "kebab": "Kebab trigger",
+      "icon": "With icon",
+      "alignEnd": "Aligned right",
+      "single": "Single selection",
+      "multiple": "Multiple selection",
+      "disabled": "Disabled"
+    },
     "overview": {
       "triggerTitle":   "Trigger",
       "triggerBody":    "The button carries a label and a chevron, the kebab only an icon without a border. The kebab belongs in table rows and card headers where there is no room for a label — it then needs an ariaLabel.",
@@ -1833,6 +2003,11 @@
         "csv":    "Als CSV"
       }
     },
+    "presets": {
+      "standard": "Default",
+      "submenu": "With submenu",
+      "disabled": "Disabled"
+    },
     "overview": {
       "basicTitle":    "Right-click",
       "basicBody":     "The menu opens at the cursor position. A click outside, Esc and a selection close it again; so do scrolling and resizing the window, because the position would no longer hold.",
@@ -1907,6 +2082,14 @@
         "phone":  "Telefonisch",
         "series": "Terminserie"
       }
+    },
+    "presets": {
+      "standard": "MenuButton",
+      "split": "SplitButton",
+      "iconMenu": "IconMenuButton",
+      "neutral": "Neutral",
+      "alignEnd": "Aligned right",
+      "disabled": "Disabled"
     },
     "overview": {
       "formsTitle":    "Three forms",
@@ -1992,6 +2175,16 @@
     "keyValue": {
       "columns": "columns",
       "stacked": "stacked"
+    },
+    "presets": {
+      "standard": "Unordered",
+      "ordered": "Ordered",
+      "content": "With content",
+      "nested": "Nested",
+      "flush": "Flush",
+      "empty": "Empty list",
+      "keyValue": "Key-value list",
+      "keyValueStacked": "Key-value stacked"
     },
     "overview": {
       "variantsTitle":  "Variants",
@@ -2082,6 +2275,16 @@
       "single":     "single",
       "multiple":   "multiple"
     },
+    "presets": {
+      "standard": "Navigation",
+      "single": "Single selection",
+      "multiple": "Multiple selection",
+      "avatars": "With avatars",
+      "action": "With row action",
+      "groups": "Grouped",
+      "empty": "Empty state",
+      "plain": "Label only"
+    },
     "overview": {
       "modesTitle":  "Modes",
       "modesBody":   "navigation leads onwards: every row opens a target, with a chevron on the right. single and multiple select — a radio or checkbox sits on the left and the chosen row rests on the selection surface. One mode per list.",
@@ -2155,6 +2358,14 @@
       "first": "First page — previous disabled",
       "last":  "Last page — next disabled"
     },
+    "presets": {
+      "standard": "Page numbers",
+      "compact": "Compact",
+      "bar": "Bar",
+      "firstLast": "With first and last",
+      "jump": "With jump field",
+      "narrow": "Narrow window"
+    },
     "overview": {
       "variantsTitle": "Variants",
       "variantsBody":  "numbers is the normal case below a list or a set of cards. bar belongs under a table: entries per page and the range on the left, the numbers and, with many pages, the direct jump on the right. compact is for narrow columns and mobile.",
@@ -2213,6 +2424,15 @@
     "which": {
       "skeleton": "Skeleton — shape known",
       "spinner":  "Spinner — shape unknown"
+    },
+    "presets": {
+      "standard": "Spinner",
+      "overlay": "Overlay",
+      "skeletonLines": "Skeleton: lines",
+      "skeletonBlock": "Skeleton: block",
+      "skeletonCard": "Skeleton: card",
+      "skeletonTable": "Skeleton: table",
+      "noLabel": "Without label"
     },
     "overview": {
       "whichTitle":    "Which form when",
@@ -2281,6 +2501,14 @@
       "r2": "Records",
       "r3": "Bank details"
     },
+    "presets": {
+      "standard": "Loading",
+      "success": "Success",
+      "error": "Error",
+      "inactive": "Inactive",
+      "inButton": "Inside a button",
+      "noLabel": "Without label"
+    },
     "overview": {
       "statesTitle": "States",
       "statesBody":  "loading shows three pulsing dots, success a check mark, error a cross, inactive stays at rest. The colours come from the status roles: running primary-600, success green-600, error red-600.",
@@ -2345,6 +2573,15 @@
         "warning": "The storage space will last about two more weeks.",
         "error":   "The connection was interrupted. Start the transfer again."
       }
+    },
+    "presets": {
+      "standard": "Default",
+      "indeterminate": "Indeterminate",
+      "success": "Success",
+      "warning": "Warning",
+      "error": "Error",
+      "statusText": "With status text",
+      "plain": "Bar only"
     },
     "overview": {
       "anatomyTitle":       "Anatomy",
@@ -2413,6 +2650,14 @@
       "s4":        "Completion",
       "errorSub":  "The liability cover is missing",
       "clickHint": "Completed steps are clickable here — the active step moves along."
+    },
+    "presets": {
+      "standard": "Default",
+      "vertical": "Vertical",
+      "error": "Failed step",
+      "clickable": "Steps clickable",
+      "noSubtitles": "Without subtitles",
+      "lastStep": "Final step"
     },
     "overview": {
       "statesTitle":      "States",
@@ -2506,6 +2751,15 @@
         "disabled": "Disabled",
         "limited": "With min and max"
       },
+      "presets": {
+        "standard": "Default",
+        "inline": "Inline calendar",
+        "range": "Date range",
+        "quickSelect": "With quick select",
+        "required": "Required",
+        "error": "With error message",
+        "disabled": "Disabled"
+      },
       "overview": {
         "formsTitle": "Forms",
         "formsBody": "The field shows the chosen date, a calendar icon on the left and, on the right, either the cross to clear it or the expand arrow. It is 44px tall and at least 230px wide. inline shows the calendar permanently — for ranges and appointment booking, where the calendar is the main element of the page.",
@@ -2568,6 +2822,15 @@
       },
       "states": {
         "empty": "Empty",
+        "disabled": "Disabled"
+      },
+      "presets": {
+        "standard": "Default",
+        "compact": "Compact",
+        "noFiles": "Without files",
+        "singleFile": "Single file",
+        "noRemove": "Without removing",
+        "noLimits": "Without format and size",
         "disabled": "Disabled"
       },
       "overview": {
@@ -2639,6 +2902,15 @@
         "left": "Links",
         "right": "Rechts"
       }
+    },
+    "presets": {
+      "standard": "Default",
+      "bottom": "Bottom",
+      "left": "Left",
+      "right": "Right",
+      "title": "With title",
+      "instant": "Without delay",
+      "disabled": "Disabled"
     },
     "overview": {
       "placementTitle": "Placements",
@@ -2714,6 +2986,15 @@
         "urgent":    "Dringend",
         "immediate": "Sofort"
       }
+    },
+    "presets": {
+      "standard": "Continuous",
+      "discrete": "Discrete with ticks",
+      "minMax": "With min and max",
+      "icons": "Icons at the ends",
+      "vertical": "Vertical",
+      "noValue": "Without value",
+      "disabled": "Disabled"
     },
     "overview": {
       "basicTitle":      "Continuous",

@@ -52,10 +52,18 @@ export default function LinkPage() {
             controls={[
               { id: 'variant', type: 'dropdown', label: t('link.controls.variant'), options: ['standalone', 'inline'], default: 'standalone' },
               { id: 'size', type: 'dropdown', label: t('link.controls.size'), options: ['sm', 'md', 'lg'], default: 'md' },
-              { id: 'iconPosition', type: 'dropdown', label: t('link.controls.iconPosition'), options: ['leading', 'trailing'], default: 'trailing' },
+              { id: 'iconPosition', type: 'dropdown', label: t('link.controls.iconPosition'), options: ['leading', 'trailing'], default: 'trailing', visibleWhen: v => v.icon },
               { id: 'icon', type: 'toggle', label: t('link.controls.icon'), default: false },
               { id: 'external', type: 'toggle', label: t('link.controls.external'), default: false },
               { id: 'disabled', type: 'toggle', label: t('link.controls.disabled'), default: false },
+            ]}
+            presets={[
+              { id: 'standard', label: t('link.presets.standard'), values: {} },
+              { id: 'inline', label: t('link.presets.inline'), values: { variant: 'inline' } },
+              { id: 'icon', label: t('link.presets.icon'), values: { icon: true } },
+              { id: 'iconLeading', label: t('link.presets.iconLeading'), values: { icon: true, iconPosition: 'leading' } },
+              { id: 'external', label: t('link.presets.external'), values: { external: true } },
+              { id: 'disabled', label: t('link.presets.disabled'), values: { disabled: true } },
             ]}
           />
 

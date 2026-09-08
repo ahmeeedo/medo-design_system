@@ -133,6 +133,17 @@
       "finish": "Anmeldung abschließen",
       "toLink": "Zur Link-Komponente"
     },
+    "presets": {
+      "standard": "Primär",
+      "secondary": "Sekundär",
+      "ghost": "Ghost",
+      "danger": "Gefahr",
+      "trailing": "Icon rechts",
+      "iconOnly": "Nur Icon",
+      "loading": "Lädt",
+      "disabled": "Gesperrt",
+      "fullWidth": "Volle Breite"
+    },
     "overview": {
       "variantsTitle": "Varianten",
       "variantsBody": "Vier Varianten bilden die Wichtigkeit einer Aktion ab. Pro Ansicht steht genau eine primäre Aktion.",
@@ -219,6 +230,14 @@
       "next": "Zu den Rechnungen",
       "export": "Export starten",
       "external": "WCAG 2.2 öffnen"
+    },
+    "presets": {
+      "standard": "Eigenständig",
+      "inline": "Im Fließtext",
+      "icon": "Mit Icon",
+      "iconLeading": "Icon links",
+      "external": "Externes Ziel",
+      "disabled": "Gesperrt"
     },
     "overview": {
       "variantsTitle": "Zwei Muster",
@@ -385,6 +404,19 @@
       "error": "Der Wert liegt über dem Bestand. Bestellen Sie höchstens 10 Packungen.",
       "success": "Menge übernommen."
     },
+    "presets": {
+      "standard": "Standard",
+      "plusminus": "Plus und Minus",
+      "prefix": "Mit Präfix",
+      "suffix": "Mit Suffix",
+      "limits": "Mit Min und Max",
+      "decimals": "Mit Nachkommastellen",
+      "error": "Mit Fehlermeldung",
+      "success": "Mit Erfolgsmeldung",
+      "required": "Pflichtfeld",
+      "readonly": "Schreibgeschützt",
+      "disabled": "Gesperrt"
+    },
     "overview": {
       "variantsTitle": "Varianten",
       "variantsBody": "chevrons setzt beide Schaltflächen rechts — der Normalfall am Schreibtisch. plusminus stellt Minus links und Plus rechts, mit mittig ausgerichtetem Wert; das ist die Touch-Variante mit größerer Trefferfläche.",
@@ -464,6 +496,17 @@
       "hint": "Bestimmt, welche Formulare im nächsten Schritt angeboten werden.",
       "error": "Ohne Fachrichtung lässt sich der Termin nicht zuordnen. Wählen Sie einen Eintrag aus.",
       "success": "Fachrichtung übernommen."
+    },
+    "presets": {
+      "standard": "Einzelauswahl",
+      "multiple": "Mehrfachauswahl",
+      "count": "Mehrfachauswahl mit Anzahl",
+      "searchable": "Suche in der Liste",
+      "groups": "Gruppen",
+      "native": "Native Betriebsart",
+      "error": "Mit Fehlermeldung",
+      "required": "Pflichtfeld",
+      "disabled": "Gesperrt"
     },
     "overview": {
       "singleTitle":  "Einzelauswahl",
@@ -574,6 +617,17 @@
       "hint": "Die Suche startet automatisch, sobald Sie eine kurze Pause machen.",
       "error": "Die Suche ist zurzeit nicht erreichbar. Versuchen Sie es in einigen Minuten erneut."
     },
+    "presets": {
+      "standard": "Standard",
+      "compact": "Kompakte Variante",
+      "filled": "Gefüllt",
+      "panelOpen": "Vorschlags-Panel offen",
+      "emptyPanel": "Leerzustand im Panel",
+      "removableHistory": "Verlauf entfernbar",
+      "loading": "Lädt",
+      "error": "Mit Fehlermeldung",
+      "disabled": "Gesperrt"
+    },
     "overview": {
       "anatomyTitle": "Anatomie",
       "anatomyBody": "Das Suchfeld ist ein Textfeld mit fester Rollenverteilung:",
@@ -683,6 +737,14 @@
         "loading":     "Wird gespeichert"
       }
     },
+    "presets": {
+      "standard": "Standard",
+      "description": "Mit Beschreibung",
+      "labelLeft": "Beschriftung links",
+      "noIcons": "Ohne Icons im Griff",
+      "loading": "Ladezustand",
+      "disabled": "Gesperrt"
+    },
     "overview": {
       "statesTitle":      "Zustände",
       "statesBody":       "Aus ist stone-300, an ist die Aktionsfarbe. Der Griff ist immer weiß und trägt Häkchen beziehungsweise Kreuz, damit der Zustand nicht allein an der Farbe hängt.",
@@ -768,6 +830,13 @@
         "disabled":        "Deaktiviert",
         "disabledChecked": "Deaktiviert und ausgewählt"
       }
+    },
+    "presets": {
+      "standard": "Standard",
+      "hint": "Mit Hilfetext",
+      "indeterminate": "Zwischenzustand",
+      "error": "Mit Fehlermeldung",
+      "disabled": "Gesperrt"
     },
     "overview": {
       "statesTitle":     "Zustände",
@@ -856,6 +925,12 @@
         "disabledSelected": "Deaktiviert und gewählt"
       }
     },
+    "presets": {
+      "standard": "Standard",
+      "horizontal": "Waagerechte Anordnung",
+      "card": "Auswahlkarten",
+      "disabled": "Gesperrt"
+    },
     "overview": {
       "statesTitle":     "Zustände",
       "statesBody":      "Im Ruhezustand trägt der Kreis die Feldrahmenfarbe, gewählt die Aktionsfarbe, im Hover eine Stufe dunkler. Gesperrt und gewählt zeigt einen stone-400-Punkt in einem gedämpften Kreis — nicht die Aktionsfarbe.",
@@ -941,6 +1016,16 @@
       "pending": "In Prüfung",
       "appointment": "Termin",
       "expired": "Abgelaufen"
+    },
+    "presets": {
+      "standard": "Standard",
+      "solid": "Kräftige Betonung",
+      "dot": "Mit Punkt",
+      "icon": "Mit Icon",
+      "removable": "Entfernbar",
+      "selectable": "Auswählbar",
+      "selected": "Ausgewählt",
+      "disabled": "Gesperrt"
     },
     "overview": {
       "colorsTitle": "Farbrollen",
@@ -1032,6 +1117,16 @@
         "neutral": "Zwei neue Nachrichten im Postfach"
       }
     },
+    "presets": {
+      "standard": "Info",
+      "success": "Erfolg",
+      "warning": "Warnung",
+      "error": "Fehler",
+      "solid": "Kräftige Betonung",
+      "single": "Einzeilig",
+      "action": "Mit Aktion",
+      "closable": "Mit Schließen"
+    },
     "overview": {
       "kindsTitle":    "Statusarten",
       "kindsBody":     "Fünf Arten mit festem Glyph und fester Farbrolle. Die Art bestimmt außerdem, wie Screenreader die Meldung ankündigen: Fehler unterbrechen, alles übrige wird beiläufig vorgelesen.",
@@ -1101,6 +1196,15 @@
       "states": {
         "loading": "Ladezustand mit Skeleton-Zeilen",
         "empty": "Leerzustand mit Begründung"
+      },
+      "presets": {
+        "standard": "Standard",
+        "noSelection": "Ohne Auswahl",
+        "rowClick": "Zeilen klickbar",
+        "loading": "Lädt",
+        "empty": "Leerzustand",
+        "noFooter": "Ohne Fuß",
+        "fixedHeight": "Feste Höhe"
       },
       "overview": {
         "columnsTitle": "Spalten und Ausrichtung",
@@ -1179,6 +1283,15 @@
     "full": {
       "a": "Übersicht",
       "b": "Verlauf"
+    },
+    "presets": {
+      "standard": "Unterstrichen",
+      "contained": "Umschlossen",
+      "vertical": "Vertikal",
+      "scrollable": "Scrollbar",
+      "fullWidth": "Volle Breite",
+      "noPanel": "Ohne Panel",
+      "plain": "Ohne Icons und Zähler"
     },
     "overview": {
       "variantsTitle":  "Varianten",
@@ -1263,6 +1376,14 @@
       "uneven": "equalWidth={false}",
       "full":   "fullWidth"
     },
+    "presets": {
+      "standard": "Standard",
+      "outline": "Umrandet",
+      "noIcons": "Ohne Icons",
+      "iconOnly": "Nur Icons",
+      "fullWidth": "Volle Breite",
+      "contentWidth": "Breite nach Inhalt"
+    },
     "overview": {
       "variantsTitle": "Stile",
       "variantsBody":  "neutral liegt auf einer stone-100-Leiste, das aktive Segment ist weiß mit shadow-sm — der Standardfall, ruhig genug für Werkzeugleisten. outline teilt einen Rahmen und füllt das aktive Segment mit primary-600; sinnvoll, wenn die Leiste auf einer bereits getönten Fläche liegt und die neutrale Bahn dort verschwindet.",
@@ -1332,6 +1453,13 @@
       "off": "Fünf Ebenen ohne Kollaps",
       "on":  "maxItems={4}"
     },
+    "presets": {
+      "standard": "Standard",
+      "shallow": "Drei Ebenen",
+      "noCollapse": "Ohne Kollabieren",
+      "homeIcon": "Mit Home-Icon",
+      "stepIcons": "Mit Stufen-Icons"
+    },
     "overview": {
       "anatomyTitle":  "Aufbau",
       "anatomyBody":   "Die erste Stufe ist die Wurzel, die letzte die aktuelle Seite:",
@@ -1391,6 +1519,15 @@
       "inlineAfter":  "im Projektverzeichnis aus.",
       "copyLabel":    "Befehl kopieren",
       "copiedLabel":  "In der Zwischenablage"
+    },
+    "presets": {
+      "standard": "Block",
+      "single": "Einzeilig",
+      "inline": "Im Fließtext",
+      "terminal": "Terminal",
+      "noHighlight": "Ohne Syntaxfarben",
+      "noNumbers": "Ohne Zeilennummern",
+      "short": "Kurzes Beispiel"
     },
     "overview": {
       "variantsTitle":  "Formen",
@@ -1493,6 +1630,14 @@
         "neutralConfirm": "Termin verschieben"
       }
     },
+    "presets": {
+      "standard": "Standard",
+      "danger": "Gefahr",
+      "warning": "Warnung",
+      "success": "Erfolg",
+      "secondary": "Mit Zweitaktion",
+      "plain": "Ohne Icon und Unterzeile"
+    },
     "overview": {
       "sizesTitle":     "Größen",
       "sizesBody":      "sm mit 420px für Bestätigungen, md mit 560px als Standard mit Formular, lg mit 760px für viel Inhalt. Der Inhalt scrollt, wenn er zu hoch wird — Kopf und Fuß bleiben stehen.",
@@ -1577,6 +1722,14 @@
         "right":  "Rechts"
       }
     },
+    "presets": {
+      "standard": "Standard",
+      "top": "Oben",
+      "left": "Links",
+      "right": "Rechts",
+      "noTitle": "Ohne Titel",
+      "wide": "Breit"
+    },
     "overview": {
       "placementTitle":  "Positionen",
       "placementBody":   "Vier Positionen mit Pfeil zum Auslöser. Die Fläche misst sich nach dem Einhängen selbst und bleibt innerhalb des Sichtfensters.",
@@ -1646,6 +1799,14 @@
       "a2": "Der Nachweis steht spätestens zwei Werktage nach Abschluss im Postfach bereit.",
       "q3": "Kann ich mehrere Standorte hinterlegen?",
       "a3": "Ja. Ergänzen Sie weitere Standorte in den Praxisdaten; jeder Standort erhält eine eigene Nummer."
+    },
+    "presets": {
+      "standard": "Standard",
+      "separated": "Abgesetzt",
+      "plain": "Schlicht",
+      "single": "Nur einer offen",
+      "chevron": "Chevron als Zeichen",
+      "noIcons": "Ohne Icons"
     },
     "overview": {
       "anatomyTitle":   "Anatomie",
@@ -1743,6 +1904,15 @@
         "doctor":  "Behandelnde Person"
       }
     },
+    "presets": {
+      "standard": "Standard",
+      "kebab": "Kebab-Auslöser",
+      "icon": "Mit Icon",
+      "alignEnd": "Rechtsbündig",
+      "single": "Einfachauswahl",
+      "multiple": "Mehrfachauswahl",
+      "disabled": "Gesperrt"
+    },
     "overview": {
       "triggerTitle":   "Auslöser",
       "triggerBody":    "Die Schaltfläche trägt Beschriftung und Chevron, der Kebab nur ein Icon ohne Rahmen. Der Kebab gehört in Tabellenzeilen und Kartenköpfe, wo für eine Beschriftung kein Platz ist — er braucht dann ein ariaLabel.",
@@ -1833,6 +2003,11 @@
         "csv":    "Als CSV"
       }
     },
+    "presets": {
+      "standard": "Standard",
+      "submenu": "Mit Untermenü",
+      "disabled": "Gesperrt"
+    },
     "overview": {
       "basicTitle":    "Rechtsklick",
       "basicBody":     "Das Menü öffnet an der Cursorposition. Ein Klick außerhalb, Esc und die Auswahl schließen es wieder; Scrollen und Größenänderung des Fensters ebenfalls, weil die Position sonst nicht mehr stimmt.",
@@ -1907,6 +2082,14 @@
         "phone":  "Telefonisch",
         "series": "Terminserie"
       }
+    },
+    "presets": {
+      "standard": "MenuButton",
+      "split": "SplitButton",
+      "iconMenu": "IconMenuButton",
+      "neutral": "Neutral",
+      "alignEnd": "Rechtsbündig",
+      "disabled": "Gesperrt"
     },
     "overview": {
       "formsTitle":    "Drei Formen",
@@ -1992,6 +2175,16 @@
     "keyValue": {
       "columns": "columns",
       "stacked": "stacked"
+    },
+    "presets": {
+      "standard": "Unsortiert",
+      "ordered": "Nummeriert",
+      "content": "Mit Inhalt",
+      "nested": "Verschachtelt",
+      "flush": "Ohne Ränder",
+      "empty": "Leere Liste",
+      "keyValue": "Schlüssel-Wert-Liste",
+      "keyValueStacked": "Schlüssel-Wert gestapelt"
     },
     "overview": {
       "variantsTitle":  "Varianten",
@@ -2082,6 +2275,16 @@
       "single":     "single",
       "multiple":   "multiple"
     },
+    "presets": {
+      "standard": "Navigation",
+      "single": "Einfachauswahl",
+      "multiple": "Mehrfachauswahl",
+      "avatars": "Mit Avataren",
+      "action": "Mit Zeilenaktion",
+      "groups": "Gruppiert",
+      "empty": "Leerzustand",
+      "plain": "Nur Beschriftung"
+    },
     "overview": {
       "modesTitle":  "Modi",
       "modesBody":   "navigation führt weiter: jede Zeile öffnet ein Ziel, rechts steht ein Chevron. single und multiple wählen aus — links steht ein Radio- oder Kontrollkästchen, die gewählte Zeile liegt auf der Auswahlfläche. Ein Modus pro Liste.",
@@ -2155,6 +2358,14 @@
       "first": "Erste Seite — Zurück deaktiviert",
       "last":  "Letzte Seite — Weiter deaktiviert"
     },
+    "presets": {
+      "standard": "Seitenzahlen",
+      "compact": "Kompakt",
+      "bar": "Leiste",
+      "firstLast": "Mit Erste und Letzte",
+      "jump": "Mit Sprungfeld",
+      "narrow": "Enges Fenster"
+    },
     "overview": {
       "variantsTitle": "Varianten",
       "variantsBody":  "numbers ist der Normalfall unter einer Liste oder Kartenmenge. bar gehört unter eine Tabelle: links Einträge pro Seite und die Bereichsangabe, rechts die Nummern und bei vielen Seiten der Direktsprung. compact ist für schmale Spalten und Mobil.",
@@ -2213,6 +2424,15 @@
     "which": {
       "skeleton": "Skeleton — Form bekannt",
       "spinner":  "Spinner — Form unbekannt"
+    },
+    "presets": {
+      "standard": "Spinner",
+      "overlay": "Overlay",
+      "skeletonLines": "Skeleton: Zeilen",
+      "skeletonBlock": "Skeleton: Block",
+      "skeletonCard": "Skeleton: Karte",
+      "skeletonTable": "Skeleton: Tabelle",
+      "noLabel": "Ohne Beschriftung"
     },
     "overview": {
       "whichTitle":    "Welche Form wann",
@@ -2281,6 +2501,14 @@
       "r2": "Nachweise",
       "r3": "Bankverbindung"
     },
+    "presets": {
+      "standard": "Lädt",
+      "success": "Erfolg",
+      "error": "Fehler",
+      "inactive": "Inaktiv",
+      "inButton": "In einer Schaltfläche",
+      "noLabel": "Ohne Beschriftung"
+    },
     "overview": {
       "statesTitle": "Zustände",
       "statesBody":  "loading zeigt drei pulsierende Punkte, success ein Häkchen, error ein Kreuz, inactive bleibt ruhend. Die Farben kommen aus den Statusrollen: laufend primary-600, Erfolg green-600, Fehler red-600.",
@@ -2345,6 +2573,15 @@
         "warning": "Der Speicherplatz reicht noch für etwa zwei Wochen.",
         "error":   "Die Verbindung wurde unterbrochen. Starten Sie die Übertragung erneut."
       }
+    },
+    "presets": {
+      "standard": "Standard",
+      "indeterminate": "Unbestimmt",
+      "success": "Erfolg",
+      "warning": "Warnung",
+      "error": "Fehler",
+      "statusText": "Mit Statustext",
+      "plain": "Nur Balken"
     },
     "overview": {
       "anatomyTitle":       "Aufbau",
@@ -2413,6 +2650,14 @@
       "s4":        "Abschluss",
       "errorSub":  "Die Haftpflicht fehlt",
       "clickHint": "Erledigte Schritte sind hier anklickbar — der aktive Schritt wandert mit."
+    },
+    "presets": {
+      "standard": "Standard",
+      "vertical": "Vertikal",
+      "error": "Fehlgeschlagener Schritt",
+      "clickable": "Zurückspringen möglich",
+      "noSubtitles": "Ohne Unterzeilen",
+      "lastStep": "Letzter Schritt"
     },
     "overview": {
       "statesTitle":      "Zustände",
@@ -2506,6 +2751,15 @@
         "disabled": "Deaktiviert",
         "limited": "Mit min und max"
       },
+      "presets": {
+        "standard": "Standard",
+        "inline": "Inline-Kalender",
+        "range": "Zeitraum",
+        "quickSelect": "Mit Schnellauswahl",
+        "required": "Pflichtfeld",
+        "error": "Mit Fehlermeldung",
+        "disabled": "Gesperrt"
+      },
       "overview": {
         "formsTitle": "Formen",
         "formsBody": "Das Feld zeigt das gewählte Datum, links ein Kalendersymbol und rechts entweder das Kreuz zum Zurücksetzen oder den Aufklapp-Pfeil. Es ist 44px hoch und mindestens 230px breit. inline stellt den Kalender fest dar — für Zeiträume und Terminbuchungen, wo der Kalender das Hauptelement der Seite ist.",
@@ -2569,6 +2823,15 @@
       "states": {
         "empty": "Leer",
         "disabled": "Deaktiviert"
+      },
+      "presets": {
+        "standard": "Standard",
+        "compact": "Kompakte Form",
+        "noFiles": "Ohne Dateien",
+        "singleFile": "Nur eine Datei",
+        "noRemove": "Ohne Entfernen",
+        "noLimits": "Ohne Format- und Größenangabe",
+        "disabled": "Gesperrt"
       },
       "overview": {
         "zoneTitle": "Ablagefläche",
@@ -2639,6 +2902,15 @@
         "left": "Links",
         "right": "Rechts"
       }
+    },
+    "presets": {
+      "standard": "Standard",
+      "bottom": "Unten",
+      "left": "Links",
+      "right": "Rechts",
+      "title": "Mit Titel",
+      "instant": "Ohne Verzögerung",
+      "disabled": "Gesperrt"
     },
     "overview": {
       "placementTitle": "Positionen",
@@ -2714,6 +2986,15 @@
         "urgent":    "Dringend",
         "immediate": "Sofort"
       }
+    },
+    "presets": {
+      "standard": "Stufenlos",
+      "discrete": "Diskret mit Stufen",
+      "minMax": "Mit Min und Max",
+      "icons": "Icons an den Enden",
+      "vertical": "Vertikal",
+      "noValue": "Ohne Wertanzeige",
+      "disabled": "Gesperrt"
     },
     "overview": {
       "basicTitle":      "Stufenlos",

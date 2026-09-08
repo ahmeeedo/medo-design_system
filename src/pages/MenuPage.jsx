@@ -93,6 +93,11 @@ export default function MenuPage() {
               { id: 'submenu', type: 'toggle', label: t('menu.controls.submenu'), default: false },
               { id: 'disabled', type: 'toggle', label: t('menu.controls.disabled'), default: false },
             ]}
+            presets={[
+              { id: 'standard', label: t('menu.presets.standard'), values: {} },
+              { id: 'submenu', label: t('menu.presets.submenu'), values: { submenu: true } },
+              { id: 'disabled', label: t('menu.presets.disabled'), values: { disabled: true } },
+            ]}
           />
 
           <Section title={t('menu.overview.basicTitle')}>

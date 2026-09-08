@@ -132,8 +132,16 @@ export default function MenuButtonsPage() {
               { id: 'form', type: 'dropdown', label: t('menuButtons.controls.form'), options: ['menuButton', 'splitButton', 'iconMenuButton'], default: 'menuButton' },
               { id: 'variant', type: 'dropdown', label: t('menuButtons.controls.variant'), options: ['primary', 'neutral'], default: 'primary' },
               { id: 'align', type: 'dropdown', label: t('menuButtons.controls.align'), options: ['start', 'end'], default: 'start' },
-              { id: 'icon', type: 'toggle', label: t('menuButtons.controls.icon'), default: false },
+              { id: 'icon', type: 'toggle', label: t('menuButtons.controls.icon'), default: false, visibleWhen: v => v.form !== 'menuButton' },
               { id: 'disabled', type: 'toggle', label: t('menuButtons.controls.disabled'), default: false },
+            ]}
+            presets={[
+              { id: 'standard', label: t('menuButtons.presets.standard'), values: {} },
+              { id: 'split', label: t('menuButtons.presets.split'), values: { form: 'splitButton' } },
+              { id: 'iconMenu', label: t('menuButtons.presets.iconMenu'), values: { form: 'iconMenuButton' } },
+              { id: 'neutral', label: t('menuButtons.presets.neutral'), values: { variant: 'neutral' } },
+              { id: 'alignEnd', label: t('menuButtons.presets.alignEnd'), values: { align: 'end' } },
+              { id: 'disabled', label: t('menuButtons.presets.disabled'), values: { disabled: true } },
             ]}
           />
 
