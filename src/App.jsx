@@ -43,6 +43,8 @@ import TooltipPage            from './pages/TooltipPage'
 import SliderPage             from './pages/SliderPage'
 import FileUploaderPage       from './pages/FileUploaderPage'
 import DatePickerPage         from './pages/DatePickerPage'
+import AvatarPage             from './pages/AvatarPage'
+import TextareaPage           from './pages/TextareaPage'
 import WhatIsMedoPage   from './pages/WhatIsMedoPage'
 import ReleasesPage     from './pages/ReleasesPage'
 import ImpressumPage          from './pages/ImpressumPage'
@@ -98,6 +100,8 @@ export const ROUTES = [
   { path: '/slider',            element: <SliderPage /> },
   { path: '/file-uploader',     element: <FileUploaderPage /> },
   { path: '/date-picker',       element: <DatePickerPage /> },
+  { path: '/avatar',            element: <AvatarPage /> },
+  { path: '/textarea',          element: <TextareaPage /> },
   { path: '/about',             element: <WhatIsMedoPage /> },
   { path: '/releases',          element: <ReleasesPage /> },
   { path: '/impressum',         element: <ImpressumPage /> },

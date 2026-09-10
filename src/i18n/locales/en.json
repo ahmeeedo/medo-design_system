@@ -45,6 +45,8 @@
       "slider":            "Slider",
       "fileUploader":      "FileUploader",
       "datePicker":        "Date Picker",
+      "avatar":            "Avatar",
+      "textarea":          "Textarea",
       "whatIsMedo":        "What is med.o?",
       "releases":          "Releases"
     },
@@ -1188,6 +1190,10 @@
         "colStatus": "Status",
         "colAbschluss": "Signed",
         "colBeitrag": "Annual premium",
+        "colPerson": "Person",
+        "colRole": "Role",
+        "colProjects": "Projects",
+        "peopleTitle": "Team",
         "search": "Search contracts",
         "export": "Export",
         "delete": "Terminate",
@@ -1209,6 +1215,8 @@
       "overview": {
         "columnsTitle": "Columns and alignment",
         "columnsBody": "Text sits left, numbers sit right in DM Mono with tabular figures so amounts line up. The most important column comes first, secondary values get muted. Use render to place real building blocks in a cell, such as a Tag for status.",
+        "peopleTitle": "People with an avatar",
+        "peopleBody": "Where a person stands in the row, the first column carries their avatar in sm beside the name and the address. The colour comes from the data of the person — it is not computed from the name and not from the row number. The circle stays silent for screen readers, because the name stands beside it.",
         "sortTitle": "Sorting",
         "sortBody": "Sortable columns carry a button in the header. The arrow appears faintly on hover and turns primary-600 once the column is active. Without onSortChange the component sorts on its own — numerically for numbers, by German locale for text.",
         "selectTitle": "Selection and bulk bar",
@@ -1288,7 +1296,6 @@
       "standard": "Underline",
       "contained": "Contained",
       "vertical": "Vertical",
-      "scrollable": "Scrollable",
       "fullWidth": "Full width",
       "noPanel": "Without panel",
       "plain": "Without icons and badges"
@@ -1300,8 +1307,8 @@
       "panelBody":      "Children are rendered as the role=\"tabpanel\" of the active tab and stay unstyled. The panel content is remounted on every switch — state that should survive the switch belongs outside.",
       "verticalTitle":  "Vertical",
       "verticalBody":   "With many areas the vertical form is the calmer solution. It sits to the left of the panel and always follows the underline logic; the indicator moves to the left edge.",
-      "scrollTitle":    "Scrollable",
-      "scrollBody":     "From about seven tabs on, set scrollable: the bar scrolls horizontally instead of wrapping, without a visible scrollbar.",
+      "scrollTitle":    "Many tabs",
+      "scrollBody":     "Where the tabs do not fit side by side, the bar runs along horizontally by itself — without a visible scrollbar and without anything being set. The selected tab is brought into view and its neighbour peeks in, so it is visible that the bar continues. This holds for every horizontal bar except fullWidth. The scrollable prop has had no effect since that change and remains only for existing integrations.",
       "fullWidthTitle": "Full width",
       "fullWidthBody":  "fullWidth divides the width evenly between the tabs. Use it only when the tabs span a card or sheet completely — on wide pages the labels drift far apart otherwise.",
       "sizesTitle":     "Density",
@@ -1320,7 +1327,7 @@
       "doTitle":     "Do",
       "dontTitle":   "Don't",
       "do1":         "Show equal views of the same subject",
-      "do2":         "Set scrollable from about seven tabs on, vertical with many areas",
+      "do2":         "Take the vertical form where there are very many areas",
       "do3":         "Keep labels to one or two words",
       "dont1":       "Map steps or a sequence onto tabs",
       "dont2":       "Nest tabs — a second level is not shown as tabs",
@@ -1331,7 +1338,7 @@
       "basicTitle":     "Basic with panel",
       "containedTitle": "Contained, controlled",
       "verticalTitle":  "Vertical",
-      "scrollTitle":    "Scrollable and full width"
+      "scrollTitle":    "Many tabs and full width"
     },
     "a11y": {
       "rolesTitle":    "Roles",
@@ -2706,6 +2713,244 @@
       "currentBody":  "The active step carries aria-current=\"step\". Screen readers can therefore announce where in the sequence the person stands.",
       "colorTitle":   "Colour carries nothing on its own",
       "colorBody":    "Completed steps carry a check mark, failed ones a cross, open ones their number. The state is recognisable without colour."
+    }
+  },
+  "avatar": {
+    "page": {
+      "title":       "Avatar",
+      "description": "Shows which person is meant. A picture, otherwise two letters, otherwise a person symbol. Fifteen colour schemes, three sizes. Always round — round is a person, square is a thing."
+    },
+    "controls": {
+      "size":     "Size",
+      "color":    "Colour scheme",
+      "name":     "Name",
+      "initials": "Set letters",
+      "image":    "Picture",
+      "loading":  "Loading",
+      "label":    "Label"
+    },
+    "presets": {
+      "standard": "Standard",
+      "scheme":   "Colour scheme",
+      "profile":  "Profile page",
+      "tableRow": "Table row",
+      "image":    "With picture",
+      "initials": "Set letters",
+      "nameless": "Without a name",
+      "loading":  "Loading"
+    },
+    "demo": {
+      "label": "Deleted account"
+    },
+    "overview": {
+      "schemesTitle": "Colour schemes",
+      "schemesBody":  "Fifteen schemes, all with white type. The colour belongs to the person: it is assigned at registration and can be changed by them. The caller passes the stored value; the component computes nothing.",
+      "schemesNote":  "Below each circle stands the name of the prop and the contrast of the white type; 4.5:1 is required. Orange, amber, yellow, violet and stone deliberately do not sit on step 600 — there they would not carry white type, or would sit too close to a neighbouring family.",
+      "sizesTitle":   "Sizes",
+      "sizesBody":    "Three sizes, there are no more. 30 and 38 pixels deliberately sit beside the spacing steps — both measures already ship that way. 64 pixels is space-3xl.",
+      "fillTitle":    "Fill and fallback",
+      "fillBody":     "The circle holds, in this order: the picture, otherwise two letters, otherwise a person symbol.",
+      "fillNote":     "A picture failing to load happens regularly in operation — a stale address, a server not answering, the network gone. The user then sees no broken image icon but the letters. The fallback is not recognisable as an error, and that is intended.",
+      "lettersTitle": "Letters",
+      "lettersBody":  "From first and last name, otherwise from the user name. Precedence of separators: a space beats a full stop, a full stop beats a hyphen and an underscore. Where none occurs, inner capitalisation splits; failing that, the first two characters count. For an e-mail address only the part before the @ counts.",
+      "statesTitle":  "States",
+      "statesBody":   "The avatar has no disabled state of its own and no hover or focus state. The surroundings handle that: in a disabled row the whole row is dimmed, in a clickable row the row reacts, not the circle.",
+      "useTitle":     "In use",
+      "useBody":      "The same people in three surroundings. A person’s colour never changes along the way.",
+      "useNote":      "In tables the different schemes are allowed to show; in lists it stays calm with a single colour."
+    },
+    "sizes": {
+      "sm": "Table row",
+      "md": "List row",
+      "lg": "Profile page"
+    },
+    "fill": {
+      "image":   "1 · Picture",
+      "letters": "2 · Picture fails to load → letters",
+      "symbol":  "3 · no name → symbol"
+    },
+    "letters": {
+      "space":    "the space splits",
+      "camel":    "a capital inside the word splits",
+      "none":     "no separator → first two characters",
+      "twoParts": "after two parts it stops",
+      "dot":      "the full stop splits",
+      "mail":     "cut at the @, then the first two",
+      "hyphen":   "the space beats the hyphen",
+      "oneWord":  "one word → first two characters"
+    },
+    "states": {
+      "rest":        "Rest",
+      "loading":     "Loading",
+      "nameless":    "Without a name",
+      "disabledRow": "In a disabled row"
+    },
+    "use": {
+      "table":   "Table row · sm",
+      "list":    "List row · md · one colour",
+      "profile": "Profile page · lg",
+      "role":    "Admin"
+    },
+    "usage": {
+      "colorTitle":   "The colour belongs to the person",
+      "colorBody":    "The colour scheme is assigned at registration and can be changed by the person later. The caller passes the stored value.",
+      "c1":           "The colour is never computed — not from the name, not from the position in a list, not from a running number. A computed colour could not be changed and would jump when the list is re-sorted.",
+      "c2":           "Two people may carry the same colour. The scheme is a personal setting, not an identifier; with a free choice, uniqueness could not be enforced anyway.",
+      "c3":           "The colour says nothing about role, status or rank. Nothing is sorted or filtered by colour.",
+      "contentTitle": "What stands in the circle",
+      "contentBody":  "In this order:",
+      "o1":           "A picture, cropped to the circle — as soon as src is set and loads.",
+      "o2":           "Two letters — when there is no picture, or the picture fails to load.",
+      "o3":           "A person symbol — when there is no name at all: a deleted account, an open invitation, a system action with no person behind it.",
+      "doTitle":      "Do",
+      "do1":          "Pass the stored colour scheme of the person.",
+      "do2":          "Let the schemes show in tables, stay with one colour in lists.",
+      "do3":          "Put the name next to the avatar so the circle can stay silent.",
+      "do4":          "Show the loading state while data is on its way, so nothing jumps when it arrives.",
+      "do5":          "Give the avatar a label where it stands on its own.",
+      "dontTitle":    "Do not",
+      "dont1":        "Compute the colour from the name or the row number.",
+      "dont2":        "Sort or filter by colour.",
+      "dont3":        "Give the colour a meaning — role, status or rank.",
+      "dont4":        "Try to enforce uniqueness of the colours.",
+      "dont5":        "Build a square variant — square is a thing, not a person.",
+      "dont6":        "Add a presence dot, overlapping groups or a clickable avatar."
+    },
+    "code": {
+      "title":        "Code",
+      "basicDesc":    "The four cases: with a name, with a picture, in the loading state and without a person.",
+      "rowDesc":      "In a table or list row the name stands next to the circle; the circle stays silent for screen readers.",
+      "initialsDesc": "The derivation of the two letters can be used on its own."
+    },
+    "a11y": {
+      "labelTitle":    "Label",
+      "labelBody":     "The avatar is silent while the name stands beside it — hearing “AM” read out helps nobody.",
+      "l1":            "With the name beside it, the circle carries aria-hidden and is skipped.",
+      "l2":            "Where the avatar stands alone, the caller passes label; it is then announced as an image with a label.",
+      "contrastTitle": "Contrast of the type",
+      "contrastBody":  "All fifteen schemes carry white type and are checked against WCAG 2.2. The weakest of the row is teal at 5.84:1 against the required 4.5:1. The values hold in both themes, because the circle takes its colour from the brand layer and that layer is the same in light and dark.",
+      "darkTitle":     "A deliberate shortfall in dark mode",
+      "darkBody":      "In dark mode the circle reaches 2.72:1 against the base surface and so stays below the 3:1 that WCAG 2.2 requires for graphical objects. This is a decision that was taken, not an open defect: the owner accepted the state with this figure in view.",
+      "d1":            "What carries information are the letters. They read at 5.84:1 in both themes.",
+      "d2":            "The edge of the circle against the page carries no information: the name stands beside it, and the circle itself is silent for screen readers.",
+      "d3":            "Against its predecessor it is an improvement — the earlier light circle sat at 1.27:1 in dark mode.",
+      "darkNote":      "The cause is structural. The project pairs its filled surfaces for dark mode; the avatar cannot follow, because it references the brand layer and that layer is identical in both themes. A remedy would be a change to the design system, not a touch-up on the component.",
+      "stateTitle":    "No operating state of its own",
+      "stateBody":     "The avatar is not focusable and does not react to the pointer. Where the row is operable, the row carries focus and hover — not the circle."
+    }
+  },
+  "textarea": {
+    "page": {
+      "title":       "Textarea",
+      "description": "A multi-line input field on the shared field frame. For answers that may run to several sentences — a finding, a note, a reason."
+    },
+    "controls": {
+      "rows":        "Rows",
+      "placeholder": "Placeholder",
+      "required":    "Required",
+      "optional":    "Optional",
+      "hint":        "Hint",
+      "error":       "Error",
+      "success":     "Success",
+      "counter":     "Character counter",
+      "fullWidth":   "Full width",
+      "disabled":    "Disabled",
+      "readOnly":    "Read-only"
+    },
+    "presets": {
+      "standard":  "Standard",
+      "hint":      "With a hint",
+      "error":     "Error",
+      "success":   "Success",
+      "disabled":  "Disabled",
+      "readOnly":  "Read-only",
+      "counter":   "Character counter",
+      "sixRows":   "Six rows",
+      "fullWidth": "Full width"
+    },
+    "demo": {
+      "label":         "Finding",
+      "placeholder":   "Enter the finding",
+      "hint":          "Will be carried into the report",
+      "error":         "Please enter a finding",
+      "success":       "Saved",
+      "successValue":  "Finding complete.",
+      "disabledValue": "Not editable"
+    },
+    "overview": {
+      "statesTitle":    "States",
+      "statesBody":     "Rest, placeholder, hint, error, success, disabled and read-only. Hover and focus arise while the field is operated.",
+      "statesNote":     "The field border is 1 pixel in every state — focus is carried by the 3 pixel ring, not by a thicker border, so nothing jumps when you click into it. In the error state the ring takes the error colour.",
+      "sizeTitle":      "One size",
+      "sizeBody":       "The textarea has no size steps — unlike text input and select there is no sm, md or lg. The type is always text-base 16 pixels.",
+      "sizeNote":       "The initial height comes from rows; after that the user drags it themselves, in height only. The width belongs to the layout — were it draggable, the form would break.",
+      "rowsTitle":      "Number of rows",
+      "rowsBody":       "Set as many rows as the expected answer roughly needs. A field that expects three sentences but stands one row high looks as if one row were enough.",
+      "counterTitle":   "Character counter",
+      "counterBody":    "showCounter shows the count at the lower edge of the field and needs maxLength — without it the counter stays off.",
+      "counterNote":    "Set the counter where the limit matters to the user. A counter without a real limit only unsettles.",
+      "fullWidthTitle": "Full width",
+      "fullWidthBody":  "With fullWidth the field takes the full width of its parent. Without it the field keeps its own width."
+    },
+    "states": {
+      "rest":        "Rest",
+      "placeholder": "Placeholder",
+      "hint":        "With a hint",
+      "error":       "Error",
+      "success":     "Success",
+      "disabled":    "Disabled",
+      "readOnly":    "Read-only"
+    },
+    "size": {
+      "lookLabel":   "This is how the field looks",
+      "lookCaption": "Type 16px · padding 8px · height from rows",
+      "dragLabel":   "Dragging · height only",
+      "dragValue":   "Drag the lower right corner — the field grows taller, never wider.",
+      "dragCaption": "A fixed system rule. No setting, cannot be switched off."
+    },
+    "rows": {
+      "short": "A short note."
+    },
+    "counter": {
+      "with":    "With a counter",
+      "without": "Without maxLength"
+    },
+    "usage": {
+      "whenTitle":    "When to use",
+      "whenBody":     "Take the textarea where the answer may run to several sentences: a finding, a note, a reason, a comment. Where the answer fits on one line, a text input belongs there.",
+      "rowsTitle":    "Choosing the number of rows",
+      "rowsBody":     "The initial height comes from rows, the default is three. Align it with the expected answer; after that the user drags it themselves, in height only.",
+      "messageTitle": "Messages",
+      "messageBody":  "hint explains, error names a fault, success confirms. Only ever one appears: error displaces success, success displaces hint. An error message names the cause and the next step — “Please enter a finding” rather than “Required field”.",
+      "doTitle":      "Do",
+      "do1":          "Take the textarea where the answer may run to several sentences.",
+      "do2":          "Align the number of rows with the expected answer.",
+      "do3":          "Show the counter only where there is a real limit.",
+      "do4":          "Write error messages with a cause and a next step.",
+      "dontTitle":    "Do not",
+      "dont1":        "Take the textarea for single-line answers.",
+      "dont2":        "Expect a size — there is only one.",
+      "dont3":        "Try to switch off the dragging or allow it in width.",
+      "dont4":        "Expect the counter without maxLength.",
+      "dont5":        "Expect a hint and an error message at once — only one appears.",
+      "dont6":        "Reach the padding of the field through className — className sits on the wrapper."
+    },
+    "code": {
+      "title":          "Code",
+      "basicDesc":      "Label, number of rows and messages come from the shared field frame.",
+      "controlledDesc": "With value and onChange the value belongs to the caller; without both the field keeps it itself.",
+      "messageDesc":    "Only ever one message appears."
+    },
+    "a11y": {
+      "labelTitle":    "Label",
+      "labelBody":     "The label always stands visibly above the field and is tied to it. A placeholder does not replace it: it disappears as soon as typing starts.",
+      "messageTitle":  "Messages",
+      "m1":            "Hint, error and success are tied to the field through aria-describedby.",
+      "m2":            "An error message sets aria-invalid and is announced as role=\"alert\".",
+      "m3":            "A description passed by the caller joins the built-in one instead of replacing it.",
+      "keyboardTitle": "Keyboard",
+      "k1":            "Tab moves into the field and out again; the enter key creates a new line.",
+      "k2":            "Focus is carried by a 3 pixel ring; the border stays 1 pixel in every state, so nothing jumps."
     }
   },
   "impressum": {

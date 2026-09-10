@@ -66,6 +66,8 @@ export const NAV = [
       { id: 'slider',            label: 'nav.items.slider' },
       { id: 'tooltip',           label: 'nav.items.tooltip' },
       { id: 'file-uploader',     label: 'nav.items.fileUploader' },
+      { id: 'avatar',            label: 'nav.items.avatar' },
+      { id: 'textarea',          label: 'nav.items.textarea' },
     ],
   },
 ]

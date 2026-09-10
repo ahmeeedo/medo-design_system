@@ -168,4 +168,19 @@ describe('Tabs — die Leiste laeuft mit', () => {
 
     expect(container.querySelector('.medo-tabs__scroller')).not.toBeNull()
   })
+
+  /* Die Nachmessung hinter der Aussage der Doku-Seite: die Angabe erreicht
+     nichts mehr. Die von useId erzeugten Kennungen laufen je Durchgang weiter
+     und werden vor dem Vergleich eingeebnet. */
+  it('rendert mit und ohne scrollable dasselbe Markup', () => {
+    const eingeebnet = (markup) => markup.replace(/:r[0-9a-z]+:/g, ':id:')
+
+    const ohne = render(<Tabs items={items} value="overview" onChange={() => {}} />)
+    const erwartet = eingeebnet(ohne.container.innerHTML)
+    ohne.unmount()
+
+    const mit = render(<Tabs items={items} value="overview" scrollable onChange={() => {}} />)
+
+    expect(eingeebnet(mit.container.innerHTML)).toBe(erwartet)
+  })
 })
