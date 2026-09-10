@@ -60,7 +60,7 @@ function ScrollToTop() {
 /* Single source of truth for the route inventory. The search index generator
    walks this list, and a test asserts it stays aligned with the sidebar NAV. */
 export const ROUTES = [
-  { path: '/',                  redirect: '/brand' },
+  { path: '/',                  redirect: '/about' },
   { path: '/brand',             element: <BrandPage /> },
   { path: '/brand-colors',      element: <BrandColorsPage /> },
   { path: '/alias-colors',      element: <AliasColorsPage /> },

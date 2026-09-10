@@ -95,3 +95,32 @@ describe('global toast host', () => {
     expect(within(toastRegion()).getByText('Speichern fehlgeschlagen')).toBeInTheDocument()
   })
 })
+
+describe('entry point', () => {
+  /* The root is a redirect, not a page. What matters is where it lands. */
+  it('sends the root address to the about page', () => {
+    renderAt('/')
+
+    expect(window.location.pathname).toBe('/about')
+    expect(screen.getByRole('heading', { name: 'Was ist med.o?', level: 1 })).toBeInTheDocument()
+  })
+
+  /* The wordmark in the header points at "/", so the redirect is the only
+     thing standing between it and a dead end. */
+  it('lets the header wordmark lead somewhere real', () => {
+    renderAt('/button')
+
+    fireEvent.click(screen.getByRole('link', { name: 'medo' }))
+
+    expect(window.location.pathname).toBe('/about')
+    expect(screen.getByRole('heading', { name: 'Was ist med.o?', level: 1 })).toBeInTheDocument()
+  })
+
+  /* The page the root used to point at keeps its own route. */
+  it('keeps the brand page reachable under its own address', () => {
+    renderAt('/brand')
+
+    expect(window.location.pathname).toBe('/brand')
+    expect(screen.getByRole('heading', { name: 'Marke', level: 1 })).toBeInTheDocument()
+  })
+})
