@@ -45,6 +45,8 @@
       "slider":            "Slider",
       "fileUploader":      "FileUploader",
       "datePicker":        "Date Picker",
+      "avatar":            "Avatar",
+      "textarea":          "Textarea",
       "whatIsMedo":        "Was ist med.o?",
       "releases":          "Releases"
     },
@@ -1188,6 +1190,10 @@
         "colStatus": "Status",
         "colAbschluss": "Abschluss",
         "colBeitrag": "Jahresbeitrag",
+        "colPerson": "Person",
+        "colRole": "Rolle",
+        "colProjects": "Projekte",
+        "peopleTitle": "Team",
         "search": "Verträge durchsuchen",
         "export": "Exportieren",
         "delete": "Kündigen",
@@ -1209,6 +1215,8 @@
       "overview": {
         "columnsTitle": "Spalten und Ausrichtung",
         "columnsBody": "Text steht links, Zahlen stehen rechts und in DM Mono mit Tabellenziffern, damit Beträge untereinander liegen. Die wichtigste Spalte steht links, Nebenangaben bekommen muted. Mit render setzen Sie echte Bausteine in die Zelle, etwa ein Tag für den Status.",
+        "peopleTitle": "Personen mit Avatar",
+        "peopleBody": "Steht eine Person in der Zeile, trägt die erste Spalte ihren Avatar in sm neben Name und Adresse. Die Farbe kommt aus den Daten der Person — sie wird nicht aus dem Namen und nicht aus der Zeilennummer berechnet. Der Kreis bleibt für Vorleseprogramme stumm, weil der Name daneben steht.",
         "sortTitle": "Sortierung",
         "sortBody": "Sortierbare Spalten tragen eine Schaltfläche im Kopf. Der Pfeil erscheint beim Überfahren blass und steht in primary-600, sobald die Spalte aktiv ist. Ohne onSortChange sortiert die Komponente selbst — Zahlen numerisch, Text nach deutscher Locale.",
         "selectTitle": "Auswahl und Bulk-Leiste",
@@ -1288,7 +1296,6 @@
       "standard": "Unterstrichen",
       "contained": "Umschlossen",
       "vertical": "Vertikal",
-      "scrollable": "Scrollbar",
       "fullWidth": "Volle Breite",
       "noPanel": "Ohne Panel",
       "plain": "Ohne Icons und Zähler"
@@ -1300,8 +1307,8 @@
       "panelBody":      "Kinder werden als role=\"tabpanel\" des aktiven Tabs gerendert und bleiben ungestylt. Der Panel-Inhalt wird bei jedem Wechsel neu gemountet — Zustand, der den Wechsel überleben soll, gehört nach außen.",
       "verticalTitle":  "Vertikal",
       "verticalBody":   "Bei sehr vielen Bereichen ist die vertikale Form die ruhigere Lösung. Sie steht links neben dem Panel und folgt immer der underline-Logik; der Indikator wandert dabei an die linke Kante.",
-      "scrollTitle":    "Scrollbar",
-      "scrollBody":     "Ab etwa sieben Tabs scrollable setzen: die Leiste scrollt waagerecht statt umzubrechen, ohne sichtbare Scrollbar.",
+      "scrollTitle":    "Viele Tabs",
+      "scrollBody":     "Passen die Tabs nicht nebeneinander, läuft die Leiste von selbst waagerecht mit — ohne sichtbare Scrollbar und ohne Zutun. Der gewählte Tab wird dabei ins Bild geholt, der benachbarte lugt herein, damit zu sehen ist, dass es weitergeht. Das gilt für jede waagerechte Leiste außer fullWidth. Die Prop scrollable ist seit dieser Änderung ohne Wirkung und bleibt nur für bestehende Einbindungen erhalten.",
       "fullWidthTitle": "Volle Breite",
       "fullWidthBody":  "fullWidth teilt die Breite gleichmäßig auf die Tabs auf. Nur einsetzen, wenn die Tabs eine Karte oder ein Sheet vollständig überspannen — auf breiten Seiten laufen die Labels sonst weit auseinander.",
       "sizesTitle":     "Dichte",
@@ -1320,7 +1327,7 @@
       "doTitle":     "Do",
       "dontTitle":   "Don't",
       "do1":         "Gleichrangige Ansichten desselben Gegenstands zeigen",
-      "do2":         "Ab etwa sieben Tabs scrollable setzen, bei sehr vielen Bereichen vertikal",
+      "do2":         "Bei sehr vielen Bereichen die vertikale Form nehmen",
       "do3":         "Labels auf ein bis zwei Wörter kürzen",
       "dont1":       "Schritte oder eine Reihenfolge in Tabs abbilden",
       "dont2":       "Tabs verschachteln — eine zweite Ebene wird nicht als Tabs gezeigt",
@@ -1331,7 +1338,7 @@
       "basicTitle":     "Basis mit Panel",
       "containedTitle": "Contained, gesteuert",
       "verticalTitle":  "Vertikal",
-      "scrollTitle":    "Scrollbar und volle Breite"
+      "scrollTitle":    "Viele Tabs und volle Breite"
     },
     "a11y": {
       "rolesTitle":    "Rollen",
@@ -2706,6 +2713,244 @@
       "currentBody":  "Der aktive Schritt trägt aria-current=\"step\". Screenreader können damit ansagen, an welcher Stelle der Abfolge die Person steht.",
       "colorTitle":   "Farbe allein trägt nichts",
       "colorBody":    "Erledigte Schritte tragen ein Häkchen, fehlgeschlagene ein Kreuz, offene ihre Nummer. Der Zustand ist damit auch ohne Farbe erkennbar."
+    }
+  },
+  "avatar": {
+    "page": {
+      "title":       "Avatar",
+      "description": "Zeigt, um welche Person es geht. Bild, sonst zwei Buchstaben, sonst ein Personen-Symbol. Fünfzehn Farbschemata, drei Größen. Immer rund — rund ist eine Person, eckig eine Sache."
+    },
+    "controls": {
+      "size":     "Größe",
+      "color":    "Farbschema",
+      "name":     "Name",
+      "initials": "Buchstaben vorgeben",
+      "image":    "Bild",
+      "loading":  "Laden",
+      "label":    "Beschriftung"
+    },
+    "presets": {
+      "standard": "Standard",
+      "scheme":   "Farbschema",
+      "profile":  "Profilseite",
+      "tableRow": "Tabellenzeile",
+      "image":    "Mit Bild",
+      "initials": "Buchstaben vorgeben",
+      "nameless": "Ohne Namen",
+      "loading":  "Laden"
+    },
+    "demo": {
+      "label": "Gelöschtes Konto"
+    },
+    "overview": {
+      "schemesTitle": "Farbschemata",
+      "schemesBody":  "Fünfzehn Schemata, alle mit weißer Schrift. Die Farbe gehört zur Person: Sie wird bei der Registrierung vergeben und ist von ihr änderbar. Der Aufrufer übergibt den gespeicherten Wert; die Komponente rechnet nichts aus.",
+      "schemesNote":  "Unter jedem Kreis steht der Name der Prop und der Kontrast der weißen Schrift; gefordert sind 4,5:1. Orange, Amber, Gelb, Violett und Stein stehen bewusst nicht auf Stufe 600 — dort trügen sie keine weiße Schrift oder lägen zu nah an einer Nachbarfamilie.",
+      "sizesTitle":   "Größen",
+      "sizesBody":    "Drei Größen, mehr gibt es nicht. 30 und 38 Pixel liegen bewusst neben den Abstandsstufen — beide Maße werden bereits so ausgeliefert. 64 Pixel ist space-3xl.",
+      "fillTitle":    "Füllung und Rückfall",
+      "fillBody":     "Im Kreis steht in dieser Reihenfolge: das Bild, sonst zwei Buchstaben, sonst ein Personen-Symbol.",
+      "fillNote":     "Dass ein Bild nicht lädt, tritt im Betrieb regelmäßig ein — veraltete Adresse, Server antwortet nicht, Netz weg. Der Anwender sieht dann kein kaputtes Bildsymbol, sondern die Buchstaben. Der Rückfall ist als Fehler nicht erkennbar, und das ist gewollt.",
+      "lettersTitle": "Buchstaben",
+      "lettersBody":  "Aus Vor- und Nachname, sonst aus dem Benutzernamen. Rangfolge der Trennzeichen: Leerzeichen schlägt Punkt, Punkt schlägt Bindestrich und Unterstrich. Kommt keines vor, trennt die Binnengroßschreibung; bleibt auch die aus, zählen die ersten zwei Zeichen. Bei einer E-Mail-Adresse zählt nur der Teil vor dem @.",
+      "statesTitle":  "Zustände",
+      "statesBody":   "Der Avatar hat keinen eigenen Deaktiviert-Zustand und keinen Hover- oder Fokuszustand. Die Umgebung regelt das: In einer deaktivierten Zeile wird die ganze Zeile abgeblendet, in einer klickbaren Zeile reagiert die Zeile, nicht der Kreis.",
+      "useTitle":     "Im Einsatz",
+      "useBody":      "Dieselben Personen in drei Umgebungen. Die Farbe einer Person ändert sich dabei nie.",
+      "useNote":      "In Tabellen wirken die verschiedenen Schemata nebeneinander, in Listen bleibt es ruhig bei einer Farbe."
+    },
+    "sizes": {
+      "sm": "Tabellenzeile",
+      "md": "Listenzeile",
+      "lg": "Profilseite"
+    },
+    "fill": {
+      "image":   "1 · Bild",
+      "letters": "2 · Bild lädt nicht → Buchstaben",
+      "symbol":  "3 · kein Name → Symbol"
+    },
+    "letters": {
+      "space":    "Leerzeichen trennt",
+      "camel":    "Großbuchstabe im Wortinneren trennt",
+      "none":     "kein Trennzeichen → erste zwei Zeichen",
+      "twoParts": "nach zwei Teilen ist Schluss",
+      "dot":      "Punkt trennt",
+      "mail":     "ab dem @ abschneiden, dann erste zwei",
+      "hyphen":   "Leerzeichen schlägt Bindestrich",
+      "oneWord":  "ein Wort → erste zwei Zeichen"
+    },
+    "states": {
+      "rest":        "Ruhe",
+      "loading":     "Laden",
+      "nameless":    "Ohne Namen",
+      "disabledRow": "In deaktivierter Zeile"
+    },
+    "use": {
+      "table":   "Tabellenzeile · sm",
+      "list":    "Listenzeile · md · einfarbig",
+      "profile": "Profilseite · lg",
+      "role":    "Admin"
+    },
+    "usage": {
+      "colorTitle":   "Die Farbe gehört zur Person",
+      "colorBody":    "Das Farbschema wird bei der Registrierung vergeben und ist später von der Person änderbar. Der Aufrufer übergibt den gespeicherten Wert.",
+      "c1":           "Die Farbe wird nie berechnet — nicht aus dem Namen, nicht aus der Position in einer Liste, nicht aus einer laufenden Nummer. Eine berechnete Farbe ließe sich nicht ändern und spränge beim Umsortieren.",
+      "c2":           "Zwei Personen dürfen dieselbe Farbe haben. Das Schema ist eine persönliche Einstellung, kein Erkennungszeichen; bei freier Wahl ließe sich Eindeutigkeit ohnehin nicht erzwingen.",
+      "c3":           "Die Farbe sagt nichts über Rolle, Status oder Rang. Es wird nicht nach Farbe sortiert und nicht nach Farbe gefiltert.",
+      "contentTitle": "Was im Kreis steht",
+      "contentBody":  "In dieser Reihenfolge:",
+      "o1":           "Bild, kreisrund beschnitten — sobald src gesetzt ist und lädt.",
+      "o2":           "Zwei Buchstaben — wenn kein Bild da ist oder das Bild nicht lädt.",
+      "o3":           "Personen-Symbol — wenn es gar keinen Namen gibt: gelöschtes Konto, offene Einladung, Systemvorgang ohne Person dahinter.",
+      "doTitle":      "So",
+      "do1":          "Das gespeicherte Farbschema der Person übergeben.",
+      "do2":          "In Tabellen die Schemata wirken lassen, in Listen einfarbig bleiben.",
+      "do3":          "Den Namen neben den Avatar setzen, damit der Kreis stumm bleiben kann.",
+      "do4":          "Beim Laden den Ladezustand zeigen, damit beim Eintreffen nichts springt.",
+      "do5":          "Steht der Avatar allein, ihm eine Beschriftung mitgeben.",
+      "dontTitle":    "Nicht so",
+      "dont1":        "Die Farbe aus dem Namen oder der Zeilennummer errechnen.",
+      "dont2":        "Nach Farbe sortieren oder filtern.",
+      "dont3":        "Der Farbe eine Bedeutung geben — Rolle, Status oder Rang.",
+      "dont4":        "Eindeutigkeit der Farben erzwingen wollen.",
+      "dont5":        "Eine eckige Variante bauen — eckig ist eine Sache, keine Person.",
+      "dont6":        "Anwesenheitspunkt, überlappende Gruppen oder klickbaren Avatar ergänzen."
+    },
+    "code": {
+      "title":        "Code",
+      "basicDesc":    "Die vier Fälle: mit Namen, mit Bild, im Ladezustand und ohne Person.",
+      "rowDesc":      "In einer Tabellen- oder Listenzeile steht der Name neben dem Kreis; der Kreis bleibt für Vorleseprogramme stumm.",
+      "initialsDesc": "Die Ableitung der zwei Buchstaben ist einzeln nutzbar."
+    },
+    "a11y": {
+      "labelTitle":    "Beschriftung",
+      "labelBody":     "Der Avatar ist stumm, solange der Name daneben steht — „AM“ vorgelesen zu bekommen hilft niemandem.",
+      "l1":            "Steht der Name daneben, trägt der Kreis aria-hidden und wird übersprungen.",
+      "l2":            "Steht der Avatar allein, gibt der Aufrufer label mit; er wird dann als Bild mit Beschriftung angekündigt.",
+      "contrastTitle": "Kontrast der Schrift",
+      "contrastBody":  "Alle fünfzehn Schemata tragen weiße Schrift und sind gegen WCAG 2.2 geprüft. Der schwächste Wert der Reihe ist Teal mit 5,84:1 gegen die geforderten 4,5:1. Die Werte gelten in beiden Themes, weil der Kreis seine Farbe aus der Brand-Ebene nimmt und die in hell und dunkel dieselbe ist.",
+      "darkTitle":     "Bewusste Unterschreitung im Dunkelmodus",
+      "darkBody":      "Im Dunkelmodus erreicht der Kreis gegen die Grundfläche 2,72:1 und bleibt damit unter den 3:1, die WCAG 2.2 für grafische Objekte verlangt. Das ist eine getroffene Entscheidung, kein offener Mangel: Der Inhaber hat den Stand mit dieser Zahl vor Augen abgenommen.",
+      "d1":            "Was Information trägt, sind die Buchstaben. Sie lesen sich in beiden Themes mit 5,84:1.",
+      "d2":            "Der Kreisrand gegen die Seite trägt keine Information: Der Name steht daneben, und der Kreis selbst ist für Vorleseprogramme stumm.",
+      "d3":            "Gegenüber dem Vorgänger ist es eine Verbesserung — der frühere helle Kreis lag im Dunkelmodus bei 1,27:1.",
+      "darkNote":      "Die Ursache ist strukturell. Das Projekt paart seine gefüllten Flächen für den Dunkelmodus; der Avatar kann dem nicht folgen, weil er die Brand-Ebene referenziert und die in beiden Themes identisch ist. Eine Lösung wäre eine Änderung am Design-System, kein Handgriff an der Komponente.",
+      "stateTitle":    "Kein eigener Bedienzustand",
+      "stateBody":     "Der Avatar ist nicht fokussierbar und reagiert nicht auf den Zeiger. Ist die Zeile bedienbar, trägt die Zeile Fokus und Hover — nicht der Kreis."
+    }
+  },
+  "textarea": {
+    "page": {
+      "title":       "Textarea",
+      "description": "Mehrzeiliges Eingabefeld auf dem gemeinsamen Feld-Gerüst. Für Antworten, die mehrere Sätze sein dürfen — Befund, Notiz, Begründung."
+    },
+    "controls": {
+      "rows":        "Zeilen",
+      "placeholder": "Platzhalter",
+      "required":    "Pflichtfeld",
+      "optional":    "Optional",
+      "hint":        "Hilfetext",
+      "error":       "Fehler",
+      "success":     "Erfolg",
+      "counter":     "Zeichenzähler",
+      "fullWidth":   "Volle Breite",
+      "disabled":    "Gesperrt",
+      "readOnly":    "Schreibgeschützt"
+    },
+    "presets": {
+      "standard":  "Standard",
+      "hint":      "Mit Hilfetext",
+      "error":     "Fehler",
+      "success":   "Erfolg",
+      "disabled":  "Gesperrt",
+      "readOnly":  "Schreibgeschützt",
+      "counter":   "Zeichenzähler",
+      "sixRows":   "Sechs Zeilen",
+      "fullWidth": "Volle Breite"
+    },
+    "demo": {
+      "label":         "Befund",
+      "placeholder":   "Befund eintragen",
+      "hint":          "Wird in den Bericht übernommen",
+      "error":         "Bitte einen Befund eintragen",
+      "success":       "Gespeichert",
+      "successValue":  "Befund vollständig.",
+      "disabledValue": "Nicht bearbeitbar"
+    },
+    "overview": {
+      "statesTitle":    "Zustände",
+      "statesBody":     "Ruhe, Platzhalter, Hilfetext, Fehler, Erfolg, gesperrt und schreibgeschützt. Hover und Fokus entstehen beim Bedienen.",
+      "statesNote":     "Der Feldrahmen ist in jedem Zustand 1 Pixel stark — der Fokus wird vom 3 Pixel breiten Ring getragen, nicht von einem dickeren Rahmen, damit beim Hineinklicken nichts springt. Im Fehlerzustand nimmt der Ring die Fehlerfarbe.",
+      "sizeTitle":      "Eine Größe",
+      "sizeBody":       "Die Textarea hat keine Größenstufen — anders als Text-Input und Select gibt es kein sm, md oder lg. Die Schrift ist immer text-base 16 Pixel.",
+      "sizeNote":       "Die Anfangshöhe kommt von rows; danach zieht der Anwender selbst, ausschließlich in der Höhe. Die Breite gehört dem Layout — würde sie ziehbar, bräche die Maske.",
+      "rowsTitle":      "Zeilenzahl",
+      "rowsBody":       "Setzen Sie so viele Zeilen, wie die erwartete Antwort ungefähr braucht. Ein Feld, das drei Sätze erwartet, aber eine Zeile hoch ist, sieht aus, als wäre eine Zeile genug.",
+      "counterTitle":   "Zeichenzähler",
+      "counterBody":    "showCounter zeigt den Stand am unteren Rand des Feldes und braucht maxLength — ohne bleibt der Zähler aus.",
+      "counterNote":    "Setzen Sie den Zähler, wenn die Grenze für den Anwender wichtig ist. Ein Zähler ohne echte Grenze verunsichert nur.",
+      "fullWidthTitle": "Volle Breite",
+      "fullWidthBody":  "Mit fullWidth nimmt das Feld die volle Breite des Elternelements ein. Ohne die Angabe behält es seine Eigenbreite."
+    },
+    "states": {
+      "rest":        "Ruhe",
+      "placeholder": "Platzhalter",
+      "hint":        "Mit Hilfetext",
+      "error":       "Fehler",
+      "success":     "Erfolg",
+      "disabled":    "Gesperrt",
+      "readOnly":    "Schreibgeschützt"
+    },
+    "size": {
+      "lookLabel":   "So sieht das Feld aus",
+      "lookCaption": "Schrift 16px · Innenabstand 8px · Höhe aus rows",
+      "dragLabel":   "Ziehen · nur in der Höhe",
+      "dragValue":   "An der unteren rechten Ecke ziehen — das Feld wird höher, nie breiter.",
+      "dragCaption": "Feste Systemregel. Keine Einstellung, nicht abschaltbar."
+    },
+    "rows": {
+      "short": "Kurze Notiz."
+    },
+    "counter": {
+      "with":    "Mit Zähler",
+      "without": "Ohne maxLength"
+    },
+    "usage": {
+      "whenTitle":    "Wann verwenden",
+      "whenBody":     "Nehmen Sie die Textarea, wenn die Antwort mehrere Sätze sein darf: Befund, Notiz, Begründung, Kommentar. Passt die Antwort in eine Zeile, gehört dorthin ein Text-Input.",
+      "rowsTitle":    "Zeilenzahl wählen",
+      "rowsBody":     "Die Anfangshöhe kommt von rows, Standard sind drei Zeilen. Richten Sie sie an der erwarteten Antwort aus; danach zieht der Anwender selbst, ausschließlich in der Höhe.",
+      "messageTitle": "Meldungen",
+      "messageBody":  "hint erklärt, error benennt einen Fehler, success bestätigt. Es erscheint immer nur eine: error verdrängt success, success verdrängt hint. Eine Fehlermeldung nennt Ursache und nächsten Schritt — „Bitte einen Befund eintragen“ statt „Pflichtfeld“.",
+      "doTitle":      "So",
+      "do1":          "Die Textarea nehmen, wenn die Antwort mehrere Sätze sein darf.",
+      "do2":          "Die Zeilenzahl an der erwarteten Antwort ausrichten.",
+      "do3":          "Den Zähler nur zeigen, wenn es eine echte Grenze gibt.",
+      "do4":          "Fehlermeldungen mit Ursache und nächstem Schritt schreiben.",
+      "dontTitle":    "Nicht so",
+      "dont1":        "Die Textarea für einzeilige Antworten nehmen.",
+      "dont2":        "Eine Größe erwarten — es gibt nur eine.",
+      "dont3":        "Das Ziehen abschalten oder in die Breite zulassen wollen.",
+      "dont4":        "Den Zähler ohne maxLength erwarten.",
+      "dont5":        "Hilfetext und Fehlermeldung gleichzeitig erwarten — es erscheint nur eines.",
+      "dont6":        "Über className an den Innenabstand des Feldes wollen — className liegt auf der Hülle."
+    },
+    "code": {
+      "title":          "Code",
+      "basicDesc":      "Label, Zeilenzahl und Meldungen kommen aus dem gemeinsamen Feld-Gerüst.",
+      "controlledDesc": "Mit value und onChange liegt der Wert beim Aufrufer; ohne beides führt das Feld ihn selbst.",
+      "messageDesc":    "Es erscheint immer nur eine Meldung."
+    },
+    "a11y": {
+      "labelTitle":    "Label",
+      "labelBody":     "Das Label steht immer sichtbar über dem Feld und ist mit ihm verknüpft. Ein Platzhalter ersetzt es nicht: Er verschwindet beim Tippen.",
+      "messageTitle":  "Meldungen",
+      "m1":            "Hilfetext, Fehler und Erfolg sind über aria-describedby mit dem Feld verknüpft.",
+      "m2":            "Eine Fehlermeldung setzt aria-invalid und wird als role=\"alert\" angekündigt.",
+      "m3":            "Eine vom Aufrufer übergebene Beschreibung tritt neben die eingebaute, sie verdrängt sie nicht.",
+      "keyboardTitle": "Tastatur",
+      "k1":            "Tab springt in das Feld und wieder heraus; die Eingabetaste erzeugt eine neue Zeile.",
+      "k2":            "Der Fokus wird von einem 3 Pixel breiten Ring getragen; der Rahmen bleibt in jedem Zustand 1 Pixel stark, damit nichts springt."
     }
   },
   "impressum": {

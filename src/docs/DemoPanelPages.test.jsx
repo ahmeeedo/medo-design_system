@@ -3,6 +3,7 @@ import { MemoryRouter } from 'react-router-dom'
 import '../i18n'
 
 import AccordionPage from '../pages/AccordionPage'
+import AvatarPage from '../pages/AvatarPage'
 import BreadcrumbPage from '../pages/BreadcrumbPage'
 import ButtonPage from '../pages/ButtonPage'
 import CheckboxPage from '../pages/CheckboxPage'
@@ -32,6 +33,7 @@ import SelectPage from '../pages/SelectPage'
 import SliderPage from '../pages/SliderPage'
 import TabsPage from '../pages/TabsPage'
 import TagPage from '../pages/TagPage'
+import TextareaPage from '../pages/TextareaPage'
 import TextInputPage from '../pages/TextInputPage'
 import TogglePage from '../pages/TogglePage'
 import TooltipPage from '../pages/TooltipPage'
@@ -41,6 +43,7 @@ import TooltipPage from '../pages/TooltipPage'
    here instead of quietly dropping out of the run. */
 const PAGES = [
   ['Accordion', AccordionPage],
+  ['Avatar', AvatarPage],
   ['Breadcrumb', BreadcrumbPage],
   ['Button', ButtonPage],
   ['Checkbox', CheckboxPage],
@@ -70,6 +73,7 @@ const PAGES = [
   ['Slider', SliderPage],
   ['Tabs', TabsPage],
   ['Tag', TagPage],
+  ['Textarea', TextareaPage],
   ['TextInput', TextInputPage],
   ['Toggle', TogglePage],
   ['Tooltip', TooltipPage],

@@ -32,8 +32,8 @@ const VERTICAL_CODE = `{/* Bei vielen Bereichen ist die vertikale Form die ruhig
   <div>Inhalt</div>
 </Tabs>`
 
-const SCROLL_CODE = `{/* Ab etwa sieben Tabs scrollable statt Umbruch */}
-<Tabs scrollable items={vieleTabs} />
+const SCROLL_CODE = `{/* Passen die Tabs nicht nebeneinander, laeuft die Leiste von selbst mit */}
+<Tabs items={vieleTabs} />
 
 {/* fullWidth nur, wenn die Tabs eine Karte vollständig überspannen */}
 <Tabs fullWidth items={[{ value: 'a', label: 'Übersicht' }, { value: 'b', label: 'Verlauf' }]} />`
@@ -89,7 +89,6 @@ export default function TabsPage() {
                   size={values.size}
                   orientation={values.orientation}
                   fullWidth={values.fullWidth}
-                  scrollable={values.scrollable}
                   defaultValue="profil"
                   ariaLabel={t('tabsPage.demo.ariaLabel')}
                 >
@@ -105,13 +104,11 @@ export default function TabsPage() {
               { id: 'badges', type: 'toggle', label: 'Badges', default: true },
               { id: 'panel', type: 'toggle', label: 'Panel', default: true },
               { id: 'fullWidth', type: 'toggle', label: 'Full Width', default: false },
-              { id: 'scrollable', type: 'toggle', label: 'Scrollable', default: false },
             ]}
             presets={[
               { id: 'standard', label: t('tabsPage.presets.standard'), values: {} },
               { id: 'contained', label: t('tabsPage.presets.contained'), values: { variant: 'contained' } },
               { id: 'vertical', label: t('tabsPage.presets.vertical'), values: { orientation: 'vertical' } },
-              { id: 'scrollable', label: t('tabsPage.presets.scrollable'), values: { scrollable: true } },
               { id: 'fullWidth', label: t('tabsPage.presets.fullWidth'), values: { fullWidth: true } },
               { id: 'noPanel', label: t('tabsPage.presets.noPanel'), values: { panel: false } },
               { id: 'plain', label: t('tabsPage.presets.plain'), values: { icons: false, badges: false } },
@@ -174,7 +171,7 @@ export default function TabsPage() {
                 {t('tabsPage.overview.scrollBody')}
               </p>
               <div className="max-w-[420px] border border-[var(--medo-border-subtle)] rounded-[var(--medo-radius-md)] px-[var(--medo-space-md)]">
-                <Tabs scrollable items={many} defaultValue="a" ariaLabel={t('tabsPage.demo.ariaLabel')} />
+                <Tabs items={many} defaultValue="a" ariaLabel={t('tabsPage.demo.ariaLabel')} />
               </div>
             </Content>
           </Section>

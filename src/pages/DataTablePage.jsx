@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { PageLayout, Section, Content, DemoPanel } from '../docs/PageLayout'
 import { CodeBlock } from '../docs/CodeBlock'
-import { DataTable, Tag, Pagination, Search, Button } from '../components'
+import { Avatar, DataTable, Tag, Pagination, Search, Button } from '../components'
 
 const BASIC_CODE = `import { DataTable } from '@/components'
 
@@ -73,6 +73,50 @@ const ROWS = [
 
 const TONES = { Aktiv: 'success', 'In Prüfung': 'warning', Gekündigt: 'neutral' }
 
+/* The people of the specification page. The avatar colour is a stored value
+   of the person and therefore sits in the data — it is never derived from
+   the name or from the position in the list. */
+const PEOPLE = [
+  { id: 1, name: 'Anna Müller', mail: 'anna@medo.de', color: 'blue', rolle: 'Administratorin', status: 'Aktiv', projekte: 12 },
+  { id: 2, name: 'Ben Krüger', mail: 'ben@medo.de', color: 'amber', rolle: 'Bearbeiter', status: 'Aktiv', projekte: 7 },
+  { id: 3, name: 'Clara Schmidt', mail: 'clara@medo.de', color: 'green', rolle: 'Betrachterin', status: 'Eingeladen', projekte: 0 },
+  { id: 4, name: 'David Weber', mail: 'david@medo.de', color: 'violet', rolle: 'Bearbeiter', status: 'Inaktiv', projekte: 3 },
+  { id: 5, name: 'Eva Fischer', mail: 'eva@medo.de', color: 'crimson', rolle: 'Bearbeiterin', status: 'Aktiv', projekte: 21 },
+  { id: 6, name: 'Felix Braun', mail: 'felix@medo.de', color: 'cyan', rolle: 'Betrachter', status: 'Eingeladen', projekte: 1 },
+]
+
+const PERSON_TONES = { Aktiv: 'success', Eingeladen: 'warning', Inaktiv: 'neutral' }
+
+/* The name cell carries the avatar; the circle stays silent because the name
+   stands right beside it. */
+function usePersonColumns(t) {
+  return [
+    {
+      key: 'name',
+      label: t('dataTable.demo.colPerson'),
+      sortable: true,
+      render: (value, row) => (
+        <div className="flex items-center gap-[var(--medo-space-sm)]">
+          <Avatar size="sm" name={value} color={row.color} />
+          <div>
+            <div>{value}</div>
+            <div className="[font-family:var(--medo-font-mono)] [font-size:var(--medo-text-xs)] text-[var(--medo-text-muted)]">
+              {row.mail}
+            </div>
+          </div>
+        </div>
+      ),
+    },
+    { key: 'rolle', label: t('dataTable.demo.colRole'), muted: true },
+    {
+      key: 'status',
+      label: t('dataTable.demo.colStatus'),
+      render: (v) => <Tag color={PERSON_TONES[v]}>{v}</Tag>,
+    },
+    { key: 'projekte', label: t('dataTable.demo.colProjects'), numeric: true, sortable: true },
+  ]
+}
+
 function useColumns(t) {
   return [
     { key: 'nr', label: t('dataTable.demo.colNr'), numeric: true, sortable: true, width: 130 },
@@ -138,6 +182,7 @@ const codeLabelClass =
 export default function DataTablePage() {
   const { t } = useTranslation()
   const columns = useColumns(t)
+  const personColumns = usePersonColumns(t)
   const [page, setPage] = useState(2)
 
   const tabs = [
@@ -172,6 +217,18 @@ export default function DataTablePage() {
             <Content>
               <p className={`${bodyClass} mb-[var(--medo-space-lg)]`}>{t('dataTable.overview.columnsBody')}</p>
               <DataTable columns={columns} rows={ROWS} rowKey="nr" ariaLabel={t('dataTable.demo.title')} />
+            </Content>
+          </Section>
+
+          <Section title={t('dataTable.overview.peopleTitle')}>
+            <Content>
+              <p className={`${bodyClass} mb-[var(--medo-space-lg)]`}>{t('dataTable.overview.peopleBody')}</p>
+              <DataTable
+                columns={personColumns}
+                rows={PEOPLE}
+                rowKey="id"
+                ariaLabel={t('dataTable.demo.peopleTitle')}
+              />
             </Content>
           </Section>
 
