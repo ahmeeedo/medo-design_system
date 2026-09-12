@@ -25,7 +25,7 @@ ist, steht es dabei.
 8. [Tokens verwenden](#8-tokens-verwenden)
 9. [Komponenten verwenden](#9-komponenten-verwenden)
 10. [TypeScript](#10-typescript)
-11. [Versionierung](#11-versionierung)
+11. [Versionierung und Aktualisieren](#11-versionierung-und-aktualisieren)
 12. [Grenzen des Systems](#12-grenzen-des-systems)
 13. [Wo weitergelesen wird](#13-wo-weitergelesen-wird)
 
@@ -38,9 +38,9 @@ ES-Module ausgeliefert.
 
 | | |
 |---|---|
-| Komponenten | 36 Module mit 46 benannten Exporten |
+| Komponenten | 37 Module mit 48 benannten Exporten |
 | Stile | Schriften, drei Token-Ebenen, Theme, CSS aller Komponenten |
-| Typen | 35 Props-Verträge plus eine erzeugte Sammel-Deklaration |
+| Typen | 37 Props-Verträge — einer je Modul — plus eine erzeugte Sammel-Deklaration |
 | Schriften | DM Sans und DM Mono, sieben Schnitte als woff2 |
 | React | Peer-Abhängigkeit `^18 || ^19`, wird von Ihnen gestellt |
 
@@ -180,11 +180,19 @@ zusätzliches Browser-Bündel auf einer Seite, die keines davon braucht.
 
 #### Zwölf Exporte brauchen die Grenze nicht
 
-26 der 36 Module benutzen React-Hooks, 10 nicht. Deren zwölf Exporte importieren
-Sie **direkt aus dem Paket**, auch in einer Server-Komponente:
+**Die Grenze ist keine Pflicht für alle Komponenten.** 27 der 37 Module benutzen
+React-Hooks, zehn nicht. Deren zwölf Exporte importieren Sie **direkt aus dem
+Paket**, auch in einer Server-Komponente:
 
 `Button`, `Field`, `Icon`, `InlineLoading`, `Link`, `List`, `KeyValueList`,
 `Loading`, `Skeleton`, `ProgressBar`, `ProgressIndicator`, `Tag`
+
+So ist gezählt: Ausgangspunkt ist das Barrel `src/components/index.js`, das jedes
+ausgelieferte Modul nennt. Ein Modul braucht die Grenze, sobald es selbst einen
+React-Hook aufruft **oder ein Modul importiert, das einen aufruft** — die Zählung
+folgt den relativen Importen also über alle Zwischenstufen, nicht nur über die
+erste. Die zehn oben bestehen die Prüfung auch transitiv: keines von ihnen zieht
+ein Modul mit Hooks nach.
 
 Sie rendern dort vollständiges Markup, und es landet kein Byte
 Bibliotheks-JavaScript im Browser-Bündel — gemessen an einer Seite, die alle
@@ -519,6 +527,27 @@ System.
 }
 ```
 
+### Neun Rollen sind hinzugekommen
+
+Alle neun sind semantisch, tragen also in Hell und Dunkel verschiedene Werte:
+
+| Token | wofür |
+|---|---|
+| `--medo-success-accent` | Akzentstreifen und -icon einer Erfolgsmeldung |
+| `--medo-warning-accent` | dasselbe für Warnungen |
+| `--medo-error-accent` | dasselbe für Fehler |
+| `--medo-info-accent` | dasselbe für Hinweise |
+| `--medo-accent-neutral` | dasselbe für die neutrale Meldung |
+| `--medo-icon-on-light` | Icon auf einer Fläche, die in **beiden** Themes hell bleibt |
+| `--medo-control-mark` | Skalenstriche auf dem ungefüllten Teil einer Spur |
+| `--medo-control-mark-on-primary` | dieselben Striche auf dem gefüllten Teil |
+| `--medo-logo-dot` | der Punkt in der Wortmarke |
+
+`--medo-icon-on-light` ist der Sonderfall, den man sich merken sollte: Es ist
+die einzige Icon-Rolle, die **nicht** mit dem Theme kippt. Sie ist für Flächen
+gedacht, die in beiden Themes hell bleiben — dort würde jede andere Icon-Rolle
+im dunklen Theme verschwinden.
+
 Die vollständige Liste der Rollen steht im Doku-Portal auf den Seiten
 „Farben · Ebene 3 Semantic" und „Grundlagen".
 
@@ -526,7 +555,7 @@ Die vollständige Liste der Rollen steht im Doku-Portal auf den Seiten
 
 ## 9. Komponenten verwenden
 
-36 Module, 46 benannte Exporte. Wo ein Modul mehr als seinen Namensgeber
+37 Module, 48 benannte Exporte. Wo ein Modul mehr als seinen Namensgeber
 exportiert, stehen die weiteren Exporte dahinter:
 
 **Aktionen** — `Button` · `Link` · `MenuButtons` (`MenuButton`, `SplitButton`,
@@ -547,7 +576,8 @@ exportiert, stehen die weiteren Exporte dahinter:
 **Overlays** — `Popover` · `Modal`
 
 **Daten und Inhalt** — `List` (`List`, `KeyValueList`) · `ContainedList` ·
-`Accordion` · `DataTable` · `CodeSnippet` · `Icon`
+`Accordion` · `DataTable` · `CodeSnippet` · `Icon` ·
+`Avatar` (`Avatar`, `medoAvatarInitials`)
 
 ### Wo der Props-Vertrag steht
 
@@ -573,46 +603,127 @@ Die Deklaration ist sowohl über die `exports`-Karte als auch über das
 `types`-Feld auf oberster Ebene erreichbar — sie wird damit unter
 `moduleResolution: "bundler"`, `"node16"` und dem älteren `"node"` gefunden.
 
-### `skipLibCheck: true` ist Voraussetzung
+### `skipLibCheck` ist nicht mehr nötig
+
+Die Deklarationen des Pakets laufen mit `skipLibCheck: false` fehlerfrei durch.
+Sie brauchen also keine Einstellung; die folgende genügt:
 
 ```json
-{ "compilerOptions": { "skipLibCheck": true } }
+{ "compilerOptions": { "strict": true, "moduleResolution": "bundler" } }
 ```
 
-Ohne diese Einstellung bricht die Typprüfung mit **TS2430** in
-`TextInput.d.ts` ab: der Vertrag erweitert die HTML-Attribute eines
-`<input>` und deklariert `prefix` als `React.ReactNode`, während das
-HTML-Attribut `prefix?: string` ist — eine unverträgliche Überschreibung. Der
-Fehler liegt im Vertrag des Design-Projekts, nicht in der Umsetzung, und ist als
-Änderungswunsch dorthin zurückgemeldet.
+Gemessen mit TypeScript 5.9 gegen `@types/react` **18.3 und 19.3**, jeweils
+`strict: true` und `skipLibCheck: false`: `tsc --noEmit` meldet aus
+`@medo/design-system` nichts.
 
-Die üblichen TypeScript- und Vite-Vorlagen setzen `skipLibCheck: true` ohnehin.
-Mit der Einstellung läuft `tsc --noEmit` sauber durch.
+Frühere Stände verlangten `skipLibCheck: true`. Der Vertrag von `TextInput`
+erweiterte die HTML-Attribute eines `<input>` und deklarierte `prefix` als
+`React.ReactNode`, während das HTML-Attribut `prefix?: string` ist — eine
+unverträgliche Überschreibung, die TypeScript mit **TS2430** ablehnte. Der
+Vertrag schließt `prefix` inzwischen aus; die Prop selbst nimmt unverändert
+beliebige Knoten:
 
-### Vier Verträge lehnen funktionierenden Code ab
+```tsx
+<TextInput label="Adresse" prefix={<span>https://</span>} suffix=".de" />
+```
 
-| Komponente | Was zur Laufzeit geht, die Typen aber nicht kennen |
-|---|---|
-| `Select` | `searchable`, `searchPlaceholder`, `children` |
-| `Field` | `className`, `style` |
-| `CheckboxGroup` | `className`, `style` |
-| `RadioGroup` | `className`, `style` |
+Setzt Ihre Vorlage `skipLibCheck: true` ohnehin — die üblichen TypeScript- und
+Vite-Vorlagen tun das —, ist nichts zu tun.
 
-Am spürbarsten ist `Select`: **die Suchfunktion ist über die Typen nicht
-erreichbar.** Alle vier sind als Änderungswunsch ins Design-Projekt
-zurückgemeldet und hier bewusst nicht angepasst worden, damit Umsetzung und
-Vertrag nicht ein zweites Mal auseinanderlaufen.
+### Jeder Export hat einen Vertrag, und er deckt den lauffähigen Code
 
-### `Textarea` hat keinen Vertrag
+Vier Verträge lehnten früher Code ab, der zur Laufzeit funktionierte:
+`Select` (`searchable`, `searchPlaceholder`, `children`) sowie `Field`,
+`CheckboxGroup` und `RadioGroup` (je `className` und `style`). Alle vier sind
+im Design-Projekt nachgezogen und hier gespiegelt. Am spürbarsten: **die
+Suchfunktion von `Select` ist jetzt über die Typen erreichbar.**
 
-Für diese Komponente hat das Design-Projekt weder eine Typdeklaration noch
-Referenzcode noch eine Spezifikationsseite. Sie wird als
-`React.FC<Record<string, unknown>>` deklariert — sie lässt sich verwenden, aber
-die Typen sagen nichts über ihre Props.
+```tsx
+<Select label="Praxis" searchable searchPlaceholder="Praxis suchen" options={options} />
+```
+
+Auch `Textarea` hat einen Vertrag; die frühere Deklaration
+`React.FC<Record<string, unknown>>` ist weg. Was das für bestehende Einbindungen
+bedeutet, steht unter [Versionierung und
+Aktualisieren](#11-versionierung-und-aktualisieren) — **dort steht eine
+brechende Änderung.**
+
+Durchgesetzt wird das beim Paket-Build: er bricht ab, wenn ein Modul aus dem
+Barrel keinen Vertrag hat oder ein Vertrag einen exportierten Namen nicht
+deklariert. Ein erfolgreicher Lauf meldet `every module has a contract`.
 
 ---
 
-## 11. Versionierung
+## 11. Versionierung und Aktualisieren
+
+### Beim Aktualisieren: `Textarea` hat zwei Props verloren
+
+Betrifft jede Einbindung, die `Textarea` verwendet. Es gibt keine
+Übergangsfassung — die Props sind weg, sobald Sie auf einen neueren Stand gehen.
+
+| Prop | früher | heute |
+|---|---|---|
+| `size`: `"sm"` · `"md"` · `"lg"` | drei Feldhöhen | **entfällt** — eine Größe |
+| `resize`: `"none"` · `"vertical"` · `"horizontal"` · `"both"` | Ziehrichtung | **entfällt** — nur senkrecht |
+
+Beide wirkten in früheren Ständen zur Laufzeit. Weil `Textarea` damals keinen
+Props-Vertrag hatte, ließen sie sich ohne Typfehler übergeben — deshalb kann
+diese Änderung eine Einbindung treffen, die nie eine Warnung gesehen hat.
+
+**Schritt 1 — Ihre Aufrufe finden:**
+
+```bash
+grep -rn "<Textarea" src/ | grep -E "size=|resize="
+```
+
+**Schritt 2 — beide Props entfernen.** Seit `Textarea` einen Vertrag hat, zeigt
+die Typprüfung die Stellen von sich aus:
+
+```
+error TS2322: Type '{ label: string; size: string; }' is not assignable to type
+'IntrinsicAttributes & TextareaProps'.
+  Property 'size' does not exist on type 'IntrinsicAttributes & TextareaProps'.
+```
+
+Ohne TypeScript gibt es keine Meldung: die Props werden still ignoriert, das
+Feld erscheint in der einen verbliebenen Größe.
+
+**Schritt 3 — Ersatz, soweit nötig.** Für eine bestimmte Anfangshöhe `rows`
+setzen; der Anwender zieht danach selbst. Die Ziehrichtung ist auf senkrecht
+festgelegt und über das Paket nicht umstellbar.
+
+```tsx
+<Textarea label="Befund" rows={3} showCounter maxLength={200} fullWidth />
+```
+
+Das ist eine Entscheidung des Design-Projekts — eine Größe, Ziehen nur senkrecht
+—, keine Auslassung.
+
+### Ohne Fehlermeldung: `Tabs.scrollable` ist wirkungslos geworden
+
+Die Leiste läuft von selbst mit der Auswahl mit, sobald die Tabs nicht
+nebeneinander passen; das gilt für jede waagerechte Leiste außer `fullWidth`.
+`scrollable` bleibt im Vertrag und wird weiterhin angenommen, bewirkt aber
+nichts mehr. Sie können die Angabe stehen lassen oder entfernen — beides ändert
+die Darstellung nicht.
+
+### Sichtbar, aber ohne Handlungsbedarf: Farben
+
+Wer über einen älteren Stand hinweg aktualisiert, sieht drei Änderungen. Alle
+drei sind Anhebungen zugunsten der Lesbarkeit, keine davon verlangt etwas von
+Ihnen:
+
+| Was | früher | heute |
+|---|---|---|
+| Fokusring, Deckkraft | 35 % | **75 %** — deutlich kräftiger sichtbar |
+| Textlink (hell) | teal-600 | **teal-700** — eine Stufe dunkler |
+| Warnknopf, Überfahren und Drücken (hell) | amber-700 / amber-800 | **amber-500 / amber-400** — heller statt dunkler |
+
+Dazu neun neue semantische Rollen, siehe [Tokens verwenden](#8-tokens-verwenden).
+Wenn Sie ausschließlich auf semantische Tokens zeigen, kommen die Änderungen von
+selbst bei Ihnen an.
+
+### Wie Sie einen Stand festhalten
 
 Die Paketversion steht auf `1.0.0`. Da die Auslieferung über Git läuft und nicht
 über eine Registry, entscheidet **nicht** diese Nummer darüber, was Sie
@@ -643,11 +754,18 @@ gegen eine Übernahme sprechen können — deshalb steht sie hier und nicht am R
 
 ### Die Oberflächensprache ist Deutsch
 
-Die Beschriftungen der Komponenten sind Deutsch und **nicht übersetzbar
-angelegt**. Das System bringt keine Internationalisierung mit; das Portal in
-diesem Repository benutzt eine, das ausgelieferte Paket nicht. Wer eine
-mehrsprachige Oberfläche braucht, muss die betroffenen Beschriftungen über die
-Props der jeweiligen Komponente setzen, soweit diese das vorsehen.
+Die Vorgabewerte der Beschriftungen sind Deutsch. Das System bringt **keine
+Internationalisierung** mit; das Portal in diesem Repository benutzt eine, das
+ausgelieferte Paket nicht. Wer eine mehrsprachige Oberfläche braucht, setzt die
+Texte über Props — und das geht weiter als früher: `Pagination` (zwölf),
+`Select` (sechs) und `ContainedList` (eine) nehmen inzwischen neunzehn
+Beschriftungen entgegen, sichtbare wie `aria-label`-Texte, jede mit einem
+deutschen Vorgabewert. Welche Komponente welche kennt, steht im Doku-Portal auf
+ihrer Seite im Tab „Code".
+
+**Vollständig ist das nicht.** Eine Beschriftung, die keine Prop hat, bleibt
+deutsch; die Umstellung deckt die Komponenten ab, in denen fest verdrahtete
+Texte gefunden wurden, nicht jede Zeichenkette des Systems.
 
 ### Die Komponenten sind nicht als erweiterbar gedacht
 
@@ -659,16 +777,20 @@ Design-Projekt zurück, nicht in einen Fork der Komponente.
 
 ### Umgebung
 
-Ein Bundler ist nötig; React Server Components verlangen eine eigene
-Client-Grenze; drei Komponenten rendern serverseitig kein Markup; unter pnpm
-muss `material-symbols` selbst deklariert werden. Einzelheiten in
+Ein Bundler ist nötig; React Server Components verlangen für 27 der 37 Module
+eine eigene Client-Grenze, für die übrigen zehn nicht; drei Komponenten rendern
+serverseitig kein Markup; unter pnpm muss `material-symbols` selbst deklariert
+werden. Einzelheiten in
 [Voraussetzungen an Ihre Umgebung](#2-voraussetzungen-an-ihre-umgebung).
 
 ### TypeScript
 
-`skipLibCheck: true` ist derzeit Voraussetzung; vier Verträge lehnen
-funktionierenden Code ab; `Textarea` hat keinen Vertrag. Einzelheiten in
-[TypeScript](#10-typescript).
+**Hier steht keine Einschränkung mehr.** Frühere Stände verlangten
+`skipLibCheck: true`, vier Verträge lehnten funktionierenden Code ab und
+`Textarea` hatte gar keinen Vertrag — alles drei ist erledigt. Der Stand ist in
+[TypeScript](#10-typescript) mit der ausgeführten Prüfung belegt. Was das für
+eine bestehende Einbindung bedeutet, steht unter [Versionierung und
+Aktualisieren](#11-versionierung-und-aktualisieren).
 
 ### Browser-Untergrenze
 
@@ -684,24 +806,25 @@ Das Theme benutzt `light-dark()`. Daraus folgt:
 Werte darunter. **Der Rückfall ist das helle Aussehen, keine kaputte
 Darstellung** — aber der dunkle Modus steht dort nicht zur Verfügung.
 
-### Kontrast im hellen Theme
+### Kontrast
 
-Eine Prüfung der Farbpaare gegen WCAG 2.2 hat im **hellen** Theme
-**14 Kombinationen** gefunden, die unter ihrer Schwelle liegen. Zwei davon
-deutlich:
+Eine Prüfung der Farbpaare gegen WCAG 2.2 findet in **jedem** der beiden Themes
+noch **eine** Kombination unter ihrer Schwelle — dieselbe:
 
-| Kombination | Schwelle | erreicht |
-|---|---|---|
-| Warnknopf, Beschriftung auf Fläche im Hover | 4,50:1 | **3,70:1** |
-| Warnknopf, Beschriftung auf Fläche im Aktiv-Zustand | 4,50:1 | **2,59:1** |
+| Kombination | Schwelle | hell | dunkel |
+|---|---|---|---|
+| Feldkante im Ruhezustand auf der Feldfläche (`--medo-input-border` auf `--medo-input-bg`) | 3,00:1 | 2,23:1 | 2,65:1 |
 
-Die übrigen zwölf liegen knapp darunter und betreffen überwiegend den Fokusring
-und Feldkanten. Das ist ein bekannter Rückläufer ins Design-Projekt und kein
-Fehler dieses Pakets — aber wenn Ihr Projekt eine Barrierefreiheitsprüfung
-durchlaufen muss, sollten Sie es vorher wissen.
+Das ist kein Versehen, sondern eine festgehaltene Entscheidung des
+Design-Projekts: die Feldkante soll zurückhaltend bleiben. Sobald das Feld
+bedient wird, übernimmt der Fokusring, der in beiden Themes deutlich über der
+Schwelle liegt. Wenn Ihr Projekt eine Barrierefreiheitsprüfung durchlaufen muss,
+sollten Sie diese eine Stelle vorher kennen — ändern lässt sie sich am Paket
+nicht; sie ginge als Änderungswunsch ins Design-Projekt.
 
-Das **dunkle** Theme hebt zwölf dieser vierzehn Kombinationen über ihre Schwelle
-und erbt zwei. Es ist in dieser Hinsicht die bessere der beiden Ausprägungen.
+Frühere Stände lagen deutlich schlechter: im hellen Theme vierzehn
+Unterschreitungen, im dunklen zwei. Beide Themes sind seither nachgezogen
+worden. Den vollständigen Bericht erzeugt `npm run contrast` im Repository.
 
 ### Keine Registry
 

@@ -36,6 +36,8 @@ Keine ist optional. Fehlt eine, fällt die Testsuite oder die Suche.
 - [ ] Ablage `src/components/<Name>/<Name>.jsx` + `<Name>.css`
 - [ ] Klassenpräfix projektweit eindeutig geprüft
 - [ ] Benannter Export, durchgereicht in `src/components/index.js`
+- [ ] Vertrag liegt als `src/types/<Name>.d.ts` und deklariert **jeden**
+      exportierten Namen — sonst bricht `npm run build:lib` ab
 - [ ] Jede in der `.d.ts` deklarierte Prop und Variante funktioniert
 - [ ] Keine Prop, die die `.d.ts` nicht kennt
 - [ ] Inline-Stile mit Token-Werten in Längsformen
@@ -70,8 +72,9 @@ Keine ist optional. Fehlt eine, fällt die Testsuite oder die Suche.
 - [ ] Jeder sichtbare Text läuft über `t()`, jeder Schlüssel steht in `de.json`
       **und** `en.json`
 - [ ] Kein hartkodierter Farb-, Abstands-, Radius- oder Schattenwert
-- [ ] `npm run build` fehlerfrei
+- [ ] `npm run build` fehlerfrei — genau **eine** Warnung, die zur Bündelgröße
 - [ ] `npm test` fehlerfrei
+- [ ] Bei Änderungen am Paket: `npm run build:lib` fehlerfrei
 - [ ] Bei Komponenten- oder Seitenänderungen: `npm run dev`, alle Tabs, beide
       Themes, Desktop und ≤ 768 px
 - [ ] Genau **ein** Entwicklungsserver lief dabei
@@ -96,15 +99,23 @@ auf — oder gar nicht.
 | `userEvent` bei Zeitgebern | Test hängt oder wird flatterig |
 | Portal-Komponente serverseitig gerendert | leeres Markup, sieht nach Portierungsfehler aus |
 | Zweiter `@theme inline`- oder `:root`-Block | Auflösung bricht ohne Meldung |
-| Rundlauf über `JSON.parse`/`JSON.stringify` auf den Locale-Dateien | Änderung über alle 3175 Zeilen |
+| Rundlauf über `JSON.parse`/`JSON.stringify` auf den Locale-Dateien | Änderung über alle 3719 Zeilen |
 | `git diff` auf `src/styles/medo/` | Prüfsummen weichen immer ab — CRLF gegen LF |
 | `design-reference/ui/*.card.html` als Abgleichsgrundlage | Seite rendert leer |
+| `sed -i` auf einer CRLF-Datei | schreibt die ganze Datei auf LF um — `git diff` zeigt es wegen `core.autocrlf` nicht |
+| `grep -q $'\r'` als CRLF-Prüfung | meldet jede CRLF-Datei als sauber |
 
-Zwei Sätze, die man sich falsch merkt:
+Drei Sätze, die man sich falsch merkt:
 
 - **Portale liegen ausschließlich in `Modal`, `Popover` und `Tooltip`.** `Menu`
   arbeitet mit `position: fixed`, nicht mit einem Portal.
 - **Brand und Alias wechseln nicht mit dem Theme.** Nur die semantische Ebene
   tut das.
+- **CRLF prüft man mit `tr -dc '\r' | wc -c` oder `file`**, nicht mit
+  `grep`. Betroffen sind die vier Dokumente im Wurzelverzeichnis und die acht
+  Token-Dateien unter `src/styles/medo/`. Punktgenaue Änderungen daran über ein
+  Node-Skript, das den Rohtext unangetastet lässt — und dort die Ersetzung als
+  **Funktion** übergeben, nicht als Zeichenkette: darin sind `$&`, `$'` und
+  `$1` Sonderzeichen, die stillschweigend fremden Text einsetzen.
 
 → `DEVELOPMENT.md` Kapitel 3, 4, 5 und 9

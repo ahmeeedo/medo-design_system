@@ -34,9 +34,10 @@ Design Systems und das **Portal**, das sie dokumentiert.
 
 ```
 src/
-  components/        36 Komponenten, je <Name>/<Name>.jsx + <Name>.css
+  components/        37 Komponenten, je <Name>/<Name>.jsx + <Name>.css
     index.js         Barrel — die einzige Import-Adresse nach außen
-  pages/             43 Doku-Seiten, je eine <Name>Page.jsx
+  types/             37 Props-Verträge, je <Name>.d.ts — Kopien aus dem Design-Projekt
+  pages/             45 Doku-Seiten, je eine <Name>Page.jsx
   docs/              Portal-Gerüst: PageLayout, DemoPanel, Suche, Navigation
   styles/            Tokens, Theme, globale Stile
     medo/            8 Token-Dateien — Spiegel des Design-Projekts, unantastbar
@@ -741,9 +742,9 @@ Zwei Einstiegspunkte:
 - `src/lib/tokens.js` — das Fundament: Schriften, die drei Token-Ebenen, das
   Theme, die Achsenregel der Icon-Schrift
 
-Ausgeliefert werden `index.js`, `styles.css`, `tokens.css` und `fonts/`.
-`styles.css` ist die Verkettung von Fundament, Komponenten-Stylesheets und
-Theme-Nachbesserungen, in dieser Reihenfolge.
+Ausgeliefert werden `index.js`, `styles.css`, `tokens.css`, `fonts/` und
+`types/`. `styles.css` ist die Verkettung von Fundament,
+Komponenten-Stylesheets und Theme-Nachbesserungen, in dieser Reihenfolge.
 
 Der zweite Schritt ist **keine Meldung, sondern eine Schranke.** Er bricht ab,
 wenn Portal-Abhängigkeiten in das Paket geraten sind, wenn eine deklarierte
@@ -752,12 +753,30 @@ hat, wenn eine Schriftdatei fehlt oder wenn die Achsenregel der Icon-Schrift
 nicht mitgekommen ist. Geprüft wird gegen die Quellen, nicht gegen eine
 aufgeschriebene Liste — die Schranke kann deshalb nicht veralten.
 
+**Die Verträge gehören dazu.** Der Schritt kopiert `src/types/*.d.ts` nach
+`dist-lib/types/` und erzeugt daraus `index.d.ts` — aus dem Barrel, nicht von
+Hand, damit die Sammel-Deklaration nicht von der exportierten Oberfläche
+abweichen kann. Auch das ist eine Schranke: sie bricht ab, wenn ein Modul des
+Barrels keinen Vertrag hat, und ebenso, wenn ein Vertrag einen Namen nicht
+deklariert, den sein Modul exportiert.
+
+```
+No contract file for Avatar — expected src/types/Avatar.d.ts.
+src/types/Avatar.d.ts does not declare medoAvatarInitials, which Avatar exports.
+```
+
+Eine neue Komponente braucht deshalb **beides**: den Eintrag im Barrel und den
+Vertrag unter `src/types/`. Der Vertrag ist eine Kopie aus dem Design-Projekt und
+wird nicht hier geschrieben.
+
 Ein erfolgreicher Lauf meldet:
 
 ```
-package build: fonts, index.js, styles.css, tokens.css
+package build: fonts, index.js, styles.css, tokens.css, types
   no portal dependencies in index.js
-  style entry point complete: 47 stylesheets, 7 font faces
+  style entry point complete: 48 stylesheets, 7 font faces
+  types: 37 contracts covering 37 modules
+  every module has a contract
 ```
 
 `dist/` und `dist-lib/` sind Bau-Ergebnisse und nicht versioniert.
@@ -774,7 +793,20 @@ npm test
 ```
 
 Beides fehlerfrei. Die Warnung zur Bündelgröße im Portal-Build ist bekannt und
-unkritisch.
+unkritisch; sie ist die **einzige** erwartete Ausgabe dieser Art. Eine weitere
+Warnung ist ein Befund, auch wenn der Build durchläuft — Tailwind durchsucht
+auch `README.md`, `DEVELOPMENT.md` und `editors-doc.md`, ein Codebeispiel dort
+kann also eine erzeugen.
+
+Wurde etwas am Paket geändert — eine Komponente, das Barrel, ein Vertrag, die
+Stile — zusätzlich:
+
+```bash
+npm run build:lib
+```
+
+Der Portal-Build deckt das nicht ab: die Vertragsschranke aus Kapitel 10 läuft
+nur hier.
 
 ### Nach Änderungen an Komponenten oder Seiten
 
