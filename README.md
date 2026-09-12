@@ -1,6 +1,6 @@
 # med.o Design System
 
-Komponenten-Bibliothek und Gestaltungsgrundlagen von med.o: 36 React-Komponenten
+Komponenten-Bibliothek und Gestaltungsgrundlagen von med.o: 37 React-Komponenten
 auf einem dreistufigen Token-System mit hellem und dunklem Theme, dazu ein
 Doku-Portal, das jede Komponente bedienbar zeigt.
 
@@ -8,8 +8,8 @@ Das Repository enthält zwei Dinge:
 
 - **das Paket `@medo/design-system`** — die Komponenten und ihre Stile, zur
   Einbindung in andere Projekte
-- **das Doku-Portal** — 43 Seiten, die jede Komponente mit Varianten, Zuständen,
-  Props-Vertrag und Barrierefreiheit dokumentieren
+- **das Doku-Portal** — 45 Seiten auf 46 Routen, davon 35 Komponentenseiten mit
+  Varianten, Zuständen, Props-Vertrag und Barrierefreiheit
 
 ---
 
@@ -66,9 +66,10 @@ import { Button, Icon } from '@medo/design-system'
 Vier Dinge, an denen eine Einbindung erfahrungsgemäß scheitert — alle vier sind
 in [HANDOFF.md](HANDOFF.md) ausgeschrieben:
 
-1. **In Next.js mit App Router brauchen die Komponenten eine eigene
-   Client-Grenze.** Sie tragen keine `'use client'`-Direktive; ein direkter
-   Import in eine Server-Komponente schlägt beim Bauen fehl.
+1. **In Next.js mit App Router brauchen 27 der 37 Module eine eigene
+   Client-Grenze**, die übrigen zehn nicht. Das Paket trägt keine
+   `'use client'`-Direktive; für die 27 schlägt ein direkter Import in eine
+   Server-Komponente fehl.
 2. **Der Icon-Import braucht die Endung `.css`.** Ohne ihn erscheinen die
    Ligaturnamen als Text.
 3. **Das Paket setzt keine Grundschrift** auf `html` oder `body`. Eine Zeile
@@ -79,15 +80,20 @@ in [HANDOFF.md](HANDOFF.md) ausgeschrieben:
 Das Theme wird über `data-theme` am `<html>`-Element gesteuert (`light`, `dark`,
 oder nicht gesetzt — dann folgt es der Systemeinstellung).
 
+**Aktualisieren Sie eine bestehende Einbindung?** `Textarea` hat die Props
+`size` und `resize` verloren, und `Tabs.scrollable` ist wirkungslos geworden.
+Die nötigen Schritte stehen in
+[HANDOFF.md — Versionierung und Aktualisieren](HANDOFF.md#11-versionierung-und-aktualisieren).
+
 ---
 
 ## Projektstruktur
 
 ```
 src/
-├── components/             # 36 portierte Komponenten, je <Name>/<Name>.jsx + .css
+├── components/             # 37 portierte Komponenten, je <Name>/<Name>.jsx + .css
 │   └── index.js            # Barrel-Export, zugleich Einstiegspunkt des Pakets
-├── types/                  # 35 Props-Vertraege, Kopien aus dem Design-Projekt
+├── types/                  # 37 Props-Vertraege, Kopien aus dem Design-Projekt
 ├── styles/
 │   ├── medo/               # die acht Token-Dateien, Spiegel von design-reference/tokens/
 │   ├── medo-tokens.css     # Token-Einstiegspunkt: Brand -> Alias -> Semantic
@@ -98,7 +104,7 @@ src/
 │   └── global.css          # Portal: Ladekette, @theme inline, :root, Basis-Layer
 ├── lib/tokens.js           # Fundament-Einstiegspunkt des Paket-Builds
 ├── docs/                   # Portal-Rahmen: Layout, Suche, Tabs, Theme-Schalter
-├── pages/                  # 43 Dokumentationsseiten
+├── pages/                  # 45 Dokumentationsseiten
 ├── config/                 # erzeugter Suchindex (searchData.js, sectionData.js)
 ├── i18n/                   # Konfiguration und locales/de.json, en.json
 ├── fonts/                  # woff2-Schnitte
@@ -133,10 +139,11 @@ import { Button, TextInput, Modal } from './components'       // im Repository
 import { Button, TextInput, Modal } from '@medo/design-system' // als Paket
 ```
 
-36 Module mit 46 benannten Exporten. Wo ein Modul mehr als seinen Namensgeber
+37 Module mit 48 benannten Exporten. Wo ein Modul mehr als seinen Namensgeber
 exportiert, stehen die weiteren Exporte dahinter:
 
-`Accordion` · `Breadcrumb` · `Button` · `Checkbox` (`Checkbox`, `CheckboxGroup`) ·
+`Accordion` · `Avatar` (`Avatar`, `medoAvatarInitials`) · `Breadcrumb` ·
+`Button` · `Checkbox` (`Checkbox`, `CheckboxGroup`) ·
 `CodeSnippet` · `ContainedList` · `ContentSwitcher` · `DataTable` ·
 `DatePicker` (`DatePicker`, `TimeSlots`) · `Dropdown` (`Dropdown`, `MenuList`) ·
 `Field` · `FileUploader` · `Icon` · `InlineLoading` · `Link` ·
