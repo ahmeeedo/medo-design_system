@@ -240,6 +240,8 @@ Besonders bitter bei `Slider.test.jsx:46-49`: der Kommentar darüber (Zeile 39-4
 
 Die Nachbartests machen es richtig: `Slider.test.jsx:21` und `:66` sichern die Anzahl vorher zu, `ContainedList.test.jsx:165` ebenso.
 
+Eine vierte Prüfung ist nicht wirkungslos, aber deutlich schwächer als ihr Name: **`src/docs/DemoPanelPages.test.jsx:113`** heißt „keeps its single controls reachable behind the detail area" und läuft über alle 35 Komponentenseiten — zugesichert wird lediglich, dass es **mehr als eine** Steuerung gibt. Eine Seite, die vierzehn Steuerungen deklariert und dreizehn verliert, bleibt grün. Die Erreichbarkeit selbst wird gar nicht geprüft: die Hilfsfunktion `visible()` aus Zeile 94 ist in diesem Test ungenutzt.
+
 ## 15. Fünfzehn Komponenten haben keine eigene Testdatei
 
 **Ohne eigene Testdatei:** `Accordion`, `Breadcrumb`, `Button`, `Field`, `Icon`, `InlineLoading`, `Link`, `List`, `Loading`, `MenuButtons`, **`Popover`**, `ProgressBar`, `ProgressIndicator`, `Tag`, **`Tooltip`**. (`Dropdown` hat `MenuList.test.jsx`.)
