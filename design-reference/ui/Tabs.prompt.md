@@ -42,8 +42,8 @@ dabei höher; sie rollt nicht — gleich breite Tabs und Rollen schließen einan
 Das ist die Regel aus Material Design 3: umbrechen vor kürzen, weil zu frühes Kürzen das
 Verstehen behindert. Sie greift selten, wenn die Beschriftungen der Vorgabe oben folgen — ein
 bis zwei kurze Wörter. Vier lange Wörter mit Icon **und** Zähler brauchen auf einem schmalen
-Gerät dagegen mehr Platz, als vier gleiche Spalten hergeben; dort ist `scrollable` oder die
-vertikale Form (`orientation="vertical"`) die ehrlichere Lösung.
+Gerät dagegen mehr Platz, als vier gleiche Spalten hergeben; dort ist die vertikale Form
+(`orientation="vertical"`) oder eine Leiste ohne `fullWidth` die ehrlichere Lösung.
 
 ## Panel
 

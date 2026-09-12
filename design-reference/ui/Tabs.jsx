@@ -102,8 +102,7 @@ const MEDO_TABS_CSS = `
 }
 
 /* Material Design 3: „Labels can use a second line if needed, with truncated text" —
-   und „labels should be wrapped before truncating them". Gleich breite Tabs rollen nie;
-   wer rollen will, nimmt „scrollable“.
+   und „labels should be wrapped before truncating them". Gleich breite Tabs rollen nie.
    „min-width: 0“ hebt die Mindestbreite auf, die sonst aus „white-space: nowrap“ folgt und
    die Seite seitlich überlaufen lässt. Der Selektor spart Icon und Zähler aus — umbrochen
    und gekürzt wird die Beschriftung, nicht das Beiwerk. */

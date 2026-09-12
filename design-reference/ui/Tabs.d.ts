@@ -23,8 +23,7 @@ export interface TabsProps {
   orientation?: "horizontal" | "vertical";
   /** Tabs teilen die Breite gleichmäßig. Nur horizontal. Passt eine Beschriftung nicht,
    *  bricht sie auf eine zweite Zeile um und wird erst danach gekürzt; die Leiste wird
-   *  dabei höher. Gleich breite Tabs rollen nie — dafür ist `scrollable` da, das zusammen
-   *  mit `fullWidth` gewinnt. */
+   *  dabei höher. Gleich breite Tabs rollen nie. */
   fullWidth?: boolean;
   /** Ohne Wirkung. Passen die Tabs nicht nebeneinander, läuft die Leiste ohnehin mit der
    *  Auswahl mit — das gilt für jede Leiste außer `fullWidth` und `orientation="vertical"`.
