@@ -126,17 +126,33 @@ DM Sans and DM Mono (SIL Open Font License). Self-host them, for example with `@
 
 ## Components
 
-`@medo/ui` keeps the styles in **plain CSS** (`medo-button`, `medo-button--primary`, `medo-button--md`) and adds thin React components on top.
-Vue, Angular or plain HTML can reuse the same CSS classes; only the small wrapper has to be written per framework.
+`@medo/ui` = **React Aria Components** (behaviour, keyboard, focus, screen readers, touch) + **plain CSS** on top of the tokens + **Lucide** icons.
+
+| Component | Figma | Notes |
+| --- | --- | --- |
+| `Button` | C01 | primary, secondary, ghost, danger, text, ghost-danger · sm/md/lg |
+| `IconButton` | C02 | `aria-label` required |
+| `TextField` (+ `InputAction`) | C03, C04, C13 | label, helper, error, icons, character counter, `multiline` = Textarea |
+| `Checkbox`, `CheckboxGroup` | C05 | indeterminate, description |
+| `Radio`, `RadioGroup` | C11 | 2–4 options, horizontal or vertical |
+| `Switch` | C12 | label start/end, loading state |
 
 ```tsx
-import { Button } from '@medo/ui';
+import { Button, TextField } from '@medo/ui';
 import '@medo/ui/styles.css';
 
-<Button variant="primary" size="md">Save</Button>
+<TextField label="Email" type="email" isRequired />
+<Button onPress={save}>Save</Button>
 ```
 
-Available: **Button**. More components follow the Figma library (C00–C44).
+React Aria naming: `onPress` instead of `onClick`, `isDisabled` instead of `disabled`, `isInvalid`, `isRequired`, `isReadOnly`.
+
+### State contract (framework-neutral CSS)
+
+The CSS reads states from data attributes: `data-hovered`, `data-pressed`, `data-focus-visible`,
+`data-selected`, `data-indeterminate`, `data-invalid`, `data-disabled`, `data-readonly`.
+React Aria sets them. A Vue or Angular wrapper sets the same attributes and reuses the CSS unchanged.
+Buttons also work as plain HTML (`:hover`, `:active`, `:focus-visible`, `:disabled` as fallback).
 
 ## Accessibility
 

@@ -1,0 +1,166 @@
+/**
+ * Checkbox + Radio – med.o Design System (Figma: C05 Checkbox, C11 Radio)
+ *
+ * <div class="medo-choice medo-checkbox medo-choice--md" data-selected …>
+ *   <label class="medo-choice__button" data-hovered data-focus-visible …>
+ *     <span class="medo-choice__control">✓</span>
+ *     <span class="medo-choice__label">Label</span>
+ *   </label>
+ *   <span class="medo-choice__description">Description</span>
+ * </div>
+ *
+ * State contract: [data-selected] [data-indeterminate] [data-hovered] [data-pressed]
+ * [data-focus-visible] [data-invalid] [data-disabled] [data-readonly]
+ * The whole row incl. label is clickable. Focus ring around the box.
+ */
+
+.medo-choice {
+  --_box: var(--medo-size-icon-sm);
+  --_gap: var(--medo-space-2);
+  --_border: var(--medo-color-border-strong);
+  --_accent: var(--medo-color-action-primary);
+
+  display: flex;
+  flex-direction: column;
+  font: var(--medo-typography-body-sm);
+  color: var(--medo-color-text-primary);
+}
+
+.medo-choice--lg {
+  --_box: var(--medo-size-icon-md);
+  font: var(--medo-typography-body-md);
+}
+
+.medo-choice__button {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: var(--_gap);
+  inline-size: fit-content;
+  cursor: pointer;
+}
+
+.medo-choice__control {
+  box-sizing: border-box;
+  display: inline-grid;
+  place-items: center;
+  flex-shrink: 0;
+  inline-size: var(--_box);
+  block-size: var(--_box);
+  /* Aligns the box with the first line of the label (20 px line, 16 px box). */
+  margin-block-start: var(--medo-space-0-5);
+  border: var(--medo-border-width-thin) solid var(--_border);
+  background-color: var(--medo-color-surface-default);
+  color: var(--medo-color-text-on-action);
+  transition:
+    background-color var(--medo-motion-duration-fast) var(--medo-motion-easing-standard),
+    border-color var(--medo-motion-duration-fast) var(--medo-motion-easing-standard);
+}
+
+.medo-checkbox .medo-choice__control {
+  border-radius: var(--medo-radius-sm);
+}
+
+.medo-checkbox .medo-choice__control > svg {
+  inline-size: calc(var(--_box) * 0.75);
+  block-size: calc(var(--_box) * 0.75);
+  stroke-width: 3;
+}
+
+.medo-radio .medo-choice__control {
+  border-radius: var(--medo-radius-full);
+}
+
+.medo-radio .medo-choice__control::after {
+  content: '';
+  inline-size: 50%;
+  block-size: 50%;
+  border-radius: var(--medo-radius-full);
+  background-color: var(--_accent);
+  transform: scale(0);
+  transition: transform var(--medo-motion-duration-fast) var(--medo-motion-easing-standard);
+}
+
+.medo-choice__description {
+  margin-inline-start: calc(var(--_box) + var(--_gap));
+  font: var(--medo-typography-body-sm);
+  color: var(--medo-color-text-secondary);
+}
+
+/* ---------- States ---------- */
+
+.medo-choice__button[data-hovered] {
+  --_border: var(--medo-color-border-strong-hover);
+  --_accent: var(--medo-color-action-primary-hover);
+}
+
+.medo-choice[data-invalid] {
+  --_border: var(--medo-color-border-danger);
+}
+
+/* Checkbox checked / indeterminate: filled box */
+.medo-checkbox:is([data-selected], [data-indeterminate]) .medo-choice__control {
+  border-color: var(--_accent);
+  background-color: var(--_accent);
+}
+
+/* Radio selected: outline + dot */
+.medo-radio[data-selected] .medo-choice__control {
+  border-color: var(--_accent);
+}
+
+.medo-radio[data-selected] .medo-choice__control::after {
+  transform: scale(1);
+}
+
+.medo-choice__button[data-focus-visible] .medo-choice__control {
+  box-shadow: var(--medo-shadow-focus-ring);
+}
+
+.medo-choice[data-readonly] .medo-choice__button {
+  cursor: default;
+}
+
+.medo-choice[data-disabled] {
+  --_border: var(--medo-color-border-default);
+  --_accent: var(--medo-color-border-default);
+  color: var(--medo-color-text-disabled);
+}
+
+.medo-choice[data-disabled] .medo-choice__button {
+  cursor: not-allowed;
+}
+
+.medo-choice[data-disabled] .medo-choice__control {
+  background-color: var(--medo-color-action-disabled);
+  color: var(--medo-color-text-disabled);
+}
+
+.medo-checkbox[data-disabled]:is([data-selected], [data-indeterminate]) .medo-choice__control {
+  background-color: var(--medo-color-action-disabled);
+}
+
+.medo-radio[data-disabled] .medo-choice__control::after {
+  background-color: var(--medo-color-text-disabled);
+}
+
+@media (forced-colors: active) {
+  .medo-choice__control {
+    border-color: CanvasText;
+  }
+  .medo-checkbox:is([data-selected], [data-indeterminate]) .medo-choice__control,
+  .medo-radio[data-selected] .medo-choice__control::after {
+    background-color: Highlight;
+    border-color: Highlight;
+  }
+  .medo-choice__button[data-focus-visible] .medo-choice__control {
+    outline: var(--medo-focus-ring-width) solid Highlight;
+    outline-offset: 2px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .medo-choice__control,
+  .medo-radio .medo-choice__control::after {
+    transition: none;
+  }
+}

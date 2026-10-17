@@ -12,7 +12,9 @@
     "*.css"
   ],
   "dependencies": {
-    "@medo/design-tokens": "0.1.0"
+    "@medo/design-tokens": "0.1.0",
+    "lucide-react": "^1.59.0",
+    "react-aria-components": "^1.22.1"
   },
   "peerDependencies": {
     "react": "^19.0.0",

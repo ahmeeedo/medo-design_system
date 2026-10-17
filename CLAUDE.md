@@ -12,7 +12,7 @@
 ## Design system rules
 - Always use the defined rules and reuse existing components. Build something new only when it is necessary and explain why.
 - Prefer proven libraries over own implementations (e.g. headless UI libraries for behaviour and accessibility).
-- Components: styles in plain CSS on top of the `--medo-*` tokens (framework-neutral), thin framework wrapper on top.
+- Components: React Aria Components for behaviour + plain CSS on top of the `--medo-*` tokens + Lucide icons. CSS reads states only from the data-attribute contract (`data-hovered`, `data-pressed`, `data-focus-visible`, `data-selected`, `data-invalid`, `data-disabled` …), so other frameworks can reuse it.
 - Only semantic tokens in components. No hard-coded colors, spacing, radii or font sizes.
 - Accessibility: WCAG 2.2 AA. Visible `:focus-visible`, forced-colors fallback, `prefers-reduced-motion`, axe clean in Storybook (Light and Dark).
 - Every component: Storybook stories for variants, sizes, states, Light and Dark.

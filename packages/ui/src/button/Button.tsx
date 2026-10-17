@@ -1,10 +1,12 @@
-import type { ButtonHTMLAttributes, ReactNode, Ref } from 'react';
+import type { CSSProperties, ReactNode } from 'react';
+import { Button as AriaButton, type ButtonProps as AriaButtonProps } from 'react-aria-components';
+import { cx } from '../utils/cx';
 import './button.css';
 
 export type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'danger' | 'text' | 'ghost-danger';
 export type ButtonSize = 'sm' | 'md' | 'lg';
 
-export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+export interface ButtonProps extends Omit<AriaButtonProps, 'children' | 'className' | 'style'> {
   /** Visual weight. One primary button per area. */
   variant?: ButtonVariant;
   /** sm 32 px · md 40 px · lg 48 px (touch). */
@@ -13,29 +15,19 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   startIcon?: ReactNode;
   /** Icon after the label (decorative, hidden from screen readers). */
   endIcon?: ReactNode;
-  ref?: Ref<HTMLButtonElement>;
+  children?: ReactNode;
+  className?: string;
+  style?: CSSProperties;
 }
 
 /**
- * Button – triggers an action. For navigation use a link styled with the same classes.
- * Icon-only buttons are a separate component (Icon Button) because they need an accessible name.
+ * Button – triggers an action (Figma: C01 Button). Built on React Aria: consistent press,
+ * hover and focus behaviour on mouse, touch, keyboard and screen readers.
+ * Use onPress instead of onClick and isDisabled instead of disabled.
  */
-export function Button({
-  variant = 'primary',
-  size = 'md',
-  startIcon,
-  endIcon,
-  className,
-  children,
-  type = 'button',
-  ...rest
-}: ButtonProps) {
-  const classes = ['medo-button', `medo-button--${variant}`, `medo-button--${size}`, className]
-    .filter(Boolean)
-    .join(' ');
-
+export function Button({ variant = 'primary', size = 'md', startIcon, endIcon, className, children, ...props }: ButtonProps) {
   return (
-    <button type={type} className={classes} {...rest}>
+    <AriaButton {...props} className={cx('medo-button', `medo-button--${variant}`, `medo-button--${size}`, className)}>
       {startIcon && (
         <span className="medo-button__icon" aria-hidden="true">
           {startIcon}
@@ -47,6 +39,6 @@ export function Button({
           {endIcon}
         </span>
       )}
-    </button>
+    </AriaButton>
   );
 }

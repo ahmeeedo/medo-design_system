@@ -6,7 +6,7 @@ const meta = {
   title: 'Components/Button',
   component: Button,
   tags: ['autodocs'],
-  args: { children: 'Button', variant: 'primary', size: 'md', disabled: false },
+  args: { children: 'Button', variant: 'primary', size: 'md', isDisabled: false },
   argTypes: {
     variant: { control: 'inline-radio', options: ['primary', 'secondary', 'ghost', 'danger', 'text', 'ghost-danger'] },
     size: { control: 'inline-radio', options: ['sm', 'md', 'lg'] },
@@ -18,7 +18,7 @@ const meta = {
       description: {
         component:
           'Triggers an action. Figma: **C01 Button**. One Primary per area, Danger only for destructive actions. ' +
-          'Styles are plain CSS (`medo-button`, `medo-button--primary`, `medo-button--md`) and can be used without React.',
+          'Styles are plain CSS (`medo-button`, `medo-button--primary`, `medo-button--md`) and can be used without React. Built on React Aria: use `onPress` and `isDisabled`.',
       },
     },
   },
@@ -71,7 +71,7 @@ export const Disabled: Story = {
   render: (args) => (
     <div style={row}>
       {(['primary', 'secondary', 'ghost', 'danger', 'text'] as const).map((v) => (
-        <Button key={v} {...args} variant={v} disabled>
+        <Button key={v} {...args} variant={v} isDisabled>
           {v[0].toUpperCase() + v.slice(1)}
         </Button>
       ))}

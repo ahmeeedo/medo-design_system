@@ -1,0 +1,106 @@
+/**
+ * Field – med.o Design System (Figma: C04 Field)
+ * Label + control + helper / error text. Used by TextField, CheckboxGroup, RadioGroup.
+ *
+ * State contract (data attributes, set by React Aria – other frameworks set the same):
+ *   [data-invalid] [data-disabled] [data-required]
+ */
+
+.medo-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--medo-space-1);
+  min-inline-size: 0;
+}
+
+.medo-field--group {
+  gap: var(--medo-space-2);
+}
+
+.medo-field__label {
+  display: inline-flex;
+  gap: var(--medo-space-1);
+  padding-inline-start: var(--medo-space-0-5);
+  font: var(--medo-typography-label-md);
+  color: var(--medo-color-text-primary);
+}
+
+.medo-field__required {
+  color: var(--medo-color-text-danger);
+}
+
+.medo-field__footer {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--medo-space-2);
+  padding-inline-start: var(--medo-space-0-5);
+  font: var(--medo-typography-body-sm);
+}
+
+.medo-field__footer:empty {
+  display: none;
+}
+
+.medo-field__description {
+  color: var(--medo-color-text-secondary);
+}
+
+/* The error message replaces the helper text. */
+.medo-field[data-invalid] > .medo-field__footer > .medo-field__description {
+  display: none;
+}
+
+.medo-field__error {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--medo-space-1);
+  color: var(--medo-color-text-danger);
+}
+
+.medo-field__error > svg {
+  flex-shrink: 0;
+  inline-size: var(--medo-size-icon-sm);
+  block-size: var(--medo-size-icon-sm);
+  margin-block-start: var(--medo-space-0-5);
+}
+
+.medo-field__counter {
+  margin-inline-start: auto;
+  color: var(--medo-color-text-secondary);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.medo-field__counter[data-over] {
+  color: var(--medo-color-text-danger);
+}
+
+.medo-field[data-disabled] .medo-field__label {
+  color: var(--medo-color-text-disabled);
+}
+/* Helper text stays readable when the field is disabled: it often explains why. */
+
+/* Options of CheckboxGroup and RadioGroup */
+.medo-field__options {
+  display: flex;
+  flex-direction: column;
+  gap: var(--medo-space-2);
+}
+
+.medo-field[data-orientation='horizontal'] .medo-field__options {
+  flex-direction: row;
+  flex-wrap: wrap;
+  column-gap: var(--medo-space-6);
+}
+
+.medo-visually-hidden {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}

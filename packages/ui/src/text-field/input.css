@@ -1,0 +1,211 @@
+/**
+ * Input + Textarea – med.o Design System (Figma: C03 Input, C13 Textarea)
+ *
+ * <div class="medo-input medo-input--md">
+ *   <span class="medo-input__icon">…</span>
+ *   <input class="medo-input__control">
+ *   <button class="medo-input__action" aria-label="…">…</button>
+ * </div>
+ * <textarea class="medo-textarea medo-textarea--md"></textarea>
+ *
+ * Sizes sm / md / lg = 32 / 40 / 48 px. Mobile and touch: always lg (16 px text prevents iOS zoom).
+ * Focus: the border turns focus/ring plus 1 px inside (flush, no outer band).
+ */
+
+.medo-input,
+.medo-textarea {
+  --_border: var(--medo-color-border-strong);
+
+  box-sizing: border-box;
+  inline-size: 100%;
+  border: var(--medo-border-width-thin) solid var(--_border);
+  border-radius: var(--medo-radius-md);
+  background-color: var(--medo-color-surface-default);
+  color: var(--medo-color-text-primary);
+  font: var(--medo-typography-body-sm);
+  transition:
+    border-color var(--medo-motion-duration-fast) var(--medo-motion-easing-standard),
+    box-shadow var(--medo-motion-duration-fast) var(--medo-motion-easing-standard);
+}
+
+.medo-input {
+  display: flex;
+  align-items: center;
+  gap: var(--medo-space-2);
+  block-size: var(--medo-size-control-md);
+  padding-inline: var(--medo-space-3);
+  cursor: text;
+}
+
+.medo-input__control {
+  flex: 1;
+  min-inline-size: 0;
+  block-size: 100%;
+  padding: 0;
+  border: 0;
+  outline: none;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+}
+
+.medo-input__control::placeholder,
+.medo-textarea::placeholder {
+  color: var(--medo-color-text-secondary);
+  opacity: 1;
+}
+
+.medo-input__icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  inline-size: var(--medo-size-icon-sm);
+  block-size: var(--medo-size-icon-sm);
+  color: var(--medo-color-text-secondary);
+}
+
+.medo-input__icon > svg {
+  inline-size: 100%;
+  block-size: 100%;
+}
+
+/* ---------- Textarea ---------- */
+
+.medo-textarea {
+  display: block;
+  padding: var(--medo-space-2) var(--medo-space-3);
+  /* 3 rows minimum, grows with the content up to 8 rows (where supported), then scrolls. */
+  min-block-size: calc(3lh + 2 * var(--medo-space-2) + 2 * var(--medo-border-width-thin));
+  max-block-size: calc(8lh + 2 * var(--medo-space-2) + 2 * var(--medo-border-width-thin));
+  field-sizing: content;
+  resize: vertical;
+  overflow: auto;
+  outline: none;
+}
+
+/* ---------- States ---------- */
+
+@media (hover: hover) {
+  .medo-input:hover:not(:has(> .medo-input__control:is(:disabled, [readonly]))),
+  .medo-textarea:hover:not(:disabled, [readonly]) {
+    --_border: var(--medo-color-border-strong-hover);
+  }
+}
+
+.medo-input:has(> .medo-input__control[data-invalid]),
+.medo-textarea[data-invalid] {
+  --_border: var(--medo-color-border-danger);
+}
+
+.medo-input:has(> .medo-input__control:focus),
+.medo-textarea:focus {
+  --_border: var(--medo-color-focus-ring);
+  box-shadow: inset 0 0 0 var(--medo-border-width-thin) var(--medo-color-focus-ring);
+}
+
+.medo-input:has(> .medo-input__control[readonly]),
+.medo-textarea[readonly] {
+  --_border: var(--medo-color-border-default);
+  background-color: var(--medo-color-surface-subtle);
+}
+
+.medo-input:has(> .medo-input__control:disabled),
+.medo-textarea:disabled {
+  --_border: var(--medo-color-border-default);
+  background-color: var(--medo-color-action-disabled);
+  color: var(--medo-color-text-disabled);
+  cursor: not-allowed;
+}
+
+.medo-input:has(> .medo-input__control:disabled) .medo-input__icon {
+  color: var(--medo-color-text-disabled);
+}
+
+@media (forced-colors: active) {
+  .medo-input:has(> .medo-input__control:focus),
+  .medo-textarea:focus {
+    outline: var(--medo-focus-ring-width) solid Highlight;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .medo-input,
+  .medo-textarea {
+    transition: none;
+  }
+}
+
+/* ---------- Sizes ---------- */
+
+.medo-input--sm {
+  block-size: var(--medo-size-control-sm);
+}
+
+.medo-input--lg {
+  block-size: var(--medo-size-control-lg);
+  padding-inline: var(--medo-space-4);
+  font: var(--medo-typography-body-md);
+}
+
+.medo-input--lg .medo-input__icon {
+  inline-size: var(--medo-size-icon-md);
+  block-size: var(--medo-size-icon-md);
+}
+
+.medo-textarea--lg {
+  padding: var(--medo-space-3) var(--medo-space-4);
+  font: var(--medo-typography-body-md);
+  min-block-size: calc(3lh + 2 * var(--medo-space-3) + 2 * var(--medo-border-width-thin));
+  max-block-size: calc(8lh + 2 * var(--medo-space-3) + 2 * var(--medo-border-width-thin));
+}
+
+/* ---------- Trailing action (e.g. clear, show password) ---------- */
+
+.medo-input__action {
+  display: inline-grid;
+  place-items: center;
+  flex-shrink: 0;
+  inline-size: var(--medo-size-icon-lg);
+  block-size: var(--medo-size-icon-lg);
+  margin-inline-end: calc(-1 * var(--medo-space-1));
+  padding: 0;
+  border: 0;
+  border-radius: var(--medo-radius-sm);
+  background: transparent;
+  color: var(--medo-color-text-secondary);
+  cursor: pointer;
+  outline: none;
+}
+
+.medo-input__action > svg {
+  inline-size: var(--medo-size-icon-sm);
+  block-size: var(--medo-size-icon-sm);
+}
+
+.medo-input__action[data-hovered] {
+  background: var(--medo-color-state-hover);
+  color: var(--medo-color-text-primary);
+}
+
+.medo-input__action[data-pressed] {
+  background: var(--medo-color-state-pressed);
+  color: var(--medo-color-text-primary);
+}
+
+.medo-input__action[data-focus-visible] {
+  box-shadow: inset 0 0 0 var(--medo-focus-ring-width) var(--medo-color-focus-ring);
+}
+
+.medo-input__action[data-disabled] {
+  color: var(--medo-color-text-disabled);
+  cursor: not-allowed;
+}
+
+.medo-input--lg .medo-input__action {
+  inline-size: var(--medo-size-control-sm);
+  block-size: var(--medo-size-control-sm);
+}
+
+.medo-input--lg .medo-input__action > svg {
+  inline-size: var(--medo-size-icon-md);
+  block-size: var(--medo-size-icon-md);
+}

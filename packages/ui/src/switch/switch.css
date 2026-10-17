@@ -1,0 +1,157 @@
+/**
+ * Switch – med.o Design System (Figma: C12 Switch)
+ * On / off that takes effect immediately (no submit). The label never changes with the state.
+ *
+ * State contract: [data-selected] [data-hovered] [data-focus-visible] [data-disabled] [data-readonly]
+ * Label position: start (settings lists, switch at the end) or end (forms, switch first).
+ */
+
+.medo-switch {
+  --_track-w: calc(var(--medo-space-8) + var(--medo-space-1));
+  --_track-h: var(--medo-space-5);
+  --_thumb: var(--medo-space-4);
+  --_pad: var(--medo-space-0-5);
+  --_track: var(--medo-color-action-toggle-off);
+  --_gap: var(--medo-space-2);
+
+  display: flex;
+  flex-direction: column;
+  font: var(--medo-typography-body-sm);
+  color: var(--medo-color-text-primary);
+}
+
+.medo-switch--lg {
+  --_track-w: calc(var(--medo-space-10) + var(--medo-space-1));
+  --_track-h: var(--medo-space-6);
+  --_thumb: var(--medo-space-5);
+  font: var(--medo-typography-body-md);
+}
+
+.medo-switch__button {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: var(--_gap);
+  inline-size: fit-content;
+  cursor: pointer;
+}
+
+.medo-switch--label-start .medo-switch__button {
+  --_gap: var(--medo-space-4);
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  inline-size: 100%;
+}
+
+.medo-switch__track {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  inline-size: var(--_track-w);
+  block-size: var(--_track-h);
+  padding: var(--_pad);
+  border-radius: var(--medo-radius-full);
+  background-color: var(--_track);
+  transition: background-color var(--medo-motion-duration-fast) var(--medo-motion-easing-standard);
+}
+
+.medo-switch__thumb {
+  display: grid;
+  place-items: center;
+  inline-size: var(--_thumb);
+  block-size: var(--_thumb);
+  border-radius: var(--medo-radius-full);
+  background-color: var(--medo-color-text-on-action);
+  color: var(--_track);
+  transition:
+    transform var(--medo-motion-duration-fast) var(--medo-motion-easing-standard),
+    color var(--medo-motion-duration-fast) var(--medo-motion-easing-standard);
+}
+
+.medo-switch__thumb > svg {
+  inline-size: 70%;
+  block-size: 70%;
+  stroke-width: 3;
+}
+
+.medo-switch__description {
+  font: var(--medo-typography-body-sm);
+  color: var(--medo-color-text-secondary);
+}
+
+.medo-switch--label-end .medo-switch__description {
+  margin-inline-start: calc(var(--_track-w) + var(--_gap));
+}
+
+/* ---------- States ---------- */
+
+.medo-switch__button[data-hovered] {
+  --_track: var(--medo-color-action-toggle-off-hover);
+}
+
+.medo-switch[data-selected] {
+  --_track: var(--medo-color-action-primary);
+}
+
+.medo-switch[data-selected] .medo-switch__button[data-hovered] {
+  --_track: var(--medo-color-action-primary-hover);
+}
+
+.medo-switch[data-selected] .medo-switch__thumb {
+  transform: translateX(calc(var(--_track-w) - var(--_thumb) - 2 * var(--_pad)));
+}
+
+.medo-switch[data-selected]:dir(rtl) .medo-switch__thumb {
+  transform: translateX(calc(-1 * (var(--_track-w) - var(--_thumb) - 2 * var(--_pad))));
+}
+
+.medo-switch__button[data-focus-visible] .medo-switch__track {
+  box-shadow: var(--medo-shadow-focus-ring);
+}
+
+.medo-switch[data-disabled] {
+  --_track: var(--medo-color-border-default);
+  color: var(--medo-color-text-disabled);
+}
+
+.medo-switch[data-disabled] .medo-switch__button {
+  cursor: not-allowed;
+}
+
+.medo-switch[data-disabled] .medo-switch__thumb {
+  background-color: var(--medo-color-surface-default);
+  color: var(--medo-color-text-disabled);
+}
+
+.medo-switch[aria-busy='true'] .medo-switch__button {
+  cursor: progress;
+}
+
+.medo-switch__spinner {
+  animation: medo-switch-spin 0.8s linear infinite;
+}
+
+@keyframes medo-switch-spin {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+@media (forced-colors: active) {
+  .medo-switch__track {
+    border: var(--medo-border-width-thin) solid CanvasText;
+  }
+  .medo-switch[data-selected] .medo-switch__track {
+    background-color: Highlight;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .medo-switch__track,
+  .medo-switch__thumb {
+    transition: none;
+  }
+  .medo-switch__spinner {
+    animation-duration: 3s;
+  }
+}

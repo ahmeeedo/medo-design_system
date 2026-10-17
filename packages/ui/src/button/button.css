@@ -7,7 +7,11 @@
  *
  * Variants: primary · secondary · ghost · danger · text · ghost-danger
  * Sizes:    sm (32) · md (40) · lg (48)
- * States:   :hover · :active (pressed) · :focus-visible · :disabled / aria-disabled
+ * Icon only: add medo-button--icon-only (Figma: C02 Icon Button), always with aria-label.
+ *
+ * State contract: [data-hovered] [data-pressed] [data-focus-visible] [data-disabled]
+ * (set by React Aria – other frameworks set the same). Plain HTML buttons without
+ * data-rac fall back to :hover, :active, :focus-visible and :disabled.
  */
 
 .medo-button {
@@ -45,24 +49,36 @@
     box-shadow var(--medo-motion-duration-fast) var(--medo-motion-easing-standard);
 }
 
-.medo-button:hover {
+.medo-button[data-hovered] {
   background-color: var(--_bg-hover);
   color: var(--_fg-hover);
 }
 
-.medo-button:active {
+@media (hover: hover) {
+  .medo-button:not([data-rac]):hover {
+    background-color: var(--_bg-hover);
+    color: var(--_fg-hover);
+  }
+}
+
+.medo-button[data-pressed],
+.medo-button:not([data-rac]):active {
   background-color: var(--_bg-pressed);
   color: var(--_fg-pressed);
 }
 
 .medo-button:focus-visible {
   outline: none;
+}
+
+.medo-button[data-focus-visible],
+.medo-button:not([data-rac]):focus-visible {
   box-shadow: var(--_focus);
 }
 
 /* Windows high contrast mode hides box-shadows: fall back to a real outline. */
 @media (forced-colors: active) {
-  .medo-button:focus-visible {
+  .medo-button:is([data-focus-visible], :not([data-rac]):focus-visible) {
     outline: var(--medo-focus-ring-width) solid CanvasText;
     outline-offset: 2px;
   }
@@ -70,6 +86,7 @@
 
 /* Disabled: never only by opacity, the colors keep the label readable for the layout. */
 .medo-button:disabled,
+.medo-button[data-disabled],
 .medo-button[aria-disabled='true'] {
   --_bg: var(--medo-color-action-disabled);
   --_bg-hover: var(--_bg);
@@ -161,22 +178,53 @@
   border-radius: var(--medo-radius-sm);
 }
 
-.medo-button--text:hover,
-.medo-button--text:active {
+.medo-button--text[data-hovered],
+.medo-button--text[data-pressed],
+.medo-button--text:not([data-rac]):is(:hover, :active) {
   text-decoration: underline;
   text-underline-offset: 0.2em;
 }
 
-.medo-button--text:focus-visible {
+.medo-button--text:is([data-focus-visible], :not([data-rac]):focus-visible) {
   box-shadow: none;
   outline: var(--medo-focus-ring-width) solid var(--medo-color-focus-ring);
   outline-offset: 2px;
 }
 
 /* Ghost, ghost danger and text buttons have no fill when disabled. */
-.medo-button--ghost:is(:disabled, [aria-disabled='true']),
-.medo-button--ghost-danger:is(:disabled, [aria-disabled='true']),
-.medo-button--text:is(:disabled, [aria-disabled='true']) {
+.medo-button--ghost:is(:disabled, [data-disabled], [aria-disabled='true']),
+.medo-button--ghost-danger:is(:disabled, [data-disabled], [aria-disabled='true']),
+.medo-button--text:is(:disabled, [data-disabled], [aria-disabled='true']) {
   --_bg: transparent;
   text-decoration: none;
+}
+
+/* ---------- Icon only (Figma: C02 Icon Button) ---------- */
+
+.medo-button--icon-only {
+  inline-size: var(--medo-size-control-md);
+  padding-inline: 0;
+}
+
+.medo-button--icon-only .medo-button__icon {
+  inline-size: var(--medo-size-icon-md);
+  block-size: var(--medo-size-icon-md);
+}
+
+.medo-button--icon-only.medo-button--sm {
+  inline-size: var(--medo-size-control-sm);
+}
+
+.medo-button--icon-only.medo-button--sm .medo-button__icon {
+  inline-size: var(--medo-size-icon-sm);
+  block-size: var(--medo-size-icon-sm);
+}
+
+.medo-button--icon-only.medo-button--lg {
+  inline-size: var(--medo-size-control-lg);
+}
+
+.medo-button--icon-only.medo-button--lg .medo-button__icon {
+  inline-size: var(--medo-size-icon-lg);
+  block-size: var(--medo-size-icon-lg);
 }
