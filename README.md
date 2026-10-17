@@ -145,12 +145,13 @@ Available: **Button**. More components follow the Figma library (C00–C44).
 - Focus is always visible (`:focus-visible`), with a fallback for Windows high contrast mode.
 - Motion respects `prefers-reduced-motion`.
 
-## Deployment (storybook.med-o.de)
+## Deployment (design.med-o.de)
 
 The repository contains a `Dockerfile`: it builds the Storybook and serves it with nginx.
 
-1. DNS: A record `storybook` → server IP.
-2. Coolify: new resource from this GitHub repository, build pack **Dockerfile**, port **80**, domain `https://storybook.med-o.de`.
+1. DNS: A records `design` and `storybook` → server IP.
+2. Coolify: resource from this GitHub repository, build pack **Dockerfile**, port **80**, domains `https://design.med-o.de,https://storybook.med-o.de`.
+   `storybook.med-o.de` redirects permanently to `design.med-o.de` (see `nginx.conf`).
 3. Every push to `main` builds and deploys again (Coolify webhook / auto deploy).
 
 ## Previous version
