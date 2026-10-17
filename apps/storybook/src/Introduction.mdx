@@ -1,0 +1,58 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Introduction" />
+
+# med.o Design System
+
+Rules for look, function and behaviour of med.o products – framework-neutral.
+**Figma is the source of truth.** This Storybook shows the code side: design tokens, CSS, Tailwind theme and components.
+
+- Figma: [med.o Design System](https://www.figma.com/design/vOTfMtcpCwAJjuSZUkfpfj)
+- Theme: use the **paintbrush / theme switch** in the toolbar (Light / Dark). Every story and token table follows it.
+- Accessibility: every story is checked with axe (panel **Accessibility**). Target: WCAG 2.2 AA.
+
+## Packages
+
+| Package | What it contains | Works with |
+| --- | --- | --- |
+| `@medo/design-tokens` | DTCG source, CSS variables (`--medo-*`), text style classes, Tailwind v4 theme, JS values | every framework, plain HTML |
+| `@medo/ui` | Components. Styles are plain CSS classes (`medo-button …`), React components on top | React today; the CSS can be reused by Vue, Angular, HTML |
+
+## Use the tokens in any project
+
+```css
+/* main.css */
+@import "@medo/design-tokens/css";            /* variables, light + dark */
+@import "@medo/design-tokens/css/typography.css"; /* optional: .medo-text-* classes */
+```
+
+```css
+.card {
+  background: var(--medo-color-surface-raised);
+  color: var(--medo-color-text-primary);
+  padding: var(--medo-space-6);
+  border-radius: var(--medo-radius-lg);
+  box-shadow: var(--medo-shadow-elevation-2);
+}
+```
+
+## Light and Dark
+
+The tokens follow the operating system automatically. To force a theme, set `data-theme` on `<html>`
+(or on any element – then only that area changes):
+
+```html
+<html data-theme="dark">   <!-- "light", "dark" or no attribute = system -->
+```
+
+## Fonts
+
+DM Sans and DM Mono (SIL Open Font License). Self-host them, e.g. with `@fontsource/dm-sans` – no request to Google.
+
+## Updating tokens from Figma
+
+1. Change variables or styles in Figma.
+2. Export them to `figma/variables.json` (see README).
+3. `npm run tokens:from-figma` → `npm run build:tokens`.
+
+Never edit the generated files (`packages/tokens/src`, `dist`) by hand.

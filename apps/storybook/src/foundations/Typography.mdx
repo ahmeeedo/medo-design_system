@@ -1,0 +1,26 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import { TypeScale, SimpleTable } from './components/TokenDocs';
+
+<Meta title="Foundations/Typography" />
+
+# Typography
+
+DM Sans for UI and text, DM Mono for code. Sizes are in `rem`, so they follow the user's browser font size.
+
+Use a text style as a whole – three ways, same result:
+
+```html
+<p class="medo-text-body-md">…</p>          <!-- plain CSS class -->
+<p class="text-body-md">…</p>               <!-- Tailwind -->
+```
+```css
+p { font: var(--medo-typography-body-md); } /* shorthand (no letter spacing) */
+```
+
+<TypeScale />
+
+## Font tokens
+<SimpleTable path={['font', 'family']} />
+<SimpleTable path={['font', 'size']} />
+<SimpleTable path={['font', 'weight']} />
+<SimpleTable path={['font', 'tracking']} />

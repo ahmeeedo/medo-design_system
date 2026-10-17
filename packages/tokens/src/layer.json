@@ -1,0 +1,49 @@
+{
+  "layer": {
+    "base": {
+      "$type": "number",
+      "$value": 0,
+      "$description": "z-index"
+    },
+    "raised": {
+      "$type": "number",
+      "$value": 10,
+      "$description": "z-index"
+    },
+    "dropdown": {
+      "$type": "number",
+      "$value": 100,
+      "$description": "z-index"
+    },
+    "sticky": {
+      "$type": "number",
+      "$value": 200,
+      "$description": "z-index"
+    },
+    "overlay": {
+      "$type": "number",
+      "$value": 300,
+      "$description": "z-index"
+    },
+    "modal": {
+      "$type": "number",
+      "$value": 400,
+      "$description": "z-index"
+    },
+    "popover": {
+      "$type": "number",
+      "$value": 500,
+      "$description": "z-index"
+    },
+    "toast": {
+      "$type": "number",
+      "$value": 600,
+      "$description": "z-index"
+    },
+    "tooltip": {
+      "$type": "number",
+      "$value": 700,
+      "$description": "z-index"
+    }
+  }
+}

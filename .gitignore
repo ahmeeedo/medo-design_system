@@ -1,6 +1,5 @@
 node_modules/
 dist/
-dist-lib/
+storybook-static/
+*.log
 .DS_Store
-.apm/
-.claude/

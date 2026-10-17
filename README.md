@@ -1,180 +1,170 @@
-# med.o Design System
+# med.o Design System – Code
 
-Komponenten-Bibliothek und Gestaltungsgrundlagen von med.o: 37 React-Komponenten
-auf einem dreistufigen Token-System mit hellem und dunklem Theme, dazu ein
-Doku-Portal, das jede Komponente bedienbar zeigt.
-
-Das Repository enthält zwei Dinge:
-
-- **das Paket `@medo/design-system`** — die Komponenten und ihre Stile, zur
-  Einbindung in andere Projekte
-- **das Doku-Portal** — 45 Seiten auf 46 Routen, davon 35 Komponentenseiten mit
-  Varianten, Zuständen, Props-Vertrag und Barrierefreiheit
+Design tokens, CSS, Tailwind v4 theme, React components and Storybook for the **med.o Design System**.
+Figma is the source of truth: [med.o Design System in Figma](https://www.figma.com/design/vOTfMtcpCwAJjuSZUkfpfj).
 
 ---
 
-## Schnellstart
+## Schnellstart (Deutsch)
 
-```bash
-npm ci
-npm run dev      # Doku-Portal auf http://localhost:5173
-```
+1. **Node.js 24 LTS** installieren (22 geht auch): <https://nodejs.org> (Installer „LTS“).
+2. Diesen Ordner in einem Terminal öffnen (Windows: Ordner öffnen → Adresszeile → `cmd` eingeben → Enter).
+3. Einmalig die Pakete laden:
+   ```
+   npm install
+   ```
+4. Storybook starten:
+   ```
+   npm run storybook
+   ```
+   Der Browser öffnet <http://localhost:6006>. Oben in der Leiste kannst du zwischen Light und Dark umschalten.
 
-| Skript | Wirkung |
-|---|---|
-| `npm run dev` | Entwicklungsserver für das Portal |
-| `npm run build` | Portal-Build nach `dist/` |
-| `npm run build:lib` | Paket-Build nach `dist-lib/` |
-| `npm run preview` | gebautes Portal lokal ausliefern |
-| `npm test` | Testsuite |
-| `npm run search-index` | Suchindex des Portals neu erzeugen |
-| `npm run contrast` | Kontrastbericht nach `docs/` |
+Weitere Befehle:
 
----
-
-## Wohin von hier
-
-| Ihre Frage | Ort |
-|---|---|
-| Ich will das System **in einem anderen Projekt** verwenden. | **[HANDOFF.md](HANDOFF.md)** — Installation, Stile, Schrift und Icons, Theme, Tokens, Typen, Grenzen |
-| Ich arbeite **in diesem Repository**. | **[DEVELOPMENT.md](DEVELOPMENT.md)** — Tokens und Theme ändern, Komponenten bearbeiten, Doku-Seiten anlegen, Tests, Abnahme |
-| Habe ich beim Arbeiten etwas vergessen? | **[editors-doc.md](editors-doc.md)** — Checklisten und stumme Fallen |
-| Wie sieht Komponente X aus, was kann sie? | Das Portal: `npm run dev` |
-| Was ist die verbindliche Gestaltungsvorgabe? | [`design-reference/`](design-reference/) — ausschließlich lesend |
-
-Diese Datei wiederholt den Inhalt der drei Dokumente nicht. Sie ist der
-Einstieg, nicht die Anleitung.
+| Befehl | Was passiert |
+| --- | --- |
+| `npm run tokens:from-figma` | Wandelt den Figma-Export (`figma/variables.json`) in DTCG-Token-Dateien um |
+| `npm run build:tokens` | Erzeugt CSS-Variablen, Tailwind-Theme, JS und Doku-Daten |
+| `npm run build-storybook` | Baut Storybook als statische Website (Ordner `apps/storybook/storybook-static`) |
 
 ---
 
-## Einbindung als Paket — in Kürze
-
-Das Paket wird als Git-Abhängigkeit eingebunden, nicht über eine Registry. Das
-Repository ist öffentlich; die Adresse braucht kein Zugangstoken.
-
-```bash
-npm install github:ahmeeedo/medo-design_system
-```
-
-```js
-import '@medo/design-system/styles.css'
-import 'material-symbols/rounded.css'
-
-import { Button, Icon } from '@medo/design-system'
-```
-
-Vier Dinge, an denen eine Einbindung erfahrungsgemäß scheitert — alle vier sind
-in [HANDOFF.md](HANDOFF.md) ausgeschrieben:
-
-1. **In Next.js mit App Router brauchen 27 der 37 Module eine eigene
-   Client-Grenze**, die übrigen zehn nicht. Das Paket trägt keine
-   `'use client'`-Direktive; für die 27 schlägt ein direkter Import in eine
-   Server-Komponente fehl.
-2. **Der Icon-Import braucht die Endung `.css`.** Ohne ihn erscheinen die
-   Ligaturnamen als Text.
-3. **Das Paket setzt keine Grundschrift** auf `html` oder `body`. Eine Zeile
-   `body { font-family: var(--medo-font-sans) }` gehört in Ihr Stylesheet.
-4. **Nur die semantische Token-Ebene folgt dem Theme.** Brand- und Alias-Ebene
-   sind in Hell und Dunkel identisch.
-
-Das Theme wird über `data-theme` am `<html>`-Element gesteuert (`light`, `dark`,
-oder nicht gesetzt — dann folgt es der Systemeinstellung).
-
-**Aktualisieren Sie eine bestehende Einbindung?** `Textarea` hat die Props
-`size` und `resize` verloren, und `Tabs.scrollable` ist wirkungslos geworden.
-Die nötigen Schritte stehen in
-[HANDOFF.md — Versionierung und Aktualisieren](HANDOFF.md#11-versionierung-und-aktualisieren).
-
----
-
-## Projektstruktur
+## Structure
 
 ```
-src/
-├── components/             # 37 portierte Komponenten, je <Name>/<Name>.jsx + .css
-│   └── index.js            # Barrel-Export, zugleich Einstiegspunkt des Pakets
-├── types/                  # 37 Props-Vertraege, Kopien aus dem Design-Projekt
-├── styles/
-│   ├── medo/               # die acht Token-Dateien, Spiegel von design-reference/tokens/
-│   ├── medo-tokens.css     # Token-Einstiegspunkt: Brand -> Alias -> Semantic
-│   ├── medo-theme.css      # Semantic-Ebene als light-dark()-Paare
-│   ├── medo-theme-components.css  # dunkle Entsprechung fuer feste Farbwerte im Komponenten-CSS
-│   ├── fonts.css           # lokale DM Sans / DM Mono
-│   ├── icons.css           # Achsenregel Material Symbols Rounded
-│   └── global.css          # Portal: Ladekette, @theme inline, :root, Basis-Layer
-├── lib/tokens.js           # Fundament-Einstiegspunkt des Paket-Builds
-├── docs/                   # Portal-Rahmen: Layout, Suche, Tabs, Theme-Schalter
-├── pages/                  # 45 Dokumentationsseiten
-├── config/                 # erzeugter Suchindex (searchData.js, sectionData.js)
-├── i18n/                   # Konfiguration und locales/de.json, en.json
-├── fonts/                  # woff2-Schnitte
-├── App.jsx                 # Routing-Tabelle
-└── main.jsx                # React-Einstiegspunkt des Portals
-scripts/                    # Suchindex-Generator, Kontrastwerkzeug, Paket-Build
-design-reference/           # Gestaltungsvorgabe, ausschliesslich lesend
+figma/variables.json          Raw export from Figma (variables, text styles, effect styles)
+scripts/figma-export.js       Runs inside Figma and produces figma/variables.json
+scripts/figma-to-dtcg.mjs     Converts the export to DTCG token files
+packages/tokens               @medo/design-tokens
+  src/                        DTCG tokens (generated, do not edit)
+  build.mjs                   Style Dictionary build
+  dist/css/tokens.css         CSS variables --medo-*, Light + Dark + responsive layout
+  dist/css/typography.css     Text style classes .medo-text-*
+  dist/tailwind/theme.css     Tailwind v4 theme on top of the CSS variables
+  dist/js/tokens.js           Resolved values for JavaScript
+  dist/docs/*.json            Flat token lists (used by Storybook)
+packages/ui                   @medo/ui – components (plain CSS + React)
+apps/storybook                Documentation and playground
 ```
 
----
+## How the pipeline works
 
-## Gestaltungsgrundlagen
-
-Alle Gestaltungsentscheidungen liegen als CSS Custom Properties mit dem Präfix
-`--medo-` in den acht Dateien unter [`src/styles/medo/`](src/styles/medo/), die
-[`src/styles/medo-tokens.css`](src/styles/medo-tokens.css) in der Reihenfolge
-Brand → Alias → Semantic einbindet. Diese acht Dateien sind ein Spiegel des
-Design-Projekts und werden hier nicht geändert.
-
-**Goldene Regel:** Keine Farb-, Abstands-, Radius- oder Schattenwerte hartkodieren
-— immer auf ein Token referenzieren, bevorzugt auf die semantische Ebene.
-
-Die vollständige Übersicht mit allen Rollen und ihren Werten in beiden Themes
-steht im Portal auf den Seiten „Farben · Ebene 3 Semantic" und „Grundlagen".
-
----
-
-## Komponenten
-
-```jsx
-import { Button, TextInput, Modal } from './components'       // im Repository
-import { Button, TextInput, Modal } from '@medo/design-system' // als Paket
+```
+Figma variables & styles
+   │  scripts/figma-export.js (inside Figma)
+   ▼
+figma/variables.json
+   │  npm run tokens:from-figma
+   ▼
+packages/tokens/src/*.json   (DTCG format – the open standard of the W3C Design Tokens Community Group)
+   │  npm run build:tokens   (Style Dictionary)
+   ▼
+CSS variables · Tailwind theme · JS · docs JSON
 ```
 
-37 Module mit 48 benannten Exporten. Wo ein Modul mehr als seinen Namensgeber
-exportiert, stehen die weiteren Exporte dahinter:
+**Never edit generated files by hand.** Change Figma, export, rebuild.
 
-`Accordion` · `Avatar` (`Avatar`, `medoAvatarInitials`) · `Breadcrumb` ·
-`Button` · `Checkbox` (`Checkbox`, `CheckboxGroup`) ·
-`CodeSnippet` · `ContainedList` · `ContentSwitcher` · `DataTable` ·
-`DatePicker` (`DatePicker`, `TimeSlots`) · `Dropdown` (`Dropdown`, `MenuList`) ·
-`Field` · `FileUploader` · `Icon` · `InlineLoading` · `Link` ·
-`List` (`List`, `KeyValueList`) · `Loading` (`Loading`, `Skeleton`) · `Menu` ·
-`MenuButtons` (`MenuButton`, `SplitButton`, `IconMenuButton`) · `Modal` ·
-`Notification` (`Notification`, `ToastHost`, `toast`) · `NumberInput` ·
-`Pagination` · `Popover` · `ProgressBar` · `ProgressIndicator` ·
-`Radio` (`Radio`, `RadioGroup`) · `Search` · `Select` · `Slider` · `Tabs` · `Tag` ·
-`Textarea` · `TextInput` · `Toggle` · `Tooltip`
+### Updating tokens from Figma
 
-Der Props-Vertrag jeder Komponente steht im Portal auf ihrer Seite im Tab „Code",
-daneben Varianten, Zustände und Barrierefreiheit. Diese Datei wiederholt ihn
-bewusst nicht: das Portal entsteht aus den Spezifikationen in
-`design-reference/components/` und kann deshalb nicht mit der Umsetzung
-auseinanderlaufen, eine zweite Abschrift hier könnte es.
+1. Change variables or styles in Figma.
+2. Run `scripts/figma-export.js` inside Figma (for example via Claude with the Figma connector, or a plugin that runs code such as Scripter) and save the result as `figma/variables.json`.
+3. `npm run tokens:from-figma && npm run build:tokens`
+4. Check the changes in Storybook, then commit.
 
----
+## Using the tokens
 
-## Technischer Rahmen
+### Any framework or plain HTML
 
-| Baustein | Version | Zweck |
-|---|---|---|
-| React | 18 | Komponenten |
-| Vite | 5 | Build und Entwicklungsserver |
-| Tailwind CSS | 4 | Utility-Klassen im Portal, ausschließlich auf `--medo-*`-Tokens |
-| react-router-dom | 6 | Routing im Portal |
-| react-i18next | 17 | Übersetzungen im Portal |
-| Vitest | 3 | Tests |
-| material-symbols | 0.44 | Icon-Schrift (Material Symbols Rounded, weight 300, FILL 0) |
-| DM Sans, DM Mono | — | Schriften, lokal ausgeliefert |
+```css
+@import "@medo/design-tokens/css";
+@import "@medo/design-tokens/css/typography.css"; /* optional */
 
-Tailwind, Routing und Übersetzungen betreffen **nur das Portal**. Das
-ausgelieferte Paket enthält keine dieser Abhängigkeiten; der Paket-Build bricht
-ab, wenn eine davon hineingerät.
+.card {
+  background: var(--medo-color-surface-raised);
+  color: var(--medo-color-text-primary);
+  padding: var(--medo-space-6);
+  border-radius: var(--medo-radius-lg);
+  box-shadow: var(--medo-shadow-elevation-2);
+}
+```
+
+### Tailwind CSS v4
+
+```css
+@import "tailwindcss";
+@import "@medo/design-tokens/css";
+@import "@medo/design-tokens/tailwind";
+```
+
+```html
+<div class="bg-surface-raised text-text-primary p-6 rounded-lg shadow-elevation-2">
+  <h2 class="text-heading-md">Title</h2>
+  <p class="text-body-sm text-text-secondary">Text</p>
+</div>
+```
+
+- Only system values exist (default Tailwind colors, shadows, radii and text sizes are removed).
+- Spacing: one Tailwind step = `space/1` (4 px). `p-4` = `space/4`, `p-0.5` = `space/0-5`.
+- Tailwind only finds **complete** class names in the code. Never build class names from variables.
+
+### Light and Dark
+
+The tokens follow the operating system. Force a theme with `data-theme` on `<html>` or on any element:
+
+```html
+<html data-theme="dark">  <!-- "light" | "dark" | no attribute = system -->
+```
+
+### Responsive layout tokens
+
+`--medo-layout-columns`, `-gutter`, `-margin`, `-section` change automatically:
+Mobile (default), Tablet (≥ 640 px), Desktop (≥ 1024 px).
+
+### Fonts
+
+DM Sans and DM Mono (SIL Open Font License). Self-host them, for example with `@fontsource/dm-sans` and `@fontsource/dm-mono`.
+
+## Components
+
+`@medo/ui` keeps the styles in **plain CSS** (`medo-button`, `medo-button--primary`, `medo-button--md`) and adds thin React components on top.
+Vue, Angular or plain HTML can reuse the same CSS classes; only the small wrapper has to be written per framework.
+
+```tsx
+import { Button } from '@medo/ui';
+import '@medo/ui/styles.css';
+
+<Button variant="primary" size="md">Save</Button>
+```
+
+Available: **Button**. More components follow the Figma library (C00–C44).
+
+## Accessibility
+
+- Target: WCAG 2.2 AA. Contrast values are documented in the token descriptions.
+- Storybook checks every story with axe (panel “Accessibility”).
+- Focus is always visible (`:focus-visible`), with a fallback for Windows high contrast mode.
+- Motion respects `prefers-reduced-motion`.
+
+## Deployment (storybook.med-o.de)
+
+The repository contains a `Dockerfile`: it builds the Storybook and serves it with nginx.
+
+1. DNS: A record `storybook` → server IP.
+2. Coolify: new resource from this GitHub repository, build pack **Dockerfile**, port **80**, domain `https://storybook.med-o.de`.
+3. Every push to `main` builds and deploys again (Coolify webhook / auto deploy).
+
+## Previous version
+
+Version 1 (own component library with documentation portal) is kept in the Git history under the tag **`v1.0.0`**.
+Projects that still use it should pin the tag: `npm install github:ahmeeedo/medo-design_system#v1.0.0`.
+
+## Roadmap
+
+- More components in `@medo/ui` (order of the Figma library).
+- Code examples per framework: one Storybook per framework (React, Vue, Angular), combined with **Storybook Composition** into one site.
+- Publishing the packages (npm or a private registry) with versioning (e.g. Changesets).
+- Automatic token export in CI.
+
+## Tech
+
+Style Dictionary 5 · DTCG token format · Tailwind CSS 4 · React 19 · Storybook 10 (Vite) · Node 24 LTS (≥ 22)

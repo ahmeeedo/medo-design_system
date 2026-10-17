@@ -1,0 +1,30 @@
+{
+  "name": "@medo/design-tokens",
+  "version": "0.1.0",
+  "description": "Design tokens of the med.o Design System (DTCG source, CSS variables, Tailwind v4 theme, JS).",
+  "type": "module",
+  "license": "MIT",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "exports": {
+    "./css": "./dist/css/tokens.css",
+    "./css/tokens.css": "./dist/css/tokens.css",
+    "./css/typography.css": "./dist/css/typography.css",
+    "./tailwind": "./dist/tailwind/theme.css",
+    "./tailwind/theme.css": "./dist/tailwind/theme.css",
+    "./js": {
+      "types": "./dist/js/tokens.d.ts",
+      "default": "./dist/js/tokens.js"
+    },
+    "./docs/*.json": "./dist/docs/*.json",
+    "./src/*": "./src/*"
+  },
+  "scripts": {
+    "build": "node build.mjs"
+  },
+  "devDependencies": {
+    "style-dictionary": "^5.7.0"
+  }
+}

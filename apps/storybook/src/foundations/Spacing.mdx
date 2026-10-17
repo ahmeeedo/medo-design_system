@@ -1,0 +1,28 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import { SpacingScale, Radii, SimpleTable, LayoutTable } from './components/TokenDocs';
+
+<Meta title="Foundations/Spacing & sizes" />
+
+# Spacing & sizes
+
+Spacing uses a 4 px grid. In Tailwind one step is exactly `space/1`, so `p-4` = `space/4` = 16 px.
+
+## Spacing
+<SpacingScale />
+
+## Radius
+<Radii />
+
+## Control and icon sizes
+<SimpleTable path={['size']} />
+
+## Layout (responsive)
+These tokens change with the screen width – one variable, three values.
+<LayoutTable />
+
+## Breakpoints and containers
+<SimpleTable path={['breakpoint']} />
+<SimpleTable path={['container']} />
+
+## Layers (z-index)
+<SimpleTable path={['layer']} />

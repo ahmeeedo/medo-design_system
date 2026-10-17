@@ -1,12 +1,6 @@
-# Reference material is mirrored byte-for-byte from the design project.
-# core.autocrlf must not rewrite line endings on checkout.
-design-reference/** -text
+# Normalize line endings: LF in the repository, whatever the editor on Windows does.
+* text=auto eol=lf
 
-# Font binaries
 *.woff2 binary
-
-# Consumed by Linux tooling on deploy. A CR from autocrlf would end up in
-# the line continuation and in nginx directives.
-Dockerfile text eol=lf
-nginx.conf text eol=lf
-.dockerignore text eol=lf
+*.png binary
+*.jpg binary

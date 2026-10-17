@@ -1,0 +1,21 @@
+{
+  "name": "@medo/ui",
+  "version": "0.1.0",
+  "description": "React components of the med.o Design System. Styles are plain CSS on top of @medo/design-tokens and can be reused by other frameworks.",
+  "type": "module",
+  "license": "MIT",
+  "exports": {
+    ".": "./src/index.ts",
+    "./styles.css": "./src/styles.css"
+  },
+  "sideEffects": [
+    "*.css"
+  ],
+  "dependencies": {
+    "@medo/design-tokens": "0.1.0"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  }
+}

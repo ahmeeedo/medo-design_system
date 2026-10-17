@@ -1,0 +1,182 @@
+/**
+ * Button – med.o Design System (Figma: C01 Button)
+ *
+ * Plain CSS on top of the design tokens. The same classes work in React, Vue,
+ * Angular or plain HTML:
+ *   <button class="medo-button medo-button--primary medo-button--md">Save</button>
+ *
+ * Variants: primary · secondary · ghost · danger · text · ghost-danger
+ * Sizes:    sm (32) · md (40) · lg (48)
+ * States:   :hover · :active (pressed) · :focus-visible · :disabled / aria-disabled
+ */
+
+.medo-button {
+  /* Private custom properties set by the variants. */
+  --_bg: transparent;
+  --_bg-hover: var(--_bg);
+  --_bg-pressed: var(--_bg-hover);
+  --_fg: var(--medo-color-text-primary);
+  --_fg-hover: var(--_fg);
+  --_fg-pressed: var(--_fg-hover);
+  --_focus: var(--medo-shadow-focus-ring-inset);
+
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--medo-space-2);
+  block-size: var(--medo-size-control-md);
+  padding-block: 0;
+  padding-inline: var(--medo-space-4);
+  border: 0;
+  border-radius: var(--medo-radius-md);
+  background-color: var(--_bg);
+  color: var(--_fg);
+  font: var(--medo-typography-label-md);
+  letter-spacing: var(--medo-font-tracking-normal);
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    background-color var(--medo-motion-duration-fast) var(--medo-motion-easing-standard),
+    color var(--medo-motion-duration-fast) var(--medo-motion-easing-standard),
+    box-shadow var(--medo-motion-duration-fast) var(--medo-motion-easing-standard);
+}
+
+.medo-button:hover {
+  background-color: var(--_bg-hover);
+  color: var(--_fg-hover);
+}
+
+.medo-button:active {
+  background-color: var(--_bg-pressed);
+  color: var(--_fg-pressed);
+}
+
+.medo-button:focus-visible {
+  outline: none;
+  box-shadow: var(--_focus);
+}
+
+/* Windows high contrast mode hides box-shadows: fall back to a real outline. */
+@media (forced-colors: active) {
+  .medo-button:focus-visible {
+    outline: var(--medo-focus-ring-width) solid CanvasText;
+    outline-offset: 2px;
+  }
+}
+
+/* Disabled: never only by opacity, the colors keep the label readable for the layout. */
+.medo-button:disabled,
+.medo-button[aria-disabled='true'] {
+  --_bg: var(--medo-color-action-disabled);
+  --_bg-hover: var(--_bg);
+  --_bg-pressed: var(--_bg);
+  --_fg: var(--medo-color-text-disabled);
+  --_fg-hover: var(--_fg);
+  cursor: not-allowed;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .medo-button {
+    transition: none;
+  }
+}
+
+/* ---------- Sizes ---------- */
+
+.medo-button--sm {
+  gap: var(--medo-space-1);
+  block-size: var(--medo-size-control-sm);
+  padding-inline: var(--medo-space-3);
+}
+
+.medo-button--lg {
+  block-size: var(--medo-size-control-lg);
+  padding-inline: var(--medo-space-5);
+  font: var(--medo-typography-label-lg);
+}
+
+.medo-button__icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  inline-size: var(--medo-size-icon-sm);
+  block-size: var(--medo-size-icon-sm);
+}
+
+.medo-button--lg .medo-button__icon {
+  inline-size: var(--medo-size-icon-md);
+  block-size: var(--medo-size-icon-md);
+}
+
+.medo-button__icon > svg {
+  inline-size: 100%;
+  block-size: 100%;
+}
+
+/* ---------- Variants ---------- */
+
+.medo-button--primary {
+  --_bg: var(--medo-color-action-primary);
+  --_bg-hover: var(--medo-color-action-primary-hover);
+  --_bg-pressed: var(--medo-color-action-primary-pressed);
+  --_fg: var(--medo-color-text-on-action);
+}
+
+.medo-button--secondary {
+  --_bg: var(--medo-color-action-secondary);
+  --_bg-hover: var(--medo-color-action-secondary-hover);
+  --_bg-pressed: var(--medo-color-action-secondary-pressed);
+  --_fg: var(--medo-color-text-primary);
+}
+
+.medo-button--danger {
+  --_bg: var(--medo-color-action-danger);
+  --_bg-hover: var(--medo-color-action-danger-hover);
+  --_bg-pressed: var(--medo-color-action-danger-pressed);
+  --_fg: var(--medo-color-text-on-danger);
+}
+
+.medo-button--ghost {
+  --_bg-hover: var(--medo-color-state-hover);
+  --_bg-pressed: var(--medo-color-state-pressed);
+  --_fg: var(--medo-color-text-primary);
+  --_focus: inset 0 0 0 var(--medo-focus-ring-width) var(--medo-color-focus-ring);
+}
+
+.medo-button--ghost-danger {
+  --_bg-hover: var(--medo-color-feedback-danger-surface);
+  --_bg-pressed: var(--medo-color-state-pressed);
+  --_fg: var(--medo-color-text-danger);
+  --_focus: inset 0 0 0 var(--medo-focus-ring-width) var(--medo-color-focus-ring);
+}
+
+.medo-button--text {
+  --_fg: var(--medo-color-text-brand);
+  --_fg-hover: var(--medo-color-text-brand-hover);
+  --_fg-pressed: var(--medo-color-text-brand-pressed);
+  padding-inline: 0;
+  border-radius: var(--medo-radius-sm);
+}
+
+.medo-button--text:hover,
+.medo-button--text:active {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.medo-button--text:focus-visible {
+  box-shadow: none;
+  outline: var(--medo-focus-ring-width) solid var(--medo-color-focus-ring);
+  outline-offset: 2px;
+}
+
+/* Ghost, ghost danger and text buttons have no fill when disabled. */
+.medo-button--ghost:is(:disabled, [aria-disabled='true']),
+.medo-button--ghost-danger:is(:disabled, [aria-disabled='true']),
+.medo-button--text:is(:disabled, [aria-disabled='true']) {
+  --_bg: transparent;
+  text-decoration: none;
+}

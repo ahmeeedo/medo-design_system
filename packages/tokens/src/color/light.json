@@ -1,0 +1,487 @@
+{
+  "color": {
+    "focus": {
+      "ring": {
+        "$type": "color",
+        "$value": "{color.info.600}",
+        "$description": "Focus ring color for all interactive elements. info/600 (sky/600) in both modes. Contrast ≥ 3:1 to focus/halo."
+      },
+      "halo": {
+        "$type": "color",
+        "$value": "{color.white.0}",
+        "$description": "Solid halo between element and focus ring. Guarantees ring contrast on any surface (white / neutral-950)."
+      }
+    },
+    "shadow": {
+      "ambient": {
+        "$type": "color",
+        "$value": "{color.slate-alpha.6}",
+        "$description": "Soft, close shadow layer of every elevation level."
+      },
+      "key": {
+        "$type": "color",
+        "$value": "{color.slate-alpha.10}",
+        "$description": "Directional shadow layer for elevation 1–2."
+      },
+      "key-strong": {
+        "$type": "color",
+        "$value": "{color.slate-alpha.16}",
+        "$description": "Directional shadow layer for elevation 3–4."
+      }
+    },
+    "surface": {
+      "canvas": {
+        "$type": "color",
+        "$value": "{color.neutral.50}",
+        "$description": "Page background."
+      },
+      "default": {
+        "$type": "color",
+        "$value": "{color.white.0}",
+        "$description": "Default surface: cards, inputs, panels."
+      },
+      "raised": {
+        "$type": "color",
+        "$value": "{color.white.0}",
+        "$description": "Floating surface with elevation: dropdowns, dialogs, popovers. One step lighter in Dark."
+      },
+      "subtle": {
+        "$type": "color",
+        "$value": "{color.neutral.100}",
+        "$description": "Subtle emphasis: table headers, hover rows, code blocks."
+      },
+      "brand-subtle": {
+        "$type": "color",
+        "$value": "{color.primary.50}",
+        "$description": "Brand-tinted surface: highlighted areas, info boxes, selected rows. Use text/primary and text/secondary."
+      },
+      "brand-muted": {
+        "$type": "color",
+        "$value": "{color.primary.100}",
+        "$description": "Hover and selected state on brand-subtle surfaces."
+      },
+      "brand-bold": {
+        "$type": "color",
+        "$value": "{color.primary.600}",
+        "$description": "Bold brand surface: hero banners, CTA sections. Use only text/on-brand*."
+      },
+      "inverse": {
+        "$type": "color",
+        "$value": "{color.neutral.900}",
+        "$description": "Inverted surface: tooltips, snackbars. Dark in Light mode, light in Dark mode."
+      },
+      "thumb": {
+        "$type": "color",
+        "$value": "{color.white.0}",
+        "$description": "Selected thumb inside a contained control (contained Tabs). Sits on surface/subtle."
+      },
+      "on-media": {
+        "$type": "color",
+        "$value": "{color.white-alpha.16}",
+        "$description": "Subtle light surface on overlay/media: progress track, chips on images. Same in both themes."
+      }
+    },
+    "text": {
+      "primary": {
+        "$type": "color",
+        "$value": "{color.neutral.900}",
+        "$description": "Main text and headings. ≥ 13.9:1 on all surfaces."
+      },
+      "secondary": {
+        "$type": "color",
+        "$value": "{color.neutral.600}",
+        "$description": "Supporting text, descriptions, placeholders. ≥ 5.5:1 on all surfaces."
+      },
+      "disabled": {
+        "$type": "color",
+        "$value": "{color.neutral.400}",
+        "$description": "Disabled text only (exempt from WCAG contrast). Never for readable content."
+      },
+      "on-brand": {
+        "$type": "color",
+        "$value": "{color.white.0}",
+        "$description": "Text on surface/brand-bold. 7.6:1 Light, 9.8:1 Dark."
+      },
+      "on-brand-secondary": {
+        "$type": "color",
+        "$value": "{color.primary.100}",
+        "$description": "Supporting text on surface/brand-bold. 6.3:1 Light, 8.1:1 Dark."
+      },
+      "on-action": {
+        "$type": "color",
+        "$value": "{color.white.0}",
+        "$description": "Text and icons on primary actions. Light: white. Dark: neutral/950 on the lighter primary."
+      },
+      "on-danger": {
+        "$type": "color",
+        "$value": "{color.white.0}",
+        "$description": "Text and icons on danger actions (action/danger). White in both modes."
+      },
+      "brand": {
+        "$type": "color",
+        "$value": "{color.primary.700}",
+        "$description": "Brand-colored text: text buttons, links. 9.4:1 Light, ≥ 6.5:1 Dark."
+      },
+      "brand-hover": {
+        "$type": "color",
+        "$value": "{color.primary.800}",
+        "$description": "Brand text hover."
+      },
+      "brand-pressed": {
+        "$type": "color",
+        "$value": "{color.primary.900}",
+        "$description": "Brand text pressed."
+      },
+      "danger": {
+        "$type": "color",
+        "$value": "{color.danger.700}",
+        "$description": "Error messages and required markers. 6.4:1 Light, 6.2:1 Dark."
+      },
+      "inverse": {
+        "$type": "color",
+        "$value": "{color.white.0}",
+        "$description": "Text on surface/inverse."
+      },
+      "inverse-secondary": {
+        "$type": "color",
+        "$value": "{color.neutral.400}",
+        "$description": "Secondary text on surface/inverse (shortcuts, meta)."
+      },
+      "on-media": {
+        "$type": "color",
+        "$value": "{color.white.0}",
+        "$description": "Text and icons on top of images, always on overlay/media. White in both themes."
+      }
+    },
+    "border": {
+      "default": {
+        "$type": "color",
+        "$value": "{color.neutral.200}",
+        "$description": "Decorative borders and dividers (cards, separators). Not for input boundaries."
+      },
+      "strong": {
+        "$type": "color",
+        "$value": "{color.neutral.500}",
+        "$description": "Boundaries of interactive controls (inputs, checkboxes). ≥ 3:1 on all surfaces."
+      },
+      "strong-hover": {
+        "$type": "color",
+        "$value": "{color.neutral.600}",
+        "$description": "Hover boundary of controls."
+      },
+      "brand": {
+        "$type": "color",
+        "$value": "{color.primary.200}",
+        "$description": "Decorative border around brand-subtle surfaces."
+      },
+      "danger": {
+        "$type": "color",
+        "$value": "{color.danger.600}",
+        "$description": "Boundary of controls with an error. 4.6:1 Light, 6.2:1 Dark."
+      },
+      "media": {
+        "$type": "color",
+        "$value": "{color.slate-alpha.10}",
+        "$description": "Hairline around images and media so light images do not bleed into light surfaces."
+      }
+    },
+    "action": {
+      "primary": {
+        "$type": "color",
+        "$value": "{color.primary.600}",
+        "$description": "Primary button fill and checked controls. Light: white text 7.6:1. Dark: lighter primary with dark text 6.1:1, 4.4:1 vs raised surfaces."
+      },
+      "primary-hover": {
+        "$type": "color",
+        "$value": "{color.primary.700}",
+        "$description": "Primary button hover."
+      },
+      "primary-pressed": {
+        "$type": "color",
+        "$value": "{color.primary.800}",
+        "$description": "Primary button pressed."
+      },
+      "secondary": {
+        "$type": "color",
+        "$value": "{color.neutral.200}",
+        "$description": "Secondary button fill. text/primary 14.5:1 Light, 9.9:1 Dark."
+      },
+      "secondary-hover": {
+        "$type": "color",
+        "$value": "{color.neutral.300}",
+        "$description": "Secondary button hover."
+      },
+      "secondary-pressed": {
+        "$type": "color",
+        "$value": "{color.neutral.400}",
+        "$description": "Secondary button pressed. text/primary ≥ 4.5:1."
+      },
+      "danger": {
+        "$type": "color",
+        "$value": "{color.danger.600}",
+        "$description": "Danger button fill. text/on-danger 4.8:1."
+      },
+      "danger-hover": {
+        "$type": "color",
+        "$value": "{color.danger.700}",
+        "$description": "Danger button hover."
+      },
+      "danger-pressed": {
+        "$type": "color",
+        "$value": "{color.danger.800}",
+        "$description": "Danger button pressed."
+      },
+      "disabled": {
+        "$type": "color",
+        "$value": "{color.neutral.100}",
+        "$description": "Disabled fill for filled buttons."
+      },
+      "toggle-off": {
+        "$type": "color",
+        "$value": "{color.neutral.500}",
+        "$description": "Switch track when off. ≥ 3:1 to all surfaces and to the thumb (text/on-action)."
+      },
+      "toggle-off-hover": {
+        "$type": "color",
+        "$value": "{color.neutral.600}",
+        "$description": "Switch track hover when off."
+      },
+      "selected": {
+        "$type": "color",
+        "$value": "{color.primary.100}",
+        "$description": "Selected (pressed) toggle button fill. Text/icon text/brand."
+      },
+      "selected-hover": {
+        "$type": "color",
+        "$value": "{color.primary.200}",
+        "$description": "Selected toggle button hover."
+      },
+      "selected-pressed": {
+        "$type": "color",
+        "$value": "{color.primary.300}",
+        "$description": "Selected toggle button pressed. Text/icon text/brand-hover."
+      }
+    },
+    "state": {
+      "hover": {
+        "$type": "color",
+        "$value": "{color.slate-alpha.8}",
+        "$description": "State layer for hover on transparent interactive elements: 8 % of the text color."
+      },
+      "pressed": {
+        "$type": "color",
+        "$value": "{color.slate-alpha.12}",
+        "$description": "State layer for pressed on transparent interactive elements: 12 % of the text color."
+      },
+      "hover-inverse": {
+        "$type": "color",
+        "$value": "{color.white-alpha.8}",
+        "$description": "State layer for hover on surface/inverse."
+      },
+      "pressed-inverse": {
+        "$type": "color",
+        "$value": "{color.white-alpha.12}",
+        "$description": "State layer for pressed on surface/inverse."
+      },
+      "hover-on-media": {
+        "$type": "color",
+        "$value": "{color.white-alpha.12}",
+        "$description": "State layer for hover on overlay/media. Same in both themes."
+      },
+      "pressed-on-media": {
+        "$type": "color",
+        "$value": "{color.white-alpha.16}",
+        "$description": "State layer for pressed on overlay/media. Same in both themes."
+      }
+    },
+    "overlay": {
+      "scrim": {
+        "$type": "color",
+        "$value": "{color.black-alpha.40}",
+        "$description": "Dims the page behind modal layers (Bottom Sheet, Dialog)."
+      },
+      "media": {
+        "$type": "color",
+        "$value": "{color.black-alpha.60}",
+        "$description": "Dark layer on images: start of the bottom gradient and play button surface. ≥ 5.7:1 for text/on-media even on white images."
+      }
+    },
+    "feedback": {
+      "success": {
+        "surface": {
+          "$type": "color",
+          "$value": "{color.success.50}",
+          "$description": "Success – subtle surface (badge, alert)."
+        },
+        "text": {
+          "$type": "color",
+          "$value": "{color.success.700}",
+          "$description": "Success – text and icons on feedback/success/surface."
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{color.success.200}",
+          "$description": "Success – border (alert), decorative."
+        },
+        "solid": {
+          "$type": "color",
+          "$value": "{color.success.700}",
+          "$description": "Success – strong fill (count, toast) with on-solid text."
+        },
+        "on-solid": {
+          "$type": "color",
+          "$value": "{color.white.0}",
+          "$description": "Text on feedback/success/solid."
+        }
+      },
+      "warning": {
+        "surface": {
+          "$type": "color",
+          "$value": "{color.warning.50}",
+          "$description": "Warning – subtle surface (badge, alert)."
+        },
+        "text": {
+          "$type": "color",
+          "$value": "{color.warning.700}",
+          "$description": "Warning – text and icons on feedback/warning/surface."
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{color.warning.200}",
+          "$description": "Warning – border (alert), decorative."
+        },
+        "solid": {
+          "$type": "color",
+          "$value": "{color.warning.400}",
+          "$description": "Warning – strong fill; use with feedback/warning/on-solid (dark text)."
+        },
+        "on-solid": {
+          "$type": "color",
+          "$value": "{color.neutral.900}",
+          "$description": "Text on feedback/warning/solid."
+        }
+      },
+      "danger": {
+        "surface": {
+          "$type": "color",
+          "$value": "{color.danger.50}",
+          "$description": "Danger – subtle surface (badge, alert)."
+        },
+        "text": {
+          "$type": "color",
+          "$value": "{color.danger.700}",
+          "$description": "Danger – text and icons on feedback/danger/surface."
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{color.danger.200}",
+          "$description": "Danger – border (alert), decorative."
+        },
+        "solid": {
+          "$type": "color",
+          "$value": "{color.danger.700}",
+          "$description": "Danger – strong fill (count, toast) with on-solid text."
+        },
+        "on-solid": {
+          "$type": "color",
+          "$value": "{color.white.0}",
+          "$description": "Text on feedback/danger/solid."
+        }
+      },
+      "info": {
+        "surface": {
+          "$type": "color",
+          "$value": "{color.info.50}",
+          "$description": "Info – subtle surface (badge, alert)."
+        },
+        "text": {
+          "$type": "color",
+          "$value": "{color.info.700}",
+          "$description": "Info – text and icons on feedback/info/surface."
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{color.info.200}",
+          "$description": "Info – border (alert), decorative."
+        },
+        "solid": {
+          "$type": "color",
+          "$value": "{color.info.700}",
+          "$description": "Info – strong fill (count, toast) with on-solid text."
+        },
+        "on-solid": {
+          "$type": "color",
+          "$value": "{color.white.0}",
+          "$description": "Text on feedback/info/solid."
+        }
+      }
+    },
+    "avatar": {
+      "blue": {
+        "surface": {
+          "$type": "color",
+          "$value": "{color.sky.100}"
+        },
+        "text": {
+          "$type": "color",
+          "$value": "{color.sky.700}"
+        }
+      },
+      "violet": {
+        "surface": {
+          "$type": "color",
+          "$value": "{color.violet.100}"
+        },
+        "text": {
+          "$type": "color",
+          "$value": "{color.violet.700}"
+        }
+      },
+      "pink": {
+        "surface": {
+          "$type": "color",
+          "$value": "{color.pink.100}"
+        },
+        "text": {
+          "$type": "color",
+          "$value": "{color.pink.700}"
+        }
+      },
+      "amber": {
+        "surface": {
+          "$type": "color",
+          "$value": "{color.amber.100}"
+        },
+        "text": {
+          "$type": "color",
+          "$value": "{color.amber.700}"
+        }
+      },
+      "green": {
+        "surface": {
+          "$type": "color",
+          "$value": "{color.green.100}"
+        },
+        "text": {
+          "$type": "color",
+          "$value": "{color.green.800}"
+        }
+      },
+      "teal": {
+        "surface": {
+          "$type": "color",
+          "$value": "{color.brand.100}"
+        },
+        "text": {
+          "$type": "color",
+          "$value": "{color.brand.700}"
+        }
+      },
+      "image-border": {
+        "$type": "color",
+        "$value": "{color.border.media}",
+        "$description": "Alias of border/media. Hairline around image avatars."
+      }
+    }
+  }
+}

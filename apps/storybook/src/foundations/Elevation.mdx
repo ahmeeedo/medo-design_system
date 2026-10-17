@@ -1,0 +1,23 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import { Elevation, Motion, SimpleTable } from './components/TokenDocs';
+
+<Meta title="Foundations/Elevation & motion" />
+
+# Elevation & motion
+
+## Elevation
+Shadows reference theme colors, so they adapt to Dark. Focus rings are shadows too (`focus/ring`, `focus/ring-inset`).
+
+<Elevation />
+
+## Blur
+<SimpleTable path={['blur']} />
+
+## Motion
+Default for state changes: `motion/duration/fast` + `motion/easing/standard`.
+Always respect `prefers-reduced-motion`.
+
+<Motion />
+
+## Opacity
+<SimpleTable path={['opacity']} />

@@ -1,0 +1,36 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import { SemanticColors, Palette } from './components/TokenDocs';
+
+<Meta title="Foundations/Colors" />
+
+# Colors
+
+Three layers: **primitives** (raw palette) → **alias** (primary, neutral, success …) → **semantic** (what a color is *for*).
+Use only **semantic** tokens in products. They switch between Light and Dark automatically.
+Every table shows both themes side by side.
+
+## Surfaces
+<SemanticColors groups={['surface', 'overlay']} />
+
+## Text
+<SemanticColors groups={['text']} />
+
+## Borders and focus
+<SemanticColors groups={['border', 'focus']} />
+
+## Actions and states
+<SemanticColors groups={['action', 'state']} />
+
+## Feedback
+<SemanticColors groups={['feedback']} />
+
+## Avatar
+<SemanticColors groups={['avatar']} />
+
+## Shadow colors
+Used inside the elevation tokens, not directly.
+<SemanticColors groups={['shadow']} />
+
+## Palette (primitives)
+For reference only. Products never use these directly.
+<Palette />

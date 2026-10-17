@@ -1,0 +1,15 @@
+/* The same setup a project uses: Tailwind + tokens + component styles. */
+@import 'tailwindcss';
+@import '@medo/design-tokens/css';
+@import '@medo/design-tokens/css/typography.css';
+@import '@medo/design-tokens/tailwind';
+@import '@medo/ui/styles.css';
+
+@source '../src';
+@source '../../../packages/ui/src';
+
+body {
+  background: var(--medo-color-surface-canvas);
+  color: var(--medo-color-text-primary);
+  font-family: var(--medo-font-family-sans);
+}

@@ -1,21 +1,22 @@
-FROM node:20-slim AS build
+# Builds the Storybook (design system documentation) and serves it with nginx.
+# Deploy: Coolify → Build pack "Dockerfile", domain storybook.med-o.de, port 80.
+FROM node:24-slim AS build
 WORKDIR /app
 
-# --ignore-scripts keeps the "prepare" hook (build:lib) from running here:
-# it needs sources that this layer deliberately does not copy yet.
 COPY package.json package-lock.json ./
-RUN npm ci --ignore-scripts
+COPY packages/tokens/package.json packages/tokens/
+COPY packages/ui/package.json packages/ui/
+COPY apps/storybook/package.json apps/storybook/
+RUN npm ci --no-audit --no-fund
 
 COPY . .
-RUN npm run build
+RUN npm run build-storybook
 
 FROM nginx:alpine
 COPY nginx.conf /etc/nginx/conf.d/default.conf
-COPY --from=build /app/dist /usr/share/nginx/html
-
+COPY --from=build /app/apps/storybook/storybook-static /usr/share/nginx/html
 EXPOSE 80
 
-# 127.0.0.1, not localhost: that resolves to ::1 in the container while
-# nginx binds IPv4 only, which fails the check and the deploy with it.
+# 127.0.0.1, not localhost: localhost resolves to ::1 while nginx listens on IPv4.
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s \
-    CMD wget -q --spider http://127.0.0.1/ || exit 1
+  CMD wget -q --spider http://127.0.0.1/ || exit 1
