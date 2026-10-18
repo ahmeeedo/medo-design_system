@@ -19,7 +19,8 @@ const meta = {
       description: {
         component:
           'Square icon-only action. Figma: **C02 Icon Button**. `aria-label` is required because there is no visible label; ' +
-          'add a tooltip for sighted users. Shares the Button styles (`medo-button medo-button--icon-only`).',
+          'it is shown as a tooltip automatically (`tooltip={false}` turns it off, `shortcut` adds a key hint). ' +
+          'Shares the Button styles (`medo-button medo-button--icon-only`).',
       },
     },
   },

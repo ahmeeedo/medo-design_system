@@ -9,7 +9,7 @@
  * Sizes:    sm (32) · md (40) · lg (48)
  * Icon only: add medo-button--icon-only (Figma: C02 Icon Button), always with aria-label.
  *
- * State contract: [data-hovered] [data-pressed] [data-focus-visible] [data-disabled]
+ * State contract: [data-hovered] [data-pressed] [data-focus-visible] [data-disabled] [data-pending]
  * (set by React Aria – other frameworks set the same). Plain HTML buttons without
  * data-rac fall back to :hover, :active, :focus-visible and :disabled.
  */
@@ -87,7 +87,7 @@
 /* Disabled: never only by opacity, the colors keep the label readable for the layout. */
 .medo-button:disabled,
 .medo-button[data-disabled],
-.medo-button[aria-disabled='true'] {
+.medo-button[aria-disabled='true']:not([data-pending]) {
   --_bg: var(--medo-color-action-disabled);
   --_bg-hover: var(--_bg);
   --_bg-pressed: var(--_bg);
@@ -128,9 +128,15 @@
   block-size: var(--medo-size-icon-md);
 }
 
-.medo-button__icon > svg {
+.medo-button__icon > svg,
+.medo-button__icon > .medo-spinner {
   inline-size: 100%;
   block-size: 100%;
+}
+
+/* Pending (isPending): keeps its look and size; the spinner replaces the icon, the label says what happens. */
+.medo-button[data-pending] {
+  cursor: progress;
 }
 
 /* ---------- Variants ---------- */

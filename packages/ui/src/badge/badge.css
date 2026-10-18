@@ -1,0 +1,153 @@
+/**
+ * Badge – med.o Design System (Figma: C17 Badge)
+ *
+ * Short, non-interactive status label. Plain CSS, works in every framework:
+ *   <span class="medo-badge medo-badge--success medo-badge--md">
+ *     <span class="medo-badge__dot" aria-hidden="true"></span>Active
+ *   </span>
+ *
+ * Count (notifications): <span class="medo-badge-count medo-badge-count--danger medo-badge-count--md">3</span>
+ * Dot (unread, presence): <span class="medo-badge-dot medo-badge-dot--success"></span>
+ *
+ * Tones: neutral · brand · success · warning · danger · info
+ */
+
+.medo-badge {
+  --_bg: var(--medo-color-surface-subtle);
+  --_fg: var(--medo-color-text-secondary);
+
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--medo-space-1);
+  block-size: var(--medo-space-6);
+  padding-inline: var(--medo-space-2);
+  border-radius: var(--medo-radius-sm);
+  background-color: var(--_bg);
+  color: var(--_fg);
+  font: var(--medo-typography-label-sm);
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
+.medo-badge--sm {
+  block-size: var(--medo-space-5);
+  padding-inline: var(--medo-space-1-5);
+}
+
+.medo-badge--brand {
+  --_bg: var(--medo-color-surface-brand-subtle);
+  --_fg: var(--medo-color-text-brand);
+}
+.medo-badge--success {
+  --_bg: var(--medo-color-feedback-success-surface);
+  --_fg: var(--medo-color-feedback-success-text);
+}
+.medo-badge--warning {
+  --_bg: var(--medo-color-feedback-warning-surface);
+  --_fg: var(--medo-color-feedback-warning-text);
+}
+.medo-badge--danger {
+  --_bg: var(--medo-color-feedback-danger-surface);
+  --_fg: var(--medo-color-feedback-danger-text);
+}
+.medo-badge--info {
+  --_bg: var(--medo-color-feedback-info-surface);
+  --_fg: var(--medo-color-feedback-info-text);
+}
+
+/* Leading dot (6 px) or icon (12 px) in the text colour – status not by colour alone. */
+.medo-badge__dot {
+  flex-shrink: 0;
+  inline-size: var(--medo-space-1-5);
+  block-size: var(--medo-space-1-5);
+  border-radius: var(--medo-radius-full);
+  background-color: currentColor;
+}
+
+.medo-badge__icon {
+  display: inline-flex;
+  flex-shrink: 0;
+}
+
+.medo-badge__icon > svg {
+  inline-size: var(--medo-space-3);
+  block-size: var(--medo-space-3);
+  stroke-width: 3; /* 1.5 px at 12 px */
+}
+
+/* ---------- Count ---------- */
+
+.medo-badge-count {
+  --_bg: var(--medo-color-feedback-danger-solid);
+  --_fg: var(--medo-color-feedback-danger-on-solid);
+
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-inline-size: var(--medo-space-5);
+  block-size: var(--medo-space-5);
+  padding-inline: var(--medo-space-1);
+  border-radius: var(--medo-radius-full);
+  background-color: var(--_bg);
+  color: var(--_fg);
+  font: var(--medo-typography-label-sm);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.medo-badge-count--sm {
+  min-inline-size: var(--medo-space-4);
+  block-size: var(--medo-space-4);
+  font: var(--medo-typography-label-xs);
+}
+
+.medo-badge-count--brand {
+  --_bg: var(--medo-color-action-primary);
+  --_fg: var(--medo-color-text-on-action);
+}
+.medo-badge-count--neutral {
+  --_bg: var(--medo-color-surface-inverse);
+  --_fg: var(--medo-color-text-inverse);
+}
+
+/* ---------- Dot ---------- */
+
+.medo-badge-dot {
+  display: inline-block;
+  flex-shrink: 0;
+  inline-size: var(--medo-space-2);
+  block-size: var(--medo-space-2);
+  border-radius: var(--medo-radius-full);
+  background-color: var(--medo-color-text-secondary);
+}
+
+.medo-badge-dot--brand {
+  background-color: var(--medo-color-action-primary);
+}
+.medo-badge-dot--success {
+  background-color: var(--medo-color-feedback-success-solid);
+}
+.medo-badge-dot--warning {
+  background-color: var(--medo-color-feedback-warning-solid);
+}
+.medo-badge-dot--danger {
+  background-color: var(--medo-color-feedback-danger-solid);
+}
+.medo-badge-dot--info {
+  background-color: var(--medo-color-feedback-info-solid);
+}
+
+/* Windows high contrast mode removes backgrounds: keep the shapes visible. */
+@media (forced-colors: active) {
+  .medo-badge,
+  .medo-badge-count {
+    border: var(--medo-border-width-thin) solid CanvasText;
+  }
+  .medo-badge__dot,
+  .medo-badge-dot {
+    forced-color-adjust: none;
+    background-color: CanvasText;
+  }
+}

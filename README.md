@@ -130,12 +130,17 @@ DM Sans and DM Mono (SIL Open Font License). Self-host them, for example with `@
 
 | Component | Figma | Notes |
 | --- | --- | --- |
-| `Button` | C01 | primary, secondary, ghost, danger, text, ghost-danger · sm/md/lg |
-| `IconButton` | C02 | `aria-label` required |
+| `Button` | C01 | primary, secondary, ghost, danger, text, ghost-danger · sm/md/lg · `isPending` |
+| `IconButton` | C02 | `aria-label` required, shown as tooltip · `shortcut` |
 | `TextField` (+ `InputAction`) | C03, C04, C13 | label, helper, error, icons, character counter, `multiline` = Textarea |
 | `Checkbox`, `CheckboxGroup` | C05 | indeterminate, description |
 | `Radio`, `RadioGroup` | C11 | 2–4 options, horizontal or vertical |
 | `Switch` | C12 | label start/end, loading state |
+| `Tag`, `TagGroup` | C06 | removable values or selectable filters · sm/md |
+| `Tooltip`, `TooltipTrigger` | C14 | 500 ms delay, instant on focus, shortcut |
+| `Badge`, `BadgeCount`, `BadgeDot` | C17 | 6 tones · dot or icon · counts „99+“ |
+| `Spinner`, `ProgressBar`, `Skeleton` | C26 | reduced motion: slower / static |
+| `Avatar`, `AvatarGroup` | C28 | image → initials → icon · colour from id · status · max 4 + „+N“ |
 
 ```tsx
 import { Button, TextField } from '@medo/ui';
@@ -150,7 +155,7 @@ React Aria naming: `onPress` instead of `onClick`, `isDisabled` instead of `disa
 ### State contract (framework-neutral CSS)
 
 The CSS reads states from data attributes: `data-hovered`, `data-pressed`, `data-focus-visible`,
-`data-selected`, `data-indeterminate`, `data-invalid`, `data-disabled`, `data-readonly`.
+`data-selected`, `data-indeterminate`, `data-invalid`, `data-disabled`, `data-readonly`, `data-pending`, `data-allows-removing`.
 React Aria sets them. A Vue or Angular wrapper sets the same attributes and reuses the CSS unchanged.
 Buttons also work as plain HTML (`:hover`, `:active`, `:focus-visible`, `:disabled` as fallback).
 

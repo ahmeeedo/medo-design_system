@@ -1,0 +1,51 @@
+/**
+ * Tooltip – med.o Design System (Figma: C14 Tooltip)
+ *
+ * Short label on hover (after 500 ms) or keyboard focus (instantly). Never interactive.
+ *   <div class="medo-tooltip" role="tooltip">Copy link<kbd class="medo-tooltip__shortcut">⌘C</kbd></div>
+ *
+ * State contract: [data-entering] [data-exiting] [data-placement] (set by React Aria).
+ */
+
+.medo-tooltip {
+  box-sizing: border-box;
+  display: flex;
+  align-items: baseline;
+  gap: var(--medo-space-2);
+  max-inline-size: 15rem; /* 240 px, then wraps */
+  padding: var(--medo-space-1) var(--medo-space-2);
+  border-radius: var(--medo-radius-sm);
+  background-color: var(--medo-color-surface-inverse);
+  color: var(--medo-color-text-inverse);
+  box-shadow: var(--medo-shadow-elevation-2);
+  font: var(--medo-typography-caption);
+  overflow-wrap: break-word;
+  z-index: var(--medo-layer-tooltip);
+  pointer-events: auto;
+}
+
+.medo-tooltip__shortcut {
+  font: inherit;
+  color: var(--medo-color-text-inverse-secondary);
+  white-space: nowrap;
+}
+
+/* Fade only – no movement (also fine with reduced motion). */
+.medo-tooltip[data-entering] {
+  animation: medo-tooltip-in var(--medo-motion-duration-fast) var(--medo-motion-easing-enter);
+}
+.medo-tooltip[data-exiting] {
+  animation: medo-tooltip-in var(--medo-motion-duration-fast) var(--medo-motion-easing-exit) reverse;
+}
+
+@keyframes medo-tooltip-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@media (forced-colors: active) {
+  .medo-tooltip {
+    border: var(--medo-border-width-thin) solid CanvasText;
+  }
+}

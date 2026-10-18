@@ -1,0 +1,225 @@
+/**
+ * Loading & Progress – med.o Design System (Figma: C26 Loading & Progress)
+ *
+ * Spinner:      <span class="medo-spinner medo-spinner--md" role="progressbar" aria-label="Loading"><svg>…</svg></span>
+ * Progress bar: label + value above, track, helper below. Modifiers --success · --error · --indeterminate
+ * Skeleton:     <span class="medo-skeleton medo-skeleton--text" aria-hidden="true"></span>
+ *               The loading region gets aria-busy="true".
+ */
+
+/* ---------- Spinner ---------- */
+
+.medo-spinner {
+  --_size: var(--medo-space-5);
+  --_stroke: 2.4; /* user units of the 24 × 24 viewBox: 2 px at 20 px */
+
+  display: inline-flex;
+  flex-shrink: 0;
+  inline-size: var(--_size);
+  block-size: var(--_size);
+  color: currentColor;
+  vertical-align: middle;
+}
+
+.medo-spinner--sm {
+  --_size: var(--medo-space-4);
+  --_stroke: 3; /* 2 px at 16 px */
+}
+.medo-spinner--lg {
+  --_size: var(--medo-space-6);
+  --_stroke: 2.5; /* 2.5 px at 24 px */
+}
+.medo-spinner--xl {
+  --_size: var(--medo-space-10);
+  --_stroke: 2.4; /* 4 px at 40 px */
+}
+
+.medo-spinner--brand {
+  color: var(--medo-color-text-brand);
+}
+.medo-spinner--neutral {
+  color: var(--medo-color-text-secondary);
+}
+.medo-spinner--on-brand {
+  color: var(--medo-color-text-on-brand);
+}
+
+.medo-spinner > svg {
+  inline-size: 100%;
+  block-size: 100%;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: var(--_stroke);
+  animation: medo-spin 0.8s linear infinite;
+}
+
+/* The light ring keeps the shape visible, even without motion. */
+.medo-spinner__track {
+  opacity: 0.2;
+}
+
+.medo-spinner__arc {
+  stroke-linecap: round;
+  stroke-dasharray: 25 100; /* 90° of pathLength 100 */
+}
+
+@keyframes medo-spin {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+/* ---------- Progress bar ---------- */
+
+.medo-progress {
+  --_fill: var(--medo-color-action-primary);
+  --_h: var(--medo-space-2);
+
+  display: grid;
+  gap: var(--medo-space-2);
+  min-inline-size: 0;
+}
+
+.medo-progress--sm {
+  --_h: var(--medo-space-1);
+}
+
+.medo-progress--success {
+  --_fill: var(--medo-color-feedback-success-solid);
+}
+.medo-progress--error {
+  --_fill: var(--medo-color-feedback-danger-solid);
+}
+
+.medo-progress__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--medo-space-4);
+}
+
+.medo-progress__label {
+  font: var(--medo-typography-label-md);
+  color: var(--medo-color-text-primary);
+}
+
+.medo-progress__value {
+  font: var(--medo-typography-body-sm);
+  color: var(--medo-color-text-secondary);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.medo-progress__track {
+  position: relative;
+  block-size: var(--_h);
+  border-radius: var(--medo-radius-full);
+  background-color: var(--medo-color-surface-subtle);
+  overflow: hidden;
+}
+
+.medo-progress__fill {
+  block-size: 100%;
+  border-radius: inherit;
+  background-color: var(--_fill);
+  transition: inline-size var(--medo-motion-duration-normal) var(--medo-motion-easing-standard);
+}
+
+/* Indeterminate: a segment slides back and forth. */
+.medo-progress--indeterminate .medo-progress__fill {
+  position: absolute;
+  inset-block: 0;
+  inline-size: 30%;
+  animation: medo-progress-slide 1.5s ease-in-out infinite;
+}
+
+@keyframes medo-progress-slide {
+  from {
+    inset-inline-start: -30%;
+  }
+  to {
+    inset-inline-start: 100%;
+  }
+}
+
+.medo-progress__description {
+  font: var(--medo-typography-caption);
+  color: var(--medo-color-text-secondary);
+}
+
+.medo-progress--error .medo-progress__description {
+  color: var(--medo-color-text-danger);
+}
+
+/* ---------- Skeleton ---------- */
+
+.medo-skeleton {
+  display: block;
+  inline-size: 100%;
+  block-size: var(--medo-space-3);
+  border-radius: var(--medo-radius-sm);
+  background-color: var(--medo-color-surface-subtle);
+  animation: medo-skeleton-pulse 1.5s ease-in-out infinite alternate;
+}
+
+.medo-skeleton--circle {
+  inline-size: var(--medo-space-10);
+  block-size: var(--medo-space-10);
+  border-radius: var(--medo-radius-full);
+}
+
+.medo-skeleton--rect {
+  block-size: var(--medo-space-24);
+  border-radius: var(--medo-radius-md);
+}
+
+/* Text lines: the last one is shorter. */
+.medo-skeleton-lines {
+  display: grid;
+  gap: var(--medo-space-2);
+}
+.medo-skeleton-lines > .medo-skeleton:last-child:not(:first-child) {
+  inline-size: 60%;
+}
+
+@keyframes medo-skeleton-pulse {
+  to {
+    opacity: 0.5;
+  }
+}
+
+/* ---------- System settings ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  /* Slower spinner, static skeleton and segment – activity stays visible. */
+  .medo-spinner > svg {
+    animation-duration: 1.6s;
+  }
+  .medo-skeleton {
+    animation: none;
+  }
+  .medo-progress--indeterminate .medo-progress__fill {
+    animation: none;
+    inset-inline-start: 0;
+    inline-size: 40%;
+  }
+  .medo-progress__fill {
+    transition: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .medo-spinner > svg {
+    stroke: CanvasText;
+  }
+  .medo-progress__track {
+    border: var(--medo-border-width-thin) solid CanvasText;
+  }
+  .medo-progress__fill {
+    forced-color-adjust: none;
+    background-color: Highlight;
+  }
+  .medo-skeleton {
+    border: var(--medo-border-width-thin) solid GrayText;
+  }
+}

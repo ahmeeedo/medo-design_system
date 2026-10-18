@@ -1,6 +1,12 @@
 /* All component styles of @medo/ui. Needs the tokens: @import "@medo/design-tokens/css"; */
+@import './utils/utilities.css';
 @import './button/button.css';
 @import './field/field.css';
 @import './text-field/input.css';
 @import './checkbox/choice.css';
 @import './switch/switch.css';
+@import './badge/badge.css';
+@import './tag/tag.css';
+@import './avatar/avatar.css';
+@import './tooltip/tooltip.css';
+@import './progress/progress.css';

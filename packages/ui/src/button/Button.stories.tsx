@@ -81,6 +81,26 @@ export const Disabled: Story = {
 };
 
 /** All variants in Light and Dark side by side – uses data-theme on a wrapper. */
+export const Pending: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: 'While saving: `isPending` keeps the look, size and focus; a spinner replaces the icon and the label says what happens.',
+      },
+    },
+  },
+  render: (args) => (
+    <div style={row}>
+      <Button {...args} isPending>
+        Saving…
+      </Button>
+      <Button {...args} variant="secondary" isPending startIcon={<Download />}>
+        Exporting…
+      </Button>
+    </div>
+  ),
+};
+
 export const LightAndDark: Story = {
   name: 'Light and Dark',
   parameters: { layout: 'fullscreen' },

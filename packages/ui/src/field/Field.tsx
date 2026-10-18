@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react';
 import { FieldError, Label, Text } from 'react-aria-components';
 import { CircleAlert } from 'lucide-react';
+import '../utils/utilities.css';
 import './field.css';
 
 /** Label with the visual required marker. The field itself is announced as required. */
