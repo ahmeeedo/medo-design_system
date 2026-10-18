@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { ArrowRight, Download, Plus, Trash2 } from 'lucide-react';
-import { Button } from './Button';
+import { Button, ButtonGroup } from './Button';
 
 const meta = {
   title: 'Components/Button',
@@ -97,6 +97,31 @@ export const Pending: Story = {
       <Button {...args} variant="secondary" isPending startIcon={<Download />}>
         Exporting…
       </Button>
+    </div>
+  ),
+};
+
+export const Group: Story = {
+  name: 'Button group',
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'Spacing, order and mobile stacking for related buttons. **footer**: right, primary last, a destructive action far left. ' +
+          '**content**: left, primary first. Below 640 px the buttons stack, the primary on top.',
+      },
+    },
+  },
+  render: () => (
+    <div style={{ ...col, maxInlineSize: '36rem' }}>
+      <ButtonGroup destructive={<Button variant="ghost-danger">Delete</Button>}>
+        <Button variant="secondary">Cancel</Button>
+        <Button>Save</Button>
+      </ButtonGroup>
+      <ButtonGroup context="content">
+        <Button>Get started</Button>
+        <Button variant="secondary">Learn more</Button>
+      </ButtonGroup>
     </div>
   ),
 };

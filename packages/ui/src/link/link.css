@@ -1,0 +1,107 @@
+/**
+ * Link – med.o Design System (Figma: C45 Link)
+ *
+ * Navigates to a page, place or file. Actions are buttons.
+ *   Inline (in running text, always underlined):
+ *     <a class="medo-link" href="/privacy">privacy policy</a>
+ *   Standalone (own line, underline on hover):
+ *     <a class="medo-link medo-link--standalone medo-link--md" href="/projects">View all <svg …/></a>
+ *
+ * State contract: [data-hovered] [data-pressed] [data-focus-visible] [data-disabled]
+ * (set by React Aria – plain HTML falls back to :hover, :active, :focus-visible).
+ */
+
+.medo-link {
+  --_fg: var(--medo-color-text-brand);
+  --_underline: 1px;
+
+  color: var(--_fg);
+  font: inherit;
+  text-decoration-line: underline;
+  text-decoration-thickness: var(--_underline);
+  text-underline-offset: 0.2em;
+  border-radius: var(--medo-radius-sm);
+  cursor: pointer;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: color var(--medo-motion-duration-fast) var(--medo-motion-easing-standard);
+}
+
+.medo-link:is([data-hovered], :not([data-rac]):hover) {
+  --_fg: var(--medo-color-text-brand-hover);
+  --_underline: 2px;
+}
+
+.medo-link:is([data-pressed], :not([data-rac]):active) {
+  --_fg: var(--medo-color-text-brand-pressed);
+  --_underline: 2px;
+}
+
+.medo-link:is([data-focus-visible], :not([data-rac]):focus-visible) {
+  outline: var(--medo-focus-ring-width) solid var(--medo-color-focus-ring);
+  outline-offset: 2px;
+}
+
+/* ---------- Standalone ---------- */
+
+.medo-link--standalone {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--medo-space-1);
+  min-block-size: var(--medo-space-6); /* 24 px target (WCAG 2.5.8) */
+  font: var(--medo-typography-label-md);
+  text-decoration-line: none;
+}
+
+.medo-link--standalone.medo-link--sm {
+  font: var(--medo-typography-label-sm);
+}
+
+.medo-link--standalone:is([data-hovered], [data-pressed], :not([data-rac]):hover, :not([data-rac]):active) {
+  text-decoration-line: underline;
+  --_underline: 1px;
+}
+
+/* ---------- Icons (external, arrow) ---------- */
+
+.medo-link__icon {
+  display: inline-block;
+  inline-size: 1em;
+  block-size: 1em;
+  margin-inline-start: var(--medo-space-1);
+  vertical-align: -0.125em;
+  stroke-width: 2.5;
+}
+
+.medo-link--standalone .medo-link__icon {
+  margin-inline-start: 0;
+  vertical-align: baseline;
+  inline-size: var(--medo-space-4);
+  block-size: var(--medo-space-4);
+}
+
+.medo-link--standalone.medo-link--sm .medo-link__icon {
+  inline-size: var(--medo-space-3);
+  block-size: var(--medo-space-3);
+  stroke-width: 3;
+}
+
+.medo-link[data-disabled] {
+  --_fg: var(--medo-color-text-disabled);
+  cursor: not-allowed;
+}
+
+@media (forced-colors: active) {
+  .medo-link {
+    color: LinkText;
+  }
+  .medo-link:is([data-focus-visible], :not([data-rac]):focus-visible) {
+    outline-color: Highlight;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .medo-link {
+    transition: none;
+  }
+}

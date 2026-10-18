@@ -234,3 +234,45 @@
   inline-size: var(--medo-size-icon-lg);
   block-size: var(--medo-size-icon-lg);
 }
+
+/* ---------- Button group (Figma: C01 Button group) ----------
+ * The main action sits at the end of the reading path.
+ *   footer  – right, primary rightmost, destructive left (forms, dialogs, card footers)
+ *   header  – right, next to a title, size sm
+ *   content – left, primary first (hero, teaser, empty state)
+ * Mobile < 640 px: footer and content stack full width with the primary on top.
+ * DOM order = desktop reading order; mobile reorders visually only.
+ */
+
+.medo-button-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--medo-space-2);
+}
+
+.medo-button-group--footer,
+.medo-button-group--header {
+  justify-content: flex-end;
+}
+
+.medo-button-group__destructive {
+  margin-inline-end: auto;
+}
+
+@media (max-width: 639.98px) {
+  /* breakpoint/sm (640) */
+  .medo-button-group--footer,
+  .medo-button-group--content {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .medo-button-group--footer {
+    flex-direction: column-reverse;
+  }
+  .medo-button-group--footer .medo-button-group__destructive {
+    order: -1; /* last on screen in column-reverse */
+    margin-inline-end: 0;
+    display: grid; /* the button fills the width like the others */
+  }
+}

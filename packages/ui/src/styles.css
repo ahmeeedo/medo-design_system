@@ -10,3 +10,7 @@
 @import './avatar/avatar.css';
 @import './tooltip/tooltip.css';
 @import './progress/progress.css';
+@import './link/link.css';
+@import './alert/alert.css';
+@import './card/card.css';
+@import './table/table.css';

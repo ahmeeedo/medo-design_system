@@ -1,0 +1,126 @@
+/**
+ * Alert – med.o Design System (Figma: C20 Alert)
+ *
+ * Persistent message inside the page. Plain markup:
+ *   <div class="medo-alert medo-alert--info">
+ *     <svg class="medo-alert__icon" aria-hidden="true">…</svg>
+ *     <div class="medo-alert__content">
+ *       <p class="medo-alert__title">Title</p>
+ *       <div class="medo-alert__description">Description</div>
+ *       <div class="medo-alert__actions">…text buttons…</div>
+ *     </div>
+ *     <button class="medo-alert__close">…</button>
+ *   </div>
+ * Tones: info · success · warning · danger. Variants: inline (default) · banner (full width).
+ */
+
+.medo-alert {
+  --_bg: var(--medo-color-feedback-info-surface);
+  --_border: var(--medo-color-feedback-info-border);
+  --_icon: var(--medo-color-feedback-info-text);
+
+  box-sizing: border-box;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--medo-space-3);
+  padding: var(--medo-space-4);
+  padding-inline-end: var(--medo-space-3);
+  border: var(--medo-border-width-thin) solid var(--_border);
+  border-radius: var(--medo-radius-md);
+  background-color: var(--_bg);
+  color: var(--medo-color-text-primary);
+}
+
+.medo-alert--success {
+  --_bg: var(--medo-color-feedback-success-surface);
+  --_border: var(--medo-color-feedback-success-border);
+  --_icon: var(--medo-color-feedback-success-text);
+}
+.medo-alert--warning {
+  --_bg: var(--medo-color-feedback-warning-surface);
+  --_border: var(--medo-color-feedback-warning-border);
+  --_icon: var(--medo-color-feedback-warning-text);
+}
+.medo-alert--danger {
+  --_bg: var(--medo-color-feedback-danger-surface);
+  --_border: var(--medo-color-feedback-danger-border);
+  --_icon: var(--medo-color-feedback-danger-text);
+}
+
+.medo-alert__icon {
+  flex-shrink: 0;
+  inline-size: var(--medo-size-icon-md);
+  block-size: var(--medo-size-icon-md);
+  color: var(--_icon);
+  stroke-width: 2; /* 1.67 px at 20 px */
+}
+
+.medo-alert__content {
+  display: grid;
+  gap: var(--medo-space-1);
+  flex: 1;
+  min-inline-size: 0;
+  /* Centre the first line with the 20 px icon (label/md has a 20 px line). */
+  padding-block-start: 0;
+}
+
+.medo-alert__title {
+  margin: 0;
+  font: var(--medo-typography-label-md);
+  color: var(--medo-color-text-primary);
+}
+
+.medo-alert__description {
+  font: var(--medo-typography-body-sm);
+  color: var(--medo-color-text-secondary);
+}
+
+.medo-alert__description > :first-child {
+  margin-block-start: 0;
+}
+.medo-alert__description > :last-child {
+  margin-block-end: 0;
+}
+
+.medo-alert__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--medo-space-4);
+  margin-block-start: var(--medo-space-2);
+}
+
+/* The close button (Icon Button ghost sm) sits in the top-right corner. */
+.medo-alert__close {
+  flex-shrink: 0;
+  margin-block: calc(-1 * var(--medo-space-1-5));
+}
+
+/* ---------- Banner: full width, bottom border only, one line ---------- */
+
+.medo-alert--banner {
+  align-items: center;
+  padding: var(--medo-space-2) var(--medo-space-6);
+  border-width: 0 0 var(--medo-border-width-thin);
+  border-radius: 0;
+}
+
+.medo-alert--banner .medo-alert__content {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  column-gap: var(--medo-space-3);
+}
+
+.medo-alert--banner .medo-alert__actions {
+  margin-block-start: 0;
+}
+
+.medo-alert--banner .medo-alert__close {
+  margin-block: 0;
+}
+
+@media (forced-colors: active) {
+  .medo-alert {
+    border-color: CanvasText;
+  }
+}

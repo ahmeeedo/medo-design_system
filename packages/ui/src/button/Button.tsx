@@ -46,3 +46,29 @@ export function Button({ variant = 'primary', size = 'md', startIcon, endIcon, c
     </AriaButton>
   );
 }
+
+export interface ButtonGroupProps {
+  /** footer: right, primary last · header: right, next to a title · content: left, primary first. */
+  context?: 'footer' | 'header' | 'content';
+  /** Buttons in reading order (footer: Cancel, Save · content: Get started, Learn more). */
+  children: ReactNode;
+  /** Footer only: a destructive action, placed on the far left and separated. */
+  destructive?: ReactNode;
+  /** Name of the group for screen readers, when it is not obvious from the context. */
+  'aria-label'?: string;
+  className?: string;
+}
+
+/** Button group – spacing, alignment and mobile stacking for related buttons (Figma: C01 Button group). */
+export function ButtonGroup({ context = 'footer', children, destructive, className, ...props }: ButtonGroupProps) {
+  return (
+    <div
+      role={props['aria-label'] ? 'group' : undefined}
+      aria-label={props['aria-label']}
+      className={cx('medo-button-group', `medo-button-group--${context}`, className)}
+    >
+      {destructive && context === 'footer' && <div className="medo-button-group__destructive">{destructive}</div>}
+      {children}
+    </div>
+  );
+}

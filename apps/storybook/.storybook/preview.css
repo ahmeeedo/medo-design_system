@@ -55,11 +55,12 @@ body {
   font-weight: var(--medo-font-weight-semibold);
   color: var(--medo-color-text-primary);
 }
-.medo-doc a {
+/* Links from Storybook markdown (story descriptions); our own links use Link (.medo-link). */
+.medo-doc a:not(.medo-link) {
   color: var(--medo-color-text-brand);
   text-underline-offset: 0.2em;
 }
-.medo-doc a:focus-visible,
+.medo-doc a:not(.medo-link):focus-visible,
 .doc-anchor:focus-visible {
   outline: 2px solid var(--medo-color-focus-ring);
   outline-offset: 2px;
@@ -105,17 +106,6 @@ body {
   display: flex;
   flex-wrap: wrap;
   gap: var(--medo-space-3) var(--medo-space-10);
-}
-.medo-doc .doc-nav a {
-  display: inline-flex;
-  gap: var(--medo-space-2);
-  align-items: baseline;
-  min-height: 24px; /* target size, WCAG 2.5.8 */
-  color: var(--medo-color-text-primary);
-  text-decoration: none;
-}
-.medo-doc .doc-nav a:hover {
-  text-decoration: underline;
 }
 
 /* ---------- section ---------- */
@@ -225,42 +215,14 @@ body {
   color: var(--medo-color-text-secondary);
 }
 
-/* ---------- tables ---------- */
-.doc-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: var(--medo-font-size-sm);
-  line-height: 1.5;
-  color: var(--medo-color-text-primary);
-}
-.doc-table th,
-.doc-table td {
-  text-align: left;
-  vertical-align: top;
-  padding: var(--medo-space-3) var(--medo-space-4);
-  border-bottom: 1px solid var(--medo-color-border-default);
-}
-.doc-table :is(th, td):first-child {
-  padding-left: 0;
-}
-.doc-table :is(th, td):last-child {
-  padding-right: 0;
-}
-.doc-table thead th {
-  font-weight: var(--medo-font-weight-medium);
-  color: var(--medo-color-text-secondary);
-  white-space: nowrap;
-}
-.doc-table tbody th {
-  font-weight: var(--medo-font-weight-medium);
-}
+/* ---------- tables (StaticTable) and token cells ---------- */
 .doc-spec tbody th {
-  width: 12.5rem;
+  inline-size: 12.5rem;
 }
-.doc-table .doc-cell-muted {
+.medo-doc .doc-cell-muted {
   color: var(--medo-color-text-secondary);
 }
-.medo-doc .doc-table .doc-mono {
+.medo-doc .doc-mono {
   padding: 0;
   background: none;
   font-family: var(--medo-font-family-mono);
@@ -268,23 +230,13 @@ body {
   color: var(--medo-color-text-secondary);
   overflow-wrap: anywhere;
 }
-.doc-scroll {
-  overflow-x: auto;
-}
 
-/* ---------- implementation notes ---------- */
+/* ---------- implementation notes (Alert info) ---------- */
 .doc-notes {
-  display: grid;
-  gap: var(--medo-space-2);
-  padding: var(--medo-space-5);
-  border-radius: var(--medo-radius-md);
-  background: var(--medo-color-surface-subtle);
-  color: var(--medo-color-text-primary);
-  line-height: 1.6;
-  max-width: 60rem;
+  max-inline-size: 60rem;
 }
 .doc-notes ul {
-  padding-left: var(--medo-space-5);
+  padding-inline-start: var(--medo-space-5);
 }
 
 /* ---------- footer ---------- */

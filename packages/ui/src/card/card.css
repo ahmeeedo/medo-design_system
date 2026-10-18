@@ -1,0 +1,208 @@
+/**
+ * Card – med.o Design System (Figma: C16 Card)
+ *
+ * Container for one topic. Media, header actions, body and footer are optional; the title is required.
+ *   <article class="medo-card medo-card--outlined">
+ *     <div class="medo-card__media">…</div>
+ *     <div class="medo-card__main">
+ *       <div class="medo-card__header">
+ *         <div class="medo-card__heading"><h3 class="medo-card__title">…</h3><p class="medo-card__subtitle">…</p></div>
+ *         <div class="medo-card__header-actions">…</div>
+ *       </div>
+ *       <div class="medo-card__body">…</div>
+ *       <div class="medo-card__footer">…</div>
+ *     </div>
+ *   </article>
+ *
+ * Variants: outlined (default) · elevated · filled · brand · plain. Density: standard (24) · compact (16).
+ * Interactive: the title link is stretched over the card (one click target); buttons stay above it.
+ */
+
+.medo-card {
+  --_pad: var(--medo-space-6);
+  --_bg: var(--medo-color-surface-default);
+  --_border: var(--medo-color-border-default);
+
+  position: relative;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  border: var(--medo-border-width-thin) solid var(--_border);
+  border-radius: var(--medo-radius-lg);
+  background-color: var(--_bg);
+  color: var(--medo-color-text-primary);
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.medo-card--compact {
+  --_pad: var(--medo-space-4);
+}
+
+.medo-card--elevated {
+  box-shadow: var(--medo-shadow-elevation-1);
+}
+.medo-card--filled {
+  --_bg: var(--medo-color-surface-subtle);
+  --_border: transparent;
+}
+.medo-card--brand {
+  --_bg: var(--medo-color-surface-brand-subtle);
+  --_border: var(--medo-color-border-brand);
+}
+.medo-card--plain {
+  --_bg: transparent;
+  --_border: transparent;
+  --_pad: 0;
+  overflow: visible;
+}
+
+/* ---------- Parts ---------- */
+
+.medo-card__media {
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background-color: var(--medo-color-surface-subtle);
+}
+
+.medo-card__media > :is(img, video, picture) {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+}
+
+.medo-card--plain .medo-card__media {
+  border-radius: var(--medo-radius-lg);
+  margin-block-end: var(--medo-space-4);
+}
+
+.medo-card__main {
+  display: flex;
+  flex-direction: column;
+  gap: var(--medo-space-4);
+  flex: 1;
+  padding: var(--_pad);
+}
+
+.medo-card__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--medo-space-4);
+}
+
+.medo-card__heading {
+  display: grid;
+  gap: var(--medo-space-1);
+  min-inline-size: 0;
+}
+
+.medo-card__title {
+  margin: 0;
+  font: var(--medo-typography-heading-sm);
+  color: var(--medo-color-text-primary);
+}
+
+.medo-card__subtitle {
+  margin: 0;
+  font: var(--medo-typography-body-sm);
+  color: var(--medo-color-text-secondary);
+}
+
+.medo-card__body {
+  font: var(--medo-typography-body-sm);
+  color: var(--medo-color-text-secondary);
+}
+
+.medo-card__body > :first-child {
+  margin-block-start: 0;
+}
+.medo-card__body > :last-child {
+  margin-block-end: 0;
+}
+
+/* Footer at the bottom, so cards in a row align. */
+.medo-card__footer {
+  margin-block-start: auto;
+}
+
+/* ---------- Horizontal (lists): media 180 px wide on the left ---------- */
+
+.medo-card--horizontal {
+  flex-direction: row;
+}
+
+.medo-card--horizontal .medo-card__media {
+  flex: 0 0 11.25rem; /* 180 px */
+  aspect-ratio: auto;
+}
+
+/* ---------- Interactive: stretched title link ---------- */
+
+.medo-card__link {
+  color: inherit;
+  text-decoration: none;
+  outline: none;
+}
+
+/* The link covers the whole card. */
+.medo-card__link::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+/* Buttons and other controls stay clickable above the link. */
+.medo-card :is(.medo-card__header-actions, .medo-card__footer, .medo-card__body) :is(a, button, input, select, textarea, [tabindex]) {
+  position: relative;
+  z-index: 1;
+}
+
+.medo-card--interactive {
+  cursor: pointer;
+}
+
+.medo-card--interactive::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background-color: transparent;
+  pointer-events: none;
+  z-index: 0;
+  transition: background-color var(--medo-motion-duration-fast) var(--medo-motion-easing-standard);
+}
+
+.medo-card--interactive:has(.medo-card__link[data-hovered])::before {
+  background-color: var(--medo-color-state-hover);
+}
+
+.medo-card--interactive:has(.medo-card__link[data-pressed])::before {
+  background-color: var(--medo-color-state-pressed);
+}
+
+.medo-card--interactive:has(.medo-card__link[data-focus-visible]) {
+  box-shadow: var(--medo-shadow-focus-ring);
+}
+
+.medo-card--interactive.medo-card--elevated:has(.medo-card__link[data-focus-visible]) {
+  box-shadow: var(--medo-shadow-focus-ring), var(--medo-shadow-elevation-1);
+}
+
+@media (forced-colors: active) {
+  .medo-card {
+    border-color: CanvasText;
+  }
+  .medo-card--interactive:has(.medo-card__link[data-focus-visible]) {
+    outline: var(--medo-focus-ring-width) solid Highlight;
+    outline-offset: 2px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .medo-card--interactive::before {
+    transition: none;
+  }
+}

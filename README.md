@@ -130,7 +130,7 @@ DM Sans and DM Mono (SIL Open Font License). Self-host them, for example with `@
 
 | Component | Figma | Notes |
 | --- | --- | --- |
-| `Button` | C01 | primary, secondary, ghost, danger, text, ghost-danger · sm/md/lg · `isPending` |
+| `Button`, `ButtonGroup` | C01 | primary, secondary, ghost, danger, text, ghost-danger · sm/md/lg · `isPending` · group: footer/header/content, stacks on mobile |
 | `IconButton` | C02 | `aria-label` required, shown as tooltip · `shortcut` |
 | `TextField` (+ `InputAction`) | C03, C04, C13 | label, helper, error, icons, character counter, `multiline` = Textarea |
 | `Checkbox`, `CheckboxGroup` | C05 | indeterminate, description |
@@ -141,6 +141,10 @@ DM Sans and DM Mono (SIL Open Font License). Self-host them, for example with `@
 | `Badge`, `BadgeCount`, `BadgeDot` | C17 | 6 tones · dot or icon · counts „99+“ |
 | `Spinner`, `ProgressBar`, `Skeleton` | C26 | reduced motion: slower / static |
 | `Avatar`, `AvatarGroup` | C28 | image → initials → icon · colour from id · status · max 4 + „+N“ |
+| `Card` | C16 | outlined, elevated, filled, brand, plain · compact · horizontal · whole card as link (`href`) |
+| `Alert` | C20 | info, success, warning, danger · inline or banner · actions, dismiss, `announce` |
+| `StaticTable`, `Table` (+ `TableHeader`, `Column`, `TableBody`, `Row`, `Cell`) | C37 | native table or interactive grid · sorting, selection, compact · numbers right |
+| `Link` | C45 | inline (always underlined) or standalone · external icon · new-tab hint |
 
 ```tsx
 import { Button, TextField } from '@medo/ui';

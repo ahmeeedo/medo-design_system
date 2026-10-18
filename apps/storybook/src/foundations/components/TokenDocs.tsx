@@ -3,6 +3,7 @@
  * Everything updates automatically when the tokens are rebuilt from Figma.
  */
 import type { ReactNode } from 'react';
+import { StaticTable } from '@medo/ui';
 import light from '@medo/design-tokens/docs/tokens.light.json';
 import dark from '@medo/design-tokens/docs/tokens.dark.json';
 import tablet from '@medo/design-tokens/src/layout/tablet.json';
@@ -24,13 +25,9 @@ const darkByVar = new Map(D.map((t) => [t.cssVar, t]));
 
 /* ---------- small building blocks ---------- */
 
-/* Table styles live in docs-blocks/docs.css (.doc-table). */
 const Code = ({ children }: { children: ReactNode }) => <code className="doc-mono">{children}</code>;
-const Table = ({ children }: { children: ReactNode }) => (
-  <div className="doc-scroll">
-    <table className="doc-table">{children}</table>
-  </div>
-);
+/** Token lists use the library table (StaticTable). */
+const Table = ({ children }: { children: ReactNode }) => <StaticTable>{children}</StaticTable>;
 
 function Swatch({ cssVar, theme, size = 40 }: { cssVar: string; theme: 'light' | 'dark'; size?: number }) {
   // A data-theme island: shows the token exactly as it renders in that theme.
@@ -183,7 +180,7 @@ export function SpacingScale() {
           <th>Token</th>
           <th>Value</th>
           <th>Tailwind</th>
-          <th><span className="sr-only">Preview</span></th>
+          <th><span className="medo-visually-hidden">Preview</span></th>
         </tr>
       </thead>
       <tbody>

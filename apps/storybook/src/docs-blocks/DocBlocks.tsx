@@ -3,12 +3,14 @@
  * Structure follows the Figma doc frames: header, numbered sections, examples,
  * spec tables, implementation notes, footer. Not a 1:1 copy.
  * Used by the MDX pages, the component docs template and the docs container below.
+ * Rule: the docs use our own components (Table, Alert, Link …) as soon as they exist.
  */
 import type { PropsWithChildren, ReactNode } from 'react';
 import { Children, useContext, useEffect, useState } from 'react';
 import type { DocsContextProps } from 'storybook/internal/types';
 import { GLOBALS_UPDATED, SET_GLOBALS } from 'storybook/internal/core-events';
 import { Canvas, Controls, Description, DocsContainer, DocsContext, useOf } from '@storybook/addon-docs/blocks';
+import { Alert, Link, StaticTable } from '@medo/ui';
 import { modeFromGlobals, themes } from '../../.storybook/theme';
 
 /** Link to a doc frame in the Figma library */
@@ -18,7 +20,7 @@ export const figmaDoc = (nodeId: string) =>
 const pad = (n: number) => String(n).padStart(2, '0');
 export const sectionId = (n: number | string) => `section-${typeof n === 'number' ? pad(n) : n}`;
 
-function jump(e: React.MouseEvent<HTMLAnchorElement>, id: string) {
+function jump(e: React.MouseEvent<Element>, id: string) {
   const target = document.getElementById(id);
   if (!target) return;
   e.preventDefault();
@@ -70,10 +72,10 @@ export function DocHeader({ kind, title, meta, subtitle, description, nav }: Hea
           <ol>
             {nav.map((label, i) => (
               <li key={label}>
-                <a className="medo-text-body-sm" href={`#${sectionId(i + 1)}`} onClick={(e) => jump(e, sectionId(i + 1))}>
+                <Link variant="standalone" size="sm" href={`#${sectionId(i + 1)}`} onClick={(e) => jump(e, sectionId(i + 1))}>
                   <span className="medo-text-code-sm doc-muted">{pad(i + 1)}</span>
                   {label}
-                </a>
+                </Link>
               </li>
             ))}
           </ol>
@@ -117,7 +119,7 @@ export function DocSection({ n, title, meta, description, children }: SectionPro
 
 export function SpecTable({ head = ['Part', 'Value'], rows }: { head?: [string, string]; rows: [ReactNode, ReactNode][] }) {
   return (
-    <table className="doc-table doc-spec">
+    <StaticTable className="doc-spec">
       <thead>
         <tr>
           <th scope="col">{head[0]}</th>
@@ -132,7 +134,7 @@ export function SpecTable({ head = ['Part', 'Value'], rows }: { head?: [string, 
           </tr>
         ))}
       </tbody>
-    </table>
+    </StaticTable>
   );
 }
 
@@ -140,10 +142,18 @@ export function SpecTable({ head = ['Part', 'Value'], rows }: { head?: [string, 
 
 export function Notes({ title = 'Implementation notes', children }: { title?: string; children: ReactNode }) {
   return (
-    <aside className="doc-notes medo-text-body-sm" aria-label={title}>
-      <p className="doc-strong">{title}</p>
+    <Alert tone="info" title={title} className="doc-notes">
       {children}
-    </aside>
+    </Alert>
+  );
+}
+
+/** Link to a Figma doc frame (new tab). */
+export function FigmaLink({ node, children = 'Open the Figma documentation' }: { node?: string; children?: ReactNode }) {
+  return (
+    <Link href={node ? figmaDoc(node) : 'https://www.figma.com/design/vOTfMtcpCwAJjuSZUkfpfj'} target="_blank" external>
+      {children}
+    </Link>
   );
 }
 
@@ -220,9 +230,7 @@ export function ComponentDocsPage() {
       <DocFooter>
         {`${kind === 'Components' ? 'Component' : kind}: ${name}${medo.code ? ` · Figma ${medo.code}` : ''} · @medo/ui`}
         {medo.figma ? (
-          <a href={figmaDoc(medo.figma)} target="_blank" rel="noreferrer">
-            Open the Figma documentation (new tab)
-          </a>
+          <FigmaLink node={medo.figma} />
         ) : (
           'Figma is the source of truth.'
         )}

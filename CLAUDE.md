@@ -16,6 +16,7 @@
 - Only semantic tokens in components. No hard-coded colors, spacing, radii or font sizes.
 - Accessibility: WCAG 2.2 AA. Visible `:focus-visible`, forced-colors fallback, `prefers-reduced-motion`, axe clean in Storybook (Light and Dark).
 - Every component: Storybook stories for variants, sizes, states, Light and Dark.
+- Storybook shows only the library (Foundations + components), no rule pages. The docs use our own components (Table, Alert, Link …) as soon as they exist.
 
 ## Commands
 - `npm install` · `npm run storybook` · `npm run build-storybook` · `npm run build:tokens` · `npm run tokens:from-figma`

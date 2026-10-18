@@ -1,0 +1,224 @@
+/**
+ * Table – med.o Design System (Figma: C37 Table)
+ *
+ * One look for two kinds of tables:
+ *   Static (content, docs, simple data): a native <table> – read like a table, not navigable cell by cell.
+ *     <div class="medo-table-container"><table class="medo-table">…</table></div>
+ *   Interactive (sort, select): React Aria Table (role grid) with the same classes.
+ *
+ * Text left, numbers right with tabular figures (class medo-table__cell--number or align="end").
+ * Density: standard (rows 48, header 40) · compact (rows 40, header 36).
+ *
+ * State contract (interactive rows): [data-hovered] [data-pressed] [data-selected] [data-focus-visible] [data-disabled]
+ * Sortable header: [data-allows-sorting] [data-sort-direction] (aria-sort is set too).
+ */
+
+.medo-table-container {
+  box-sizing: border-box;
+  inline-size: 100%;
+  overflow: auto;
+  border: var(--medo-border-width-thin) solid var(--medo-color-border-default);
+  border-radius: var(--medo-radius-lg);
+  background-color: var(--medo-color-surface-default);
+}
+
+/* Without the frame, e.g. inside a card or a documentation page. */
+.medo-table-container--plain {
+  border: 0;
+  border-radius: 0;
+  background-color: transparent;
+}
+
+.medo-table {
+  --_row: var(--medo-space-12);
+  --_head: var(--medo-space-10);
+  --_pad: var(--medo-space-4);
+
+  inline-size: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font: var(--medo-typography-body-sm);
+  color: var(--medo-color-text-primary);
+  text-align: start;
+}
+
+.medo-table--compact {
+  --_row: var(--medo-space-10);
+  --_head: calc(var(--medo-space-8) + var(--medo-space-1)); /* 36 */
+  --_pad: var(--medo-space-3);
+}
+
+.medo-table caption {
+  padding: var(--medo-space-3) var(--_pad);
+  font: var(--medo-typography-label-md);
+  text-align: start;
+}
+
+/* ---------- Header ---------- */
+
+.medo-table__column,
+.medo-table thead th {
+  position: sticky;
+  inset-block-start: 0;
+  z-index: 1;
+  block-size: var(--_head);
+  padding: 0 var(--_pad);
+  border-block-end: var(--medo-border-width-thin) solid var(--medo-color-border-default);
+  background-color: var(--medo-color-surface-subtle);
+  font: var(--medo-typography-label-sm);
+  color: var(--medo-color-text-secondary);
+  text-align: start;
+  vertical-align: middle;
+  white-space: nowrap;
+  outline: none;
+}
+
+.medo-table__column[data-allows-sorting] {
+  cursor: pointer;
+  user-select: none;
+}
+
+.medo-table__column[data-hovered] {
+  color: var(--medo-color-text-primary);
+}
+
+.medo-table__column[data-focus-visible] {
+  box-shadow: var(--medo-shadow-focus-ring-inset);
+}
+
+.medo-table__column[aria-sort='ascending'],
+.medo-table__column[aria-sort='descending'] {
+  font: var(--medo-typography-label-sm-strong);
+  color: var(--medo-color-text-primary);
+}
+
+.medo-table__column-inner {
+  display: inline-flex;
+  vertical-align: middle;
+  align-items: center;
+  gap: var(--medo-space-1);
+}
+
+.medo-table__sort {
+  inline-size: calc(var(--medo-space-3) + var(--medo-space-0-5)); /* 14 */
+  block-size: calc(var(--medo-space-3) + var(--medo-space-0-5));
+  stroke-width: 2.5;
+}
+
+/* Unsorted sortable columns show the arrow on hover and focus only. */
+.medo-table__column:not([aria-sort='ascending'], [aria-sort='descending']) .medo-table__sort {
+  opacity: 0;
+}
+.medo-table__column:is([data-hovered], [data-focus-visible]) .medo-table__sort {
+  opacity: 1;
+}
+
+/* ---------- Rows and cells ---------- */
+
+.medo-table__row,
+.medo-table tbody tr {
+  outline: none;
+}
+
+.medo-table__cell,
+.medo-table tbody :is(td, th) {
+  block-size: var(--_row);
+  padding: var(--medo-space-2) var(--_pad);
+  border-block-end: var(--medo-border-width-thin) solid var(--medo-color-border-default);
+  vertical-align: middle;
+  text-align: start;
+  outline: none;
+}
+
+.medo-table tbody th {
+  font-weight: var(--medo-font-weight-medium);
+}
+
+.medo-table tbody tr:last-child > *,
+.medo-table__row:last-child > .medo-table__cell {
+  border-block-end: 0;
+}
+
+/* Numbers: right, tabular, never truncated. */
+.medo-table :is(th, td, .medo-table__column, .medo-table__cell):is(.medo-table__cell--number, [data-align='end']) {
+  text-align: end;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.medo-table__column[data-align='end'] .medo-table__column-inner {
+  flex-direction: row-reverse;
+}
+
+/* Skeletons in number columns sit on the right, like the numbers will. */
+.medo-table :is(.medo-table__cell--number, [data-align='end']) .medo-skeleton {
+  margin-inline-start: auto;
+}
+
+/* Utility columns (checkbox, actions, chevron) */
+.medo-table :is(.medo-table__cell--utility, .medo-table__column--utility) {
+  inline-size: var(--medo-space-12);
+  padding-inline: var(--medo-space-4) 0;
+}
+
+.medo-table__row[data-hovered] > .medo-table__cell {
+  background-color: var(--medo-color-state-hover);
+}
+
+.medo-table__row[data-pressed] > .medo-table__cell {
+  background-color: var(--medo-color-state-pressed);
+}
+
+.medo-table__row[data-selected] > .medo-table__cell {
+  background-color: var(--medo-color-action-selected);
+}
+
+.medo-table__row[data-selected][data-hovered] > .medo-table__cell {
+  background-color: var(--medo-color-action-selected-hover);
+}
+
+.medo-table__row[data-focus-visible] > .medo-table__cell:first-child {
+  box-shadow: inset var(--medo-focus-ring-width) 0 0 var(--medo-color-focus-ring);
+}
+
+.medo-table__row[data-focus-visible] {
+  outline: var(--medo-focus-ring-width) solid var(--medo-color-focus-ring);
+  outline-offset: calc(-1 * var(--medo-focus-ring-width));
+}
+
+.medo-table__cell[data-focus-visible] {
+  box-shadow: var(--medo-shadow-focus-ring-inset);
+}
+
+.medo-table__row[data-disabled] {
+  color: var(--medo-color-text-disabled);
+}
+
+.medo-table__row[data-href],
+.medo-table__row[data-selection-mode] {
+  cursor: pointer;
+}
+
+/* Optional zebra stripes for wide, dense data. */
+.medo-table--striped tbody tr:nth-child(even) > *,
+.medo-table--striped .medo-table__row:nth-child(even) > .medo-table__cell {
+  background-color: var(--medo-color-surface-subtle);
+}
+
+/* Empty and loading states fill the body; toolbar and header stay. */
+.medo-table__empty {
+  padding: var(--medo-space-12) var(--_pad);
+  text-align: center;
+  color: var(--medo-color-text-secondary);
+}
+
+@media (forced-colors: active) {
+  .medo-table__row[data-selected] > .medo-table__cell {
+    forced-color-adjust: none;
+    background-color: Highlight;
+    color: HighlightText;
+  }
+  .medo-table__row[data-focus-visible] {
+    outline-color: Highlight;
+  }
+}
