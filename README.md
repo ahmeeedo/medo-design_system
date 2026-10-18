@@ -138,6 +138,7 @@ DM Sans and DM Mono (SIL Open Font License). Self-host them, for example with `@
 | `Switch` | C12 | label start/end, loading state |
 | `Tag`, `TagGroup` | C06 | removable values or selectable filters · sm/md |
 | `Tooltip`, `TooltipTrigger` | C14 | 500 ms delay, instant on focus, shortcut |
+| `ToggleButton`, `ToggleButtonGroup`, `Toolbar` | C15 | stays pressed (`aria-pressed`) · segmented (single, `fullWidth`) or toolbar (multiple) · groups with divider |
 | `Badge`, `BadgeCount`, `BadgeDot` | C17 | 6 tones · dot or icon · counts „99+“ |
 | `Spinner`, `ProgressBar`, `Skeleton` | C26 | reduced motion: slower / static |
 | `Avatar`, `AvatarGroup` | C28 | image → initials → icon · colour from id · status · max 4 + „+N“ |
@@ -187,6 +188,8 @@ Projects that still use it should pin the tag: `npm install github:ahmeeedo/medo
 ## Roadmap
 
 - More components in `@medo/ui` (order of the Figma library).
+- Table, part 2: bulk action bar, column menu, pagination, cards on mobile.
+- Storybook tests: Accessibility panel strict (`a11y: { test: 'error' }`, every violation fails); `play` functions for core behaviour (Table sort and select, Tag remove, Alert dismiss, Tooltip keyboard), visible in the Interactions panel and run in CI with the Storybook Vitest addon.
 - Code examples per framework: one Storybook per framework (React, Vue, Angular), combined with **Storybook Composition** into one site.
 - Publishing the packages (npm or a private registry) with versioning (e.g. Changesets).
 - Automatic token export in CI.

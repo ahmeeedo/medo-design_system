@@ -8,7 +8,7 @@
 import type { PropsWithChildren, ReactNode } from 'react';
 import { Children, useContext, useEffect, useState } from 'react';
 import type { DocsContextProps } from 'storybook/internal/types';
-import { GLOBALS_UPDATED, SET_GLOBALS } from 'storybook/internal/core-events';
+import { GLOBALS_UPDATED, SET_GLOBALS, UPDATE_STORY_ARGS } from 'storybook/internal/core-events';
 import { Canvas, Controls, Description, DocsContainer, DocsContext, useOf } from '@storybook/addon-docs/blocks';
 import { Alert, Link, StaticTable } from '@medo/ui';
 import { modeFromGlobals, themes } from '../../.storybook/theme';
@@ -195,6 +195,16 @@ export function ComponentDocsPage() {
   const name = path.at(-1)!;
   const kind = path[0];
   const [primary, ...examples] = stories;
+
+  /*
+   * Storybook quirk: the docs Controls block starts with the *mapped* args, so select controls
+   * with a mapping (slot()) show „Choose option…“ until the first change. An empty update makes
+   * the preview send the real (unmapped) args once.
+   */
+  const primaryId = primary?.id;
+  useEffect(() => {
+    if (primaryId) context.channel.emit(UPDATE_STORY_ARGS, { storyId: primaryId, updatedArgs: {} });
+  }, [context.channel, primaryId]);
   const nav = [primary ? 'Playground' : null, ...examples.map((s) => s.name)].filter(Boolean) as string[];
   let n = 0;
 

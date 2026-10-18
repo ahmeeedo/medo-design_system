@@ -21,6 +21,8 @@ export { Tooltip, TooltipTrigger } from './tooltip/Tooltip';
 export type { TooltipProps } from './tooltip/Tooltip';
 export { Spinner, ProgressBar, Skeleton } from './progress/Progress';
 export type { SpinnerProps, ProgressBarProps, SkeletonProps } from './progress/Progress';
+export { ToggleButton, ToggleButtonGroup, Toolbar, ToolbarSeparator } from './toggle-button/ToggleButton';
+export type { ToggleButtonProps, ToggleButtonGroupProps, ToolbarProps } from './toggle-button/ToggleButton';
 export { Link } from './link/Link';
 export type { LinkProps } from './link/Link';
 export { Alert } from './alert/Alert';

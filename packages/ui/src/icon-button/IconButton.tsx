@@ -1,7 +1,7 @@
 import type { CSSProperties, ReactNode } from 'react';
 import { Button as AriaButton, type ButtonProps as AriaButtonProps } from 'react-aria-components';
 import { Spinner } from '../progress/Progress';
-import { Tooltip, TooltipTrigger } from '../tooltip/Tooltip';
+import { Tooltip, TooltipTrigger, formatShortcut } from '../tooltip/Tooltip';
 import { cx } from '../utils/cx';
 import '../button/button.css';
 
@@ -27,13 +27,6 @@ export interface IconButtonProps extends Omit<AriaButtonProps, 'children' | 'cla
 }
 
 /** Square icon-only action (Figma: C02 Icon Button). Shares the Button styles. Shows its label as a tooltip. */
-const KEY_LABELS: Record<string, string> = { Control: 'Ctrl', Meta: '⌘', Shift: '⇧' };
-const formatShortcut = (keys: string) =>
-  keys
-    .split('+')
-    .map((k) => KEY_LABELS[k] ?? k)
-    .join(' ');
-
 export function IconButton({
   icon,
   variant = 'ghost',

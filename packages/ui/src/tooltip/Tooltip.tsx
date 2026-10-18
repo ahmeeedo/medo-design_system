@@ -25,6 +25,15 @@ export interface TooltipProps extends Omit<AriaTooltipProps, 'children' | 'class
   className?: string;
 }
 
+const KEY_LABELS: Record<string, string> = { Control: 'Ctrl', Meta: '⌘', Shift: '⇧' };
+
+/** Visible form of an aria-keyshortcuts value: „Control+C“ → „Ctrl C“, „Meta+C“ → „⌘ C“. */
+export const formatShortcut = (keys: string) =>
+  keys
+    .split('+')
+    .map((k) => KEY_LABELS[k] ?? k)
+    .join(' ');
+
 /** Tooltip – short label on hover or focus (Figma: C14 Tooltip). Top, 8 px offset, flips if needed. */
 export function Tooltip({ children, shortcut, placement = 'top', offset = 8, className, ...props }: TooltipProps) {
   return (
