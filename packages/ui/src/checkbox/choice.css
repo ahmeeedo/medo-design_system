@@ -61,8 +61,10 @@
 }
 
 .medo-checkbox .medo-choice__control > svg {
-  inline-size: calc(var(--_box) * 0.75);
-  block-size: calc(var(--_box) * 0.75);
+  /* 2 px inset like Figma (md 16 → 12, lg 20 → 16). 75 % gave 15 px in lg:
+     odd size, half-pixel offset, so the mark looked off-centre. */
+  inline-size: calc(var(--_box) - 2 * var(--medo-space-0-5));
+  block-size: calc(var(--_box) - 2 * var(--medo-space-0-5));
   stroke-width: 3;
 }
 
