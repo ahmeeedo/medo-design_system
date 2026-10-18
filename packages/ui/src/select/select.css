@@ -1,0 +1,199 @@
+/**
+ * Select – med.o Design System (Figma: C08 Select)
+ *
+ * Input anatomy plus a chevron; the whole field is one button that opens the Listbox.
+ *   <div class="medo-field medo-select" data-open data-invalid data-disabled data-readonly>
+ *     <span class="medo-field__label">Country</span>
+ *     <div class="medo-input medo-input--md medo-select__field">
+ *       <button class="medo-select__trigger">
+ *         <span class="medo-input__icon">…</span>
+ *         <span class="medo-select__value">Germany</span>      (or tags for multi)
+ *         <span class="medo-select__chevron">⌄</span>
+ *       </button>
+ *       <button class="medo-input__action medo-select__clear" aria-label="Clear selection">×</button>
+ *     </div>
+ *     …helper / error…
+ *   </div>
+ * The clear button sits beside the trigger (never inside it: no button in a button).
+ */
+
+.medo-select__field {
+  --_pad: var(--medo-space-3);
+  --_pad-start: var(--_pad);
+  --_icon: var(--medo-size-icon-sm);
+  --_clear: var(--medo-size-icon-lg);
+
+  position: relative;
+  padding-inline: 0;
+  cursor: pointer;
+}
+
+.medo-select__field.medo-input--lg {
+  --_pad: var(--medo-space-4);
+  --_icon: var(--medo-size-icon-md);
+  --_clear: var(--medo-size-control-sm);
+}
+
+/* Multi with values: tags start closer to the edge (sm 4 · md/lg 8). */
+.medo-select--tags .medo-select__field {
+  --_pad-start: var(--medo-space-2);
+}
+.medo-select--tags .medo-select__field.medo-input--sm {
+  --_pad-start: var(--medo-space-1);
+}
+
+.medo-select__trigger {
+  box-sizing: border-box;
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: var(--medo-space-2);
+  min-inline-size: 0;
+  block-size: 100%;
+  padding-block: 0;
+  padding-inline: var(--_pad-start) var(--_pad);
+  border: 0;
+  border-radius: inherit;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: start;
+  cursor: inherit;
+  outline: none;
+}
+
+/* Room for the clear button between value and chevron (the button itself sits beside the trigger). */
+.medo-select--clearable .medo-select__chevron {
+  margin-inline-start: calc(var(--_clear) + var(--medo-space-2));
+}
+
+.medo-select__value {
+  flex: 1;
+  min-inline-size: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.medo-select__value[data-placeholder] {
+  color: var(--medo-color-text-secondary);
+}
+
+.medo-select__chevron {
+  display: inline-flex;
+  flex: none;
+  inline-size: var(--_icon);
+  block-size: var(--_icon);
+  color: var(--medo-color-text-secondary);
+  transition: transform var(--medo-motion-duration-fast) var(--medo-motion-easing-standard);
+}
+
+.medo-select__chevron > svg {
+  inline-size: 100%;
+  block-size: 100%;
+}
+
+.medo-select[data-open] .medo-select__chevron {
+  transform: rotate(180deg);
+}
+
+.medo-select__clear {
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-end: calc(var(--_pad) + var(--_icon) + var(--medo-space-2));
+  display: flex;
+  translate: 0 -50%;
+}
+
+.medo-select__clear > .medo-input__action {
+  margin: 0;
+}
+
+/* ---------- Tags (multi) ---------- */
+
+.medo-select__tags {
+  position: relative;
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: var(--medo-space-1);
+  min-inline-size: 0;
+  overflow: hidden;
+}
+
+.medo-select__tags .medo-tag {
+  flex: none;
+  max-inline-size: 100%;
+}
+
+.medo-select__tags .medo-tag:first-child {
+  flex-shrink: 1;
+  min-inline-size: 0;
+}
+
+.medo-select__tag-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Hidden copy that measures every tag, so the visible row knows how many fit. */
+.medo-select__measure {
+  position: absolute;
+  inset-inline-start: 0;
+  display: flex;
+  gap: var(--medo-space-1);
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* ---------- States ---------- */
+
+.medo-select:is([data-open], :has(.medo-select__trigger[data-focus-visible])) .medo-select__field {
+  --_border: var(--medo-color-focus-ring);
+  box-shadow: inset 0 0 0 var(--medo-border-width-thin) var(--medo-color-focus-ring);
+}
+
+.medo-select[data-invalid] .medo-select__field {
+  --_border: var(--medo-color-border-danger);
+}
+
+.medo-select[data-readonly] .medo-select__field {
+  --_border: var(--medo-color-border-default);
+  background-color: var(--medo-color-surface-subtle);
+  cursor: default;
+}
+
+.medo-select[data-disabled] .medo-select__field {
+  --_border: var(--medo-color-border-default);
+  background-color: var(--medo-color-action-disabled);
+  color: var(--medo-color-text-disabled);
+  cursor: not-allowed;
+}
+
+.medo-select[data-disabled] :is(.medo-select__value[data-placeholder], .medo-select__chevron, .medo-input__icon) {
+  color: var(--medo-color-text-disabled);
+}
+
+.medo-select[data-disabled] .medo-tag {
+  --_bg: transparent;
+  --_fg: var(--medo-color-text-disabled);
+}
+
+/* Hover only when the field can change. */
+@media (hover: hover) {
+  .medo-select:is([data-readonly], [data-disabled]) .medo-select__field:hover {
+    --_border: var(--medo-color-border-default);
+  }
+}
+
+@media (forced-colors: active) {
+  .medo-select:is([data-open], :has(.medo-select__trigger[data-focus-visible])) .medo-select__field {
+    outline: var(--medo-focus-ring-width) solid Highlight;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .medo-select__chevron {
+    transition: none;
+  }
+}
