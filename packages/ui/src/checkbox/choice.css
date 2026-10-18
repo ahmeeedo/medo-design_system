@@ -72,8 +72,10 @@
 
 .medo-radio .medo-choice__control::after {
   content: '';
-  inline-size: 50%;
-  block-size: 50%;
+  /* Half of the outer size (Figma: md 16 → 8, lg 20 → 10). A % of the inner box
+     gives odd sizes (7 px) and a half-pixel offset, so the dot looks off-centre. */
+  inline-size: calc(var(--_box) / 2);
+  block-size: calc(var(--_box) / 2);
   border-radius: var(--medo-radius-full);
   background-color: var(--_accent);
   transform: scale(0);
