@@ -8,11 +8,14 @@ import '@fontsource/dm-sans/600.css';
 import '@fontsource/dm-sans/700.css';
 import '@fontsource/dm-mono/400.css';
 import './preview.css';
+import { ComponentDocsPage, MedoDocsContainer } from '../src/docs-blocks/DocBlocks';
 
 const preview: Preview = {
   parameters: {
     layout: 'padded',
     controls: { expanded: true },
+    // Docs pages follow the structure of the Figma doc frames and the Light / Dark switch (src/docs-blocks).
+    docs: { container: MedoDocsContainer, page: ComponentDocsPage },
     // Accessibility checks (axe) for every story. Violations show in the "Accessibility" panel.
     a11y: { test: 'todo' },
     options: {

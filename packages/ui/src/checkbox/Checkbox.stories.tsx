@@ -9,6 +9,7 @@ const meta = {
   args: { children: 'Accept the terms', size: 'md', isDisabled: false, isInvalid: false, isIndeterminate: false },
   argTypes: { size: { control: 'inline-radio', options: ['md', 'lg'] } },
   parameters: {
+    medo: { code: 'C05', subtitle: 'Select one or several independent options.', figma: '102:79' },
     docs: {
       description: {
         component:

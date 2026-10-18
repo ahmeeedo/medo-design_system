@@ -2,7 +2,7 @@
  * Documentation blocks that read the generated token lists.
  * Everything updates automatically when the tokens are rebuilt from Figma.
  */
-import type { CSSProperties, ReactNode } from 'react';
+import type { ReactNode } from 'react';
 import light from '@medo/design-tokens/docs/tokens.light.json';
 import dark from '@medo/design-tokens/docs/tokens.dark.json';
 import tablet from '@medo/design-tokens/src/layout/tablet.json';
@@ -24,15 +24,13 @@ const darkByVar = new Map(D.map((t) => [t.cssVar, t]));
 
 /* ---------- small building blocks ---------- */
 
-const s = {
-  table: { width: '100%', borderCollapse: 'collapse', fontSize: 14, lineHeight: 1.45 } as CSSProperties,
-  th: { textAlign: 'left', fontWeight: 600, padding: '10px 16px', borderBottom: '1px solid #d0d7de', whiteSpace: 'nowrap' } as CSSProperties,
-  td: { padding: '12px 16px', borderBottom: '1px solid #eaeef2', verticalAlign: 'top' } as CSSProperties,
-  code: { fontFamily: 'var(--medo-font-family-mono)', fontSize: 12, wordBreak: 'break-all' } as CSSProperties,
-  muted: { color: '#59636e', fontSize: 13 } as CSSProperties,
-};
-
-const Code = ({ children }: { children: ReactNode }) => <code style={s.code}>{children}</code>;
+/* Table styles live in docs-blocks/docs.css (.doc-table). */
+const Code = ({ children }: { children: ReactNode }) => <code className="doc-mono">{children}</code>;
+const Table = ({ children }: { children: ReactNode }) => (
+  <div className="doc-scroll">
+    <table className="doc-table">{children}</table>
+  </div>
+);
 
 function Swatch({ cssVar, theme, size = 40 }: { cssVar: string; theme: 'light' | 'dark'; size?: number }) {
   // A data-theme island: shows the token exactly as it renders in that theme.
@@ -69,14 +67,14 @@ const tailwindHint = (t: Token) => {
 export function SemanticColors({ groups }: { groups: string[] }) {
   const tokens = L.filter((t) => t.type === 'color' && groups.includes(t.path[1]) && darkByVar.has(t.cssVar));
   return (
-    <table style={s.table}>
+    <Table>
       <thead>
         <tr>
-          <th style={s.th}>Light</th>
-          <th style={s.th}>Dark</th>
-          <th style={s.th}>Token</th>
-          <th style={s.th}>Light → Dark</th>
-          <th style={s.th}>Usage</th>
+          <th>Light</th>
+          <th>Dark</th>
+          <th>Token</th>
+          <th>Light → Dark</th>
+          <th>Usage</th>
         </tr>
       </thead>
       <tbody>
@@ -84,26 +82,26 @@ export function SemanticColors({ groups }: { groups: string[] }) {
           const d = darkByVar.get(t.cssVar)!;
           return (
             <tr key={t.cssVar}>
-              <td style={s.td}><Swatch cssVar={t.cssVar} theme="light" /></td>
-              <td style={s.td}><Swatch cssVar={t.cssVar} theme="dark" /></td>
-              <td style={s.td}>
+              <td><Swatch cssVar={t.cssVar} theme="light" /></td>
+              <td><Swatch cssVar={t.cssVar} theme="dark" /></td>
+              <td>
                 <strong>{t.name}</strong>
                 <br />
                 <Code>{t.cssVar}</Code>
                 <br />
                 <Code>{tailwindHint(t)}</Code>
               </td>
-              <td style={{ ...s.td, ...s.muted, whiteSpace: 'nowrap' }}>
+              <td className="doc-cell-muted" style={{ whiteSpace: 'nowrap' }}>
                 {t.ref ?? t.value}
                 <br />
                 {d.ref ?? d.value}
               </td>
-              <td style={{ ...s.td, ...s.muted }}>{t.description}</td>
+              <td className="doc-cell-muted">{t.description}</td>
             </tr>
           );
         })}
       </tbody>
-    </table>
+    </Table>
   );
 }
 
@@ -122,7 +120,7 @@ export function Palette() {
                 <div key={t.cssVar}>
                   <div style={{ height: 40, borderRadius: 6, background: `var(${t.cssVar})`, boxShadow: 'inset 0 0 0 1px rgba(127,127,127,.25)' }} />
                   <div style={{ fontSize: 11, marginTop: 4 }}>{t.path[2]}</div>
-                  <div style={{ ...s.code, fontSize: 10, color: '#59636e' }}>{String(t.value)}</div>
+                  <div className="doc-mono" style={{ fontSize: 10 }}>{String(t.value)}</div>
                 </div>
               ))}
             </div>
@@ -138,11 +136,11 @@ export function Palette() {
 export function TypeScale() {
   const styles = L.filter((t) => t.type === 'typography' && !t.path.includes('avatar'));
   return (
-    <table style={s.table}>
+    <Table>
       <thead>
         <tr>
-          <th style={s.th}>Sample</th>
-          <th style={s.th}>Style</th>
+          <th>Sample</th>
+          <th>Style</th>
         </tr>
       </thead>
       <tbody>
@@ -150,26 +148,26 @@ export function TypeScale() {
           const name = t.path.slice(1).join('-');
           return (
             <tr key={t.cssVar}>
-              <td style={{ ...s.td, width: '60%' }}>
+              <td style={{ width: '60%' }}>
                 {/* sb-unstyled: keeps Storybook's docs styles away from the sample. */}
                 <div className="sb-unstyled">
                   <span className={`medo-text-${name}`}>Design for everyone</span>
                 </div>
               </td>
-              <td style={s.td}>
+              <td>
                 <strong>{t.name.replace('typography/', '')}</strong>
                 <br />
                 <Code>.medo-text-{name}</Code>
                 <br />
                 <Code>text-{name}</Code>
                 <br />
-                <span style={s.muted}>{String(t.value)}</span>
+                <span className="doc-cell-muted">{String(t.value)}</span>
               </td>
             </tr>
           );
         })}
       </tbody>
-    </table>
+    </Table>
   );
 }
 
@@ -179,28 +177,28 @@ const byGroup = (...path: string[]) => L.filter((t) => path.every((p, i) => t.pa
 
 export function SpacingScale() {
   return (
-    <table style={s.table}>
+    <Table>
       <thead>
         <tr>
-          <th style={s.th}>Token</th>
-          <th style={s.th}>Value</th>
-          <th style={s.th}>Tailwind</th>
-          <th style={s.th} />
+          <th>Token</th>
+          <th>Value</th>
+          <th>Tailwind</th>
+          <th><span className="sr-only">Preview</span></th>
         </tr>
       </thead>
       <tbody>
         {byGroup('space').map((t) => (
           <tr key={t.cssVar}>
-            <td style={s.td}><strong>{t.name}</strong><br /><Code>{t.cssVar}</Code></td>
-            <td style={{ ...s.td, ...s.muted }}>{String(t.value)}</td>
-            <td style={s.td}><Code>p-{t.path[1].replace('-', '.')}</Code></td>
-            <td style={{ ...s.td, width: '40%' }}>
+            <td><strong>{t.name}</strong><br /><Code>{t.cssVar}</Code></td>
+            <td className="doc-cell-muted">{String(t.value)}</td>
+            <td><Code>p-{t.path[1].replace('-', '.')}</Code></td>
+            <td style={{ width: '40%' }}>
               <div style={{ height: 16, width: `var(${t.cssVar})`, background: 'var(--medo-color-action-primary)', borderRadius: 2 }} />
             </td>
           </tr>
         ))}
       </tbody>
-    </table>
+    </Table>
   );
 }
 
@@ -211,8 +209,8 @@ export function Radii() {
         <div key={t.cssVar} style={{ textAlign: 'center' }}>
           <div style={{ width: 72, height: 72, background: 'var(--medo-color-surface-brand-muted)', border: '2px solid var(--medo-color-action-primary)', borderRadius: `var(${t.cssVar})` }} />
           <div style={{ fontSize: 13, marginTop: 6, fontWeight: 600 }}>{t.name}</div>
-          <div style={{ ...s.code }}>rounded-{t.path[1]}</div>
-          <div style={s.muted}>{String(t.value)}</div>
+          <div className="doc-mono">rounded-{t.path[1]}</div>
+          <div className="medo-text-caption doc-muted">{String(t.value)}</div>
         </div>
       ))}
     </div>
@@ -221,24 +219,24 @@ export function Radii() {
 
 export function SimpleTable({ path }: { path: string[] }) {
   return (
-    <table style={s.table}>
+    <Table>
       <thead>
         <tr>
-          <th style={s.th}>Token</th>
-          <th style={s.th}>CSS variable</th>
-          <th style={s.th}>Value</th>
+          <th>Token</th>
+          <th>CSS variable</th>
+          <th>Value</th>
         </tr>
       </thead>
       <tbody>
         {byGroup(...path).map((t) => (
           <tr key={t.cssVar}>
-            <td style={s.td}><strong>{t.name}</strong>{t.description ? <div style={s.muted}>{t.description}</div> : null}</td>
-            <td style={s.td}><Code>{t.cssVar}</Code></td>
-            <td style={{ ...s.td, ...s.muted }}>{String(t.value)}</td>
+            <td><strong>{t.name}</strong>{t.description ? <div className="doc-cell-muted" style={{ fontWeight: 400 }}>{t.description}</div> : null}</td>
+            <td><Code>{t.cssVar}</Code></td>
+            <td className="doc-cell-muted">{String(t.value)}</td>
           </tr>
         ))}
       </tbody>
-    </table>
+    </Table>
   );
 }
 
@@ -252,26 +250,26 @@ export function LayoutTable() {
   const keys = ['columns', 'gutter', 'margin', 'section'];
   const mobile = Object.fromEntries(byGroup('layout').map((t) => [t.path[1], String(t.value)]));
   return (
-    <table style={s.table}>
+    <Table>
       <thead>
         <tr>
-          <th style={s.th}>Token</th>
-          <th style={s.th}>Mobile (&lt; 640)</th>
-          <th style={s.th}>Tablet (≥ 640)</th>
-          <th style={s.th}>Desktop (≥ 1024)</th>
+          <th>Token</th>
+          <th>Mobile (&lt; 640)</th>
+          <th>Tablet (≥ 640)</th>
+          <th>Desktop (≥ 1024)</th>
         </tr>
       </thead>
       <tbody>
         {keys.map((k) => (
           <tr key={k}>
-            <td style={s.td}><strong>layout/{k}</strong><br /><Code>--medo-layout-{k}</Code></td>
-            <td style={{ ...s.td, ...s.muted }}>{mobile[k]}</td>
-            <td style={{ ...s.td, ...s.muted }}>{lv(tablet as LayoutFile, k)}</td>
-            <td style={{ ...s.td, ...s.muted }}>{lv(desktop as LayoutFile, k)}</td>
+            <td><strong>layout/{k}</strong><br /><Code>--medo-layout-{k}</Code></td>
+            <td className="doc-cell-muted">{mobile[k]}</td>
+            <td className="doc-cell-muted">{lv(tablet as LayoutFile, k)}</td>
+            <td className="doc-cell-muted">{lv(desktop as LayoutFile, k)}</td>
           </tr>
         ))}
       </tbody>
-    </table>
+    </Table>
   );
 }
 
@@ -279,28 +277,31 @@ export function LayoutTable() {
 
 export function Elevation() {
   return (
-    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', borderRadius: 12, overflow: 'hidden' }}>
+    <div className="doc-stages" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(20rem, 1fr))' }}>
       {(['light', 'dark'] as const).map((theme) => (
-        <div key={theme} data-theme={theme} style={{ display: 'flex', gap: 24, flexWrap: 'wrap', padding: 32, background: 'var(--medo-color-surface-canvas)' }}>
-          {byGroup('shadow').map((t) => (
-            <div
-              key={t.cssVar}
-              style={{
-                width: 120,
-                height: 88,
-                padding: 12,
-                boxSizing: 'border-box',
-                borderRadius: 12,
-                background: 'var(--medo-color-surface-raised)',
-                color: 'var(--medo-color-text-primary)',
-                boxShadow: `var(${t.cssVar})`,
-                fontSize: 13,
-              }}
-            >
-              <strong>{t.path.slice(1).join('/')}</strong>
-              <div style={{ ...s.code, color: 'var(--medo-color-text-secondary)' }}>shadow-{t.path.slice(1).join('-')}</div>
-            </div>
-          ))}
+        <div key={theme} data-theme={theme} className="doc-stage" style={{ background: 'var(--medo-color-surface-canvas)' }}>
+          <span className="doc-stage-label medo-text-code-sm doc-upper">{theme}</span>
+          <div style={{ display: 'flex', gap: 24, flexWrap: 'wrap' }}>
+            {byGroup('shadow').map((t) => (
+              <div
+                key={t.cssVar}
+                style={{
+                  width: 120,
+                  height: 88,
+                  padding: 12,
+                  boxSizing: 'border-box',
+                  borderRadius: 12,
+                  background: 'var(--medo-color-surface-raised)',
+                  color: 'var(--medo-color-text-primary)',
+                  boxShadow: `var(${t.cssVar})`,
+                  fontSize: 13,
+                }}
+              >
+                <strong>{t.path.slice(1).join('/')}</strong>
+                <div style={{ fontFamily: 'var(--medo-font-family-mono)', fontSize: 11, color: 'var(--medo-color-text-secondary)' }}>shadow-{t.path.slice(1).join('-')}</div>
+              </div>
+            ))}
+          </div>
         </div>
       ))}
     </div>

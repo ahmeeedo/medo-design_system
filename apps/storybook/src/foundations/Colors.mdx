@@ -1,36 +1,59 @@
 import { Meta } from '@storybook/addon-docs/blocks';
 import { SemanticColors, Palette } from './components/TokenDocs';
+import { DocPage, DocHeader, DocSection, DocFooter, Tok, figmaDoc } from '../docs-blocks/DocBlocks';
 
 <Meta title="Foundations/Colors" />
 
-# Colors
+<DocPage>
 
-Three layers: **primitives** (raw palette) → **alias** (primary, neutral, success …) → **semantic** (what a color is *for*).
-Use only **semantic** tokens in products. They switch between Light and Dark automatically.
-Every table shows both themes side by side.
+<DocHeader
+  kind="Foundations"
+  title="Colors"
+  meta="Colors · 01 + 07 + F09"
+  subtitle="Roles that components use. Each token switches between Light and Dark."
+  description={<>
+    <p>Three layers: <strong className="doc-strong">primitives</strong> (raw palette) → <strong className="doc-strong">alias</strong> (primary, neutral, success …) → <strong className="doc-strong">semantic</strong> (what a color is for).</p>
+    <p>Products use only semantic tokens. Every table shows Light and Dark side by side.</p>
+  </>}
+  nav={['Surfaces', 'Text', 'Borders & focus', 'Actions & states', 'Feedback', 'Avatar', 'Shadow colors', 'Palette']}
+/>
 
-## Surfaces
-<SemanticColors groups={['surface', 'overlay']} />
+<DocSection n={1} title="Surfaces" meta="Light + Dark" description="Backgrounds from page to overlay. Max three levels: page → container → inset.">
+  <SemanticColors groups={['surface', 'overlay']} />
+</DocSection>
 
-## Text
-<SemanticColors groups={['text']} />
+<DocSection n={2} title="Text" meta="Light + Dark" description="text/primary and text/secondary pass AA on every surface in both modes.">
+  <SemanticColors groups={['text']} />
+</DocSection>
 
-## Borders and focus
-<SemanticColors groups={['border', 'focus']} />
+<DocSection n={3} title="Borders & focus" meta="Light + Dark" description="border/default is decorative. Control boundaries use border/strong (≥ 3 : 1).">
+  <SemanticColors groups={['border', 'focus']} />
+</DocSection>
 
-## Actions and states
-<SemanticColors groups={['action', 'state']} />
+<DocSection n={4} title="Actions & states" meta="Light + Dark" description="Filled controls have their own hover and pressed tokens. Transparent ones use the state layers.">
+  <SemanticColors groups={['action', 'state']} />
+</DocSection>
 
-## Feedback
-<SemanticColors groups={['feedback']} />
+<DocSection n={5} title="Feedback" meta="Light + Dark">
+  <SemanticColors groups={['feedback']} />
+</DocSection>
 
-## Avatar
-<SemanticColors groups={['avatar']} />
+<DocSection n={6} title="Avatar" meta="Light + Dark">
+  <SemanticColors groups={['avatar']} />
+</DocSection>
 
-## Shadow colors
-Used inside the elevation tokens, not directly.
-<SemanticColors groups={['shadow']} />
+<DocSection n={7} title="Shadow colors" meta="Used by elevation" description="Used inside the elevation tokens, not directly.">
+  <SemanticColors groups={['shadow']} />
+</DocSection>
 
-## Palette (primitives)
-For reference only. Products never use these directly.
-<Palette />
+<DocSection n={8} title="Palette" meta="Primitives" description="For reference only. Products never use these directly.">
+  <Palette />
+</DocSection>
+
+
+<DocFooter>
+  {'Foundations: Colors · tokens generated from Figma'}
+  <a href={figmaDoc('50:2')} target="_blank" rel="noreferrer">Open the Figma documentation (new tab)</a>
+</DocFooter>
+
+</DocPage>

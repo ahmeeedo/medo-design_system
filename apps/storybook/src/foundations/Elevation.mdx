@@ -1,23 +1,43 @@
 import { Meta } from '@storybook/addon-docs/blocks';
 import { Elevation, Motion, SimpleTable } from './components/TokenDocs';
+import { DocPage, DocHeader, DocSection, DocFooter, Notes, Tok, figmaDoc } from '../docs-blocks/DocBlocks';
 
 <Meta title="Foundations/Elevation & motion" />
 
-# Elevation & motion
+<DocPage>
 
-## Elevation
-Shadows reference theme colors, so they adapt to Dark. Focus rings are shadows too (`focus/ring`, `focus/ring-inset`).
+<DocHeader
+  kind="Foundations"
+  title="Elevation & motion"
+  meta="Depth · Interaction · 05 + 06"
+  subtitle="How elements float, stack, fade and move."
+  description={<p>Shadows reference theme colors, so they adapt to Dark. Focus rings are shadows too (<Tok>focus/ring</Tok>, <Tok>focus/ring-inset</Tok>).</p>}
+  nav={['Elevation', 'Blur', 'Motion', 'Opacity']}
+/>
 
-<Elevation />
+<DocSection n={1} title="Elevation" meta="4 levels · Light + Dark" description="Only for elements that float above the page. Dropdowns elevation/2, dialogs elevation/3.">
+  <Elevation />
+</DocSection>
 
-## Blur
-<SimpleTable path={['blur']} />
+<DocSection n={2} title="Blur" meta="Media · image">
+  <SimpleTable path={['blur']} />
+</DocSection>
 
-## Motion
-Default for state changes: `motion/duration/fast` + `motion/easing/standard`.
-Always respect `prefers-reduced-motion`.
+<DocSection n={3} title="Motion" meta="Durations · easings" description="Default for state changes: motion/duration/fast with motion/easing/standard.">
+  <Motion />
+  <Notes>
+    <p>Respect <Tok>prefers-reduced-motion: reduce</Tok>: remove movement or replace it with a short fade.</p>
+  </Notes>
+</DocSection>
 
-<Motion />
+<DocSection n={4} title="Opacity" meta="Scrims · overlays" description="Opacity is not a disabled state. Disabled uses dedicated colors with known contrast.">
+  <SimpleTable path={['opacity']} />
+</DocSection>
 
-## Opacity
-<SimpleTable path={['opacity']} />
+
+<DocFooter>
+  {'Foundations: Elevation & motion · tokens generated from Figma'}
+  <a href={figmaDoc('47:2')} target="_blank" rel="noreferrer">Open the Figma documentation (new tab)</a>
+</DocFooter>
+
+</DocPage>

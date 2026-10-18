@@ -14,7 +14,7 @@ import { Button } from '@medo/ui';
 const meta = {
   title: 'Usage/Tailwind',
   tags: ['autodocs'],
-  parameters: { layout: 'centered' },
+  parameters: { layout: 'centered', medo: { subtitle: 'Utility classes on top of the tokens. Only system values exist.' } },
 } satisfies Meta;
 
 export default meta;

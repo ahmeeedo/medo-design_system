@@ -25,7 +25,7 @@ export interface TextFieldProps extends Omit<AriaTextFieldProps, 'children' | 'c
   size?: InputSize;
   /** Decorative icon before the text (hidden from screen readers). */
   leadingIcon?: ReactNode;
-  /** Trailing action, e.g. <InputAction aria-label="Show password" …/>. */
+  /** Trailing action, e.g. `<InputAction aria-label="Show password" />`. */
   trailing?: ReactNode;
   /** Multi-line text (Textarea): min 3 rows, grows up to 8 rows. */
   multiline?: boolean;

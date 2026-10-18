@@ -1,32 +1,41 @@
 import { Meta } from '@storybook/addon-docs/blocks';
+import { DocPage, DocHeader, DocSection, DocFooter, SpecTable, Notes, Tok } from './docs-blocks/DocBlocks';
 
 <Meta title="Introduction" />
 
-# med.o Design System
+<DocPage>
 
-Rules for look, function and behaviour of med.o products – framework-neutral.
-**Figma is the source of truth.** This Storybook shows the code side: design tokens, CSS, Tailwind theme and components.
+<DocHeader
+  kind="Overview"
+  title="med.o Design System"
+  meta="Code · v2"
+  subtitle="Rules for look, function and behaviour of med.o products – framework-neutral."
+  description={<>
+    <p><strong className="doc-strong">Figma is the source of truth.</strong> This site shows the code side: design tokens, CSS, Tailwind theme and components.</p>
+    <p>Use the theme switch in the toolbar (Light / Dark). Every example follows it. Accessibility target: WCAG 2.2 AA.</p>
+  </>}
+  nav={['Packages', 'Use the tokens', 'Light and Dark', 'Fonts', 'Updating from Figma']}
+/>
 
-- Figma: [med.o Design System](https://www.figma.com/design/vOTfMtcpCwAJjuSZUkfpfj)
-- Theme: use the **paintbrush / theme switch** in the toolbar (Light / Dark). Every story and token table follows it.
-- Accessibility: every story is checked with axe (panel **Accessibility**). Target: WCAG 2.2 AA.
+<DocSection n={1} title="Packages" meta="2 packages">
 
-## Packages
+<SpecTable
+  head={['Package', 'Contents']}
+  rows={[
+    [<Tok>@medo/design-tokens</Tok>, 'CSS variables (--medo-*), text style classes, Tailwind v4 theme, JS values. Works with every framework and plain HTML.'],
+    [<Tok>@medo/ui</Tok>, 'Components. Styles are plain CSS classes, React components on top. Vue, Angular or HTML can reuse the CSS.'],
+  ]}
+/>
 
-| Package | What it contains | Works with |
-| --- | --- | --- |
-| `@medo/design-tokens` | DTCG source, CSS variables (`--medo-*`), text style classes, Tailwind v4 theme, JS values | every framework, plain HTML |
-| `@medo/ui` | Components. Styles are plain CSS classes (`medo-button …`), React components on top | React today; the CSS can be reused by Vue, Angular, HTML |
+</DocSection>
 
-## Use the tokens in any project
+<DocSection n={2} title="Use the tokens" meta="CSS · Tailwind" description="Import the variables once. Then use only semantic tokens.">
 
 ```css
 /* main.css */
-@import "@medo/design-tokens/css";            /* variables, light + dark */
+@import "@medo/design-tokens/css";               /* variables, light + dark */
 @import "@medo/design-tokens/css/typography.css"; /* optional: .medo-text-* classes */
-```
 
-```css
 .card {
   background: var(--medo-color-surface-raised);
   color: var(--medo-color-text-primary);
@@ -36,23 +45,36 @@ Rules for look, function and behaviour of med.o products – framework-neutral.
 }
 ```
 
-## Light and Dark
+</DocSection>
 
-The tokens follow the operating system automatically. To force a theme, set `data-theme` on `<html>`
-(or on any element – then only that area changes):
+<DocSection n={3} title="Light and Dark" meta="System · forced" description="The tokens follow the operating system. Force a theme for the whole page or for one area.">
 
 ```html
 <html data-theme="dark">   <!-- "light", "dark" or no attribute = system -->
 ```
 
-## Fonts
+</DocSection>
 
-DM Sans and DM Mono (SIL Open Font License). Self-host them, e.g. with `@fontsource/dm-sans` – no request to Google.
+<DocSection n={4} title="Fonts" meta="DM Sans · DM Mono" description="Both fonts use the SIL Open Font License. Self-host them – no request to Google.">
 
-## Updating tokens from Figma
+<Notes>
+  <p>Example: <Tok>@fontsource/dm-sans</Tok> and <Tok>@fontsource/dm-mono</Tok> (weights 400, 500, 600, 700).</p>
+</Notes>
+
+</DocSection>
+
+<DocSection n={5} title="Updating from Figma" meta="Tokens" description="Generated files are never edited by hand.">
 
 1. Change variables or styles in Figma.
 2. Export them to `figma/variables.json` (see README).
-3. `npm run tokens:from-figma` → `npm run build:tokens`.
+3. Run `npm run tokens:from-figma`, then `npm run build:tokens`.
 
-Never edit the generated files (`packages/tokens/src`, `dist`) by hand.
+</DocSection>
+
+
+<DocFooter>
+  {'med.o Design System · design.med-o.de'}
+  <a href="https://www.figma.com/design/vOTfMtcpCwAJjuSZUkfpfj" target="_blank" rel="noreferrer">Open the Figma library (new tab)</a>
+</DocFooter>
+
+</DocPage>

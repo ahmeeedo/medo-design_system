@@ -9,7 +9,7 @@ import { Button, Checkbox, Radio, RadioGroup, Switch, TextField } from '@medo/ui
 const meta = {
   title: 'Usage/Form',
   tags: ['autodocs'],
-  parameters: { layout: 'padded' },
+  parameters: { layout: 'padded', medo: { subtitle: 'A complete form built from the components, with validation.' } },
 } satisfies Meta;
 
 export default meta;

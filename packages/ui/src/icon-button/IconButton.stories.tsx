@@ -14,6 +14,7 @@ const meta = {
     icon: { control: false },
   },
   parameters: {
+    medo: { code: 'C02', subtitle: 'A square button with an icon instead of a label.', figma: '68:122' },
     docs: {
       description: {
         component:

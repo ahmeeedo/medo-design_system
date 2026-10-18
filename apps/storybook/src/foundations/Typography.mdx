@@ -1,26 +1,48 @@
 import { Meta } from '@storybook/addon-docs/blocks';
 import { TypeScale, SimpleTable } from './components/TokenDocs';
+import { DocPage, DocHeader, DocSection, DocFooter, Notes, Tok, figmaDoc } from '../docs-blocks/DocBlocks';
 
 <Meta title="Foundations/Typography" />
 
-# Typography
+<DocPage>
 
-DM Sans for UI and text, DM Mono for code. Sizes are in `rem`, so they follow the user's browser font size.
+<DocHeader
+  kind="Foundations"
+  title="Typography"
+  meta="Typography · 04"
+  subtitle="DM Sans and DM Mono, 9 sizes, 4 weights."
+  description={<p>Sizes are px in Figma and rem in code (16 px = 1 rem), so text follows the user’s browser font size. Every size has a paired line height on the 4 px grid.</p>}
+  nav={['Text styles', 'Usage', 'Font tokens']}
+/>
 
-Use a text style as a whole – three ways, same result:
+<DocSection n={1} title="Text styles" meta="Use as a whole" description="A text style bundles family, size, weight, line height and letter spacing.">
+  <TypeScale />
+</DocSection>
+
+<DocSection n={2} title="Usage" meta="CSS · Tailwind" description="Three ways, same result.">
 
 ```html
-<p class="medo-text-body-md">…</p>          <!-- plain CSS class -->
-<p class="text-body-md">…</p>               <!-- Tailwind -->
-```
-```css
-p { font: var(--medo-typography-body-md); } /* shorthand (no letter spacing) */
+<p class="medo-text-body-md">…</p>   <!-- plain CSS class -->
+<p class="text-body-md">…</p>        <!-- Tailwind -->
 ```
 
-<TypeScale />
+<Notes>
+  <p>CSS shorthand: <Tok>font: var(--medo-typography-body-md)</Tok>. The shorthand has no letter spacing – prefer the class.</p>
+</Notes>
 
-## Font tokens
-<SimpleTable path={['font', 'family']} />
-<SimpleTable path={['font', 'size']} />
-<SimpleTable path={['font', 'weight']} />
-<SimpleTable path={['font', 'tracking']} />
+</DocSection>
+
+<DocSection n={3} title="Font tokens" meta="Family · size · weight · tracking">
+  <SimpleTable path={['font', 'family']} />
+  <SimpleTable path={['font', 'size']} />
+  <SimpleTable path={['font', 'weight']} />
+  <SimpleTable path={['font', 'tracking']} />
+</DocSection>
+
+
+<DocFooter>
+  {'Foundations: Typography · tokens generated from Figma'}
+  <a href={figmaDoc('39:2')} target="_blank" rel="noreferrer">Open the Figma documentation (new tab)</a>
+</DocFooter>
+
+</DocPage>

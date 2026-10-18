@@ -1,6 +1,12 @@
 import type { StorybookConfig } from '@storybook/react-vite';
 import tailwindcss from '@tailwindcss/vite';
 import { mergeConfig } from 'vite';
+import { createRequire } from 'node:module';
+import { dirname, join } from 'node:path';
+
+// Font files for the Storybook UI (see manager-head.html).
+const require = createRequire(import.meta.url);
+const fontFiles = (pkg: string) => join(dirname(require.resolve(`${pkg}/package.json`)), 'files');
 
 const config: StorybookConfig = {
   stories: [
@@ -12,6 +18,10 @@ const config: StorybookConfig = {
   addons: ['@storybook/addon-docs', '@storybook/addon-themes', '@storybook/addon-a11y'],
   framework: { name: '@storybook/react-vite', options: {} },
   core: { disableTelemetry: true },
+  staticDirs: [
+    { from: fontFiles('@fontsource/dm-sans'), to: '/fonts/dm-sans' },
+    { from: fontFiles('@fontsource/dm-mono'), to: '/fonts/dm-mono' },
+  ],
   // Tailwind v4 runs as a Vite plugin.
   viteFinal: (viteConfig) => mergeConfig(viteConfig, { plugins: [tailwindcss()] }),
 };

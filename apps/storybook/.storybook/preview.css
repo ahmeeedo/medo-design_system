@@ -13,3 +13,293 @@ body {
   color: var(--medo-color-text-primary);
   font-family: var(--medo-font-family-sans);
 }
+
+/* ======================================================================
+ * Documentation pages (blocks in src/docs-blocks/DocBlocks.tsx).
+ * Structure follows the Figma doc frames, not a 1:1 copy.
+ * Only system tokens, so the whole page follows Light / Dark.
+ * ====================================================================== */
+
+/* ---------- Storybook docs container: full width for our pages ---------- */
+.sbdocs-wrapper:has(.medo-doc) {
+  padding: 0;
+  background: var(--medo-color-surface-default);
+}
+.sbdocs-content:has(.medo-doc) {
+  max-width: none;
+}
+
+/* ---------- page ---------- */
+.medo-doc {
+  --doc-gutter: clamp(var(--medo-space-6), 5vw, var(--medo-space-16));
+  max-width: 90rem;
+  margin-inline: auto;
+  background: var(--medo-color-surface-default);
+  color: var(--medo-color-text-primary);
+  font-family: var(--medo-font-family-sans);
+}
+.medo-doc :where(h1, h2, h3, h4, p, ol, ul, figure) {
+  margin: 0;
+}
+.medo-doc :where(ol, ul) {
+  padding: 0;
+}
+.doc-muted {
+  color: var(--medo-color-text-secondary);
+}
+.doc-upper {
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.doc-strong {
+  font-weight: var(--medo-font-weight-semibold);
+  color: var(--medo-color-text-primary);
+}
+.medo-doc a {
+  color: var(--medo-color-text-brand);
+  text-underline-offset: 0.2em;
+}
+.medo-doc a:focus-visible,
+.doc-anchor:focus-visible {
+  outline: 2px solid var(--medo-color-focus-ring);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* ---------- header ---------- */
+.doc-header {
+  display: grid;
+  gap: var(--medo-space-10);
+  padding: var(--medo-space-8) var(--doc-gutter) var(--medo-space-12);
+  border-bottom: 1px solid var(--medo-color-border-default);
+}
+.doc-topline {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--medo-space-4);
+  flex-wrap: wrap;
+  padding-bottom: var(--medo-space-6);
+  border-bottom: 1px solid var(--medo-color-border-default);
+}
+.doc-intro {
+  display: grid;
+  gap: var(--medo-space-8) var(--medo-space-20);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 33rem);
+  align-items: start;
+}
+.doc-intro-main {
+  display: grid;
+  gap: var(--medo-space-4);
+}
+.doc-intro-main p {
+  max-width: 42rem;
+}
+.doc-intro-aside {
+  display: grid;
+  gap: var(--medo-space-3);
+  line-height: 1.65;
+  padding-top: var(--medo-space-2);
+}
+.doc-nav ol {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--medo-space-3) var(--medo-space-10);
+}
+.medo-doc .doc-nav a {
+  display: inline-flex;
+  gap: var(--medo-space-2);
+  align-items: baseline;
+  min-height: 24px; /* target size, WCAG 2.5.8 */
+  color: var(--medo-color-text-primary);
+  text-decoration: none;
+}
+.medo-doc .doc-nav a:hover {
+  text-decoration: underline;
+}
+
+/* ---------- section ---------- */
+.doc-section {
+  display: grid;
+  gap: var(--medo-space-6);
+  padding: var(--medo-space-12) var(--doc-gutter);
+  border-bottom: 1px solid var(--medo-color-border-default);
+}
+.doc-section-head {
+  display: flex;
+  align-items: baseline;
+  gap: var(--medo-space-5);
+  flex-wrap: wrap;
+}
+.doc-section-meta {
+  margin-left: auto;
+}
+.doc-anchor {
+  position: relative;
+  top: calc(-1 * var(--medo-space-6));
+}
+.doc-lead,
+.doc-body > p,
+.doc-body > ul,
+.doc-body > ol {
+  max-width: 48rem;
+}
+.doc-lead {
+  display: grid;
+  gap: var(--medo-space-3);
+}
+.doc-body {
+  display: grid;
+  gap: var(--medo-space-5);
+  min-width: 0;
+}
+.doc-body > :where(p, ul, ol) {
+  font-size: var(--medo-font-size-base);
+  line-height: 1.6;
+  color: var(--medo-color-text-secondary);
+}
+.doc-body :where(ul, ol):not([class]) {
+  padding-left: var(--medo-space-5);
+  display: grid;
+  gap: var(--medo-space-1);
+}
+.doc-body > :where(p, ul, ol) strong {
+  color: var(--medo-color-text-primary);
+  font-weight: var(--medo-font-weight-semibold);
+}
+.doc-body h3:not([class]) {
+  font-size: var(--medo-font-size-lg);
+  font-weight: var(--medo-font-weight-semibold);
+  margin-top: var(--medo-space-4);
+}
+.medo-doc :not(pre) > code,
+.doc-code {
+  font-family: var(--medo-font-family-mono);
+  font-size: 0.875em;
+  padding: 0.1em 0.35em;
+  border-radius: var(--medo-radius-sm);
+  background: var(--medo-color-surface-subtle);
+  color: var(--medo-color-text-primary);
+  overflow-wrap: anywhere;
+}
+
+/* ---------- stage: examples in Light and Dark ---------- */
+.doc-stages {
+  display: grid;
+  gap: var(--medo-space-4);
+}
+.doc-stage-label {
+  color: var(--medo-color-text-secondary);
+}
+.doc-stage {
+  display: grid;
+  gap: var(--medo-space-6);
+  padding: var(--medo-space-8);
+  border: 1px solid var(--medo-color-border-default);
+  border-radius: var(--medo-radius-md);
+  background: var(--medo-color-surface-default);
+  color: var(--medo-color-text-primary);
+}
+/* Storybook blocks (canvas, code, controls): same frame as the stages */
+.medo-doc .sbdocs-preview,
+.medo-doc .docblock-source {
+  margin: 0;
+  border: 1px solid var(--medo-color-border-default);
+  border-radius: var(--medo-radius-md);
+  box-shadow: none;
+}
+.medo-doc .docs-story {
+  background: var(--medo-color-surface-default);
+  color: var(--medo-color-text-primary);
+}
+/* "Show code" bar sits directly below its canvas */
+.medo-doc .sbdocs-preview-actions {
+  margin: calc(var(--medo-space-2) - var(--medo-space-5)) 0 0;
+}
+.medo-doc .doc-body > div:has(.docblock-argstable) {
+  margin: 0;
+}
+
+/* Storybook boolean control: its unselected label is too light (contrast < 4.5 : 1) */
+.medo-doc label:has(> input[role='switch']) > span {
+  color: var(--medo-color-text-secondary);
+}
+
+/* ---------- tables ---------- */
+.doc-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--medo-font-size-sm);
+  line-height: 1.5;
+  color: var(--medo-color-text-primary);
+}
+.doc-table th,
+.doc-table td {
+  text-align: left;
+  vertical-align: top;
+  padding: var(--medo-space-3) var(--medo-space-4);
+  border-bottom: 1px solid var(--medo-color-border-default);
+}
+.doc-table :is(th, td):first-child {
+  padding-left: 0;
+}
+.doc-table :is(th, td):last-child {
+  padding-right: 0;
+}
+.doc-table thead th {
+  font-weight: var(--medo-font-weight-medium);
+  color: var(--medo-color-text-secondary);
+  white-space: nowrap;
+}
+.doc-table tbody th {
+  font-weight: var(--medo-font-weight-medium);
+}
+.doc-spec tbody th {
+  width: 12.5rem;
+}
+.doc-table .doc-cell-muted {
+  color: var(--medo-color-text-secondary);
+}
+.medo-doc .doc-table .doc-mono {
+  padding: 0;
+  background: none;
+  font-family: var(--medo-font-family-mono);
+  font-size: var(--medo-font-size-xs);
+  color: var(--medo-color-text-secondary);
+  overflow-wrap: anywhere;
+}
+.doc-scroll {
+  overflow-x: auto;
+}
+
+/* ---------- implementation notes ---------- */
+.doc-notes {
+  display: grid;
+  gap: var(--medo-space-2);
+  padding: var(--medo-space-5);
+  border-radius: var(--medo-radius-md);
+  background: var(--medo-color-surface-subtle);
+  color: var(--medo-color-text-primary);
+  line-height: 1.6;
+  max-width: 60rem;
+}
+.doc-notes ul {
+  padding-left: var(--medo-space-5);
+}
+
+/* ---------- footer ---------- */
+.doc-footer {
+  display: grid;
+  gap: var(--medo-space-1-5);
+  padding: var(--medo-space-4) var(--doc-gutter) var(--medo-space-8);
+}
+
+/* ---------- small screens ---------- */
+@media (max-width: 56rem) {
+  .doc-intro {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .medo-doc .medo-text-display-lg {
+    font-size: var(--medo-font-size-4xl);
+  }
+}

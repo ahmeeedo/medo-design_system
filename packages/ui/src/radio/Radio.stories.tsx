@@ -23,6 +23,7 @@ const meta = {
     children: { control: false },
   },
   parameters: {
+    medo: { code: 'C11', subtitle: 'Pick exactly one of 2–4 visible options. From 5 options use Select.', figma: '143:58' },
     docs: {
       description: {
         component:

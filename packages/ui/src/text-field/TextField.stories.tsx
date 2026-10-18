@@ -26,6 +26,7 @@ const meta = {
     trailing: { control: false },
   },
   parameters: {
+    medo: { code: 'C03 + C04', subtitle: 'Label, input and helper or error text as one unit.', figma: '81:9' },
     docs: {
       description: {
         component:

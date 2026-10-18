@@ -14,6 +14,7 @@ const meta = {
     endIcon: { control: false },
   },
   parameters: {
+    medo: { code: 'C01', subtitle: 'Triggers an action.', figma: '58:2' },
     docs: {
       description: {
         component:

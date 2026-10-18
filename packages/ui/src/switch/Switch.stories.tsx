@@ -14,6 +14,7 @@ const meta = {
     labelPosition: { control: 'inline-radio', options: ['start', 'end'] },
   },
   parameters: {
+    medo: { code: 'C12', subtitle: 'Turns a single setting on or off. The change takes effect immediately.', figma: '147:58' },
     docs: {
       description: {
         component:

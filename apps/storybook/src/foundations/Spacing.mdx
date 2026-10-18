@@ -1,28 +1,49 @@
 import { Meta } from '@storybook/addon-docs/blocks';
 import { SpacingScale, Radii, SimpleTable, LayoutTable } from './components/TokenDocs';
+import { DocPage, DocHeader, DocSection, DocFooter, Tok, figmaDoc } from '../docs-blocks/DocBlocks';
 
 <Meta title="Foundations/Spacing & sizes" />
 
-# Spacing & sizes
+<DocPage>
 
-Spacing uses a 4 px grid. In Tailwind one step is exactly `space/1`, so `p-4` = `space/4` = 16 px.
+<DocHeader
+  kind="Foundations"
+  title="Spacing & sizes"
+  meta="Spacing · Radius · Layout · 02 + 03 + F08"
+  subtitle="One 4 px base unit for spacing, six radius steps, responsive layout values."
+  description={<p>The step number times 4 px is the value. In Tailwind one step is exactly <Tok>space/1</Tok>, so <Tok>p-4</Tok> = <Tok>space/4</Tok> = 16 px.</p>}
+  nav={['Spacing', 'Radius', 'Control & icon sizes', 'Layout', 'Breakpoints & containers', 'Layers']}
+/>
 
-## Spacing
-<SpacingScale />
+<DocSection n={1} title="Spacing" meta="4 px grid">
+  <SpacingScale />
+</DocSection>
 
-## Radius
-<Radii />
+<DocSection n={2} title="Radius" meta="Square to pill" description="Bigger element, bigger radius. Inner radius = outer radius − padding.">
+  <Radii />
+</DocSection>
 
-## Control and icon sizes
-<SimpleTable path={['size']} />
+<DocSection n={3} title="Control & icon sizes" meta="sm · md · lg">
+  <SimpleTable path={['size']} />
+</DocSection>
 
-## Layout (responsive)
-These tokens change with the screen width – one variable, three values.
-<LayoutTable />
+<DocSection n={4} title="Layout" meta="Mobile · Tablet · Desktop" description="These tokens change with the screen width – one variable, three values.">
+  <LayoutTable />
+</DocSection>
 
-## Breakpoints and containers
-<SimpleTable path={['breakpoint']} />
-<SimpleTable path={['container']} />
+<DocSection n={5} title="Breakpoints & containers">
+  <SimpleTable path={['breakpoint']} />
+  <SimpleTable path={['container']} />
+</DocSection>
 
-## Layers (z-index)
-<SimpleTable path={['layer']} />
+<DocSection n={6} title="Layers" meta="z-index" description="Never invent z-index values. Use the layer scale.">
+  <SimpleTable path={['layer']} />
+</DocSection>
+
+
+<DocFooter>
+  {'Foundations: Spacing & sizes · tokens generated from Figma'}
+  <a href={figmaDoc('37:2')} target="_blank" rel="noreferrer">Open the Figma documentation (new tab)</a>
+</DocFooter>
+
+</DocPage>
