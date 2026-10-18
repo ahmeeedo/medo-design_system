@@ -2,7 +2,8 @@ import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Alert, type AlertTone } from './Alert';
 import { Button } from '../button/Button';
-import { LightDark } from '../story-helpers';
+import { fn } from 'storybook/test';
+import { LightDark, semantic, slot } from '../story-helpers';
 
 const examples: { tone: AlertTone; title: string; text: string }[] = [
   { tone: 'info', title: 'New export format', text: 'You can now export reports as CSV.' },
@@ -30,11 +31,25 @@ const meta = {
   title: 'Components/Alert',
   component: Alert,
   tags: ['autodocs'],
-  args: { tone: 'info', title: 'New export format', children: 'You can now export reports as CSV.' },
+  args: { tone: 'info', variant: 'inline', actions: 'none', title: 'New export format', children: 'You can now export reports as CSV.' },
   argTypes: {
+    title: { control: 'text' },
+    children: { control: 'text' },
     tone: { control: 'inline-radio', options: ['info', 'success', 'warning', 'danger'] },
     variant: { control: 'inline-radio', options: ['inline', 'banner'] },
-    actions: { control: false },
+    actions: slot({
+      none: undefined,
+      one: <Button variant="text" size="sm">Learn more</Button>,
+      two: (
+        <>
+          <Button variant="text" size="sm">Choose a plan</Button>
+          <Button variant="text" size="sm">Remind me later</Button>
+        </>
+      ),
+    }),
+    onDismiss: { ...slot({ none: undefined, 'close button': fn() }), description: 'Shows the close button. Called when it is pressed.' },
+    dismissLabel: semantic,
+    announce: semantic,
   },
   parameters: {
     medo: { code: 'C20', subtitle: 'A persistent message inside the page. Stays until the cause is gone or it is dismissed.', figma: '210:87' },

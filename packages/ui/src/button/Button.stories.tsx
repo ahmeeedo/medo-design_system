@@ -1,17 +1,22 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { ArrowRight, Download, Plus, Trash2 } from 'lucide-react';
+import { fn } from 'storybook/test';
 import { Button, ButtonGroup } from './Button';
+import { slot } from '../story-helpers';
 
 const meta = {
   title: 'Components/Button',
   component: Button,
   tags: ['autodocs'],
-  args: { children: 'Button', variant: 'primary', size: 'md', isDisabled: false },
+  args: { children: 'Button', variant: 'primary', size: 'md', isDisabled: false, isPending: false, startIcon: 'none', endIcon: 'none', onPress: fn() },
   argTypes: {
     variant: { control: 'inline-radio', options: ['primary', 'secondary', 'ghost', 'danger', 'text', 'ghost-danger'] },
     size: { control: 'inline-radio', options: ['sm', 'md', 'lg'] },
-    startIcon: { control: false },
-    endIcon: { control: false },
+    startIcon: slot({ none: undefined, plus: <Plus />, download: <Download />, trash: <Trash2 /> }),
+    endIcon: slot({ none: undefined, arrow: <ArrowRight />, download: <Download /> }),
+    children: { control: 'text' },
+    isPending: { control: 'boolean', description: 'Shows a spinner and blocks presses while an action runs.' },
+    onPress: { control: false },
   },
   parameters: {
     medo: { code: 'C01', subtitle: 'Triggers an action.', figma: '58:2' },

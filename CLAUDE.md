@@ -16,6 +16,7 @@
 - Only semantic tokens in components. No hard-coded colors, spacing, radii or font sizes.
 - Accessibility: WCAG 2.2 AA. Visible `:focus-visible`, forced-colors fallback, `prefers-reduced-motion`, axe clean in Storybook (Light and Dark).
 - Every component: Storybook stories for variants, sizes, states, Light and Dark.
+- Playground: every control must change what you see, and the Playground renders from its args. Props without a visual effect (heading level, screen-reader text) use `semantic` (table only, no control). Slot props (media, icons, actions) use `slot({...})` with sample content. Dependent controls use `if`. Events use `fn()` (Actions panel). Helpers: `packages/ui/src/story-helpers.tsx`.
 - Storybook shows only the library (Foundations + components), no rule pages. The docs use our own components (Table, Alert, Link …) as soon as they exist.
 
 ## Commands

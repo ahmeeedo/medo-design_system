@@ -21,7 +21,7 @@ const TONE: Record<Invoice['status'], BadgeTone> = { Paid: 'success', Open: 'inf
 const money = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'EUR' });
 const day = new Intl.DateTimeFormat('en-US', { dateStyle: 'medium' });
 
-function InvoiceTable({ density = 'standard' as 'standard' | 'compact', selectable = false, striped = false }) {
+function InvoiceTable({ density = 'standard' as 'standard' | 'compact', selectable = false, striped = false, plain = false }) {
   const [sort, setSort] = useState<SortDescriptor>({ column: 'date', direction: 'descending' });
   const [selected, setSelected] = useState<Selection>(new Set());
   const rows = useMemo(() => {
@@ -42,6 +42,7 @@ function InvoiceTable({ density = 'standard' as 'standard' | 'compact', selectab
         aria-label="Invoices"
         density={density}
         striped={striped}
+        plain={plain}
         sortDescriptor={sort}
         onSortChange={setSort}
         selectionMode={selectable ? 'multiple' : 'none'}
@@ -105,15 +106,15 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Playground: Story = {
-  args: { density: 'standard', striped: false },
+  args: { density: 'standard', striped: false, plain: false },
   argTypes: {
     density: { control: 'inline-radio', options: ['standard', 'compact'] },
     striped: { control: 'boolean' },
-    plain: { control: false },
+    plain: { control: 'boolean', description: 'Without border and radius, e.g. inside a card.' },
     className: { control: false },
     style: { control: false },
   },
-  render: (args) => <InvoiceTable density={args.density} striped={args.striped} />,
+  render: (args) => <InvoiceTable density={args.density} striped={args.striped} plain={args.plain} />,
 };
 
 export const Static: Story = {

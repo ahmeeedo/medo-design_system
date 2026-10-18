@@ -4,7 +4,7 @@ import { Card } from './Card';
 import { Button, ButtonGroup } from '../button/Button';
 import { IconButton } from '../icon-button/IconButton';
 import { Badge } from '../badge/Badge';
-import { LightDark } from '../story-helpers';
+import { LightDark, semantic, slot } from '../story-helpers';
 
 /** Neutral placeholder media: a token-coloured gradient, no external image. */
 const media = (
@@ -24,14 +24,29 @@ const meta = {
   title: 'Components/Card',
   component: Card,
   tags: ['autodocs'],
-  args: { title: 'Quarterly report', subtitle: 'Updated 2 hours ago', children: 'Revenue, costs and forecasts for Q3 in one place.' },
+  args: { title: 'Quarterly report', subtitle: 'Updated 2 hours ago', children: 'Revenue, costs and forecasts for Q3 in one place.', variant: 'outlined', density: 'standard', layout: 'vertical', media: 'none', headerActions: 'none', footer: 'none', href: 'none' },
   argTypes: {
+    title: { control: 'text' },
+    subtitle: { control: 'text' },
+    children: { control: 'text' },
     variant: { control: 'inline-radio', options: ['outlined', 'elevated', 'filled', 'brand', 'plain'] },
     density: { control: 'inline-radio', options: ['standard', 'compact'] },
-    layout: { control: 'inline-radio', options: ['vertical', 'horizontal'] },
-    media: { control: false },
-    headerActions: { control: false },
-    footer: { control: false },
+    media: slot({ none: undefined, image: media }),
+    /* Layout only matters with media. */
+    layout: { control: 'inline-radio', options: ['vertical', 'horizontal'], if: { arg: 'media', truthy: true } },
+    headerActions: slot({ none: undefined, 'more menu': <IconButton variant="ghost" size="sm" icon={<Ellipsis />} aria-label="More actions" /> }),
+    footer: slot({
+      none: undefined,
+      buttons: (
+        <ButtonGroup>
+          <Button variant="secondary" size="sm">Later</Button>
+          <Button size="sm">Invite</Button>
+        </ButtonGroup>
+      ),
+    }),
+    href: { ...slot({ none: undefined, link: '#' }), description: 'Makes the whole card a link. Hover or focus it to see the state.' },
+    headingLevel: semantic,
+    linkProps: semantic,
   },
   /* Single cards get a realistic width; stories with parameters.width set their own. */
   decorators: [(Story, { parameters }) => <div style={{ maxInlineSize: parameters.width ?? '22rem' }}>{Story()}</div>],

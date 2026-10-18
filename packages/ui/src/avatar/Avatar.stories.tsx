@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Avatar, AvatarGroup, type AvatarSize } from './Avatar';
-import { LightDark, row } from '../story-helpers';
+import { LightDark, row, semantic, slot } from '../story-helpers';
 
 // Local sample "photo" (no external request): a soft gradient with a silhouette.
 const photo =
@@ -16,11 +16,16 @@ const meta = {
   title: 'Components/Avatar',
   component: Avatar,
   tags: ['autodocs'],
-  args: { name: 'Lea Meyer', size: 'lg', shape: 'circle', src: photo },
+  args: { name: 'Lea Meyer', size: 'lg', shape: 'circle', src: 'photo' },
   argTypes: {
     size: { control: 'inline-radio', options: sizes },
     shape: { control: 'inline-radio', options: ['circle', 'square'] },
-    status: { control: 'inline-radio', options: [undefined, 'online', 'away', 'busy', 'offline'] },
+    status: { control: 'select', options: [undefined, 'online', 'away', 'busy', 'offline'] },
+    src: { ...slot({ none: undefined, photo }), description: 'Image URL. Without it the initials (or an icon) show.' },
+    colorKey: { control: 'text', description: 'Stable id (e.g. user id) that picks the initials colour. Remove the photo to see it.' },
+    statusLabels: semantic,
+    decorative: semantic,
+    unknownLabel: semantic,
   },
   parameters: {
     medo: { code: 'C28', subtitle: 'A picture of a person or an organization – with a reliable fallback.', figma: '259:70' },

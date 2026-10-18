@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Bell, CircleCheck, CircleAlert, Clock, Info, Sparkles, FileText } from 'lucide-react';
 import { Badge, BadgeCount, BadgeDot, type BadgeTone } from './Badge';
 import { IconButton } from '../icon-button/IconButton';
-import { LightDark, row } from '../story-helpers';
+import { LightDark, row, slot } from '../story-helpers';
 
 const tones: { tone: BadgeTone; label: string; icon: React.ReactNode }[] = [
   { tone: 'neutral', label: 'Draft', icon: <FileText /> },
@@ -17,11 +17,13 @@ const meta = {
   title: 'Components/Badge',
   component: Badge,
   tags: ['autodocs'],
-  args: { children: 'Active', tone: 'success', size: 'md', dot: true },
+  args: { children: 'Active', tone: 'success', size: 'md', dot: true, icon: 'none' },
   argTypes: {
     tone: { control: 'inline-radio', options: ['neutral', 'brand', 'success', 'warning', 'danger', 'info'] },
     size: { control: 'inline-radio', options: ['sm', 'md'] },
-    icon: { control: false },
+    /* The dot wins over the icon: the icon control appears when dot is off. */
+    icon: { ...slot({ none: undefined, check: <CircleCheck />, clock: <Clock />, info: <Info /> }), if: { arg: 'dot', truthy: false } },
+    children: { control: 'text' },
   },
   parameters: {
     medo: { code: 'C17', subtitle: 'A short, non-interactive status label. Plus count and dot indicators.', figma: '184:38' },

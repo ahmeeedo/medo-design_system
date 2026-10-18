@@ -1,13 +1,14 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Checkbox, CheckboxGroup } from './Checkbox';
+import { fn } from 'storybook/test';
 import { LightDark, stack } from '../story-helpers';
 
 const meta = {
   title: 'Components/Checkbox',
   component: Checkbox,
   tags: ['autodocs'],
-  args: { children: 'Accept the terms', size: 'md', isDisabled: false, isInvalid: false, isIndeterminate: false },
-  argTypes: { size: { control: 'inline-radio', options: ['md', 'lg'] } },
+  args: { children: 'Accept the terms', size: 'md', isDisabled: false, isInvalid: false, isIndeterminate: false, onChange: fn() },
+  argTypes: { size: { control: 'inline-radio', options: ['md', 'lg'] }, onChange: { control: false }, children: { control: 'text' }, description: { control: 'text' } },
   parameters: {
     medo: { code: 'C05', subtitle: 'Select one or several independent options.', figma: '102:79' },
     docs: {

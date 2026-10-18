@@ -23,3 +23,17 @@ export function LightDark({ children }: { children: ReactNode }) {
     </div>
   );
 }
+
+/* ---------- Playground controls (rule: a control must change what you see) ---------- */
+
+/**
+ * Props without a visual effect (heading level, screen-reader text, ARIA): listed in the
+ * props table in their own group, but without a control.
+ */
+export const semantic = { control: false, table: { category: 'Semantics (no visual change)' } } as const;
+
+/**
+ * Slot prop (media, icons, actions …) as a select with sample content.
+ * Storybook maps the chosen key to the element. Put 'none' first.
+ */
+export const slot = (mapping: Record<string, unknown>) => ({ control: 'select', options: Object.keys(mapping), mapping }) as const;

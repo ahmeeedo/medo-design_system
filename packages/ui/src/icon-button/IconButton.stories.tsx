@@ -1,17 +1,23 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Pencil, Plus, Trash2, X } from 'lucide-react';
 import { IconButton } from './IconButton';
-import { LightDark, row } from '../story-helpers';
+import { fn } from 'storybook/test';
+import { LightDark, row, semantic, slot } from '../story-helpers';
 
 const meta = {
   title: 'Components/Icon Button',
   component: IconButton,
   tags: ['autodocs'],
-  args: { 'aria-label': 'Add item', icon: <Plus />, variant: 'ghost', size: 'md', isDisabled: false },
+  args: { 'aria-label': 'Add item', icon: 'plus', variant: 'ghost', size: 'md', isDisabled: false, onPress: fn() },
   argTypes: {
     variant: { control: 'inline-radio', options: ['ghost', 'secondary', 'primary', 'danger'] },
     size: { control: 'inline-radio', options: ['sm', 'md', 'lg'] },
-    icon: { control: false },
+    icon: slot({ plus: <Plus />, edit: <Pencil />, delete: <Trash2 />, close: <X /> }),
+    'aria-label': { control: 'text', description: 'Accessible name. Also shown as the tooltip (hover or focus).' },
+    shortcut: { control: 'text', description: 'Shown in the tooltip (hover or focus), e.g. „Control+C“.' },
+    tooltip: { control: 'text', description: 'Own tooltip text instead of the label. false hides it.' },
+    shortcutLabel: semantic,
+    onPress: { control: false },
   },
   parameters: {
     medo: { code: 'C02', subtitle: 'A square button with an icon instead of a label.', figma: '68:122' },

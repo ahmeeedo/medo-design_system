@@ -9,7 +9,12 @@ const meta = {
   title: 'Components/Tooltip',
   component: Tooltip,
   tags: ['autodocs'],
-  args: { children: 'Copy link' },
+  args: { children: 'Copy link', placement: 'top', offset: 8 },
+  argTypes: {
+    children: { control: 'text' },
+    placement: { control: 'inline-radio', options: ['top', 'bottom', 'start', 'end'] },
+    offset: { control: { type: 'number', min: 0, max: 24, step: 4 } },
+  },
   parameters: {
     medo: { code: 'C14', subtitle: 'A short text label on hover or keyboard focus. Mainly names icon-only buttons.', figma: '155:26' },
     docs: {

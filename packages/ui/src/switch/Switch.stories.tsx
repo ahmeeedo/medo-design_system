@@ -2,14 +2,18 @@ import type React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useState } from 'react';
 import { Switch } from './Switch';
+import { fn } from 'storybook/test';
 import { LightDark, stack } from '../story-helpers';
 
 const meta = {
   title: 'Components/Switch',
   component: Switch,
   tags: ['autodocs'],
-  args: { children: 'Email notifications', size: 'md', labelPosition: 'end', isDisabled: false, isLoading: false },
+  args: { children: 'Email notifications', size: 'md', labelPosition: 'end', isDisabled: false, isLoading: false, onChange: fn() },
   argTypes: {
+    onChange: { control: false },
+    children: { control: 'text' },
+    description: { control: 'text' },
     size: { control: 'inline-radio', options: ['md', 'lg'] },
     labelPosition: { control: 'inline-radio', options: ['start', 'end'] },
   },

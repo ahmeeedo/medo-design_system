@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Link } from './Link';
-import { LightDark, row } from '../story-helpers';
+import { LightDark, row, semantic } from '../story-helpers';
 
 const text: React.CSSProperties = { font: 'var(--medo-typography-body-md)', color: 'var(--medo-color-text-primary)', margin: 0, maxInlineSize: '36rem' };
 
@@ -11,7 +11,12 @@ const meta = {
   args: { children: 'View all projects', href: '#', variant: 'standalone', size: 'md', arrow: true },
   argTypes: {
     variant: { control: 'inline-radio', options: ['inline', 'standalone'] },
-    size: { control: 'inline-radio', options: ['sm', 'md'] },
+    /* Size and arrow only apply to standalone links; inline links take the size of the text. */
+    size: { control: 'inline-radio', options: ['sm', 'md'], if: { arg: 'variant', eq: 'standalone' } },
+    arrow: { control: 'boolean', if: { arg: 'variant', eq: 'standalone' } },
+    newTabLabel: semantic,
+    href: semantic,
+    children: { control: 'text' },
   },
   parameters: {
     medo: { code: 'C45', subtitle: 'Navigates to a page, a place on the page or a file. Actions are buttons.', figma: '473:30' },

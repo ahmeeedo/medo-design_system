@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useState } from 'react';
 import { Eye, EyeOff, Mail, Search } from 'lucide-react';
 import { InputAction, TextField } from './TextField';
-import { LightDark, stack } from '../story-helpers';
+import { LightDark, slot, stack } from '../story-helpers';
 
 const meta = {
   title: 'Components/Text Field',
@@ -19,11 +19,16 @@ const meta = {
     isReadOnly: false,
     isInvalid: false,
     errorMessage: 'Enter a valid email address.',
+    leadingIcon: 'none',
+    trailing: 'none',
   },
   argTypes: {
     size: { control: 'inline-radio', options: ['sm', 'md', 'lg'] },
-    leadingIcon: { control: false },
-    trailing: { control: false },
+    label: { control: 'text' },
+    description: { control: 'text' },
+    errorMessage: { control: 'text', if: { arg: 'isInvalid', truthy: true } },
+    leadingIcon: slot({ none: undefined, search: <Search />, mail: <Mail /> }),
+    trailing: slot({ none: undefined, 'show password': <InputAction aria-label="Show password" icon={<Eye />} /> }),
   },
   parameters: {
     medo: { code: 'C03 + C04', subtitle: 'Label, input and helper or error text as one unit.', figma: '81:9' },

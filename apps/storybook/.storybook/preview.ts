@@ -13,7 +13,8 @@ import { ComponentDocsPage, MedoDocsContainer } from '../src/docs-blocks/DocBloc
 const preview: Preview = {
   parameters: {
     layout: 'padded',
-    controls: { expanded: true },
+    // className and style are plain React props: not part of the Playground.
+    controls: { expanded: true, exclude: ['className', 'style'] },
     // Docs pages follow the structure of the Figma doc frames and the Light / Dark switch (src/docs-blocks).
     docs: { container: MedoDocsContainer, page: ComponentDocsPage },
     // Accessibility checks (axe) for every story. Violations show in the "Accessibility" panel.

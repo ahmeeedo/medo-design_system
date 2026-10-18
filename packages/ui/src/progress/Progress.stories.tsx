@@ -8,8 +8,11 @@ const meta = {
   title: 'Components/Loading & Progress',
   component: ProgressBar,
   tags: ['autodocs'],
-  args: { label: 'Uploading 3 files', value: 64, description: '2 of 3 files · about 12 s left', size: 'md', status: 'default' },
+  args: { label: 'Uploading 3 files', value: 64, description: '2 of 3 files · about 12 s left', size: 'md', status: 'default', showValue: true },
   argTypes: {
+    label: { control: 'text' },
+    description: { control: 'text' },
+    value: { control: { type: 'range', min: 0, max: 100, step: 1 } },
     size: { control: 'inline-radio', options: ['sm', 'md'] },
     status: { control: 'inline-radio', options: ['default', 'success', 'error'] },
   },

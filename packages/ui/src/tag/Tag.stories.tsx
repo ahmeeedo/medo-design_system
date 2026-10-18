@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { User } from 'lucide-react';
 import { Tag, TagGroup } from './Tag';
 import { Button } from '../button/Button';
-import { LightDark } from '../story-helpers';
+import { LightDark, semantic } from '../story-helpers';
 
 const topics = [
   { id: 'design', name: 'Design' },
@@ -12,11 +12,14 @@ const topics = [
   { id: 'marketing', name: 'Marketing' },
 ];
 
-function RemovableDemo({ size = 'md' as 'sm' | 'md' }) {
+type DemoProps = { size?: 'sm' | 'md'; label?: React.ReactNode; description?: React.ReactNode };
+
+function RemovableDemo({ size = 'md', label = 'Selected topics', description }: DemoProps) {
   const [items, setItems] = useState(topics);
   return (
     <TagGroup
-      label="Selected topics"
+      label={label}
+      description={description}
       size={size}
       items={items}
       onRemove={(keys) => setItems((list) => list.filter((t) => !keys.has(t.id)))}
@@ -27,14 +30,15 @@ function RemovableDemo({ size = 'md' as 'sm' | 'md' }) {
   );
 }
 
-function FilterDemo({ size = 'md' as 'sm' | 'md' }) {
+function FilterDemo({ size = 'md', label = 'Filter by topic', description, selectionMode = 'multiple' }: DemoProps & { selectionMode?: 'single' | 'multiple' }) {
   const [selected, setSelected] = useState<Set<string | number>>(new Set(['design']));
   return (
     <div style={{ display: 'grid', gap: 'var(--medo-space-3)', justifyItems: 'start' }}>
       <TagGroup
-        label="Filter by topic"
+        label={label}
+        description={description}
         size={size}
-        selectionMode="multiple"
+        selectionMode={selectionMode}
         selectedKeys={selected}
         onSelectionChange={(keys) => setSelected(new Set(keys === 'all' ? topics.map((t) => t.id) : keys))}
         items={topics}
@@ -54,6 +58,20 @@ const meta = {
   title: 'Components/Tag',
   component: TagGroup,
   tags: ['autodocs'],
+  argTypes: {
+    size: { control: 'inline-radio', options: ['sm', 'md'] },
+    selectionMode: {
+      control: 'inline-radio',
+      options: ['none', 'single', 'multiple'],
+      description: 'none: removable values (with onRemove) · single / multiple: filters.',
+    },
+    label: { control: 'text' },
+    description: { control: 'text' },
+    children: { control: false },
+    items: { control: false },
+    renderEmptyState: { control: false },
+    removedMessage: semantic,
+  },
   parameters: {
     medo: { code: 'C06', subtitle: 'Compact pill for a value. Removable in multi-select, selectable as a filter.', figma: '108:48' },
     docs: {
@@ -71,8 +89,13 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Playground: Story = {
-  args: { label: 'Selected topics', children: null },
-  render: () => <RemovableDemo />,
+  args: { label: 'Topics', description: '', size: 'md', selectionMode: 'none', children: null },
+  render: ({ label, description, size, selectionMode }) =>
+    selectionMode === 'single' || selectionMode === 'multiple' ? (
+      <FilterDemo key={selectionMode} label={label} description={description || undefined} size={size} selectionMode={selectionMode} />
+    ) : (
+      <RemovableDemo label={label} description={description || undefined} size={size} />
+    ),
 };
 
 export const Removable: Story = {
