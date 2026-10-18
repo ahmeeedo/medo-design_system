@@ -28,7 +28,8 @@ const build = (mode: Mode): ThemeVars => {
   };
   return create({
     base: mode,
-    brandTitle: 'med.o Design System',
+    brandTitle: 'med.o Design System', // also the alt text of the logo
+    brandImage: mode === 'dark' ? './logo-white.svg' : './logo-rgb.svg',
     brandUrl: '/',
     brandTarget: '_self',
 

@@ -19,6 +19,7 @@ const config: StorybookConfig = {
   framework: { name: '@storybook/react-vite', options: {} },
   core: { disableTelemetry: true },
   staticDirs: [
+    '../public', // logo-rgb.svg (Light), logo-white.svg (Dark)
     { from: fontFiles('@fontsource/dm-sans'), to: '/fonts/dm-sans' },
     { from: fontFiles('@fontsource/dm-mono'), to: '/fonts/dm-mono' },
   ],
