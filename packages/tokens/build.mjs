@@ -50,7 +50,21 @@ StyleDictionary.registerTransform({
   },
 });
 
-const TRANSFORMS = ['medo/dimension/rem', ...StyleDictionary.hooks.transformGroups.css];
+// Typography with a font size that has no own token (11px, avatar sizes): rem as well.
+StyleDictionary.registerTransform({
+  name: 'medo/typography/rem',
+  type: 'value',
+  transitive: true,
+  filter: (t) => (t.$type ?? t.type) === 'typography',
+  transform: (t) => {
+    const v = t.$value ?? t.value;
+    const fs = v.fontSize;
+    if (fs && typeof fs === 'object' && fs.unit === 'px') return { ...v, fontSize: `${+(fs.value / 16).toFixed(4)}rem` };
+    return v;
+  },
+});
+
+const TRANSFORMS = ['medo/dimension/rem', 'medo/typography/rem', ...StyleDictionary.hooks.transformGroups.css];
 
 /* ------------------------------------------------------------------ */
 /* Helpers                                                             */
@@ -61,6 +75,9 @@ const cssVar = (path) => `--${PREFIX}-${path.join('-')}`;
 const refToVar = (v) =>
   typeof v === 'string' ? v.replace(/\{([^}]+)\}/g, (_, p) => `var(${cssVar(p.split('.'))})`) : v;
 const dimToCss = (v) => (v && typeof v === 'object' && 'unit' in v ? `${v.value}${v.unit}` : v);
+/** Font sizes without their own token (e.g. 11px, avatar sizes) also go to rem, like the font/size tokens. */
+const fontSizeToCss = (v) =>
+  v && typeof v === 'object' && v.unit === 'px' ? `${+(v.value / 16).toFixed(4)}rem` : dimToCss(v);
 const value = (t) => t.$value ?? t.value;
 const original = (t) => t.original.$value ?? t.original.value;
 const figmaName = (t) => t.path.slice(t.path[0] === 'color' ? 1 : 0).join('/');
@@ -88,7 +105,7 @@ StyleDictionary.registerFormat({
             )
             .join(', ');
         } else if (type === 'typography') {
-          v = `${refToVar(o.fontWeight)} ${refToVar(dimToCss(o.fontSize))}/${o.lineHeight} ${refToVar(o.fontFamily)}`;
+          v = `${refToVar(o.fontWeight)} ${refToVar(fontSizeToCss(o.fontSize))}/${o.lineHeight} ${refToVar(o.fontFamily)}`;
         } else if (typeof o === 'string' && /\{[^}]+\}/.test(o)) {
           v = refToVar(o);
         } else {
@@ -112,7 +129,7 @@ StyleDictionary.registerFormat({
           `/* ${t.path.slice(1).join('/')} */`,
           `.${PREFIX}-text-${name} {`,
           `  font-family: ${refToVar(o.fontFamily)};`,
-          `  font-size: ${refToVar(dimToCss(o.fontSize))};`,
+          `  font-size: ${refToVar(fontSizeToCss(o.fontSize))};`,
           `  font-weight: ${refToVar(o.fontWeight)};`,
           `  line-height: ${o.lineHeight};`,
           `  letter-spacing: ${refToVar(dimToCss(o.letterSpacing))};`,
@@ -164,7 +181,7 @@ StyleDictionary.registerFormat({
     for (const t of by((t) => (t.$type ?? t.type) === 'typography')) {
       const o = original(t);
       const n = `text-${t.path.slice(1).join('-')}`;
-      out.push(line(n, refToVar(dimToCss(o.fontSize))));
+      out.push(line(n, refToVar(fontSizeToCss(o.fontSize))));
       out.push(line(`${n}--line-height`, o.lineHeight));
       out.push(line(`${n}--font-weight`, refToVar(o.fontWeight)));
       out.push(line(`${n}--letter-spacing`, refToVar(dimToCss(o.letterSpacing))));
