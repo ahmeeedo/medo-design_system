@@ -362,10 +362,10 @@ function useInitialFocus(ref: React.RefObject<HTMLElement | null>) {
 
 export type AlertDialogTone = 'danger' | 'warning' | 'info';
 
-/** Figma: danger = triangle-alert, warning = circle-alert, info = info. */
+/** Same icons as the Alert (C20): danger = circle-alert, warning = triangle-alert, info = info. */
 const TONE_ICONS: Record<AlertDialogTone, typeof Info> = {
-  danger: TriangleAlert,
-  warning: CircleAlert,
+  danger: CircleAlert,
+  warning: TriangleAlert,
   info: Info,
 };
 
