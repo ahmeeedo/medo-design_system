@@ -94,9 +94,10 @@ export function Select<T extends object, M extends SelectMode = 'single'>({
               </span>
             )}
             <SelectValue<T> className="medo-select__value">
-              {({ defaultChildren, isPlaceholder }) => (
+              {/* The field shows only the label of the option – no description or option icon (Figma: one line, ellipsis). */}
+              {({ defaultChildren, isPlaceholder, selectedText }) => (
                 <>
-                  {multiple && !isPlaceholder ? <SelectedTags size={size} /> : defaultChildren}
+                  {isPlaceholder ? defaultChildren : multiple ? <SelectedTags size={size} /> : selectedText}
                   {isReadOnly && <span className="medo-visually-hidden">, read only</span>}
                 </>
               )}
