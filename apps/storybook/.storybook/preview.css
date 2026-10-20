@@ -215,6 +215,11 @@ body {
   color: var(--medo-color-text-secondary);
 }
 
+/* Storybook „func“ / „union“ type toggles in the props table: brand colour too dark in Dark mode. */
+.medo-doc .sbdocs-expandable {
+  color: var(--medo-color-text-primary);
+}
+
 /* ---------- tables (StaticTable) and token cells ---------- */
 .doc-spec tbody th {
   inline-size: 12.5rem;

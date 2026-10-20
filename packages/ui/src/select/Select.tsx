@@ -14,6 +14,7 @@ import { FieldFooter, FieldLabel } from '../field/Field';
 import { ListBox } from '../listbox/ListBox';
 import { InputAction, type InputSize } from '../text-field/TextField';
 import { cx } from '../utils/cx';
+import { useFitCount } from '../utils/useFitCount';
 import '../text-field/input.css';
 import '../tag/tag.css';
 import './select.css';
@@ -163,36 +164,8 @@ function SelectedTags({ size }: { size: InputSize }) {
   const key = labels.join('\u0000');
   const rowRef = useRef<HTMLSpanElement>(null);
   const measureRef = useRef<HTMLSpanElement>(null);
-  const [visible, setVisible] = useState(labels.length);
+  const visible = useFitCount(rowRef, measureRef, key, labels.length);
   const tagClass = cx('medo-tag', size === 'lg' ? 'medo-tag--md' : 'medo-tag--sm');
-
-  useLayoutEffect(() => {
-    const row = rowRef.current;
-    const measure = measureRef.current;
-    if (!row || !measure) return;
-    const fit = () => {
-      const tags = [...measure.children] as HTMLElement[];
-      const plus = tags.pop(); // last child: „+N“ probe
-      const gap = parseFloat(getComputedStyle(measure).columnGap) || 0;
-      const avail = row.clientWidth;
-      let used = 0;
-      let count = 0;
-      tags.forEach((tag, i) => {
-        if (count < i) return;
-        const width = tag.offsetWidth + (i ? gap : 0);
-        const reserve = i < tags.length - 1 ? gap + (plus?.offsetWidth ?? 0) : 0;
-        if (used + width + reserve <= avail) {
-          used += width;
-          count = i + 1;
-        }
-      });
-      setVisible(Math.max(1, count));
-    };
-    fit();
-    const observer = new ResizeObserver(fit);
-    observer.observe(row);
-    return () => observer.disconnect();
-  }, [key]);
 
   const hidden = labels.length - visible;
   return (

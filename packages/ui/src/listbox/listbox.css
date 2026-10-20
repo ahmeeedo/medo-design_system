@@ -121,9 +121,7 @@
   background-color: var(--medo-color-state-hover);
 }
 
-.medo-option[data-focus-visible] {
-  box-shadow: inset 0 0 0 var(--medo-focus-ring-width) var(--medo-color-focus-ring);
-}
+/* Keyboard focus is the same neutral highlight (Figma has no extra ring on options). */
 
 .medo-option[data-disabled] {
   color: var(--medo-color-text-disabled);
@@ -136,6 +134,10 @@
   flex-direction: column;
   min-inline-size: 0;
   overflow-wrap: anywhere; /* labels wrap, never truncate */
+}
+
+.medo-option__match {
+  font-weight: var(--medo-font-weight-semibold);
 }
 
 .medo-option__description {

@@ -1,0 +1,125 @@
+/**
+ * Combobox – med.o Design System (Figma: C09 Combobox)
+ *
+ * A Select you can type into. Input anatomy; clear and chevron are separate buttons (_Input action).
+ *   <div class="medo-field medo-combobox" data-open data-invalid data-disabled data-readonly>
+ *     <label class="medo-field__label">Assignee</label>
+ *     <div class="medo-input medo-input--md medo-combobox__field" role="group">
+ *       <span class="medo-input__icon">…</span>
+ *       <span class="medo-combobox__tags-row">tags · „+N“</span>   (multi)
+ *       <input class="medo-input__control medo-combobox__input" role="combobox">
+ *       <button class="medo-input__action" aria-label="Clear">×</button>
+ *       <button class="medo-input__action medo-combobox__toggle">⌄</button>
+ *     </div>
+ *   </div>
+ * The list is the shared Listbox (medo-listbox) in a popover anchored to the whole field.
+ */
+
+/* Multi with values: tags start closer to the edge (sm 4 · md/lg 8). */
+.medo-combobox__field:has(.medo-combobox__tags-row) {
+  padding-inline-start: var(--medo-space-2);
+}
+.medo-combobox__field.medo-input--sm:has(.medo-combobox__tags-row) {
+  padding-inline-start: var(--medo-space-1);
+}
+
+/* Clear and toggle: 8 px apart, flush with the field padding (Figma). */
+.medo-combobox__field > .medo-input__action {
+  margin-inline-end: 0;
+}
+
+.medo-combobox__toggle > svg {
+  transition: transform var(--medo-motion-duration-fast) var(--medo-motion-easing-standard);
+}
+
+.medo-combobox__toggle[data-pressed]:not([data-hovered]) {
+  /* React Aria marks the toggle as pressed while the list is open: only the chevron flips (Figma). */
+  background: transparent;
+}
+
+.medo-combobox[data-open] .medo-combobox__toggle > svg {
+  transform: rotate(180deg);
+}
+
+.medo-combobox__input {
+  min-inline-size: 4rem;
+}
+
+/* ---------- Tags (multi) ---------- */
+
+.medo-combobox__entry {
+  position: relative;
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: var(--medo-space-1);
+  min-inline-size: 0;
+  block-size: 100%;
+}
+
+.medo-combobox__tags-row {
+  display: flex;
+  flex: 0 1 auto;
+  align-items: center;
+  gap: var(--medo-space-1);
+  min-inline-size: 0;
+  overflow: hidden;
+}
+
+/* The tag group behaves like a plain row inside the field. */
+.medo-combobox__tags {
+  flex-direction: row;
+  gap: 0;
+  min-inline-size: 0;
+}
+
+.medo-combobox__tags .medo-tag-list {
+  flex-wrap: nowrap;
+  gap: var(--medo-space-1);
+  min-inline-size: 0;
+}
+
+.medo-combobox__tags .medo-tag:first-child {
+  flex-shrink: 1;
+  min-inline-size: 0;
+}
+
+.medo-combobox__more {
+  flex: none;
+}
+
+/* Hidden copy that measures every tag, so the visible row knows how many fit. */
+.medo-combobox__measure {
+  position: absolute;
+  inset-inline-start: 0;
+  display: flex;
+  gap: var(--medo-space-1);
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* ---------- States ---------- */
+
+.medo-combobox[data-open] .medo-combobox__field {
+  --_border: var(--medo-color-focus-ring);
+  box-shadow: inset 0 0 0 var(--medo-border-width-thin) var(--medo-color-focus-ring);
+}
+
+.medo-combobox[data-invalid] .medo-combobox__field {
+  --_border: var(--medo-color-border-danger);
+}
+
+.medo-combobox[data-invalid]:is([data-open], :focus-within) .medo-combobox__field {
+  --_border: var(--medo-color-focus-ring);
+}
+
+.medo-combobox[data-disabled] .medo-tag {
+  --_bg: transparent;
+  --_fg: var(--medo-color-text-disabled);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .medo-combobox__toggle > svg {
+    transition: none;
+  }
+}

@@ -141,6 +141,7 @@ DM Sans and DM Mono (SIL Open Font License). Self-host them, for example with `@
 | `ToggleButton`, `ToggleButtonGroup`, `Toolbar` | C15 | stays pressed (`aria-pressed`) · segmented (single, `fullWidth`) or toolbar (multiple) · groups with divider |
 | `ListBox`, `Option`, `ListBoxSection` | C07 | list behind Select / Combobox · check (single) or checkbox (multi) · groups, descriptions, wrapping |
 | `Select` | C08 | hidden native select (forms, autofill) · single or multiple (tags + „+N“) · clearable, read-only · sm/md/lg |
+| `Combobox` | C09 | type to filter (contains, case and accent insensitive, match bold) · single or multiple (removable tags + „+N“) · „Add …“ for tags · server search (`isLoading`) |
 | `Badge`, `BadgeCount`, `BadgeDot` | C17 | 6 tones · dot or icon · counts „99+“ |
 | `Spinner`, `ProgressBar`, `Skeleton` | C26 | reduced motion: slower / static |
 | `Avatar`, `AvatarGroup` | C28 | image → initials → icon · colour from id · status · max 4 + „+N“ |

@@ -27,6 +27,8 @@ export { ListBox, Option, ListBoxSection, ListBoxMessage } from './listbox/ListB
 export type { ListBoxProps, OptionProps, ListBoxSectionProps, ListBoxSize } from './listbox/ListBox';
 export { Select } from './select/Select';
 export type { SelectProps } from './select/Select';
+export { Combobox } from './combobox/Combobox';
+export type { ComboboxProps } from './combobox/Combobox';
 export { Link } from './link/Link';
 export type { LinkProps } from './link/Link';
 export { Alert } from './alert/Alert';

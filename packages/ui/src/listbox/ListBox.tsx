@@ -1,6 +1,7 @@
 import { createContext, useContext, type ReactNode } from 'react';
 import {
   Collection,
+  ComboBoxStateContext,
   Header,
   ListBox as AriaListBox,
   ListBoxItem,
@@ -67,7 +68,7 @@ export function Option({ children, description, icon, textValue, ...props }: Opt
           )}
           <span className="medo-option__content">
             <Text slot="label" className="medo-option__label">
-              {children}
+              <Highlight>{children}</Highlight>
             </Text>
             {description && (
               <Text slot="description" className="medo-option__description">
@@ -87,8 +88,9 @@ export function Option({ children, description, icon, textValue, ...props }: Opt
 }
 
 export interface ListBoxSectionProps<T> {
-  /** Group heading (overline). Use headings only with two or more groups. */
-  title: ReactNode;
+  /** Group heading (overline). Use headings only with two or more groups. Without a title, set aria-label. */
+  title?: ReactNode;
+  'aria-label'?: string;
   children: ReactNode | ((item: T) => ReactNode);
   items?: Iterable<T>;
   id?: string;
@@ -98,16 +100,57 @@ export interface ListBoxSectionProps<T> {
  * A group of options with a heading (announced as the name of the group).
  * Groups are divided by a line automatically (a separator element is not allowed inside a listbox).
  */
-export function ListBoxSection<T extends object>({ title, children, items, id }: ListBoxSectionProps<T>) {
+export function ListBoxSection<T extends object>({ title, children, items, id, ...props }: ListBoxSectionProps<T>) {
   return (
-    <AriaListBoxSection id={id} className="medo-listbox__section">
-      <Header className="medo-listbox__header">{title}</Header>
+    <AriaListBoxSection id={id} aria-label={props['aria-label']} className="medo-listbox__section">
+      {title && <Header className="medo-listbox__header">{title}</Header>}
       {typeof children === 'function' ? <Collection items={items}>{children}</Collection> : children}
     </AriaListBoxSection>
   );
 }
 
-/** Message row for empty and loading states – never an empty popup. */
+/** Message row for empty and loading states – never an empty popup. Announced as status. */
 export function ListBoxMessage({ children }: { children: ReactNode }) {
-  return <div className="medo-listbox__message">{children}</div>;
+  return (
+    <div className="medo-listbox__message" role="status">
+      {children}
+    </div>
+  );
+}
+
+/* ---------- Match highlight (Combobox) ---------- */
+
+const plain = (text: string) => text.normalize('NFD').replace(/\p{Diacritic}/gu, '').toLocaleLowerCase();
+
+/**
+ * Inside a Combobox: shows the typed text in bold within the option label (contains match,
+ * case and accent insensitive, „mul“ → „Müller“). Visual only; screen readers read plain text.
+ */
+function Highlight({ children }: { children: ReactNode }) {
+  const combo = useContext(ComboBoxStateContext);
+  let query = combo?.inputValue.trim() ?? '';
+  // The input shows the chosen value (single): nothing to highlight then.
+  if (combo?.selectedItems.some((item) => item?.textValue === query)) query = '';
+  if (!query || typeof children !== 'string') return <>{children}</>;
+
+  // Map every character of the label to its plain form, so indices stay in the original text.
+  const chars = [...children];
+  const map: number[] = [];
+  let flat = '';
+  chars.forEach((char, i) => {
+    const p = plain(char);
+    flat += p;
+    for (let k = 0; k < p.length; k++) map.push(i);
+  });
+  const at = flat.indexOf(plain(query));
+  if (at < 0) return <>{children}</>;
+  const start = map[at];
+  const end = map[at + plain(query).length - 1] + 1;
+  return (
+    <>
+      {chars.slice(0, start).join('')}
+      <span className="medo-option__match">{chars.slice(start, end).join('')}</span>
+      {chars.slice(end).join('')}
+    </>
+  );
 }
