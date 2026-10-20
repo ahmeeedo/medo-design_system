@@ -1,0 +1,113 @@
+import type { Meta, StoryObj } from '@storybook/react-vite';
+import { fn } from 'storybook/test';
+import { AlertDialog, DialogTrigger, type AlertDialogTone } from './Dialog';
+import { Button } from '../button/Button';
+import { row, semantic } from '../story-helpers';
+
+/** The Figma examples per tone. */
+const examples: Record<AlertDialogTone, { trigger: string; title: string; text: string; action: string; cancel: string }> = {
+  danger: {
+    trigger: 'Delete file',
+    title: 'Delete Q3-Report.pdf?',
+    text: 'The file will be deleted for everyone in this workspace. This cannot be undone.',
+    action: 'Delete',
+    cancel: 'Cancel',
+  },
+  warning: {
+    trigger: 'Leave form',
+    title: 'Discard changes?',
+    text: 'Your changes to „Invite member“ will be lost.',
+    action: 'Discard',
+    cancel: 'Keep editing',
+  },
+  info: {
+    trigger: 'Session timeout',
+    title: 'Stay signed in?',
+    text: 'You will be signed out in 2 minutes because you have been inactive.',
+    action: 'Stay signed in',
+    cancel: 'Sign out',
+  },
+};
+
+const meta = {
+  title: 'Components/Alert Dialog',
+  component: AlertDialog,
+  tags: ['autodocs'],
+  args: {
+    tone: 'danger',
+    title: examples.danger.title,
+    children: examples.danger.text,
+    actionLabel: examples.danger.action,
+    cancelLabel: examples.danger.cancel,
+    onAction: fn(),
+    onOpenChange: fn(),
+  },
+  argTypes: {
+    tone: { control: 'inline-radio', options: ['danger', 'warning', 'info'] },
+    title: { control: 'text' },
+    children: { control: 'text', description: 'The consequence.' },
+    actionLabel: { control: 'text' },
+    cancelLabel: { control: 'text' },
+    onAction: { control: false },
+    isOpen: { control: false },
+    onOpenChange: { control: false },
+    className: semantic,
+  },
+  parameters: {
+    medo: { code: 'C19', subtitle: 'A decision that needs an answer before the user can go on.', figma: '204:432' },
+    docs: {
+      description: {
+        component:
+          'Built on React Aria Modal + Dialog with role `alertdialog`. The icon shows the tone (decorative), the title asks a question, the description names the consequence, the action button names the verb. ' +
+          'No X: the user decides with the buttons. A click on the scrim never closes, Esc = Cancel. Focus starts on Cancel, so an accidental Enter never deletes, and returns to the trigger. ' +
+          'Danger uses a danger button, Warning and Info a primary one. Below 640 px the icon moves on top and the buttons stack (main action on top). ' +
+          'The only dialog allowed on top of a Dialog (e.g. „Discard changes?“). Styles: `medo-alert-dialog`, `medo-alert-dialog--{danger|warning|info}`.',
+      },
+    },
+  },
+  render: (args) => (
+    <DialogTrigger>
+      <Button variant={args.tone === 'danger' ? 'danger' : 'secondary'}>{examples[args.tone ?? 'danger'].trigger}</Button>
+      <AlertDialog {...args} />
+    </DialogTrigger>
+  ),
+} satisfies Meta<typeof AlertDialog>;
+
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const Playground: Story = {
+  parameters: { docs: { description: { story: 'Open the Alert dialog to see the changes from the controls. The Actions panel shows the action.' } } },
+};
+
+export const Tones: Story = {
+  parameters: { docs: { description: { story: 'Danger: irreversible or destructive. Warning: risk of data loss. Info: must be acknowledged.' } } },
+  render: () => (
+    <div style={row}>
+      {(Object.keys(examples) as AlertDialogTone[]).map((tone) => {
+        const e = examples[tone];
+        return (
+          <DialogTrigger key={tone}>
+            <Button variant="secondary">{e.trigger}</Button>
+            <AlertDialog tone={tone} title={e.title} actionLabel={e.action} cancelLabel={e.cancel}>
+              {e.text}
+            </AlertDialog>
+          </DialogTrigger>
+        );
+      })}
+    </div>
+  ),
+};
+
+export const Pending: Story = {
+  name: 'Deleting (pending)',
+  parameters: { docs: { description: { story: 'When `onAction` returns a promise, the action shows the pending state; the dialog closes when it resolves.' } } },
+  render: () => (
+    <DialogTrigger>
+      <Button variant="danger">Delete file</Button>
+      <AlertDialog title={examples.danger.title} actionLabel="Delete" onAction={() => new Promise((resolve) => setTimeout(resolve, 1500))}>
+        {examples.danger.text}
+      </AlertDialog>
+    </DialogTrigger>
+  ),
+};

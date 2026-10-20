@@ -31,6 +31,8 @@ export { BottomSheet } from './bottom-sheet/BottomSheet';
 export { Menu, MenuButton, MenuItem, MenuSection, MenuTrigger, Submenu } from './menu/Menu';
 export type { MenuProps, MenuItemProps, MenuSectionProps, MenuTriggerProps, SubmenuProps } from './menu/Menu';
 export type { BottomSheetProps } from './bottom-sheet/BottomSheet';
+export { Dialog, DialogTrigger, AlertDialog } from './dialog/Dialog';
+export type { DialogProps, DialogAction, DialogDiscardText, AlertDialogProps, AlertDialogTone } from './dialog/Dialog';
 export { Combobox } from './combobox/Combobox';
 export type { ComboboxProps } from './combobox/Combobox';
 export { Link } from './link/Link';

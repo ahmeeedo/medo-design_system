@@ -1,0 +1,301 @@
+/**
+ * Dialog – med.o Design System (Figma: C19 Dialog, Alert dialog, Dialog fullscreen)
+ *
+ *   <div class="medo-dialog-overlay">                          scrim, overlay/scrim, centers the dialog
+ *     <div class="medo-dialog medo-dialog--md">                 surface/raised, border, elevation/4, radius/lg
+ *       <section class="medo-dialog__dialog" role="dialog" [data-scrolled]>
+ *         <div class="medo-dialog__header">  heading (title + description) · close X  </div>
+ *         <div class="medo-dialog__body">…only this scrolls…</div>
+ *         <div class="medo-dialog__footer">  Button group (footer)  </div>
+ *       </section>
+ *     </div>
+ *   </div>
+ * Sizes: sm 400 · md 560 · lg 720 · Alert dialog 400. Max height: viewport − 2 × 32.
+ * Fullscreen (mobile forms): .medo-dialog--fullscreen with .medo-dialog__bar (Cancel · title · action).
+ * Alert dialog: .medo-alert-dialog--{danger|warning|info} with .medo-alert-dialog__icon / __text.
+ * State contract: [data-entering] [data-exiting] on overlay and dialog (React Aria), [data-scrolled] on the section.
+ */
+
+.medo-dialog-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: var(--medo-layer-modal);
+  display: grid;
+  place-items: center;
+  padding: var(--medo-space-8);
+  background-color: var(--medo-color-overlay-scrim);
+}
+
+.medo-dialog {
+  --_width: 35rem; /* md 560 */
+
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  inline-size: min(var(--_width), 100%);
+  max-block-size: 100%;
+  overflow: hidden;
+  border: var(--medo-border-width-thin) solid var(--medo-color-border-default);
+  border-radius: var(--medo-radius-lg);
+  background-color: var(--medo-color-surface-raised);
+  box-shadow: var(--medo-shadow-elevation-4);
+  color: var(--medo-color-text-primary);
+  outline: none;
+}
+
+.medo-dialog--sm,
+.medo-alert-dialog {
+  --_width: 25rem; /* 400 */
+}
+.medo-dialog--lg {
+  --_width: 45rem; /* 720 */
+}
+
+/* ---------- Motion: scrim fades, dialog scales 0.96 → 1 and fades ---------- */
+
+.medo-dialog-overlay[data-entering] {
+  animation: medo-dialog-fade var(--medo-motion-duration-normal) var(--medo-motion-easing-enter);
+}
+.medo-dialog-overlay[data-exiting] {
+  animation: medo-dialog-fade var(--medo-motion-duration-fast) var(--medo-motion-easing-exit) reverse;
+}
+.medo-dialog-overlay[data-entering] .medo-dialog {
+  animation: medo-dialog-scale var(--medo-motion-duration-normal) var(--medo-motion-easing-enter);
+}
+.medo-dialog-overlay[data-exiting] .medo-dialog {
+  animation: medo-dialog-scale var(--medo-motion-duration-fast) var(--medo-motion-easing-exit) reverse;
+}
+
+@keyframes medo-dialog-fade {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes medo-dialog-scale {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+}
+
+/* ---------- Parts ---------- */
+
+.medo-dialog__dialog {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-block-size: 0;
+  outline: none;
+}
+
+.medo-dialog__header {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--medo-space-4);
+  padding: var(--medo-space-6) var(--medo-space-4) var(--medo-space-4) var(--medo-space-6);
+}
+
+.medo-dialog__heading {
+  display: grid;
+  flex: 1;
+  gap: var(--medo-space-1);
+  min-inline-size: 0;
+}
+
+.medo-dialog__title {
+  margin: 0;
+  font: var(--medo-typography-heading-md);
+  color: var(--medo-color-text-primary);
+}
+
+.medo-dialog__description {
+  margin: 0;
+  font: var(--medo-typography-body-sm);
+  color: var(--medo-color-text-secondary);
+}
+
+.medo-dialog__body {
+  flex: 1;
+  min-block-size: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+  padding-inline: var(--medo-space-6);
+  font: var(--medo-typography-body-sm);
+  outline: none;
+}
+
+.medo-dialog__body:focus-visible {
+  box-shadow: var(--medo-shadow-focus-ring-inset);
+}
+
+/* Without a footer the body keeps the bottom padding. */
+.medo-dialog__body:last-child {
+  padding-block-end: var(--medo-space-6);
+}
+
+.medo-dialog__footer {
+  padding: var(--medo-space-6);
+}
+
+/* Content too long: dividers keep title and actions apart from the scrolling body. */
+.medo-dialog__dialog[data-scrolled] .medo-dialog__header {
+  border-block-end: var(--medo-border-width-thin) solid var(--medo-color-border-default);
+}
+.medo-dialog__dialog[data-scrolled] .medo-dialog__body {
+  padding-block: var(--medo-space-4);
+}
+.medo-dialog__dialog[data-scrolled] .medo-dialog__footer {
+  padding-block-start: var(--medo-space-4);
+  border-block-start: var(--medo-border-width-thin) solid var(--medo-color-border-default);
+}
+
+/* ---------- Fullscreen (mobile forms) ---------- */
+
+.medo-dialog-overlay--fullscreen {
+  padding: 0;
+}
+
+.medo-dialog--fullscreen {
+  inline-size: 100%;
+  block-size: 100%;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  padding-block-start: env(safe-area-inset-top);
+  padding-block-end: env(safe-area-inset-bottom);
+}
+
+.medo-dialog__bar {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: var(--medo-space-2);
+  min-block-size: calc(var(--medo-size-control-md) + 2 * var(--medo-space-2)); /* 56 */
+  padding-inline: var(--medo-space-2);
+  border-block-end: var(--medo-border-width-thin) solid var(--medo-color-border-default);
+}
+
+.medo-dialog__bar > :first-child {
+  justify-self: start;
+}
+.medo-dialog__bar > :last-child {
+  justify-self: end;
+}
+
+.medo-dialog__bar-title {
+  min-inline-size: 0;
+  margin: 0;
+  overflow: hidden;
+  font: var(--medo-typography-label-lg);
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.medo-dialog--fullscreen .medo-dialog__body,
+.medo-dialog--fullscreen .medo-dialog__dialog[data-scrolled] .medo-dialog__body {
+  padding: var(--medo-space-4);
+}
+
+.medo-dialog--fullscreen .medo-dialog__body-inner,
+.medo-dialog__sheet-body {
+  display: grid;
+  gap: var(--medo-space-4);
+}
+
+/* ---------- Bottom Sheet (short content on mobile) ---------- */
+
+.medo-dialog__sheet-body {
+  padding: var(--medo-space-2) var(--medo-space-4) var(--medo-space-4);
+  font: var(--medo-typography-body-sm);
+}
+
+/* ---------- Alert dialog ---------- */
+
+.medo-alert-dialog {
+  --_tone-bg: var(--medo-color-feedback-danger-surface);
+  --_tone-fg: var(--medo-color-feedback-danger-text);
+}
+.medo-alert-dialog--warning {
+  --_tone-bg: var(--medo-color-feedback-warning-surface);
+  --_tone-fg: var(--medo-color-feedback-warning-text);
+}
+.medo-alert-dialog--info {
+  --_tone-bg: var(--medo-color-feedback-info-surface);
+  --_tone-fg: var(--medo-color-feedback-info-text);
+}
+
+.medo-alert-dialog .medo-dialog__dialog {
+  gap: var(--medo-space-6);
+  padding: var(--medo-space-6);
+}
+
+.medo-alert-dialog__content {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--medo-space-4);
+}
+
+.medo-alert-dialog__icon {
+  display: inline-grid;
+  flex: none;
+  place-items: center;
+  inline-size: var(--medo-space-10); /* 40 */
+  block-size: var(--medo-space-10);
+  border-radius: var(--medo-radius-full);
+  background-color: var(--_tone-bg);
+  color: var(--_tone-fg);
+}
+
+.medo-alert-dialog__icon > svg {
+  inline-size: var(--medo-size-icon-md);
+  block-size: var(--medo-size-icon-md);
+}
+
+.medo-alert-dialog__text {
+  display: grid;
+  flex: 1;
+  gap: var(--medo-space-2);
+  min-inline-size: 0;
+}
+
+.medo-alert-dialog__title {
+  margin: 0;
+  font: var(--medo-typography-heading-sm);
+  color: var(--medo-color-text-primary);
+}
+
+.medo-alert-dialog__description {
+  font: var(--medo-typography-body-sm);
+  color: var(--medo-color-text-secondary);
+}
+
+/* ---------- Mobile < 640 px (breakpoint/sm) ---------- */
+
+@media (max-width: 639.98px) {
+  .medo-dialog-overlay {
+    padding: var(--medo-space-4);
+  }
+  .medo-dialog-overlay--fullscreen {
+    padding: 0;
+  }
+  /* Alert dialog: icon on top; the Button group stacks the buttons (main action on top). */
+  .medo-alert-dialog__content {
+    flex-direction: column;
+  }
+}
+
+@media (forced-colors: active) {
+  .medo-dialog {
+    border: 1px solid CanvasText;
+  }
+  .medo-alert-dialog__icon {
+    border: 1px solid CanvasText;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .medo-dialog-overlay:is([data-entering], [data-exiting]) .medo-dialog {
+    animation-name: medo-dialog-fade;
+  }
+}

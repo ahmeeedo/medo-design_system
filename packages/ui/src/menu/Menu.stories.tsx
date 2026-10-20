@@ -1,9 +1,11 @@
+import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import type { Key } from 'react-aria-components';
 import { fn } from 'storybook/test';
 import { Archive, Copy, Download, FileText, Folder, FolderInput, Link2, Pencil, Share2, Trash2 } from 'lucide-react';
 import { Menu, MenuButton, MenuItem, MenuSection, MenuTrigger, Submenu } from './Menu';
 import { Button } from '../button/Button';
+import { AlertDialog } from '../dialog/Dialog';
 
 const file: React.CSSProperties = {
   display: 'flex',
@@ -86,26 +88,39 @@ const meta = {
       },
     },
   },
-  render: (args) => (
-    <div style={file}>
-      <FileText aria-hidden="true" style={{ inlineSize: 20, blockSize: 20, color: 'var(--medo-color-text-secondary)' }} />
-      <div style={{ flex: 1, display: 'grid' }}>
-        <span style={{ font: 'var(--medo-typography-label-md)' }}>Q3-Report.pdf</span>
-        <span style={{ font: 'var(--medo-typography-caption)', color: 'var(--medo-color-text-secondary)' }}>PDF · 2.4 MB · edited 2 h ago</span>
+  render: function Render(args) {
+    const [confirm, setConfirm] = useState(false);
+    return (
+      <div style={file}>
+        <FileText aria-hidden="true" style={{ inlineSize: 20, blockSize: 20, color: 'var(--medo-color-text-secondary)' }} />
+        <div style={{ flex: 1, display: 'grid' }}>
+          <span style={{ font: 'var(--medo-typography-label-md)' }}>Q3-Report.pdf</span>
+          <span style={{ font: 'var(--medo-typography-caption)', color: 'var(--medo-color-text-secondary)' }}>PDF · 2.4 MB · edited 2 h ago</span>
+        </div>
+        <MenuTrigger>
+          <MenuButton aria-label="More actions for Q3-Report.pdf" />
+          <FileActions
+            overlay={args.overlay}
+            onAction={(key) => {
+              args.onAction?.(key, {});
+              if (key === 'delete') setConfirm(true);
+            }}
+          />
+        </MenuTrigger>
+        {/* „Delete…“ – the ellipsis means a second step: an Alert dialog confirms. */}
+        <AlertDialog isOpen={confirm} onOpenChange={setConfirm} title="Delete Q3-Report.pdf?" actionLabel="Delete">
+          The file will be deleted for everyone in this workspace. This cannot be undone.
+        </AlertDialog>
       </div>
-      <MenuTrigger>
-        <MenuButton aria-label="More actions for Q3-Report.pdf" />
-        <FileActions overlay={args.overlay} onAction={(key) => args.onAction?.(key, {})} />
-      </MenuTrigger>
-    </div>
-  ),
+    );
+  },
 } satisfies Meta<typeof Menu>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Playground: Story = {
-  parameters: { docs: { description: { story: 'Open the menu with the ••• button. The Actions panel shows the chosen item.' } } },
+  parameters: { docs: { description: { story: 'Open the menu with the ••• button. The Actions panel shows the chosen item; „Delete…“ opens an Alert dialog.' } } },
 };
 
 export const TextTrigger: Story = {
