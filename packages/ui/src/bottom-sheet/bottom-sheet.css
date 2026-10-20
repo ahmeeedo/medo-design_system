@@ -1,0 +1,196 @@
+/**
+ * Bottom Sheet – med.o Design System (Figma: C10 Bottom Sheet)
+ *
+ * Modal layer from the bottom on small screens.
+ *   <div class="medo-sheet-overlay">                       scrim, overlay/scrim
+ *     <div class="medo-sheet [medo-sheet--full]">           surface/raised, top radius/xl, elevation/4
+ *       <section class="medo-sheet__dialog" role="dialog">
+ *         <div class="medo-sheet__grab">  handle (decorative) + header: title and close button  </div>
+ *         <div class="medo-sheet__content">…scrolls…</div>
+ *         <div class="medo-sheet__footer">…sticky, safe area…</div>
+ *       </section>
+ *     </div>
+ *   </div>
+ * Height = content, max 90dvh (full: fixed 90dvh, e.g. with search). Enter 0.2 s, exit 0.1 s; reduced motion: fade.
+ * State contract: [data-entering] [data-exiting] on overlay and sheet (React Aria).
+ */
+
+.medo-sheet-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: var(--medo-layer-modal);
+  display: flex;
+  align-items: flex-end;
+  background-color: var(--medo-color-overlay-scrim);
+}
+
+.medo-sheet-overlay[data-entering] {
+  animation: medo-sheet-fade var(--medo-motion-duration-normal) var(--medo-motion-easing-enter);
+}
+.medo-sheet-overlay[data-exiting] {
+  animation: medo-sheet-fade var(--medo-motion-duration-fast) var(--medo-motion-easing-exit) reverse;
+}
+
+.medo-sheet {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  inline-size: 100%;
+  max-block-size: 90dvh;
+  border-start-start-radius: var(--medo-radius-xl);
+  border-start-end-radius: var(--medo-radius-xl);
+  background-color: var(--medo-color-surface-raised);
+  box-shadow: var(--medo-shadow-elevation-4);
+  color: var(--medo-color-text-primary);
+  outline: none;
+  touch-action: pan-y;
+  /* Snaps back when a swipe is too short. */
+  transition: transform var(--medo-motion-duration-fast) var(--medo-motion-easing-standard);
+}
+
+/* With search: fixed height, so the sheet does not jump while typing or when the keyboard opens. */
+.medo-sheet--full {
+  block-size: 90dvh;
+}
+
+.medo-sheet[data-entering],
+.medo-sheet-overlay[data-entering] .medo-sheet {
+  animation: medo-sheet-slide var(--medo-motion-duration-normal) var(--medo-motion-easing-enter);
+}
+.medo-sheet[data-exiting],
+.medo-sheet-overlay[data-exiting] .medo-sheet {
+  animation: medo-sheet-slide var(--medo-motion-duration-fast) var(--medo-motion-easing-exit) reverse;
+}
+
+/*
+ * Select sheet (popover): React Aria positions popovers with inline styles next to the trigger.
+ * The sheet covers the viewport instead – !important is the only way to beat inline styles.
+ */
+.medo-sheet-overlay--popover {
+  position: fixed !important;
+  inset: 0 !important;
+  inline-size: auto !important;
+  block-size: auto !important;
+  max-block-size: none !important;
+  max-inline-size: none !important;
+}
+
+/* Select sheet (popover): the scrim fills the popover, the sheet sits at the bottom. */
+.medo-sheet-scrim {
+  display: flex;
+  flex: 1;
+  align-items: flex-end;
+  block-size: 100%;
+}
+
+/* While dragging: follow the finger, no transition. */
+.medo-sheet[data-dragging] {
+  transition: none;
+}
+
+@keyframes medo-sheet-slide {
+  from {
+    transform: translateY(100%);
+  }
+}
+
+@keyframes medo-sheet-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+.medo-sheet__dialog {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-block-size: 0;
+  outline: none;
+}
+
+/* Handle + header: the area that can be swiped down. */
+.medo-sheet__grab {
+  flex: none;
+  touch-action: none;
+  cursor: grab;
+}
+
+.medo-sheet__handle {
+  display: block;
+  inline-size: var(--medo-space-8);
+  block-size: var(--medo-space-1);
+  margin: var(--medo-space-2) auto var(--medo-space-1);
+  border-radius: var(--medo-radius-full);
+  background-color: var(--medo-color-border-default);
+}
+
+.medo-sheet__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--medo-space-2);
+  padding-inline: var(--medo-space-4) var(--medo-space-2);
+}
+
+.medo-sheet__title {
+  margin: 0;
+  font: var(--medo-typography-heading-sm);
+  color: var(--medo-color-text-primary);
+}
+
+.medo-sheet__content {
+  flex: 1;
+  min-block-size: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+
+/* Last block without footer: keep clear of the iPhone home indicator. */
+.medo-sheet__content:last-child {
+  padding-block-end: env(safe-area-inset-bottom);
+}
+
+.medo-sheet__footer {
+  display: grid;
+  gap: var(--medo-space-2);
+  padding: var(--medo-space-4);
+  padding-block-end: calc(var(--medo-space-4) + env(safe-area-inset-bottom));
+  border-block-start: var(--medo-border-width-thin) solid var(--medo-color-border-default);
+}
+
+.medo-sheet__footer .medo-button {
+  inline-size: 100%;
+}
+
+.medo-sheet__count {
+  margin: 0;
+  font: var(--medo-typography-caption);
+  color: var(--medo-color-text-secondary);
+}
+
+/* ---------- Select sheet ---------- */
+
+.medo-sheet__search {
+  flex: none;
+  padding: var(--medo-space-2) var(--medo-space-4);
+}
+
+.medo-sheet .medo-listbox {
+  max-block-size: none;
+  padding-inline: var(--medo-space-1);
+}
+
+@media (forced-colors: active) {
+  .medo-sheet {
+    border: 1px solid CanvasText;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .medo-sheet[data-entering],
+  .medo-sheet[data-exiting],
+  .medo-sheet-overlay:is([data-entering], [data-exiting]) .medo-sheet {
+    animation-name: medo-sheet-fade;
+    animation-duration: var(--medo-motion-duration-fast);
+  }
+}

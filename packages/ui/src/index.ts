@@ -26,7 +26,9 @@ export type { ToggleButtonProps, ToggleButtonGroupProps, ToolbarProps } from './
 export { ListBox, Option, ListBoxSection, ListBoxMessage } from './listbox/ListBox';
 export type { ListBoxProps, OptionProps, ListBoxSectionProps, ListBoxSize } from './listbox/ListBox';
 export { Select } from './select/Select';
-export type { SelectProps } from './select/Select';
+export type { SelectProps, SelectOverlay } from './select/Select';
+export { BottomSheet } from './bottom-sheet/BottomSheet';
+export type { BottomSheetProps } from './bottom-sheet/BottomSheet';
 export { Combobox } from './combobox/Combobox';
 export type { ComboboxProps } from './combobox/Combobox';
 export { Link } from './link/Link';

@@ -24,8 +24,12 @@
   --_clear: var(--medo-size-icon-lg);
 
   position: relative;
-  padding-inline: 0;
   cursor: pointer;
+}
+
+/* The trigger carries the padding (higher specificity than .medo-input, independent of CSS order). */
+.medo-input.medo-select__field {
+  padding-inline: 0;
 }
 
 .medo-select__field.medo-input--lg {
@@ -107,6 +111,32 @@
 
 .medo-select__clear > .medo-input__action {
   margin: 0;
+}
+
+/* ---------- Mobile: native picker (single) ---------- */
+
+/* Invisible native select over the field: taps open the system picker. 16 px prevents iOS zoom. */
+.medo-select__native {
+  position: absolute;
+  inset: 0;
+  inline-size: 100%;
+  block-size: 100%;
+  margin: 0;
+  border: 0;
+  opacity: 0;
+  font-size: 1rem;
+  cursor: pointer;
+  appearance: none;
+}
+
+.medo-select:has(.medo-select__native:focus-visible) .medo-select__field {
+  --_border: var(--medo-color-focus-ring);
+  box-shadow: inset 0 0 0 var(--medo-border-width-thin) var(--medo-color-focus-ring);
+}
+
+/* The clear button stays above the native select. */
+.medo-select__clear {
+  z-index: 1;
 }
 
 /* ---------- Tags (multi) ---------- */

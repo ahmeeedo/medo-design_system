@@ -126,9 +126,13 @@ const plain = (text: string) => text.normalize('NFD').replace(/\p{Diacritic}/gu,
  * Inside a Combobox: shows the typed text in bold within the option label (contains match,
  * case and accent insensitive, „mul“ → „Müller“). Visual only; screen readers read plain text.
  */
+/** Search text to highlight, for lists filtered outside a ComboBox (e.g. the search in a Bottom Sheet). */
+export const OptionHighlightContext = createContext<string | null>(null);
+
 function Highlight({ children }: { children: ReactNode }) {
   const combo = useContext(ComboBoxStateContext);
-  let query = combo?.inputValue.trim() ?? '';
+  const external = useContext(OptionHighlightContext);
+  let query = (external ?? combo?.inputValue ?? '').trim();
   // The input shows the chosen value (single): nothing to highlight then.
   if (combo?.selectedItems.some((item) => item?.textValue === query)) query = '';
   if (!query || typeof children !== 'string') return <>{children}</>;

@@ -1,4 +1,6 @@
+import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { Key } from 'react-aria-components';
 import { fn } from 'storybook/test';
 import { Globe, MapPin } from 'lucide-react';
 import { Select } from './Select';
@@ -51,6 +53,10 @@ const meta = {
     children: { control: false },
     items: { control: false },
     onChange: { control: false },
+    overlay: { control: 'inline-radio', options: ['auto', 'popover', 'sheet', 'native'], description: 'auto: popover on desktop; below 640 px native picker (single) or Bottom Sheet (multi).' },
+    commit: { control: 'inline-radio', options: ['live', 'onClose'], if: { arg: 'selectionMode', eq: 'multiple' } },
+    onApply: { control: false },
+    resultLabel: { control: false },
   },
   parameters: {
     medo: { code: 'C08', subtitle: 'Choose one or several values from a list. Same anatomy as Input, plus a chevron.', figma: '122:1109' },
@@ -158,6 +164,54 @@ export const Groups: Story = {
         </Option>
       </ListBoxSection>
     </Select>
+  ),
+};
+
+/** Fake result count for the filter demo: 37 people per team. */
+function TeamFilter() {
+  const [applied, setApplied] = useState<Key[]>([]);
+  return (
+    <div style={stack}>
+      <Select
+        label="Team"
+        selectionMode="multiple"
+        overlay="sheet"
+        commit="onClose"
+        items={topics}
+        onApply={setApplied}
+        resultLabel={(value) => (value.length ? `Show ${value.length * 37} results` : 'Show all results')}
+      >
+        {(item) => <Option id={item.id}>{item.name}</Option>}
+      </Select>
+      <p role="status" style={{ margin: 0, font: 'var(--medo-typography-body-sm)', color: 'var(--medo-color-text-secondary)' }}>
+        Applied filter: {applied.length ? applied.join(', ') : 'none'}
+      </p>
+    </div>
+  );
+}
+
+export const Mobile: Story = {
+  name: 'Mobile (below 640 px)',
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'Below 640 px (`overlay="auto"`) a simple Select uses the system picker, multi opens a Bottom Sheet. Forced here with `overlay`. ' +
+          '**Live** (forms): „3 selected“ + Done. **On close** (filters): `onApply` runs once when the sheet closes – any way – if the selection changed; ' +
+          'the primary button shows the result count, Reset sits below.',
+      },
+    },
+  },
+  render: () => (
+    <div style={stack}>
+      <Select label="Country (native picker)" overlay="native" defaultValue="de" items={countries}>
+        {(item) => <Option id={item.id}>{item.name}</Option>}
+      </Select>
+      <Select label="Topics (sheet, live)" selectionMode="multiple" overlay="sheet" defaultValue={['design', 'code']} items={topics}>
+        {(item) => <Option id={item.id}>{item.name}</Option>}
+      </Select>
+      <TeamFilter />
+    </div>
   ),
 };
 

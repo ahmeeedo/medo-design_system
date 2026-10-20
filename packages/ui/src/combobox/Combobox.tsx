@@ -1,24 +1,34 @@
-import { useContext, useEffect, useRef, useState, type KeyboardEvent, type MouseEvent, type ReactNode } from 'react';
+import { useContext, useEffect, useId, useRef, useState, type KeyboardEvent, type MouseEvent, type ReactNode } from 'react';
 import {
+  Autocomplete,
   Button as AriaButton,
   Collection,
+  CollectionBuilder,
   ComboBox as AriaComboBox,
   ComboBoxStateContext,
   Group,
   Input,
   Popover,
+  TextField as AriaTextField,
+  useFilter,
   type ComboBoxProps as AriaComboBoxProps,
   type Key,
+  type Selection,
 } from 'react-aria-components';
-import { ChevronDown, Plus, X } from 'lucide-react';
+import { ChevronDown, CircleAlert, Plus, Search, X } from 'lucide-react';
+import { BottomSheet } from '../bottom-sheet/BottomSheet';
+import { Button } from '../button/Button';
 import { FieldFooter, FieldLabel } from '../field/Field';
-import { ListBox, ListBoxMessage, ListBoxSection, Option } from '../listbox/ListBox';
+import { ListBox, ListBoxMessage, ListBoxSection, OptionHighlightContext, Option } from '../listbox/ListBox';
+import { MOBILE_QUERY, useMediaQuery } from '../utils/useMediaQuery';
 import { Tag, TagGroup } from '../tag/Tag';
 import { InputAction, type InputSize } from '../text-field/TextField';
 import { cx } from '../utils/cx';
 import { useFitCount } from '../utils/useFitCount';
 import '../text-field/input.css';
 import '../tag/tag.css';
+import '../select/select.css';
+import '../bottom-sheet/bottom-sheet.css';
 import './combobox.css';
 
 type ComboMode = 'single' | 'multiple';
@@ -49,6 +59,14 @@ export interface ComboboxProps<T extends object, M extends ComboMode = 'single'>
   onCreate?: (text: string) => Key | void;
   /** Option and ListBoxSection elements, or a render function with items / defaultItems. */
   children: ReactNode | ((item: T) => ReactNode);
+  /** auto (default): popover on desktop, Bottom Sheet with search below 640 px · popover · sheet. */
+  overlay?: 'auto' | 'popover' | 'sheet';
+  /** Multi in the sheet: live (forms, footer „Done“) · onClose (filters: onApply once when the sheet closes, if changed). */
+  commit?: 'live' | 'onClose';
+  /** commit="onClose": apply the selection (load results, write the URL …). */
+  onApply?: (value: Key[]) => void;
+  /** commit="onClose": label of the primary sheet button, ideally with the live result count. */
+  resultLabel?: (value: Key[]) => ReactNode;
   className?: string;
 }
 
@@ -70,6 +88,10 @@ export function Combobox<T extends object, M extends ComboMode = 'single'>({
   noResultsMessage = (text) => (text ? `No results for „${text}“` : 'No results'),
   onCreate,
   children,
+  overlay = 'auto',
+  commit = 'live',
+  onApply,
+  resultLabel = () => 'Show results',
   className,
   selectionMode,
   value: valueProp,
@@ -104,6 +126,43 @@ export function Combobox<T extends object, M extends ComboMode = 'single'>({
     }
     setValue(next);
   };
+
+  const mobile = useMediaQuery(MOBILE_QUERY);
+  if (overlay === 'sheet' || (overlay === 'auto' && mobile)) {
+    return (
+      <ComboboxSheet<T>
+        {...{
+          label,
+          description,
+          errorMessage,
+          placeholder,
+          size,
+          leadingIcon,
+          isLoading,
+          noResultsMessage,
+          onCreate,
+          children,
+          className,
+        }}
+        multiple={multiple}
+        value={value}
+        onValueChange={handleChange}
+        textRef={textRef}
+        items={props.items}
+        defaultItems={props.defaultItems}
+        inputValue={props.inputValue}
+        onInputChange={onInputChange}
+        isDisabled={props.isDisabled}
+        isReadOnly={props.isReadOnly}
+        isInvalid={props.isInvalid}
+        isRequired={props.isRequired}
+        name={props.name}
+        commit={commit}
+        onApply={onApply}
+        resultLabel={resultLabel}
+      />
+    );
+  }
 
   // Click on the free space of the field puts the caret into the input.
   const focusInput = (e: MouseEvent) => {
@@ -357,5 +416,277 @@ function ComboList<T extends object>({
       {/* Server search: previous results stay, the loading row sits below them. */}
       {isLoading && hasItems && <ListBoxMessage>Loading…</ListBoxMessage>}
     </>
+  );
+}
+
+/* ---------- Mobile: Bottom Sheet with search (Figma: Select sheet, Search = true) ---------- */
+
+interface ComboboxSheetProps<T> {
+  label: ReactNode;
+  description?: ReactNode;
+  errorMessage?: ReactNode;
+  placeholder: string;
+  size: InputSize;
+  leadingIcon?: ReactNode;
+  isLoading?: boolean;
+  noResultsMessage: (inputValue: string) => ReactNode;
+  onCreate?: (text: string) => Key | void;
+  children: ReactNode | ((item: T) => ReactNode);
+  className?: string;
+  multiple: boolean;
+  value: Value;
+  onValueChange: (value: Value) => void;
+  textRef: React.RefObject<string>;
+  items?: Iterable<T>;
+  defaultItems?: Iterable<T>;
+  inputValue?: string;
+  onInputChange?: (value: string) => void;
+  isDisabled?: boolean;
+  isReadOnly?: boolean;
+  isInvalid?: boolean;
+  isRequired?: boolean;
+  name?: string;
+  commit: 'live' | 'onClose';
+  onApply?: (value: Key[]) => void;
+  resultLabel: (value: Key[]) => ReactNode;
+}
+
+/**
+ * Below 640 px the field becomes a button that opens a Bottom Sheet: search on top (fixed 90 % height,
+ * so it does not jump with the keyboard), options lg, single closes on tap, multi with Done or result button.
+ */
+function ComboboxSheet<T extends object>({
+  label,
+  description,
+  errorMessage,
+  placeholder,
+  size,
+  leadingIcon,
+  isLoading,
+  noResultsMessage,
+  onCreate,
+  children,
+  className,
+  multiple,
+  value,
+  onValueChange,
+  textRef,
+  items,
+  defaultItems,
+  inputValue,
+  onInputChange,
+  isDisabled,
+  isReadOnly,
+  isInvalid,
+  isRequired,
+  name,
+  commit,
+  onApply,
+  resultLabel,
+}: ComboboxSheetProps<T>) {
+  const id = useId();
+  const [isOpen, setOpen] = useState(false);
+  const [ownSearch, setOwnSearch] = useState('');
+  const search = inputValue ?? ownSearch;
+  const setSearch = (text: string) => {
+    textRef.current = text;
+    if (inputValue === undefined) setOwnSearch(text);
+    onInputChange?.(text);
+  };
+  const { contains } = useFilter({ sensitivity: 'base' });
+  const list = items ?? defaultItems;
+  const keys = Array.isArray(value) ? value : value == null ? [] : [value];
+  const opened = useRef<string | null>(null);
+
+  const query = search.trim();
+  const content = typeof children === 'function' ? <Collection items={list}>{children}</Collection> : children;
+
+  const open = (next: boolean) => {
+    if (next) {
+      setSearch('');
+      opened.current = JSON.stringify(keys);
+    } else if (commit === 'onClose' && multiple && opened.current !== null && opened.current !== JSON.stringify(keys)) {
+      onApply?.(keys);
+    }
+    if (!next) opened.current = null;
+    setOpen(next);
+  };
+
+  const onSelectionChange = (selection: Selection) => {
+    const next = selection === 'all' ? [] : [...selection];
+    if (multiple) {
+      onValueChange(next);
+    } else {
+      // Tapping the chosen option again deselects it in the list: keep the value, just close (single closes on tap).
+      onValueChange(next[0] ?? value);
+      open(false);
+    }
+  };
+
+  const descId = description ? `${id}-desc` : undefined;
+  const errId = isInvalid && errorMessage ? `${id}-err` : undefined;
+
+  // The field shows the labels of the chosen values: React Aria builds the collection from the options
+  // without rendering them, the same way the Select gets its labels.
+  return (
+    <CollectionBuilder content={content}>
+      {(collection) => {
+        const nodes = [...collection.getKeys()].map((key) => collection.getItem(key)).filter((node) => node?.type === 'item');
+        const text = keys.map((key) => collection.getItem(key)?.textValue ?? String(key));
+        const exact = nodes.some((node) => node!.textValue.toLocaleLowerCase() === query.toLocaleLowerCase());
+        return (
+          <div
+            className={cx('medo-field', 'medo-combobox', 'medo-select', multiple && keys.length > 0 && 'medo-select--tags', className)}
+            data-invalid={isInvalid || undefined}
+            data-disabled={isDisabled || undefined}
+            data-readonly={isReadOnly || undefined}
+            data-open={isOpen || undefined}
+          >
+            <span className="medo-field__label" id={`${id}-label`}>
+              {label}
+              {isRequired && (
+                <span className="medo-field__required" aria-hidden="true">
+                  *
+                </span>
+              )}
+            </span>
+            <div className={cx('medo-input', `medo-input--${size}`, 'medo-select__field')}>
+              <AriaButton
+                className="medo-select__trigger"
+                isDisabled={isDisabled}
+                aria-haspopup="dialog"
+                aria-labelledby={`${id}-label ${id}-value`}
+                aria-describedby={[errId ?? descId].filter(Boolean).join(' ') || undefined}
+                onPress={() => !isReadOnly && open(true)}
+              >
+                {leadingIcon && (
+                  <span className="medo-input__icon" aria-hidden="true">
+                    {leadingIcon}
+                  </span>
+                )}
+                <span className="medo-select__value" id={`${id}-value`} data-placeholder={keys.length === 0 || undefined}>
+                  {keys.length === 0 ? placeholder : multiple ? <DisplayTags labels={text} size={size} /> : text[0]}
+                  {isReadOnly && <span className="medo-visually-hidden">, read only</span>}
+                </span>
+                {!isReadOnly && (
+                  <span className="medo-select__chevron" aria-hidden="true">
+                    <ChevronDown />
+                  </span>
+                )}
+              </AriaButton>
+            </div>
+            <div className="medo-field__footer">
+              {isInvalid && errorMessage ? (
+                <span className="medo-field__error" id={errId}>
+                  <CircleAlert aria-hidden="true" />
+                  <span>{errorMessage}</span>
+                </span>
+              ) : (
+                description && (
+                  <span className="medo-field__description" id={descId}>
+                    {description}
+                  </span>
+                )
+              )}
+            </div>
+            {name && keys.map((key) => <input key={String(key)} type="hidden" name={name} value={String(key)} />)}
+
+            <BottomSheet
+              title={label}
+              height="full"
+              isOpen={isOpen}
+              onOpenChange={open}
+              footer={
+                multiple
+                  ? commit === 'onClose'
+                    ? (close) => (
+                        <>
+                          <Button size="lg" onPress={close}>
+                            {resultLabel(keys)}
+                          </Button>
+                          <Button size="lg" variant="secondary" onPress={() => onValueChange([])} isDisabled={keys.length === 0}>
+                            Reset
+                          </Button>
+                        </>
+                      )
+                    : (close) => (
+                        <>
+                          <p className="medo-sheet__count" aria-live="polite">
+                            {keys.length} selected
+                          </p>
+                          <Button size="lg" onPress={close}>
+                            Done
+                          </Button>
+                        </>
+                      )
+                  : undefined
+              }
+            >
+              <Autocomplete inputValue={search} onInputChange={setSearch} filter={items ? undefined : contains}>
+                <div className="medo-sheet__search">
+                  <AriaTextField aria-label="Search" autoFocus className="medo-input medo-input--lg">
+                    <span className="medo-input__icon" aria-hidden="true">
+                      <Search />
+                    </span>
+                    <Input className="medo-input__control" placeholder={placeholder} />
+                  </AriaTextField>
+                </div>
+                <OptionHighlightContext.Provider value={query}>
+                  <ListBox<T>
+                    size="lg"
+                    aria-labelledby={`${id}-label`}
+                    selectionMode={multiple ? 'multiple' : 'single'}
+                          selectedKeys={keys}
+                    onSelectionChange={onSelectionChange}
+                    renderEmptyState={() => <ListBoxMessage>{isLoading ? 'Loading…' : noResultsMessage(query)}</ListBoxMessage>}
+                  >
+                    {content}
+                    {multiple && onCreate && query && !exact && (
+                      <ListBoxSection aria-label="Create">
+                        <Option id={CREATE_KEY} icon={<Plus />} textValue={query}>
+                          {`Add „${query}“`}
+                        </Option>
+                      </ListBoxSection>
+                    )}
+                  </ListBox>
+                </OptionHighlightContext.Provider>
+                {isLoading && list && [...list].length > 0 && <ListBoxMessage>Loading…</ListBoxMessage>}
+              </Autocomplete>
+            </BottomSheet>
+          </div>
+        );
+      }}
+    </CollectionBuilder>
+  );
+}
+
+/** Chosen values as display-only tags in one line (inside the trigger button: no remove buttons). */
+function DisplayTags({ labels, size }: { labels: string[]; size: InputSize }) {
+  const rowRef = useRef<HTMLSpanElement>(null);
+  const measureRef = useRef<HTMLSpanElement>(null);
+  const visible = useFitCount(rowRef, measureRef, labels.join('\u0000'), labels.length);
+  const tagClass = cx('medo-tag', size === 'lg' ? 'medo-tag--md' : 'medo-tag--sm');
+  return (
+    <span className="medo-select__tags" ref={rowRef}>
+      <span className="medo-visually-hidden">{labels.join(', ')}</span>
+      <span className="medo-select__measure" ref={measureRef} aria-hidden="true">
+        {labels.map((l, i) => (
+          <span key={i} className={tagClass}>
+            {l}
+          </span>
+        ))}
+        <span className={tagClass}>+{labels.length}</span>
+      </span>
+      {labels.slice(0, visible).map((l, i) => (
+        <span key={i} className={tagClass} aria-hidden="true">
+          <span className="medo-select__tag-label">{l}</span>
+        </span>
+      ))}
+      {labels.length > visible && (
+        <span className={tagClass} aria-hidden="true">
+          +{labels.length - visible}
+        </span>
+      )}
+    </span>
   );
 }

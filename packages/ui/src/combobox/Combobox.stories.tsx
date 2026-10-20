@@ -60,6 +60,10 @@ const meta = {
     isLoading: { control: false },
     noResultsMessage: { control: false },
     onCreate: { control: false },
+    overlay: { control: 'inline-radio', options: ['auto', 'popover', 'sheet'], description: 'auto: popover on desktop, Bottom Sheet with search below 640 px.' },
+    commit: { control: 'inline-radio', options: ['live', 'onClose'], if: { arg: 'selectionMode', eq: 'multiple' } },
+    onApply: { control: false },
+    resultLabel: { control: false },
   },
   parameters: {
     medo: { code: 'C09', subtitle: 'A Select you can type into. Typing filters the list – for long lists, people, places or tags.', figma: '127:2306' },
@@ -241,6 +245,33 @@ export const Server: Story = {
     },
   },
   render: () => <ServerDemo />,
+};
+
+export const Mobile: Story = {
+  name: 'Mobile (below 640 px)',
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'Below 640 px (`overlay="auto"`) the field opens a Bottom Sheet: search on top, fixed 90 % height so it does not jump with the keyboard, options lg. ' +
+          'Single closes on tap; multi has „Done“ (or a result button with `commit="onClose"`). Forced here with `overlay="sheet"`.',
+      },
+    },
+  },
+  render: () => (
+    <div style={stack}>
+      <Combobox label="Assignee" overlay="sheet" defaultValue="mueller" defaultItems={people}>
+        {(item) => (
+          <Option id={item.id} description={item.role}>
+            {item.name}
+          </Option>
+        )}
+      </Combobox>
+      <Combobox label="Reviewers" overlay="sheet" selectionMode="multiple" defaultValue={['mueller', 'lorenz', 'cetin']} defaultItems={people}>
+        {(item) => <Option id={item.id}>{item.name}</Option>}
+      </Combobox>
+    </div>
+  ),
 };
 
 export const LightAndDark: Story = {

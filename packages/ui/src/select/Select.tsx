@@ -1,20 +1,28 @@
-import { useContext, useLayoutEffect, useRef, useState, type KeyboardEvent, type ReactNode } from 'react';
+import { useContext, useEffect, useLayoutEffect, useRef, useState, type KeyboardEvent, type ReactNode } from 'react';
 import {
   Button as AriaButton,
   Popover,
   Select as AriaSelect,
   SelectStateContext,
   SelectValue,
+  type Key,
   type SelectProps as AriaSelectProps,
 } from 'react-aria-components';
-
-type SelectMode = 'single' | 'multiple';
 import { ChevronDown, X } from 'lucide-react';
+import { BottomSheetPopover } from '../bottom-sheet/BottomSheet';
+import { Button } from '../button/Button';
 import { FieldFooter, FieldLabel } from '../field/Field';
 import { ListBox } from '../listbox/ListBox';
 import { InputAction, type InputSize } from '../text-field/TextField';
 import { cx } from '../utils/cx';
 import { useFitCount } from '../utils/useFitCount';
+import { MOBILE_QUERY, useMediaQuery } from '../utils/useMediaQuery';
+
+type SelectMode = 'single' | 'multiple';
+type ValueOf<M extends SelectMode> = M extends 'multiple' ? Key[] : Key | null;
+
+/** Where the options open. auto: popover on desktop; below 640 px native picker (single) or Bottom Sheet (multi). */
+export type SelectOverlay = 'auto' | 'popover' | 'sheet' | 'native';
 import '../text-field/input.css';
 import '../tag/tag.css';
 import './select.css';
@@ -41,6 +49,17 @@ export interface SelectProps<T extends object, M extends SelectMode = 'single'>
   items?: Iterable<T>;
   /** Option and ListBoxSection elements, or a render function with items. */
   children: ReactNode | ((item: T) => ReactNode);
+  /** auto (default) · popover · sheet (Bottom Sheet) · native (system picker, single only). */
+  overlay?: SelectOverlay;
+  /**
+   * Multi: what happens with the selection. live (forms): it is the value, nothing else happens.
+   * onClose (filters, reloads): `onApply` runs once when the list closes – any way – and only if the selection changed.
+   */
+  commit?: 'live' | 'onClose';
+  /** commit="onClose": apply the selection (load results, write the URL …). */
+  onApply?: (value: ValueOf<M>) => void;
+  /** commit="onClose": label of the primary sheet button, ideally with the live result count („Show 128 results“). */
+  resultLabel?: (value: ValueOf<M>) => ReactNode;
   className?: string;
 }
 
@@ -60,11 +79,17 @@ export function Select<T extends object, M extends SelectMode = 'single'>({
   isReadOnly,
   items,
   children,
+  overlay = 'auto',
+  commit = 'live',
+  onApply,
+  resultLabel = () => 'Show results',
   className,
   selectionMode,
   ...props
 }: SelectProps<T, M>) {
   const multiple = selectionMode === 'multiple';
+  const mobile = useMediaQuery(MOBILE_QUERY);
+  const mode = overlay === 'auto' ? (mobile ? (multiple ? 'sheet' : 'native') : 'popover') : overlay === 'native' && multiple ? 'sheet' : overlay;
   const [hasValue, setHasValue] = useState(false);
   /* The popover aligns to the whole field (border incl.), not only the inner trigger button. */
   const fieldRef = useRef<HTMLDivElement>(null);
@@ -87,7 +112,8 @@ export function Select<T extends object, M extends SelectMode = 'single'>({
       <FieldLabel isRequired={props.isRequired}>{label}</FieldLabel>
       <div ref={fieldRef} className={cx('medo-input', `medo-input--${size}`, 'medo-select__field')}>
         <ReadOnlyKeys isReadOnly={isReadOnly}>
-          <AriaButton className="medo-select__trigger">
+          {/* With the native picker the invisible <select> on top takes focus and taps; the button only shows the value. */}
+          <AriaButton className="medo-select__trigger" excludeFromTabOrder={mode === 'native'} aria-hidden={mode === 'native' || undefined}>
             {leadingIcon && (
               <span className="medo-input__icon" aria-hidden="true">
                 {leadingIcon}
@@ -109,14 +135,27 @@ export function Select<T extends object, M extends SelectMode = 'single'>({
             )}
           </AriaButton>
         </ReadOnlyKeys>
+        {mode === 'native' && !isReadOnly && <NativePicker label={label} placeholder={placeholder} isRequired={props.isRequired} />}
         <ClearButton enabled={(multiple || !!clearable) && !isReadOnly && !props.isDisabled} onHasValue={setHasValue} />
       </div>
       <FieldFooter description={description} errorMessage={errorMessage} />
-      <Popover triggerRef={fieldRef} offset={4} className="medo-listbox-popover">
-        <ListBox<T> size={size === 'lg' ? 'lg' : 'md'} items={items}>
-          {children}
-        </ListBox>
-      </Popover>
+      {commit === 'onClose' && onApply && <ApplyOnClose onApply={onApply as (value: Key[] | Key | null) => void} />}
+      {mode === 'sheet' ? (
+        <BottomSheetPopover
+          title={label}
+          footer={multiple ? <SheetFooter commit={commit} resultLabel={resultLabel as (value: Key[] | Key | null) => ReactNode} /> : undefined}
+        >
+          <ListBox<T> size="lg" items={items}>
+            {children}
+          </ListBox>
+        </BottomSheetPopover>
+      ) : (
+        <Popover triggerRef={fieldRef} offset={4} className="medo-listbox-popover">
+          <ListBox<T> size={size === 'lg' ? 'lg' : 'md'} items={items}>
+            {children}
+          </ListBox>
+        </Popover>
+      )}
     </AriaSelect>
   );
 }
@@ -192,4 +231,92 @@ function SelectedTags({ size }: { size: InputSize }) {
       )}
     </span>
   );
+}
+
+/**
+ * Mobile, single: an invisible native <select> over the field opens the system picker.
+ * The options come from the Select's collection; the change goes into the same state.
+ */
+function NativePicker({ label, placeholder, isRequired }: { label: ReactNode; placeholder: string; isRequired?: boolean }) {
+  const state = useContext(SelectStateContext);
+  if (!state) return null;
+  const keys = new Map<string, Key>();
+  const option = (key: Key) => {
+    const node = state.collection.getItem(key);
+    if (!node || node.type !== 'item') return null;
+    keys.set(String(key), key);
+    return (
+      <option key={String(key)} value={String(key)} disabled={state.selectionManager.isDisabled(key)}>
+        {node.textValue}
+      </option>
+    );
+  };
+  const value = state.value == null || Array.isArray(state.value) ? '' : String(state.value);
+  return (
+    <select
+      className="medo-select__native"
+      aria-label={typeof label === 'string' ? label : undefined}
+      required={isRequired}
+      value={value}
+      onChange={(e) => state.setValue(e.target.value === '' ? null : (keys.get(e.target.value) ?? e.target.value))}
+    >
+      <option value="" disabled={isRequired}>
+        {placeholder}
+      </option>
+      {[...state.collection].map((node) =>
+        node.type === 'section' ? (
+          <optgroup key={String(node.key)} label={node.textValue || node['aria-label'] || ''}>
+            {[...state.collection.getChildren!(node.key)].map((child) => option(child.key))}
+          </optgroup>
+        ) : (
+          option(node.key)
+        ),
+      )}
+    </select>
+  );
+}
+
+/** Sheet footer for multi: live → „3 selected“ + Done · onClose → result button + Reset below (thumb reach). */
+function SheetFooter({ commit, resultLabel }: { commit: 'live' | 'onClose'; resultLabel: (value: Key[] | Key | null) => ReactNode }) {
+  const state = useContext(SelectStateContext);
+  if (!state) return null;
+  const count = Array.isArray(state.value) ? state.value.length : state.value == null ? 0 : 1;
+  return commit === 'onClose' ? (
+    <>
+      <Button size="lg" onPress={() => state.close()}>
+        {resultLabel(state.value as Key[])}
+      </Button>
+      <Button size="lg" variant="secondary" onPress={() => state.setValue([])} isDisabled={count === 0}>
+        Reset
+      </Button>
+    </>
+  ) : (
+    <>
+      <p className="medo-sheet__count" aria-live="polite">
+        {count} selected
+      </p>
+      <Button size="lg" onPress={() => state.close()}>
+        Done
+      </Button>
+    </>
+  );
+}
+
+/** commit="onClose": calls onApply once when the list closes (any way), if the selection changed while open. */
+function ApplyOnClose({ onApply }: { onApply: (value: Key[] | Key | null) => void }) {
+  const state = useContext(SelectStateContext);
+  const opened = useRef<string | null>(null);
+  const isOpen = !!state?.isOpen;
+  useEffect(() => {
+    if (!state) return;
+    const snapshot = JSON.stringify(state.value);
+    if (isOpen) opened.current = snapshot;
+    else if (opened.current !== null) {
+      if (opened.current !== snapshot) onApply(state.value as Key[]);
+      opened.current = null;
+    }
+    // Only the open/close transition matters.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isOpen]);
+  return null;
 }
