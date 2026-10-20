@@ -1,7 +1,7 @@
 import type { CSSProperties, ReactNode } from 'react';
 import { Button as AriaButton, type ButtonProps as AriaButtonProps } from 'react-aria-components';
 import { Spinner } from '../progress/Progress';
-import { Tooltip, TooltipTrigger, formatShortcut } from '../tooltip/Tooltip';
+import { Tooltip, TooltipTrigger, formatShortcut, resolveShortcut } from '../tooltip/Tooltip';
 import { cx } from '../utils/cx';
 import '../button/button.css';
 
@@ -40,7 +40,7 @@ export function IconButton({
   const button = (
     <AriaButton
       {...props}
-      aria-keyshortcuts={shortcut}
+      aria-keyshortcuts={shortcut && resolveShortcut(shortcut)}
       className={cx('medo-button', 'medo-button--icon-only', `medo-button--${variant}`, `medo-button--${size}`, className)}
     >
       <span className="medo-button__icon" aria-hidden="true">

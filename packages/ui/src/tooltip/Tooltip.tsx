@@ -25,11 +25,17 @@ export interface TooltipProps extends Omit<AriaTooltipProps, 'children' | 'class
   className?: string;
 }
 
-const KEY_LABELS: Record<string, string> = { Control: 'Ctrl', Meta: '⌘', Shift: '⇧' };
+const KEY_LABELS: Record<string, string> = { Control: 'Ctrl', Meta: '⌘', Shift: '⇧', Alt: 'Alt' };
 
-/** Visible form of an aria-keyshortcuts value: „Control+C“ → „Ctrl C“, „Meta+C“ → „⌘ C“. */
+/** True on macOS and iOS: „Mod“ means ⌘ there, Ctrl everywhere else. */
+const isApple = () => typeof navigator !== 'undefined' && /Mac|iPhone|iPad/.test(navigator.platform || navigator.userAgent);
+
+/** „Mod+D“ → „Meta+D“ on Apple devices, „Control+D“ elsewhere (aria-keyshortcuts syntax). */
+export const resolveShortcut = (keys: string) => keys.replace(/\bMod\b/g, isApple() ? 'Meta' : 'Control');
+
+/** Visible form of an aria-keyshortcuts value: „Control+C“ → „Ctrl C“, „Meta+C“ → „⌘ C“, „Mod+C“ → per platform. */
 export const formatShortcut = (keys: string) =>
-  keys
+  resolveShortcut(keys)
     .split('+')
     .map((k) => KEY_LABELS[k] ?? k)
     .join(' ');

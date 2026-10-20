@@ -8,7 +8,7 @@ import {
   type ToggleButtonProps as AriaToggleButtonProps,
   type ToolbarProps as AriaToolbarProps,
 } from 'react-aria-components';
-import { Tooltip, TooltipTrigger, formatShortcut } from '../tooltip/Tooltip';
+import { Tooltip, TooltipTrigger, formatShortcut, resolveShortcut } from '../tooltip/Tooltip';
 import { cx } from '../utils/cx';
 import '../button/button.css';
 import './toggle-button.css';
@@ -45,7 +45,7 @@ export function ToggleButton({ children, icon, size, tooltip, shortcut, classNam
   const button = (
     <AriaToggleButton
       {...props}
-      aria-keyshortcuts={shortcut}
+      aria-keyshortcuts={shortcut && resolveShortcut(shortcut)}
       className={cx('medo-button', `medo-button--${s}`, iconOnly && 'medo-button--icon-only', 'medo-toggle', className)}
     >
       {icon && (

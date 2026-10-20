@@ -1,0 +1,141 @@
+import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { Key } from 'react-aria-components';
+import { fn } from 'storybook/test';
+import { Archive, Copy, Download, FileText, Folder, FolderInput, Link2, Pencil, Share2, Trash2 } from 'lucide-react';
+import { Menu, MenuButton, MenuItem, MenuSection, MenuTrigger, Submenu } from './Menu';
+import { Button } from '../button/Button';
+
+const file: React.CSSProperties = {
+  display: 'flex',
+  alignItems: 'center',
+  gap: 'var(--medo-space-3)',
+  maxInlineSize: '28rem',
+  padding: 'var(--medo-space-3) var(--medo-space-4)',
+  border: 'var(--medo-border-width-thin) solid var(--medo-color-border-default)',
+  borderRadius: 'var(--medo-radius-md)',
+  background: 'var(--medo-color-surface-default)',
+};
+
+/** The file actions from the Figma example. */
+function FileActions({ overlay, onAction }: { overlay?: 'auto' | 'popover' | 'sheet'; onAction?: (key: Key) => void }) {
+  return (
+    <Menu title="Q3-Report.pdf" overlay={overlay} onAction={onAction}>
+      <MenuSection aria-label="Edit">
+        <MenuItem id="rename" icon={<Pencil />} shortcut="F2">
+          Rename
+        </MenuItem>
+        <MenuItem id="duplicate" icon={<Copy />} shortcut="Mod+D">
+          Duplicate
+        </MenuItem>
+        <Submenu label="Move to…" icon={<FolderInput />}>
+          <MenuItem id="move-reports" icon={<Folder />}>
+            Reports
+          </MenuItem>
+          <MenuItem id="move-finance" icon={<Folder />}>
+            Finance
+          </MenuItem>
+          <MenuItem id="move-archive" icon={<Folder />}>
+            Archive
+          </MenuItem>
+        </Submenu>
+      </MenuSection>
+      <MenuSection aria-label="Share">
+        <MenuItem id="share" icon={<Share2 />}>
+          Share…
+        </MenuItem>
+        <MenuItem id="link" icon={<Link2 />} shortcut="Mod+Shift+C">
+          Copy link
+        </MenuItem>
+        <MenuItem id="download" icon={<Download />}>
+          Download
+        </MenuItem>
+        <MenuItem id="archive" icon={<Archive />} isDisabled>
+          Archive
+        </MenuItem>
+      </MenuSection>
+      <MenuSection aria-label="Danger">
+        <MenuItem id="delete" icon={<Trash2 />} variant="danger">
+          Delete…
+        </MenuItem>
+      </MenuSection>
+    </Menu>
+  );
+}
+
+const meta = {
+  title: 'Components/Menu',
+  component: Menu,
+  tags: ['autodocs'],
+  args: { overlay: 'popover', onAction: fn() },
+  argTypes: {
+    overlay: { control: 'inline-radio', options: ['auto', 'popover', 'sheet'], description: 'auto: popover on desktop, Bottom Sheet below 640 px.' },
+    title: { control: false },
+    onAction: { control: false },
+    children: { control: false },
+    items: { control: false },
+  },
+  parameters: {
+    medo: { code: 'C18', subtitle: 'A list of actions that opens from a trigger. Popover on desktop, bottom sheet on mobile.', figma: '195:122' },
+    docs: {
+      description: {
+        component:
+          'Built on React Aria Menu: arrow keys move, Enter runs the item, Esc closes and focus returns to the trigger, letters jump. ' +
+          'Every item has an icon and a verb label; shortcuts on desktop (`Mod` = ⌘ on Apple, Ctrl elsewhere); danger items last in their own group. ' +
+          'One submenu level: to the side on desktop, a second view with a back button on mobile. No checkmarks – values belong in Select, views in Toggle Button. ' +
+          'Styles: `medo-menu-popover`, `medo-menu`, `medo-menu-item`, `medo-menu-item--danger`.',
+      },
+    },
+  },
+  render: (args) => (
+    <div style={file}>
+      <FileText aria-hidden="true" style={{ inlineSize: 20, blockSize: 20, color: 'var(--medo-color-text-secondary)' }} />
+      <div style={{ flex: 1, display: 'grid' }}>
+        <span style={{ font: 'var(--medo-typography-label-md)' }}>Q3-Report.pdf</span>
+        <span style={{ font: 'var(--medo-typography-caption)', color: 'var(--medo-color-text-secondary)' }}>PDF · 2.4 MB · edited 2 h ago</span>
+      </div>
+      <MenuTrigger>
+        <MenuButton aria-label="More actions for Q3-Report.pdf" />
+        <FileActions overlay={args.overlay} onAction={(key) => args.onAction?.(key, {})} />
+      </MenuTrigger>
+    </div>
+  ),
+} satisfies Meta<typeof Menu>;
+
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const Playground: Story = {
+  parameters: { docs: { description: { story: 'Open the menu with the ••• button. The Actions panel shows the chosen item.' } } },
+};
+
+export const TextTrigger: Story = {
+  name: 'Button as trigger',
+  parameters: { docs: { description: { story: 'Any button can open a menu, e.g. a split or „More“ button.' } } },
+  render: () => (
+    <MenuTrigger>
+      <Button variant="secondary">Export</Button>
+      <Menu overlay="popover">
+        <MenuItem id="pdf" icon={<FileText />}>
+          Export as PDF
+        </MenuItem>
+        <MenuItem id="csv" icon={<Download />}>
+          Export as CSV
+        </MenuItem>
+      </Menu>
+    </MenuTrigger>
+  ),
+};
+
+export const Mobile: Story = {
+  name: 'Mobile (below 640 px)',
+  args: { overlay: 'sheet' },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'Below 640 px (`overlay="auto"`) the menu opens as a Bottom Sheet: lg items (48 px), no shortcuts, the title names the object. ' +
+          'Tapping an item runs it and closes the sheet; a submenu replaces the list with a back button. Forced here with `overlay="sheet"`.',
+      },
+    },
+  },
+};

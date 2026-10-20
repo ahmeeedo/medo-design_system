@@ -133,6 +133,8 @@
 }
 
 .medo-sheet__title {
+  flex: 1;
+  min-inline-size: 0;
   margin: 0;
   font: var(--medo-typography-heading-sm);
   color: var(--medo-color-text-primary);
@@ -166,6 +168,11 @@
   margin: 0;
   font: var(--medo-typography-caption);
   color: var(--medo-color-text-secondary);
+}
+
+/* With a back button the header starts closer to the edge. */
+.medo-sheet__header:has(> .medo-button:first-child) {
+  padding-inline-start: var(--medo-space-1);
 }
 
 /* ---------- Select sheet ---------- */

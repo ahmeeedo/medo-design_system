@@ -1,6 +1,6 @@
 import { useContext, useId, useRef, type PointerEvent, type ReactNode } from 'react';
 import { Dialog, Heading, Modal, ModalOverlay, OverlayTriggerStateContext, Popover, type ModalOverlayProps } from 'react-aria-components';
-import { X } from 'lucide-react';
+import { ChevronLeft, X } from 'lucide-react';
 import { IconButton } from '../icon-button/IconButton';
 import { cx } from '../utils/cx';
 import './bottom-sheet.css';
@@ -16,6 +16,10 @@ export interface BottomSheetProps extends Omit<ModalOverlayProps, 'children' | '
   height?: 'content' | 'full';
   /** Accessible name of the close button. */
   closeLabel?: string;
+  /** Shows a back button before the title (second view, e.g. a submenu). */
+  onBack?: () => void;
+  /** Accessible name of the back button. */
+  backLabel?: string;
   className?: string;
 }
 
@@ -35,6 +39,8 @@ export function BottomSheet({
   footer,
   height = 'content',
   closeLabel = 'Close',
+  onBack,
+  backLabel = 'Back',
   isDismissable = true,
   className,
   ...props
@@ -48,6 +54,9 @@ export function BottomSheet({
               <SwipeArea onClose={close}>
                 <span className="medo-sheet__handle" aria-hidden="true" />
                 <div className="medo-sheet__header">
+                  {onBack && (
+                    <IconButton variant="ghost" size="lg" icon={<ChevronLeft />} aria-label={backLabel} tooltip={false} onPress={onBack} />
+                  )}
                   <Heading slot="title" className="medo-sheet__title">
                     {title}
                   </Heading>

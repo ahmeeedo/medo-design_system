@@ -1,0 +1,174 @@
+/**
+ * Menu – med.o Design System (Figma: C18 Menu)
+ *
+ * A list of actions that opens from a trigger. Popover on desktop, Bottom Sheet below 640 px.
+ *   <div class="medo-menu-popover">                         surface/raised, border, elevation/2, radius/md
+ *     <div class="medo-menu medo-menu--md" role="menu">     padding + gap 4
+ *       <section class="medo-menu__section">
+ *         <header class="medo-listbox__header">Group</header>
+ *         <div class="medo-menu-item [medo-menu-item--danger]" role="menuitem">
+ *           <span class="medo-menu-item__icon">…</span>
+ *           <span class="medo-menu-item__label">Duplicate</span>
+ *           <kbd class="medo-menu-item__shortcut">⌘ D</kbd>    (desktop)
+ *           <span class="medo-menu-item__chevron">›</span>     (submenu)
+ *         </div>
+ *       </section>
+ *     </div>
+ *   </div>
+ * State contract: [data-focused] [data-hovered] [data-pressed] [data-disabled] [data-has-submenu] [data-open]
+ */
+
+.medo-menu-popover {
+  box-sizing: border-box;
+  min-inline-size: 11.25rem; /* 180 */
+  inline-size: 15rem; /* 240 */
+  max-inline-size: min(20rem, calc(100vw - 2 * var(--medo-space-4))); /* 320 */
+  border: var(--medo-border-width-thin) solid var(--medo-color-border-default);
+  border-radius: var(--medo-radius-md);
+  background-color: var(--medo-color-surface-raised);
+  box-shadow: var(--medo-shadow-elevation-2);
+  z-index: var(--medo-layer-dropdown);
+  outline: none;
+  overflow: auto;
+}
+
+.medo-menu-popover[data-entering] {
+  animation: medo-menu-in var(--medo-motion-duration-fast) var(--medo-motion-easing-standard);
+}
+.medo-menu-popover[data-exiting] {
+  animation: medo-menu-in var(--medo-motion-duration-fast) var(--medo-motion-easing-standard) reverse;
+}
+
+@keyframes medo-menu-in {
+  from {
+    opacity: 0;
+  }
+}
+
+.medo-menu {
+  --_pad: var(--medo-space-2);
+  --_label: var(--medo-typography-body-sm);
+  --_icon: var(--medo-size-icon-sm);
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--medo-space-1);
+  padding: var(--medo-space-1);
+  outline: none;
+}
+
+.medo-menu--lg {
+  --_pad: var(--medo-space-3);
+  --_label: var(--medo-typography-body-md);
+  --_icon: var(--medo-size-icon-md);
+}
+
+.medo-menu__section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--medo-space-1);
+}
+
+/* Divider between groups (same as the Listbox). */
+.medo-menu__section + .medo-menu__section,
+.medo-menu__section + .medo-menu-item,
+.medo-menu-item + .medo-menu__section {
+  margin-block-start: var(--medo-space-1);
+  padding-block-start: var(--medo-space-1);
+  border-block-start: var(--medo-border-width-thin) solid var(--medo-color-border-default);
+}
+
+/* ---------- Item ---------- */
+
+.medo-menu-item {
+  --_fg: var(--medo-color-text-primary);
+  --_icon-fg: var(--medo-color-text-secondary);
+  --_hover: var(--medo-color-state-hover);
+
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: var(--medo-space-2);
+  padding: var(--_pad);
+  border-radius: var(--medo-radius-sm);
+  font: var(--_label);
+  color: var(--_fg);
+  cursor: pointer;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Hover and keyboard focus look the same: the menu moves focus with the arrow keys. */
+.medo-menu-item:is([data-focused], [data-hovered], [data-open]) {
+  background-color: var(--_hover);
+}
+
+.medo-menu-item[data-pressed] {
+  background-color: var(--medo-color-state-pressed);
+}
+
+.medo-menu-item--danger {
+  --_fg: var(--medo-color-feedback-danger-text);
+  --_icon-fg: var(--medo-color-feedback-danger-text);
+  --_hover: var(--medo-color-feedback-danger-surface);
+}
+
+.medo-menu-item--danger[data-pressed] {
+  background-image: linear-gradient(var(--medo-color-state-pressed), var(--medo-color-state-pressed));
+  background-color: var(--medo-color-feedback-danger-surface);
+}
+
+.medo-menu-item[data-disabled] {
+  --_fg: var(--medo-color-text-disabled);
+  --_icon-fg: var(--medo-color-text-disabled);
+  background: none;
+  cursor: not-allowed;
+}
+
+.medo-menu-item__icon,
+.medo-menu-item__chevron {
+  display: inline-flex;
+  flex: none;
+  inline-size: var(--_icon);
+  block-size: var(--_icon);
+  color: var(--_icon-fg);
+}
+
+.medo-menu-item__icon > svg,
+.medo-menu-item__chevron > svg {
+  inline-size: 100%;
+  block-size: 100%;
+}
+
+.medo-menu-item__label {
+  flex: 1;
+  min-inline-size: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.medo-menu-item__shortcut {
+  flex: none;
+  font: var(--medo-typography-caption);
+  color: var(--medo-color-text-secondary);
+}
+
+.medo-menu-item[data-disabled] .medo-menu-item__shortcut {
+  color: var(--medo-color-text-disabled);
+}
+
+@media (forced-colors: active) {
+  .medo-menu-item:is([data-focused], [data-hovered]) {
+    forced-color-adjust: none;
+    background-color: Highlight;
+    color: HighlightText;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .medo-menu-popover[data-entering],
+  .medo-menu-popover[data-exiting] {
+    animation: none;
+  }
+}
