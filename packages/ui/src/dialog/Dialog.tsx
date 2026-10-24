@@ -47,8 +47,8 @@ function useOpenState({ isOpen, onOpenChange }: OpenProps) {
   return [open, setOpen] as const;
 }
 
-/** Main action button: runs the action and closes; a promise shows the pending state. */
-function ActionButton({ action, close, size, variant }: { action: DialogAction; close: () => void; size: ButtonSize; variant: 'primary' | 'danger' }) {
+/** Main action button: runs the action and closes; a promise shows the pending state. Shared with Popover (internal, not exported from the package). */
+export function ActionButton({ action, close, size, variant }: { action: DialogAction; close: () => void; size: ButtonSize; variant: 'primary' | 'danger' }) {
   const [pending, setPending] = useState(false);
   const run = async () => {
     const result = action.onAction?.();
@@ -348,7 +348,7 @@ function SheetContent({ description, children }: { description: ReactNode; child
 
 /** Figma: focus starts in the first field, else on the first button. */
 const FIELDS = 'input, textarea, select, [role="combobox"], button[aria-haspopup="listbox"]';
-function useInitialFocus(ref: React.RefObject<HTMLElement | null>) {
+export function useInitialFocus(ref: React.RefObject<HTMLElement | null>) {
   useEffect(() => {
     const root = ref.current;
     if (!root) return;

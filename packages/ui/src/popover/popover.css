@@ -1,0 +1,163 @@
+/**
+ * Popover – med.o Design System (Figma: C23 Popover, Toggletip)
+ *
+ * Small non-modal panel anchored to its trigger. Same surface as Menu and Listbox.
+ *   <div class="medo-popover medo-popover--md">                   surface/raised, border, elevation/2, radius/md
+ *     <section class="medo-popover__dialog" role="dialog">
+ *       <div class="medo-popover__header">  title (label/md) · close X  </div>   optional
+ *       <div class="medo-popover__body">…scrolls…</div>
+ *       <div class="medo-popover__footer">  Button group (sm)  </div>             optional
+ *     </section>
+ *   </div>
+ * Toggletip: .medo-popover.medo-toggletip with .medo-toggletip__text + link.
+ * Sizes: sm 240 · md 320 · lg 400 · auto (hugs, no padding). Below 640 px popovers open as Bottom Sheet.
+ * State contract: [data-entering] [data-exiting] [data-placement] (React Aria).
+ */
+
+.medo-popover {
+  --_width: 20rem; /* md 320 */
+  --_pad: var(--medo-space-4);
+
+  box-sizing: border-box;
+  display: flex;
+  inline-size: min(var(--_width), 100vw - 2 * var(--medo-space-4));
+  border: var(--medo-border-width-thin) solid var(--medo-color-border-default);
+  border-radius: var(--medo-radius-md);
+  background-color: var(--medo-color-surface-raised);
+  box-shadow: var(--medo-shadow-elevation-2);
+  color: var(--medo-color-text-primary);
+  z-index: var(--medo-layer-popover);
+  outline: none;
+  transform-origin: var(--trigger-anchor-point);
+}
+
+.medo-popover--sm {
+  --_width: 15rem; /* 240 */
+}
+.medo-popover--lg {
+  --_width: 25rem; /* 400 */
+}
+.medo-popover--auto {
+  --_pad: 0px;
+  inline-size: auto;
+}
+
+/* Motion: fade + scale 0.96 → 1 from the trigger side; out: fade. */
+.medo-popover[data-entering] {
+  animation: medo-popover-in var(--medo-motion-duration-normal) var(--medo-motion-easing-enter);
+}
+.medo-popover[data-exiting] {
+  animation: medo-popover-fade var(--medo-motion-duration-fast) var(--medo-motion-easing-exit) reverse;
+}
+
+@keyframes medo-popover-in {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+}
+@keyframes medo-popover-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+.medo-popover__dialog {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--medo-space-3);
+  min-block-size: 0;
+  padding: var(--_pad);
+  outline: none;
+}
+
+.medo-popover__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--medo-space-2);
+}
+
+.medo-popover__title {
+  margin: 0;
+  font: var(--medo-typography-label-md);
+  color: var(--medo-color-text-primary);
+}
+
+.medo-popover__body {
+  flex: 1;
+  min-block-size: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+  font: var(--medo-typography-body-sm);
+  /* Room for focus rings of the content, which the scroll container would clip. */
+  margin: calc(-1 * var(--medo-space-1));
+  padding: var(--medo-space-1);
+}
+
+.medo-popover--auto .medo-popover__body {
+  margin: 0;
+  padding: 0;
+}
+
+.medo-popover__footer {
+  padding-block-start: var(--medo-space-1);
+}
+
+/* auto: no padding around the content; header and footer keep an inset of 16. */
+.medo-popover--auto .medo-popover__dialog {
+  gap: 0;
+}
+.medo-popover--auto .medo-popover__header,
+.medo-popover--auto .medo-popover__footer {
+  padding: var(--medo-space-4);
+}
+
+/* ---------- Toggletip ---------- */
+
+.medo-toggletip {
+  --_width: 15rem; /* 240 */
+  --_pad: var(--medo-space-3);
+}
+
+.medo-toggletip__dialog {
+  display: grid;
+  justify-items: start;
+  gap: var(--medo-space-1);
+}
+
+.medo-toggletip__text {
+  font: var(--medo-typography-body-sm);
+  color: var(--medo-color-text-primary);
+}
+
+.medo-toggletip__text > p {
+  margin: 0;
+}
+
+/* ---------- Bottom Sheet (mobile) ---------- */
+
+.medo-popover__sheet-body {
+  padding: var(--medo-space-2) var(--medo-space-4) var(--medo-space-4);
+  font: var(--medo-typography-body-sm);
+}
+
+/* Mobile: the toggletip stays a popover, full width minus 16 px on each side. */
+@media (max-width: 639.98px) {
+  .medo-toggletip {
+    inline-size: calc(100vw - 2 * var(--medo-space-4));
+  }
+}
+
+@media (forced-colors: active) {
+  .medo-popover {
+    border-color: CanvasText;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .medo-popover[data-entering] {
+    animation-name: medo-popover-fade;
+  }
+}

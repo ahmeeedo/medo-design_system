@@ -21,5 +21,6 @@
 @import './alert/alert.css';
 @import './toast/toast.css';
 @import './tabs/tabs.css';
+@import './popover/popover.css';
 @import './card/card.css';
 @import './table/table.css';
