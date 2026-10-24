@@ -19,5 +19,6 @@
 @import './dialog/dialog.css';
 @import './link/link.css';
 @import './alert/alert.css';
+@import './toast/toast.css';
 @import './card/card.css';
 @import './table/table.css';

@@ -1,0 +1,169 @@
+/**
+ * Toast – med.o Design System (Figma: C21 Toast)
+ *
+ * Short, temporary feedback after an action. Inverted surface, no icon, no tone.
+ *   <div class="medo-toast-region" role="region">                desktop bottom right · mobile full width
+ *     <div class="medo-toast" role="alertdialog">                 surface/inverse, radius/md, elevation/3
+ *       <div class="medo-toast__content" role="alert">
+ *         <span class="medo-toast__message">Q3-Report.pdf deleted</span>
+ *       </div>
+ *       <button class="medo-toast__button medo-toast__action">Undo</button>
+ *       <button class="medo-toast__button medo-toast__close">×</button>
+ *     </div>
+ *   </div>
+ * Max 3, newest closest to the edge. Region offset for a bottom navigation: --medo-toast-offset.
+ * State contract: [data-hovered] [data-pressed] [data-focus-visible] (React Aria).
+ */
+
+.medo-toast-region {
+  --medo-toast-offset: 0px;
+
+  position: fixed;
+  inset-block-end: calc(var(--medo-space-6) + var(--medo-toast-offset));
+  inset-inline-end: var(--medo-space-6);
+  z-index: var(--medo-layer-toast);
+  display: flex;
+  /* The queue is newest first: the newest toast sits at the edge, older ones above. */
+  flex-direction: column-reverse;
+  gap: var(--medo-space-2);
+  outline: none;
+}
+
+.medo-toast-region[data-focus-visible] {
+  border-radius: var(--medo-radius-md);
+  box-shadow: var(--medo-shadow-focus-ring);
+}
+
+.medo-toast {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: var(--medo-space-2);
+  inline-size: 25rem; /* 400 */
+  min-inline-size: 18rem; /* 288 */
+  max-inline-size: min(35rem, 100vw - 2 * var(--medo-space-6)); /* 560 */
+  min-block-size: var(--medo-size-control-lg); /* 48 */
+  padding: var(--medo-space-2);
+  padding-inline-start: var(--medo-space-4);
+  border-radius: var(--medo-radius-md);
+  background-color: var(--medo-color-surface-inverse);
+  box-shadow: var(--medo-shadow-elevation-3);
+  color: var(--medo-color-text-inverse);
+  outline: none;
+  view-transition-class: medo-toast;
+}
+
+.medo-toast[data-focus-visible] {
+  box-shadow:
+    var(--medo-shadow-focus-ring),
+    var(--medo-shadow-elevation-3);
+}
+
+.medo-toast__content {
+  flex: 1;
+  min-inline-size: 0;
+}
+
+/* One line; longer text is cut (write shorter). */
+.medo-toast__message {
+  display: block;
+  overflow: hidden;
+  font: var(--medo-typography-body-sm);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ---------- _Toast button (Action · Close) – inverse state layers ---------- */
+
+.medo-toast__button {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  block-size: var(--medo-size-control-sm); /* 32 */
+  border: 0;
+  border-radius: var(--medo-radius-sm);
+  background-color: transparent;
+  color: var(--medo-color-text-inverse);
+  font: var(--medo-typography-label-md);
+  cursor: pointer;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.medo-toast__action {
+  padding-inline: var(--medo-space-3);
+}
+
+.medo-toast__close {
+  inline-size: var(--medo-size-control-sm);
+  color: var(--medo-color-text-inverse-secondary);
+}
+
+.medo-toast__close > svg {
+  inline-size: var(--medo-size-icon-sm);
+  block-size: var(--medo-size-icon-sm);
+}
+
+.medo-toast__button[data-hovered] {
+  background-color: var(--medo-color-state-hover-inverse);
+}
+
+.medo-toast__button[data-pressed] {
+  background-color: var(--medo-color-state-pressed-inverse);
+}
+
+.medo-toast__button[data-focus-visible] {
+  box-shadow: var(--medo-shadow-focus-ring);
+}
+
+/* ---------- Mobile < 640 px: full width, 16 px margin, above the safe area ---------- */
+
+@media (max-width: 639.98px) {
+  .medo-toast-region {
+    inset-inline: var(--medo-space-4);
+    inset-block-end: calc(var(--medo-space-4) + var(--medo-toast-offset) + env(safe-area-inset-bottom));
+  }
+  .medo-toast {
+    inline-size: 100%;
+    min-inline-size: 0;
+    max-inline-size: none;
+  }
+}
+
+/* ---------- Motion (View Transitions): in slide up 8 px + fade 200 ms, out fade 150 ms ---------- */
+
+::view-transition-new(.medo-toast):only-child {
+  animation: medo-toast-in var(--medo-motion-duration-normal) var(--medo-motion-easing-enter);
+}
+::view-transition-old(.medo-toast):only-child {
+  animation: medo-toast-out var(--medo-motion-duration-fast) var(--medo-motion-easing-exit) forwards;
+}
+
+@keyframes medo-toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(var(--medo-space-2));
+  }
+}
+@keyframes medo-toast-out {
+  to {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-new(.medo-toast):only-child {
+    animation-name: medo-toast-out;
+    animation-direction: reverse;
+  }
+}
+
+@media (forced-colors: active) {
+  .medo-toast {
+    border: 1px solid CanvasText;
+  }
+  .medo-toast__button[data-focus-visible] {
+    outline: 2px solid Highlight;
+  }
+}

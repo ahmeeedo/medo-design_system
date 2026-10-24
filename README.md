@@ -150,6 +150,7 @@ DM Sans and DM Mono (SIL Open Font License). Self-host them, for example with `@
 | `Avatar`, `AvatarGroup` | C28 | image → initials → icon · colour from id · status · max 4 + „+N“ |
 | `Card` | C16 | outlined, elevated, filled, brand, plain · compact · horizontal · whole card as link (`href`) |
 | `Alert` | C20 | info, success, warning, danger · inline or banner · actions, dismiss, `announce` |
+| `ToastRegion`, `toast()` | C21 | region once at the root, `toast(message, { action, persistent })` from anywhere · 5 s / 8 s with action / errors until closed · pauses on hover, focus, hidden tab · max 3 · F6, Esc |
 | `StaticTable`, `Table` (+ `TableHeader`, `Column`, `TableBody`, `Row`, `Cell`) | C37 | native table or interactive grid · sorting, selection, compact · numbers right |
 | `Link` | C45 | inline (always underlined) or standalone · external icon · new-tab hint |
 
