@@ -1,0 +1,157 @@
+/**
+ * Empty state – med.o Design System (Figma: C36 Empty state)
+ *
+ *   <section class="medo-empty-state medo-empty-state--page|section|inline" aria-labelledby="…">
+ *     <span class="medo-icon-tile medo-icon-tile--lg medo-icon-tile--neutral" aria-hidden="true"><svg/></span>
+ *     <div class="medo-empty-state__content"><h2 class="medo-empty-state__title">…</h2><p class="medo-empty-state__description">…</p></div>
+ *     <div class="medo-empty-state__actions">…</div>
+ *   </section>
+ * Page 480 · padding 48 · gap 16 · heading/md · body/md · Button md
+ * Section 400 · padding 32 · gap 12 · heading/sm · body/sm · Button sm
+ * Inline 320 · padding 24 · gap 8 · label/md · body/sm · Button sm
+ */
+
+.medo-empty-state {
+  --_max: 30rem; /* 480 */
+  --_gap: var(--medo-space-4);
+
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--_gap);
+  inline-size: 100%;
+  max-inline-size: var(--_max);
+  margin-inline: auto;
+  padding-block: var(--medo-space-12);
+  text-align: center;
+}
+
+.medo-empty-state--section {
+  --_max: 25rem; /* 400 */
+  --_gap: var(--medo-space-3);
+  padding-block: var(--medo-space-8);
+}
+
+.medo-empty-state--inline {
+  --_max: 20rem; /* 320 */
+  --_gap: var(--medo-space-2);
+  padding-block: var(--medo-space-6);
+}
+
+.medo-empty-state__content {
+  display: grid;
+  gap: var(--medo-space-1);
+  inline-size: 100%;
+  overflow-wrap: anywhere;
+}
+
+.medo-empty-state__title {
+  margin: 0;
+  font: var(--medo-typography-heading-md);
+  color: var(--medo-color-text-primary);
+}
+
+.medo-empty-state__description {
+  margin: 0;
+  font: var(--medo-typography-body-md);
+  color: var(--medo-color-text-secondary);
+}
+
+.medo-empty-state--section .medo-empty-state__title {
+  font: var(--medo-typography-heading-sm);
+}
+
+.medo-empty-state--inline .medo-empty-state__title {
+  font: var(--medo-typography-label-md);
+}
+
+.medo-empty-state:is(.medo-empty-state--section, .medo-empty-state--inline) .medo-empty-state__description {
+  font: var(--medo-typography-body-sm);
+}
+
+.medo-empty-state__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--medo-space-2);
+  padding-block-start: var(--medo-space-2);
+}
+
+.medo-empty-state--inline .medo-empty-state__actions {
+  padding-block-start: 0;
+}
+
+/* Illustration slot: 240 × 160 · 160 × 120 · 120 × 88, radius/lg. */
+.medo-empty-state__illustration {
+  display: block;
+  overflow: hidden;
+  inline-size: 15rem;
+  block-size: 10rem;
+  border-radius: var(--medo-radius-lg);
+}
+
+.medo-empty-state--section .medo-empty-state__illustration {
+  inline-size: 10rem;
+  block-size: 7.5rem;
+}
+
+.medo-empty-state--inline .medo-empty-state__illustration {
+  inline-size: 7.5rem;
+  block-size: 5.5rem;
+}
+
+.medo-empty-state__illustration > :is(img, svg) {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: contain;
+}
+
+/* ---------- Icon tile (Figma: _Icon tile) – sm 40/20 · md 48/24 · lg 64/32 ---------- */
+
+.medo-icon-tile {
+  --_tile: var(--medo-size-control-lg);
+  --_icon: var(--medo-size-icon-lg);
+
+  display: inline-grid;
+  flex: none;
+  place-items: center;
+  inline-size: var(--_tile);
+  block-size: var(--_tile);
+  border-radius: var(--medo-radius-full);
+  background-color: var(--medo-color-surface-subtle);
+  color: var(--medo-color-text-secondary);
+}
+
+.medo-icon-tile--sm {
+  --_tile: var(--medo-size-control-md);
+  --_icon: var(--medo-size-icon-md);
+}
+
+.medo-icon-tile--lg {
+  --_tile: var(--medo-space-16);
+  --_icon: var(--medo-space-8);
+}
+
+.medo-icon-tile > svg {
+  inline-size: var(--_icon);
+  block-size: var(--_icon);
+}
+
+.medo-icon-tile--danger {
+  background-color: var(--medo-color-feedback-danger-surface);
+  color: var(--medo-color-feedback-danger-text);
+}
+
+.medo-icon-tile--success {
+  background-color: var(--medo-color-feedback-success-surface);
+  color: var(--medo-color-feedback-success-text);
+}
+
+@media (forced-colors: active) {
+  .medo-icon-tile {
+    outline: 1px solid CanvasText;
+  }
+}

@@ -76,6 +76,8 @@ export { List, ListItem, DescriptionList, DescriptionItem } from './list/List';
 export type { ListProps, ListItemProps, ListType, DescriptionListProps, DescriptionItemProps } from './list/List';
 export { ListView, ListRow, ListRowIcon } from './list-view/ListView';
 export type { ListViewProps, ListRowProps } from './list-view/ListView';
+export { EmptyState } from './empty-state/EmptyState';
+export type { EmptyStateProps, EmptyStateAction, EmptyStateType, EmptyStateSize } from './empty-state/EmptyState';
 export { Link } from './link/Link';
 export type { LinkProps } from './link/Link';
 export { Alert } from './alert/Alert';

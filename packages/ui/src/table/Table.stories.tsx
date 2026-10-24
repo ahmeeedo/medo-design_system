@@ -4,7 +4,7 @@ import type { Selection, SortDescriptor } from 'react-aria-components';
 import { Cell, Column, Row, StaticTable, Table, TableBody, TableHeader } from './Table';
 import { Badge, type BadgeTone } from '../badge/Badge';
 import { Skeleton } from '../progress/Progress';
-import { Button } from '../button/Button';
+import { EmptyState } from '../empty-state/EmptyState';
 import { LightDark } from '../story-helpers';
 
 type Invoice = { id: string; customer: string; status: 'Paid' | 'Open' | 'Overdue'; date: string; amount: number };
@@ -152,7 +152,9 @@ export const Static: Story = {
 };
 
 export const Sortable: Story = {
-  parameters: { docs: { description: { story: 'Click a header or press Enter on it: ascending, then descending. Unsorted sortable columns show the arrow on hover and focus.' } } },
+  parameters: {
+    docs: { description: { story: 'Click a header or press Enter on it: ascending, then descending. Unsorted sortable columns show the arrow on hover and focus.' } },
+  },
   render: () => <InvoiceTable />,
 };
 
@@ -195,7 +197,7 @@ export const Loading: Story = {
 };
 
 export const Empty: Story = {
-  parameters: { docs: { description: { story: 'The header stays; the body says why it is empty and what to do.' } } },
+  parameters: { docs: { description: { story: 'The header stays; the body shows an inline Empty state that says why it is empty and what to do.' } } },
   render: () => (
     <Table aria-label="Invoices">
       <TableHeader>
@@ -205,12 +207,13 @@ export const Empty: Story = {
       </TableHeader>
       <TableBody
         renderEmptyState={() => (
-          <div className="medo-table__empty">
-            <p style={{ margin: '0 0 var(--medo-space-3)' }}>No invoices match your filters.</p>
-            <Button variant="secondary" size="sm">
-              Clear filters
-            </Button>
-          </div>
+          <EmptyState
+            type="no-results"
+            size="inline"
+            title="No invoices match your filters"
+            description="Remove some filters or change the date range."
+            action={{ label: 'Clear filters' }}
+          />
         )}
       >
         {[]}
