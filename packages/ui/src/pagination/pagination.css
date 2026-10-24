@@ -1,0 +1,132 @@
+/**
+ * Pagination – med.o Design System (Figma: C35 Pagination)
+ *
+ *   <nav class="medo-pagination medo-pagination--full" aria-label="Pagination">
+ *     <div class="medo-pagination__info"><p class="medo-pagination__summary" role="status">81–100 of 380</p> [Rows per page]</div>
+ *     <ul class="medo-pagination__pages">
+ *       <li><button class="medo-button medo-button--ghost medo-button--md medo-page-item" aria-current="page">5</button></li> …
+ *     </ul>
+ *   </nav>
+ * Page items reuse the ghost button (state layers, inset focus ring): min width = height, padding space/2.
+ * Current page: action/selected (-hover/-pressed), text/brand, label strong – calm, never the primary colour.
+ */
+
+.medo-pagination {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--medo-space-4) var(--medo-space-6);
+}
+
+.medo-pagination__info {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--medo-space-2) var(--medo-space-6);
+}
+
+.medo-pagination__summary {
+  margin: 0;
+  font: var(--medo-typography-body-sm);
+  font-variant-numeric: tabular-nums;
+  color: var(--medo-color-text-secondary);
+  white-space: nowrap;
+}
+
+/* Rows per page: label on the left, Select sm 80 wide. */
+.medo-pagination__size {
+  flex-direction: row;
+  align-items: center;
+  gap: var(--medo-space-2);
+}
+
+.medo-pagination__size .medo-field__label {
+  padding-inline-start: 0;
+  font: var(--medo-typography-body-sm);
+  color: var(--medo-color-text-secondary);
+  white-space: nowrap;
+}
+
+.medo-pagination__size .medo-select__field {
+  inline-size: 5rem;
+}
+
+.medo-pagination__size .medo-field__footer {
+  display: none;
+}
+
+.medo-pagination__pages {
+  display: flex;
+  align-items: center;
+  gap: var(--medo-space-1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* ---------- Page item (Figma: _Page item) – md 40 · lg 48 ---------- */
+
+.medo-page-item {
+  min-inline-size: var(--medo-size-control-md);
+  padding-inline: var(--medo-space-2);
+  font-variant-numeric: tabular-nums;
+}
+
+.medo-page-item--lg {
+  min-inline-size: var(--medo-size-control-lg);
+  font: var(--medo-typography-label-lg);
+}
+
+.medo-page-item[aria-current='page'] {
+  --_bg: var(--medo-color-action-selected);
+  --_bg-hover: var(--medo-color-action-selected-hover);
+  --_bg-pressed: var(--medo-color-action-selected-pressed);
+  --_fg: var(--medo-color-text-brand);
+  font: var(--medo-typography-label-md-strong);
+}
+
+.medo-page-item--lg[aria-current='page'] {
+  font: var(--medo-typography-label-lg-strong);
+}
+
+.medo-page-item--ellipsis {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  block-size: var(--medo-size-control-md);
+  font: var(--medo-typography-label-md);
+  color: var(--medo-color-text-secondary);
+  user-select: none;
+}
+
+.medo-page-item--ellipsis.medo-page-item--lg {
+  block-size: var(--medo-size-control-lg);
+}
+
+/* ---------- Compact (< 640 px): ‹ Page 5 of 19 › full width ---------- */
+
+.medo-pagination--compact {
+  flex-wrap: nowrap;
+  inline-size: 100%;
+}
+
+.medo-pagination__compact-label {
+  margin: 0;
+  font: var(--medo-typography-label-lg);
+  font-variant-numeric: tabular-nums;
+  color: var(--medo-color-text-primary);
+  text-align: center;
+}
+
+/* Disabled previous / next: the ghost button has no fill; links keep the button look. */
+.medo-pagination a.medo-button[data-disabled] {
+  pointer-events: none;
+}
+
+@media (forced-colors: active) {
+  .medo-page-item[aria-current='page'] {
+    outline: 2px solid Highlight;
+    outline-offset: -2px;
+  }
+}

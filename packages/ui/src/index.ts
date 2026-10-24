@@ -78,6 +78,8 @@ export { ListView, ListRow, ListRowIcon } from './list-view/ListView';
 export type { ListViewProps, ListRowProps } from './list-view/ListView';
 export { EmptyState } from './empty-state/EmptyState';
 export type { EmptyStateProps, EmptyStateAction, EmptyStateType, EmptyStateSize } from './empty-state/EmptyState';
+export { Pagination } from './pagination/Pagination';
+export type { PaginationProps } from './pagination/Pagination';
 export { Link } from './link/Link';
 export type { LinkProps } from './link/Link';
 export { Alert } from './alert/Alert';
