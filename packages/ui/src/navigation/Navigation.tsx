@@ -19,6 +19,7 @@ import { IconButton } from '../icon-button/IconButton';
 import { Tooltip, TooltipTrigger } from '../tooltip/Tooltip';
 import { cx } from '../utils/cx';
 import { useMediaQuery } from '../utils/useMediaQuery';
+import { Drawer } from '../drawer/Drawer';
 import './navigation.css';
 
 /*
@@ -30,8 +31,8 @@ import './navigation.css';
 export type NavVariant = 'header' | 'sidebar' | 'rail' | 'sheet';
 const NavVariantContext = createContext<NavVariant>('sidebar');
 
-/** Side navigation state, for groups in the rail (they expand the sidebar). */
-const SideNavContext = createContext<{ expand: () => void } | null>(null);
+/** Side navigation: groups in the rail expand it (with the group open); links in the tablet drawer close it. */
+const SideNavContext = createContext<{ expand: (group?: string) => void; openGroup?: string; onNavigate?: () => void } | null>(null);
 
 const TABLET_QUERY = '(min-width: 640px) and (max-width: 1023.98px)';
 const SITE_MENU_QUERY = '(max-width: 767.98px)';
@@ -45,18 +46,21 @@ export interface NavItemProps extends Omit<AriaLinkProps, 'children' | 'classNam
   icon?: ReactNode;
   /** The current page (exactly one). Marked with aria-current="page" and action/selected. */
   isCurrent?: boolean;
-  /** Items waiting (Badge count, neutral). In the rail it turns into a dot. */
+  /** Number in the item (Badge count, neutral). */
   count?: number;
-  /** Screen-reader text of the count („3 unread“). */
+  /** Screen-reader text of the count („3 unread“, „12 projects“). */
   countLabel?: string;
+  /** The count is new or unread: in the rail it turns into a dot. Plain totals („12 projects“) are hidden there. */
+  unread?: boolean;
 }
 
 /**
  * One navigation link (Figma: Nav item). Built on React Aria Link, so client-side routing works
  * with any router through RouterProvider. The container decides the form (header, sidebar, rail, sheet).
  */
-export function NavItem({ children, icon, isCurrent, count, countLabel, ...props }: NavItemProps) {
+export function NavItem({ children, icon, isCurrent, count, countLabel, unread, ...props }: NavItemProps) {
   const variant = useContext(NavVariantContext);
+  const sideNav = useContext(SideNavContext);
   const rail = variant === 'rail';
   const content = (
     <>
@@ -68,13 +72,21 @@ export function NavItem({ children, icon, isCurrent, count, countLabel, ...props
       <span className={rail ? 'medo-visually-hidden' : 'medo-nav-item__label'}>{children}</span>
       {count !== undefined &&
         (rail ? (
-          count > 0 && <BadgeDot tone="danger" label={countLabel ?? String(count)} className="medo-nav-item__dot" />
+          unread && count > 0 && <BadgeDot tone="danger" label={countLabel ?? String(count)} className="medo-nav-item__dot" />
         ) : (
           <BadgeCount count={count} tone="neutral" size="sm" label={countLabel ?? String(count)} />
         ))}
     </>
   );
-  const linkProps = { ...props, 'aria-current': isCurrent ? ('page' as const) : undefined, className: cx('medo-nav-item', `medo-nav-item--${variant}`) };
+  const linkProps = {
+    ...props,
+    onPress: (e: PressEvent) => {
+      props.onPress?.(e);
+      sideNav?.onNavigate?.();
+    },
+    'aria-current': isCurrent ? ('page' as const) : undefined,
+    className: cx('medo-nav-item', `medo-nav-item--${variant}`),
+  };
   return (
     <li className="medo-nav__entry">
       {rail ? (
@@ -123,7 +135,7 @@ export function NavGroup({ label, icon, children, defaultOpen }: NavGroupProps) 
   const variant = useContext(NavVariantContext);
   const sideNav = useContext(SideNavContext);
   const hasCurrent = containsCurrent(children);
-  const [open, setOpen] = useState(defaultOpen ?? (variant !== 'header' && hasCurrent));
+  const [open, setOpen] = useState(defaultOpen ?? (variant !== 'header' && (hasCurrent || sideNav?.openGroup === label)));
   const panelId = useId();
   const itemRef = useRef<HTMLLIElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
@@ -160,7 +172,7 @@ export function NavGroup({ label, icon, children, defaultOpen }: NavGroupProps) 
             data-current={hasCurrent || undefined}
             onPress={() => {
               setOpen(true);
-              sideNav?.expand();
+              sideNav?.expand(label);
             }}
           >
             <span className="medo-nav-item__icon" aria-hidden="true">
@@ -444,12 +456,14 @@ export interface SideNavProps {
   'aria-label'?: string;
   collapseLabel?: string;
   expandLabel?: string;
+  /** Close button of the tablet drawer. */
+  closeLabel?: string;
 }
 
 /**
  * Side navigation for apps (Figma: Side navigation): 256 px with icons, counts, sections and groups;
- * collapses to a 64 px rail with tooltips. 640–1023 px: always a rail, expanding as an overlay.
- * Below 640 px it is hidden – use the BottomTabBar there.
+ * collapses to a 64 px rail with tooltips. 640–1023 px: always a rail; expanding opens the full navigation
+ * as a Drawer on the left (Figma: Drawer, navigation). Below 640 px it is hidden – use the BottomTabBar there.
  */
 export function SideNav({
   logo,
@@ -462,33 +476,26 @@ export function SideNav({
   'aria-label': label = 'App',
   collapseLabel = 'Collapse navigation',
   expandLabel = 'Expand navigation',
+  closeLabel = 'Close',
 }: SideNavProps) {
   const [ownCollapsed, setOwnCollapsed] = useState(defaultCollapsed);
   const tablet = useMediaQuery(TABLET_QUERY);
-  const [overlay, setOverlay] = useState(false);
-  const panelRef = useRef<HTMLDivElement>(null);
-  const collapsed = tablet ? !overlay : (isCollapsed ?? ownCollapsed);
+  const [drawer, setDrawer] = useState(false);
+  const [openGroup, setOpenGroup] = useState<string>();
+  const collapsed = tablet || (isCollapsed ?? ownCollapsed);
 
-  const setCollapsed = (next: boolean) => {
-    if (tablet) return setOverlay(!next);
-    if (isCollapsed === undefined) setOwnCollapsed(next);
-    onCollapsedChange?.(next);
+  const expand = (group?: string) => {
+    setOpenGroup(group);
+    if (tablet) return setDrawer(true);
+    if (isCollapsed === undefined) setOwnCollapsed(false);
+    onCollapsedChange?.(false);
   };
-
-  // Tablet overlay: Esc or a click outside closes it.
+  const collapse = () => {
+    if (isCollapsed === undefined) setOwnCollapsed(true);
+    onCollapsedChange?.(true);
+  };
   useEffect(() => {
-    if (!overlay) return;
-    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setOverlay(false);
-    const onPointer = (e: PointerEvent) => !panelRef.current?.contains(e.target as Node) && setOverlay(false);
-    document.addEventListener('keydown', onKey);
-    document.addEventListener('pointerdown', onPointer);
-    return () => {
-      document.removeEventListener('keydown', onKey);
-      document.removeEventListener('pointerdown', onPointer);
-    };
-  }, [overlay]);
-  useEffect(() => {
-    if (!tablet) setOverlay(false);
+    if (!tablet) setDrawer(false);
   }, [tablet]);
 
   const toggle = (
@@ -497,20 +504,20 @@ export function SideNav({
       size="sm"
       icon={<PanelLeft />}
       aria-label={collapsed ? expandLabel : collapseLabel}
-      aria-expanded={!collapsed}
-      onPress={() => setCollapsed(!collapsed)}
+      aria-expanded={tablet ? drawer : !collapsed}
+      onPress={() => (collapsed ? expand() : collapse())}
     />
   );
 
   return (
-    <aside className={cx('medo-sidenav', collapsed && 'medo-sidenav--collapsed', tablet && overlay && 'medo-sidenav--overlay')}>
-      <div ref={panelRef} className="medo-sidenav__panel">
+    <aside className={cx('medo-sidenav', collapsed && 'medo-sidenav--collapsed')}>
+      <div className="medo-sidenav__panel">
         <div className="medo-sidenav__top">
           <div className="medo-sidenav__logo">{collapsed ? logoMark : logo}</div>
           {!collapsed && toggle}
         </div>
         <nav aria-label={label} className="medo-sidenav__nav">
-          <SideNavContext.Provider value={{ expand: () => setCollapsed(false) }}>
+          <SideNavContext.Provider value={{ expand, openGroup }}>
             <NavVariantContext.Provider value={collapsed ? 'rail' : 'sidebar'}>
               <ul className="medo-nav__list">{children}</ul>
             </NavVariantContext.Provider>
@@ -531,6 +538,18 @@ export function SideNav({
           )}
         </div>
       </div>
+      {tablet && (
+        // Tablet: the full navigation as a Drawer on the left. Choosing a page closes it.
+        <Drawer side="left" size="sm" title={logo} aria-label={label} closeLabel={closeLabel} isOpen={drawer} onOpenChange={setDrawer}>
+          <nav aria-label={label}>
+            <SideNavContext.Provider value={{ expand, openGroup, onNavigate: () => setDrawer(false) }}>
+              <NavVariantContext.Provider value="sidebar">
+                <ul className="medo-nav__list">{children}</ul>
+              </NavVariantContext.Provider>
+            </SideNavContext.Provider>
+          </nav>
+        </Drawer>
+      )}
     </aside>
   );
 }

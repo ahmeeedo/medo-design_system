@@ -1,0 +1,155 @@
+/**
+ * Drawer – med.o Design System (Figma: C25 Drawer)
+ *
+ * Modal panel from the side, full height. Same surface and behaviour as the Dialog.
+ *   <div class="medo-drawer-overlay medo-drawer-overlay--right">     scrim, overlay/scrim
+ *     <div class="medo-drawer medo-drawer--right medo-drawer--sm">  surface/raised, elevation/4, border + radius/lg on the free side
+ *       <section class="medo-drawer__dialog" role="dialog">
+ *         <div class="medo-drawer__header">  title (heading/md) · close  </div>
+ *         <div class="medo-drawer__body">…scrolls…</div>
+ *         <div class="medo-drawer__footer">  Button group  </div>   optional
+ *       </section>
+ *     </div>
+ *   </div>
+ * Sizes: sm 320 · md 400 · lg 560 · max viewport − 56 (the scrim strip shows a tap outside closes).
+ * State contract: [data-entering] [data-exiting] (React Aria), [data-dragging] while swiped.
+ */
+
+.medo-drawer-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: var(--medo-layer-modal);
+  display: flex;
+  justify-content: flex-end;
+  background-color: var(--medo-color-overlay-scrim);
+}
+
+.medo-drawer-overlay--left {
+  justify-content: flex-start;
+}
+
+.medo-drawer {
+  --_width: 20rem; /* sm 320 */
+  --_from: 100%;
+
+  box-sizing: border-box;
+  display: flex;
+  inline-size: min(var(--_width), 100vw - (var(--medo-space-12) + var(--medo-space-2))); /* viewport − 56 */
+  block-size: 100%;
+  border-start-start-radius: var(--medo-radius-lg);
+  border-end-start-radius: var(--medo-radius-lg);
+  border-inline-start: var(--medo-border-width-thin) solid var(--medo-color-border-default);
+  background-color: var(--medo-color-surface-raised);
+  box-shadow: var(--medo-shadow-elevation-4);
+  color: var(--medo-color-text-primary);
+  outline: none;
+  touch-action: pan-y;
+  /* Snaps back when a swipe is too short. */
+  transition: transform var(--medo-motion-duration-fast) var(--medo-motion-easing-standard);
+}
+
+/* Left: radius and border on the free (right) side. */
+.medo-drawer--left {
+  --_from: -100%;
+  border-radius: 0;
+  border-inline-start: 0;
+  border-start-end-radius: var(--medo-radius-lg);
+  border-end-end-radius: var(--medo-radius-lg);
+  border-inline-end: var(--medo-border-width-thin) solid var(--medo-color-border-default);
+}
+
+.medo-drawer--md {
+  --_width: 25rem; /* 400 */
+}
+.medo-drawer--lg {
+  --_width: 35rem; /* 560 */
+}
+
+.medo-drawer[data-dragging] {
+  transition: none;
+}
+
+/* ---------- Motion: slide in from the side, scrim fades ---------- */
+
+.medo-drawer-overlay[data-entering] {
+  animation: medo-drawer-fade var(--medo-motion-duration-normal) var(--medo-motion-easing-enter);
+}
+.medo-drawer-overlay[data-exiting] {
+  animation: medo-drawer-fade var(--medo-motion-duration-normal) var(--medo-motion-easing-exit) reverse;
+}
+.medo-drawer-overlay[data-entering] .medo-drawer {
+  animation: medo-drawer-slide var(--medo-motion-duration-slow) var(--medo-motion-easing-enter);
+}
+.medo-drawer-overlay[data-exiting] .medo-drawer {
+  animation: medo-drawer-slide var(--medo-motion-duration-normal) var(--medo-motion-easing-exit) reverse;
+}
+
+@keyframes medo-drawer-fade {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes medo-drawer-slide {
+  from {
+    transform: translateX(var(--_from));
+  }
+}
+
+/* ---------- Parts ---------- */
+
+.medo-drawer__dialog {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-inline-size: 0;
+  outline: none;
+}
+
+.medo-drawer__header {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--medo-space-2);
+  padding: var(--medo-space-4) var(--medo-space-3) var(--medo-space-4) var(--medo-space-6);
+}
+
+.medo-drawer__title {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  min-inline-size: 0;
+  margin: 0;
+  font: var(--medo-typography-heading-md);
+  color: var(--medo-color-text-primary);
+}
+
+.medo-drawer__body {
+  flex: 1;
+  min-block-size: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+  /* A scroll container starts its own touch-action: keep horizontal drags for the swipe. */
+  touch-action: pan-y;
+  padding: var(--medo-space-2) var(--medo-space-4) var(--medo-space-4);
+  font: var(--medo-typography-body-sm);
+}
+
+.medo-drawer__footer {
+  flex: none;
+  padding: var(--medo-space-4) var(--medo-space-6) var(--medo-space-6);
+  padding-block-end: calc(var(--medo-space-6) + env(safe-area-inset-bottom));
+  border-block-start: var(--medo-border-width-thin) solid var(--medo-color-border-default);
+}
+
+@media (forced-colors: active) {
+  .medo-drawer {
+    border: 1px solid CanvasText;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .medo-drawer-overlay:is([data-entering], [data-exiting]) .medo-drawer {
+    animation-name: medo-drawer-fade;
+  }
+}

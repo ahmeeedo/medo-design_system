@@ -70,6 +70,8 @@ export type {
   TabBarItemProps,
   TabBarMoreProps,
 } from './navigation/Navigation';
+export { Drawer } from './drawer/Drawer';
+export type { DrawerProps } from './drawer/Drawer';
 export { Link } from './link/Link';
 export type { LinkProps } from './link/Link';
 export { Alert } from './alert/Alert';

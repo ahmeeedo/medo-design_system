@@ -92,6 +92,44 @@ function Nested({ children }: { children: ReactNode }) {
 
 /* ---------- Dialog ---------- */
 
+export interface DirtyGuardProps extends OpenProps {
+  isDirty?: boolean;
+  discardText?: Partial<DialogDiscardText>;
+}
+
+/**
+ * Open state with the „Discard changes?“ guard (Figma: protect input). Every way of closing
+ * (X, Cancel, Esc, swipe) goes through onOpenChange; with unsaved input it asks first.
+ * Render `confirmDiscard` inside the dialog. Shared with Drawer (internal).
+ */
+export function useDirtyGuard({ isDirty = false, discardText, ...openProps }: DirtyGuardProps) {
+  const [open, setOpen] = useOpenState(openProps);
+  const [confirm, setConfirm] = useState(false);
+  const onOpenChange = (next: boolean) => {
+    if (next || !isDirty) setOpen(next);
+    else setConfirm(true);
+  };
+  const discard = { ...DISCARD, ...discardText };
+  const confirmDiscard = (
+    <Nested>
+      <AlertDialog
+        tone="warning"
+        isOpen={confirm}
+        onOpenChange={setConfirm}
+        title={discard.title}
+        actionLabel={discard.actionLabel}
+        cancelLabel={discard.cancelLabel}
+        onAction={() => setOpen(false)}
+      >
+        {discard.description}
+      </AlertDialog>
+    </Nested>
+  );
+  /** Deliberate close after saving – does not ask. */
+  const forceClose = () => setOpen(false);
+  return { open, onOpenChange, confirmDiscard, forceClose };
+}
+
 export interface DialogDiscardText {
   title: string;
   description: string;
@@ -104,7 +142,7 @@ export interface DialogProps extends OpenProps {
   title: ReactNode;
   /** One or two sentences under the title. */
   description?: ReactNode;
-  /** Content or form. A function gets `close` (e.g. to close after a form submit). */
+  /** Content or form. A function gets `close`: closes without asking – call it after saving (X, Cancel and Esc still ask when isDirty). */
   children?: ReactNode | ((close: () => void) => ReactNode);
   /** sm 400 (one or two fields) · md 560 · lg 720 (tables, two-column forms). */
   size?: 'sm' | 'md' | 'lg';
@@ -157,33 +195,10 @@ export function Dialog({
   className,
   ...openProps
 }: DialogProps) {
-  const [open, setOpen] = useOpenState(openProps);
-  const [confirm, setConfirm] = useState(false);
+  const { open, onOpenChange, confirmDiscard, forceClose } = useDirtyGuard({ isDirty, discardText, ...openProps });
   const isMobile = useMediaQuery(MOBILE_QUERY);
   const layout = overlay === 'auto' ? (isMobile ? mobile : 'dialog') : overlay;
-
-  // Every way of closing (X, Cancel, Esc, swipe) comes through here.
-  const onOpenChange = (next: boolean) => {
-    if (next || !isDirty) setOpen(next);
-    else setConfirm(true);
-  };
   const content = (close: () => void) => (typeof children === 'function' ? children(close) : children);
-  const discard = { ...DISCARD, ...discardText };
-  const confirmDiscard = (
-    <Nested>
-      <AlertDialog
-        tone="warning"
-        isOpen={confirm}
-        onOpenChange={setConfirm}
-        title={discard.title}
-        actionLabel={discard.actionLabel}
-        cancelLabel={discard.cancelLabel}
-        onAction={() => setOpen(false)}
-      >
-        {discard.description}
-      </AlertDialog>
-    </Nested>
-  );
 
   if (layout === 'sheet') {
     return (
@@ -201,12 +216,12 @@ export function Dialog({
               <Button variant="secondary" size="lg" onPress={close}>
                 {cancelLabel}
               </Button>
-              <ActionButton action={primaryAction} close={close} size="lg" variant="primary" />
+              <ActionButton action={primaryAction} close={forceClose} size="lg" variant="primary" />
             </ButtonGroup>
           ))
         }
       >
-        <SheetContent description={description}>{content}</SheetContent>
+        <SheetContent description={description}>{content(forceClose)}</SheetContent>
         {confirmDiscard}
       </BottomSheet>
     );
@@ -230,6 +245,7 @@ export function Dialog({
           closeLabel={closeLabel}
           showClose={showClose}
           nested={confirmDiscard}
+          forceClose={forceClose}
         >
           {content}
         </DialogFrame>
@@ -244,11 +260,13 @@ interface FrameProps extends Pick<DialogProps, 'title' | 'description' | 'primar
   closeLabel: string;
   /** Rendered inside the dialog (focus scope): the „Discard changes?“ Alert dialog. */
   nested: ReactNode;
+  /** Closes without asking: the main action and the content's `close` (after saving). */
+  forceClose: () => void;
   children: (close: () => void) => ReactNode;
 }
 
 /** Header, scrolling body and footer of the centered and the fullscreen dialog. */
-function DialogFrame({ title, description, fullscreen, primaryAction, cancelLabel, closeLabel, showClose, nested, children }: FrameProps) {
+function DialogFrame({ title, description, fullscreen, primaryAction, cancelLabel, closeLabel, showClose, nested, forceClose, children }: FrameProps) {
   const descriptionId = useId();
   const ref = useRef<HTMLElement>(null);
   const [scrolls, setScrolls] = useState(false);
@@ -267,7 +285,7 @@ function DialogFrame({ title, description, fullscreen, primaryAction, cancelLabe
               <Heading slot="title" className="medo-dialog__bar-title">
                 {title}
               </Heading>
-              {primaryAction ? <ActionButton action={primaryAction} close={close} size="md" variant="primary" /> : <span />}
+              {primaryAction ? <ActionButton action={primaryAction} close={forceClose} size="md" variant="primary" /> : <span />}
             </div>
             <DialogBody onScrollsChange={setScrolls}>
               {description && (
@@ -275,7 +293,7 @@ function DialogFrame({ title, description, fullscreen, primaryAction, cancelLabe
                   {description}
                 </p>
               )}
-              {children(close)}
+              {children(forceClose)}
             </DialogBody>
             {nested}
           </>
@@ -294,14 +312,14 @@ function DialogFrame({ title, description, fullscreen, primaryAction, cancelLabe
               </div>
               {showClose && <IconButton variant="ghost" size="sm" icon={<X />} aria-label={closeLabel} tooltip={false} onPress={close} />}
             </div>
-            <DialogBody onScrollsChange={setScrolls}>{children(close)}</DialogBody>
+            <DialogBody onScrollsChange={setScrolls}>{children(forceClose)}</DialogBody>
             {primaryAction && (
               <div className="medo-dialog__footer">
                 <ButtonGroup>
                   <Button variant="secondary" onPress={close}>
                     {cancelLabel}
                   </Button>
-                  <ActionButton action={primaryAction} close={close} size="md" variant="primary" />
+                  <ActionButton action={primaryAction} close={forceClose} size="md" variant="primary" />
                 </ButtonGroup>
               </div>
             )}
@@ -336,12 +354,11 @@ function DialogBody({ children, onScrollsChange }: { children: ReactNode; onScro
 }
 
 /** Bottom Sheet content: description and the dialog content with the sheet's padding. */
-function SheetContent({ description, children }: { description: ReactNode; children: (close: () => void) => ReactNode }) {
-  const state = useContext(OverlayTriggerStateContext);
+function SheetContent({ description, children }: { description: ReactNode; children: ReactNode }) {
   return (
     <div className="medo-dialog__sheet-body">
       {description && <p className="medo-dialog__description">{description}</p>}
-      {children(() => state?.close())}
+      {children}
     </div>
   );
 }

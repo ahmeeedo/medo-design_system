@@ -145,6 +145,7 @@ DM Sans and DM Mono (SIL Open Font License). Self-host them, for example with `@
 | `BottomSheet` | C10 | modal sheet from the bottom · swipe, scrim, Esc, close button · max 90 % · Select / Combobox use it below 640 px (commit live or on close) |
 | `MenuTrigger`, `Menu`, `MenuItem`, `MenuSection`, `Submenu`, `MenuButton` | C18 | actions from a trigger · icon required · shortcuts (`Mod`) · danger last · one submenu level · mobile: Bottom Sheet with second view |
 | `DialogTrigger`, `Dialog`, `AlertDialog` | C19 | sm/md/lg · only the body scrolls · `primaryAction` (form submit, promise = pending) · `isDirty` asks „Discard changes?“ · Alert dialog: danger/warning/info, focus on Cancel · mobile: fullscreen (forms) or Bottom Sheet |
+| `Drawer` | C25 | modal panel from the side · right (account, filters, details) or left (navigation) · sm/md/lg · free footer (`close`, `cancel`) · `isDirty` · mobile viewport − 56, swipe to close · SideNav uses it on tablets |
 | `Badge`, `BadgeCount`, `BadgeDot` | C17 | 6 tones · dot or icon · counts „99+“ |
 | `Spinner`, `ProgressBar`, `Skeleton` | C26 | reduced motion: slower / static |
 | `Avatar`, `AvatarGroup` | C28 | image → initials → icon · colour from id · status · max 4 + „+N“ |

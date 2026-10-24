@@ -102,7 +102,7 @@ function AppItems({ current = 'dashboard' }: { current?: string }) {
       <NavItem href="#calendar" icon={<Calendar />} isCurrent={current === 'calendar'}>
         Calendar
       </NavItem>
-      <NavItem href="#inbox" icon={<MessageSquare />} count={3} countLabel="3 unread" isCurrent={current === 'inbox'}>
+      <NavItem href="#inbox" icon={<MessageSquare />} count={3} countLabel="3 unread" unread isCurrent={current === 'inbox'}>
         Inbox
       </NavItem>
       <NavSection title="Workspace">
@@ -194,7 +194,12 @@ export const Playground: Story = {
 export const NavItems: Story = {
   name: 'Nav item forms',
   parameters: {
-    docs: { description: { story: 'One item for every navigation. The container decides the form: header 36, sidebar 36, rail 40 × 40 (label as tooltip), sheet 48.' } },
+    docs: {
+      description: {
+        story:
+          'One item for every navigation. The container decides the form: header 36, sidebar 36, rail 40 × 40 (label as tooltip; unread counts as dot, totals hidden), sheet 48.',
+      },
+    },
   },
   render: () => (
     <LightDark>
@@ -211,6 +216,9 @@ export const NavItems: Story = {
             <NavItem href="#c" icon={<ListChecks />}>
               Tasks
             </NavItem>
+            <NavItem href="#d" icon={<MessageSquare />} count={3} countLabel="3 unread" unread>
+              Inbox
+            </NavItem>
           </NavList>
         </div>
       ))}
@@ -224,7 +232,7 @@ export const AppShell: Story = {
     docs: {
       description: {
         story:
-          'Side navigation with sections, counts and a group (Settings, one level). The button at the top collapses it to the 64 px rail: labels as tooltips, counts as dot, a group expands the sidebar. ' +
+          'Side navigation with sections, counts and a group (Settings, one level). The button at the top collapses it to the 64 px rail: labels as tooltips, unread counts (`unread`) as dot, totals hidden, a group expands the sidebar. ' +
           'Remember the state per user with `onCollapsedChange`. Between 640 and 1023 px it is always a rail and expands as an overlay.',
       },
     },

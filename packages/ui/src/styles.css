@@ -17,6 +17,7 @@
 @import './bottom-sheet/bottom-sheet.css';
 @import './menu/menu.css';
 @import './dialog/dialog.css';
+@import './drawer/drawer.css';
 @import './link/link.css';
 @import './alert/alert.css';
 @import './toast/toast.css';

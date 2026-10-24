@@ -381,8 +381,7 @@
   transition: inline-size var(--medo-motion-duration-normal) var(--medo-motion-easing-enter);
 }
 
-.medo-sidenav--collapsed,
-.medo-sidenav--overlay {
+.medo-sidenav--collapsed {
   inline-size: var(--medo-space-16); /* 64 */
 }
 
@@ -394,16 +393,6 @@
   block-size: 100%;
   border-inline-end: var(--medo-border-width-thin) solid var(--medo-color-border-default);
   background-color: var(--medo-color-surface-default);
-}
-
-/* Tablet: expanded as an overlay above the content. */
-.medo-sidenav--overlay .medo-sidenav__panel {
-  position: absolute;
-  inset-block: 0;
-  inset-inline-start: 0;
-  z-index: var(--medo-layer-overlay);
-  inline-size: 16rem;
-  box-shadow: var(--medo-shadow-elevation-3);
 }
 
 .medo-sidenav__top {
