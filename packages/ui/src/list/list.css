@@ -1,0 +1,172 @@
+/**
+ * List – med.o Design System (Figma: C27 List, Description list)
+ *
+ *   <ul class="medo-list medo-list--bullet [medo-list--md]">       bullets · <ol class="medo-list--number"> · <ul role="list" class="medo-list--check">
+ *     <li class="medo-list__item">Text <ul class="medo-list …">level 2</ul></li>
+ *     <li class="medo-list__item medo-list__item--excluded"><span class="medo-list__icon">×</span>…</li>
+ *   </ul>
+ *   <dl class="medo-dl medo-dl--auto"><div class="medo-dl__row"><dt class="medo-dl__term"/><dd class="medo-dl__value"/></div></dl>
+ * Without a size class the list takes the size of the surrounding text; markers scale with it.
+ * Marker column 24 (numbers 28), aligned to the first line. Item spacing space/2. Level 2: ring, „a.“.
+ */
+
+.medo-list {
+  --_col: 1.5rem; /* 24 */
+  --_icon: max(1rem, 1em); /* 16 · lg 20 */
+
+  display: grid;
+  gap: var(--medo-space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  color: var(--medo-color-text-primary);
+}
+
+.medo-list--sm {
+  font: var(--medo-typography-body-sm);
+}
+.medo-list--md {
+  font: var(--medo-typography-body-md);
+}
+.medo-list--lg {
+  --_icon: var(--medo-size-icon-md); /* 20 */
+  font: var(--medo-typography-body-lg);
+}
+
+.medo-list--number {
+  --_col: 1.75rem; /* 28 */
+  counter-reset: medo-list;
+}
+
+.medo-list__item {
+  position: relative;
+  padding-inline-start: var(--_col);
+}
+
+/* Level 2 sits in the text column of its parent item: 24 px further in. */
+.medo-list__item > .medo-list {
+  margin-block-start: var(--medo-space-2);
+}
+
+/* ---------- Markers: own column, centred on the first line ---------- */
+
+.medo-list--bullet > .medo-list__item::before,
+.medo-list--number > .medo-list__item::before,
+.medo-list__icon {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  display: flex;
+  align-items: center;
+  block-size: 1lh;
+  color: var(--medo-color-text-secondary);
+}
+
+/* Bullet: dot 6 (sm 5), centred in a box as tall as the first line. */
+.medo-list--bullet > .medo-list__item::before {
+  content: '';
+  inset-block-start: calc(0.5lh - 0.1875em);
+  block-size: 0.375em;
+  inline-size: 0.375em;
+  border-radius: var(--medo-radius-full);
+  background-color: currentColor;
+}
+
+/* Level 2: ring. */
+.medo-list__item .medo-list--bullet > .medo-list__item::before {
+  box-sizing: border-box;
+  border: 1.25px solid currentColor;
+  background-color: transparent;
+}
+
+/* Number: same style as the text, tabular figures, right aligned so „9.“ and „10.“ line up. */
+.medo-list--number > .medo-list__item {
+  counter-increment: medo-list;
+}
+
+.medo-list--number > .medo-list__item::before {
+  content: counter(medo-list) '.';
+  justify-content: flex-end;
+  inline-size: calc(var(--_col) - 0.375em);
+  font-variant-numeric: tabular-nums;
+}
+
+.medo-list__item .medo-list--number > .medo-list__item::before {
+  content: counter(medo-list, lower-alpha) '.';
+}
+
+/* ---------- Feature list ---------- */
+
+.medo-list__icon {
+  color: var(--medo-color-text-brand);
+}
+
+.medo-list__icon > svg {
+  inline-size: var(--_icon);
+  block-size: var(--_icon);
+}
+
+.medo-list__item--excluded {
+  color: var(--medo-color-text-secondary);
+}
+
+.medo-list__item--excluded .medo-list__icon {
+  color: var(--medo-color-text-secondary);
+}
+
+/* ---------- Description list ---------- */
+
+.medo-dl {
+  container-type: inline-size;
+  margin: 0;
+}
+
+.medo-dl__row {
+  display: grid;
+  grid-template-columns: 11.25rem minmax(0, 1fr); /* term column 180 */
+  gap: var(--medo-space-1) var(--medo-space-4);
+  align-items: baseline;
+  padding-block: var(--medo-space-3);
+}
+
+.medo-dl__row:first-child {
+  padding-block-start: 0;
+}
+
+.medo-dl__row + .medo-dl__row {
+  border-block-start: var(--medo-border-width-thin) solid var(--medo-color-border-default);
+}
+
+.medo-dl__term {
+  font: var(--medo-typography-label-md);
+  color: var(--medo-color-text-secondary);
+}
+
+.medo-dl__value {
+  min-inline-size: 0;
+  margin: 0;
+  font: var(--medo-typography-body-md);
+  color: var(--medo-color-text-primary);
+  overflow-wrap: anywhere;
+}
+
+.medo-dl--stacked .medo-dl__row {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+/* auto: stacked when the list itself is narrow (phone, Drawer, narrow column). */
+@container (max-width: 22.5rem) {
+  .medo-dl--auto .medo-dl__row {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (forced-colors: active) {
+  .medo-list--bullet > .medo-list__item::before {
+    background-color: CanvasText;
+  }
+  .medo-list__item .medo-list--bullet > .medo-list__item::before {
+    background-color: transparent;
+    border-color: CanvasText;
+  }
+}

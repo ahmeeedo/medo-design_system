@@ -10,6 +10,7 @@
 @import './avatar/avatar.css';
 @import './tooltip/tooltip.css';
 @import './progress/progress.css';
+@import './list/list.css';
 @import './toggle-button/toggle-button.css';
 @import './listbox/listbox.css';
 @import './select/select.css';

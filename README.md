@@ -148,6 +148,7 @@ DM Sans and DM Mono (SIL Open Font License). Self-host them, for example with `@
 | `Drawer` | C25 | modal panel from the side · right (account, filters, details) or left (navigation) · sm/md/lg · free footer (`close`, `cancel`) · `isDirty` · mobile viewport − 56, swipe to close · SideNav uses it on tablets |
 | `Badge`, `BadgeCount`, `BadgeDot` | C17 | 6 tones · dot or icon · counts „99+“ |
 | `Spinner`, `ProgressBar`, `Skeleton` | C26 | reduced motion: slower / static |
+| `List`, `ListItem`, `DescriptionList`, `DescriptionItem` | C27 | real ul/ol/dl · bullet, number (tabular, `start`), check with `excluded` · level 2 · follows the text size · DL stacks below 360 px (container query) |
 | `Avatar`, `AvatarGroup` | C28 | image → initials → icon · colour from id · status · max 4 + „+N“ |
 | `Card` | C16 | outlined, elevated, filled, brand, plain · compact · horizontal · whole card as link (`href`) |
 | `Alert` | C20 | info, success, warning, danger · inline or banner · actions, dismiss, `announce` |

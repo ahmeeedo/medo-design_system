@@ -72,6 +72,8 @@ export type {
 } from './navigation/Navigation';
 export { Drawer } from './drawer/Drawer';
 export type { DrawerProps } from './drawer/Drawer';
+export { List, ListItem, DescriptionList, DescriptionItem } from './list/List';
+export type { ListProps, ListItemProps, ListType, DescriptionListProps, DescriptionItemProps } from './list/List';
 export { Link } from './link/Link';
 export type { LinkProps } from './link/Link';
 export { Alert } from './alert/Alert';
