@@ -19,7 +19,8 @@ export type AvatarSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl';
 export type AvatarStatus = 'online' | 'away' | 'busy' | 'offline';
 
 const TONES = ['blue', 'violet', 'pink', 'amber', 'green', 'teal'] as const;
-const AvatarSizeContext = createContext<AvatarSize | undefined>(undefined);
+/** Size for avatars inside a group or a list row (internal, set by the container). */
+export const AvatarSizeContext = createContext<AvatarSize | undefined>(undefined);
 
 /** Same input, same tone: a small string hash modulo 6. */
 function toneFor(key: string) {

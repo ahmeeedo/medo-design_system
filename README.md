@@ -150,6 +150,7 @@ DM Sans and DM Mono (SIL Open Font License). Self-host them, for example with `@
 | `Spinner`, `ProgressBar`, `Skeleton` | C26 | reduced motion: slower / static |
 | `List`, `ListItem`, `DescriptionList`, `DescriptionItem` | C27 | real ul/ol/dl · bullet, number (tabular, `start`), check with `excluded` · level 2 · follows the text size · DL stacks below 360 px (container query) |
 | `Avatar`, `AvatarGroup` | C28 | image → initials → icon · colour from id · status · max 4 + „+N“ |
+| `ListView`, `ListRow`, `ListRowIcon` | C29 | React Aria GridList: ↑ ↓ rows, Tab into row controls · 1–3 lines · leading (avatar auto-sized) · meta, menu, chevron, switch or buttons · `unread` · selection with checkboxes · plain / card · `isLoading` skeleton rows |
 | `Card` | C16 | outlined, elevated, filled, brand, plain · compact · horizontal · whole card as link (`href`) |
 | `Alert` | C20 | info, success, warning, danger · inline or banner · actions, dismiss, `announce` |
 | `ToastRegion`, `toast()` | C21 | region once at the root, `toast(message, { action, persistent })` from anywhere · 5 s / 8 s with action / errors until closed · pauses on hover, focus, hidden tab · max 3 · F6, Esc |
@@ -200,7 +201,8 @@ Projects that still use it should pin the tag: `npm install github:ahmeeedo/medo
 ## Roadmap
 
 - More components in `@medo/ui` (order of the Figma library).
-- Table, part 2: bulk action bar, column menu, pagination, cards on mobile.
+- Table, part 2: bulk action bar (also for List view selection), column menu, pagination, cards on mobile.
+- List view: swipe actions on mobile (Figma draft – delete with Toast „Undo“, archive) once the draft is final.
 - Storybook tests: Accessibility panel strict (`a11y: { test: 'error' }`, every violation fails); `play` functions for core behaviour (Table sort and select, Tag remove, Alert dismiss, Tooltip keyboard), visible in the Interactions panel and run in CI with the Storybook Vitest addon.
 - Code examples per framework: one Storybook per framework (React, Vue, Angular), combined with **Storybook Composition** into one site.
 - Publishing the packages (npm or a private registry) with versioning (e.g. Changesets).

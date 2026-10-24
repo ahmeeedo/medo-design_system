@@ -1,0 +1,237 @@
+/**
+ * List view – med.o Design System (Figma: C29 List view)
+ *
+ *   <div class="medo-list-view medo-list-view--plain|card" role="grid">
+ *     <div class="medo-list-row medo-list-row--lines-1|2|3 [medo-list-row--unread]" role="row">
+ *       [check] [leading] <span class="medo-list-row__main">content · meta · trailing · chevron</span>
+ *     </div>
+ *   </div>
+ * Height 48 · 64 · 88. Padding 12 vertical, 16 left, 8 right, gap 12. Inset divider: starts at the text, none after the last row.
+ * State contract: [data-hovered] [data-pressed] [data-selected] [data-focus-visible] [data-disabled] (React Aria).
+ */
+
+.medo-list-view {
+  display: flex;
+  flex-direction: column;
+  outline: none;
+}
+
+.medo-list-view--card {
+  overflow: hidden;
+  border: var(--medo-border-width-thin) solid var(--medo-color-border-default);
+  border-radius: var(--medo-radius-lg);
+  background-color: var(--medo-color-surface-default);
+}
+
+.medo-list-view[data-focus-visible] {
+  box-shadow: var(--medo-shadow-focus-ring);
+}
+
+.medo-list-view__empty {
+  padding: var(--medo-space-8) var(--medo-space-4);
+  font: var(--medo-typography-body-sm);
+  color: var(--medo-color-text-secondary);
+  text-align: center;
+}
+
+/* ---------- Row ---------- */
+
+.medo-list-row {
+  --_lead: var(--medo-size-control-md); /* 40 */
+
+  position: relative;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: var(--medo-space-3);
+  padding-inline-start: var(--medo-space-4);
+  color: var(--medo-color-text-primary);
+  cursor: default;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.medo-list-row--lines-1 {
+  --_lead: var(--medo-size-icon-lg); /* 24 */
+}
+
+.medo-list-row[data-href],
+.medo-list-row[data-allows-selection],
+.medo-list-row[data-has-action] {
+  cursor: pointer;
+}
+
+.medo-list-row[data-hovered] {
+  background-color: var(--medo-color-state-hover);
+}
+
+.medo-list-row[data-pressed] {
+  background-color: var(--medo-color-state-pressed);
+}
+
+.medo-list-row[data-selected] {
+  background-color: var(--medo-color-action-selected);
+}
+
+.medo-list-row[data-focus-visible] {
+  box-shadow: var(--medo-shadow-focus-ring-inset);
+}
+
+.medo-list-row[data-disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* 3 lines: leading and trailing top aligned. */
+.medo-list-row--lines-3 {
+  align-items: flex-start;
+}
+
+.medo-list-row__check,
+.medo-list-row__leading {
+  display: flex;
+  flex: none;
+  align-items: center;
+  padding-block: var(--medo-space-3);
+}
+
+.medo-list-row__leading > * {
+  max-inline-size: var(--_lead);
+  max-block-size: var(--_lead);
+}
+
+/* Icon tile 40 (settings). */
+.medo-list-row__icon {
+  display: inline-grid;
+  place-items: center;
+  inline-size: var(--_lead);
+  block-size: var(--_lead);
+  border-radius: var(--medo-radius-md);
+  background-color: var(--medo-color-surface-subtle);
+  color: var(--medo-color-text-secondary);
+}
+
+.medo-list-row__icon > svg {
+  inline-size: var(--medo-size-icon-md);
+  block-size: var(--medo-size-icon-md);
+}
+
+/* Main: content, meta and trailing. Its bottom border is the inset divider – it starts at the text. */
+.medo-list-row__main {
+  display: flex;
+  flex: 1;
+  align-self: stretch;
+  align-items: center;
+  gap: var(--medo-space-3);
+  min-inline-size: 0;
+  padding: var(--medo-space-3) var(--medo-space-2) var(--medo-space-3) 0;
+  border-block-end: var(--medo-border-width-thin) solid var(--medo-color-border-default);
+}
+
+.medo-list-row--lines-3 .medo-list-row__main {
+  align-items: flex-start;
+}
+
+.medo-list-row:last-child .medo-list-row__main {
+  border-block-end-color: transparent;
+}
+
+.medo-list-row__content {
+  display: grid;
+  flex: 1;
+  gap: var(--medo-space-0-5);
+  min-inline-size: 0;
+}
+
+.medo-list-row__title {
+  overflow: hidden;
+  font: var(--medo-typography-label-md);
+  color: var(--medo-color-text-primary);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.medo-list-row__description {
+  display: -webkit-box;
+  overflow: hidden;
+  font: var(--medo-typography-body-sm);
+  color: var(--medo-color-text-secondary);
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
+}
+
+.medo-list-row--lines-3 .medo-list-row__description {
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+}
+
+/* Meta stack: meta text, unread dot below (gap 6). */
+.medo-list-row__meta {
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--medo-space-1-5);
+}
+
+.medo-list-row__meta-text {
+  font: var(--medo-typography-caption);
+  color: var(--medo-color-text-secondary);
+  white-space: nowrap;
+}
+
+.medo-list-row__dot {
+  inline-size: var(--medo-space-2);
+  block-size: var(--medo-space-2);
+  border-radius: var(--medo-radius-full);
+  background-color: var(--medo-color-action-primary);
+}
+
+.medo-list-row__trailing {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: var(--medo-space-2);
+}
+
+.medo-list-row__chevron {
+  display: inline-flex;
+  flex: none;
+  inline-size: var(--medo-size-icon-md);
+  block-size: var(--medo-size-icon-md);
+  color: var(--medo-color-text-secondary);
+}
+
+.medo-list-row__chevron > svg {
+  inline-size: 100%;
+  block-size: 100%;
+}
+
+/* Unread: strong title and excerpt, meta in brand (never colour alone – plus the dot and hidden text). */
+.medo-list-row--unread .medo-list-row__title {
+  font: var(--medo-typography-label-md-strong);
+}
+
+.medo-list-row--unread .medo-list-row__description {
+  font: var(--medo-typography-body-sm-strong);
+}
+
+.medo-list-row--unread .medo-list-row__meta-text {
+  color: var(--medo-color-text-brand);
+}
+
+/* Loading rows. */
+.medo-list-row--loading .medo-list-row__content {
+  gap: var(--medo-space-2);
+}
+
+@media (forced-colors: active) {
+  .medo-list-row[data-selected] {
+    outline: 2px solid Highlight;
+    outline-offset: -2px;
+  }
+  .medo-list-row__dot {
+    background-color: CanvasText;
+  }
+}
