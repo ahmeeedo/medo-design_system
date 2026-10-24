@@ -14,7 +14,7 @@ export interface ListViewProps<T> extends Omit<GridListProps<T>, 'className' | '
   variant?: 'plain' | 'card';
   /** Shows 3 skeleton rows instead of the items (aria-busy). */
   isLoading?: boolean;
-  /** Shown when there are no rows (until the Empty state component exists: text and a next step). */
+  /** Shown when there are no rows: an EmptyState with `size="inline"`. */
   emptyState?: ReactNode;
   className?: string;
 }

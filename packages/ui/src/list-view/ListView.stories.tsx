@@ -7,6 +7,7 @@ import { Badge } from '../badge/Badge';
 import { Button } from '../button/Button';
 import { Menu, MenuButton, MenuItem, MenuTrigger } from '../menu/Menu';
 import { Switch } from '../switch/Switch';
+import { EmptyState } from '../empty-state/EmptyState';
 import { row, semantic } from '../story-helpers';
 
 const box: React.CSSProperties = { maxInlineSize: '35rem' };
@@ -208,7 +209,7 @@ export const Selection: Story = {
 
 export const LoadingAndEmpty: Story = {
   name: 'Loading and empty',
-  parameters: { docs: { description: { story: '3 skeleton rows while loading (aria-busy). An empty list shows a short text with a next step.' } } },
+  parameters: { docs: { description: { story: '3 skeleton rows while loading (aria-busy). An empty list shows an inline Empty state with a next step.' } } },
   render: () => (
     <div style={{ ...row, alignItems: 'start' }}>
       <div style={{ flex: '1 1 18rem' }}>
@@ -217,7 +218,20 @@ export const LoadingAndEmpty: Story = {
         </ListView>
       </div>
       <div style={{ flex: '1 1 18rem' }}>
-        <ListView aria-label="Inbox" variant="card" items={[] as typeof inbox} emptyState="No messages yet. Invite your team to start a conversation.">
+        <ListView
+          aria-label="Inbox"
+          variant="card"
+          items={[] as typeof inbox}
+          emptyState={
+            <EmptyState
+              size="inline"
+              icon={<Mail />}
+              title="No messages yet"
+              description="Invite your team to start a conversation."
+              action={{ label: 'Invite people', onPress: fn() }}
+            />
+          }
+        >
           {(item) => <ListRow id={item.id} title={item.name} />}
         </ListView>
       </div>

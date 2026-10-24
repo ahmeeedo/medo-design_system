@@ -28,10 +28,7 @@
 }
 
 .medo-list-view__empty {
-  padding: var(--medo-space-8) var(--medo-space-4);
-  font: var(--medo-typography-body-sm);
-  color: var(--medo-color-text-secondary);
-  text-align: center;
+  padding-inline: var(--medo-space-4);
 }
 
 /* ---------- Row ---------- */
