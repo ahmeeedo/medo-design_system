@@ -37,6 +37,8 @@ export { Combobox } from './combobox/Combobox';
 export type { ComboboxProps } from './combobox/Combobox';
 export { ToastRegion, toast } from './toast/Toast';
 export type { ToastRegionProps, ToastOptions, ToastAction } from './toast/Toast';
+export { Tabs, TabList, Tab, TabPanel } from './tabs/Tabs';
+export type { TabsProps, TabListProps, TabProps, TabPanelProps } from './tabs/Tabs';
 export { Link } from './link/Link';
 export type { LinkProps } from './link/Link';
 export { Alert } from './alert/Alert';

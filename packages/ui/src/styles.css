@@ -20,5 +20,6 @@
 @import './link/link.css';
 @import './alert/alert.css';
 @import './toast/toast.css';
+@import './tabs/tabs.css';
 @import './card/card.css';
 @import './table/table.css';

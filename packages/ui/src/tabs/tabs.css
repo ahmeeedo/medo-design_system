@@ -1,0 +1,210 @@
+/**
+ * Tabs – med.o Design System (Figma: C22 Tabs)
+ *
+ * Contained style: tabs sit in a track, the selected tab is a raised thumb.
+ *   <div class="medo-tabs medo-tabs--md [medo-tabs--full]">
+ *     <div class="medo-tabs__list" role="tablist">                    track: surface/subtle, radius/md, padding + gap 4
+ *       <div class="medo-tab" role="tab" [data-selected]>
+ *         <div class="medo-tab__thumb"></div>                          surface/thumb, elevation/1 (selected only, slides)
+ *         <span class="medo-tab__icon">…</span> <span class="medo-tab__label">Activity</span> <span class="medo-badge-count">3</span>
+ *       </div>
+ *     </div>
+ *     <div class="medo-tabs__panel" role="tabpanel">…</div>
+ *   </div>
+ * Below 640 px: always lg; up to 3 tabs fill the width, more scroll with a fade.
+ * State contract: [data-selected] [data-hovered] [data-pressed] [data-focus-visible] [data-disabled],
+ * list [data-scroll-start] [data-scroll-end], panel [data-inert] (hidden).
+ */
+
+.medo-tabs {
+  --_tab-h: var(--medo-size-control-sm); /* 32 */
+  --_tab-pad: var(--medo-space-3);
+  --_label: var(--medo-typography-label-md);
+  --_icon: var(--medo-size-icon-sm);
+
+  display: grid;
+  gap: var(--medo-space-4);
+  min-inline-size: 0;
+}
+
+.medo-tabs--lg {
+  --_tab-h: var(--medo-size-control-md); /* 40 */
+  --_tab-pad: var(--medo-space-4);
+  --_label: var(--medo-typography-label-lg);
+  --_icon: var(--medo-size-icon-md);
+}
+
+/* ---------- Track ---------- */
+
+.medo-tabs__list {
+  display: flex;
+  gap: var(--medo-space-1);
+  justify-self: start;
+  max-inline-size: 100%;
+  padding: var(--medo-space-1);
+  border-radius: var(--medo-radius-md);
+  background-color: var(--medo-color-surface-subtle);
+  overflow-x: auto;
+  scrollbar-width: none;
+  outline: none;
+}
+
+.medo-tabs__list::-webkit-scrollbar {
+  display: none;
+}
+
+.medo-tabs--full .medo-tabs__list {
+  justify-self: stretch;
+}
+
+.medo-tabs--full .medo-tab {
+  flex: 1;
+}
+
+/* Fade at an edge that still has tabs – they never wrap. */
+.medo-tabs__list[data-scroll-end] {
+  mask-image: linear-gradient(to right, #000 calc(100% - var(--medo-space-8)), transparent);
+}
+.medo-tabs__list[data-scroll-start] {
+  mask-image: linear-gradient(to left, #000 calc(100% - var(--medo-space-8)), transparent);
+}
+.medo-tabs__list[data-scroll-start][data-scroll-end] {
+  mask-image: linear-gradient(to right, transparent, #000 var(--medo-space-8), #000 calc(100% - var(--medo-space-8)), transparent);
+}
+
+/* ---------- Tab ---------- */
+
+.medo-tab {
+  position: relative;
+  box-sizing: border-box;
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  gap: var(--medo-space-2);
+  block-size: var(--_tab-h);
+  padding-inline: var(--_tab-pad);
+  border-radius: var(--medo-radius-sm);
+  font: var(--_label);
+  color: var(--medo-color-text-secondary);
+  white-space: nowrap;
+  cursor: pointer;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Content above the thumb. */
+.medo-tab > :not(.medo-tab__thumb) {
+  position: relative;
+  z-index: 1;
+}
+
+.medo-tab:not([data-selected])[data-hovered] {
+  background-color: var(--medo-color-state-hover);
+  color: var(--medo-color-text-primary);
+}
+
+.medo-tab:not([data-selected])[data-pressed] {
+  background-color: var(--medo-color-state-pressed);
+  color: var(--medo-color-text-primary);
+}
+
+.medo-tab[data-selected] {
+  color: var(--medo-color-text-primary);
+  cursor: default;
+}
+
+.medo-tab[data-disabled] {
+  color: var(--medo-color-text-disabled);
+  cursor: not-allowed;
+}
+
+/* Focus ring inside, drawn above the thumb. */
+.medo-tab::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.medo-tab[data-focus-visible]::after {
+  box-shadow: var(--medo-shadow-focus-ring-inset);
+}
+
+.medo-tab__thumb {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background-color: var(--medo-color-surface-thumb);
+  box-shadow: var(--medo-shadow-elevation-1);
+  /* SelectionIndicator animates translate and size from the previous tab. */
+  transition:
+    translate var(--medo-motion-duration-normal) var(--medo-motion-easing-enter),
+    width var(--medo-motion-duration-normal) var(--medo-motion-easing-enter);
+}
+
+.medo-tab__icon {
+  display: inline-flex;
+  inline-size: var(--_icon);
+  block-size: var(--_icon);
+}
+
+.medo-tab__icon > svg {
+  inline-size: 100%;
+  block-size: 100%;
+}
+
+/* ---------- Panel ---------- */
+
+.medo-tabs__panel {
+  min-inline-size: 0;
+  border-radius: var(--medo-radius-sm);
+  outline: none;
+}
+
+.medo-tabs__panel[data-focus-visible] {
+  box-shadow: var(--medo-shadow-focus-ring);
+}
+
+/* Kept mounted (input is not lost), but hidden while another tab is selected. */
+.medo-tabs__panel[data-inert] {
+  display: none;
+}
+
+/* ---------- Mobile < 640 px: always lg; up to 3 tabs fill, more scroll ---------- */
+
+@media (max-width: 639.98px) {
+  .medo-tabs {
+    --_tab-h: var(--medo-size-control-md);
+    --_tab-pad: var(--medo-space-4);
+    --_label: var(--medo-typography-label-lg);
+    --_icon: var(--medo-size-icon-md);
+  }
+  .medo-tabs__list:not(:has(> .medo-tab:nth-child(4))) {
+    justify-self: stretch;
+  }
+  .medo-tabs__list:not(:has(> .medo-tab:nth-child(4))) > .medo-tab {
+    flex: 1;
+  }
+}
+
+@media (forced-colors: active) {
+  .medo-tabs__list {
+    border: 1px solid CanvasText;
+  }
+  .medo-tab[data-selected] .medo-tab__thumb {
+    border: 2px solid Highlight;
+  }
+  .medo-tab[data-focus-visible]::after {
+    outline: 2px solid Highlight;
+    outline-offset: -2px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .medo-tab__thumb {
+    transition: none;
+  }
+}
