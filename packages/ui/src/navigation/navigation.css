@@ -1,0 +1,631 @@
+/**
+ * Navigation – med.o Design System (Figma: C24 Navigation)
+ *
+ * Always links in a named <nav>; the current page has aria-current="page".
+ *   .medo-nav-item.medo-nav-item--{header|sidebar|rail|sheet}   one item, four forms (36 · 36 · 40×40 · 48)
+ *   .medo-nav-group (disclosure button + list) · .medo-nav-section (overline + list)
+ *   .medo-site-header · .medo-nav-fullscreen · .medo-app-header · .medo-sidenav · .medo-tab-bar · .medo-skip-link
+ * Current: action/selected + label strong in text/primary. Default: text/secondary; hover and pressed use the state layers.
+ * State contract: [aria-current="page"] / [data-current] · [data-hovered] [data-pressed] [data-focus-visible] (React Aria),
+ * [aria-expanded] on group buttons, [data-scrolled] on headers.
+ */
+
+.medo-nav__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--medo-space-0-5);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.medo-nav__list--row {
+  flex-direction: row;
+  align-items: center;
+  gap: var(--medo-space-1);
+}
+
+.medo-nav__list--rail {
+  align-items: center;
+}
+
+.medo-nav__entry {
+  display: block;
+}
+
+/* ---------- Nav item ---------- */
+
+.medo-nav-item {
+  --_h: 2.25rem; /* 36 */
+  --_label: var(--medo-typography-label-md);
+  --_label-current: var(--medo-typography-label-md-strong);
+  --_icon: var(--medo-size-icon-sm);
+
+  position: relative;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: var(--medo-space-3);
+  inline-size: 100%;
+  min-block-size: var(--_h);
+  padding-inline: var(--medo-space-3);
+  border: 0;
+  border-radius: var(--medo-radius-sm);
+  background: none;
+  font: var(--_label);
+  color: var(--medo-color-text-secondary);
+  text-align: start;
+  text-decoration: none;
+  cursor: pointer;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.medo-nav-item--header {
+  inline-size: auto;
+  white-space: nowrap;
+}
+
+.medo-nav-item--sheet {
+  --_h: var(--medo-size-control-lg); /* 48 */
+  --_label: var(--medo-typography-label-lg);
+  --_label-current: var(--medo-typography-label-lg-strong);
+  --_icon: var(--medo-size-icon-md);
+}
+
+.medo-nav-item--rail {
+  --_icon: var(--medo-size-icon-md);
+  justify-content: center;
+  inline-size: var(--medo-size-control-md); /* 40 */
+  block-size: var(--medo-size-control-md);
+  padding: 0;
+}
+
+.medo-nav-item[data-hovered] {
+  background-color: var(--medo-color-state-hover);
+  color: var(--medo-color-text-primary);
+}
+
+.medo-nav-item[data-pressed] {
+  background-color: var(--medo-color-state-pressed);
+  color: var(--medo-color-text-primary);
+}
+
+.medo-nav-item:is([aria-current='page'], [data-current]) {
+  background-color: var(--medo-color-action-selected);
+  font: var(--_label-current);
+  color: var(--medo-color-text-primary);
+}
+
+.medo-nav-item:is([aria-current='page'], [data-current])[data-hovered] {
+  background-color: var(--medo-color-action-selected-hover);
+}
+
+.medo-nav-item[data-focus-visible] {
+  box-shadow: var(--medo-shadow-focus-ring-inset);
+}
+
+.medo-nav-item__icon {
+  display: inline-flex;
+  flex: none;
+  inline-size: var(--_icon);
+  block-size: var(--_icon);
+}
+
+.medo-nav-item__icon > svg {
+  inline-size: 100%;
+  block-size: 100%;
+}
+
+.medo-nav-item__label {
+  flex: 1;
+  min-inline-size: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.medo-nav-item--header .medo-nav-item__label {
+  flex: none;
+}
+
+.medo-nav-item__dot {
+  position: absolute;
+  inset-block-start: var(--medo-space-2);
+  inset-inline-end: var(--medo-space-2);
+}
+
+/* ---------- Group ---------- */
+
+.medo-nav-group {
+  position: relative;
+}
+
+.medo-nav-group__chevron {
+  flex: none;
+  inline-size: var(--medo-size-icon-sm);
+  block-size: var(--medo-size-icon-sm);
+  transition: rotate var(--medo-motion-duration-fast) var(--medo-motion-easing-standard);
+}
+
+.medo-nav-group__button[aria-expanded='true'] .medo-nav-group__chevron {
+  rotate: 180deg;
+}
+
+/* Header: the open group button looks pressed. */
+.medo-nav-group--floating > .medo-nav-group__button[aria-expanded='true'] {
+  background-color: var(--medo-color-state-hover);
+  color: var(--medo-color-text-primary);
+}
+
+/* Sidebar and sheet: children indented, one level. */
+.medo-nav-group__list {
+  margin-block-start: var(--medo-space-0-5);
+  padding-inline-start: var(--medo-space-4);
+}
+
+.medo-nav-item--sidebar + .medo-nav-group__list {
+  /* Child labels line up with the parent label (icon + gap). */
+  padding-inline-start: calc(var(--medo-size-icon-sm) + var(--medo-space-3));
+}
+
+/* Header: dropdown panel on the popover surface, 280 wide, 8 below the item. */
+.medo-nav-group__panel {
+  position: absolute;
+  inset-block-start: calc(100% + var(--medo-space-2));
+  inset-inline-start: 0;
+  z-index: var(--medo-layer-dropdown);
+  box-sizing: border-box;
+  inline-size: 17.5rem; /* 280 */
+  padding: var(--medo-space-2);
+  border: var(--medo-border-width-thin) solid var(--medo-color-border-default);
+  border-radius: var(--medo-radius-md);
+  background-color: var(--medo-color-surface-raised);
+  box-shadow: var(--medo-shadow-elevation-2);
+}
+
+.medo-nav-group__panel[hidden],
+.medo-nav-group__list[hidden] {
+  display: none;
+}
+
+/* ---------- Section (sidebar) ---------- */
+
+.medo-nav-section__title {
+  display: block;
+  padding: var(--medo-space-2) var(--medo-space-2) var(--medo-space-1);
+  font: var(--medo-typography-overline);
+  color: var(--medo-color-text-secondary);
+  text-transform: uppercase;
+}
+
+.medo-nav-section__divider {
+  display: block;
+  margin: var(--medo-space-1) var(--medo-space-1);
+  border-block-start: var(--medo-border-width-thin) solid var(--medo-color-border-default);
+}
+
+/* ---------- Skip link ---------- */
+
+.medo-skip-link {
+  position: fixed;
+  inset-block-start: var(--medo-space-2);
+  inset-inline-start: var(--medo-space-2);
+  z-index: var(--medo-layer-tooltip);
+  padding: var(--medo-space-2) var(--medo-space-4);
+  border-radius: var(--medo-radius-md);
+  background-color: var(--medo-color-surface-raised);
+  box-shadow: var(--medo-shadow-elevation-2);
+  font: var(--medo-typography-label-md);
+  color: var(--medo-color-text-primary);
+  text-decoration: none;
+  translate: 0 calc(-100% - var(--medo-space-4));
+}
+
+.medo-skip-link:focus-visible {
+  translate: 0 0;
+  outline: none;
+  box-shadow:
+    var(--medo-shadow-focus-ring),
+    var(--medo-shadow-elevation-2);
+}
+
+/* ---------- Headers ---------- */
+
+.medo-site-header,
+.medo-app-header {
+  position: sticky;
+  inset-block-start: 0;
+  z-index: var(--medo-layer-sticky);
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: var(--medo-space-8);
+  block-size: var(--medo-space-16); /* 64 */
+  padding-inline: var(--medo-space-8);
+  border-block-end: var(--medo-border-width-thin) solid transparent;
+  background-color: var(--medo-color-surface-default);
+}
+
+.medo-app-header {
+  padding-inline: var(--medo-space-6);
+}
+
+/* Divider once the page scrolls. */
+.medo-site-header[data-scrolled],
+.medo-app-header[data-scrolled] {
+  border-block-end-color: var(--medo-color-border-default);
+}
+
+.medo-site-header__logo,
+.medo-app-header__logo {
+  display: flex;
+  flex: none;
+  align-items: center;
+}
+
+.medo-site-header__nav {
+  flex: 1;
+  min-inline-size: 0;
+}
+
+.medo-site-header__actions,
+.medo-app-header__actions {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: var(--medo-space-2);
+  margin-inline-start: auto;
+}
+
+.medo-app-header__actions {
+  margin-inline-start: 0;
+}
+
+.medo-app-header__title {
+  flex: 1;
+  min-inline-size: 0;
+  margin: 0;
+  overflow: hidden;
+  font: var(--medo-typography-heading-md);
+  color: var(--medo-color-text-primary);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.medo-app-header__search {
+  flex: 0 1 17.5rem; /* 280 */
+  min-inline-size: 0;
+}
+
+/* ---------- Fullscreen menu (website, mobile) ---------- */
+
+.medo-nav-fullscreen-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: var(--medo-layer-modal);
+}
+
+.medo-nav-fullscreen {
+  box-sizing: border-box;
+  display: flex;
+  block-size: 100dvh;
+  padding-block: env(safe-area-inset-top) env(safe-area-inset-bottom);
+  background-color: var(--medo-color-surface-default);
+  color: var(--medo-color-text-primary);
+  outline: none;
+}
+
+.medo-nav-fullscreen-overlay[data-entering] .medo-nav-fullscreen {
+  animation: medo-nav-fade var(--medo-motion-duration-normal) var(--medo-motion-easing-enter);
+}
+.medo-nav-fullscreen-overlay[data-exiting] .medo-nav-fullscreen {
+  animation: medo-nav-fade var(--medo-motion-duration-fast) var(--medo-motion-easing-exit) reverse;
+}
+
+@keyframes medo-nav-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+.medo-nav-fullscreen__dialog {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-block-size: 0;
+  outline: none;
+}
+
+.medo-nav-fullscreen__header {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: space-between;
+  block-size: calc(var(--medo-size-control-md) + 2 * var(--medo-space-2)); /* 56 */
+  padding-inline: var(--medo-space-4) var(--medo-space-2);
+}
+
+.medo-nav-fullscreen__nav {
+  flex: 1;
+  min-block-size: 0;
+  overflow: auto;
+  padding: var(--medo-space-4);
+}
+
+.medo-nav-fullscreen__nav .medo-nav__list {
+  gap: var(--medo-space-1);
+}
+
+/* Actions pinned at the bottom – primary on top, in thumb reach. */
+.medo-nav-fullscreen__actions {
+  display: grid;
+  flex: none;
+  gap: var(--medo-space-2);
+  padding: var(--medo-space-4);
+  border-block-start: var(--medo-border-width-thin) solid var(--medo-color-border-default);
+}
+
+.medo-nav-fullscreen__actions .medo-button {
+  inline-size: 100%;
+}
+
+/* ---------- Side navigation ---------- */
+
+.medo-sidenav {
+  position: relative;
+  flex: none;
+  box-sizing: border-box;
+  inline-size: 16rem; /* 256 */
+  block-size: 100%;
+  transition: inline-size var(--medo-motion-duration-normal) var(--medo-motion-easing-enter);
+}
+
+.medo-sidenav--collapsed,
+.medo-sidenav--overlay {
+  inline-size: var(--medo-space-16); /* 64 */
+}
+
+.medo-sidenav__panel {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  inline-size: 100%;
+  block-size: 100%;
+  border-inline-end: var(--medo-border-width-thin) solid var(--medo-color-border-default);
+  background-color: var(--medo-color-surface-default);
+}
+
+/* Tablet: expanded as an overlay above the content. */
+.medo-sidenav--overlay .medo-sidenav__panel {
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: 0;
+  z-index: var(--medo-layer-overlay);
+  inline-size: 16rem;
+  box-shadow: var(--medo-shadow-elevation-3);
+}
+
+.medo-sidenav__top {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--medo-space-2);
+  block-size: var(--medo-space-16); /* 64 */
+  padding-inline: var(--medo-space-4) var(--medo-space-3);
+}
+
+.medo-sidenav--collapsed .medo-sidenav__top {
+  justify-content: center;
+  padding-inline: 0;
+}
+
+.medo-sidenav__nav {
+  flex: 1;
+  min-block-size: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: var(--medo-space-2) var(--medo-space-3);
+}
+
+.medo-sidenav--collapsed .medo-nav__list {
+  align-items: center;
+}
+
+.medo-sidenav__bottom {
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--medo-space-2);
+  padding: var(--medo-space-3) var(--medo-space-4) var(--medo-space-4);
+  border-block-start: var(--medo-border-width-thin) solid var(--medo-color-border-default);
+}
+
+.medo-sidenav__bottom:empty {
+  display: none;
+}
+
+.medo-sidenav__user {
+  display: flex;
+  align-items: center;
+  gap: var(--medo-space-3);
+  align-self: stretch;
+  min-inline-size: 0;
+}
+
+.medo-sidenav--collapsed .medo-sidenav__user {
+  justify-content: center;
+}
+
+.medo-sidenav__user-text {
+  display: grid;
+  min-inline-size: 0;
+}
+
+.medo-sidenav__user-name,
+.medo-sidenav__user-email {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.medo-sidenav__user-name {
+  font: var(--medo-typography-label-md);
+  color: var(--medo-color-text-primary);
+}
+
+.medo-sidenav__user-email {
+  font: var(--medo-typography-caption);
+  color: var(--medo-color-text-secondary);
+}
+
+/* ---------- Bottom tab bar ---------- */
+
+.medo-tab-bar {
+  position: fixed;
+  inset-inline: 0;
+  inset-block-end: 0;
+  z-index: var(--medo-layer-sticky);
+  padding-block-end: env(safe-area-inset-bottom);
+  border-block-start: var(--medo-border-width-thin) solid var(--medo-color-border-default);
+  background-color: var(--medo-color-surface-default);
+}
+
+.medo-tab-bar__list {
+  display: flex;
+  margin: 0;
+  padding: var(--medo-space-1) var(--medo-space-2);
+  list-style: none;
+}
+
+.medo-tab-bar__entry {
+  display: flex;
+  flex: 1;
+}
+
+.medo-tab-bar-item {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--medo-space-1);
+  min-block-size: 3.5rem; /* 56 */
+  padding: var(--medo-space-1) 0;
+  border: 0;
+  border-radius: var(--medo-radius-sm);
+  background: none;
+  font: var(--medo-typography-caption);
+  color: var(--medo-color-text-secondary);
+  text-decoration: none;
+  cursor: pointer;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.medo-tab-bar-item__indicator {
+  position: relative;
+  display: grid;
+  place-items: center;
+  inline-size: 3.5rem; /* 56 */
+  block-size: 1.75rem; /* 28 */
+  border-radius: var(--medo-radius-full);
+}
+
+.medo-tab-bar-item__icon {
+  display: inline-flex;
+  inline-size: var(--medo-size-icon-md);
+  block-size: var(--medo-size-icon-md);
+}
+
+.medo-tab-bar-item__icon > svg {
+  inline-size: 100%;
+  block-size: 100%;
+}
+
+.medo-tab-bar-item__dot {
+  position: absolute;
+  inset-block-start: var(--medo-space-0-5);
+  inset-inline-start: calc(50% + var(--medo-space-1));
+}
+
+.medo-tab-bar-item[data-pressed] .medo-tab-bar-item__indicator {
+  background-color: var(--medo-color-state-pressed);
+}
+
+.medo-tab-bar-item:is([aria-current='page'], [data-current]) {
+  font: var(--medo-typography-label-sm-strong);
+  color: var(--medo-color-text-primary);
+}
+
+.medo-tab-bar-item:is([aria-current='page'], [data-current]) .medo-tab-bar-item__indicator {
+  background-color: var(--medo-color-action-selected);
+}
+
+.medo-tab-bar-item[data-focus-visible] {
+  box-shadow: var(--medo-shadow-focus-ring-inset);
+}
+
+/* Only on phones by default – the side navigation takes over from 640 px. */
+@media (min-width: 640px) {
+  .medo-tab-bar:not(.medo-tab-bar--always) {
+    display: none;
+  }
+}
+
+/* Compact website header (menu button) and phones: 56 high. */
+.medo-site-header--compact {
+  gap: var(--medo-space-2);
+  block-size: calc(var(--medo-size-control-md) + 2 * var(--medo-space-2)); /* 56 */
+  padding-inline: var(--medo-space-4) var(--medo-space-2);
+}
+
+@media (max-width: 639.98px) {
+  .medo-sidenav {
+    display: none;
+  }
+  .medo-app-header {
+    gap: var(--medo-space-2);
+    block-size: calc(var(--medo-size-control-md) + 2 * var(--medo-space-2)); /* 56 */
+    padding-inline: var(--medo-space-4) var(--medo-space-2);
+  }
+  .medo-app-header__title {
+    font: var(--medo-typography-label-lg);
+  }
+  .medo-app-header__search {
+    display: none;
+  }
+}
+
+/* Nav sheet (apps): items inside the Bottom Sheet. */
+.medo-nav-sheet {
+  padding: 0 var(--medo-space-2) var(--medo-space-4);
+}
+
+@media (min-width: 640px) {
+  .medo-app-header__logo {
+    display: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .medo-nav-item:is([aria-current='page'], [data-current]),
+  .medo-tab-bar-item:is([aria-current='page'], [data-current]) .medo-tab-bar-item__indicator {
+    outline: 2px solid Highlight;
+    outline-offset: -2px;
+  }
+  .medo-nav-group__panel {
+    border-color: CanvasText;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .medo-sidenav,
+  .medo-nav-group__chevron {
+    transition: none;
+  }
+  .medo-nav-fullscreen-overlay:is([data-entering], [data-exiting]) .medo-nav-fullscreen {
+    animation: none;
+  }
+}

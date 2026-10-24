@@ -153,6 +153,7 @@ DM Sans and DM Mono (SIL Open Font License). Self-host them, for example with `@
 | `ToastRegion`, `toast()` | C21 | region once at the root, `toast(message, { action, persistent })` from anywhere · 5 s / 8 s with action / errors until closed · pauses on hover, focus, hidden tab · max 3 · F6, Esc |
 | `Tabs`, `TabList`, `Tab`, `TabPanel` | C22 | track with sliding thumb · md/lg, `fullWidth` · icon, count · panels stay mounted (`keepMounted`) · mobile: lg, up to 3 fill, more scroll with fade · URL via `selectedKey` |
 | `PopoverTrigger`, `Popover`, `Toggletip` | C23 | click only, bottom start, 8 px · sm/md/lg/auto · `title` (header + close), `primaryAction` (footer) · mobile: Bottom Sheet · Toggletip: info button + text + link |
+| `NavItem`, `NavGroup`, `NavSection`, `NavList`, `SkipLink`, `SiteHeader`, `AppHeader`, `SideNav`, `BottomTabBar`, `TabBarItem`, `TabBarMore` | C24 | links with `aria-current`, any router via `RouterProvider` · website header with dropdown (disclosure) and fullscreen menu < 768 px · side navigation 256 / rail 64 (tooltips), overlay 640–1023 px · bottom tab bar + Nav sheet < 640 px |
 | `StaticTable`, `Table` (+ `TableHeader`, `Column`, `TableBody`, `Row`, `Cell`) | C37 | native table or interactive grid · sorting, selection, compact · numbers right |
 | `Link` | C45 | inline (always underlined) or standalone · external icon · new-tab hint |
 

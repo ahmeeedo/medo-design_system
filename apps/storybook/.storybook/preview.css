@@ -55,12 +55,12 @@ body {
   font-weight: var(--medo-font-weight-semibold);
   color: var(--medo-color-text-primary);
 }
-/* Links from Storybook markdown (story descriptions); our own links use Link (.medo-link). */
-.medo-doc a:not(.medo-link) {
+/* Links from Storybook markdown (story descriptions); our components' anchors (.medo-*) keep their own styles. */
+.medo-doc a:not([class*='medo-']) {
   color: var(--medo-color-text-brand);
   text-underline-offset: 0.2em;
 }
-.medo-doc a:not(.medo-link):focus-visible,
+.medo-doc a:not([class*='medo-']):focus-visible,
 .doc-anchor:focus-visible {
   outline: 2px solid var(--medo-color-focus-ring);
   outline-offset: 2px;
