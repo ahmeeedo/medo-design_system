@@ -1,0 +1,196 @@
+/**
+ * Slider – med.o Design System (Figma: C32 Slider, Slider field)
+ *
+ *   <div class="medo-slider" [data-disabled]>
+ *     <div class="medo-slider__header"><label>Volume</label><output>40 %</output></div>
+ *     <div class="medo-slider__track">                       20 high, 10 px inset on both ends
+ *       rail (4, border/default) · ticks (2 × 6, border/strong) · fill (action/primary)
+ *       <div class="medo-slider__thumb" [data-hovered] [data-dragging] [data-focus-visible]>  20 · hit area 44
+ *     </div>
+ *     <div class="medo-slider__limits">0 · 100</div>
+ *   </div>
+ * Halo: hover 36 state/hover · pressed 40 state/pressed. Focus: 2 px focus/ring, 28 ring. Disabled 50 %.
+ */
+
+.medo-slider {
+  display: grid;
+  gap: var(--medo-space-2);
+  inline-size: 100%;
+  min-inline-size: 0;
+}
+
+.medo-slider[data-disabled] {
+  opacity: 0.5;
+}
+
+.medo-slider__header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--medo-space-3);
+}
+
+.medo-slider__label {
+  font: var(--medo-typography-label-md);
+  color: var(--medo-color-text-primary);
+}
+
+.medo-slider__value {
+  font: var(--medo-typography-body-sm);
+  font-variant-numeric: tabular-nums;
+  color: var(--medo-color-text-secondary);
+  white-space: nowrap;
+}
+
+/* The track is inset by 10 px, so the thumb never overflows the field; pointer positions map to it. */
+.medo-slider__track {
+  position: relative;
+  block-size: var(--medo-space-5); /* 20 */
+  margin-inline: calc(var(--medo-space-2) + var(--medo-space-0-5)); /* 10 */
+  cursor: pointer;
+}
+
+.medo-slider[data-disabled] .medo-slider__track {
+  cursor: not-allowed;
+}
+
+.medo-slider__rail,
+.medo-slider__fill {
+  position: absolute;
+  inset-block-start: 50%;
+  block-size: var(--medo-space-1); /* 4 */
+  border-radius: var(--medo-radius-full);
+  translate: 0 -50%;
+}
+
+.medo-slider__rail {
+  inset-inline: 0;
+  background-color: var(--medo-color-border-default);
+}
+
+.medo-slider__fill {
+  background-color: var(--medo-color-action-primary);
+}
+
+.medo-slider__ticks {
+  position: absolute;
+  inset-inline: 0;
+  inset-block-start: calc(var(--medo-space-4)); /* 16: below the track */
+}
+
+.medo-slider__tick {
+  position: absolute;
+  inline-size: var(--medo-space-0-5);
+  block-size: var(--medo-space-1-5);
+  border-radius: var(--medo-radius-full);
+  background-color: var(--medo-color-border-strong);
+  translate: -50% 0;
+}
+
+.medo-slider__thumb {
+  /* React Aria positions the thumb (left, top 50 %, translate -50 %). */
+  inset-block-start: 50%;
+  box-sizing: border-box;
+  inline-size: var(--medo-space-5); /* 20 */
+  block-size: var(--medo-space-5);
+  border: var(--medo-border-width-thick) solid var(--medo-color-action-primary);
+  border-radius: var(--medo-radius-full);
+  background-color: var(--medo-color-surface-default);
+  box-shadow: var(--medo-shadow-elevation-1);
+  transition: box-shadow var(--medo-motion-duration-fast) var(--medo-motion-easing-standard);
+}
+
+/* 44 px hit area around the 20 px thumb. */
+.medo-slider__thumb::before {
+  content: '';
+  position: absolute;
+  inset: calc(-1 * var(--medo-space-3));
+  border-radius: var(--medo-radius-full);
+}
+
+.medo-slider__thumb[data-hovered] {
+  box-shadow:
+    0 0 0 var(--medo-space-2) var(--medo-color-state-hover),
+    var(--medo-shadow-elevation-1);
+}
+
+.medo-slider__thumb[data-dragging] {
+  box-shadow:
+    0 0 0 calc(var(--medo-space-2) + var(--medo-space-0-5)) var(--medo-color-state-pressed),
+    var(--medo-shadow-elevation-1);
+}
+
+.medo-slider__thumb[data-focus-visible] {
+  outline: var(--medo-focus-ring-width) solid var(--medo-color-focus-ring);
+  outline-offset: var(--medo-space-0-5);
+}
+
+.medo-slider__thumb[data-disabled] {
+  cursor: not-allowed;
+}
+
+/* Value bubble while dragging – the Tooltip look, above the thumb. */
+.medo-slider__bubble {
+  position: absolute;
+  inset-block-end: calc(100% + var(--medo-space-2));
+  inset-inline-start: 50%;
+  translate: -50% 0;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.medo-slider__limits {
+  display: flex;
+  justify-content: space-between;
+  font: var(--medo-typography-caption);
+  font-variant-numeric: tabular-nums;
+  color: var(--medo-color-text-secondary);
+}
+
+/* ---------- Slider field ---------- */
+
+.medo-slider-field {
+  display: grid;
+  gap: var(--medo-space-2);
+}
+
+/* Single: input 88 on the right, level with the track. */
+.medo-slider-field--single {
+  grid-template-columns: 1fr 5.5rem;
+  align-items: end;
+  gap: var(--medo-space-4);
+}
+
+.medo-slider-field__inputs {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: var(--medo-space-2);
+}
+
+.medo-slider-field__dash {
+  color: var(--medo-color-text-secondary);
+}
+
+/* Tabular figures, so digits do not jump while the value changes. */
+.medo-number-field__control {
+  font-variant-numeric: tabular-nums;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .medo-slider__thumb {
+    transition: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .medo-slider__fill,
+  .medo-slider__thumb {
+    forced-color-adjust: none;
+    background-color: Highlight;
+    border-color: CanvasText;
+  }
+  .medo-slider__rail {
+    background-color: GrayText;
+  }
+}
