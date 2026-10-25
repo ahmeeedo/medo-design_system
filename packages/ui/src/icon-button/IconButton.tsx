@@ -9,9 +9,13 @@ export interface IconButtonProps extends Omit<AriaButtonProps, 'children' | 'cla
   /** Required: describes the action („Delete file“), because there is no visible label. */
   'aria-label': string;
   icon: ReactNode;
-  /** ghost (default for toolbars) · secondary · primary · danger */
-  variant?: 'ghost' | 'secondary' | 'primary' | 'danger';
-  /** sm 32 · md 40 · lg 48 px with 16 / 20 / 24 px icons. */
+  /**
+   * ghost (default for toolbars) · secondary · primary · danger.
+   * On images and video (Figma: Media icon button): media – round overlay/media fill for busy images ·
+   * media-ghost – no fill, on a gradient bar (video controls).
+   */
+  variant?: 'ghost' | 'secondary' | 'primary' | 'danger' | 'media' | 'media-ghost';
+  /** sm 32 · md 40 · lg 48 px with 16 / 20 / 24 px icons. Media variants: sm 28 with a 44 px hit area. */
   size?: 'sm' | 'md' | 'lg';
   /**
    * Tooltip text. Default: the aria-label, so sighted users see the same name.
@@ -27,16 +31,7 @@ export interface IconButtonProps extends Omit<AriaButtonProps, 'children' | 'cla
 }
 
 /** Square icon-only action (Figma: C02 Icon Button). Shares the Button styles. Shows its label as a tooltip. */
-export function IconButton({
-  icon,
-  variant = 'ghost',
-  size = 'md',
-  tooltip,
-  shortcut,
-  shortcutLabel,
-  className,
-  ...props
-}: IconButtonProps) {
+export function IconButton({ icon, variant = 'ghost', size = 'md', tooltip, shortcut, shortcutLabel, className, ...props }: IconButtonProps) {
   const button = (
     <AriaButton
       {...props}

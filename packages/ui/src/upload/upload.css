@@ -1,0 +1,362 @@
+/**
+ * Upload – med.o Design System (Figma: C33 Upload)
+ *
+ *   <div class="medo-upload [medo-upload--grid] [medo-upload--compact]" role="group">
+ *     label · Dropzone (or File trigger) · <ul class="medo-upload__list"> File items / File tiles · live region
+ *   </div>
+ *
+ * Dropzone   padding space/8 · gap space/3 · radius/lg · 1 px dashed border/strong · Icon tile md
+ *            [data-drop-target] 2 px solid action/primary on surface/brand-subtle · [data-focus-visible] 2 px focus/ring
+ *            --invalid dashed border/danger + message · [data-disabled] 50 %
+ * File item  padding space/3 · gap space/3 · radius/md · border/default (error: border/danger) · leading 40 radius/sm
+ * File tile  136 · radius/md · overlay/media while uploading or on error · Media icon button 28 (hit 44)
+ * Lists      gap space/2
+ */
+
+.medo-upload {
+  display: grid;
+  gap: var(--medo-space-2);
+  min-inline-size: 0;
+}
+
+.medo-upload--compact {
+  gap: var(--medo-space-3);
+}
+
+.medo-upload__list {
+  display: grid;
+  gap: var(--medo-space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.medo-upload__list--grid {
+  grid-template-columns: repeat(auto-fill, calc(2 * var(--medo-space-16) + var(--medo-space-2)));
+}
+
+.medo-upload__item {
+  min-inline-size: 0;
+}
+
+/* ---------- Dropzone ---------- */
+
+.medo-dropzone {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--medo-space-3);
+  padding: var(--medo-space-8);
+  border: var(--medo-border-width-thin) dashed var(--medo-color-border-strong);
+  border-radius: var(--medo-radius-lg);
+  background-color: var(--medo-color-surface-default);
+  text-align: center;
+  transition:
+    background-color var(--medo-motion-duration-fast) var(--medo-motion-easing-standard),
+    border-color var(--medo-motion-duration-fast) var(--medo-motion-easing-standard);
+}
+
+.medo-dropzone__title {
+  font: var(--medo-typography-label-md);
+  color: var(--medo-color-text-primary);
+}
+
+.medo-dropzone__hint {
+  font: var(--medo-typography-caption);
+  color: var(--medo-color-text-secondary);
+}
+
+.medo-dropzone__error {
+  justify-content: center;
+  font: var(--medo-typography-body-sm);
+  text-align: start;
+}
+
+/* 2 px without a layout shift: the 1 px border plus a 1 px inset ring. */
+.medo-dropzone[data-drop-target] {
+  border-style: solid;
+  border-color: var(--medo-color-action-primary);
+  box-shadow: inset 0 0 0 var(--medo-border-width-thin) var(--medo-color-action-primary);
+  background-color: var(--medo-color-surface-brand-subtle);
+}
+
+.medo-dropzone[data-drop-target] .medo-icon-tile {
+  background-color: var(--medo-color-surface-default);
+  color: var(--medo-color-text-brand);
+}
+
+/* While dragging, the drop is the action – the button would only distract. */
+.medo-dropzone[data-drop-target] .medo-dropzone__button {
+  display: none;
+}
+
+.medo-dropzone[data-focus-visible] {
+  border-style: solid;
+  border-color: var(--medo-color-focus-ring);
+  box-shadow: inset 0 0 0 var(--medo-border-width-thin) var(--medo-color-focus-ring);
+}
+
+.medo-dropzone--invalid:not([data-drop-target], [data-focus-visible]) {
+  border-color: var(--medo-color-border-danger);
+}
+
+.medo-dropzone[data-disabled] {
+  opacity: 0.5;
+}
+
+/* ---------- File trigger ---------- */
+
+.medo-file-trigger {
+  gap: var(--medo-space-2);
+}
+
+/* ---------- File name: truncates in the middle ---------- */
+
+.medo-file-name {
+  display: block;
+  min-inline-size: 0;
+}
+
+.medo-file-name__visual {
+  display: flex;
+  min-inline-size: 0;
+  white-space: nowrap;
+}
+
+.medo-file-name__start {
+  min-inline-size: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.medo-file-name__end {
+  flex: none;
+}
+
+/* ---------- File item ---------- */
+
+.medo-file-item {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: var(--medo-space-3);
+  padding: var(--medo-space-3);
+  border: var(--medo-border-width-thin) solid var(--medo-color-border-default);
+  border-radius: var(--medo-radius-md);
+  background-color: var(--medo-color-surface-default);
+}
+
+.medo-file-item--error {
+  border-color: var(--medo-color-border-danger);
+}
+
+.medo-file-item__icon,
+.medo-file-item__thumb {
+  flex: none;
+  inline-size: var(--medo-size-control-md); /* 40 */
+  block-size: var(--medo-size-control-md);
+  border-radius: var(--medo-radius-sm);
+}
+
+.medo-file-item__icon {
+  display: grid;
+  place-items: center;
+  background-color: var(--medo-color-surface-subtle);
+  color: var(--medo-color-text-secondary);
+}
+
+.medo-file-item__icon > svg {
+  inline-size: var(--medo-size-icon-md);
+  block-size: var(--medo-size-icon-md);
+}
+
+.medo-file-item__thumb {
+  object-fit: cover;
+}
+
+.medo-file-item__content {
+  display: grid;
+  flex: 1;
+  gap: var(--medo-space-0-5);
+  min-inline-size: 0;
+}
+
+.medo-file-item__name {
+  font: var(--medo-typography-label-md);
+  color: var(--medo-color-text-primary);
+}
+
+/* The meta line never truncates (size, %, error). */
+.medo-file-item__meta {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--medo-space-1);
+  font: var(--medo-typography-caption);
+  font-variant-numeric: tabular-nums;
+  color: var(--medo-color-text-secondary);
+}
+
+.medo-file-item__meta > svg {
+  flex: none;
+  inline-size: calc(var(--medo-space-3) + var(--medo-space-0-5)); /* 14 */
+  block-size: calc(var(--medo-space-3) + var(--medo-space-0-5));
+  margin-block-start: calc(var(--medo-space-0-5) / 2);
+}
+
+.medo-file-item__done {
+  color: var(--medo-color-feedback-success-text);
+}
+
+.medo-file-item__meta--error {
+  color: var(--medo-color-feedback-danger-text);
+}
+
+.medo-file-item__progress {
+  margin-block-start: var(--medo-space-1);
+}
+
+.medo-file-item__actions {
+  display: flex;
+  flex: none;
+  gap: var(--medo-space-1);
+}
+
+/* Touch: the icon buttons grow to 44 px targets. */
+@media (max-width: 639.98px) {
+  .medo-file-item__actions .medo-button--icon-only {
+    inline-size: calc(var(--medo-space-10) + var(--medo-space-1));
+    block-size: calc(var(--medo-space-10) + var(--medo-space-1));
+  }
+}
+
+/* ---------- File tile ---------- */
+
+.medo-file-tile {
+  display: grid;
+  gap: var(--medo-space-2);
+  inline-size: calc(2 * var(--medo-space-16) + var(--medo-space-2)); /* 136 */
+}
+
+.medo-file-tile__media {
+  position: relative;
+  aspect-ratio: 1;
+  border-radius: var(--medo-radius-md);
+  background-color: var(--medo-color-surface-subtle);
+  overflow: hidden;
+}
+
+.medo-file-tile--error .medo-file-tile__media {
+  box-shadow: inset 0 0 0 var(--medo-border-width-thick) var(--medo-color-border-danger);
+}
+
+.medo-file-tile__image {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+}
+
+.medo-file-tile__placeholder {
+  display: grid;
+  place-items: center;
+  block-size: 100%;
+  color: var(--medo-color-text-secondary);
+}
+
+.medo-file-tile__placeholder > svg {
+  inline-size: var(--medo-size-icon-lg);
+  block-size: var(--medo-size-icon-lg);
+}
+
+.medo-file-tile__overlay {
+  position: absolute;
+  inset: 0;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--medo-space-2);
+  padding-inline: var(--medo-space-6);
+  border: 0;
+  background-color: var(--medo-color-overlay-media);
+  color: var(--medo-color-text-on-media);
+  font: var(--medo-typography-label-md);
+}
+
+/* Error: the danger border stays visible above the overlay. */
+.medo-file-tile--error .medo-file-tile__overlay {
+  border: var(--medo-border-width-thick) solid var(--medo-color-border-danger);
+  border-radius: inherit;
+}
+
+.medo-file-tile__overlay > svg {
+  inline-size: var(--medo-size-icon-lg);
+  block-size: var(--medo-size-icon-lg);
+}
+
+.medo-file-tile__retry {
+  cursor: pointer;
+  background-image: linear-gradient(var(--_tint, transparent), var(--_tint, transparent));
+}
+
+.medo-file-tile__retry[data-hovered] {
+  --_tint: var(--medo-color-state-hover-on-media);
+}
+
+.medo-file-tile__retry[data-pressed] {
+  --_tint: var(--medo-color-state-pressed-on-media);
+}
+
+.medo-file-tile__retry[data-focus-visible] {
+  outline: none;
+  box-shadow: var(--medo-shadow-focus-ring-inset);
+}
+
+.medo-file-tile__percent {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Progress bar on the image: white fill on a translucent track. */
+.medo-file-tile__progress {
+  inline-size: 100%;
+  --_fill: var(--medo-color-text-on-media);
+}
+
+.medo-file-tile__progress .medo-progress__track {
+  background-color: var(--medo-color-surface-on-media);
+}
+
+.medo-file-tile__remove {
+  position: absolute;
+  inset-block-start: var(--medo-space-2);
+  inset-inline-end: var(--medo-space-2);
+}
+
+.medo-file-tile__caption {
+  font: var(--medo-typography-caption);
+  color: var(--medo-color-text-secondary);
+}
+
+/* Error captions name the problem – they wrap instead of truncating. */
+.medo-file-tile__caption--error {
+  color: var(--medo-color-feedback-danger-text);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .medo-dropzone {
+    transition: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .medo-dropzone[data-drop-target],
+  .medo-dropzone[data-focus-visible] {
+    border-color: Highlight;
+  }
+  .medo-file-item--error,
+  .medo-file-tile--error .medo-file-tile__overlay {
+    border-color: Mark;
+  }
+}

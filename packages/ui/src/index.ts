@@ -107,3 +107,5 @@ export { StaticTable, Table, TableHeader, Column, TableBody, Row, Cell } from '.
 export type { StaticTableProps, TableProps, ColumnProps, CellProps } from './table/Table';
 export { ColumnsMenu } from './table/ColumnsMenu';
 export type { ColumnsMenuProps, ColumnOption } from './table/ColumnsMenu';
+export { UploadField, Dropzone, FileTrigger, FileItem, FileTile, formatBytes, defaultUploadTexts } from './upload/Upload';
+export type { UploadFieldProps, DropzoneProps, FileTriggerProps, FileItemProps, FileTileProps, UploadFile, UploadTexts } from './upload/Upload';

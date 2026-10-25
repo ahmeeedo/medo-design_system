@@ -235,6 +235,48 @@
   block-size: var(--medo-size-icon-lg);
 }
 
+/* ---------- Media icon button (Figma: Media icon button) ----------
+ * On images and video: media (overlay/media circle) · media-ghost (no fill, on a gradient bar).
+ * Hover/pressed tint the fill with state/hover-on-media · state/pressed-on-media (same in both themes).
+ * Focus: media 2 px ring outside · media-ghost 2 px ring inside. sm is 28 with a 44 px hit area.
+ */
+
+.medo-button--media,
+.medo-button--media-ghost {
+  --_fg: var(--medo-color-text-on-media);
+  --_tint: transparent;
+  position: relative;
+  border-radius: var(--medo-radius-full);
+  background-image: linear-gradient(var(--_tint), var(--_tint));
+}
+
+.medo-button--media {
+  --_bg: var(--medo-color-overlay-media);
+  --_focus: var(--medo-shadow-focus-ring);
+}
+
+.medo-button--media:is([data-hovered], :not([data-rac]):hover),
+.medo-button--media-ghost:is([data-hovered], :not([data-rac]):hover) {
+  --_tint: var(--medo-color-state-hover-on-media);
+}
+
+.medo-button--media:is([data-pressed], :not([data-rac]):active),
+.medo-button--media-ghost:is([data-pressed], :not([data-rac]):active) {
+  --_tint: var(--medo-color-state-pressed-on-media);
+}
+
+.medo-button--icon-only:is(.medo-button--media, .medo-button--media-ghost).medo-button--sm {
+  inline-size: calc(var(--medo-space-6) + var(--medo-space-1)); /* 28 */
+  block-size: calc(var(--medo-space-6) + var(--medo-space-1));
+}
+
+.medo-button--icon-only:is(.medo-button--media, .medo-button--media-ghost).medo-button--sm::before {
+  content: '';
+  position: absolute;
+  inset: calc(-1 * var(--medo-space-2)); /* 44 hit area */
+  border-radius: var(--medo-radius-full);
+}
+
 /* ---------- Button group (Figma: C01 Button group) ----------
  * The main action sits at the end of the reading path.
  *   footer  – right, primary rightmost, destructive left (forms, dialogs, card footers)
