@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { FieldError, Label, Text } from 'react-aria-components';
+import { FieldError, Label, Text, type ValidationResult } from 'react-aria-components';
 import { CircleAlert } from 'lucide-react';
 import '../utils/utilities.css';
 import './field.css';
@@ -25,7 +25,8 @@ export function FieldFooter({
   children,
 }: {
   description?: ReactNode;
-  errorMessage?: ReactNode;
+  /** A function gets the validation details (rangeUnderflow, badInput …) to name the rule. */
+  errorMessage?: ReactNode | ((validation: ValidationResult) => ReactNode);
   children?: ReactNode;
 }) {
   return (
@@ -39,7 +40,7 @@ export function FieldFooter({
         {(validation) => (
           <>
             <CircleAlert aria-hidden="true" />
-            <span>{errorMessage ?? validation.validationErrors.join(' ')}</span>
+            <span>{(typeof errorMessage === 'function' ? errorMessage(validation) : errorMessage) || validation.validationErrors.join(' ')}</span>
           </>
         )}
       </FieldError>

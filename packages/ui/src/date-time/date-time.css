@@ -1,0 +1,466 @@
+/**
+ * Date & Time – med.o Design System (Figma: C34 Date & Time)
+ *
+ *   Field   <div class="medo-input medo-input--md medo-date-box">                    Input look, hugs its content
+ *             <div class="medo-date-input"> segments (spinbuttons) </div> [– end] [calendar / clock action]
+ *           Min widths: date 200 · range 300 · time 120 · date + time 240
+ *           Segments 24 × 24 targets · focus action/primary + text/on-action, radius/sm · literals and placeholders text/secondary
+ *   Calendar padding space/4 · gap space/2 (lg space/3) · header Button ghost + Icon buttons
+ *           Day cell md 40 (circle 36) · lg 48 (circle 44, label/lg) · today 1 px ring action/primary + text/brand
+ *           selected action/primary · range band surface/brand-subtle · disabled/outside text/disabled · focus 2 px focus/ring
+ *           Months/Years 3 × 4 pills md 40 · lg 48, same states · week numbers 32 wide
+ *   Panel   Popover Size Auto · presets 168 with divider · time row with a divider
+ */
+
+/* ---------- Field ---------- */
+
+/* The box hugs its segments; label and messages keep the full width. */
+.medo-date-field {
+  align-items: flex-start;
+}
+
+.medo-date-field > .medo-field__footer {
+  align-self: stretch;
+}
+
+.medo-date-box {
+  --_min: 12.5rem; /* 200 */
+  inline-size: auto;
+  min-inline-size: var(--_min);
+  max-inline-size: 100%;
+}
+
+.medo-time-field .medo-date-box {
+  --_min: 7.5rem; /* 120 */
+}
+
+.medo-date-picker--time .medo-date-box {
+  --_min: 15rem; /* 240 */
+}
+
+.medo-date-picker--range .medo-date-box {
+  --_min: 18.75rem; /* 300 */
+}
+
+.medo-date-input {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+  outline: none;
+}
+
+.medo-date-box__dash {
+  color: var(--medo-color-text-secondary);
+}
+
+/* The action (calendar, clock) sits at the end. */
+.medo-date-box > .medo-input__action {
+  margin-inline-start: auto;
+}
+
+.medo-date-segment {
+  border-radius: var(--medo-radius-sm);
+  outline: none;
+  caret-color: transparent;
+}
+
+.medo-date-segment[data-type='literal'],
+.medo-date-segment[data-placeholder] {
+  color: var(--medo-color-text-secondary);
+}
+
+/* The format as in Figma: TT.MM.JJJJ · DD/MM/YYYY. */
+.medo-date-segment[data-placeholder] {
+  text-transform: uppercase;
+}
+
+/* Every editable segment is a 24 × 24 target (WCAG 2.5.8); the digits stay centred. */
+.medo-date-segment:not([data-type='literal']) {
+  display: inline-block;
+  box-sizing: border-box;
+  min-inline-size: var(--medo-space-6);
+  padding-inline: var(--medo-space-1);
+  line-height: var(--medo-space-6);
+  text-align: center;
+}
+
+.medo-date-segment[data-focused] {
+  background-color: var(--medo-color-action-primary);
+  color: var(--medo-color-text-on-action);
+}
+
+/* States come from the date input (data-focus-within, data-invalid, data-disabled). */
+.medo-input.medo-date-box:has(.medo-date-input[data-focus-within]) {
+  --_border: var(--medo-color-focus-ring);
+  box-shadow: inset 0 0 0 var(--medo-border-width-thin) var(--medo-color-focus-ring);
+}
+
+.medo-input.medo-date-box:has(.medo-date-input[data-invalid]) {
+  --_border: var(--medo-color-border-danger);
+}
+
+.medo-input.medo-date-box:has(.medo-date-input[data-disabled]) {
+  --_border: var(--medo-color-border-default);
+  background-color: var(--medo-color-action-disabled);
+  color: var(--medo-color-text-disabled);
+  cursor: not-allowed;
+}
+
+.medo-date-box:has(.medo-date-input[data-disabled]) :is(.medo-date-segment, .medo-date-box__dash) {
+  color: var(--medo-color-text-disabled);
+}
+
+@media (forced-colors: active) {
+  .medo-date-box:has(.medo-date-input[data-focus-within]) {
+    outline: var(--medo-focus-ring-width) solid Highlight;
+  }
+  .medo-date-segment[data-focused] {
+    forced-color-adjust: none;
+    background-color: Highlight;
+    color: HighlightText;
+  }
+}
+
+/* ---------- Calendar ---------- */
+
+.medo-calendar {
+  --_cell: var(--medo-size-control-md); /* 40 */
+  --_day: calc(var(--medo-size-control-md) - var(--medo-space-1)); /* 36 */
+  --_gap: var(--medo-space-2);
+  --_strong: var(--medo-typography-label-md-strong);
+
+  box-sizing: border-box;
+  inline-size: max-content;
+  padding: var(--medo-space-4);
+  color: var(--medo-color-text-primary);
+}
+
+.medo-calendar--lg {
+  --_cell: var(--medo-size-control-lg); /* 48 */
+  --_day: calc(var(--medo-size-control-lg) - var(--medo-space-1)); /* 44 */
+  --_gap: var(--medo-space-3);
+  --_strong: var(--medo-typography-label-lg-strong);
+}
+
+.medo-calendar__body {
+  display: grid;
+  gap: var(--_gap);
+}
+
+.medo-calendar__headers,
+.medo-calendar__months {
+  display: grid;
+  column-gap: var(--medo-space-8);
+}
+
+.medo-calendar__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--medo-space-2);
+}
+
+.medo-calendar__title--static {
+  padding-inline: var(--medo-space-3);
+  font: var(--medo-typography-label-md);
+}
+
+.medo-calendar__nav {
+  display: flex;
+  gap: var(--medo-space-1);
+}
+
+.medo-calendar__month {
+  position: relative;
+}
+
+.medo-calendar__grid {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+.medo-calendar__grid td {
+  padding: 0;
+}
+
+.medo-calendar__weekday {
+  block-size: var(--medo-space-6);
+  padding: 0;
+  font: var(--medo-typography-caption);
+  color: var(--medo-color-text-secondary);
+}
+
+.medo-calendar__cell {
+  position: relative;
+  display: grid;
+  place-items: center;
+  inline-size: var(--_cell);
+  block-size: var(--_cell);
+  font: var(--medo-typography-label-md);
+  cursor: pointer;
+  outline: none;
+}
+
+.medo-calendar--lg .medo-calendar__cell {
+  font: var(--medo-typography-label-lg);
+}
+
+.medo-calendar__day {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  inline-size: var(--_day);
+  block-size: var(--_day);
+  border-radius: var(--medo-radius-full);
+  transition: background-color var(--medo-motion-duration-fast) var(--medo-motion-easing-standard);
+}
+
+.medo-calendar__cell[data-hovered] .medo-calendar__day {
+  background-color: var(--medo-color-state-hover);
+}
+
+.medo-calendar__cell[data-pressed] .medo-calendar__day {
+  background-color: var(--medo-color-state-pressed);
+}
+
+.medo-calendar__cell[data-focus-visible] .medo-calendar__day {
+  outline: var(--medo-focus-ring-width) solid var(--medo-color-focus-ring);
+}
+
+.medo-calendar__cell[data-today] .medo-calendar__day {
+  box-shadow: inset 0 0 0 var(--medo-border-width-thin) var(--medo-color-action-primary);
+  color: var(--medo-color-text-brand);
+  font: var(--_strong);
+}
+
+/* Single: the selected day. Range: start and end (the days between get the band). */
+.medo-calendar:not(.medo-calendar--range) .medo-calendar__cell[data-selected] .medo-calendar__day,
+.medo-calendar__cell:is([data-selection-start], [data-selection-end]) .medo-calendar__day {
+  background-color: var(--medo-color-action-primary);
+  box-shadow: none;
+  color: var(--medo-color-text-on-action);
+  font: var(--_strong);
+}
+
+.medo-calendar:not(.medo-calendar--range) .medo-calendar__cell[data-selected][data-hovered] .medo-calendar__day,
+.medo-calendar__cell:is([data-selection-start], [data-selection-end])[data-hovered] .medo-calendar__day {
+  background-color: var(--medo-color-action-primary-hover);
+}
+
+.medo-calendar:not(.medo-calendar--range) .medo-calendar__cell[data-selected][data-pressed] .medo-calendar__day,
+.medo-calendar__cell:is([data-selection-start], [data-selection-end])[data-pressed] .medo-calendar__day {
+  background-color: var(--medo-color-action-primary-pressed);
+}
+
+/* Range band (36 high) behind the days; half at the ends, never on days of the other month. */
+.medo-calendar--range .medo-calendar__cell[data-selected]:not([data-outside-month])::before {
+  content: '';
+  position: absolute;
+  inset-inline: 0;
+  inset-block: calc((var(--_cell) - var(--_day)) / 2);
+  background-color: var(--medo-color-surface-brand-subtle);
+}
+
+.medo-calendar--range .medo-calendar__cell[data-selection-start]:not([data-outside-month])::before {
+  inset-inline-start: 50%;
+}
+
+.medo-calendar--range .medo-calendar__cell[data-selection-end]:not([data-outside-month])::before {
+  inset-inline-end: 50%;
+}
+
+.medo-calendar--range .medo-calendar__cell[data-selection-start][data-selection-end]::before {
+  content: none;
+}
+
+.medo-calendar__cell:is([data-disabled], [data-unavailable], [data-outside-month]) {
+  color: var(--medo-color-text-disabled);
+  cursor: default;
+}
+
+.medo-calendar__cell:is([data-disabled], [data-outside-month]) .medo-calendar__day {
+  background-color: transparent;
+}
+
+.medo-calendar__cell[data-outside-month] {
+  pointer-events: none;
+}
+
+/* Days of the other month never show today or a selection – the neighbouring grid does. */
+.medo-calendar .medo-calendar__cell[data-outside-month] .medo-calendar__day {
+  background-color: transparent;
+  box-shadow: none;
+  color: var(--medo-color-text-disabled);
+  font: inherit;
+}
+
+.medo-calendar__cell[data-invalid] .medo-calendar__day {
+  background-color: var(--medo-color-feedback-danger-solid);
+  color: var(--medo-color-feedback-danger-on-solid);
+}
+
+/* Week numbers: a 32 px column before the rows. */
+.medo-calendar__month--weeks {
+  padding-inline-start: var(--medo-space-8);
+}
+
+.medo-calendar__weeks-label,
+.medo-calendar__week {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  inline-size: var(--medo-space-8);
+  font: var(--medo-typography-caption);
+  color: var(--medo-color-text-secondary);
+  pointer-events: none;
+}
+
+.medo-calendar__weeks-label {
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  block-size: var(--medo-space-6);
+}
+
+.medo-calendar__week {
+  inset-block: 0;
+  inset-inline-start: calc(-1 * var(--medo-space-8));
+}
+
+/* ---------- Months · Years ---------- */
+
+.medo-calendar__periods {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--medo-space-2);
+  min-inline-size: calc(7 * var(--_cell));
+}
+
+.medo-calendar__period {
+  block-size: var(--_cell);
+  padding: 0;
+  border: 0;
+  border-radius: var(--medo-radius-full);
+  background-color: transparent;
+  color: var(--medo-color-text-primary);
+  font: var(--medo-typography-label-md);
+  cursor: pointer;
+  outline: none;
+}
+
+.medo-calendar--lg .medo-calendar__period {
+  font: var(--medo-typography-label-lg);
+}
+
+.medo-calendar__period[data-hovered] {
+  background-color: var(--medo-color-state-hover);
+}
+
+.medo-calendar__period[data-pressed] {
+  background-color: var(--medo-color-state-pressed);
+}
+
+.medo-calendar__period[data-current] {
+  box-shadow: inset 0 0 0 var(--medo-border-width-thin) var(--medo-color-action-primary);
+  color: var(--medo-color-text-brand);
+  font: var(--_strong);
+}
+
+.medo-calendar__period[data-selected] {
+  background-color: var(--medo-color-action-primary);
+  box-shadow: none;
+  color: var(--medo-color-text-on-action);
+  font: var(--_strong);
+}
+
+.medo-calendar__period[data-selected][data-hovered] {
+  background-color: var(--medo-color-action-primary-hover);
+}
+
+.medo-calendar__period[data-focus-visible] {
+  outline: var(--medo-focus-ring-width) solid var(--medo-color-focus-ring);
+}
+
+.medo-calendar__period[data-disabled] {
+  background-color: transparent;
+  color: var(--medo-color-text-disabled);
+  cursor: default;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .medo-calendar__day {
+    transition: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .medo-calendar__cell:is([data-selected], [data-selection-start], [data-selection-end]) .medo-calendar__day,
+  .medo-calendar__period[data-selected] {
+    forced-color-adjust: none;
+    background-color: Highlight;
+    color: HighlightText;
+  }
+  .medo-calendar__cell[data-focus-visible] .medo-calendar__day,
+  .medo-calendar__period[data-focus-visible] {
+    outline-color: CanvasText;
+  }
+}
+
+/* ---------- Panel ---------- */
+
+.medo-date-popover {
+  max-inline-size: calc(100vw - 2 * var(--medo-space-4));
+}
+
+.medo-date-panel {
+  display: grid;
+}
+
+.medo-date-panel__range--presets {
+  display: grid;
+  grid-template-columns: 10.5rem auto; /* presets 168 */
+}
+
+.medo-date-panel__presets {
+  max-block-size: none;
+  padding: var(--medo-space-2);
+  border-inline-end: var(--medo-border-width-thin) solid var(--medo-color-border-default);
+}
+
+/* Date + time: the time row below the calendar, label left. */
+.medo-date-panel__time {
+  padding: var(--medo-space-4);
+  border-block-start: var(--medo-border-width-thin) solid var(--medo-color-border-default);
+}
+
+.medo-date-panel__time .medo-field {
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--medo-space-4);
+}
+
+/* Bottom Sheet: the lg calendar fills the width, presets above it. */
+.medo-date-sheet .medo-calendar {
+  inline-size: 100%;
+  padding-inline: var(--medo-space-2);
+}
+
+.medo-date-sheet .medo-calendar__grid {
+  margin-inline: auto;
+}
+
+.medo-date-sheet .medo-date-panel__range--presets {
+  grid-template-columns: 1fr;
+}
+
+.medo-date-sheet .medo-date-panel__presets {
+  border-inline-end: 0;
+  border-block-end: var(--medo-border-width-thin) solid var(--medo-color-border-default);
+}
+
+/* Time slots: Popover width 202. */
+.medo-time-slots .medo-listbox {
+  min-inline-size: 12.5rem;
+}
