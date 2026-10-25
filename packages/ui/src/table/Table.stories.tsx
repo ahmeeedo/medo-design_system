@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import type { Selection, SortDescriptor } from 'react-aria-components';
 import { fn } from 'storybook/test';
-import { Archive, Download, Funnel, Mail, Plus, Search, Trash2 } from 'lucide-react';
+import { Archive, Download, Funnel, Mail, Plus, Trash2 } from 'lucide-react';
 import { Cell, Column, Row, StaticTable, Table, TableBody, TableHeader } from './Table';
 import { ColumnsMenu } from './ColumnsMenu';
 import { Badge, type BadgeTone } from '../badge/Badge';
@@ -11,7 +11,7 @@ import { EmptyState } from '../empty-state/EmptyState';
 import { BulkActionBar } from '../bulk-action-bar/BulkActionBar';
 import { Pagination } from '../pagination/Pagination';
 import { Button } from '../button/Button';
-import { TextField } from '../text-field/TextField';
+import { SearchField } from '../search/SearchField';
 import { Avatar } from '../avatar/Avatar';
 import { Menu, MenuButton, MenuItem, MenuTrigger } from '../menu/Menu';
 import { ListCard, ListView } from '../list-view/ListView';
@@ -349,13 +349,10 @@ function InvoiceWorkspace({ forceMobile = false }: { forceMobile?: boolean }) {
   );
   const search = (
     <div style={{ inlineSize: isMobile ? '100%' : '15rem' }}>
-      <TextField
-        // Until the Search component exists: the label is only for screen readers.
-        label={<span className="medo-visually-hidden">Search invoices</span>}
+      <SearchField
+        aria-label="Search invoices"
         placeholder="Search invoices"
-        type="search"
         size={isMobile ? 'lg' : 'sm'}
-        leadingIcon={<Search />}
         value={query}
         onChange={(v) => {
           setQuery(v);

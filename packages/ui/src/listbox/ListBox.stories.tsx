@@ -84,7 +84,9 @@ export const Types: Story = {
 export const Content: Story = {
   name: 'Groups, descriptions, wrapping',
   parameters: {
-    docs: { description: { story: 'Headings only with two or more groups; a line divides the groups automatically. Long labels wrap; icon and check stay on the first line.' } },
+    docs: {
+      description: { story: 'Headings only with two or more groups; a line divides the groups automatically. Long labels wrap; icon and check stay on the first line.' },
+    },
   },
   render: () => (
     <div style={frame}>

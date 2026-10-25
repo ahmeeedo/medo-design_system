@@ -12,6 +12,7 @@ import {
 } from 'react-aria-components';
 import { Check } from 'lucide-react';
 import { cx } from '../utils/cx';
+import { Highlight as SharedHighlight } from '../utils/highlight';
 import '../checkbox/choice.css';
 import './listbox.css';
 
@@ -32,10 +33,7 @@ export interface ListBoxProps<T> extends Omit<AriaListBoxProps<T>, 'className' |
 export function ListBox<T extends object>({ size = 'md', className, ...props }: ListBoxProps<T>) {
   return (
     <ListBoxSizeContext.Provider value={size}>
-      <AriaListBox
-        {...props}
-        className={cx('medo-listbox', `medo-listbox--${size}`, className)}
-      />
+      <AriaListBox {...props} className={cx('medo-listbox', `medo-listbox--${size}`, className)} />
     </ListBoxSizeContext.Provider>
   );
 }
@@ -57,7 +55,11 @@ export function Option({ children, description, icon, textValue, ...props }: Opt
       {({ isSelected, selectionMode }) => (
         <>
           {selectionMode === 'multiple' && (
-            <span className={cx('medo-choice', 'medo-checkbox', `medo-choice--${size}`, 'medo-option__checkbox')} data-selected={isSelected || undefined} aria-hidden="true">
+            <span
+              className={cx('medo-choice', 'medo-checkbox', `medo-choice--${size}`, 'medo-option__checkbox')}
+              data-selected={isSelected || undefined}
+              aria-hidden="true"
+            >
               <span className="medo-choice__control">{isSelected && <Check />}</span>
             </span>
           )}
@@ -120,15 +122,13 @@ export function ListBoxMessage({ children }: { children: ReactNode }) {
 
 /* ---------- Match highlight (Combobox) ---------- */
 
-const plain = (text: string) => text.normalize('NFD').replace(/\p{Diacritic}/gu, '').toLocaleLowerCase();
+/** Search text to highlight, for lists filtered outside a ComboBox (e.g. the search in a Bottom Sheet, Quick search). */
+export const OptionHighlightContext = createContext<string | null>(null);
 
 /**
  * Inside a Combobox: shows the typed text in bold within the option label (contains match,
  * case and accent insensitive, „mul“ → „Müller“). Visual only; screen readers read plain text.
  */
-/** Search text to highlight, for lists filtered outside a ComboBox (e.g. the search in a Bottom Sheet). */
-export const OptionHighlightContext = createContext<string | null>(null);
-
 function Highlight({ children }: { children: ReactNode }) {
   const combo = useContext(ComboBoxStateContext);
   const external = useContext(OptionHighlightContext);
@@ -136,25 +136,5 @@ function Highlight({ children }: { children: ReactNode }) {
   // The input shows the chosen value (single): nothing to highlight then.
   if (combo?.selectedItems.some((item) => item?.textValue === query)) query = '';
   if (!query || typeof children !== 'string') return <>{children}</>;
-
-  // Map every character of the label to its plain form, so indices stay in the original text.
-  const chars = [...children];
-  const map: number[] = [];
-  let flat = '';
-  chars.forEach((char, i) => {
-    const p = plain(char);
-    flat += p;
-    for (let k = 0; k < p.length; k++) map.push(i);
-  });
-  const at = flat.indexOf(plain(query));
-  if (at < 0) return <>{children}</>;
-  const start = map[at];
-  const end = map[at + plain(query).length - 1] + 1;
-  return (
-    <>
-      {chars.slice(0, start).join('')}
-      <span className="medo-option__match">{chars.slice(start, end).join('')}</span>
-      {chars.slice(end).join('')}
-    </>
-  );
+  return <SharedHighlight text={children} query={query} as="span" className="medo-option__match" />;
 }
