@@ -232,3 +232,115 @@
     background-color: CanvasText;
   }
 }
+
+/* ---------- Cards (Figma: C37 Table card – records on mobile) ---------- */
+
+.medo-list-view--cards {
+  gap: var(--medo-space-3);
+}
+
+.medo-list-card {
+  box-sizing: border-box;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--medo-space-3);
+  padding: var(--medo-space-4);
+  border: var(--medo-border-width-thin) solid var(--medo-color-border-default);
+  border-radius: var(--medo-radius-md);
+  background-color: var(--medo-color-surface-default);
+  color: var(--medo-color-text-primary);
+  cursor: default;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.medo-list-card[data-href],
+.medo-list-card[data-allows-selection],
+.medo-list-card[data-has-action] {
+  cursor: pointer;
+}
+
+.medo-list-card[data-hovered] {
+  background-color: var(--medo-color-state-hover);
+}
+
+.medo-list-card[data-pressed] {
+  background-color: var(--medo-color-state-pressed);
+}
+
+.medo-list-card[data-selected] {
+  border-color: var(--medo-color-action-primary);
+  background-color: var(--medo-color-action-selected);
+}
+
+.medo-list-card[data-focus-visible] {
+  box-shadow: var(--medo-shadow-focus-ring);
+}
+
+.medo-list-card[data-disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.medo-list-card__check {
+  display: flex;
+  flex: none;
+}
+
+.medo-list-card__content {
+  display: grid;
+  flex: 1;
+  gap: var(--medo-space-2);
+  min-inline-size: 0;
+}
+
+.medo-list-card__top,
+.medo-list-card__bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--medo-space-3);
+  min-inline-size: 0;
+}
+
+.medo-list-card__title {
+  overflow: hidden;
+  font: var(--medo-typography-label-md);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.medo-list-card__amount {
+  flex: none;
+  font: var(--medo-typography-label-md-strong);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.medo-list-card__description {
+  display: flex;
+  align-items: center;
+  gap: var(--medo-space-2);
+  min-inline-size: 0;
+  overflow: hidden;
+  font: var(--medo-typography-body-sm);
+  color: var(--medo-color-text-secondary);
+  white-space: nowrap;
+}
+
+.medo-list-card__meta {
+  font: var(--medo-typography-caption);
+  font-variant-numeric: tabular-nums;
+  color: var(--medo-color-text-secondary);
+}
+
+.medo-list-card--loading .medo-list-card__content {
+  gap: var(--medo-space-3);
+}
+
+@media (forced-colors: active) {
+  .medo-list-card[data-selected] {
+    outline: 2px solid Highlight;
+    outline-offset: -2px;
+  }
+}

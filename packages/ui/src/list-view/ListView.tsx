@@ -10,8 +10,8 @@ import './list-view.css';
 export interface ListViewProps<T> extends Omit<GridListProps<T>, 'className' | 'style' | 'layout' | 'keyboardNavigationBehavior'> {
   /** Required: names the list („Inbox“). */
   'aria-label'?: string;
-  /** plain: full-page lists (inbox) · card: inside settings or dashboards (border, radius/lg). */
-  variant?: 'plain' | 'card';
+  /** plain: full-page lists (inbox) · card: inside settings or dashboards (border, radius/lg) · cards: records on mobile (Table cards, use ListCard). */
+  variant?: 'plain' | 'card' | 'cards';
   /** Shows 3 skeleton rows instead of the items (aria-busy). */
   isLoading?: boolean;
   /** Shown when there are no rows: an EmptyState with `size="inline"`. */
@@ -30,19 +30,29 @@ export function ListView<T extends object>({ variant = 'plain', isLoading = fals
   if (isLoading) {
     return (
       <div role="list" aria-busy="true" aria-label={props['aria-label']} className={cx('medo-list-view', `medo-list-view--${variant}`, className)}>
-        {Array.from({ length: 3 }, (_, i) => (
-          <div key={i} role="listitem" className="medo-list-row medo-list-row--loading">
-            <span className="medo-list-row__leading">
-              <Skeleton shape="circle" width={40} height={40} />
-            </span>
-            <span className="medo-list-row__main">
-              <span className="medo-list-row__content">
-                <Skeleton width="40%" />
+        {Array.from({ length: 3 }, (_, i) =>
+          variant === 'cards' ? (
+            <div key={i} role="listitem" className="medo-list-card medo-list-card--loading">
+              <span className="medo-list-card__content">
+                <Skeleton width="50%" />
+                <Skeleton width="35%" />
                 <Skeleton width="70%" />
               </span>
-            </span>
-          </div>
-        ))}
+            </div>
+          ) : (
+            <div key={i} role="listitem" className="medo-list-row medo-list-row--loading">
+              <span className="medo-list-row__leading">
+                <Skeleton shape="circle" width={40} height={40} />
+              </span>
+              <span className="medo-list-row__main">
+                <span className="medo-list-row__content">
+                  <Skeleton width="40%" />
+                  <Skeleton width="70%" />
+                </span>
+              </span>
+            </div>
+          ),
+        )}
       </div>
     );
   }
@@ -132,5 +142,56 @@ export function ListRowIcon({ children }: { children: ReactNode }) {
     <span className="medo-list-row__icon" aria-hidden="true">
       {children}
     </span>
+  );
+}
+
+export interface ListCardProps extends Omit<GridListItemProps, 'children' | 'className' | 'style' | 'textValue'> {
+  /** Required. The record („INV-2026-0140“). Also the card's accessible name. */
+  title: string;
+  /** Key number on the right of the title (amount, count) – strong, never truncated. */
+  amount?: ReactNode;
+  /** Second line, e.g. the owner with an Avatar (sized xs automatically). */
+  description?: ReactNode;
+  /** Bottom left: date or other meta in caption. */
+  meta?: ReactNode;
+  /** Bottom right: status as Badge sm with dot. */
+  status?: ReactNode;
+}
+
+/**
+ * List card – a record as a card (Figma: C37 Table card), the mobile form of a table row. Use inside
+ * `<ListView variant="cards">`: the whole card opens the record (`href` or `onAction`); in selection mode
+ * a checkbox lg shows and a tap toggles the card.
+ */
+export function ListCard({ title, amount, description, meta, status, ...props }: ListCardProps) {
+  return (
+    <GridListItem {...props} textValue={title} className="medo-list-card">
+      {({ selectionMode }) => (
+        <>
+          {selectionMode !== 'none' && (
+            <span className="medo-list-card__check">
+              <Checkbox slot="selection" size="lg" />
+            </span>
+          )}
+          <span className="medo-list-card__content">
+            <span className="medo-list-card__top">
+              <span className="medo-list-card__title">{title}</span>
+              {amount && <span className="medo-list-card__amount">{amount}</span>}
+            </span>
+            {description && (
+              <AvatarSizeContext.Provider value="xs">
+                <span className="medo-list-card__description">{description}</span>
+              </AvatarSizeContext.Provider>
+            )}
+            {(meta || status) && (
+              <span className="medo-list-card__bottom">
+                <span className="medo-list-card__meta">{meta}</span>
+                {status}
+              </span>
+            )}
+          </span>
+        </>
+      )}
+    </GridListItem>
   );
 }

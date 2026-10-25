@@ -58,6 +58,10 @@ export function StaticTable({ children, caption, captionHidden, density = 'stand
 
 export interface TableProps extends Omit<AriaTableProps, 'className' | 'style'> {
   density?: Density;
+  /** Bar above the header: search (Input sm 240), filter, ColumnsMenu, primary action on the right (Buttons sm). */
+  toolbar?: ReactNode;
+  /** Bar below the rows, usually Pagination. */
+  footer?: ReactNode;
   striped?: boolean;
   plain?: boolean;
   className?: string;
@@ -69,13 +73,21 @@ export interface TableProps extends Omit<AriaTableProps, 'className' | 'style'> 
  * arrow keys move between cells, Space selects, Enter opens, sortable headers announce the order.
  * Data logic (sorting, filtering, paging) stays in your code or a headless table library.
  */
-export function Table({ density = 'standard', striped, plain, className, style, ...props }: TableProps) {
+export function Table({ density = 'standard', striped, plain, toolbar, footer, className, style, ...props }: TableProps) {
+  const table = <AriaTable {...props} className={cx('medo-table', density === 'compact' && 'medo-table--compact', striped && 'medo-table--striped')} />;
+  if (!toolbar && !footer) {
+    return (
+      <div className={cx('medo-table-container', plain && 'medo-table-container--plain', className)} style={style}>
+        {table}
+      </div>
+    );
+  }
+  // Toolbar – rows – footer in one bordered surface; only the table scrolls.
   return (
-    <div className={cx('medo-table-container', plain && 'medo-table-container--plain', className)} style={style}>
-      <AriaTable
-        {...props}
-        className={cx('medo-table', density === 'compact' && 'medo-table--compact', striped && 'medo-table--striped')}
-      />
+    <div className={cx('medo-table-frame', plain && 'medo-table-frame--plain', className)} style={style}>
+      {toolbar && <div className="medo-table__toolbar">{toolbar}</div>}
+      <div className="medo-table-container medo-table-container--plain">{table}</div>
+      {footer && <div className="medo-table__footer">{footer}</div>}
     </div>
   );
 }

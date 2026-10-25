@@ -1,11 +1,25 @@
 import { useMemo, useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import type { Selection, SortDescriptor } from 'react-aria-components';
+import { fn } from 'storybook/test';
+import { Archive, Download, Funnel, Mail, Plus, Search, Trash2 } from 'lucide-react';
 import { Cell, Column, Row, StaticTable, Table, TableBody, TableHeader } from './Table';
+import { ColumnsMenu } from './ColumnsMenu';
 import { Badge, type BadgeTone } from '../badge/Badge';
 import { Skeleton } from '../progress/Progress';
 import { EmptyState } from '../empty-state/EmptyState';
+import { BulkActionBar } from '../bulk-action-bar/BulkActionBar';
+import { Pagination } from '../pagination/Pagination';
+import { Button } from '../button/Button';
+import { TextField } from '../text-field/TextField';
+import { Avatar } from '../avatar/Avatar';
+import { Menu, MenuButton, MenuItem, MenuTrigger } from '../menu/Menu';
+import { ListCard, ListView } from '../list-view/ListView';
+import { MOBILE_QUERY, useMediaQuery } from '../utils/useMediaQuery';
 import { LightDark } from '../story-helpers';
+
+/** Stories only: a transformed box is the containing block for the fixed bulk bar, so it stays inside the preview. */
+const stage: React.CSSProperties = { transform: 'translateZ(0)', paddingBlockEnd: 'var(--medo-space-20)' };
 
 type Invoice = { id: string; customer: string; status: 'Paid' | 'Open' | 'Overdue'; date: string; amount: number };
 
@@ -32,12 +46,7 @@ function InvoiceTable({ density = 'standard' as 'standard' | 'compact', selectab
   const count = selected === 'all' ? invoices.length : selected.size;
 
   return (
-    <div style={{ display: 'grid', gap: 'var(--medo-space-3)' }}>
-      {selectable && (
-        <p aria-live="polite" style={{ margin: 0, font: 'var(--medo-typography-body-sm)', color: 'var(--medo-color-text-secondary)' }}>
-          {count} of {invoices.length} selected
-        </p>
-      )}
+    <div style={selectable ? stage : undefined}>
       <Table
         aria-label="Invoices"
         density={density}
@@ -80,6 +89,18 @@ function InvoiceTable({ density = 'standard' as 'standard' | 'compact', selectab
           )}
         </TableBody>
       </Table>
+      {selectable && (
+        <BulkActionBar
+          variant="desktop"
+          count={count}
+          onClear={() => setSelected(new Set())}
+          actions={[
+            { label: 'Export', onAction: fn() },
+            { label: 'Archive', onAction: fn() },
+            { label: 'Delete', onAction: fn(), variant: 'danger' },
+          ]}
+        />
+      )}
     </div>
   );
 }
@@ -96,6 +117,7 @@ const meta = {
           'Two components, one look. **StaticTable** is a native `<table>` for content and simple data. ' +
           '**Table** is interactive (React Aria Table): arrow keys move between cells, sortable headers set `aria-sort`, Space selects a row. ' +
           'Text left, numbers right with tabular figures. Data logic (sort, filter, paging) stays in your code. ' +
+          '`toolbar` and `footer` put search, ColumnsMenu, actions and Pagination into the same bordered surface; selection shows the Bulk action bar; below 640 px records become List view cards. ' +
           'Styles: `medo-table-container`, `medo-table`, `medo-table--compact`.',
       },
     },
@@ -111,6 +133,8 @@ export const Playground: Story = {
     density: { control: 'inline-radio', options: ['standard', 'compact'] },
     striped: { control: 'boolean' },
     plain: { control: 'boolean', description: 'Without border and radius, e.g. inside a card.' },
+    toolbar: { control: false, description: 'Bar above the header – see „Toolbar, columns, bulk actions, pagination“.' },
+    footer: { control: false, description: 'Bar below the rows, usually Pagination.' },
     className: { control: false },
     style: { control: false },
   },
@@ -159,7 +183,14 @@ export const Sortable: Story = {
 };
 
 export const Selectable: Story = {
-  parameters: { docs: { description: { story: 'Checkbox column first. The header checkbox selects all; the count above the table is announced.' } } },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'Checkbox column first; the header checkbox selects the page (indeterminate when some are selected). With ≥ 1 selected the Bulk action bar floats in – the layout never shifts. The count is announced; Esc or × clears the selection.',
+      },
+    },
+  },
   render: () => <InvoiceTable selectable />,
 };
 
@@ -230,4 +261,281 @@ export const LightAndDark: Story = {
       <InvoiceTable selectable />
     </LightDark>
   ),
+};
+
+/* ---------- Full example: toolbar, columns, selection, bulk bar, pagination – cards on mobile ---------- */
+
+type InvoiceRecord = { id: string; customer: string; status: Invoice['status']; date: string; amount: number };
+const people = ['Lea Marquardt', 'Sam Kowalski', 'Jonas Bauer', 'Aylin Demir', 'Mia Hoffmann', 'Noah Weber'];
+const statuses: Invoice['status'][] = ['Paid', 'Open', 'Overdue', 'Paid', 'Open', 'Paid'];
+const records: InvoiceRecord[] = Array.from({ length: 46 }, (_, i) => ({
+  id: `INV-2026-${String(142 - i).padStart(4, '0')}`,
+  customer: people[i % 6],
+  status: statuses[(i * 5) % 6],
+  date: new Date(Date.UTC(2026, 9, 12) - i * 86400000 * 1.5).toISOString().slice(0, 10),
+  amount: 120 + ((i * 731) % 3200) + (i % 2) * 0.5,
+}));
+
+const columnOptions = [
+  { id: 'id', label: 'Invoice', isLocked: true },
+  { id: 'customer', label: 'Customer' },
+  { id: 'date', label: 'Date' },
+  { id: 'status', label: 'Status' },
+  { id: 'amount', label: 'Amount' },
+  { id: 'actions', label: 'Actions', isLocked: true },
+];
+
+function RowMenu({ id }: { id: string }) {
+  return (
+    <MenuTrigger>
+      <MenuButton aria-label={`More actions for ${id}`} size="sm" />
+      <Menu>
+        <MenuItem id="send" icon={<Mail />}>
+          Send reminder
+        </MenuItem>
+        <MenuItem id="download" icon={<Download />}>
+          Download PDF
+        </MenuItem>
+        <MenuItem id="delete" icon={<Trash2 />} variant="danger">
+          Delete
+        </MenuItem>
+      </Menu>
+    </MenuTrigger>
+  );
+}
+
+function InvoiceWorkspace({ forceMobile = false }: { forceMobile?: boolean }) {
+  const isMobile = useMediaQuery(MOBILE_QUERY) || forceMobile;
+  const [query, setQuery] = useState('');
+  const [sort, setSort] = useState<SortDescriptor>({ column: 'date', direction: 'descending' });
+  const [selected, setSelected] = useState<Selection>(new Set());
+  const [selecting, setSelecting] = useState(false);
+  const [visible, setVisible] = useState(['id', 'customer', 'date', 'status', 'amount', 'actions']);
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
+
+  const filtered = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    const list = records.filter((r) => !q || r.id.toLowerCase().includes(q) || r.customer.toLowerCase().includes(q));
+    const key = sort.column as keyof InvoiceRecord;
+    const sorted = [...list].sort((a, b) => (a[key] < b[key] ? -1 : a[key] > b[key] ? 1 : 0));
+    return sort.direction === 'descending' ? sorted.reverse() : sorted;
+  }, [query, sort]);
+  const rows = filtered.slice((page - 1) * pageSize, page * pageSize);
+  const count = selected === 'all' ? filtered.length : selected.size;
+  const clear = () => setSelected(new Set());
+  const columns = columnOptions.filter((c) => visible.includes(c.id));
+
+  const empty = (
+    <EmptyState
+      type="no-results"
+      size="inline"
+      title={`No results for “${query}”`}
+      description="Check the spelling or search for a customer."
+      action={{ label: 'Clear search', onPress: () => setQuery('') }}
+    />
+  );
+  const bar = (
+    <BulkActionBar
+      variant={isMobile ? 'mobile' : 'desktop'}
+      count={count}
+      onClear={clear}
+      actions={[
+        ...(isMobile ? [] : [{ label: 'Export', onAction: fn(), icon: <Download /> }]),
+        { label: 'Archive', onAction: fn(), icon: <Archive /> },
+        { label: 'Delete', onAction: fn(), variant: 'danger' as const, icon: <Trash2 /> },
+      ]}
+    />
+  );
+  const search = (
+    <div style={{ inlineSize: isMobile ? '100%' : '15rem' }}>
+      <TextField
+        // Until the Search component exists: the label is only for screen readers.
+        label={<span className="medo-visually-hidden">Search invoices</span>}
+        placeholder="Search invoices"
+        type="search"
+        size={isMobile ? 'lg' : 'sm'}
+        leadingIcon={<Search />}
+        value={query}
+        onChange={(v) => {
+          setQuery(v);
+          setPage(1);
+        }}
+      />
+    </div>
+  );
+
+  if (isMobile) {
+    return (
+      <div style={{ ...stage, display: 'grid', gap: 'var(--medo-space-3)', maxInlineSize: '23.4375rem' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <h2 className="medo-text-heading-sm" style={{ margin: 0 }}>
+            Invoices
+          </h2>
+          <Button
+            variant="ghost"
+            onPress={() => {
+              setSelecting((s) => !s);
+              clear();
+            }}
+          >
+            {selecting ? 'Done' : 'Select'}
+          </Button>
+        </div>
+        {search}
+        <ListView
+          aria-label="Invoices"
+          variant="cards"
+          items={rows}
+          selectionMode={selecting ? 'multiple' : 'none'}
+          selectedKeys={selected}
+          onSelectionChange={setSelected}
+          onAction={selecting ? undefined : fn()}
+          emptyState={empty}
+        >
+          {(r) => (
+            <ListCard
+              id={r.id}
+              title={r.id}
+              amount={money.format(r.amount)}
+              description={
+                <>
+                  <Avatar name={r.customer} decorative />
+                  {r.customer}
+                </>
+              }
+              meta={day.format(new Date(r.date))}
+              status={
+                <Badge tone={TONE[r.status]} size="sm" dot>
+                  {r.status}
+                </Badge>
+              }
+            />
+          )}
+        </ListView>
+        <Pagination variant="compact" aria-label="Invoice pages" page={page} onChange={setPage} totalItems={filtered.length} pageSize={pageSize} />
+        {bar}
+      </div>
+    );
+  }
+
+  return (
+    <div style={stage}>
+      <Table
+        aria-label="Invoices"
+        sortDescriptor={sort}
+        onSortChange={setSort}
+        selectionMode="multiple"
+        selectedKeys={selected}
+        onSelectionChange={setSelected}
+        toolbar={
+          <>
+            {search}
+            <Button variant="secondary" size="sm" startIcon={<Funnel />}>
+              Filter
+            </Button>
+            <ColumnsMenu columns={columnOptions} visibleColumns={visible} onVisibleColumnsChange={setVisible} />
+            <span style={{ flex: 1 }} />
+            <Button size="sm" startIcon={<Plus />}>
+              New invoice
+            </Button>
+          </>
+        }
+        footer={
+          <Pagination
+            aria-label="Invoice pages"
+            page={page}
+            onChange={setPage}
+            totalItems={filtered.length}
+            pageSize={pageSize}
+            onPageSizeChange={(n) => {
+              setPageSize(n);
+              setPage(1);
+            }}
+          />
+        }
+      >
+        <TableHeader columns={columns}>
+          {(c) =>
+            c.id === 'actions' ? (
+              <Column id="actions">
+                <span className="medo-visually-hidden">Actions</span>
+              </Column>
+            ) : (
+              <Column id={c.id} isRowHeader={c.id === 'id'} allowsSorting={c.id !== 'status'} align={c.id === 'amount' ? 'end' : 'start'}>
+                {c.label}
+              </Column>
+            )
+          }
+        </TableHeader>
+        <TableBody items={rows} dependencies={[visible]} renderEmptyState={() => empty}>
+          {(r) => (
+            <Row id={r.id} columns={columns}>
+              {(c) => {
+                switch (c.id) {
+                  case 'customer':
+                    return (
+                      <Cell>
+                        <span style={{ display: 'inline-flex', alignItems: 'center', gap: 'var(--medo-space-2)' }}>
+                          <Avatar name={r.customer} size="sm" decorative />
+                          {r.customer}
+                        </span>
+                      </Cell>
+                    );
+                  case 'date':
+                    return <Cell>{day.format(new Date(r.date))}</Cell>;
+                  case 'status':
+                    return (
+                      <Cell>
+                        <Badge tone={TONE[r.status]} size="sm" dot>
+                          {r.status}
+                        </Badge>
+                      </Cell>
+                    );
+                  case 'amount':
+                    return <Cell align="end">{money.format(r.amount)}</Cell>;
+                  case 'actions':
+                    return (
+                      <Cell>
+                        <RowMenu id={r.id} />
+                      </Cell>
+                    );
+                  default:
+                    return <Cell>{r.id}</Cell>;
+                }
+              }}
+            </Row>
+          )}
+        </TableBody>
+      </Table>
+      {bar}
+    </div>
+  );
+}
+
+export const FullExample: Story = {
+  name: 'Toolbar, columns, bulk actions, pagination',
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'Toolbar (search Input sm 240, Filter, ColumnsMenu, primary action), sortable header, selection with the Bulk action bar, Pagination in the footer – one bordered surface. ' +
+          '„Columns“ shows or hides columns; Invoice and Actions are locked. Search for „xyz“ for the empty state. Below 640 px the same data becomes Table cards (next story).',
+      },
+    },
+  },
+  render: () => <InvoiceWorkspace />,
+};
+
+export const MobileCards: Story = {
+  name: 'Mobile: cards',
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'Below 640 px records become a List view with `variant="cards"` (ListCard: title + amount, customer, date + status). The whole card opens the record. „Select“ shows checkboxes lg and the bar at the bottom incl. safe area. Comparison data (prices, specs) scrolls horizontally instead.',
+      },
+    },
+  },
+  render: () => <InvoiceWorkspace forceMobile />,
 };

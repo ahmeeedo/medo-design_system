@@ -1,0 +1,91 @@
+/**
+ * Bulk action bar – med.o Design System (Figma: C37 Bulk action bar)
+ *
+ *   <div class="medo-bulk-bar medo-bulk-bar--desktop" role="toolbar" aria-label="Bulk actions">
+ *     <span class="medo-bulk-bar__count">3 selected</span> | <button class="medo-toast__button medo-toast__action">Export</button> … | ×
+ *   </div>
+ * Desktop: floating, bottom centre, 24 px above the viewport edge · surface/inverse · radius/lg · elevation/3 ·
+ *          padding 8 8 8 16 · gap 8 · buttons = _Toast button (32).
+ * Mobile:  full width at the bottom · surface/raised + top border · Button ghost lg · Icon Button ghost lg · safe area.
+ * In: slide up 200 ms (none with reduced motion).
+ */
+
+.medo-bulk-bar-host {
+  display: contents;
+}
+
+.medo-bulk-bar {
+  position: fixed;
+  z-index: var(--medo-layer-toast);
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  animation: medo-bulk-bar-in var(--medo-motion-duration-normal) var(--medo-motion-easing-enter);
+}
+
+.medo-bulk-bar--desktop {
+  inset-block-end: var(--medo-space-6);
+  inset-inline: 0;
+  inline-size: fit-content;
+  max-inline-size: calc(100vw - 2 * var(--medo-space-4));
+  margin-inline: auto;
+  gap: var(--medo-space-2);
+  padding: var(--medo-space-2) var(--medo-space-2) var(--medo-space-2) var(--medo-space-4);
+  border-radius: var(--medo-radius-lg);
+  background-color: var(--medo-color-surface-inverse);
+  box-shadow: var(--medo-shadow-elevation-3);
+  color: var(--medo-color-text-inverse);
+}
+
+.medo-bulk-bar__count {
+  font: var(--medo-typography-label-md-strong);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.medo-bulk-bar__divider {
+  flex: none;
+  inline-size: var(--medo-border-width-thin);
+  block-size: var(--medo-space-5);
+  background-color: var(--medo-color-text-inverse-secondary);
+  opacity: var(--medo-opacity-40);
+}
+
+.medo-bulk-bar--mobile {
+  inset-inline: 0;
+  inset-block-end: 0;
+  justify-content: space-between;
+  gap: var(--medo-space-1);
+  padding: var(--medo-space-2) var(--medo-space-2) max(var(--medo-space-2), env(safe-area-inset-bottom));
+  border-block-start: var(--medo-border-width-thin) solid var(--medo-color-border-default);
+  background-color: var(--medo-color-surface-raised);
+  box-shadow: var(--medo-shadow-elevation-3);
+  color: var(--medo-color-text-primary);
+}
+
+.medo-bulk-bar__start,
+.medo-bulk-bar__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--medo-space-1);
+  min-inline-size: 0;
+}
+
+@keyframes medo-bulk-bar-in {
+  from {
+    opacity: 0;
+    transform: translateY(var(--medo-space-4));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .medo-bulk-bar {
+    animation: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .medo-bulk-bar {
+    border: 1px solid CanvasText;
+  }
+}

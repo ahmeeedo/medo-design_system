@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { fn } from 'storybook/test';
 import { Archive, Bell, CreditCard, Mail, Trash2 } from 'lucide-react';
-import { ListRow, ListRowIcon, ListView } from './ListView';
+import { ListCard, ListRow, ListRowIcon, ListView } from './ListView';
 import { Avatar } from '../avatar/Avatar';
 import { Badge } from '../badge/Badge';
 import { Button } from '../button/Button';
@@ -60,6 +60,7 @@ const meta = {
           'Built on React Aria GridList: ↑ ↓ move between rows, Enter opens a row (`onAction` or `href`), Tab reaches the controls inside a row. Each row is named by its title. ' +
           '`ListRow`: leading (Avatar – sized automatically –, `ListRowIcon` or thumbnail), title and description (48 · 64 · 88), meta, one trailing type per list (Menu, Badge, Switch, chevron or max 2 Button sm – then the row has no action). ' +
           '`unread`: strong text, meta in brand, a dot and „Unread“ for screen readers. Plain or card; inset dividers start at the text. `isLoading` shows 3 skeleton rows. ' +
+          '`variant="cards"` with `ListCard` shows records as cards – the mobile form of a Table row. Selection works with the Bulk action bar. ' +
           'Swipe actions are a draft in Figma – the „…“ menu holds every action. Styles: `medo-list-view`, `medo-list-view--card`, `medo-list-row`, `medo-list-row--unread`.',
       },
     },
@@ -233,6 +234,65 @@ export const LoadingAndEmpty: Story = {
           }
         >
           {(item) => <ListRow id={item.id} title={item.name} />}
+        </ListView>
+      </div>
+    </div>
+  ),
+};
+
+const invoices = [
+  { id: 'INV-2026-0142', customer: 'Lea Marquardt', amount: '€1,240.00', date: 'Oct 12, 2026', status: 'Paid', tone: 'success' as const },
+  { id: 'INV-2026-0141', customer: 'Sam Kowalski', amount: '€860.50', date: 'Oct 11, 2026', status: 'Open', tone: 'info' as const },
+  { id: 'INV-2026-0140', customer: 'Jonas Bauer', amount: '€2,315.00', date: 'Oct 9, 2026', status: 'Overdue', tone: 'danger' as const },
+];
+
+export const Cards: Story = {
+  name: 'Cards (records on mobile)',
+  parameters: {
+    docs: {
+      description: {
+        story:
+          '`variant="cards"` with ListCard: title and key number, owner (Avatar xs automatically), date and status. The whole card opens the record. In selection mode a checkbox lg shows; selected cards use action/selected with an action/primary border.',
+      },
+    },
+  },
+  render: () => (
+    <div style={{ ...row, alignItems: 'start' }}>
+      {(['none', 'multiple'] as const).map((mode) => (
+        <div key={mode} style={{ flex: '1 1 18rem', maxInlineSize: '21.4375rem' }}>
+          <ListView
+            aria-label={mode === 'none' ? 'Invoices' : 'Invoices, selecting'}
+            variant="cards"
+            items={invoices}
+            selectionMode={mode}
+            defaultSelectedKeys={mode === 'multiple' ? ['INV-2026-0140'] : undefined}
+            onAction={mode === 'none' ? fn() : undefined}
+          >
+            {(r) => (
+              <ListCard
+                id={r.id}
+                title={r.id}
+                amount={r.amount}
+                description={
+                  <>
+                    <Avatar name={r.customer} decorative />
+                    {r.customer}
+                  </>
+                }
+                meta={r.date}
+                status={
+                  <Badge tone={r.tone} size="sm" dot>
+                    {r.status}
+                  </Badge>
+                }
+              />
+            )}
+          </ListView>
+        </div>
+      ))}
+      <div style={{ flex: '1 1 18rem', maxInlineSize: '21.4375rem' }}>
+        <ListView aria-label="Invoices loading" variant="cards" isLoading>
+          {[]}
         </ListView>
       </div>
     </div>

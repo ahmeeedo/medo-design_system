@@ -222,3 +222,41 @@
     outline-color: Highlight;
   }
 }
+
+/* ---------- Frame: toolbar – table – footer in one bordered surface ---------- */
+
+.medo-table-frame {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  inline-size: 100%;
+  overflow: hidden;
+  border: var(--medo-border-width-thin) solid var(--medo-color-border-default);
+  border-radius: var(--medo-radius-lg);
+  background-color: var(--medo-color-surface-default);
+}
+
+.medo-table-frame--plain {
+  border: 0;
+  border-radius: 0;
+  background-color: transparent;
+}
+
+/* Search, filter, columns – spacer – primary action. Wraps on narrow screens. */
+.medo-table__toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--medo-space-2);
+  padding: var(--medo-space-3) var(--medo-space-4);
+}
+
+.medo-table__footer {
+  padding: var(--medo-space-3) var(--medo-space-4);
+  border-block-start: var(--medo-border-width-thin) solid var(--medo-color-border-default);
+}
+
+/* Rows above the footer keep their bottom divider only between rows. */
+.medo-table-frame .medo-table__row:last-child > .medo-table__cell {
+  border-block-end: 0;
+}

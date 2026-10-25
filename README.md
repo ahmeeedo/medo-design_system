@@ -150,7 +150,7 @@ DM Sans and DM Mono (SIL Open Font License). Self-host them, for example with `@
 | `Spinner`, `ProgressBar`, `Skeleton` | C26 | reduced motion: slower / static |
 | `List`, `ListItem`, `DescriptionList`, `DescriptionItem` | C27 | real ul/ol/dl · bullet, number (tabular, `start`), check with `excluded` · level 2 · follows the text size · DL stacks below 360 px (container query) |
 | `Avatar`, `AvatarGroup` | C28 | image → initials → icon · colour from id · status · max 4 + „+N“ |
-| `ListView`, `ListRow`, `ListRowIcon` | C29 | React Aria GridList: ↑ ↓ rows, Tab into row controls · 1–3 lines · leading (avatar auto-sized) · meta, menu, chevron, switch or buttons · `unread` · selection with checkboxes · plain / card · `isLoading` skeleton rows |
+| `ListView`, `ListRow`, `ListRowIcon`, `ListCard` | C29 | React Aria GridList: ↑ ↓ rows, Tab into row controls · 1–3 lines · leading (avatar auto-sized) · meta, menu, chevron, switch or buttons · `unread` · selection with checkboxes · plain / card · `isLoading` skeleton rows · `variant="cards"` with ListCard (Table cards on mobile, checkbox lg) |
 | `EmptyState` | C36 | 5 types (first use, no results, error, no access, all done) with icon and tone · page / section / inline · structured `action` (primary only for first use) and `secondaryAction` (text button or Link) · illustration slot · `section` named by its heading · „no results“ in `role="status"` · used by List view and Table |
 | `Pagination` | C35 | navigation region · full: summary (live region), rows per page (Select sm), ‹ 1 … 4 5 6 … 19 › (max 7, first and last always) · compact below 640 px: ‹ Page 5 of 19 › 48 px · buttons (`onChange`) or real links (`getPageHref`) · current page `aria-current`, action/selected · one page: hidden · „Load more“ is a Button pattern |
 | `Card` | C16 | outlined, elevated, filled, brand, plain · compact · horizontal · whole card as link (`href`) |
@@ -159,7 +159,8 @@ DM Sans and DM Mono (SIL Open Font License). Self-host them, for example with `@
 | `Tabs`, `TabList`, `Tab`, `TabPanel` | C22 | track with sliding thumb · md/lg, `fullWidth` · icon, count · panels stay mounted (`keepMounted`) · mobile: lg, up to 3 fill, more scroll with fade · URL via `selectedKey` |
 | `PopoverTrigger`, `Popover`, `Toggletip` | C23 | click only, bottom start, 8 px · sm/md/lg/auto · `title` (header + close), `primaryAction` (footer) · mobile: Bottom Sheet · Toggletip: info button + text + link |
 | `NavItem`, `NavGroup`, `NavSection`, `NavList`, `SkipLink`, `SiteHeader`, `AppHeader`, `SideNav`, `BottomTabBar`, `TabBarItem`, `TabBarMore` | C24 | links with `aria-current`, any router via `RouterProvider` · website header with dropdown (disclosure) and fullscreen menu < 768 px · side navigation 256 / rail 64 (tooltips), overlay 640–1023 px · bottom tab bar + Nav sheet < 640 px |
-| `StaticTable`, `Table` (+ `TableHeader`, `Column`, `TableBody`, `Row`, `Cell`) | C37 | native table or interactive grid · sorting, selection, compact · numbers right |
+| `StaticTable`, `Table` (+ `TableHeader`, `Column`, `TableBody`, `Row`, `Cell`) | C37 | native table or interactive grid · sorting, selection, compact · numbers right · `toolbar` and `footer` in one frame · `ColumnsMenu` (show/hide, locked columns) |
+| `BulkActionBar` | C37 | appears with ≥ 1 selected · desktop: floating inverse bar with Toast buttons · mobile: full-width bar, ghost lg, safe area · max 3 actions + „…“ menu · count announced · Esc / × clears, focus returns · Table and List view |
 | `Link` | C45 | inline (always underlined) or standalone · external icon · new-tab hint |
 
 ```tsx
@@ -203,7 +204,6 @@ Projects that still use it should pin the tag: `npm install github:ahmeeedo/medo
 ## Roadmap
 
 - More app components in `@medo/ui`: Search, Breadcrumbs, Accordion, Slider, Upload, Date & Time, Image & Media. Marketing components (Carousel, Video Player, Shapes, Hero, Text + Media) are out of scope.
-- Table, part 2: bulk action bar (also for List view selection), column menu, pagination, cards on mobile.
 - List view: swipe actions on mobile (Figma draft – delete with Toast „Undo“, archive) once the draft is final.
 - Storybook tests: Accessibility panel strict (`a11y: { test: 'error' }`, every violation fails); `play` functions for core behaviour (Table sort and select, Tag remove, Alert dismiss, Tooltip keyboard), visible in the Interactions panel and run in CI with the Storybook Vitest addon.
 - Code examples per framework: one Storybook per framework (React, Vue, Angular), combined with **Storybook Composition** into one site.
