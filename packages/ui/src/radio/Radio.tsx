@@ -1,12 +1,5 @@
 import { useContext, type ReactNode } from 'react';
-import {
-  RadioButton,
-  RadioField,
-  RadioGroup as AriaRadioGroup,
-  Text,
-  type RadioFieldProps,
-  type RadioGroupProps as AriaRadioGroupProps,
-} from 'react-aria-components';
+import { RadioButton, RadioField, RadioGroup as AriaRadioGroup, Text, type RadioFieldProps, type RadioGroupProps as AriaRadioGroupProps } from 'react-aria-components';
 import { FieldFooter, FieldLabel } from '../field/Field';
 import { ChoiceSizeContext, type ChoiceSize } from '../checkbox/Checkbox';
 import { cx } from '../utils/cx';
@@ -38,7 +31,8 @@ export function Radio({ children, description, size, className, ...props }: Radi
 }
 
 export interface RadioGroupProps extends Omit<AriaRadioGroupProps, 'children' | 'className' | 'style'> {
-  label: ReactNode;
+  /** Group label (rendered like a legend). Without it set `aria-label` – only where the context names the group (e.g. an Accordion title). */
+  label?: ReactNode;
   description?: ReactNode;
   errorMessage?: ReactNode;
   size?: ChoiceSize;
@@ -53,7 +47,7 @@ export interface RadioGroupProps extends Omit<AriaRadioGroupProps, 'children' | 
 export function RadioGroup({ label, description, errorMessage, size = 'md', children, className, ...props }: RadioGroupProps) {
   return (
     <AriaRadioGroup {...props} className={cx('medo-field', 'medo-field--group', className)}>
-      <FieldLabel isRequired={props.isRequired}>{label}</FieldLabel>
+      {label && <FieldLabel isRequired={props.isRequired}>{label}</FieldLabel>}
       <ChoiceSizeContext.Provider value={size}>
         <div className="medo-field__options">{children}</div>
       </ChoiceSizeContext.Provider>

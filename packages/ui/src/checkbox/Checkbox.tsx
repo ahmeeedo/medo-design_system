@@ -50,8 +50,8 @@ export function Checkbox({ children, description, size, className, ...props }: C
 }
 
 export interface CheckboxGroupProps extends Omit<AriaCheckboxGroupProps, 'children' | 'className' | 'style'> {
-  /** Group label (rendered like a legend). */
-  label: ReactNode;
+  /** Group label (rendered like a legend). Without it set `aria-label` – only where the context names the group (e.g. an Accordion title). */
+  label?: ReactNode;
   description?: ReactNode;
   errorMessage?: ReactNode;
   size?: ChoiceSize;
@@ -62,19 +62,10 @@ export interface CheckboxGroupProps extends Omit<AriaCheckboxGroupProps, 'childr
 }
 
 /** Several checkboxes with one label, helper and error text (Figma: Checkbox group). */
-export function CheckboxGroup({
-  label,
-  description,
-  errorMessage,
-  size = 'md',
-  orientation = 'vertical',
-  children,
-  className,
-  ...props
-}: CheckboxGroupProps) {
+export function CheckboxGroup({ label, description, errorMessage, size = 'md', orientation = 'vertical', children, className, ...props }: CheckboxGroupProps) {
   return (
     <AriaCheckboxGroup {...props} className={cx('medo-field', 'medo-field--group', className)} data-orientation={orientation}>
-      <FieldLabel isRequired={props.isRequired}>{label}</FieldLabel>
+      {label && <FieldLabel isRequired={props.isRequired}>{label}</FieldLabel>}
       <ChoiceSizeContext.Provider value={size}>
         <div className="medo-field__options">{children}</div>
       </ChoiceSizeContext.Provider>

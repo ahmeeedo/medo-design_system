@@ -1,12 +1,17 @@
 import { useMemo, useState } from 'react';
+import { DialogTrigger } from 'react-aria-components';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import type { Key, Selection } from 'react-aria-components';
 import { fn } from 'storybook/test';
-import { ArrowUpDown, FileText, Globe, LayoutGrid, List, RotateCcw, Search, Settings, Upload, User } from 'lucide-react';
+import { ArrowUpDown, Funnel, FileText, Globe, LayoutGrid, List, RotateCcw, Search, Settings, Upload, User } from 'lucide-react';
 import { SearchField } from './SearchField';
 import { SearchResult, type SearchResultType } from './SearchResult';
 import { QuickSearch } from './QuickSearch';
+import { Accordion, AccordionItem } from '../accordion/Accordion';
 import { Avatar } from '../avatar/Avatar';
+import { BottomSheet } from '../bottom-sheet/BottomSheet';
+import { Checkbox, CheckboxGroup } from '../checkbox/Checkbox';
+import { Radio, RadioGroup } from '../radio/Radio';
 import { Button } from '../button/Button';
 import { Card } from '../card/Card';
 import { EmptyState } from '../empty-state/EmptyState';
@@ -130,7 +135,7 @@ const meta = {
           '**SearchField** (React Aria SearchField): search icon, × to clear once filled, Esc clears, Enter submits. Visible label or `aria-label`; put the search area in a `<search>` element (landmark). ' +
           '**SearchResult**: one hit – path, title (one link for the whole hit), snippet (2 lines), meta with type badge. `query` shows every match in bold, never colour alone. Base: divider, title in brand · Aesthetic: no divider, larger title, rounded hover. ' +
           '**QuickSearch** (Cmd / Ctrl + K): a modal with React Aria Autocomplete – focus stays in the field while ↑ ↓ move, Enter opens, Esc closes and returns focus. Recent and suggested while empty, hits grouped by type while typing. ' +
-          'Search page: result count announced, sort by relevance, active filters as removable tags, query and filters in the URL. Filters in a sidebar and the mobile filter sheet follow with Accordion. ' +
+          'Search page: result count announced, sort by relevance, active filters as removable tags, query and filters in the URL. Many filters: a sidebar with Accordion groups; mobile: a filter Bottom Sheet. ' +
           'Styles: `medo-search-field`, `medo-search-result--{base|aesthetic}`, `medo-search-results`, `medo-quick-search`.',
       },
     },
@@ -380,6 +385,213 @@ export const Page: Story = {
     },
   },
   render: () => <SearchPage />,
+};
+
+/* ---------- Search page with sidebar filters · mobile filter sheet ---------- */
+
+const typeOptions = [
+  { id: 'PDF', label: 'PDF' },
+  { id: 'Word', label: 'Word' },
+  { id: 'Page', label: 'Page' },
+  { id: 'Video', label: 'Video' },
+];
+const dateOptions = ['Any time', 'Last 7 days', 'Last 30 days', 'This year'];
+
+/** The filter groups – the same in the sidebar and in the mobile sheet. Each Accordion title names its group. */
+function Filters({
+  types,
+  setTypes,
+  date,
+  setDate,
+  counts,
+  choiceSize = 'md',
+}: {
+  types: string[];
+  setTypes: (t: string[]) => void;
+  date: string;
+  setDate: (d: string) => void;
+  counts: Record<string, number>;
+  choiceSize?: 'md' | 'lg';
+}) {
+  return (
+    <Accordion defaultExpandedKeys={['type', 'date']}>
+      <AccordionItem id="type" title="Type">
+        <CheckboxGroup aria-label="Type" size={choiceSize} value={types} onChange={setTypes}>
+          {typeOptions.map((o) => (
+            <Checkbox key={o.id} value={o.id}>
+              {`${o.label} (${counts[o.id] ?? 0})`}
+            </Checkbox>
+          ))}
+        </CheckboxGroup>
+      </AccordionItem>
+      <AccordionItem id="date" title="Date">
+        <RadioGroup aria-label="Date" size={choiceSize} value={date} onChange={setDate}>
+          {dateOptions.map((d) => (
+            <Radio key={d} value={d}>
+              {d}
+            </Radio>
+          ))}
+        </RadioGroup>
+      </AccordionItem>
+      <AccordionItem id="author" title="Author">
+        <CheckboxGroup aria-label="Author" size={choiceSize}>
+          <Checkbox value="lea">Lea Müller</Checkbox>
+          <Checkbox value="sam">Sam Kowalski</Checkbox>
+        </CheckboxGroup>
+      </AccordionItem>
+      <AccordionItem id="size" title="File size">
+        <RadioGroup aria-label="File size" size={choiceSize} defaultValue="any">
+          <Radio value="any">Any size</Radio>
+          <Radio value="small">Under 1 MB</Radio>
+          <Radio value="large">1 MB and more</Radio>
+        </RadioGroup>
+      </AccordionItem>
+    </Accordion>
+  );
+}
+
+function SidebarPage({ forceMobile = false }: { forceMobile?: boolean }) {
+  const [types, setTypes] = useState<string[]>(['PDF']);
+  const [date, setDate] = useState('Last 30 days');
+  const counts: Record<string, number> = {};
+  hits.forEach((h) => (counts[h.badge] = (counts[h.badge] ?? 0) + 1));
+  const shown = hits.filter((h) => types.length === 0 || types.includes(h.badge));
+  const active = [...types.map((t) => ({ id: `type:${t}`, label: t })), ...(date !== 'Any time' ? [{ id: 'date', label: date }] : [])];
+  const remove = (keys: Set<Key>) => {
+    setTypes(types.filter((t) => !keys.has(`type:${t}`)));
+    if (keys.has('date')) setDate('Any time');
+  };
+  const clear = () => {
+    setTypes([]);
+    setDate('Any time');
+  };
+  const results = (
+    <ul role="list" className="medo-search-results" aria-label="Results">
+      {shown.map((h) => (
+        <li key={h.id}>
+          <SearchResult
+            type={h.type}
+            href={`#${h.id}`}
+            query="invoice"
+            title={h.title}
+            path={h.path}
+            snippet={h.snippet}
+            badge={h.badge}
+            meta={h.meta}
+            leading={leadingFor(h)}
+          />
+        </li>
+      ))}
+    </ul>
+  );
+  const row: React.CSSProperties = { display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 'var(--medo-space-2)' };
+  const n = `${shown.length} ${shown.length === 1 ? 'result' : 'results'}`;
+
+  if (forceMobile) {
+    return (
+      <div style={{ display: 'grid', gap: 'var(--medo-space-4)', maxInlineSize: '23.4375rem' }}>
+        <search>
+          <SearchField aria-label="Search" size="lg" defaultValue="invoice" />
+        </search>
+        <div style={{ ...row, justifyContent: 'space-between' }}>
+          <span role="status" style={{ font: 'var(--medo-typography-label-md)' }}>
+            {n}
+          </span>
+          <DialogTrigger>
+            <Button variant="secondary" size="sm" startIcon={<Funnel />}>
+              {`Filters (${active.length})`}
+            </Button>
+            {/* The sheet button names the result count, so users know what they get before closing. */}
+            <BottomSheet
+              title="Filters"
+              footer={(close) => (
+                <Button size="lg" onPress={close} style={{ inlineSize: '100%' }}>
+                  {`Show ${n}`}
+                </Button>
+              )}
+            >
+              {/* Mobile: checkboxes and radios lg (touch). */}
+              <div style={{ paddingInline: 'var(--medo-space-4)' }}>
+                <Filters types={types} setTypes={setTypes} date={date} setDate={setDate} counts={counts} choiceSize="lg" />
+              </div>
+            </BottomSheet>
+          </DialogTrigger>
+        </div>
+        {results}
+        <Pagination variant="compact" aria-label="Result pages" totalItems={24} pageSize={10} onChange={fn()} />
+      </div>
+    );
+  }
+
+  return (
+    <div style={{ display: 'grid', gap: 'var(--medo-space-6)' }}>
+      <search style={{ maxInlineSize: '45rem' }}>
+        <SearchField aria-label="Search" size="lg" defaultValue="invoice" />
+      </search>
+      <div style={{ display: 'grid', gridTemplateColumns: '16.5rem 1fr', gap: 'var(--medo-space-8)', alignItems: 'start' }}>
+        <aside aria-labelledby="filters-heading" style={{ display: 'grid', gap: 'var(--medo-space-2)' }}>
+          <h2 id="filters-heading" className="medo-text-heading-sm" style={{ margin: 0 }}>
+            Filters
+          </h2>
+          <Filters types={types} setTypes={setTypes} date={date} setDate={setDate} counts={counts} />
+        </aside>
+        <div style={{ display: 'grid', gap: 'var(--medo-space-4)', minInlineSize: 0 }}>
+          <div style={{ ...row, justifyContent: 'space-between' }}>
+            <h2 style={{ margin: 0, font: 'var(--medo-typography-label-md)' }}>
+              <span role="status">{`${n} for “invoice”`}</span>
+            </h2>
+            <Select aria-label="Sort by" size="sm" leadingIcon={<ArrowUpDown />} defaultValue="relevance">
+              <Option id="relevance">Relevance</Option>
+              <Option id="newest">Newest</Option>
+            </Select>
+          </div>
+          {active.length > 0 && (
+            <div style={row}>
+              <TagGroup aria-label="Active filters" onRemove={remove}>
+                {active.map((a) => (
+                  <Tag key={a.id} id={a.id}>
+                    {a.label}
+                  </Tag>
+                ))}
+              </TagGroup>
+              <Button variant="text" size="sm" onPress={clear}>
+                Clear all
+              </Button>
+            </div>
+          )}
+          {results}
+          <Pagination aria-label="Result pages" totalItems={24} pageSize={10} onChange={fn()} />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export const Sidebar: Story = {
+  name: 'Search page: sidebar filters',
+  parameters: {
+    layout: 'padded',
+    docs: {
+      description: {
+        story:
+          'More than 4 filter groups: a sidebar (264) with an Accordion – Type and Date open. Every group is named by its Accordion title (CheckboxGroup / RadioGroup with `aria-label`). Active filters are removable tags plus „Clear all“; the count is announced.',
+      },
+    },
+  },
+  render: () => <SidebarPage />,
+};
+
+export const MobileFilters: Story = {
+  name: 'Search page: mobile filter sheet',
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'Below 640 px the filters move into a Bottom Sheet behind „Filters (2)“. The sheet button names the result count („Show 3 results“). Tabs scroll sideways; Quick search opens full screen.',
+      },
+    },
+  },
+  render: () => <SidebarPage forceMobile />,
 };
 
 /* ---------- Quick search ---------- */

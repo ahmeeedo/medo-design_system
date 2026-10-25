@@ -17,6 +17,7 @@
 @import './pagination/pagination.css';
 @import './search/search.css';
 @import './breadcrumbs/breadcrumbs.css';
+@import './accordion/accordion.css';
 @import './toggle-button/toggle-button.css';
 @import './listbox/listbox.css';
 @import './select/select.css';

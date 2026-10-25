@@ -133,8 +133,8 @@ DM Sans and DM Mono (SIL Open Font License). Self-host them, for example with `@
 | `Button`, `ButtonGroup` | C01 | primary, secondary, ghost, danger, text, ghost-danger · sm/md/lg · `isPending` · group: footer/header/content, stacks on mobile |
 | `IconButton` | C02 | `aria-label` required, shown as tooltip · `shortcut` |
 | `TextField` (+ `InputAction`) | C03, C04, C13 | label, helper, error, icons, character counter, `multiline` = Textarea |
-| `Checkbox`, `CheckboxGroup` | C05 | indeterminate, description |
-| `Radio`, `RadioGroup` | C11 | 2–4 options, horizontal or vertical |
+| `Checkbox`, `CheckboxGroup` | C05 | indeterminate, description · group without visible label via `aria-label` |
+| `Radio`, `RadioGroup` | C11 | 2–4 options, horizontal or vertical · group without visible label via `aria-label` |
 | `Switch` | C12 | label start/end, loading state |
 | `Tag`, `TagGroup` | C06 | removable values or selectable filters · sm/md |
 | `Tooltip`, `TooltipTrigger` | C14 | 500 ms delay, instant on focus, shortcut |
@@ -155,6 +155,7 @@ DM Sans and DM Mono (SIL Open Font License). Self-host them, for example with `@
 | `Pagination` | C35 | navigation region · full: summary (live region), rows per page (Select sm), ‹ 1 … 4 5 6 … 19 › (max 7, first and last always) · compact below 640 px: ‹ Page 5 of 19 › 48 px · buttons (`onChange`) or real links (`getPageHref`) · current page `aria-current`, action/selected · one page: hidden · „Load more“ is a Button pattern |
 | `SearchField`, `SearchResult`, `QuickSearch`, `Highlight` | C43 | search field (Esc clears, Enter submits, label or `aria-label`) · result: page, document, person, media · base / aesthetic · every match bold · Quick search Cmd/Ctrl+K: React Aria Autocomplete, recent and suggested, groups, „All results“, full screen on mobile · search page pattern (tabs, filters, tags, sort, list/grid) |
 | `Breadcrumbs` | C44 | React Aria Breadcrumbs: nav „Breadcrumb“, ordered list, current page last (`aria-current`) · home icon · sm / md · from 5 levels „…“ with a Menu · labels over 200 px with Tooltip · mobile: back link to the parent page |
+| `Accordion`, `AccordionItem` | C31 | React Aria DisclosureGroup · contained group md / lg · header button in a real heading · icon, description, badge · several open by default (or one at a time) · closed panels findable (`until-found`) · „Expand all“ from 7 sections · deep link via `#id` · Search: sidebar filters and mobile filter sheet |
 | `Card` | C16 | outlined, elevated, filled, brand, plain · compact · horizontal · whole card as link (`href`) |
 | `Alert` | C20 | info, success, warning, danger · inline or banner · actions, dismiss, `announce` |
 | `ToastRegion`, `toast()` | C21 | region once at the root, `toast(message, { action, persistent })` from anywhere · 5 s / 8 s with action / errors until closed · pauses on hover, focus, hidden tab · max 3 · F6, Esc |
@@ -205,8 +206,7 @@ Projects that still use it should pin the tag: `npm install github:ahmeeedo/medo
 
 ## Roadmap
 
-- Search: filters in a sidebar (Accordion groups) and the mobile filter sheet („Show 8 results“) – after Accordion.
-- More app components in `@medo/ui`: Accordion, Slider, Upload, Date & Time, Image & Media. Marketing components (Carousel, Video Player, Shapes, Hero, Text + Media) are out of scope.
+- More app components in `@medo/ui`: Slider, Upload, Date & Time, Image & Media. Marketing components (Carousel, Video Player, Shapes, Hero, Text + Media) are out of scope.
 - List view: swipe actions on mobile (Figma draft – delete with Toast „Undo“, archive) once the draft is final.
 - Storybook tests: Accessibility panel strict (`a11y: { test: 'error' }`, every violation fails); `play` functions for core behaviour (Table sort and select, Tag remove, Alert dismiss, Tooltip keyboard), visible in the Interactions panel and run in CI with the Storybook Vitest addon.
 - Code examples per framework: one Storybook per framework (React, Vue, Angular), combined with **Storybook Composition** into one site.

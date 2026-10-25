@@ -30,28 +30,39 @@ export const States: Story = {
   render: (args) => (
     <div style={stack}>
       <Checkbox {...args}>Unchecked</Checkbox>
-      <Checkbox {...args} defaultSelected>Checked</Checkbox>
-      <Checkbox {...args} isIndeterminate>Indeterminate (some children selected)</Checkbox>
-      <Checkbox {...args} description="A second line explains the option.">With description</Checkbox>
-      <Checkbox {...args} isInvalid>Invalid</Checkbox>
-      <Checkbox {...args} isDisabled>Disabled</Checkbox>
-      <Checkbox {...args} isDisabled defaultSelected>Disabled and checked</Checkbox>
-      <Checkbox {...args} size="lg" defaultSelected>Large (mobile)</Checkbox>
+      <Checkbox {...args} defaultSelected>
+        Checked
+      </Checkbox>
+      <Checkbox {...args} isIndeterminate>
+        Indeterminate (some children selected)
+      </Checkbox>
+      <Checkbox {...args} description="A second line explains the option.">
+        With description
+      </Checkbox>
+      <Checkbox {...args} isInvalid>
+        Invalid
+      </Checkbox>
+      <Checkbox {...args} isDisabled>
+        Disabled
+      </Checkbox>
+      <Checkbox {...args} isDisabled defaultSelected>
+        Disabled and checked
+      </Checkbox>
+      <Checkbox {...args} size="lg" defaultSelected>
+        Large (mobile)
+      </Checkbox>
     </div>
   ),
 };
 
 export const Group: Story = {
   render: () => (
-    <CheckboxGroup
-      label="Notifications"
-      description="Select all that apply."
-      defaultValue={['email']}
-      isRequired
-    >
+    <CheckboxGroup label="Notifications" description="Select all that apply." defaultValue={['email']} isRequired>
       <Checkbox value="email">Email</Checkbox>
       <Checkbox value="push">Push notification</Checkbox>
-      <Checkbox value="sms" description="Costs may apply.">SMS</Checkbox>
+      <Checkbox value="sms" description="Costs may apply.">
+        SMS
+      </Checkbox>
     </CheckboxGroup>
   ),
 };
@@ -72,10 +83,18 @@ export const LightAndDark: Story = {
   render: (args) => (
     <LightDark>
       <Checkbox {...args}>Unchecked</Checkbox>
-      <Checkbox {...args} defaultSelected>Checked</Checkbox>
-      <Checkbox {...args} isIndeterminate>Indeterminate</Checkbox>
-      <Checkbox {...args} isInvalid>Invalid</Checkbox>
-      <Checkbox {...args} isDisabled defaultSelected>Disabled</Checkbox>
+      <Checkbox {...args} defaultSelected>
+        Checked
+      </Checkbox>
+      <Checkbox {...args} isIndeterminate>
+        Indeterminate
+      </Checkbox>
+      <Checkbox {...args} isInvalid>
+        Invalid
+      </Checkbox>
+      <Checkbox {...args} isDisabled defaultSelected>
+        Disabled
+      </Checkbox>
     </LightDark>
   ),
 };

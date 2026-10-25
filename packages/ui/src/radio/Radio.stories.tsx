@@ -42,8 +42,12 @@ const meta = {
   /* key: defaultValue only applies on mount, so remount when it changes. */
   render: (args) => (
     <RadioGroup key={String(args.defaultValue)} {...args}>
-      <Radio value="standard" description="3–5 working days">Standard</Radio>
-      <Radio value="express" description="Next working day">Express</Radio>
+      <Radio value="standard" description="3–5 working days">
+        Standard
+      </Radio>
+      <Radio value="express" description="Next working day">
+        Express
+      </Radio>
       <Radio value="pickup">Pick-up</Radio>
     </RadioGroup>
   ),
@@ -68,7 +72,9 @@ export const LightAndDark: Story = {
       <RadioGroup {...args}>
         <Radio value="standard">Standard</Radio>
         <Radio value="express">Express</Radio>
-        <Radio value="pickup" isDisabled>Pick-up (unavailable)</Radio>
+        <Radio value="pickup" isDisabled>
+          Pick-up (unavailable)
+        </Radio>
       </RadioGroup>
     </LightDark>
   ),
