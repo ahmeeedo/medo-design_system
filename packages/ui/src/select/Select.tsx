@@ -27,10 +27,9 @@ import '../text-field/input.css';
 import '../tag/tag.css';
 import './select.css';
 
-export interface SelectProps<T extends object, M extends SelectMode = 'single'>
-  extends Omit<AriaSelectProps<T, M>, 'children' | 'className' | 'style' | 'placeholder'> {
-  /** Visible label. Always set one. */
-  label: ReactNode;
+export interface SelectProps<T extends object, M extends SelectMode = 'single'> extends Omit<AriaSelectProps<T, M>, 'children' | 'className' | 'style' | 'placeholder'> {
+  /** Visible label. Without it set `aria-label` – only where the context names the field (filter bars, toolbars). */
+  label?: ReactNode;
   /** Helper text below the field. Replaced by the error message when invalid. */
   description?: ReactNode;
   /** Error text shown when the field is invalid. Validate on submit or blur, not while open. */
@@ -109,7 +108,7 @@ export function Select<T extends object, M extends SelectMode = 'single'>({
         className,
       )}
     >
-      <FieldLabel isRequired={props.isRequired}>{label}</FieldLabel>
+      {label && <FieldLabel isRequired={props.isRequired}>{label}</FieldLabel>}
       <div ref={fieldRef} className={cx('medo-input', `medo-input--${size}`, 'medo-select__field')}>
         <ReadOnlyKeys isReadOnly={isReadOnly}>
           {/* With the native picker the invisible <select> on top takes focus and taps; the button only shows the value. */}
@@ -135,14 +134,14 @@ export function Select<T extends object, M extends SelectMode = 'single'>({
             )}
           </AriaButton>
         </ReadOnlyKeys>
-        {mode === 'native' && !isReadOnly && <NativePicker label={label} placeholder={placeholder} isRequired={props.isRequired} />}
+        {mode === 'native' && !isReadOnly && <NativePicker label={label ?? props['aria-label']} placeholder={placeholder} isRequired={props.isRequired} />}
         <ClearButton enabled={(multiple || !!clearable) && !isReadOnly && !props.isDisabled} onHasValue={setHasValue} />
       </div>
       <FieldFooter description={description} errorMessage={errorMessage} />
       {commit === 'onClose' && onApply && <ApplyOnClose onApply={onApply as (value: Key[] | Key | null) => void} />}
       {mode === 'sheet' ? (
         <BottomSheetPopover
-          title={label}
+          title={label ?? props['aria-label']}
           footer={multiple ? <SheetFooter commit={commit} resultLabel={resultLabel as (value: Key[] | Key | null) => ReactNode} /> : undefined}
         >
           <ListBox<T> size="lg" items={items}>

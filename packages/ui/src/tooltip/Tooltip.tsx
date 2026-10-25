@@ -1,7 +1,10 @@
-import type { ReactNode } from 'react';
+import { useContext, type ReactNode } from 'react';
 import {
+  Link as AriaLink,
   Tooltip as AriaTooltip,
   TooltipTrigger as AriaTooltipTrigger,
+  TooltipTriggerStateContext,
+  type LinkProps as AriaLinkProps,
   type TooltipProps as AriaTooltipProps,
   type TooltipTriggerComponentProps,
 } from 'react-aria-components';
@@ -48,4 +51,13 @@ export function Tooltip({ children, shortcut, placement = 'top', offset = 8, cla
       {shortcut && <kbd className="medo-tooltip__shortcut">{shortcut}</kbd>}
     </AriaTooltip>
   );
+}
+
+/**
+ * Link as a tooltip trigger. React Aria's Link takes focus but not hover from a TooltipTrigger –
+ * this opens the tooltip on hover too. Internal (Navigation rail, Breadcrumbs), not exported from the package.
+ */
+export function TooltipLink(props: AriaLinkProps) {
+  const tooltip = useContext(TooltipTriggerStateContext);
+  return <AriaLink {...props} onHoverStart={() => tooltip?.open()} onHoverEnd={() => tooltip?.close()} />;
 }

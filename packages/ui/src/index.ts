@@ -89,6 +89,8 @@ export type { SearchResultProps, SearchResultType } from './search/SearchResult'
 export { QuickSearch } from './search/QuickSearch';
 export type { QuickSearchProps } from './search/QuickSearch';
 export { Highlight } from './utils/highlight';
+export { Breadcrumbs } from './breadcrumbs/Breadcrumbs';
+export type { BreadcrumbsProps, BreadcrumbItem } from './breadcrumbs/Breadcrumbs';
 export { Link } from './link/Link';
 export type { LinkProps } from './link/Link';
 export { Alert } from './alert/Alert';

@@ -298,14 +298,7 @@ function SearchPage() {
         <span role="status">{loading ? 'Searching …' : `${shown.length} ${noun} for “${submitted}”`}</span>
       </h2>
       <div style={row}>
-        <Select
-          label={<span className="medo-visually-hidden">Type</span>}
-          placeholder="Type"
-          size="sm"
-          selectionMode="multiple"
-          value={types}
-          onChange={(v) => setTypes(v as string[])}
-        >
+        <Select aria-label="Type" placeholder="Type" size="sm" selectionMode="multiple" value={types} onChange={(v) => setTypes(v as string[])}>
           {['Page', 'PDF', 'Word', 'Video', 'Person'].map((t) => (
             <Option key={t} id={t}>
               {t}
@@ -313,7 +306,7 @@ function SearchPage() {
           ))}
         </Select>
         <span style={{ flex: 1 }} />
-        <Select label={<span className="medo-visually-hidden">Sort by</span>} size="sm" leadingIcon={<ArrowUpDown />} value={sort} onChange={(v) => setSort(v as Key)}>
+        <Select aria-label="Sort by" size="sm" leadingIcon={<ArrowUpDown />} value={sort} onChange={(v) => setSort(v as Key)}>
           <Option id="relevance">Relevance</Option>
           <Option id="title">Title A–Z</Option>
         </Select>

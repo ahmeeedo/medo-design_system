@@ -2,7 +2,7 @@ import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import type { Key } from 'react-aria-components';
 import { fn } from 'storybook/test';
-import { Globe, MapPin } from 'lucide-react';
+import { ArrowUpDown, Globe, MapPin } from 'lucide-react';
 import { Select } from './Select';
 import { ListBoxSection, Option } from '../listbox/ListBox';
 import { LightDark, slot, stack } from '../story-helpers';
@@ -19,7 +19,6 @@ const countries = [
 ];
 
 const topics = ['Design', 'Code', 'Research', 'Marketing', 'Sales', 'Support'].map((name) => ({ id: name.toLowerCase(), name }));
-
 
 const meta = {
   title: 'Components/Select',
@@ -49,11 +48,19 @@ const meta = {
     size: { control: 'inline-radio', options: ['sm', 'md', 'lg'] },
     selectionMode: { control: 'inline-radio', options: ['single', 'multiple'] },
     leadingIcon: slot({ none: undefined, globe: <Globe />, pin: <MapPin /> }),
-    clearable: { control: 'boolean', if: { arg: 'selectionMode', eq: 'single' }, description: 'Single only: clear button for optional fields. Multi always has clear-all.' },
+    clearable: {
+      control: 'boolean',
+      if: { arg: 'selectionMode', eq: 'single' },
+      description: 'Single only: clear button for optional fields. Multi always has clear-all.',
+    },
     children: { control: false },
     items: { control: false },
     onChange: { control: false },
-    overlay: { control: 'inline-radio', options: ['auto', 'popover', 'sheet', 'native'], description: 'auto: popover on desktop; below 640 px native picker (single) or Bottom Sheet (multi).' },
+    overlay: {
+      control: 'inline-radio',
+      options: ['auto', 'popover', 'sheet', 'native'],
+      description: 'auto: popover on desktop; below 640 px native picker (single) or Bottom Sheet (multi).',
+    },
     commit: { control: 'inline-radio', options: ['live', 'onClose'], if: { arg: 'selectionMode', eq: 'multiple' } },
     onApply: { control: false },
     resultLabel: { control: false },
@@ -211,6 +218,31 @@ export const Mobile: Story = {
         {(item) => <Option id={item.id}>{item.name}</Option>}
       </Select>
       <TeamFilter />
+    </div>
+  ),
+};
+
+export const WithoutVisibleLabel: Story = {
+  name: 'Without visible label',
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'In filter bars and toolbars the context names the field: no visible label, `aria-label` instead and a placeholder that says what it filters („Type“). Everywhere else keep the visible label.',
+      },
+    },
+  },
+  render: () => (
+    <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--medo-space-2)' }}>
+      <Select aria-label="Type" placeholder="Type" size="sm" selectionMode="multiple">
+        <Option id="pdf">PDF</Option>
+        <Option id="word">Word</Option>
+        <Option id="video">Video</Option>
+      </Select>
+      <Select aria-label="Sort by" size="sm" leadingIcon={<ArrowUpDown />} defaultValue="relevance">
+        <Option id="relevance">Relevance</Option>
+        <Option id="newest">Newest</Option>
+      </Select>
     </div>
   ),
 };

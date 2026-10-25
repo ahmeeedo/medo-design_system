@@ -225,9 +225,7 @@
 .medo-skip-link:focus-visible {
   translate: 0 0;
   outline: none;
-  box-shadow:
-    var(--medo-shadow-focus-ring),
-    var(--medo-shadow-elevation-2);
+  box-shadow: var(--medo-shadow-focus-ring), var(--medo-shadow-elevation-2);
 }
 
 /* ---------- Headers ---------- */

@@ -7,7 +7,6 @@ import {
   Link as AriaLink,
   Modal,
   ModalOverlay,
-  TooltipTriggerStateContext,
   type LinkProps as AriaLinkProps,
   type PressEvent,
 } from 'react-aria-components';
@@ -16,7 +15,7 @@ import { Avatar } from '../avatar/Avatar';
 import { BadgeCount, BadgeDot } from '../badge/Badge';
 import { BottomSheet } from '../bottom-sheet/BottomSheet';
 import { IconButton } from '../icon-button/IconButton';
-import { Tooltip, TooltipTrigger } from '../tooltip/Tooltip';
+import { Tooltip, TooltipLink, TooltipTrigger } from '../tooltip/Tooltip';
 import { cx } from '../utils/cx';
 import { useMediaQuery } from '../utils/useMediaQuery';
 import { Drawer } from '../drawer/Drawer';
@@ -92,7 +91,7 @@ export function NavItem({ children, icon, isCurrent, count, countLabel, unread, 
       {rail ? (
         // Collapsed: the label appears as tooltip on hover and focus.
         <TooltipTrigger>
-          <RailLink {...linkProps}>{content}</RailLink>
+          <TooltipLink {...linkProps}>{content}</TooltipLink>
           <Tooltip placement="end">{children}</Tooltip>
         </TooltipTrigger>
       ) : (
@@ -100,12 +99,6 @@ export function NavItem({ children, icon, isCurrent, count, countLabel, unread, 
       )}
     </li>
   );
-}
-
-/** React Aria's Link takes focus but not hover from a TooltipTrigger – open the tooltip on hover ourselves. */
-function RailLink(props: AriaLinkProps) {
-  const tooltip = useContext(TooltipTriggerStateContext);
-  return <AriaLink {...props} onHoverStart={() => tooltip?.open()} onHoverEnd={() => tooltip?.close()} />;
 }
 
 /* ---------- Group (dropdown in the header, accordion elsewhere) ---------- */

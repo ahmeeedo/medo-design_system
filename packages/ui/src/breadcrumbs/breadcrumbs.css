@@ -1,0 +1,140 @@
+/**
+ * Breadcrumbs – med.o Design System (Figma: C44 Breadcrumbs)
+ *
+ *   <nav class="medo-breadcrumbs medo-breadcrumbs--md" aria-label="Breadcrumb">
+ *     <ol class="medo-breadcrumbs__list">
+ *       <li class="medo-breadcrumbs__item"><a class="medo-breadcrumbs__icon-part" aria-label="Home">⌂</a> ›</li>
+ *       <li class="medo-breadcrumbs__item"><a class="medo-breadcrumbs__link"><span class="medo-breadcrumbs__label">Projects</span></a> ›</li>
+ *       <li class="medo-breadcrumbs__item"><span class="medo-breadcrumbs__link medo-breadcrumbs__current" aria-current="page">…</span></li>
+ *     </ol>
+ *   </nav>
+ * sm: caption, current label/sm, height 24, icons 16, separator 12, gap 2 · md: body/sm, label/md, 28, 20, 16, gap 4.
+ * Parts: padding space/1, radius/sm, gap icon–text space/0-5. Labels max 200 px with „…“.
+ * State contract: [data-hovered] [data-pressed] [data-focus-visible] [data-current] (React Aria).
+ */
+
+.medo-breadcrumbs {
+  --_height: var(--medo-space-6); /* sm 24 */
+  --_icon: var(--medo-size-icon-sm);
+  --_sep: var(--medo-space-3);
+  --_gap: var(--medo-space-0-5);
+  --_text: var(--medo-typography-caption);
+  --_current: var(--medo-typography-label-sm);
+}
+
+.medo-breadcrumbs--md {
+  --_height: calc(var(--medo-space-6) + var(--medo-space-1)); /* 28 */
+  --_icon: var(--medo-size-icon-md);
+  --_sep: var(--medo-space-4);
+  --_gap: var(--medo-space-1);
+  --_text: var(--medo-typography-body-sm);
+  --_current: var(--medo-typography-label-md);
+}
+
+.medo-breadcrumbs__list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--_gap);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.medo-breadcrumbs__item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--_gap);
+  min-inline-size: 0;
+}
+
+.medo-breadcrumbs__link,
+.medo-breadcrumbs__icon-part {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--medo-space-0-5);
+  min-block-size: var(--_height);
+  padding: var(--medo-space-1);
+  border: 0;
+  border-radius: var(--medo-radius-sm);
+  background: none;
+  color: var(--medo-color-text-secondary);
+  font: var(--_text);
+  text-decoration: none;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.medo-breadcrumbs__link[data-hovered]:not([data-current]) {
+  color: var(--medo-color-text-primary);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.medo-breadcrumbs__link[data-pressed] {
+  background-color: var(--medo-color-state-pressed);
+  color: var(--medo-color-text-primary);
+}
+
+.medo-breadcrumbs__current {
+  color: var(--medo-color-text-primary);
+  font: var(--_current);
+  cursor: default;
+}
+
+.medo-breadcrumbs__label {
+  overflow: hidden;
+  max-inline-size: 12.5rem; /* 200 */
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Home and „…“: square, a soft surface on hover so the target is visible. */
+.medo-breadcrumbs__icon-part {
+  justify-content: center;
+  inline-size: var(--_height);
+  padding: 0;
+  cursor: pointer;
+}
+
+.medo-breadcrumbs__icon-part > svg {
+  inline-size: var(--_icon);
+  block-size: var(--_icon);
+}
+
+.medo-breadcrumbs__icon-part:is([data-hovered], [aria-expanded='true']) {
+  background-color: var(--medo-color-state-hover);
+  color: var(--medo-color-text-primary);
+}
+
+.medo-breadcrumbs__icon-part[data-pressed] {
+  background-color: var(--medo-color-state-pressed);
+}
+
+.medo-breadcrumbs__link[data-focus-visible],
+.medo-breadcrumbs__icon-part[data-focus-visible] {
+  box-shadow: inset 0 0 0 var(--medo-focus-ring-width) var(--medo-color-focus-ring);
+}
+
+.medo-breadcrumbs__separator {
+  flex: none;
+  inline-size: var(--_sep);
+  block-size: var(--_sep);
+  color: var(--medo-color-text-secondary);
+}
+
+/* Mobile: one link to the parent page. */
+.medo-breadcrumbs__back-icon {
+  flex: none;
+  inline-size: var(--_icon);
+  block-size: var(--_icon);
+}
+
+@media (forced-colors: active) {
+  .medo-breadcrumbs__link[data-focus-visible],
+  .medo-breadcrumbs__icon-part[data-focus-visible] {
+    outline: 2px solid Highlight;
+    outline-offset: -2px;
+  }
+}
