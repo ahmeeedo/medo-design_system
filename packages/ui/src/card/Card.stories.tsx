@@ -4,19 +4,11 @@ import { Card } from './Card';
 import { Button, ButtonGroup } from '../button/Button';
 import { IconButton } from '../icon-button/IconButton';
 import { Badge } from '../badge/Badge';
-import { LightDark, semantic, slot } from '../story-helpers';
+import { Image } from '../media/Image';
+import { LightDark, samplePhoto, semantic, slot } from '../story-helpers';
 
-/** Neutral placeholder media: a token-coloured gradient, no external image. */
-const media = (
-  <div
-    role="presentation"
-    style={{
-      inlineSize: '100%',
-      blockSize: '100%',
-      background: 'linear-gradient(135deg, var(--medo-color-surface-brand-subtle), var(--medo-color-surface-subtle))',
-    }}
-  />
-);
+/** Sample media: the Image component (decorative – the card title names the content). In cards the image takes the card's radius. */
+const media = <Image src={samplePhoto(0)} alt="" ratio="16:9" radius="none" />;
 
 const grid: React.CSSProperties = { display: 'grid', gap: 'var(--medo-space-6)', gridTemplateColumns: 'repeat(auto-fill, minmax(16rem, 1fr))', alignItems: 'stretch' };
 
@@ -24,7 +16,18 @@ const meta = {
   title: 'Components/Card',
   component: Card,
   tags: ['autodocs'],
-  args: { title: 'Quarterly report', subtitle: 'Updated 2 hours ago', children: 'Revenue, costs and forecasts for Q3 in one place.', variant: 'outlined', density: 'standard', layout: 'vertical', media: 'none', headerActions: 'none', footer: 'none', href: 'none' },
+  args: {
+    title: 'Quarterly report',
+    subtitle: 'Updated 2 hours ago',
+    children: 'Revenue, costs and forecasts for Q3 in one place.',
+    variant: 'outlined',
+    density: 'standard',
+    layout: 'vertical',
+    media: 'none',
+    headerActions: 'none',
+    footer: 'none',
+    href: 'none',
+  },
   argTypes: {
     title: { control: 'text' },
     subtitle: { control: 'text' },
@@ -39,7 +42,9 @@ const meta = {
       none: undefined,
       buttons: (
         <ButtonGroup>
-          <Button variant="secondary" size="sm">Later</Button>
+          <Button variant="secondary" size="sm">
+            Later
+          </Button>
           <Button size="sm">Invite</Button>
         </ButtonGroup>
       ),
@@ -69,7 +74,12 @@ type Story = StoryObj<typeof meta>;
 export const Playground: Story = {};
 
 export const Variants: Story = {
-  parameters: { width: 'none', docs: { description: { story: 'Outlined is the default. Elevated for attention or drag, filled inside white areas, brand once per view, plain for editorial lists.' } } },
+  parameters: {
+    width: 'none',
+    docs: {
+      description: { story: 'Outlined is the default. Elevated for attention or drag, filled inside white areas, brand once per view, plain for editorial lists.' },
+    },
+  },
   render: () => (
     <div style={grid}>
       {(['outlined', 'elevated', 'filled', 'brand', 'plain'] as const).map((v) => (
@@ -119,7 +129,17 @@ export const Horizontal: Story = {
       <Card layout="horizontal" href="#" media={media} title="Design tokens 2.0" subtitle="Article · 5 min read">
         What changed in colours, spacing and typography.
       </Card>
-      <Card layout="horizontal" density="compact" media={media} title="Onboarding flow" subtitle={<Badge tone="success" size="sm" dot>Live</Badge>}>
+      <Card
+        layout="horizontal"
+        density="compact"
+        media={media}
+        title="Onboarding flow"
+        subtitle={
+          <Badge tone="success" size="sm" dot>
+            Live
+          </Badge>
+        }
+      >
         Three steps instead of five.
       </Card>
     </div>
@@ -134,7 +154,15 @@ export const LightAndDark: Story = {
       <Card href="#" title="Design tokens 2.0" subtitle="Article · 5 min read">
         What changed in colours, spacing and typography.
       </Card>
-      <Card variant="brand" title="Upgrade to Pro" footer={<ButtonGroup><Button size="sm">Upgrade</Button></ButtonGroup>}>
+      <Card
+        variant="brand"
+        title="Upgrade to Pro"
+        footer={
+          <ButtonGroup>
+            <Button size="sm">Upgrade</Button>
+          </ButtonGroup>
+        }
+      >
         Unlimited projects and version history.
       </Card>
     </LightDark>

@@ -1,0 +1,291 @@
+/**
+ * Image & Media – med.o Design System (Figma: C30 Image & Media)
+ *
+ *   <div class="medo-image medo-image--cover medo-image--radius-md" data-state="loading|loaded|error" style="aspect-ratio">
+ *     preview (blur-up) | Skeleton · <img class="medo-image__img"> · error (image-off) · overlay · badge · play
+ *   </div>
+ * Surface surface/subtle · radius/md · optional 1 px border/media inside · fade-in ≤ 200 ms (none with reduced motion)
+ * Overlay: gradient transparent → overlay/media, 55 % (min 96), padding 16, title heading/sm + meta caption, text/on-media
+ * Badge inset 12 · Play md 48 / lg 64, overlay/media, icon 20 / 28, hover/pressed/focus from the surrounding link
+ * Figure gap space/2 · caption body/sm · credit caption · text/secondary
+ * Embed consent surface/subtle + border/default · radius/md · Default padding space/8 · Compact (< 480) padding space/4
+ */
+
+/* ---------- Image ---------- */
+
+.medo-image {
+  position: relative;
+  overflow: hidden;
+  inline-size: 100%;
+  min-inline-size: 0; /* no content-based minimum from the aspect ratio */
+  background-color: var(--medo-color-surface-subtle);
+  isolation: isolate;
+}
+
+.medo-image--radius-none {
+  border-radius: 0;
+}
+.medo-image--radius-sm {
+  border-radius: var(--medo-radius-sm);
+}
+.medo-image--radius-md {
+  border-radius: var(--medo-radius-md);
+}
+.medo-image--radius-lg {
+  border-radius: var(--medo-radius-lg);
+}
+
+.medo-image__img {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+  opacity: 1;
+  transition: opacity var(--medo-motion-duration-normal) var(--medo-motion-easing-standard);
+}
+
+.medo-image--contain .medo-image__img {
+  object-fit: contain;
+}
+
+/* Hidden while loading, fades in once loaded. */
+.medo-image[data-state='loading'] .medo-image__img {
+  opacity: 0;
+}
+
+.medo-image__skeleton,
+.medo-image__preview,
+.medo-image__error {
+  position: absolute;
+  inset: 0;
+  inline-size: 100%;
+  block-size: 100%;
+}
+
+.medo-image__skeleton {
+  border-radius: 0;
+}
+
+/* Blur-up: the tiny preview, larger than the frame so the soft blur edge is cut off. */
+.medo-image__preview {
+  inset: calc(-2 * var(--medo-space-6));
+  inline-size: calc(100% + 4 * var(--medo-space-6));
+  block-size: calc(100% + 4 * var(--medo-space-6));
+  max-inline-size: none; /* global img resets cap it at 100 % */
+  object-fit: cover;
+  filter: blur(var(--medo-space-6));
+}
+
+.medo-image__error {
+  display: grid;
+  place-items: center;
+  color: var(--medo-color-text-secondary);
+}
+
+.medo-image__error > svg {
+  inline-size: var(--medo-size-icon-lg);
+  block-size: var(--medo-size-icon-lg);
+}
+
+/* 1 px border/media inside, above the image. */
+.medo-image--bordered::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  border: var(--medo-border-width-thin) solid var(--medo-color-border-media);
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+/* Text overlay on a gradient – white text keeps ≥ 4.5 : 1 even on white images. */
+.medo-image__overlay {
+  position: absolute;
+  inset-inline: 0;
+  z-index: 1;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: var(--medo-space-0-5);
+  block-size: 55%;
+  min-block-size: var(--medo-space-24);
+  padding: var(--medo-space-4);
+  color: var(--medo-color-text-on-media);
+}
+
+.medo-image__overlay--bottom {
+  inset-block-end: 0;
+  justify-content: flex-end;
+  background-image: linear-gradient(to bottom, transparent, var(--medo-color-overlay-media));
+}
+
+.medo-image__overlay--top {
+  inset-block-start: 0;
+  justify-content: flex-start;
+  background-image: linear-gradient(to top, transparent, var(--medo-color-overlay-media));
+}
+
+.medo-image__title {
+  font: var(--medo-typography-heading-sm);
+}
+
+.medo-image__meta {
+  font: var(--medo-typography-caption);
+}
+
+.medo-image__badge {
+  position: absolute;
+  inset-block-start: var(--medo-space-3);
+  inset-inline-start: var(--medo-space-3);
+  z-index: 1;
+  display: flex;
+}
+
+.medo-image__play {
+  position: absolute;
+  inset: 50% auto auto 50%;
+  z-index: 1;
+  translate: -50% -50%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .medo-image__img {
+    transition: none;
+  }
+}
+
+/* ---------- Media play button ---------- */
+
+.medo-media-play {
+  --_tint: transparent;
+  display: inline-grid;
+  place-items: center;
+  inline-size: var(--medo-size-control-lg); /* 48 */
+  block-size: var(--medo-size-control-lg);
+  border-radius: var(--medo-radius-full);
+  background-color: var(--medo-color-overlay-media);
+  background-image: linear-gradient(var(--_tint), var(--_tint));
+  color: var(--medo-color-text-on-media);
+}
+
+.medo-media-play > svg {
+  inline-size: var(--medo-size-icon-md); /* 20 */
+  block-size: var(--medo-size-icon-md);
+  margin-inline-start: var(--medo-space-0-5); /* optical centre of the triangle */
+}
+
+.medo-media-play--lg {
+  inline-size: var(--medo-space-16); /* 64 */
+  block-size: var(--medo-space-16);
+}
+
+.medo-media-play--lg > svg {
+  inline-size: calc(var(--medo-size-icon-lg) + var(--medo-space-1)); /* 28 */
+  block-size: calc(var(--medo-size-icon-lg) + var(--medo-space-1));
+}
+
+/* States come from the thumbnail link or button around it. */
+:is(a, button, [role='link'], [role='button']):is(:hover, [data-hovered]) .medo-media-play {
+  --_tint: var(--medo-color-state-hover-on-media);
+}
+
+:is(a, button, [role='link'], [role='button']):is(:active, [data-pressed]) .medo-media-play {
+  --_tint: var(--medo-color-state-pressed-on-media);
+}
+
+:is(a, button, [role='link'], [role='button']):is(:focus-visible, [data-focus-visible]) .medo-media-play {
+  box-shadow: var(--medo-shadow-focus-ring);
+}
+
+/* ---------- Figure ---------- */
+
+.medo-figure {
+  display: grid;
+  gap: var(--medo-space-2);
+  margin: 0;
+}
+
+.medo-figure__caption {
+  display: grid;
+  gap: var(--medo-space-0-5);
+  font: var(--medo-typography-body-sm);
+  color: var(--medo-color-text-secondary);
+}
+
+.medo-figure__credit {
+  font: var(--medo-typography-caption);
+}
+
+/* ---------- Embed consent ---------- */
+
+.medo-embed {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--medo-space-4);
+  inline-size: 100%;
+  min-inline-size: 0; /* no content-based minimum from the aspect ratio */
+  padding: var(--medo-space-8);
+  border: var(--medo-border-width-thin) solid var(--medo-color-border-default);
+  border-radius: var(--medo-radius-md);
+  background-color: var(--medo-color-surface-subtle);
+  text-align: center;
+}
+
+.medo-embed--compact {
+  gap: var(--medo-space-3);
+  padding: var(--medo-space-4);
+}
+
+.medo-embed__content {
+  display: grid;
+  gap: var(--medo-space-1);
+  max-inline-size: 27.5rem; /* 440 – readable line length */
+}
+
+.medo-embed__title,
+.medo-embed__body {
+  margin: 0;
+}
+
+.medo-embed__title {
+  font: var(--medo-typography-label-lg);
+  color: var(--medo-color-text-primary);
+}
+
+.medo-embed--compact .medo-embed__title {
+  font: var(--medo-typography-label-md);
+}
+
+.medo-embed__body {
+  font: var(--medo-typography-body-sm);
+  color: var(--medo-color-text-secondary);
+}
+
+.medo-embed__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--medo-space-2) var(--medo-space-4);
+}
+
+.medo-embed--loaded {
+  padding: 0;
+  overflow: hidden;
+  background-color: var(--medo-color-surface-subtle);
+}
+
+.medo-embed__frame {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+  border: 0;
+}
+
+.medo-embed__frame:focus-visible {
+  outline: var(--medo-focus-ring-width) solid var(--medo-color-focus-ring);
+  outline-offset: calc(-1 * var(--medo-focus-ring-width));
+}

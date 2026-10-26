@@ -140,6 +140,10 @@
   block-size: var(--_icon);
 }
 
+.medo-icon-tile--raised {
+  background-color: var(--medo-color-surface-default);
+}
+
 .medo-icon-tile--danger {
   background-color: var(--medo-color-feedback-danger-surface);
   color: var(--medo-color-feedback-danger-text);

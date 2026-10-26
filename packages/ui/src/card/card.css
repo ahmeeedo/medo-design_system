@@ -65,7 +65,7 @@
   background-color: var(--medo-color-surface-subtle);
 }
 
-.medo-card__media > :is(img, video, picture) {
+.medo-card__media > :is(img, video, picture, .medo-image) {
   display: block;
   inline-size: 100%;
   block-size: 100%;

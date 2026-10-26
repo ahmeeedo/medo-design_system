@@ -117,7 +117,8 @@ export function EmptyState({
 
 /* ---------- Icon tile (internal, Figma: _Icon tile – shared with Dropzone and Embed consent) ---------- */
 
-export type IconTileTone = 'neutral' | 'danger' | 'success';
+/** raised: surface/default – on surface/subtle (Embed consent). */
+export type IconTileTone = 'neutral' | 'raised' | 'danger' | 'success';
 
 /** Round, decorative icon tile: sm 40 / icon 20 · md 48 / 24 · lg 64 / 32. Internal, not exported from the package. */
 export function IconTile({ size = 'md', tone = 'neutral', children }: { size?: 'sm' | 'md' | 'lg'; tone?: IconTileTone; children: ReactNode }) {

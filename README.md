@@ -159,6 +159,7 @@ DM Sans and DM Mono (SIL Open Font License). Self-host them, for example with `@
 | `Slider`, `SliderField`, `NumberField` | C32 | React Aria Slider: single or range, thumbs never cross · value always shown and read in the same format (Intl) · halo, value tooltip while dragging · ticks (≤ 10 steps), min/max · Slider field with number inputs (sync, clamp on blur) · NumberField: Input look, Intl format, clamps |
 | `UploadField`, `Dropzone`, `FileTrigger`, `FileItem`, `FileTile` | C33 | React Aria DropZone + FileTrigger: button always there, drag and drop a shortcut, paste on focus · controlled list (app uploads, `loaded`, `error`, `previewUrl`) · type, size and count checked before upload, messages that fix · progress per file, Retry and Remove at the file · names truncate in the middle · List · Grid · Compact (auto below 640 px) · polite announcements, focus kept on remove |
 | `DatePicker`, `DateRangePicker`, `DateField`, `TimeField`, `Calendar`, `RangeCalendar` | C34 | React Aria + `@internationalized/date` (helpers re-exported) · typing first: segments, digits only, auto-advance, locale order, 24 × 24 targets · calendar as helper: month and year grids, ISO week numbers · range: two months, presets (Figma list or own) · date + time with a time field in the panel · time slots behind a clock button, booked ones with reason · Bottom Sheet lg below 640 px · messages that name the rule |
+| `Image`, `Figure`, `MediaPlayButton`, `EmbedConsent` | C30 | Image: ratios reserve the space (1:1 · 3:4 · 4:3 · 3:2 · 16:9 · 21:9 · original), `alt` required, blur-up or Skeleton, fade-in, error keeps the space · cover / contain · lazy by default, `priority` for the hero · overlays: text on gradient, one badge, play (states from the surrounding link) · Figure with caption and credit · Embed consent: two-click (GDPR), nothing loads before the click, Compact below 480 px, iframe takes the focus |
 | `Card` | C16 | outlined, elevated, filled, brand, plain · compact · horizontal · whole card as link (`href`) |
 | `Alert` | C20 | info, success, warning, danger · inline or banner · actions, dismiss, `announce` |
 | `ToastRegion`, `toast()` | C21 | region once at the root, `toast(message, { action, persistent })` from anywhere · 5 s / 8 s with action / errors until closed · pauses on hover, focus, hidden tab · max 3 · F6, Esc |
@@ -209,7 +210,7 @@ Projects that still use it should pin the tag: `npm install github:ahmeeedo/medo
 
 ## Roadmap
 
-- More app components in `@medo/ui`: Image & Media. Marketing components (Carousel, Video Player, Shapes, Hero, Text + Media) are out of scope.
+- All app components of the Figma file are in `@medo/ui`. Marketing components (Carousel, Video Player, Shapes, Hero, Text + Media) are out of scope.
 - List view: swipe actions on mobile (Figma draft – delete with Toast „Undo“, archive) once the draft is final.
 - Storybook tests: Accessibility panel strict (`a11y: { test: 'error' }`, every violation fails); `play` functions for core behaviour (Table sort and select, Tag remove, Alert dismiss, Tooltip keyboard), visible in the Interactions panel and run in CI with the Storybook Vitest addon.
 - Code examples per framework: one Storybook per framework (React, Vue, Angular), combined with **Storybook Composition** into one site.

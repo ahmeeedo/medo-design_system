@@ -24,15 +24,11 @@ import { Select } from '../select/Select';
 import { Tab, TabList, TabPanel, Tabs } from '../tabs/Tabs';
 import { Tag, TagGroup } from '../tag/Tag';
 import { ToggleButton, ToggleButtonGroup } from '../toggle-button/ToggleButton';
-import { LightDark, semantic, slot } from '../story-helpers';
+import { Image } from '../media/Image';
+import { LightDark, samplePhoto, semantic, slot } from '../story-helpers';
 
 /** Placeholder thumbnail (stories only). */
-const thumb = (
-  <div
-    role="presentation"
-    style={{ inlineSize: '100%', blockSize: '100%', background: 'linear-gradient(135deg, var(--medo-color-surface-brand-subtle), var(--medo-color-surface-subtle))' }}
-  />
-);
+const thumb = <Image src={samplePhoto(1)} alt="" ratio="4:3" radius="none" />;
 
 type Hit = { id: string; type: SearchResultType; title: string; path: string; snippet: string; badge: string; meta: string; group: 'pages' | 'files' | 'people' };
 const hits: Hit[] = [

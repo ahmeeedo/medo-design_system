@@ -2,15 +2,11 @@ import { useEffect, useRef, useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { fn } from 'storybook/test';
 import { Dropzone, FileItem, FileTile, FileTrigger, UploadField, type UploadFile } from './Upload';
-import { LightDark, semantic } from '../story-helpers';
+import { LightDark, samplePhoto, semantic } from '../story-helpers';
 
-/* Sample thumbnails (inline SVG, no network). */
-const scene = (sky: string, hill: string, sun: string) =>
-  `data:image/svg+xml;utf8,${encodeURIComponent(
-    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 136 136"><defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${sky}"/><stop offset="1" stop-color="#0f1a1f"/></linearGradient></defs><rect width="136" height="136" fill="url(#g)"/><circle cx="96" cy="58" r="12" fill="${sun}"/><path d="M0 92 L34 70 L58 84 L90 62 L136 88 V136 H0Z" fill="${hill}"/><path d="M0 110 L40 96 L80 108 L136 98 V136 H0Z" fill="#0b1316"/></svg>`,
-  )}`;
-const photo = scene('#4d7387', '#2c4450', '#f3e3b0');
-const photo2 = scene('#3b4f5c', '#24343c', '#d9c38e');
+/* Sample thumbnails (shared story images, inline SVG, no network). */
+const photo = samplePhoto(0, { width: 400, height: 400 });
+const photo2 = samplePhoto(1, { width: 400, height: 400 });
 
 const MB = 1_000_000;
 const pdf = 'application/pdf';

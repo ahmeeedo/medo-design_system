@@ -132,3 +132,7 @@ export {
   isToday,
 } from '@internationalized/date';
 export type { DateValue, TimeValue } from 'react-aria-components';
+export { Image, Figure, MediaPlayButton } from './media/Image';
+export type { ImageProps, ImageRatio, FigureProps, MediaPlayButtonProps } from './media/Image';
+export { EmbedConsent, defaultEmbedTexts } from './media/EmbedConsent';
+export type { EmbedConsentProps, EmbedTexts, EmbedType } from './media/EmbedConsent';

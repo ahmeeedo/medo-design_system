@@ -89,7 +89,7 @@
   inline-size: 10rem;
 }
 
-.medo-search-result--media .medo-search-result__leading > :is(img, picture, video) {
+.medo-search-result--media .medo-search-result__leading > :is(img, picture, video, .medo-image) {
   inline-size: 100%;
   block-size: 100%;
   object-fit: cover;
