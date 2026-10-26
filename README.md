@@ -150,7 +150,7 @@ DM Sans and DM Mono (SIL Open Font License). Self-host them, for example with `@
 | `Spinner`, `ProgressBar`, `Skeleton` | C26 | reduced motion: slower / static |
 | `List`, `ListItem`, `DescriptionList`, `DescriptionItem` | C27 | real ul/ol/dl · bullet, number (tabular, `start`), check with `excluded` · level 2 · follows the text size · DL stacks below 360 px (container query) |
 | `Avatar`, `AvatarGroup` | C28 | image → initials → icon · colour from id · status · max 4 + „+N“ |
-| `ListView`, `ListRow`, `ListRowIcon`, `ListCard` | C29 | React Aria GridList: ↑ ↓ rows, Tab into row controls · 1–3 lines · leading (avatar auto-sized) · meta, menu, chevron, switch or buttons · `unread` · selection with checkboxes · plain / card · `isLoading` skeleton rows · `variant="cards"` with ListCard (Table cards on mobile, checkbox lg) |
+| `ListView`, `ListRow`, `ListRowIcon`, `ListCard` | C29 | React Aria GridList: ↑ ↓ rows, Tab into row controls · 1–3 lines · leading (avatar auto-sized) · meta, menu, chevron, switch or buttons · `unread` · selection with checkboxes · plain / card · `isLoading` skeleton rows · `variant="cards"` with ListCard (Table cards on mobile, checkbox lg) · `swipeActions` on touch: left Delete, right Archive, snaps open from 88 px, full swipe ≥ 50 % or flick, Toast „Undo“ – same actions in the „…“ menu |
 | `EmptyState` | C36 | 5 types (first use, no results, error, no access, all done) with icon and tone · page / section / inline · structured `action` (primary only for first use) and `secondaryAction` (text button or Link) · illustration slot · `section` named by its heading · „no results“ in `role="status"` · used by List view and Table |
 | `Pagination` | C35 | navigation region · full: summary (live region), rows per page (Select sm), ‹ 1 … 4 5 6 … 19 › (max 7, first and last always) · compact below 640 px: ‹ Page 5 of 19 › 48 px · buttons (`onChange`) or real links (`getPageHref`) · current page `aria-current`, action/selected · one page: hidden · „Load more“ is a Button pattern |
 | `SearchField`, `SearchResult`, `QuickSearch`, `Highlight` | C43 | search field (Esc clears, Enter submits, label or `aria-label`) · result: page, document, person, media · base / aesthetic · every match bold · Quick search Cmd/Ctrl+K: React Aria Autocomplete, recent and suggested, groups, „All results“, full screen on mobile · search page pattern (tabs, filters, tags, sort, list/grid) |
@@ -211,7 +211,6 @@ Projects that still use it should pin the tag: `npm install github:ahmeeedo/medo
 ## Roadmap
 
 - All app components of the Figma file are in `@medo/ui`. Marketing components (Carousel, Video Player, Shapes, Hero, Text + Media) are out of scope.
-- List view: swipe actions on mobile (Figma draft – delete with Toast „Undo“, archive) once the draft is final.
 - Storybook tests: Accessibility panel strict (`a11y: { test: 'error' }`, every violation fails); `play` functions for core behaviour (Table sort and select, Tag remove, Alert dismiss, Tooltip keyboard), visible in the Interactions panel and run in CI with the Storybook Vitest addon.
 - Code examples per framework: one Storybook per framework (React, Vue, Angular), combined with **Storybook Composition** into one site.
 - Publishing the packages (npm or a private registry) with versioning (e.g. Changesets).

@@ -344,3 +344,106 @@
     outline-offset: -2px;
   }
 }
+
+/* ---------- Swipe (Figma: List row swipe) – touch only ----------
+ *   <div class="medo-list-row medo-list-row--swipe">
+ *     <span class="medo-list-row__swipe-action --end|--start --danger|--primary" style="inline-size: |offset|">icon + label</span>
+ *     <span class="medo-list-row__surface" style="transform">…row content…</span>
+ *   </div>
+ * Action 88 wide at the edge · icon 20 + label/sm · Delete feedback/danger/solid · Archive action/primary
+ */
+
+.medo-list-row--swipe {
+  overflow: hidden;
+  padding-inline-start: 0;
+}
+
+.medo-list-row__surface {
+  position: relative;
+  display: flex;
+  flex: 1;
+  align-self: stretch;
+  align-items: center;
+  gap: var(--medo-space-3);
+  min-inline-size: 0;
+  padding-inline-start: var(--medo-space-4);
+  /* Vertical scrolling stays with the browser; horizontal moves swipe the row. */
+  touch-action: pan-y;
+  transition: transform var(--medo-motion-duration-normal) var(--medo-motion-easing-standard);
+}
+
+.medo-list-row--lines-3 .medo-list-row__surface {
+  align-items: flex-start;
+}
+
+.medo-list-row__surface--dragging {
+  transition: none;
+}
+
+.medo-list-row__swipe-action {
+  position: absolute;
+  inset-block: 0;
+  z-index: 0;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.medo-list-row__swipe-action--end {
+  inset-inline-end: 0;
+  justify-content: flex-end;
+}
+
+.medo-list-row__swipe-action--start {
+  inset-inline-start: 0;
+  justify-content: flex-start;
+}
+
+.medo-list-row__swipe-action--danger {
+  background-color: var(--medo-color-feedback-danger-solid);
+  color: var(--medo-color-feedback-danger-on-solid);
+}
+
+.medo-list-row__swipe-action--primary {
+  background-color: var(--medo-color-action-primary);
+  color: var(--medo-color-text-on-action);
+}
+
+/* Icon and label centred in the 88 px at the edge. */
+.medo-list-row__swipe-label {
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--medo-space-1);
+  inline-size: calc(var(--medo-space-20) + var(--medo-space-2)); /* 88 */
+  font: var(--medo-typography-label-sm);
+}
+
+.medo-list-row__swipe-label > svg {
+  inline-size: var(--medo-size-icon-md);
+  block-size: var(--medo-size-icon-md);
+}
+
+/* While a row is open, a tap on it closes it. */
+.medo-list-row__swipe-shield {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .medo-list-row__surface {
+    transition: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .medo-list-row__swipe-action {
+    forced-color-adjust: none;
+    background-color: Highlight;
+    color: HighlightText;
+  }
+}

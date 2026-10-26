@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { fn } from 'storybook/test';
 import { Archive, Bell, CreditCard, Mail, Trash2 } from 'lucide-react';
@@ -8,6 +9,7 @@ import { Button } from '../button/Button';
 import { Menu, MenuButton, MenuItem, MenuTrigger } from '../menu/Menu';
 import { Switch } from '../switch/Switch';
 import { EmptyState } from '../empty-state/EmptyState';
+import { ToastRegion, toast } from '../toast/Toast';
 import { row, semantic } from '../story-helpers';
 
 const box: React.CSSProperties = { maxInlineSize: '35rem' };
@@ -19,12 +21,12 @@ const inbox = [
   { id: 'ahmet', name: 'Ahmet D.', text: 'Updated the Q3 report', meta: 'Sep 28' },
 ];
 
-/** „…“ menu of a row – every action of the row lives here (also the future swipe actions). */
-function RowMenu({ name }: { name: string }) {
+/** „…“ menu of a row – every action of the row lives here (also the swipe actions). */
+function RowMenu({ name, onAction }: { name: string; onAction?: (key: 'archive' | 'delete') => void }) {
   return (
     <MenuTrigger>
       <MenuButton aria-label={`More actions for ${name}`} size="sm" />
-      <Menu overlay="popover">
+      <Menu overlay="popover" onAction={(key) => onAction?.(key as 'archive' | 'delete')}>
         <MenuItem id="archive" icon={<Archive />}>
           Archive
         </MenuItem>
@@ -61,7 +63,7 @@ const meta = {
           '`ListRow`: leading (Avatar – sized automatically –, `ListRowIcon` or thumbnail), title and description (48 · 64 · 88), meta, one trailing type per list (Menu, Badge, Switch, chevron or max 2 Button sm – then the row has no action). ' +
           '`unread`: strong text, meta in brand, a dot and „Unread“ for screen readers. Plain or card; inset dividers start at the text. `isLoading` shows 3 skeleton rows. ' +
           '`variant="cards"` with `ListCard` shows records as cards – the mobile form of a Table row. Selection works with the Bulk action bar. ' +
-          'Swipe actions are a draft in Figma – the „…“ menu holds every action. Styles: `medo-list-view`, `medo-list-view--card`, `medo-list-row`, `medo-list-row--unread`.',
+          'Swipe on touch (`swipeActions`): left reveals Delete, right Archive – the „…“ menu holds the same actions. Styles: `medo-list-view`, `medo-list-view--card`, `medo-list-row`, `medo-list-row--unread`.',
       },
     },
   },
@@ -297,4 +299,54 @@ export const Cards: Story = {
       </div>
     </div>
   ),
+};
+
+/** Inbox with swipe actions: delete and archive remove the row at once and offer „Undo“ (8 s). */
+function SwipeInbox({ onOpen }: { onOpen?: (key: unknown) => void }) {
+  const [items, setItems] = useState(inbox);
+  const remove = (id: string, verb: 'deleted' | 'archived') => {
+    const index = items.findIndex((i) => i.id === id);
+    const item = items[index];
+    setItems((all) => all.filter((i) => i.id !== id));
+    toast(`Conversation ${verb}`, {
+      action: { label: 'Undo', onAction: () => setItems((all) => [...all.slice(0, index), item, ...all.slice(index)]) },
+    });
+  };
+  return (
+    <div style={box}>
+      <ListView aria-label="Inbox" items={items} onAction={onOpen} emptyState={<EmptyState size="inline" type="all-done" title="Inbox zero" />}>
+        {(item) => (
+          <ListRow
+            id={item.id}
+            title={item.name}
+            description={item.text}
+            meta={item.meta}
+            unread={item.unread}
+            leading={<Avatar name={item.name} decorative />}
+            trailing={<RowMenu name={item.name} onAction={(key) => remove(item.id, key === 'delete' ? 'deleted' : 'archived')} />}
+            swipeActions={{
+              start: { label: 'Archive', icon: <Archive />, onAction: () => remove(item.id, 'archived') },
+              end: { label: 'Delete', icon: <Trash2 />, tone: 'danger', onAction: () => remove(item.id, 'deleted') },
+            }}
+          />
+        )}
+      </ListView>
+      <ToastRegion />
+    </div>
+  );
+}
+
+export const Swipe: Story = {
+  name: 'Swipe (touch)',
+  parameters: {
+    viewport: { defaultViewport: 'mobile1' },
+    docs: {
+      description: {
+        story:
+          'Touch only (use device mode in the browser): swipe left reveals Delete, right Archive. From 88 px the action snaps open – tap it; a full swipe (≥ 50 % or a flick) triggers it at once. Only one row is open; a tap elsewhere, scrolling or Esc closes it. ' +
+          'Delete and archive remove the row at once and a Toast offers „Undo“ for 8 s – no confirmation dialog. Mouse, keyboard and screen readers use the „…“ menu with the same actions.',
+      },
+    },
+  },
+  render: (args) => <SwipeInbox onOpen={args.onAction} />,
 };
