@@ -97,7 +97,10 @@
   border-radius: var(--medo-radius-full);
   background-color: var(--medo-color-surface-default);
   box-shadow: var(--medo-shadow-elevation-1);
-  transition: box-shadow var(--medo-motion-duration-fast) var(--medo-motion-easing-standard);
+  transition:
+    box-shadow var(--medo-motion-duration-fast) var(--medo-motion-easing-standard),
+    left var(--medo-motion-spring-snappy-duration) var(--medo-motion-spring-snappy),
+    right var(--medo-motion-spring-snappy-duration) var(--medo-motion-spring-snappy);
 }
 
 /* 44 px hit area around the 20 px thumb. */
@@ -177,8 +180,21 @@
   font-variant-numeric: tabular-nums;
 }
 
+/* A click on the track or a key moves thumb and fill with a snappy spring; while dragging they follow 1:1. */
+.medo-slider__fill {
+  transition:
+    inset-inline-start var(--medo-motion-spring-snappy-duration) var(--medo-motion-spring-snappy),
+    inline-size var(--medo-motion-spring-snappy-duration) var(--medo-motion-spring-snappy);
+}
+.medo-slider__track:has(.medo-slider__thumb[data-dragging]) :is(.medo-slider__thumb, .medo-slider__fill) {
+  transition-property: box-shadow;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .medo-slider__thumb {
+    transition: box-shadow var(--medo-motion-duration-fast) var(--medo-motion-easing-standard);
+  }
+  .medo-slider__fill {
     transition: none;
   }
 }

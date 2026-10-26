@@ -2,8 +2,8 @@ import type React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useState } from 'react';
 import { Switch } from './Switch';
-import { fn } from 'storybook/test';
-import { LightDark, stack } from '../story-helpers';
+import { expect, fn } from 'storybook/test';
+import { interactionTest, LightDark, stack } from '../story-helpers';
 
 const meta = {
   title: 'Components/Switch',
@@ -98,4 +98,17 @@ export const LightAndDark: Story = {
       <Switch {...args} isDisabled defaultSelected>Disabled</Switch>
     </LightDark>
   ),
+};
+
+export const InteractionTest: Story = {
+  ...interactionTest,
+  decorators: narrow,
+  play: async ({ canvas, userEvent, args }) => {
+    const sw = canvas.getByRole('switch', { name: 'Email notifications' });
+    await userEvent.click(canvas.getByText('Email notifications'));
+    await expect(sw).toBeChecked();
+    await userEvent.keyboard(' ');
+    await expect(sw).not.toBeChecked();
+    await expect(args.onChange).toHaveBeenCalledTimes(2);
+  },
 };

@@ -9,7 +9,7 @@
  *   </div>
  * md: header min 48 · padding 12/16 · title label/md · icon 20 · panel padding 12 16 16
  * lg: header min 64 · padding 20/24 · title heading/sm · icon 24 · panel padding 16 24 24
- * Motion: height + chevron 200 ms ease-out, none with reduced motion. Closed panels: hidden="until-found" (React Aria).
+ * Motion: height + chevron with spring/smooth, the content fades; reduced motion: content cross-fade only. Closed panels: hidden="until-found" (React Aria).
  */
 
 .medo-accordion-wrap {
@@ -134,7 +134,7 @@
   inline-size: var(--_icon);
   block-size: var(--_icon);
   color: var(--medo-color-text-secondary);
-  transition: rotate var(--medo-motion-duration-normal) var(--medo-motion-easing-enter);
+  transition: rotate var(--medo-motion-spring-smooth-duration) var(--medo-motion-spring-smooth);
 }
 
 .medo-accordion__item[data-expanded] .medo-accordion__chevron {
@@ -145,11 +145,17 @@
 .medo-accordion__panel {
   block-size: var(--disclosure-panel-height);
   overflow: clip;
-  transition: block-size var(--medo-motion-duration-normal) var(--medo-motion-easing-enter);
+  transition: block-size var(--medo-motion-spring-smooth-duration) var(--medo-motion-spring-smooth);
 }
 
+/* The content fades with the height, so it never pops in or is cut off hard. */
 .medo-accordion__content {
   padding: var(--_panel);
+  transition: opacity var(--medo-motion-duration-normal) var(--medo-motion-easing-standard);
+}
+
+.medo-accordion__item:not([data-expanded]) .medo-accordion__content {
+  opacity: 0;
 }
 
 /* The content lines up with the title when an icon is shown. */
@@ -158,9 +164,15 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .medo-accordion__chevron,
+  /* Reduced motion: no growing height – the content cross-fades. */
   .medo-accordion__panel {
     transition: none;
+  }
+  .medo-accordion__chevron {
+    transition: rotate var(--medo-motion-duration-fast) var(--medo-motion-easing-standard);
+  }
+  .medo-accordion__content {
+    transition-duration: var(--medo-motion-duration-fast);
   }
 }
 

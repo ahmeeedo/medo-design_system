@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { fn } from 'storybook/test';
+import { expect, fn, waitFor, within } from 'storybook/test';
 import { AlertDialog, DialogTrigger, type AlertDialogTone } from './Dialog';
 import { Button } from '../button/Button';
-import { row, semantic } from '../story-helpers';
+import { interactionTest, row, semantic } from '../story-helpers';
 
 /** The Figma examples per tone. */
 const examples: Record<AlertDialogTone, { trigger: string; title: string; text: string; action: string; cancel: string }> = {
@@ -110,4 +110,25 @@ export const Pending: Story = {
       </AlertDialog>
     </DialogTrigger>
   ),
+};
+
+export const InteractionTest: Story = {
+  ...interactionTest,
+  play: async ({ canvas, userEvent, args }) => {
+    const trigger = canvas.getByRole('button', { name: 'Delete file' });
+    await userEvent.click(trigger);
+    const dialog = await within(document.body).findByRole('alertdialog');
+    // Focus starts on Cancel, so an accidental Enter never deletes.
+    await waitFor(() => expect(within(dialog).getByRole('button', { name: 'Cancel' })).toHaveFocus());
+    // Esc = Cancel: closes without the action, focus returns to the trigger.
+    await userEvent.keyboard('{Escape}');
+    await waitFor(() => expect(within(document.body).queryByRole('alertdialog')).toBeNull());
+    await expect(args.onAction).not.toHaveBeenCalled();
+    await expect(trigger).toHaveFocus();
+    // The action button runs the action and closes.
+    await userEvent.click(trigger);
+    await userEvent.click(await within(document.body).findByRole('button', { name: 'Delete' }));
+    await expect(args.onAction).toHaveBeenCalledTimes(1);
+    await waitFor(() => expect(within(document.body).queryByRole('alertdialog')).toBeNull());
+  },
 };

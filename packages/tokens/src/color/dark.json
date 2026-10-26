@@ -265,8 +265,8 @@
     "state": {
       "hover": {
         "$type": "color",
-        "$value": "{color.white-alpha.8}",
-        "$description": "State layer for hover on transparent interactive elements: 8 % of the text color."
+        "$value": "{color.white-alpha.6}",
+        "$description": "State layer for hover on transparent interactive elements: 8 % of the text color in Light, 6 % white in Dark (keeps text/secondary ≥ 4.5:1 on hovered rows)."
       },
       "pressed": {
         "$type": "color",

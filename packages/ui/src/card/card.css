@@ -201,8 +201,17 @@
   }
 }
 
+/* Interactive cards give way a little while pressed (iOS) and spring back. */
+.medo-card--interactive {
+  transition: scale var(--medo-motion-spring-snappy-duration) var(--medo-motion-spring-snappy);
+}
+.medo-card--interactive:has(.medo-card__link[data-pressed]) {
+  scale: 0.98;
+  transition-duration: var(--medo-motion-duration-fast);
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .medo-card--interactive::before {
-    transition: none;
+  .medo-card--interactive:has(.medo-card__link[data-pressed]) {
+    scale: none;
   }
 }

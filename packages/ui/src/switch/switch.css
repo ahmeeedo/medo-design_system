@@ -63,8 +63,9 @@
   border-radius: var(--medo-radius-full);
   background-color: var(--medo-color-text-on-action);
   color: var(--_track);
+  /* The thumb moves with a snappy spring (iOS). */
   transition:
-    transform var(--medo-motion-duration-fast) var(--medo-motion-easing-standard),
+    transform var(--medo-motion-spring-snappy-duration) var(--medo-motion-spring-snappy),
     color var(--medo-motion-duration-fast) var(--medo-motion-easing-standard);
 }
 
@@ -147,9 +148,11 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .medo-switch__track,
+  /* Reduced motion: a short, plain move – the state change stays visible. */
   .medo-switch__thumb {
-    transition: none;
+    transition:
+      transform var(--medo-motion-duration-fast) var(--medo-motion-easing-standard),
+      color var(--medo-motion-duration-fast) var(--medo-motion-easing-standard);
   }
   .medo-switch__spinner {
     animation-duration: 3s;

@@ -124,3 +124,24 @@
     border-color: CanvasText;
   }
 }
+
+/* An alert that appears (after an action) fades in and settles 4 px with a smooth spring. */
+.medo-alert {
+  transition:
+    opacity var(--medo-motion-duration-normal) var(--medo-motion-easing-enter),
+    translate var(--medo-motion-spring-smooth-duration) var(--medo-motion-spring-smooth);
+}
+@starting-style {
+  .medo-alert {
+    opacity: 0;
+    translate: 0 calc(-1 * var(--medo-space-1));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  @starting-style {
+    .medo-alert {
+      translate: none;
+    }
+  }
+}

@@ -57,7 +57,7 @@ export interface ImageProps extends Omit<ImgHTMLAttributes<HTMLImageElement>, 'a
 
 /**
  * Image – an image with reserved space and calm loading states (Figma: C30 Image). Loading: blur-up preview or
- * Skeleton; the image fades in (200 ms, none with reduced motion). Error keeps the space and shows image-off;
+ * Skeleton; the image fades in (250 ms; 100 ms with reduced motion). Error keeps the space and shows image-off;
  * the alt text stays available. Overlays (text, badge, play) only on the loaded image.
  */
 export function Image({

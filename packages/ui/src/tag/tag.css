@@ -201,9 +201,25 @@
   }
 }
 
+/* New tags pop in with a snappy spring (filters, multi-select). */
+@starting-style {
+  .medo-tag {
+    opacity: 0;
+    scale: 0.9;
+  }
+}
+.medo-tag {
+  transition:
+    background-color var(--medo-motion-duration-fast) var(--medo-motion-easing-standard),
+    color var(--medo-motion-duration-fast) var(--medo-motion-easing-standard),
+    opacity var(--medo-motion-duration-fast) var(--medo-motion-easing-standard),
+    scale var(--medo-motion-spring-snappy-duration) var(--medo-motion-spring-snappy);
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .medo-tag,
-  .medo-tag__remove {
-    transition: none;
+  @starting-style {
+    .medo-tag {
+      scale: none;
+    }
   }
 }

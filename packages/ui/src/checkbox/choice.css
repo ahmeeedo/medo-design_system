@@ -81,7 +81,20 @@
   border-radius: var(--medo-radius-full);
   background-color: var(--_accent);
   transform: scale(0);
-  transition: transform var(--medo-motion-duration-fast) var(--medo-motion-easing-standard);
+  transition: transform var(--medo-motion-spring-snappy-duration) var(--medo-motion-spring-snappy);
+}
+
+/* The check pops in with a snappy spring (iOS). */
+.medo-checkbox .medo-choice__control > svg {
+  transition:
+    scale var(--medo-motion-spring-snappy-duration) var(--medo-motion-spring-snappy),
+    opacity var(--medo-motion-duration-fast) var(--medo-motion-easing-standard);
+}
+@starting-style {
+  .medo-checkbox .medo-choice__control > svg {
+    scale: 0.4;
+    opacity: 0;
+  }
 }
 
 .medo-choice__description {
@@ -163,8 +176,21 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .medo-choice__control,
+  /* Reduced motion: marks fade in, nothing grows. */
   .medo-radio .medo-choice__control::after {
-    transition: none;
+    transform: none;
+    opacity: 0;
+    transition: opacity var(--medo-motion-duration-fast) var(--medo-motion-easing-standard);
+  }
+  .medo-radio[data-selected] .medo-choice__control::after {
+    opacity: 1;
+  }
+  .medo-checkbox .medo-choice__control > svg {
+    transition: opacity var(--medo-motion-duration-fast) var(--medo-motion-easing-standard);
+  }
+  @starting-style {
+    .medo-checkbox .medo-choice__control > svg {
+      scale: none;
+    }
   }
 }

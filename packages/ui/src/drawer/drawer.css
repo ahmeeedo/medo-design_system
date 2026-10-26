@@ -44,8 +44,8 @@
   color: var(--medo-color-text-primary);
   outline: none;
   touch-action: pan-y;
-  /* Snaps back when a swipe is too short. */
-  transition: transform var(--medo-motion-duration-fast) var(--medo-motion-easing-standard);
+  /* Slides with a smooth spring – also back when a swipe is too short. */
+  transition: transform var(--medo-motion-spring-smooth-duration) var(--medo-motion-spring-smooth);
 }
 
 /* Left: radius and border on the free (right) side. */
@@ -71,28 +71,22 @@
 
 /* ---------- Motion: slide in from the side, scrim fades ---------- */
 
+.medo-drawer-overlay {
+  transition: opacity var(--medo-motion-duration-normal) var(--medo-motion-easing-enter);
+}
 .medo-drawer-overlay[data-entering] {
-  animation: medo-drawer-fade var(--medo-motion-duration-normal) var(--medo-motion-easing-enter);
+  opacity: 0;
 }
 .medo-drawer-overlay[data-exiting] {
-  animation: medo-drawer-fade var(--medo-motion-duration-normal) var(--medo-motion-easing-exit) reverse;
+  opacity: 0;
+  transition: opacity var(--medo-motion-duration-normal) var(--medo-motion-easing-exit);
 }
 .medo-drawer-overlay[data-entering] .medo-drawer {
-  animation: medo-drawer-slide var(--medo-motion-duration-slow) var(--medo-motion-easing-enter);
+  transform: translateX(var(--_from));
 }
 .medo-drawer-overlay[data-exiting] .medo-drawer {
-  animation: medo-drawer-slide var(--medo-motion-duration-normal) var(--medo-motion-easing-exit) reverse;
-}
-
-@keyframes medo-drawer-fade {
-  from {
-    opacity: 0;
-  }
-}
-@keyframes medo-drawer-slide {
-  from {
-    transform: translateX(var(--_from));
-  }
+  transform: translateX(var(--_from));
+  transition: transform var(--medo-motion-duration-normal) var(--medo-motion-easing-exit);
 }
 
 /* ---------- Parts ---------- */
@@ -149,7 +143,14 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  /* Reduced motion: the panel fades with the scrim instead of sliding. */
+  .medo-drawer-overlay {
+    transition: opacity var(--medo-motion-duration-fast) var(--medo-motion-easing-standard);
+  }
+  .medo-drawer {
+    transition: none;
+  }
   .medo-drawer-overlay:is([data-entering], [data-exiting]) .medo-drawer {
-    animation-name: medo-drawer-fade;
+    transform: none;
   }
 }

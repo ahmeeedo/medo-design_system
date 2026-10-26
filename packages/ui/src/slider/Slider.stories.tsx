@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { fn } from 'storybook/test';
+import { expect, fn } from 'storybook/test';
 import { Slider, SliderField } from './Slider';
 import { NumberField } from '../number-field/NumberField';
-import { LightDark, semantic } from '../story-helpers';
+import { interactionTest, LightDark, semantic } from '../story-helpers';
 
 const box: React.CSSProperties = { maxInlineSize: '20rem' };
 const percent = { style: 'percent', maximumFractionDigits: 0 } as const;
@@ -139,4 +139,39 @@ export const Number: Story = {
       <NumberField label="Discount" defaultValue={0.15} minValue={0} maxValue={1} step={0.05} formatOptions={percent} />
     </div>
   ),
+};
+
+export const InteractionTest: Story = {
+  ...interactionTest,
+  play: async ({ canvas, userEvent, args }) => {
+    const thumb = canvas.getByRole('slider', { name: 'Volume' });
+    await expect(thumb).toHaveAttribute('aria-valuetext', '40%');
+    thumb.focus();
+    // Arrow keys move one step, Page Up 10 %, End to the maximum.
+    await userEvent.keyboard('{ArrowRight}');
+    await expect(thumb).toHaveAttribute('aria-valuetext', '41%');
+    await userEvent.keyboard('{PageUp}');
+    await expect(thumb).toHaveAttribute('aria-valuetext', '51%');
+    await userEvent.keyboard('{End}');
+    await expect(thumb).toHaveAttribute('aria-valuetext', '100%');
+    await expect(args.onChange).toHaveBeenLastCalledWith(1);
+  },
+};
+
+export const NumberFieldTest: Story = {
+  ...interactionTest,
+  name: 'Interaction test: number field',
+  render: () => <NumberField label="Quantity" defaultValue={2} minValue={1} maxValue={99} />,
+  play: async ({ canvas, userEvent }) => {
+    const input = canvas.getByRole('textbox', { name: 'Quantity' });
+    // Clamped to the maximum when the field is left.
+    await userEvent.clear(input);
+    await userEvent.type(input, '150');
+    await userEvent.tab();
+    await expect(input).toHaveValue('99');
+    // ↓ changes it by one step.
+    input.focus();
+    await userEvent.keyboard('{ArrowDown}');
+    await expect(input).toHaveValue('98');
+  },
 };

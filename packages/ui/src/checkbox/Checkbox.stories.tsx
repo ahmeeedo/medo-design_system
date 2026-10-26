@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Checkbox, CheckboxGroup } from './Checkbox';
-import { fn } from 'storybook/test';
-import { LightDark, stack } from '../story-helpers';
+import { expect, fn } from 'storybook/test';
+import { interactionTest, LightDark, stack } from '../story-helpers';
 
 const meta = {
   title: 'Components/Checkbox',
@@ -97,4 +97,16 @@ export const LightAndDark: Story = {
       </Checkbox>
     </LightDark>
   ),
+};
+
+export const InteractionTest: Story = {
+  ...interactionTest,
+  play: async ({ canvas, userEvent, args }) => {
+    const box = canvas.getByRole('checkbox', { name: 'Accept the terms' });
+    await userEvent.click(canvas.getByText('Accept the terms'));
+    await expect(box).toBeChecked();
+    await userEvent.keyboard(' ');
+    await expect(box).not.toBeChecked();
+    await expect(args.onChange).toHaveBeenLastCalledWith(false);
+  },
 };

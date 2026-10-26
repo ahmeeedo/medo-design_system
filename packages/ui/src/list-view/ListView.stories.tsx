@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { fn } from 'storybook/test';
+import { expect, fn } from 'storybook/test';
 import { Archive, Bell, CreditCard, Mail, Trash2 } from 'lucide-react';
 import { ListCard, ListRow, ListRowIcon, ListView } from './ListView';
 import { Avatar } from '../avatar/Avatar';
@@ -10,7 +10,7 @@ import { Menu, MenuButton, MenuItem, MenuTrigger } from '../menu/Menu';
 import { Switch } from '../switch/Switch';
 import { EmptyState } from '../empty-state/EmptyState';
 import { ToastRegion, toast } from '../toast/Toast';
-import { row, semantic } from '../story-helpers';
+import { interactionTest, row, semantic } from '../story-helpers';
 
 const box: React.CSSProperties = { maxInlineSize: '35rem' };
 
@@ -349,4 +349,21 @@ export const Swipe: Story = {
     },
   },
   render: (args) => <SwipeInbox onOpen={args.onAction} />,
+};
+
+export const InteractionTest: Story = {
+  ...interactionTest,
+  play: async ({ canvas, userEvent, args }) => {
+    // ↑ ↓ move between rows, Enter opens the row. findBy: wait until React Aria has rendered the collection.
+    const lea = await canvas.findByRole('row', { name: /Lea M\./ });
+    await userEvent.tab();
+    await expect(lea).toHaveFocus();
+    await userEvent.keyboard('{ArrowDown}');
+    await expect(canvas.getByRole('row', { name: /Sam K\./ })).toHaveFocus();
+    await userEvent.keyboard('{Enter}');
+    await expect(args.onAction).toHaveBeenLastCalledWith('sam');
+    // A click opens it as well.
+    await userEvent.click(canvas.getByText('Jonas B.'));
+    await expect(args.onAction).toHaveBeenLastCalledWith('jonas');
+  },
 };

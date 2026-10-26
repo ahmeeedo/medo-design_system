@@ -100,8 +100,4 @@
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .medo-link {
-    transition: none;
-  }
-}
+/* Color fades stay with reduced motion – they do not move anything. */

@@ -11,7 +11,7 @@
  *       </section>
  *     </div>
  *   </div>
- * Height = content, max 90dvh (full: fixed 90dvh, e.g. with search). Enter 0.2 s, exit 0.1 s; reduced motion: fade.
+ * Height = content, max 90dvh (full: fixed 90dvh, e.g. with search). In: smooth spring; out: 250 ms ease-in; reduced motion: fade.
  * State contract: [data-entering] [data-exiting] on overlay and sheet (React Aria).
  */
 
@@ -24,11 +24,15 @@
   background-color: var(--medo-color-overlay-scrim);
 }
 
+.medo-sheet-overlay {
+  transition: opacity var(--medo-motion-duration-normal) var(--medo-motion-easing-enter);
+}
 .medo-sheet-overlay[data-entering] {
-  animation: medo-sheet-fade var(--medo-motion-duration-normal) var(--medo-motion-easing-enter);
+  opacity: 0;
 }
 .medo-sheet-overlay[data-exiting] {
-  animation: medo-sheet-fade var(--medo-motion-duration-fast) var(--medo-motion-easing-exit) reverse;
+  opacity: 0;
+  transition: opacity var(--medo-motion-duration-normal) var(--medo-motion-easing-exit);
 }
 
 .medo-sheet {
@@ -44,8 +48,8 @@
   color: var(--medo-color-text-primary);
   outline: none;
   touch-action: pan-y;
-  /* Snaps back when a swipe is too short. */
-  transition: transform var(--medo-motion-duration-fast) var(--medo-motion-easing-standard);
+  /* Slides with a smooth spring (iOS sheet) – also back when a swipe is too short. */
+  transition: transform var(--medo-motion-spring-smooth-duration) var(--medo-motion-spring-smooth);
 }
 
 /* With search: fixed height, so the sheet does not jump while typing or when the keyboard opens. */
@@ -55,11 +59,12 @@
 
 .medo-sheet[data-entering],
 .medo-sheet-overlay[data-entering] .medo-sheet {
-  animation: medo-sheet-slide var(--medo-motion-duration-normal) var(--medo-motion-easing-enter);
+  transform: translateY(100%);
 }
 .medo-sheet[data-exiting],
 .medo-sheet-overlay[data-exiting] .medo-sheet {
-  animation: medo-sheet-slide var(--medo-motion-duration-fast) var(--medo-motion-easing-exit) reverse;
+  transform: translateY(100%);
+  transition: transform var(--medo-motion-duration-normal) var(--medo-motion-easing-exit);
 }
 
 /*
@@ -86,18 +91,6 @@
 /* While dragging: follow the finger, no transition. */
 .medo-sheet[data-dragging] {
   transition: none;
-}
-
-@keyframes medo-sheet-slide {
-  from {
-    transform: translateY(100%);
-  }
-}
-
-@keyframes medo-sheet-fade {
-  from {
-    opacity: 0;
-  }
 }
 
 .medo-sheet__dialog {
@@ -194,10 +187,16 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .medo-sheet[data-entering],
-  .medo-sheet[data-exiting],
+  /* Reduced motion: the sheet fades with the scrim instead of sliding. */
+  .medo-sheet-overlay {
+    transition: opacity var(--medo-motion-duration-fast) var(--medo-motion-easing-standard);
+  }
+  .medo-sheet {
+    transition: opacity var(--medo-motion-duration-fast) var(--medo-motion-easing-standard);
+  }
+  .medo-sheet:is([data-entering], [data-exiting]),
   .medo-sheet-overlay:is([data-entering], [data-exiting]) .medo-sheet {
-    animation-name: medo-sheet-fade;
-    animation-duration: var(--medo-motion-duration-fast);
+    transform: none;
+    opacity: 0;
   }
 }

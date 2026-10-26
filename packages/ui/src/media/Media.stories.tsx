@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { fn } from 'storybook/test';
+import { expect, fn, waitFor } from 'storybook/test';
 import { Image, Figure, MediaPlayButton, type ImageRatio } from './Image';
 import { EmbedConsent } from './EmbedConsent';
 import { Badge } from '../badge/Badge';
-import { LightDark, samplePhoto, sampleScreenshot, semantic, slot } from '../story-helpers';
+import { interactionTest, LightDark, samplePhoto, sampleScreenshot, semantic, slot } from '../story-helpers';
 
 const ratios: ImageRatio[] = ['1:1', '3:4', '4:3', '3:2', '16:9', '21:9', 'original'];
 const grid: React.CSSProperties = { display: 'grid', gap: 'var(--medo-space-6)', gridTemplateColumns: 'repeat(auto-fill, minmax(12rem, 1fr))', alignItems: 'start' };
@@ -56,7 +56,7 @@ const meta = {
     docs: {
       description: {
         component:
-          '**Image**: the ratio reserves the space before the file arrives – nothing jumps (CLS). `alt` is required (decorative: `alt=""` on purpose). Loading: blur-up with `placeholder` (≈ 20 px data URI or BlurHash), otherwise a Skeleton; the image fades in (200 ms, none with reduced motion). Error keeps the space and shows image-off. ' +
+          '**Image**: the ratio reserves the space before the file arrives – nothing jumps (CLS). `alt` is required (decorative: `alt=""` on purpose). Loading: blur-up with `placeholder` (≈ 20 px data URI or BlurHash), otherwise a Skeleton; the image fades in (250 ms; 100 ms with reduced motion). Error keeps the space and shows image-off. ' +
           '`fit` cover for photos, contain for logos, screenshots and charts. Lazy by default; `priority` for the hero (eager, fetchpriority high). Pass `srcSet`/`sizes`, `width`/`height`. Overlays only on the loaded image: text on a gradient, one badge, play. ' +
           '**Figure**: figure + figcaption with caption and credit. **Embed consent**: two-click placeholder – nothing loads from the provider before the click. Styles: `medo-image`, `medo-figure`, `medo-embed`.',
       },
@@ -225,4 +225,22 @@ export const Embed: Story = {
       <EmbedConsent type="generic" src={demoEmbed} title="Booking widget" privacyHref="#privacy" onConsent={fn()} />
     </div>
   ),
+};
+
+export const InteractionTest: Story = {
+  ...interactionTest,
+  render: () => (
+    <div style={{ maxInlineSize: '40rem' }}>
+      <EmbedConsent type="video" provider="YouTube" company="Google" src={demoEmbed} title="Video: Product tour" privacyHref="#privacy" onConsent={fn()} />
+    </div>
+  ),
+  play: async ({ canvas, userEvent, canvasElement }) => {
+    // Nothing loads before the click.
+    await expect(canvasElement.querySelector('iframe')).toBeNull();
+    await userEvent.click(canvas.getByRole('checkbox', { name: 'Always load YouTube videos' }));
+    await userEvent.click(canvas.getByRole('button', { name: 'Load video' }));
+    // The iframe replaces the placeholder in place and takes the focus.
+    const frame = await canvas.findByTitle('Video: Product tour');
+    await waitFor(() => expect(frame).toHaveFocus());
+  },
 };

@@ -344,9 +344,27 @@
   color: var(--medo-color-feedback-danger-text);
 }
 
+/* New files slide in softly (iOS list insert). */
+.medo-upload__item {
+  transition:
+    opacity var(--medo-motion-duration-normal) var(--medo-motion-easing-enter),
+    translate var(--medo-motion-spring-smooth-duration) var(--medo-motion-spring-smooth);
+}
+@starting-style {
+  .medo-upload__item {
+    opacity: 0;
+    translate: 0 var(--medo-space-2);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .medo-dropzone {
-    transition: none;
+  .medo-upload__item {
+    transition: opacity var(--medo-motion-duration-fast) var(--medo-motion-easing-standard);
+  }
+  @starting-style {
+    .medo-upload__item {
+      translate: none;
+    }
   }
 }
 

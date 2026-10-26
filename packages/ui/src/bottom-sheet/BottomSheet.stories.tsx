@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { DialogTrigger } from 'react-aria-components';
-import { fn } from 'storybook/test';
+import { expect, fn, waitFor, within } from 'storybook/test';
 import { BottomSheet } from './BottomSheet';
 import { Button } from '../button/Button';
 import { Checkbox, CheckboxGroup } from '../checkbox/Checkbox';
-import { semantic } from '../story-helpers';
+import { interactionTest, semantic } from '../story-helpers';
 
 const text: React.CSSProperties = { margin: 0, padding: '0 var(--medo-space-4) var(--medo-space-4)', font: 'var(--medo-typography-body-md)', color: 'var(--medo-color-text-secondary)' };
 
@@ -87,4 +87,19 @@ export const WithContent: Story = {
       </BottomSheet>
     </DialogTrigger>
   ),
+};
+
+export const InteractionTest: Story = {
+  ...interactionTest,
+  play: async ({ canvas, userEvent }) => {
+    const trigger = canvas.getByRole('button', { name: 'Open sheet' });
+    await userEvent.click(trigger);
+    const body = within(document.body);
+    const sheet = await body.findByRole('dialog', { name: 'Share project' });
+    await waitFor(() => expect(sheet).toContainElement(document.activeElement as HTMLElement));
+    // The close button and Esc close it; focus returns.
+    await userEvent.click(within(sheet).getByRole('button', { name: 'Close' }));
+    await waitFor(() => expect(body.queryByRole('dialog')).toBeNull());
+    await expect(trigger).toHaveFocus();
+  },
 };

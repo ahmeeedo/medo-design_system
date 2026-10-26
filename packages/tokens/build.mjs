@@ -189,6 +189,8 @@ StyleDictionary.registerFormat({
 
     out.push('', '  /* Easing */', line('ease-*', 'initial'));
     for (const t of by((t) => t.path[0] === 'motion' && t.path[1] === 'easing')) out.push(line(`ease-${t.path[2]}`, `var(${cssVar(t.path)})`));
+    // Springs as easings (ease-spring-smooth) – pair them with their settle time (duration-spring-smooth).
+    for (const t of by((t) => t.path[0] === 'motion' && t.path[1] === 'spring' && !t.path[2].endsWith('-duration'))) out.push(line(`ease-spring-${t.path[2]}`, `var(${cssVar(t.path)})`));
 
     out.push('', '  /* Max widths (max-w-prose, max-w-xl …) */', line('container-*', 'initial'));
     for (const t of by((t) => t.path[0] === 'container')) out.push(line(`container-${t.path[1]}`, `var(${cssVar(t.path)})`));

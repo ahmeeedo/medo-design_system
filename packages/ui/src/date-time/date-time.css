@@ -307,7 +307,7 @@
 }
 
 .medo-calendar__weeks-label,
-.medo-calendar__week {
+.medo-calendar__day[data-week]::before {
   position: absolute;
   display: grid;
   place-items: center;
@@ -323,9 +323,11 @@
   block-size: var(--medo-space-6);
 }
 
-.medo-calendar__week {
+.medo-calendar__day[data-week]::before {
+  content: attr(data-week);
+  /* From the centred day circle to the 32 px column before the row. */
   inset-block: 0;
-  inset-inline-start: calc(-1 * var(--medo-space-8));
+  inset-inline-start: calc(-1 * var(--medo-space-8) - (var(--_cell) - var(--_day)) / 2);
 }
 
 /* ---------- Months · Years ---------- */
@@ -388,9 +390,15 @@
   cursor: default;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .medo-calendar__day {
-    transition: none;
+/* Switching days ↔ months ↔ years cross-fades. */
+.medo-calendar__months,
+.medo-calendar__periods {
+  transition: opacity var(--medo-motion-duration-normal) var(--medo-motion-easing-enter);
+}
+@starting-style {
+  .medo-calendar__months,
+  .medo-calendar__periods {
+    opacity: 0;
   }
 }
 

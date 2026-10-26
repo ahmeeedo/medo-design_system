@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Maximize2, Pause, Pencil, Plus, Trash2, Volume2, X } from 'lucide-react';
 import { IconButton } from './IconButton';
-import { fn } from 'storybook/test';
-import { LightDark, row, semantic, slot } from '../story-helpers';
+import { expect, fn, waitFor, within } from 'storybook/test';
+import { interactionTest, LightDark, row, semantic, slot } from '../story-helpers';
 
 const meta = {
   title: 'Components/Icon Button',
@@ -106,4 +106,17 @@ export const OnMedia: Story = {
       </div>
     </div>
   ),
+};
+
+export const InteractionTest: Story = {
+  ...interactionTest,
+  play: async ({ canvas, userEvent, args }) => {
+    // Keyboard focus shows the name as a tooltip at once; Enter presses.
+    await userEvent.tab();
+    const body = within(document.body);
+    await waitFor(() => expect(body.getByRole('tooltip')).toHaveTextContent('Add item'));
+    await userEvent.keyboard('{Enter}');
+    await expect(args.onPress).toHaveBeenCalledTimes(1);
+    await expect(canvas.getByRole('button', { name: 'Add item' })).toBeInTheDocument();
+  },
 };

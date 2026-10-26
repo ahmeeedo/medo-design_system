@@ -122,7 +122,7 @@
   block-size: 100%;
   border-radius: inherit;
   background-color: var(--_fill);
-  transition: inline-size var(--medo-motion-duration-normal) var(--medo-motion-easing-standard);
+  transition: inline-size var(--medo-motion-spring-smooth-duration) var(--medo-motion-spring-smooth);
 }
 
 /* Indeterminate: a segment slides back and forth. */
@@ -204,7 +204,7 @@
     inline-size: 40%;
   }
   .medo-progress__fill {
-    transition: none;
+    transition-duration: var(--medo-motion-duration-fast);
   }
 }
 

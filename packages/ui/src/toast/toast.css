@@ -54,9 +54,7 @@
 }
 
 .medo-toast[data-focus-visible] {
-  box-shadow:
-    var(--medo-shadow-focus-ring),
-    var(--medo-shadow-elevation-3);
+  box-shadow: var(--medo-shadow-focus-ring), var(--medo-shadow-elevation-3);
 }
 
 .medo-toast__content {
@@ -131,10 +129,15 @@
   }
 }
 
-/* ---------- Motion (View Transitions): in slide up 8 px + fade 200 ms, out fade 150 ms ---------- */
+/* ---------- Motion (View Transitions, iOS): in slides up with a smooth spring, out fades and shrinks a little;
+ * the other toasts glide to their new place with the same spring. ---------- */
 
+::view-transition-group(.medo-toast) {
+  animation-duration: var(--medo-motion-spring-smooth-duration);
+  animation-timing-function: var(--medo-motion-spring-smooth);
+}
 ::view-transition-new(.medo-toast):only-child {
-  animation: medo-toast-in var(--medo-motion-duration-normal) var(--medo-motion-easing-enter);
+  animation: medo-toast-in var(--medo-motion-spring-smooth-duration) var(--medo-motion-spring-smooth);
 }
 ::view-transition-old(.medo-toast):only-child {
   animation: medo-toast-out var(--medo-motion-duration-fast) var(--medo-motion-easing-exit) forwards;
@@ -143,19 +146,31 @@
 @keyframes medo-toast-in {
   from {
     opacity: 0;
-    transform: translateY(var(--medo-space-2));
+    transform: translateY(var(--medo-space-6)) scale(0.96);
   }
 }
 @keyframes medo-toast-out {
   to {
     opacity: 0;
+    transform: scale(0.96);
+  }
+}
+@keyframes medo-toast-fade {
+  from {
+    opacity: 0;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
+  /* Reduced motion: toasts cross-fade, nothing slides. */
+  ::view-transition-group(.medo-toast) {
+    animation-duration: var(--medo-motion-duration-fast);
+  }
   ::view-transition-new(.medo-toast):only-child {
-    animation-name: medo-toast-out;
-    animation-direction: reverse;
+    animation: medo-toast-fade var(--medo-motion-duration-fast) var(--medo-motion-easing-standard);
+  }
+  ::view-transition-old(.medo-toast):only-child {
+    animation: medo-toast-fade var(--medo-motion-duration-fast) var(--medo-motion-easing-standard) reverse forwards;
   }
 }
 

@@ -58,6 +58,14 @@
   cursor: pointer;
 }
 
+/* Row feedback fades; pressed shows at once (iOS highlight). */
+.medo-list-row {
+  transition: background-color var(--medo-motion-duration-fast) var(--medo-motion-easing-standard);
+}
+.medo-list-row[data-pressed] {
+  transition-duration: 0s;
+}
+
 .medo-list-row[data-hovered] {
   background-color: var(--medo-color-state-hover);
 }
@@ -369,7 +377,8 @@
   padding-inline-start: var(--medo-space-4);
   /* Vertical scrolling stays with the browser; horizontal moves swipe the row. */
   touch-action: pan-y;
-  transition: transform var(--medo-motion-duration-normal) var(--medo-motion-easing-standard);
+  /* Settles with a smooth spring (open, closed, back). */
+  transition: transform var(--medo-motion-spring-smooth-duration) var(--medo-motion-spring-smooth);
 }
 
 .medo-list-row--lines-3 .medo-list-row__surface {
@@ -380,7 +389,20 @@
   transition: none;
 }
 
+/* A full swipe: the row leaves quickly, accelerating. */
+.medo-list-row__surface--leaving {
+  transition: transform var(--medo-motion-duration-normal) var(--medo-motion-easing-exit);
+}
+.medo-list-row:has(.medo-list-row__surface--dragging) .medo-list-row__swipe-action {
+  transition: none;
+}
+.medo-list-row:has(.medo-list-row__surface--leaving) .medo-list-row__swipe-action {
+  transition: inline-size var(--medo-motion-duration-normal) var(--medo-motion-easing-exit);
+}
+
 .medo-list-row__swipe-action {
+  /* Grows with the surface – same spring, same timing. */
+  transition: inline-size var(--medo-motion-spring-smooth-duration) var(--medo-motion-spring-smooth);
   position: absolute;
   inset-block: 0;
   z-index: 0;
@@ -435,8 +457,10 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .medo-list-row__surface {
-    transition: none;
+  .medo-list-row__surface,
+  .medo-list-row__swipe-action {
+    transition-duration: var(--medo-motion-duration-fast);
+    transition-timing-function: var(--medo-motion-easing-standard);
   }
 }
 

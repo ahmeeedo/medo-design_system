@@ -1,12 +1,12 @@
 import { useRef, useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { fn } from 'storybook/test';
+import { expect, fn } from 'storybook/test';
 import { Pagination } from './Pagination';
 import { Cell, Column, Row, Table, TableBody, TableHeader } from '../table/Table';
 import { ListRow, ListView } from '../list-view/ListView';
 import { Avatar } from '../avatar/Avatar';
 import { Button } from '../button/Button';
-import { LightDark, semantic, slot } from '../story-helpers';
+import { interactionTest, LightDark, semantic, slot } from '../story-helpers';
 
 const caption: React.CSSProperties = { font: 'var(--medo-typography-code-sm)', color: 'var(--medo-color-text-secondary)' };
 const stack: React.CSSProperties = { display: 'grid', gap: 'var(--medo-space-6)' };
@@ -230,4 +230,17 @@ export const LoadMore: Story = {
     },
   },
   render: () => <LoadMoreExample />,
+};
+
+export const InteractionTest: Story = {
+  ...interactionTest,
+  play: async ({ canvas, userEvent, args }) => {
+    await expect(canvas.getByRole('button', { name: 'Page 5' })).toHaveAttribute('aria-current', 'page');
+    await userEvent.click(canvas.getByRole('button', { name: 'Next page' }));
+    await expect(canvas.getByRole('button', { name: 'Page 6' })).toHaveAttribute('aria-current', 'page');
+    await expect(args.onChange).toHaveBeenLastCalledWith(6);
+    // The last page disables „Next“ – focus stays inside the pagination.
+    await userEvent.click(canvas.getByRole('button', { name: 'Page 19' }));
+    await expect(canvas.getByRole('button', { name: 'Next page' })).toBeDisabled();
+  },
 };

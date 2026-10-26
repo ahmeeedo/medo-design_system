@@ -66,3 +66,11 @@ export function sampleScreenshot() {
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1200" viewBox="0 0 120 120"><rect width="120" height="120" rx="4" fill="#ffffff"/><rect width="120" height="14" fill="#e9eef3"/><circle cx="8" cy="7" r="2.5" fill="#d96b6b"/><circle cx="15" cy="7" r="2.5" fill="#e7c06a"/><circle cx="22" cy="7" r="2.5" fill="#6bbf8a"/><rect x="10" y="24" width="60" height="6" rx="2" fill="#1d2b33"/><rect x="10" y="36" width="100" height="4" rx="2" fill="#9aa7b2"/><rect x="10" y="44" width="92" height="4" rx="2" fill="#9aa7b2"/><rect x="10" y="58" width="46" height="40" rx="3" fill="#0f5b4f"/><rect x="62" y="58" width="48" height="40" rx="3" fill="#e9eef3"/><rect x="10" y="106" width="100" height="6" rx="3" fill="#0f5b4f"/></svg>`;
   return `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`;
 }
+
+/* ---------- Interaction tests ---------- */
+
+/**
+ * A story with a play function that checks the core behaviour. Runs in Vitest (npm test, CI) and shows its steps in
+ * the Interactions panel; it is not part of the docs page.
+ */
+export const interactionTest: { name: string; tags: string[] } = { name: 'Interaction test', tags: ['!autodocs'] };

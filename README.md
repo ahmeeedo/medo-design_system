@@ -26,6 +26,7 @@ Weitere Befehle:
 | `npm run tokens:from-figma` | Wandelt den Figma-Export (`figma/variables.json`) in DTCG-Token-Dateien um |
 | `npm run build:tokens` | Erzeugt CSS-Variablen, Tailwind-Theme, JS und Doku-Daten |
 | `npm run build-storybook` | Baut Storybook als statische Website (Ordner `apps/storybook/storybook-static`) |
+| `npm test` | Testet alle Stories im Browser: Rendern, axe (WCAG 2.2 AA) und die Interaction tests. Einmalig vorher: `npx playwright install chromium` |
 
 ---
 
@@ -190,9 +191,10 @@ Buttons also work as plain HTML (`:hover`, `:active`, `:focus-visible`, `:disabl
 ## Accessibility
 
 - Target: WCAG 2.2 AA. Contrast values are documented in the token descriptions.
-- Storybook checks every story with axe (panel “Accessibility”).
+- Storybook checks every story with axe (panel “Accessibility”). Strict: `a11y.test: 'error'`, so every violation fails `npm test`.
+- Every interactive component has an “Interaction test” story (`play` function: keyboard, focus, pointer). They run in the Interactions panel, in the Testing widget at the bottom of the sidebar and with `npm test` (Storybook Vitest addon, headless Chromium).
+- Motion follows iOS: spring tokens from Figma (`--medo-motion-spring-*`), interruptible transitions; with reduced motion only cross-fades.
 - Focus is always visible (`:focus-visible`), with a fallback for Windows high contrast mode.
-- Motion respects `prefers-reduced-motion`.
 
 ## Deployment (design.med-o.de)
 
@@ -211,7 +213,7 @@ Projects that still use it should pin the tag: `npm install github:ahmeeedo/medo
 ## Roadmap
 
 - All app components of the Figma file are in `@medo/ui`. Marketing components (Carousel, Video Player, Shapes, Hero, Text + Media) are out of scope.
-- Storybook tests: Accessibility panel strict (`a11y: { test: 'error' }`, every violation fails); `play` functions for core behaviour (Table sort and select, Tag remove, Alert dismiss, Tooltip keyboard), visible in the Interactions panel and run in CI with the Storybook Vitest addon.
+- Run `npm test` in CI (GitHub Actions) on every pull request.
 - Code examples per framework: one Storybook per framework (React, Vue, Angular), combined with **Storybook Composition** into one site.
 - Publishing the packages (npm or a private registry) with versioning (e.g. Changesets).
 - Automatic token export in CI.

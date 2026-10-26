@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { fn } from 'storybook/test';
+import { expect, fn } from 'storybook/test';
 import { Bell, CreditCard, Lock, User } from 'lucide-react';
 import { Accordion, AccordionItem } from './Accordion';
 import { Badge } from '../badge/Badge';
 import { Link } from '../link/Link';
 import { Switch } from '../switch/Switch';
-import { LightDark, semantic } from '../story-helpers';
+import { interactionTest, LightDark, semantic } from '../story-helpers';
 
 const text: React.CSSProperties = { margin: 0, font: 'inherit', color: 'var(--medo-color-text-secondary)' };
 const stack: React.CSSProperties = { display: 'grid', gap: 'var(--medo-space-4)' };
@@ -169,4 +169,20 @@ export const DeepLink: Story = {
       <Settings />
     </div>
   ),
+};
+
+export const InteractionTest: Story = {
+  ...interactionTest,
+  play: async ({ canvas, userEvent, args }) => {
+    const profile = canvas.getByRole('button', { name: /Profile/ });
+    await expect(profile).toHaveAttribute('aria-expanded', 'false');
+    await userEvent.click(profile);
+    await expect(profile).toHaveAttribute('aria-expanded', 'true');
+    // Several open at once: Notifications stays open.
+    await expect(canvas.getByRole('button', { name: /Notifications/ })).toHaveAttribute('aria-expanded', 'true');
+    // Keyboard: Enter toggles the focused header.
+    await userEvent.keyboard('{Enter}');
+    await expect(profile).toHaveAttribute('aria-expanded', 'false');
+    await expect(args.size).toBe('md');
+  },
 };

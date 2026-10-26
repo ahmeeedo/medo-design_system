@@ -17,8 +17,14 @@ const preview: Preview = {
     controls: { expanded: true, exclude: ['className', 'style'] },
     // Docs pages follow the structure of the Figma doc frames and the Light / Dark switch (src/docs-blocks).
     docs: { container: MedoDocsContainer, page: ComponentDocsPage },
-    // Accessibility checks (axe) for every story. Violations show in the "Accessibility" panel.
-    a11y: { test: 'todo' },
+    // Accessibility checks (axe) for every story. A violation fails the story's test (Vitest, CI).
+    // Standard: WCAG 2.2 A + AA plus axe best practices. landmark-unique is off because stories show several
+    // instances side by side (Light and Dark, sizes) – in an app every landmark has its own name.
+    a11y: {
+      test: 'error',
+      options: { runOnly: { type: 'tag', values: ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa', 'best-practice'] } },
+      config: { rules: [{ id: 'landmark-unique', enabled: false }] },
+    },
     options: {
       storySort: { order: ['Introduction', 'Foundations', ['Colors', 'Typography', 'Spacing & sizes', 'Elevation & motion'], 'Usage', 'Components'] },
     },

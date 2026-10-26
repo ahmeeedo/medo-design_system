@@ -93,3 +93,23 @@
   column-gap: var(--medo-space-6);
 }
 
+/* Errors appear softly instead of popping in. */
+.medo-field__error {
+  transition:
+    opacity var(--medo-motion-duration-fast) var(--medo-motion-easing-standard),
+    translate var(--medo-motion-spring-snappy-duration) var(--medo-motion-spring-snappy);
+}
+@starting-style {
+  .medo-field__error {
+    opacity: 0;
+    translate: 0 calc(-1 * var(--medo-space-1));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  @starting-style {
+    .medo-field__error {
+      translate: none;
+    }
+  }
+}

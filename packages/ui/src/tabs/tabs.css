@@ -139,10 +139,10 @@
   border-radius: inherit;
   background-color: var(--medo-color-surface-thumb);
   box-shadow: var(--medo-shadow-elevation-1);
-  /* SelectionIndicator animates translate and size from the previous tab. */
+  /* SelectionIndicator animates translate and size from the previous tab – a snappy spring like the iOS segmented control. */
   transition:
-    translate var(--medo-motion-duration-normal) var(--medo-motion-easing-enter),
-    width var(--medo-motion-duration-normal) var(--medo-motion-easing-enter);
+    translate var(--medo-motion-spring-snappy-duration) var(--medo-motion-spring-snappy),
+    width var(--medo-motion-spring-snappy-duration) var(--medo-motion-spring-snappy);
 }
 
 .medo-tab__icon {
@@ -204,6 +204,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  /* Reduced motion: the thumb appears at the new tab, no slide. */
   .medo-tab__thumb {
     transition: none;
   }

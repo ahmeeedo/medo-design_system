@@ -7,7 +7,7 @@
  * Desktop: floating, bottom centre, 24 px above the viewport edge · surface/inverse · radius/lg · elevation/3 ·
  *          padding 8 8 8 16 · gap 8 · buttons = _Toast button (32).
  * Mobile:  full width at the bottom · surface/raised + top border · Button ghost lg · Icon Button ghost lg · safe area.
- * In: slide up 200 ms (none with reduced motion).
+ * In: slides up with spring/smooth (a fade with reduced motion).
  */
 
 .medo-bulk-bar-host {
@@ -20,7 +20,16 @@
   box-sizing: border-box;
   display: flex;
   align-items: center;
-  animation: medo-bulk-bar-in var(--medo-motion-duration-normal) var(--medo-motion-easing-enter);
+  /* Slides up with a smooth spring when the first item is selected. */
+  transition:
+    opacity var(--medo-motion-duration-normal) var(--medo-motion-easing-enter),
+    translate var(--medo-motion-spring-smooth-duration) var(--medo-motion-spring-smooth);
+}
+@starting-style {
+  .medo-bulk-bar {
+    opacity: 0;
+    translate: 0 var(--medo-space-4);
+  }
 }
 
 .medo-bulk-bar--desktop {
@@ -71,16 +80,14 @@
   min-inline-size: 0;
 }
 
-@keyframes medo-bulk-bar-in {
-  from {
-    opacity: 0;
-    transform: translateY(var(--medo-space-4));
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
   .medo-bulk-bar {
-    animation: none;
+    transition: opacity var(--medo-motion-duration-fast) var(--medo-motion-easing-standard);
+  }
+  @starting-style {
+    .medo-bulk-bar {
+      translate: none;
+    }
   }
 }
 

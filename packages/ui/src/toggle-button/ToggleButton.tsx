@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useRef, type CSSProperties, type ReactNode } from 'react';
 import {
+  SelectionIndicator,
   Separator,
   ToggleButton as AriaToggleButton,
   ToggleButtonGroup as AriaToggleButtonGroup,
@@ -17,6 +18,8 @@ type ToggleSize = 'sm' | 'md' | 'lg';
 
 /** Item size set by a group (segmented items are one size smaller than the group). */
 const ToggleSizeContext = createContext<ToggleSize | null>(null);
+/** Segmented groups show a sliding indicator (iOS segmented control). */
+const SegmentedContext = createContext(false);
 
 export interface ToggleButtonProps extends Omit<AriaToggleButtonProps, 'children' | 'className' | 'style'> {
   /** Visible label. It never changes with the state („Bold“ stays „Bold“). Leave out for icon only. */
@@ -40,6 +43,7 @@ export interface ToggleButtonProps extends Omit<AriaToggleButtonProps, 'children
  */
 export function ToggleButton({ children, icon, size, tooltip, shortcut, className, ...props }: ToggleButtonProps) {
   const groupSize = useContext(ToggleSizeContext);
+  const segmented = useContext(SegmentedContext);
   const s = groupSize ?? size ?? 'md';
   const iconOnly = !children;
   const button = (
@@ -48,6 +52,8 @@ export function ToggleButton({ children, icon, size, tooltip, shortcut, classNam
       aria-keyshortcuts={shortcut && resolveShortcut(shortcut)}
       className={cx('medo-button', `medo-button--${s}`, iconOnly && 'medo-button--icon-only', 'medo-toggle', className)}
     >
+      {/* Segmented: the selected fill is an indicator that slides from the previous item (React Aria SelectionIndicator). */}
+      {segmented && <SelectionIndicator className="medo-toggle__indicator" />}
       {icon && (
         <span className="medo-button__icon" aria-hidden="true">
           {icon}
@@ -122,15 +128,11 @@ export function ToggleButtonGroup({
       ref={ref}
       selectionMode={segmented ? 'single' : (selectionMode ?? 'multiple')}
       disallowEmptySelection={segmented || disallowEmptySelection}
-      className={cx(
-        'medo-toggle-group',
-        `medo-toggle-group--${variant}`,
-        `medo-toggle-group--${size}`,
-        segmented && fullWidth && 'medo-toggle-group--full',
-        className,
-      )}
+      className={cx('medo-toggle-group', `medo-toggle-group--${variant}`, `medo-toggle-group--${size}`, segmented && fullWidth && 'medo-toggle-group--full', className)}
     >
-      <ToggleSizeContext.Provider value={itemSize}>{children}</ToggleSizeContext.Provider>
+      <SegmentedContext.Provider value={segmented}>
+        <ToggleSizeContext.Provider value={itemSize}>{children}</ToggleSizeContext.Provider>
+      </SegmentedContext.Provider>
     </AriaToggleButtonGroup>
   );
 }

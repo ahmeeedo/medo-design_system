@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { fn } from 'storybook/test';
+import { expect, fn, waitFor, within } from 'storybook/test';
 import { ToastRegion, toast, type ToastAction } from './Toast';
 import { Button } from '../button/Button';
-import { row, slot } from '../story-helpers';
+import { interactionTest, row, slot } from '../story-helpers';
 
 interface ToastArgs {
   /** The result in one line, max about 50 characters („Q3-Report.pdf deleted“). */
@@ -107,4 +107,17 @@ export const Error: Story = {
       <ToastRegion />
     </>
   ),
+};
+
+export const InteractionTest: Story = {
+  ...interactionTest,
+  play: async ({ canvas, userEvent, args }) => {
+    await userEvent.click(canvas.getByRole('button', { name: 'Show toast' }));
+    const body = within(document.body);
+    await body.findByText('Q3-Report.pdf deleted');
+    // The action closes the toast.
+    await userEvent.click(body.getByRole('button', { name: 'Undo' }));
+    await waitFor(() => expect(body.queryByText('Q3-Report.pdf deleted')).toBeNull());
+    await expect(args.onClose).toHaveBeenCalled();
+  },
 };

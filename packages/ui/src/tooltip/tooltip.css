@@ -30,22 +30,37 @@
   white-space: nowrap;
 }
 
-/* Fade only – no movement (also fine with reduced motion). */
+/* Motion (iOS): fades in and settles from 96 % at the trigger; out: a quick fade without movement. */
+.medo-tooltip {
+  transform-origin: var(--trigger-anchor-point, top);
+  transition:
+    opacity var(--medo-motion-duration-normal) var(--medo-motion-easing-enter),
+    scale var(--medo-motion-spring-snappy-duration) var(--medo-motion-spring-snappy);
+}
 .medo-tooltip[data-entering] {
-  animation: medo-tooltip-in var(--medo-motion-duration-fast) var(--medo-motion-easing-enter);
+  opacity: 0;
+  scale: 0.96;
 }
 .medo-tooltip[data-exiting] {
-  animation: medo-tooltip-in var(--medo-motion-duration-fast) var(--medo-motion-easing-exit) reverse;
-}
-
-@keyframes medo-tooltip-in {
-  from {
-    opacity: 0;
-  }
+  opacity: 0;
+  scale: 1;
+  transition:
+    opacity var(--medo-motion-duration-fast) var(--medo-motion-easing-exit),
+    scale var(--medo-motion-duration-fast) var(--medo-motion-easing-exit);
 }
 
 @media (forced-colors: active) {
   .medo-tooltip {
     border: var(--medo-border-width-thin) solid CanvasText;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Reduced motion: a short cross-fade, no scaling. */
+  .medo-tooltip {
+    transition: opacity var(--medo-motion-duration-fast) var(--medo-motion-easing-standard);
+  }
+  .medo-tooltip:is([data-entering], [data-exiting]) {
+    scale: none;
   }
 }

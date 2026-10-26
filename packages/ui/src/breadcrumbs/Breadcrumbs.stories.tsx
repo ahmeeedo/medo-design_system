@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { expect, waitFor, within } from 'storybook/test';
 import { Breadcrumbs } from './Breadcrumbs';
-import { LightDark, semantic, slot } from '../story-helpers';
+import { interactionTest, LightDark, semantic, slot } from '../story-helpers';
 
 const caption: React.CSSProperties = { font: 'var(--medo-typography-code-sm)', color: 'var(--medo-color-text-secondary)' };
 
@@ -105,4 +106,19 @@ export const InPageHeader: Story = {
       <p style={{ margin: 0, font: 'var(--medo-typography-body-md)', color: 'var(--medo-color-text-secondary)' }}>Feedback round for the new start page.</p>
     </header>
   ),
+};
+
+export const InteractionTest: Story = {
+  ...interactionTest,
+  args: { items: six },
+  play: async ({ canvas, userEvent }) => {
+    // Current page is not a link; hidden levels sit in the „…“ menu.
+    // findBy: the collapsed trail renders after its first measurement.
+    await expect((await canvas.findByText('Button states')).closest('[aria-current="page"]')).not.toBeNull();
+    await userEvent.click(canvas.getByRole('button', { name: 'Show 2 more levels' }));
+    const menu = await within(document.body).findByRole('menu');
+    await expect(within(menu).getAllByRole('menuitem').map((i) => i.textContent)).toEqual(['Products', 'Design system']);
+    await userEvent.keyboard('{Escape}');
+    await waitFor(() => expect(within(document.body).queryByRole('menu')).toBeNull());
+  },
 };

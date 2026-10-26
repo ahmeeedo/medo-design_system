@@ -122,10 +122,41 @@ for (const [name, family, weight, size, lineHeight, tracking, transform] of raw.
 
 /* ---------- motion, layer, opacity ---------- */
 const motion = {};
-for (const [name, value] of Object.entries(C['Foundation Motion'].vars)) {
+const motionVars = C['Foundation Motion'].vars;
+/**
+ * A Figma spring (bounce) plus its perceptual duration (motion/duration/<name>) as a CSS linear() curve – the SwiftUI
+ * model: stiffness (2π / duration)², damping ratio 1 − bounce. Returns the curve and the settle time (|1 − x| < 0.2 %).
+ */
+function springToCss(bounce, duration) {
+  const w0 = (2 * Math.PI) / duration;
+  const zeta = 1 - bounce;
+  const x = (t) => {
+    if (zeta >= 1) return 1 - (1 + w0 * t) * Math.exp(-w0 * t);
+    const wd = w0 * Math.sqrt(1 - zeta * zeta);
+    return 1 - Math.exp(-zeta * w0 * t) * (Math.cos(wd * t) + ((zeta * w0) / wd) * Math.sin(wd * t));
+  };
+  let settle = 0;
+  for (let t = 0; t < 5; t += 0.005) {
+    let still = true;
+    for (let u = t; u < t + 0.5; u += 0.01) if (Math.abs(1 - x(u)) > 0.002) { still = false; break; }
+    if (still) { settle = t; break; }
+  }
+  const steps = 40;
+  const points = Array.from({ length: steps + 1 }, (_, i) => (i === steps ? 1 : +x((i / steps) * settle).toFixed(4)));
+  return { curve: `linear(${points.join(', ')})`, ms: Math.round((settle * 1000) / 10) * 10 };
+}
+for (const [name, value] of Object.entries(motionVars)) {
   const path = figmaPath(name);
-  if (Array.isArray(value)) set(motion, path, { $type: 'cubicBezier', $value: value });
-  else set(motion, path, { $type: 'duration', $value: { value: Math.round(value * 1000), unit: 'ms' } });
+  const description = desc[name] ? { $description: desc[name] } : {};
+  if (Array.isArray(value)) set(motion, path, { $type: 'cubicBezier', $value: value, ...description });
+  else if (value && typeof value === 'object' && value.spring) {
+    const key = name.split('/').pop();
+    const perceptual = motionVars[`motion/duration/${key}`];
+    const { curve, ms } = springToCss(value.spring.bounce, perceptual);
+    // Not a DTCG type: the curve is a CSS easing string; the spring parameters stay in $extensions.
+    set(motion, path, { $type: 'string', $value: curve, $extensions: { 'com.medo': { spring: { bounce: value.spring.bounce, duration: perceptual } } }, ...description });
+    set(motion, `${path}-duration`, { $type: 'duration', $value: { value: ms, unit: 'ms' }, $description: `Settle time of ${name.replace('motion/', '')} – use it as transition-duration with the curve.` });
+  } else set(motion, path, { $type: 'duration', $value: { value: Math.round(value * 1000), unit: 'ms' }, ...description });
 }
 const layer = {};
 for (const [name, value] of Object.entries(C['Foundation Layer'].vars)) set(layer, figmaPath(name), { $type: 'number', $value: value, $description: 'z-index' });

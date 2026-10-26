@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { fn } from 'storybook/test';
+import { expect, fn, waitFor } from 'storybook/test';
 import { Dropzone, FileItem, FileTile, FileTrigger, UploadField, type UploadFile } from './Upload';
-import { LightDark, samplePhoto, semantic } from '../story-helpers';
+import { interactionTest, LightDark, samplePhoto, semantic } from '../story-helpers';
 
 /* Sample thumbnails (shared story images, inline SVG, no network). */
 const photo = samplePhoto(0, { width: 400, height: 400 });
@@ -325,4 +325,33 @@ export const Validation: Story = {
       <Demo label="Contracts" layout="list" acceptedFileTypes={['.pdf']} typesLabel="PDF" maxSize={1 * MB} maxFiles={2} />
     </div>
   ),
+};
+
+/** Puts files into the hidden file input as the system picker would. */
+function pick(root: HTMLElement, files: File[]) {
+  const input = root.querySelector<HTMLInputElement>('input[type=file]')!;
+  Object.defineProperty(input, 'files', { value: files, configurable: true });
+  input.dispatchEvent(new Event('change', { bubbles: true }));
+}
+
+export const InteractionTest: Story = {
+  ...interactionTest,
+  render: () => (
+    <div style={box}>
+      <Demo label="Contracts" layout="list" acceptedFileTypes={['.pdf']} typesLabel="PDF" maxSize={1 * MB} maxFiles={2} />
+    </div>
+  ),
+  play: async ({ canvas, canvasElement }) => {
+    // Wrong type: the message names the file and the allowed types, nothing is uploaded.
+    pick(canvasElement, [new File(['x'], 'Contract.docx', { type: 'application/msword' })]);
+    // Shown at the field and announced in the live region.
+    await expect((await canvas.findAllByText('“Contract.docx” is not allowed. Use PDF.')).some((el) => el.checkVisibility())).toBe(true);
+    // Too large: an error row at the file.
+    pick(canvasElement, [new File([new Uint8Array(1_400_000)], 'Big.pdf', { type: 'application/pdf' })]);
+    await expect((await canvas.findAllByText('File is 1.4 MB – max. 1 MB allowed')).some((el) => el.checkVisibility())).toBe(true);
+    // Valid: uploads with its own progress, then „uploaded“ is announced.
+    pick(canvasElement, [new File([new Uint8Array(400_000)], 'Offer.pdf', { type: 'application/pdf' })]);
+    await expect(await canvas.findByRole('progressbar', { name: 'Uploading Offer.pdf' })).toBeInTheDocument();
+    await waitFor(() => expect(canvas.getByRole('status')).toHaveTextContent('Offer.pdf uploaded'), { timeout: 4000 });
+  },
 };

@@ -1,6 +1,6 @@
 {
   "source": "Figma file vOTfMtcpCwAJjuSZUkfpfj (med.o Design System)",
-  "exportedAt": "2026-10-17",
+  "exportedAt": "2026-10-26",
   "note": "Raw export of Figma variables and styles. Do not edit by hand: re-export from Figma (scripts/figma-export.js), then run `npm run tokens:from-figma`.",
   "collections": {
     "Foundation Colors": {
@@ -17,7 +17,7 @@
         "black/1000": "#000000", "white/0": "#ffffff",
         "slate-alpha/6": "#0f172b0f", "slate-alpha/8": "#0f172b14", "slate-alpha/10": "#0f172b1a", "slate-alpha/12": "#0f172b1f", "slate-alpha/16": "#0f172b29",
         "black-alpha/40": "#00000066", "black-alpha/50": "#00000080", "black-alpha/60": "#00000099",
-        "white-alpha/8": "#ffffff14", "white-alpha/12": "#ffffff1f", "white-alpha/16": "#ffffff29"
+        "white-alpha/6": "#ffffff0f", "white-alpha/8": "#ffffff14", "white-alpha/12": "#ffffff1f", "white-alpha/16": "#ffffff29"
       }
     },
     "Alias Colors": {
@@ -79,7 +79,7 @@
         "action/selected": ["{primary/100}", "{primary/900}"],
         "action/selected-hover": ["{primary/200}", "{primary/800}"],
         "action/selected-pressed": ["{primary/300}", "{primary/700}"],
-        "state/hover": ["{slate-alpha/8}", "{white-alpha/8}"],
+        "state/hover": ["{slate-alpha/8}", "{white-alpha/6}"],
         "state/pressed": ["{slate-alpha/12}", "{white-alpha/12}"],
         "state/hover-inverse": ["{white-alpha/8}", "{slate-alpha/8}"],
         "state/pressed-inverse": ["{white-alpha/12}", "{slate-alpha/12}"],
@@ -139,8 +139,9 @@
     "Foundation Motion": {
       "modes": ["Base"],
       "vars": {
-        "motion/duration/fast": 0.1, "motion/duration/normal": 0.2, "motion/duration/slow": 0.3,
-        "motion/easing/standard": [0.4, 0, 0.2, 1], "motion/easing/enter": [0, 0, 0.2, 1], "motion/easing/exit": [0.4, 0, 1, 1]
+        "motion/duration/fast": 0.1, "motion/duration/normal": 0.25, "motion/duration/slow": 0.35, "motion/duration/smooth": 0.5, "motion/duration/snappy": 0.4,
+        "motion/easing/standard": [0.32, 0.72, 0, 1], "motion/easing/enter": [0.16, 1, 0.3, 1], "motion/easing/exit": [0.32, 0, 0.67, 0],
+        "motion/spring/smooth": { "spring": { "bounce": 0 } }, "motion/spring/snappy": { "spring": { "bounce": 0.15 } }
       }
     },
     "Foundation Layer": { "modes": ["Base"], "vars": { "layer/base": 0, "layer/raised": 10, "layer/dropdown": 100, "layer/sticky": 200, "layer/overlay": 300, "layer/modal": 400, "layer/popover": 500, "layer/toast": 600, "layer/tooltip": 700 } },
@@ -149,6 +150,16 @@
     "Layout": { "modes": ["Mobile", "Tablet", "Desktop"], "vars": { "layout/columns": [4, 8, 12], "layout/gutter": [16, 24, 24], "layout/margin": [16, 24, 32], "layout/section": [48, 64, 96] } }
   },
   "descriptions": {
+    "motion/duration/fast": "100 ms: feedback – hover, pressed, focus, color and opacity. Pressed starts at once and fades out (iOS highlight).",
+    "motion/duration/normal": "250 ms: small changes in place – fades, overlays in (popover, menu, tooltip), content swaps.",
+    "motion/duration/slow": "350 ms: larger fades and the fallback where a spring cannot be used.",
+    "motion/duration/smooth": "Perceptual duration of spring/smooth (SwiftUI .smooth: 0.5 s). Code turns spring + duration into a CSS linear() curve and its settle time.",
+    "motion/duration/snappy": "Perceptual duration of spring/snappy. Code turns spring + duration into a CSS linear() curve and its settle time.",
+    "motion/easing/standard": "cubic-bezier(0.32, 0.72, 0, 1): the iOS ease-out – state changes and movement within the view where no spring is used.",
+    "motion/easing/enter": "cubic-bezier(0.16, 1, 0.3, 1): elements appearing – fast start, long soft landing.",
+    "motion/easing/exit": "cubic-bezier(0.32, 0, 0.67, 0): elements leaving – accelerate out; exits are always shorter than entries.",
+    "motion/spring/smooth": "Spring like SwiftUI .smooth (bounce 0, with duration/smooth): no overshoot. Everything that moves – sheets, drawers, dialogs, toasts, accordion, swipe.",
+    "motion/spring/snappy": "Spring like SwiftUI .snappy (bounce 0.15, with duration/snappy): a hint of overshoot. Small controls – switch thumb, tab and segment indicator, checkbox and radio marks, slider thumb.",
     "focus/ring": "Focus ring color for all interactive elements. info/600 (sky/600) in both modes. Contrast ≥ 3:1 to focus/halo.",
     "focus/halo": "Solid halo between element and focus ring. Guarantees ring contrast on any surface (white / neutral-950).",
     "shadow/ambient": "Soft, close shadow layer of every elevation level.",
@@ -199,7 +210,7 @@
     "action/selected": "Selected (pressed) toggle button fill. Text/icon text/brand.",
     "action/selected-hover": "Selected toggle button hover.",
     "action/selected-pressed": "Selected toggle button pressed. Text/icon text/brand-hover.",
-    "state/hover": "State layer for hover on transparent interactive elements: 8 % of the text color.",
+    "state/hover": "State layer for hover on transparent interactive elements: 8 % of the text color in Light, 6 % white in Dark (keeps text/secondary ≥ 4.5:1 on hovered rows).",
     "state/pressed": "State layer for pressed on transparent interactive elements: 12 % of the text color.",
     "state/hover-inverse": "State layer for hover on surface/inverse.",
     "state/pressed-inverse": "State layer for pressed on surface/inverse.",

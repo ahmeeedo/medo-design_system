@@ -32,17 +32,23 @@
   overflow: auto;
 }
 
+/* Motion (iOS): grows from the trigger with a snappy spring and fades in; out: a quick fade. Transitions, so a fast open–close reverses smoothly. */
+.medo-menu-popover {
+  transform-origin: var(--trigger-anchor-point, top);
+  transition:
+    opacity var(--medo-motion-duration-normal) var(--medo-motion-easing-enter),
+    scale var(--medo-motion-spring-snappy-duration) var(--medo-motion-spring-snappy);
+}
 .medo-menu-popover[data-entering] {
-  animation: medo-menu-in var(--medo-motion-duration-fast) var(--medo-motion-easing-standard);
+  opacity: 0;
+  scale: 0.96;
 }
 .medo-menu-popover[data-exiting] {
-  animation: medo-menu-in var(--medo-motion-duration-fast) var(--medo-motion-easing-standard) reverse;
-}
-
-@keyframes medo-menu-in {
-  from {
-    opacity: 0;
-  }
+  opacity: 0;
+  scale: 0.98;
+  transition:
+    opacity var(--medo-motion-duration-fast) var(--medo-motion-easing-exit),
+    scale var(--medo-motion-duration-fast) var(--medo-motion-easing-exit);
 }
 
 .medo-menu {
@@ -167,8 +173,11 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .medo-menu-popover[data-entering],
-  .medo-menu-popover[data-exiting] {
-    animation: none;
+  /* Reduced motion: a short cross-fade, no scaling. */
+  .medo-menu-popover {
+    transition: opacity var(--medo-motion-duration-fast) var(--medo-motion-easing-standard);
+  }
+  .medo-menu-popover:is([data-entering], [data-exiting]) {
+    scale: none;
   }
 }

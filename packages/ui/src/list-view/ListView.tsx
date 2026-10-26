@@ -178,6 +178,7 @@ function Swipeable({ actions, children }: { actions: { start?: SwipeAction; end?
   const drag = useRef<{ x: number; y: number; t: number; base: number; lock: 'x' | 'y' | null; id: number; buzzed: boolean } | null>(null);
   const [offset, setOffset] = useState(0); // logical: < 0 reveals the end action, > 0 the start action
   const [dragging, setDragging] = useState(false);
+  const [leaving, setLeaving] = useState(false);
   const open = offset !== 0 && !dragging;
 
   const close = () => setOffset(0);
@@ -205,12 +206,14 @@ function Swipeable({ actions, children }: { actions: { start?: SwipeAction; end?
   const actionFor = (value: number) => (value < 0 ? actions.end : value > 0 ? actions.start : undefined);
 
   const trigger = (action: SwipeAction, side: number) => {
+    // The row slides out (250 ms, accelerating), then the action runs – the app removes the row and shows „Undo“.
+    setLeaving(true);
     setOffset(side * width());
-    // Let the row slide out, then run the action (the app removes the row and shows „Undo“).
     window.setTimeout(() => {
       action.onAction();
+      setLeaving(false);
       setOffset(0);
-    }, 200);
+    }, 250);
   };
 
   const onPointerDown = (e: ReactPointerEvent) => {
@@ -285,7 +288,7 @@ function Swipeable({ actions, children }: { actions: { start?: SwipeAction; end?
       )}
       <span
         ref={surface}
-        className={cx('medo-list-row__surface', dragging && 'medo-list-row__surface--dragging')}
+        className={cx('medo-list-row__surface', dragging && 'medo-list-row__surface--dragging', leaving && 'medo-list-row__surface--leaving')}
         style={{ transform: offset ? `translateX(${rtl ? -offset : offset}px)` : undefined }}
         onPointerDown={onPointerDown}
         onPointerMove={onPointerMove}

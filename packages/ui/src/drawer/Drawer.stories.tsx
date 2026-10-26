@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { fn } from 'storybook/test';
+import { expect, fn, waitFor, within } from 'storybook/test';
 import {
   Bell,
   Calendar,
@@ -24,7 +24,7 @@ import { Checkbox, CheckboxGroup } from '../checkbox/Checkbox';
 import { NavItem, NavList } from '../navigation/Navigation';
 import { Switch } from '../switch/Switch';
 import { TextField } from '../text-field/TextField';
-import { row, semantic, slot } from '../story-helpers';
+import { interactionTest, row, semantic, slot } from '../story-helpers';
 
 const divider: React.CSSProperties = {
   border: 0,
@@ -256,5 +256,19 @@ export const UnsavedChanges: Story = {
         </Drawer>
       </DialogTrigger>
     );
+  },
+};
+
+export const InteractionTest: Story = {
+  ...interactionTest,
+  play: async ({ canvas, userEvent }) => {
+    const trigger = canvas.getByRole('button', { name: 'Open drawer' });
+    await userEvent.click(trigger);
+    const body = within(document.body);
+    const drawer = await body.findByRole('dialog', { name: 'Account' });
+    await waitFor(() => expect(drawer).toContainElement(document.activeElement as HTMLElement));
+    await userEvent.keyboard('{Escape}');
+    await waitFor(() => expect(body.queryByRole('dialog')).toBeNull());
+    await expect(trigger).toHaveFocus();
   },
 };

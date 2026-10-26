@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { expect } from 'storybook/test';
 import { User } from 'lucide-react';
 import { Tag, TagGroup } from './Tag';
 import { Button } from '../button/Button';
-import { LightDark, semantic } from '../story-helpers';
+import { interactionTest, LightDark, semantic } from '../story-helpers';
 
 const topics = [
   { id: 'design', name: 'Design' },
@@ -143,4 +144,20 @@ export const LightAndDark: Story = {
       <FilterDemo />
     </LightDark>
   ),
+};
+
+export const InteractionTest: Story = {
+  ...interactionTest,
+  args: { children: null },
+  render: () => <RemovableDemo />,
+  play: async ({ canvas, userEvent }) => {
+    // findAll: wait until React Aria has rendered the collection.
+    await expect(await canvas.findAllByRole('row')).toHaveLength(4);
+    await userEvent.click(canvas.getAllByRole('button', { name: /Remove/ })[0]);
+    await expect(canvas.queryByText('Design')).toBeNull();
+    // Keyboard: Backspace removes the focused tag.
+    await userEvent.tab();
+    await userEvent.keyboard('{Backspace}');
+    await expect(canvas.getAllByRole('row')).toHaveLength(2);
+  },
 };

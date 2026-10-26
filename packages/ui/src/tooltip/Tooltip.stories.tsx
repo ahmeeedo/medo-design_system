@@ -1,9 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { expect, waitFor, within } from 'storybook/test';
 import { Bell, Copy, Download, Link2, Settings } from 'lucide-react';
 import { Tooltip, TooltipTrigger } from './Tooltip';
 import { IconButton } from '../icon-button/IconButton';
 import { Button } from '../button/Button';
-import { LightDark, row } from '../story-helpers';
+import { interactionTest, LightDark, row } from '../story-helpers';
 
 const meta = {
   title: 'Components/Tooltip',
@@ -90,4 +91,18 @@ export const LightAndDark: Story = {
       </div>
     </LightDark>
   ),
+};
+
+export const InteractionTest: Story = {
+  ...interactionTest,
+  render: () => <IconButton aria-label="Copy link" icon={<Link2 />} variant="secondary" />,
+  play: async ({ userEvent }) => {
+    const body = within(document.body);
+    // Keyboard focus opens it at once, Esc closes it, focus stays.
+    await userEvent.tab();
+    await waitFor(() => expect(body.getByRole('tooltip')).toHaveTextContent('Copy link'));
+    await userEvent.keyboard('{Escape}');
+    await waitFor(() => expect(body.queryByRole('tooltip')).toBeNull());
+    await expect(body.getByRole('button', { name: 'Copy link' })).toHaveFocus();
+  },
 };

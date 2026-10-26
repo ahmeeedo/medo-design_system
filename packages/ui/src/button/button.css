@@ -96,10 +96,9 @@
   cursor: not-allowed;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .medo-button {
-    transition: none;
-  }
+/* iOS highlight: pressed shows at once and fades out on release. Color fades stay with reduced motion. */
+.medo-button:is([data-pressed], :not([data-rac]):active) {
+  transition-duration: 0s;
 }
 
 /* ---------- Sizes ---------- */

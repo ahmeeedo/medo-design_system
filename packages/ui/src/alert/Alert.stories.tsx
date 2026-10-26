@@ -2,8 +2,8 @@ import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Alert, type AlertTone } from './Alert';
 import { Button } from '../button/Button';
-import { fn } from 'storybook/test';
-import { LightDark, semantic, slot } from '../story-helpers';
+import { expect, fn, waitFor } from 'storybook/test';
+import { interactionTest, LightDark, semantic, slot } from '../story-helpers';
 
 const examples: { tone: AlertTone; title: string; text: string }[] = [
   { tone: 'info', title: 'New export format', text: 'You can now export reports as CSV.' },
@@ -136,4 +136,16 @@ export const LightAndDark: Story = {
       ))}
     </LightDark>
   ),
+};
+
+export const InteractionTest: Story = {
+  ...interactionTest,
+  render: () => <DismissDemo />,
+  play: async ({ canvas, userEvent }) => {
+    await userEvent.click(canvas.getByRole('button', { name: 'Dismiss' }));
+    await expect(canvas.queryByText('New export format')).toBeNull();
+    await userEvent.click(canvas.getByRole('button', { name: 'Show alert again' }));
+    // It fades in (motion) – wait until it is fully visible.
+    await waitFor(() => expect(canvas.getByText('New export format')).toBeVisible());
+  },
 };

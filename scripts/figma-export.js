@@ -28,6 +28,8 @@ const convert = (v, type) => {
     const b = v.easingFunctionCubicBezier;
     return [b.x1, b.y1, b.x2, b.y2].map((n) => +n.toFixed(3));
   }
+  // Figma springs carry only the bounce; the perceptual duration is its own variable (motion/duration/<name>).
+  if (v && v.type === 'CUSTOM_SPRING') return { spring: { bounce: +v.easingFunctionSpring.bounce.toFixed(3) } };
   return typeof v === 'number' ? +v.toFixed(4) : v;
 };
 

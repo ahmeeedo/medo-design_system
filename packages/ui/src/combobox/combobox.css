@@ -29,7 +29,7 @@
 }
 
 .medo-combobox__toggle > svg {
-  transition: transform var(--medo-motion-duration-fast) var(--medo-motion-easing-standard);
+  transition: transform var(--medo-motion-spring-snappy-duration) var(--medo-motion-spring-snappy);
 }
 
 .medo-combobox__toggle[data-pressed]:not([data-hovered]) {
@@ -120,6 +120,6 @@
 
 @media (prefers-reduced-motion: reduce) {
   .medo-combobox__toggle > svg {
-    transition: none;
+    transition: transform var(--medo-motion-duration-fast) var(--medo-motion-easing-standard);
   }
 }

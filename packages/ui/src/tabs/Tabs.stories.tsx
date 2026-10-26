@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import type { Key } from 'react-aria-components';
-import { fn } from 'storybook/test';
+import { expect, fn } from 'storybook/test';
 import { Activity, LayoutGrid, Settings, Users } from 'lucide-react';
 import { Tab, TabList, TabPanel, Tabs } from './Tabs';
 import { TextField } from '../text-field/TextField';
-import { LightDark, semantic } from '../story-helpers';
+import { interactionTest, LightDark, semantic } from '../story-helpers';
 
 const panel: React.CSSProperties = { margin: 0, font: 'var(--medo-typography-body-sm)', color: 'var(--medo-color-text-secondary)' };
 const caption: React.CSSProperties = { font: 'var(--medo-typography-code-sm)', color: 'var(--medo-color-text-secondary)' };
@@ -152,5 +152,22 @@ export const UrlSync: Story = {
         <span style={caption}>/projects/website-relaunch?tab={String(tab)}</span>
       </div>
     );
+  },
+};
+
+export const InteractionTest: Story = {
+  ...interactionTest,
+  play: async ({ canvas, userEvent, args }) => {
+    // findBy: wait until React Aria has rendered the collection.
+    const overview = await canvas.findByRole('tab', { name: 'Overview' });
+    await userEvent.tab();
+    await expect(overview).toHaveFocus();
+    // Arrow keys move and select; the panel follows.
+    await userEvent.keyboard('{ArrowRight}');
+    await expect(canvas.getByRole('tab', { name: /Activity/ })).toHaveAttribute('aria-selected', 'true');
+    await expect(canvas.getByRole('tabpanel')).toHaveTextContent('3 new comments');
+    await userEvent.keyboard('{End}');
+    await expect(canvas.getByRole('tab', { name: 'Settings' })).toHaveAttribute('aria-selected', 'true');
+    await expect(args.onSelectionChange).toHaveBeenLastCalledWith('settings');
   },
 };

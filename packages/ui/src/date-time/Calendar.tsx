@@ -238,14 +238,10 @@ function DayGrid({ offset, showWeekNumbers, t }: { offset: number; showWeekNumbe
           {(date) => (
             <CalendarCell date={date} className="medo-calendar__cell">
               {({ formattedDate }) => (
-                <>
-                  {showWeekNumbers && getDayOfWeek(date, locale) === 0 && (
-                    <span className="medo-calendar__week" aria-hidden="true">
-                      {isoWeek(date.add({ days: 3 }))}
-                    </span>
-                  )}
-                  <span className="medo-calendar__day">{formattedDate}</span>
-                </>
+                // The week number is drawn by CSS (data-week), so it is not part of the day's visible name (WCAG 2.5.3).
+                <span className="medo-calendar__day" data-week={showWeekNumbers && getDayOfWeek(date, locale) === 0 ? isoWeek(date.add({ days: 3 })) : undefined}>
+                  {formattedDate}
+                </span>
               )}
             </CalendarCell>
           )}

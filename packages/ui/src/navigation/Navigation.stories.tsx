@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import { RouterProvider } from 'react-aria-components';
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { expect, waitFor, within } from 'storybook/test';
 import { Bell, Calendar, FolderClosed, House, LayoutDashboard, ListChecks, MessageSquare, Settings, Users } from 'lucide-react';
 import { AppHeader, BottomTabBar, NavGroup, NavItem, NavList, NavSection, SideNav, SiteHeader, SkipLink, TabBarItem, TabBarMore, type NavAction } from './Navigation';
 import { Avatar } from '../avatar/Avatar';
 import { IconButton } from '../icon-button/IconButton';
 import { TextField } from '../text-field/TextField';
-import { LightDark, slot } from '../story-helpers';
+import { interactionTest, LightDark, slot } from '../story-helpers';
 
 /* ---------- Story placeholders (Figma: _Logo) ---------- */
 
@@ -35,9 +36,8 @@ function Logo({ full = true }: { full?: boolean }) {
         font: 'var(--medo-typography-heading-sm)',
       }}
     >
-      <span style={mark} aria-hidden="true">
-        m
-      </span>
+      {/* A sample mark without letters, so the link's name contains all visible text (WCAG 2.5.3). */}
+      <span style={mark} aria-hidden="true" />
       {full && <span aria-hidden="true">med.o</span>}
     </a>
   );
@@ -322,4 +322,18 @@ export const TabBar: Story = {
       </div>
     </div>
   ),
+};
+
+export const InteractionTest: Story = {
+  ...interactionTest,
+  args: { layout: 'mobile' },
+  play: async ({ canvas, userEvent }) => {
+    const menu = canvas.getByRole('button', { name: 'Menu' });
+    await userEvent.click(menu);
+    const dialog = await within(document.body).findByRole('dialog');
+    await expect(within(dialog).getAllByRole('link').length).toBeGreaterThan(0);
+    await userEvent.keyboard('{Escape}');
+    await waitFor(() => expect(within(document.body).queryByRole('dialog')).toBeNull());
+    await expect(menu).toHaveFocus();
+  },
 };

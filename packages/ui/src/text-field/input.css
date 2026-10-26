@@ -127,12 +127,7 @@
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .medo-input,
-  .medo-textarea {
-    transition: none;
-  }
-}
+/* Color fades stay with reduced motion – they do not move anything. */
 
 /* ---------- Sizes ---------- */
 

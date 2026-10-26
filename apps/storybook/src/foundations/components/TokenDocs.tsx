@@ -2,8 +2,8 @@
  * Documentation blocks that read the generated token lists.
  * Everything updates automatically when the tokens are rebuilt from Figma.
  */
-import type { ReactNode } from 'react';
-import { StaticTable } from '@medo/ui';
+import { useState, type ReactNode } from 'react';
+import { Button, StaticTable } from '@medo/ui';
 import light from '@medo/design-tokens/docs/tokens.light.json';
 import dark from '@medo/design-tokens/docs/tokens.dark.json';
 import tablet from '@medo/design-tokens/src/layout/tablet.json';
@@ -214,7 +214,7 @@ export function Radii() {
   );
 }
 
-export function SimpleTable({ path }: { path: string[] }) {
+export function SimpleTable({ path, format = (t) => String(t.value) }: { path: string[]; format?: (t: Token) => string }) {
   return (
     <Table>
       <thead>
@@ -229,7 +229,7 @@ export function SimpleTable({ path }: { path: string[] }) {
           <tr key={t.cssVar}>
             <td><strong>{t.name}</strong>{t.description ? <div className="doc-cell-muted" style={{ fontWeight: 400 }}>{t.description}</div> : null}</td>
             <td><Code>{t.cssVar}</Code></td>
-            <td className="doc-cell-muted">{String(t.value)}</td>
+            <td className="doc-cell-muted">{format(t)}</td>
           </tr>
         ))}
       </tbody>
@@ -305,12 +305,60 @@ export function Elevation() {
   );
 }
 
+/** Springs: the linear() curve is long – show its size, the CSS variable holds the full curve. */
+const springValue = (t: Token) => (String(t.value).startsWith('linear(') ? `linear() · ${String(t.value).split(',').length} points` : String(t.value));
+
+const curves = [
+  { name: 'easing/standard', timing: 'var(--medo-motion-duration-slow) var(--medo-motion-easing-standard)' },
+  { name: 'easing/enter', timing: 'var(--medo-motion-duration-slow) var(--medo-motion-easing-enter)' },
+  { name: 'easing/exit', timing: 'var(--medo-motion-duration-slow) var(--medo-motion-easing-exit)' },
+  { name: 'spring/smooth', timing: 'var(--medo-motion-spring-smooth-duration) var(--medo-motion-spring-smooth)' },
+  { name: 'spring/snappy', timing: 'var(--medo-motion-spring-snappy-duration) var(--medo-motion-spring-snappy)' },
+];
+
+/** Live comparison: every curve moves the same distance; easings run motion/duration/slow, springs their settle time. */
+function MotionPlayground() {
+  const [on, setOn] = useState(false);
+  return (
+    <div className="doc-stage" style={{ display: 'grid', gap: 12 }}>
+      <div>
+        <Button size="sm" variant="secondary" onPress={() => setOn((v) => !v)}>
+          {on ? 'Play back' : 'Play'}
+        </Button>
+      </div>
+      {curves.map((c) => (
+        <div key={c.name} style={{ display: 'grid', gridTemplateColumns: '9rem 1fr', alignItems: 'center', gap: 16 }}>
+          <code className="doc-mono">{c.name}</code>
+          <div style={{ position: 'relative', height: 24, borderRadius: 12, background: 'var(--medo-color-surface-subtle)' }}>
+            <span
+              aria-hidden="true"
+              style={{
+                position: 'absolute',
+                insetBlock: 2,
+                insetInlineStart: on ? 'calc(100% - 22px)' : 2,
+                width: 20,
+                borderRadius: 10,
+                background: 'var(--medo-color-action-primary)',
+                transition: `inset-inline-start ${c.timing}`,
+              }}
+            />
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 export function Motion() {
   return (
     <>
+      <MotionPlayground />
+      <div style={{ height: 16 }} />
       <SimpleTable path={['motion', 'duration']} />
       <div style={{ height: 16 }} />
       <SimpleTable path={['motion', 'easing']} />
+      <div style={{ height: 16 }} />
+      <SimpleTable path={['motion', 'spring']} format={springValue} />
     </>
   );
 }

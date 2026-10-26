@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { expect, waitFor, within } from 'storybook/test';
 import { ChevronDown, Filter } from 'lucide-react';
 import { Popover, PopoverTrigger, Toggletip } from './Popover';
 import { Button } from '../button/Button';
 import { Checkbox, CheckboxGroup } from '../checkbox/Checkbox';
 import { TextField } from '../text-field/TextField';
-import { row, semantic, slot } from '../story-helpers';
+import { interactionTest, row, semantic, slot } from '../story-helpers';
 
 const text: React.CSSProperties = { margin: 0, color: 'var(--medo-color-text-secondary)' };
 const form: React.CSSProperties = { display: 'grid', gap: 'var(--medo-space-3)' };
@@ -185,4 +186,20 @@ export const Mobile: Story = {
       </Popover>
     </PopoverTrigger>
   ),
+};
+
+export const InteractionTest: Story = {
+  ...interactionTest,
+  play: async ({ canvas, userEvent }) => {
+    const trigger = canvas.getByRole('button', { name: 'Filter' });
+    await userEvent.click(trigger);
+    const body = within(document.body);
+    const dialog = await body.findByRole('dialog', { name: 'Filter' });
+    await expect(trigger).toHaveAttribute('aria-expanded', 'true');
+    await userEvent.click(within(dialog).getByRole('checkbox', { name: 'Done' }));
+    await expect(within(dialog).getByRole('checkbox', { name: 'Done' })).toBeChecked();
+    await userEvent.keyboard('{Escape}');
+    await waitFor(() => expect(body.queryByRole('dialog')).toBeNull());
+    await expect(trigger).toHaveFocus();
+  },
 };

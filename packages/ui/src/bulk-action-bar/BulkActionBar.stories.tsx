@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import type { Selection } from 'react-aria-components';
-import { fn } from 'storybook/test';
+import { expect, fn } from 'storybook/test';
 import { Archive, Download, FolderInput, Tag, Trash2 } from 'lucide-react';
 import { BulkActionBar } from './BulkActionBar';
 import { ListRow, ListView } from '../list-view/ListView';
 import { Avatar } from '../avatar/Avatar';
-import { semantic, slot } from '../story-helpers';
+import { interactionTest, semantic, slot } from '../story-helpers';
 
 /** Stories only: a transformed box is the containing block for the fixed bar, so it stays inside the preview. */
 const stage = (height: string): React.CSSProperties => ({ transform: 'translateZ(0)', minBlockSize: height });
@@ -44,7 +44,7 @@ const meta = {
     docs: {
       description: {
         component:
-          'Appears with ≥ 1 selected item and floats, so selecting never shifts the layout (slide up 200 ms, none with reduced motion). A toolbar named „Bulk actions“: the count is announced, Esc or × clears the selection. ' +
+          'Appears with ≥ 1 selected item and floats, so selecting never shifts the layout (slides up with a smooth spring; a fade with reduced motion). A toolbar named „Bulk actions“: the count is announced, Esc or × clears the selection. ' +
           'Desktop: bottom centre, 24 px above the viewport edge, surface/inverse with the Toast buttons. Mobile: full width at the bottom, Button ghost lg (Delete as ghost danger), safe area. ' +
           'Actions are structured: max 3, more go into the „…“ menu; destructive actions confirm (Alert dialog) or offer Undo (Toast). Render it right after the list so Tab reaches it next. Styles: `medo-bulk-bar`.',
       },
@@ -114,4 +114,18 @@ export const WithListView: Story = {
     },
   },
   render: () => <ListExample />,
+};
+
+export const InteractionTest: Story = {
+  ...interactionTest,
+  play: async ({ canvas, userEvent, args }) => {
+    const bar = canvas.getByRole('toolbar', { name: 'Bulk actions' });
+    await expect(bar).toHaveTextContent('3 selected');
+    await userEvent.click(canvas.getByRole('button', { name: 'Export' }));
+    await expect(three[0].onAction).toHaveBeenCalled();
+    // Esc clears the selection.
+    canvas.getByRole('button', { name: 'Archive' }).focus();
+    await userEvent.keyboard('{Escape}');
+    await expect(args.onClear).toHaveBeenCalled();
+  },
 };

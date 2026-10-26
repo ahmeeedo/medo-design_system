@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import type { Selection, SortDescriptor } from 'react-aria-components';
-import { fn } from 'storybook/test';
+import { expect, fn } from 'storybook/test';
 import { Archive, Download, Funnel, Mail, Plus, Trash2 } from 'lucide-react';
 import { Cell, Column, Row, StaticTable, Table, TableBody, TableHeader } from './Table';
 import { ColumnsMenu } from './ColumnsMenu';
@@ -16,7 +16,7 @@ import { Avatar } from '../avatar/Avatar';
 import { Menu, MenuButton, MenuItem, MenuTrigger } from '../menu/Menu';
 import { ListCard, ListView } from '../list-view/ListView';
 import { MOBILE_QUERY, useMediaQuery } from '../utils/useMediaQuery';
-import { LightDark } from '../story-helpers';
+import { interactionTest, LightDark } from '../story-helpers';
 
 /** Stories only: a transformed box is the containing block for the fixed bulk bar, so it stays inside the preview. */
 const stage: React.CSSProperties = { transform: 'translateZ(0)', paddingBlockEnd: 'var(--medo-space-20)' };
@@ -212,6 +212,7 @@ export const Loading: Story = {
         {(item) => (
           <Row id={item.id}>
             <Cell textValue="Loading">
+              <span className="medo-visually-hidden">Loading</span>
               <Skeleton width="5rem" />
             </Cell>
             <Cell textValue="Loading">
@@ -535,4 +536,25 @@ export const MobileCards: Story = {
     },
   },
   render: () => <InvoiceWorkspace forceMobile />,
+};
+
+export const InteractionTest: Story = {
+  ...interactionTest,
+  render: () => <InvoiceTable selectable />,
+  play: async ({ canvas, userEvent }) => {
+    // findBy: wait until React Aria has rendered the collection.
+    const invoice = await canvas.findByRole('columnheader', { name: /Invoice/ });
+    // A click on a sortable header sorts; a second click reverses.
+    await userEvent.click(invoice);
+    const first = invoice.getAttribute('aria-sort');
+    await userEvent.click(invoice);
+    await expect(invoice.getAttribute('aria-sort')).not.toBe(first);
+    await expect(['ascending', 'descending']).toContain(invoice.getAttribute('aria-sort'));
+    // Selecting rows with their checkbox.
+    const boxes = canvas.getAllByRole('checkbox');
+    await userEvent.click(boxes[1]);
+    await expect(canvas.getAllByRole('row').filter((r) => r.getAttribute('aria-selected') === 'true')).toHaveLength(1);
+    await userEvent.click(boxes[0]);
+    await expect(canvas.getAllByRole('row').filter((r) => r.getAttribute('aria-selected') === 'true').length).toBeGreaterThan(1);
+  },
 };

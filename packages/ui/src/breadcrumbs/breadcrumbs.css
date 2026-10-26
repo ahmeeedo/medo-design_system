@@ -64,6 +64,13 @@
   text-decoration: none;
   outline: none;
   -webkit-tap-highlight-color: transparent;
+  transition:
+    background-color var(--medo-motion-duration-fast) var(--medo-motion-easing-standard),
+    color var(--medo-motion-duration-fast) var(--medo-motion-easing-standard);
+}
+
+.medo-breadcrumbs__link[data-pressed] {
+  transition-duration: 0s;
 }
 
 .medo-breadcrumbs__link[data-hovered]:not([data-current]) {

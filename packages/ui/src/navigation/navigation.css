@@ -145,7 +145,7 @@
   flex: none;
   inline-size: var(--medo-size-icon-sm);
   block-size: var(--medo-size-icon-sm);
-  transition: rotate var(--medo-motion-duration-fast) var(--medo-motion-easing-standard);
+  transition: rotate var(--medo-motion-spring-snappy-duration) var(--medo-motion-spring-snappy);
 }
 
 .medo-nav-group__button[aria-expanded='true'] .medo-nav-group__chevron {
@@ -314,17 +314,22 @@
   outline: none;
 }
 
+/* Full-screen menu: fades in while its content settles 8 px with a smooth spring; out: a quick fade. */
+.medo-nav-fullscreen-overlay {
+  transition: opacity var(--medo-motion-duration-normal) var(--medo-motion-easing-enter);
+}
+.medo-nav-fullscreen-overlay[data-entering] {
+  opacity: 0;
+}
+.medo-nav-fullscreen-overlay[data-exiting] {
+  opacity: 0;
+  transition: opacity var(--medo-motion-duration-fast) var(--medo-motion-easing-exit);
+}
+.medo-nav-fullscreen {
+  transition: translate var(--medo-motion-spring-smooth-duration) var(--medo-motion-spring-smooth);
+}
 .medo-nav-fullscreen-overlay[data-entering] .medo-nav-fullscreen {
-  animation: medo-nav-fade var(--medo-motion-duration-normal) var(--medo-motion-easing-enter);
-}
-.medo-nav-fullscreen-overlay[data-exiting] .medo-nav-fullscreen {
-  animation: medo-nav-fade var(--medo-motion-duration-fast) var(--medo-motion-easing-exit) reverse;
-}
-
-@keyframes medo-nav-fade {
-  from {
-    opacity: 0;
-  }
+  translate: 0 calc(-1 * var(--medo-space-2));
 }
 
 .medo-nav-fullscreen__dialog {
@@ -376,7 +381,7 @@
   box-sizing: border-box;
   inline-size: 16rem; /* 256 */
   block-size: 100%;
-  transition: inline-size var(--medo-motion-duration-normal) var(--medo-motion-easing-enter);
+  transition: inline-size var(--medo-motion-spring-smooth-duration) var(--medo-motion-spring-smooth);
 }
 
 .medo-sidenav--collapsed {
@@ -608,11 +613,14 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .medo-sidenav,
-  .medo-nav-group__chevron {
+  .medo-sidenav {
     transition: none;
   }
-  .medo-nav-fullscreen-overlay:is([data-entering], [data-exiting]) .medo-nav-fullscreen {
-    animation: none;
+  .medo-nav-group__chevron {
+    transition: rotate var(--medo-motion-duration-fast) var(--medo-motion-easing-standard);
+  }
+  .medo-nav-fullscreen {
+    transition: none;
+    translate: none !important;
   }
 }

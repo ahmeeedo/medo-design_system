@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react';
 import { DialogTrigger } from 'react-aria-components';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import type { Key, Selection } from 'react-aria-components';
-import { fn } from 'storybook/test';
+import { expect, fn, waitFor, within } from 'storybook/test';
 import { ArrowUpDown, Funnel, FileText, Globe, LayoutGrid, List, RotateCcw, Search, Settings, Upload, User } from 'lucide-react';
 import { SearchField } from './SearchField';
 import { SearchResult, type SearchResultType } from './SearchResult';
@@ -25,7 +25,7 @@ import { Tab, TabList, TabPanel, Tabs } from '../tabs/Tabs';
 import { Tag, TagGroup } from '../tag/Tag';
 import { ToggleButton, ToggleButtonGroup } from '../toggle-button/ToggleButton';
 import { Image } from '../media/Image';
-import { LightDark, samplePhoto, semantic, slot } from '../story-helpers';
+import { interactionTest, LightDark, samplePhoto, semantic, slot } from '../story-helpers';
 
 /** Placeholder thumbnail (stories only). */
 const thumb = <Image src={samplePhoto(1)} alt="" ratio="4:3" radius="none" />;
@@ -659,4 +659,35 @@ export const Quick: Story = {
     },
   },
   render: () => <QuickSearchExample />,
+};
+
+export const InteractionTest: Story = {
+  ...interactionTest,
+  play: async ({ canvas, userEvent, args }) => {
+    const field = canvas.getByRole('searchbox', { name: 'Search' });
+    await userEvent.type(field, 'invoice{Enter}');
+    await expect(args.onSubmit).toHaveBeenLastCalledWith('invoice');
+    // Esc clears; the clear button only shows with text.
+    await userEvent.keyboard('{Escape}');
+    await expect(field).toHaveValue('');
+    await expect(args.onClear).toHaveBeenCalled();
+  },
+};
+
+export const QuickSearchTest: Story = {
+  ...interactionTest,
+  name: 'Interaction test: quick search',
+  render: () => <QuickSearchExample />,
+  play: async ({ userEvent }) => {
+    // Cmd/Ctrl + K opens it with the field focused.
+    await userEvent.keyboard('{Control>}k{/Control}');
+    const body = within(document.body);
+    const dialog = await body.findByRole('dialog');
+    const field = within(dialog).getByRole('searchbox');
+    await waitFor(() => expect(field).toHaveFocus());
+    await userEvent.type(field, 'inv');
+    await waitFor(() => expect(within(dialog).getAllByRole('option').length).toBeGreaterThan(0));
+    await userEvent.keyboard('{Escape}{Escape}');
+    await waitFor(() => expect(body.queryByRole('dialog')).toBeNull());
+  },
 };

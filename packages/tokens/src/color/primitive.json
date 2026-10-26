@@ -417,6 +417,10 @@
       }
     },
     "white-alpha": {
+      "6": {
+        "$type": "color",
+        "$value": "#ffffff0f"
+      },
       "8": {
         "$type": "color",
         "$value": "#ffffff14"

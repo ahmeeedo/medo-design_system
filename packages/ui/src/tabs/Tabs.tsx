@@ -59,7 +59,7 @@ export interface TabProps extends Omit<AriaTabProps, 'className' | 'style' | 'ch
   countLabel?: string;
 }
 
-/** One tab. The selected tab is a raised thumb that slides to the new tab (200 ms, no slide with reduced motion). */
+/** One tab. The selected tab is a raised thumb that slides to the new tab with a snappy spring (no slide with reduced motion). */
 export function Tab({ children, icon, count, countLabel, ...props }: TabProps) {
   return (
     <AriaTab {...props} className="medo-tab">

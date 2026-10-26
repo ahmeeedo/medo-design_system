@@ -63,7 +63,40 @@
 }
 
 .medo-toggle-group--segmented .medo-toggle {
+  position: relative;
+  isolation: isolate;
   border-radius: var(--medo-radius-sm);
+}
+
+/* The selected fill is an indicator that slides between the items with a snappy spring (iOS segmented control). */
+.medo-toggle-group--segmented .medo-toggle:is([data-selected], [aria-pressed='true']) {
+  --_bg: transparent;
+}
+.medo-toggle__indicator {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background-color: var(--medo-color-action-selected);
+  transition:
+    translate var(--medo-motion-spring-snappy-duration) var(--medo-motion-spring-snappy),
+    width var(--medo-motion-spring-snappy-duration) var(--medo-motion-spring-snappy),
+    background-color var(--medo-motion-duration-fast) var(--medo-motion-easing-standard);
+}
+.medo-toggle[data-hovered] > .medo-toggle__indicator {
+  background-color: var(--medo-color-action-selected-hover);
+}
+.medo-toggle[data-pressed] > .medo-toggle__indicator {
+  background-color: var(--medo-color-action-selected-pressed);
+}
+.medo-toggle:is(:disabled, [data-disabled]) > .medo-toggle__indicator {
+  background-color: var(--medo-color-action-disabled);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .medo-toggle__indicator {
+    transition: background-color var(--medo-motion-duration-fast) var(--medo-motion-easing-standard);
+  }
 }
 
 /* Full width (mobile): items share the space equally. */

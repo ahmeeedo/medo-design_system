@@ -89,7 +89,7 @@
   inline-size: var(--_icon);
   block-size: var(--_icon);
   color: var(--medo-color-text-secondary);
-  transition: transform var(--medo-motion-duration-fast) var(--medo-motion-easing-standard);
+  transition: transform var(--medo-motion-spring-snappy-duration) var(--medo-motion-spring-snappy);
 }
 
 .medo-select__chevron > svg {
@@ -224,6 +224,6 @@
 
 @media (prefers-reduced-motion: reduce) {
   .medo-select__chevron {
-    transition: none;
+    transition: transform var(--medo-motion-duration-fast) var(--medo-motion-easing-standard);
   }
 }

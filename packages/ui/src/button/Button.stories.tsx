@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { ArrowRight, Download, Plus, Trash2 } from 'lucide-react';
-import { fn } from 'storybook/test';
+import { expect, fn } from 'storybook/test';
 import { Button, ButtonGroup } from './Button';
-import { slot } from '../story-helpers';
+import { interactionTest, slot } from '../story-helpers';
 
 const meta = {
   title: 'Components/Button',
@@ -156,4 +156,18 @@ export const LightAndDark: Story = {
       ))}
     </div>
   ),
+};
+
+export const InteractionTest: Story = {
+  ...interactionTest,
+  play: async ({ canvas, userEvent, args }) => {
+    const button = canvas.getByRole('button', { name: 'Button' });
+    await userEvent.click(button);
+    await expect(args.onPress).toHaveBeenCalledTimes(1);
+    // Keyboard: Enter and Space press it too.
+    button.focus();
+    await userEvent.keyboard('{Enter}');
+    await userEvent.keyboard(' ');
+    await expect(args.onPress).toHaveBeenCalledTimes(3);
+  },
 };

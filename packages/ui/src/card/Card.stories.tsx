@@ -1,11 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { expect } from 'storybook/test';
 import { Ellipsis } from 'lucide-react';
 import { Card } from './Card';
 import { Button, ButtonGroup } from '../button/Button';
 import { IconButton } from '../icon-button/IconButton';
 import { Badge } from '../badge/Badge';
 import { Image } from '../media/Image';
-import { LightDark, samplePhoto, semantic, slot } from '../story-helpers';
+import { interactionTest, LightDark, samplePhoto, semantic, slot } from '../story-helpers';
 
 /** Sample media: the Image component (decorative – the card title names the content). In cards the image takes the card's radius. */
 const media = <Image src={samplePhoto(0)} alt="" ratio="16:9" radius="none" />;
@@ -167,4 +168,22 @@ export const LightAndDark: Story = {
       </Card>
     </LightDark>
   ),
+};
+
+export const InteractionTest: Story = {
+  ...interactionTest,
+  render: () => (
+    <div style={{ maxInlineSize: '20rem' }}>
+      <Card href="#tokens" media={media} title="Design tokens 2.0" subtitle="Article · 5 min read">
+        What changed in colours, spacing and typography.
+      </Card>
+    </div>
+  ),
+  play: async ({ canvas, userEvent }) => {
+    // One link for the whole card: one tab stop, named by the title.
+    const links = canvas.getAllByRole('link');
+    await expect(links).toHaveLength(1);
+    await userEvent.tab();
+    await expect(canvas.getByRole('link', { name: 'Design tokens 2.0' })).toHaveFocus();
+  },
 };

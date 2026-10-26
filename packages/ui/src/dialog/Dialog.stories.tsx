@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { fn } from 'storybook/test';
+import { expect, fn, waitFor, within } from 'storybook/test';
 import { Dialog, DialogTrigger } from './Dialog';
 import { Button } from '../button/Button';
 import { TextField } from '../text-field/TextField';
 import { Select } from '../select/Select';
 import { Option } from '../listbox/ListBox';
-import { row, semantic, slot } from '../story-helpers';
+import { interactionTest, row, semantic, slot } from '../story-helpers';
 
 const roles = [
   { id: 'viewer', name: 'Viewer' },
@@ -252,4 +252,21 @@ export const Mobile: Story = {
       </DialogTrigger>
     </div>
   ),
+};
+
+export const InteractionTest: Story = {
+  ...interactionTest,
+  play: async ({ canvas, userEvent, args }) => {
+    const trigger = canvas.getByRole('button', { name: 'Invite member' });
+    await userEvent.click(trigger);
+    const body = within(document.body);
+    const dialog = await body.findByRole('dialog', { name: 'Invite member' });
+    // Focus moves into the dialog and stays there.
+    await waitFor(() => expect(dialog).toContainElement(document.activeElement as HTMLElement));
+    // Esc closes it and focus returns to the trigger.
+    await userEvent.keyboard('{Escape}');
+    await waitFor(() => expect(body.queryByRole('dialog')).toBeNull());
+    await expect(trigger).toHaveFocus();
+    await expect(args.onOpenChange).toHaveBeenLastCalledWith(false);
+  },
 };

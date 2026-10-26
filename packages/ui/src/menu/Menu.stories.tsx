@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import type { Key } from 'react-aria-components';
-import { fn } from 'storybook/test';
+import { expect, fn, waitFor, within } from 'storybook/test';
 import { Archive, Copy, Download, FileText, Folder, FolderInput, Link2, Pencil, Share2, Trash2 } from 'lucide-react';
 import { Menu, MenuButton, MenuItem, MenuSection, MenuTrigger, Submenu } from './Menu';
 import { Button } from '../button/Button';
 import { AlertDialog } from '../dialog/Dialog';
+import { interactionTest } from '../story-helpers';
 
 const file: React.CSSProperties = {
   display: 'flex',
@@ -152,5 +153,22 @@ export const Mobile: Story = {
           'Tapping an item runs it and closes the sheet; a submenu replaces the list with a back button. Forced here with `overlay="sheet"`.',
       },
     },
+  },
+};
+
+export const InteractionTest: Story = {
+  ...interactionTest,
+  play: async ({ canvas, userEvent, args }) => {
+    const trigger = canvas.getByRole('button', { name: 'More actions for Q3-Report.pdf' });
+    trigger.focus();
+    // Enter opens the menu with focus on the first item; arrow keys move, Enter runs.
+    await userEvent.keyboard('{Enter}');
+    const body = within(document.body);
+    const menu = await body.findByRole('menu');
+    await waitFor(() => expect(within(menu).getByRole('menuitem', { name: /Rename/ })).toHaveFocus());
+    await userEvent.keyboard('{ArrowDown}{Enter}');
+    await expect(args.onAction).toHaveBeenCalledWith('duplicate', {});
+    await waitFor(() => expect(body.queryByRole('menu')).toBeNull());
+    await expect(trigger).toHaveFocus();
   },
 };

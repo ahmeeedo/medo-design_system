@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import type { Key } from 'react-aria-components';
-import { fn } from 'storybook/test';
+import { expect, fn, waitFor, within } from 'storybook/test';
 import { ArrowUpDown, Globe, MapPin } from 'lucide-react';
 import { Select } from './Select';
 import { ListBoxSection, Option } from '../listbox/ListBox';
-import { LightDark, slot, stack } from '../story-helpers';
+import { interactionTest, LightDark, slot, stack } from '../story-helpers';
 
 const countries = [
   { id: 'de', name: 'Germany' },
@@ -66,7 +66,12 @@ const meta = {
     resultLabel: { control: false },
   },
   parameters: {
-    medo: { code: 'C08', subtitle: 'Choose one or several values from a list. Same anatomy as Input, plus a chevron.', figma: '122:1109' },
+    a11y: {
+      // label-content-name-mismatch is an experimental axe rule: options read their label as the name and the
+      // second line as description (aria-describedby) – correct, but the rule counts all visible text.
+      config: { rules: [{ id: 'landmark-unique', enabled: false }, { id: 'label-content-name-mismatch', enabled: false }] },
+    },
+        medo: { code: 'C08', subtitle: 'Choose one or several values from a list. Same anatomy as Input, plus a chevron.', figma: '122:1109' },
     docs: {
       description: {
         component:
@@ -263,4 +268,23 @@ export const LightAndDark: Story = {
       </Select>
     </LightDark>
   ),
+};
+
+export const InteractionTest: Story = {
+  ...interactionTest,
+  play: async ({ canvas, userEvent, args }) => {
+    const trigger = canvas.getByRole('button', { name: /Country/ });
+    await expect(trigger).toHaveTextContent('Germany');
+    trigger.focus();
+    // ↓ opens the list; typing jumps; Enter picks and closes.
+    await userEvent.keyboard('{ArrowDown}');
+    const body = within(document.body);
+    const list = await body.findByRole('listbox');
+    await waitFor(() => expect(list).toContainElement(document.activeElement as HTMLElement));
+    await userEvent.keyboard('Fra');
+    await userEvent.keyboard('{Enter}');
+    await waitFor(() => expect(body.queryByRole('listbox')).toBeNull());
+    await expect(trigger).toHaveTextContent('France');
+    await expect(args.onChange).toHaveBeenLastCalledWith('fr');
+  },
 };

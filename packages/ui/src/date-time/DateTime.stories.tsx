@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { fn } from 'storybook/test';
+import { expect, fn, waitFor, within } from 'storybook/test';
 import { I18nProvider } from 'react-aria-components';
 import { getLocalTimeZone, isWeekend, parseDate, parseDateTime, parseTime, today, Time } from '@internationalized/date';
 import { Calendar, RangeCalendar } from './Calendar';
 import { DateField, TimeField } from './DateField';
 import { DatePicker, DateRangePicker } from './DatePicker';
-import { LightDark, semantic } from '../story-helpers';
+import { interactionTest, LightDark, semantic } from '../story-helpers';
 
 const stack: React.CSSProperties = { display: 'grid', gap: 'var(--medo-space-6)', alignContent: 'start' };
 const columns: React.CSSProperties = { display: 'flex', flexWrap: 'wrap', gap: 'var(--medo-space-8)', alignItems: 'start' };
@@ -246,4 +246,24 @@ export const Locales: Story = {
       ))}
     </div>
   ),
+};
+
+export const InteractionTest: Story = {
+  ...interactionTest,
+  play: async ({ canvas, userEvent, args }) => {
+    // Typing first: digits fill the segments, each segment jumps to the next.
+    const day = canvas.getAllByRole('spinbutton')[0];
+    await userEvent.click(day);
+    await userEvent.keyboard('03');
+    await expect(day).toHaveAttribute('aria-valuenow', '3');
+    await expect(canvas.getAllByRole('spinbutton')[1]).toHaveFocus();
+    // The calendar is a helper: open it, move one day with →, Enter picks it and closes.
+    await userEvent.click(canvas.getByRole('button', { name: /Open calendar/ }));
+    const dialog = await within(document.body).findByRole('dialog');
+    await waitFor(() => expect(within(dialog).getByRole('grid')).toContainElement(document.activeElement as HTMLElement));
+    await userEvent.keyboard('{ArrowRight}{Enter}');
+    await waitFor(() => expect(within(document.body).queryByRole('dialog')).toBeNull());
+    await expect(day).toHaveAttribute('aria-valuenow', '4');
+    await expect(args.onChange).toHaveBeenCalled();
+  },
 };

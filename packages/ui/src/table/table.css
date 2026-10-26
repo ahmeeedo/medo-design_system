@@ -78,6 +78,9 @@
   user-select: none;
 }
 
+.medo-table__column {
+  transition: color var(--medo-motion-duration-fast) var(--medo-motion-easing-standard);
+}
 .medo-table__column[data-hovered] {
   color: var(--medo-color-text-primary);
 }
@@ -106,6 +109,9 @@
 }
 
 /* Unsorted sortable columns show the arrow on hover and focus only. */
+.medo-table__sort {
+  transition: opacity var(--medo-motion-duration-fast) var(--medo-motion-easing-standard);
+}
 .medo-table__column:not([aria-sort='ascending'], [aria-sort='descending']) .medo-table__sort {
   opacity: 0;
 }
@@ -159,6 +165,14 @@
 .medo-table :is(.medo-table__cell--utility, .medo-table__column--utility) {
   inline-size: var(--medo-space-12);
   padding-inline: var(--medo-space-4) 0;
+}
+
+/* Row feedback fades; pressed shows at once (iOS highlight). */
+.medo-table__row > .medo-table__cell {
+  transition: background-color var(--medo-motion-duration-fast) var(--medo-motion-easing-standard);
+}
+.medo-table__row[data-pressed] > .medo-table__cell {
+  transition-duration: 0s;
 }
 
 .medo-table__row[data-hovered] > .medo-table__cell {

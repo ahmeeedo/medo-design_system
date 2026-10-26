@@ -1,21 +1,10 @@
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useArgs } from 'storybook/preview-api';
-import { fn } from 'storybook/test';
-import {
-  AlignCenter,
-  AlignLeft,
-  AlignRight,
-  Bold,
-  Heart,
-  Italic,
-  LayoutGrid,
-  List,
-  Map as MapIcon,
-  Underline,
-} from 'lucide-react';
+import { expect, fn } from 'storybook/test';
+import { AlignCenter, AlignLeft, AlignRight, Bold, Heart, Italic, LayoutGrid, List, Map as MapIcon, Underline } from 'lucide-react';
 import { ToggleButton, ToggleButtonGroup, Toolbar, ToolbarSeparator } from './ToggleButton';
-import { LightDark, row, slot } from '../story-helpers';
+import { interactionTest, LightDark, row, slot } from '../story-helpers';
 
 const col: React.CSSProperties = { display: 'grid', gap: 'var(--medo-space-6)', justifyItems: 'start' };
 const caption: React.CSSProperties = { font: 'var(--medo-typography-code-sm)', color: 'var(--medo-color-text-secondary)' };
@@ -210,4 +199,25 @@ export const LightAndDark: Story = {
       <Formatting />
     </LightDark>
   ),
+};
+
+export const InteractionTest: Story = {
+  ...interactionTest,
+  render: () => (
+    <ToggleButtonGroup aria-label="View" defaultSelectedKeys={['week']}>
+      <ToggleButton id="day">Day</ToggleButton>
+      <ToggleButton id="week">Week</ToggleButton>
+      <ToggleButton id="month">Month</ToggleButton>
+    </ToggleButtonGroup>
+  ),
+  play: async ({ canvas, userEvent }) => {
+    await expect(canvas.getByRole('radio', { name: 'Week' })).toBeChecked();
+    // Arrow keys move between the items; Space selects.
+    canvas.getByRole('radio', { name: 'Week' }).focus();
+    await userEvent.keyboard('{ArrowRight}');
+    await expect(canvas.getByRole('radio', { name: 'Month' })).toHaveFocus();
+    await userEvent.keyboard(' ');
+    await expect(canvas.getByRole('radio', { name: 'Month' })).toBeChecked();
+    await expect(canvas.getByRole('radio', { name: 'Week' })).not.toBeChecked();
+  },
 };

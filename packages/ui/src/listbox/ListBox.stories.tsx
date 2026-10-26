@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { expect } from 'storybook/test';
 import { Building2, Globe, User, Users } from 'lucide-react';
 import { ListBox, ListBoxMessage, ListBoxSection, Option } from './ListBox';
-import { LightDark, row } from '../story-helpers';
+import { interactionTest, LightDark, row } from '../story-helpers';
 
 /* Stories show the list inline. In Select and Combobox it sits in a popover. */
 const frame: React.CSSProperties = {
@@ -25,7 +26,12 @@ const meta = {
     renderEmptyState: { control: false },
   },
   parameters: {
-    medo: { code: 'C07', subtitle: 'The list behind Select, Combobox and the Bottom Sheet. Option is one row, Listbox the container.', figma: '115:252' },
+    a11y: {
+      // label-content-name-mismatch is an experimental axe rule: options read their label as the name and the
+      // second line as description (aria-describedby) – correct, but the rule counts all visible text.
+      config: { rules: [{ id: 'landmark-unique', enabled: false }, { id: 'label-content-name-mismatch', enabled: false }] },
+    },
+        medo: { code: 'C07', subtitle: 'The list behind Select, Combobox and the Bottom Sheet. Option is one row, Listbox the container.', figma: '115:252' },
     docs: {
       description: {
         component:
@@ -158,4 +164,19 @@ export const LightAndDark: Story = {
       </div>
     </LightDark>
   ),
+};
+
+export const InteractionTest: Story = {
+  ...interactionTest,
+  play: async ({ canvas, userEvent }) => {
+    // findBy: React Aria builds the collection before the options appear.
+    const ben = await canvas.findByRole('option', { name: 'Ben Lorenz' });
+    await userEvent.click(ben);
+    await expect(ben).toHaveAttribute('aria-selected', 'true');
+    await expect(canvas.getByRole('option', { name: 'Anna Weber' })).toHaveAttribute('aria-selected', 'false');
+    // Disabled options are skipped by the keyboard.
+    await userEvent.keyboard('{ArrowDown}{ArrowDown}');
+    await expect(canvas.getByRole('option', { name: /Design team/ })).toHaveFocus();
+    await expect(canvas.getByRole('option', { name: 'External agency' })).toHaveAttribute('aria-disabled', 'true');
+  },
 };

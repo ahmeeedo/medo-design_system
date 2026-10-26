@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Radio, RadioGroup } from './Radio';
-import { fn } from 'storybook/test';
-import { LightDark } from '../story-helpers';
+import { expect, fn } from 'storybook/test';
+import { interactionTest, LightDark } from '../story-helpers';
 
 const meta = {
   title: 'Components/Radio',
@@ -78,4 +78,18 @@ export const LightAndDark: Story = {
       </RadioGroup>
     </LightDark>
   ),
+};
+
+export const InteractionTest: Story = {
+  ...interactionTest,
+  play: async ({ canvas, userEvent, args }) => {
+    const standard = canvas.getByRole('radio', { name: /Standard/ });
+    await expect(standard).toBeChecked();
+    // Tab enters on the selected option, arrow keys move and select.
+    await userEvent.tab();
+    await expect(standard).toHaveFocus();
+    await userEvent.keyboard('{ArrowDown}');
+    await expect(canvas.getByRole('radio', { name: /Express/ })).toBeChecked();
+    await expect(args.onChange).toHaveBeenLastCalledWith('express');
+  },
 };

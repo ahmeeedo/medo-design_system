@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useAsyncList, type Key } from 'react-aria-components';
-import { fn } from 'storybook/test';
+import { expect, fn, waitFor, within } from 'storybook/test';
 import { Search, User } from 'lucide-react';
 import { Combobox } from './Combobox';
 import { Option } from '../listbox/ListBox';
-import { LightDark, slot, stack } from '../story-helpers';
+import { interactionTest, LightDark, slot, stack } from '../story-helpers';
 
 type Person = { id: string; name: string; role: string };
 
@@ -66,7 +66,12 @@ const meta = {
     resultLabel: { control: false },
   },
   parameters: {
-    medo: { code: 'C09', subtitle: 'A Select you can type into. Typing filters the list – for long lists, people, places or tags.', figma: '127:2306' },
+    a11y: {
+      // label-content-name-mismatch is an experimental axe rule: options read their label as the name and the
+      // second line as description (aria-describedby) – correct, but the rule counts all visible text.
+      config: { rules: [{ id: 'landmark-unique', enabled: false }, { id: 'label-content-name-mismatch', enabled: false }] },
+    },
+        medo: { code: 'C09', subtitle: 'A Select you can type into. Typing filters the list – for long lists, people, places or tags.', figma: '127:2306' },
     docs: {
       description: {
         component:
@@ -290,4 +295,21 @@ export const LightAndDark: Story = {
       </Combobox>
     </LightDark>
   ),
+};
+
+export const InteractionTest: Story = {
+  ...interactionTest,
+  args: { defaultValue: null },
+  play: async ({ canvas, userEvent, args }) => {
+    const input = canvas.getByRole('combobox', { name: /Assignee/ });
+    await userEvent.clear(input);
+    // Typing filters the list (match anywhere); ↓ + Enter picks.
+    await userEvent.type(input, 'fisch');
+    const body = within(document.body);
+    const list = await body.findByRole('listbox');
+    await waitFor(() => expect(within(list).getAllByRole('option')).toHaveLength(1));
+    await userEvent.keyboard('{ArrowDown}{Enter}');
+    await expect(input).toHaveValue('Fiona Fischer');
+    await expect(args.onChange).toHaveBeenLastCalledWith('fischer');
+  },
 };

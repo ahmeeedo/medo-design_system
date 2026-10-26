@@ -1,9 +1,10 @@
 import type React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { expect } from 'storybook/test';
 import { useState } from 'react';
 import { Eye, EyeOff, Mail, Search } from 'lucide-react';
 import { InputAction, TextField } from './TextField';
-import { LightDark, slot, stack } from '../story-helpers';
+import { interactionTest, LightDark, slot, stack } from '../story-helpers';
 
 const meta = {
   title: 'Components/Text Field',
@@ -130,4 +131,16 @@ export const LightAndDark: Story = {
       <TextField {...args} label="Disabled" defaultValue="anna@example.com" isDisabled />
     </LightDark>
   ),
+};
+
+export const InteractionTest: Story = {
+  ...interactionTest,
+  decorators: narrow,
+  play: async ({ canvas, userEvent }) => {
+    const input = canvas.getByRole('textbox', { name: 'Email' });
+    // Label and helper text are wired up for screen readers.
+    await expect(input).toHaveAccessibleDescription('We only use it for the login.');
+    await userEvent.type(input, 'name@example.com');
+    await expect(input).toHaveValue('name@example.com');
+  },
 };

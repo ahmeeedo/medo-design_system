@@ -53,29 +53,42 @@
 
 /* ---------- Motion: scrim fades, dialog scales 0.96 → 1 and fades ---------- */
 
+/*
+ * Motion (iOS): the scrim fades, the dialog settles from 96 % with a smooth spring (fullscreen: slides up);
+ * out: everything fades quickly. Transitions – an interrupted open or close reverses smoothly.
+ * React Aria waits for the overlay's own transition, so the dialog's exit is never longer than the overlay's.
+ */
+.medo-dialog-overlay {
+  transition: opacity var(--medo-motion-duration-normal) var(--medo-motion-easing-enter);
+}
 .medo-dialog-overlay[data-entering] {
-  animation: medo-dialog-fade var(--medo-motion-duration-normal) var(--medo-motion-easing-enter);
+  opacity: 0;
 }
 .medo-dialog-overlay[data-exiting] {
-  animation: medo-dialog-fade var(--medo-motion-duration-fast) var(--medo-motion-easing-exit) reverse;
+  opacity: 0;
+  transition: opacity var(--medo-motion-duration-normal) var(--medo-motion-easing-exit);
+}
+.medo-dialog {
+  transition:
+    scale var(--medo-motion-spring-smooth-duration) var(--medo-motion-spring-smooth),
+    translate var(--medo-motion-spring-smooth-duration) var(--medo-motion-spring-smooth);
 }
 .medo-dialog-overlay[data-entering] .medo-dialog {
-  animation: medo-dialog-scale var(--medo-motion-duration-normal) var(--medo-motion-easing-enter);
+  scale: 0.96;
+}
+.medo-dialog-overlay[data-entering] .medo-dialog--fullscreen {
+  scale: none;
+  translate: 0 100%;
 }
 .medo-dialog-overlay[data-exiting] .medo-dialog {
-  animation: medo-dialog-scale var(--medo-motion-duration-fast) var(--medo-motion-easing-exit) reverse;
+  scale: 0.98;
+  transition:
+    scale var(--medo-motion-duration-normal) var(--medo-motion-easing-exit),
+    translate var(--medo-motion-duration-normal) var(--medo-motion-easing-exit);
 }
-
-@keyframes medo-dialog-fade {
-  from {
-    opacity: 0;
-  }
-}
-@keyframes medo-dialog-scale {
-  from {
-    opacity: 0;
-    transform: scale(0.96);
-  }
+.medo-dialog-overlay[data-exiting] .medo-dialog--fullscreen {
+  scale: none;
+  translate: 0 100%;
 }
 
 /* ---------- Parts ---------- */
@@ -295,7 +308,12 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  /* Reduced motion: only the cross-fade of the overlay. */
+  .medo-dialog-overlay {
+    transition: opacity var(--medo-motion-duration-fast) var(--medo-motion-easing-standard);
+  }
   .medo-dialog-overlay:is([data-entering], [data-exiting]) .medo-dialog {
-    animation-name: medo-dialog-fade;
+    scale: none;
+    translate: none;
   }
 }

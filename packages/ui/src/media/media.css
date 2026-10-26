@@ -4,7 +4,7 @@
  *   <div class="medo-image medo-image--cover medo-image--radius-md" data-state="loading|loaded|error" style="aspect-ratio">
  *     preview (blur-up) | Skeleton · <img class="medo-image__img"> · error (image-off) · overlay · badge · play
  *   </div>
- * Surface surface/subtle · radius/md · optional 1 px border/media inside · fade-in ≤ 200 ms (none with reduced motion)
+ * Surface surface/subtle · radius/md · optional 1 px border/media inside · fade-in 250 ms (100 ms with reduced motion)
  * Overlay: gradient transparent → overlay/media, 55 % (min 96), padding 16, title heading/sm + meta caption, text/on-media
  * Badge inset 12 · Play md 48 / lg 64, overlay/media, icon 20 / 28, hover/pressed/focus from the surrounding link
  * Figure gap space/2 · caption body/sm · credit caption · text/secondary
@@ -148,9 +148,16 @@
   translate: -50% -50%;
 }
 
+/* Play button tint follows the thumbnail link. */
+.medo-media-play {
+  transition:
+    background-color var(--medo-motion-duration-fast) var(--medo-motion-easing-standard),
+    box-shadow var(--medo-motion-duration-fast) var(--medo-motion-easing-standard);
+}
+
 @media (prefers-reduced-motion: reduce) {
   .medo-image__img {
-    transition: none;
+    transition-duration: var(--medo-motion-duration-fast);
   }
 }
 

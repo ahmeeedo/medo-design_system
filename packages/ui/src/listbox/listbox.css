@@ -35,17 +35,23 @@
   overflow: hidden;
 }
 
+/* Motion (iOS): unfolds from the field with a snappy spring and fades in; out: a quick fade. */
+.medo-listbox-popover {
+  transform-origin: var(--trigger-anchor-point, top);
+  transition:
+    opacity var(--medo-motion-duration-normal) var(--medo-motion-easing-enter),
+    scale var(--medo-motion-spring-snappy-duration) var(--medo-motion-spring-snappy);
+}
 .medo-listbox-popover[data-entering] {
-  animation: medo-listbox-in var(--medo-motion-duration-fast) var(--medo-motion-easing-standard);
+  opacity: 0;
+  scale: 0.98;
 }
 .medo-listbox-popover[data-exiting] {
-  animation: medo-listbox-in var(--medo-motion-duration-fast) var(--medo-motion-easing-standard) reverse;
-}
-
-@keyframes medo-listbox-in {
-  from {
-    opacity: 0;
-  }
+  opacity: 0;
+  scale: 0.98;
+  transition:
+    opacity var(--medo-motion-duration-fast) var(--medo-motion-easing-exit),
+    scale var(--medo-motion-duration-fast) var(--medo-motion-easing-exit);
 }
 
 /* ---------- Listbox ---------- */
@@ -187,8 +193,11 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .medo-listbox-popover[data-entering],
-  .medo-listbox-popover[data-exiting] {
-    animation: none;
+  /* Reduced motion: a short cross-fade, no scaling. */
+  .medo-listbox-popover {
+    transition: opacity var(--medo-motion-duration-fast) var(--medo-motion-easing-standard);
+  }
+  .medo-listbox-popover:is([data-entering], [data-exiting]) {
+    scale: none;
   }
 }
