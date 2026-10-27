@@ -12,12 +12,12 @@
   },
   "scripts": {
     "tokens:from-figma": "node scripts/figma-to-dtcg.mjs",
-    "build:tokens": "npm run build -w @medo/design-tokens",
-    "build:packages": "npm run build -w @medo/design-tokens -w @medo/ui",
-    "storybook": "npm run build:tokens && npm run dev -w @medo/storybook",
-    "build-storybook": "npm run build:tokens && npm run build -w @medo/storybook",
+    "build:tokens": "npm run build -w @med-o/design-tokens",
+    "build:packages": "npm run build -w @med-o/design-tokens -w @med-o/ui",
+    "storybook": "npm run build:tokens && npm run dev -w @med-o/storybook",
+    "build-storybook": "npm run build:tokens && npm run build -w @med-o/storybook",
     "build": "npm run build-storybook",
-    "test": "npm run build:tokens && npm run test -w @medo/storybook",
+    "test": "npm run build:tokens && npm run test -w @med-o/storybook",
     "changeset": "changeset",
     "release": "changeset publish"
   },

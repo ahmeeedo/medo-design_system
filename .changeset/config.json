@@ -4,8 +4,8 @@
   "commit": false,
   "fixed": [
     [
-      "@medo/design-tokens",
-      "@medo/ui"
+      "@med-o/design-tokens",
+      "@med-o/ui"
     ]
   ],
   "linked": [],

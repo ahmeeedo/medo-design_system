@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { Button } from '@medo/ui';
+import { Button } from '@med-o/ui';
 
 /**
  * Tailwind v4 with the med.o theme. Only system values exist:
@@ -7,8 +7,8 @@ import { Button } from '@medo/ui';
  *
  * ```css
  * @import "tailwindcss";
- * @import "@medo/design-tokens/css";
- * @import "@medo/design-tokens/tailwind";
+ * @import "@med-o/design-tokens/css";
+ * @import "@med-o/design-tokens/tailwind";
  * ```
  */
 const meta = {

@@ -3,11 +3,11 @@
  * Everything updates automatically when the tokens are rebuilt.
  */
 import { useState, type ReactNode } from 'react';
-import { Button, StaticTable } from '@medo/ui';
-import light from '@medo/design-tokens/docs/tokens.light.json';
-import dark from '@medo/design-tokens/docs/tokens.dark.json';
-import tablet from '@medo/design-tokens/src/layout/tablet.json';
-import desktop from '@medo/design-tokens/src/layout/desktop.json';
+import { Button, StaticTable } from '@med-o/ui';
+import light from '@med-o/design-tokens/docs/tokens.light.json';
+import dark from '@med-o/design-tokens/docs/tokens.dark.json';
+import tablet from '@med-o/design-tokens/src/layout/tablet.json';
+import desktop from '@med-o/design-tokens/src/layout/desktop.json';
 
 type Token = {
   name: string;

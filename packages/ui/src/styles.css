@@ -1,4 +1,4 @@
-/* All component styles of @medo/ui. Needs the tokens: @import "@medo/design-tokens/css"; */
+/* All component styles of @med-o/ui. Needs the tokens: @import "@med-o/design-tokens/css"; */
 @import './utils/utilities.css';
 @import './button/button.css';
 @import './field/field.css';

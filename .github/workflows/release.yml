@@ -1,5 +1,5 @@
 # Release: Changesets opens a "Version Packages" pull request when changesets are on main.
-# Merging that pull request publishes the new versions of @medo/design-tokens and @medo/ui to npm.
+# Merging that pull request publishes the new versions of @med-o/design-tokens and @med-o/ui to npm.
 # Authentication: npm trusted publishing (OIDC) – no token stored in GitHub. Provenance is added automatically.
 name: Release
 

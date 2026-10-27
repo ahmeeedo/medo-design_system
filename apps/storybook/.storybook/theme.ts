@@ -5,8 +5,8 @@
  */
 import { create } from 'storybook/theming';
 import type { ThemeVars } from 'storybook/theming';
-import light from '@medo/design-tokens/docs/tokens.light.json';
-import dark from '@medo/design-tokens/docs/tokens.dark.json';
+import light from '@med-o/design-tokens/docs/tokens.light.json';
+import dark from '@med-o/design-tokens/docs/tokens.dark.json';
 
 export type Mode = 'light' | 'dark';
 type Token = { name: string; value: string | number };

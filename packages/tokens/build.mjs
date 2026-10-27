@@ -204,8 +204,8 @@ StyleDictionary.registerFormat({
  *
  * Usage (in your main CSS file):
  *   @import "tailwindcss";
- *   @import "@medo/design-tokens/css";
- *   @import "@medo/design-tokens/tailwind";
+ *   @import "@med-o/design-tokens/css";
+ *   @import "@med-o/design-tokens/tailwind";
  *
  * "inline" makes every utility point to the --${PREFIX}-* variables, so light and dark
  * switch automatically. You rarely need the dark: variant.

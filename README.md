@@ -9,8 +9,8 @@ Light and Dark, responsive, WCAG 2.2 AA.
 
 | Package | Contents |
 | --- | --- |
-| [`@medo/design-tokens`](packages/tokens) | CSS variables (`--medo-*`), text style classes, Tailwind v4 theme, JavaScript values. Works with any framework and plain HTML. |
-| [`@medo/ui`](packages/ui) | React components. Behaviour from React Aria Components, look from plain CSS on top of the tokens, icons from Lucide. |
+| [`@med-o/design-tokens`](packages/tokens) | CSS variables (`--medo-*`), text style classes, Tailwind v4 theme, JavaScript values. Works with any framework and plain HTML. |
+| [`@med-o/ui`](packages/ui) | React components. Behaviour from React Aria Components, look from plain CSS on top of the tokens, icons from Lucide. |
 
 ## Contents
 
@@ -27,15 +27,15 @@ Light and Dark, responsive, WCAG 2.2 AA.
 ### Install
 
 ```bash
-npm install @medo/design-tokens            # tokens only, any framework
-npm install @medo/design-tokens @medo/ui   # tokens + React components (React 19)
+npm install @med-o/design-tokens            # tokens only, any framework
+npm install @med-o/design-tokens @med-o/ui   # tokens + React components (React 19)
 ```
 
 ### Design tokens in CSS
 
 ```css
-@import "@medo/design-tokens/css";               /* variables, Light + Dark */
-@import "@medo/design-tokens/css/typography.css"; /* optional: .medo-text-* classes */
+@import "@med-o/design-tokens/css";               /* variables, Light + Dark */
+@import "@med-o/design-tokens/css/typography.css"; /* optional: .medo-text-* classes */
 
 .card {
   background: var(--medo-color-surface-raised);
@@ -52,8 +52,8 @@ Use the semantic tokens (`surface`, `text`, `border`, `action`, `feedback` …).
 
 ```css
 @import "tailwindcss";
-@import "@medo/design-tokens/css";
-@import "@medo/design-tokens/tailwind";
+@import "@med-o/design-tokens/css";
+@import "@med-o/design-tokens/tailwind";
 ```
 
 ```html
@@ -71,12 +71,12 @@ Use the semantic tokens (`surface`, `text`, `border`, `action`, `feedback` …).
 
 ```tsx
 // once, e.g. in your app entry
-import '@medo/design-tokens/css';
-import '@medo/ui/styles.css';
+import '@med-o/design-tokens/css';
+import '@med-o/ui/styles.css';
 ```
 
 ```tsx
-import { Button, TextField } from '@medo/ui';
+import { Button, TextField } from '@med-o/ui';
 
 <TextField label="Email" type="email" isRequired />
 <Button onPress={save}>Save</Button>
@@ -84,7 +84,7 @@ import { Button, TextField } from '@medo/ui';
 
 - React Aria naming: `onPress` instead of `onClick`, `isDisabled` instead of `disabled`, `isInvalid`, `isRequired`, `isReadOnly`.
 - ESM only, marked `"use client"`: works in Vite, Next.js (App Router) and other modern bundlers.
-- Dates use [`@internationalized/date`](https://react-spectrum.adobe.com/internationalized/date/). Its helpers (`parseDate`, `today` …) are re-exported from `@medo/ui`.
+- Dates use [`@internationalized/date`](https://react-spectrum.adobe.com/internationalized/date/). Its helpers (`parseDate`, `today` …) are re-exported from `@med-o/ui`.
 
 ### Light and Dark
 
@@ -107,7 +107,7 @@ DM Sans and DM Mono (SIL Open Font License). Self-host them, for example with `@
 
 The component CSS reads states only from data attributes: `data-hovered`, `data-pressed`, `data-focus-visible`,
 `data-selected`, `data-indeterminate`, `data-invalid`, `data-disabled`, `data-readonly`, `data-pending`, `data-allows-removing`.
-React Aria sets them. A Vue, Angular or plain HTML implementation can set the same attributes and reuse `@medo/ui/styles.css` unchanged.
+React Aria sets them. A Vue, Angular or plain HTML implementation can set the same attributes and reuse `@med-o/ui/styles.css` unchanged.
 Buttons also work as plain HTML (`:hover`, `:active`, `:focus-visible`, `:disabled` as fallback).
 
 ## Components
@@ -181,15 +181,15 @@ npm run storybook   # http://localhost:6006
 | --- | --- |
 | `npm run storybook` | Builds the tokens and starts Storybook with hot reload |
 | `npm test` | Runs every story in a headless browser, in Light and Dark: rendering, axe (WCAG 2.2 AA) and the interaction tests. Once before: `npx playwright install chromium` |
-| `npm run build:packages` | Builds `@medo/design-tokens` and `@medo/ui` for npm |
+| `npm run build:packages` | Builds `@med-o/design-tokens` and `@med-o/ui` for npm |
 | `npm run build-storybook` | Builds Storybook as a static site (`apps/storybook/storybook-static`) |
 | `npm run changeset` | Describes a change for the next release (see [Contributing](#contributing)) |
 
 Project structure:
 
 ```
-packages/tokens     @medo/design-tokens – DTCG source tokens (src/) and the Style Dictionary build (build.mjs)
-packages/ui         @medo/ui – one folder per component: React component, CSS and stories
+packages/tokens     @med-o/design-tokens – DTCG source tokens (src/) and the Style Dictionary build (build.mjs)
+packages/ui         @med-o/ui – one folder per component: React component, CSS and stories
 apps/storybook      Documentation site: foundations, usage examples, Storybook and test configuration
 ```
 

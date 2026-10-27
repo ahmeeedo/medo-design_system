@@ -1,9 +1,9 @@
 /* The same setup a project uses: Tailwind + tokens + component styles. */
 @import 'tailwindcss';
-@import '@medo/design-tokens/css';
-@import '@medo/design-tokens/css/typography.css';
-@import '@medo/design-tokens/tailwind';
-@import '@medo/ui/styles.css';
+@import '@med-o/design-tokens/css';
+@import '@med-o/design-tokens/css/typography.css';
+@import '@med-o/design-tokens/tailwind';
+@import '@med-o/ui/styles.css';
 
 @source '../src';
 @source '../../../packages/ui/src';

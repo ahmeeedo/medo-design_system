@@ -9,7 +9,7 @@ import { Children, useContext, useEffect, useState } from 'react';
 import type { DocsContextProps } from 'storybook/internal/types';
 import { GLOBALS_UPDATED, SET_GLOBALS, UPDATE_STORY_ARGS } from 'storybook/internal/core-events';
 import { Canvas, Controls, Description, DocsContainer, DocsContext, useOf } from '@storybook/addon-docs/blocks';
-import { Alert, Link, StaticTable } from '@medo/ui';
+import { Alert, Link, StaticTable } from '@med-o/ui';
 import { modeFromGlobals, themes } from '../../.storybook/theme';
 
 /** Public source repository. */
@@ -234,7 +234,7 @@ export function ComponentDocsPage() {
       ))}
 
       <DocFooter>
-        {`${kind === 'Components' ? 'Component' : kind}: ${name} · @medo/ui`}
+        {`${kind === 'Components' ? 'Component' : kind}: ${name} · @med-o/ui`}
         <SourceLink path="packages/ui/src" />
       </DocFooter>
     </DocPage>

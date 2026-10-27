@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Form } from 'react-aria-components';
-import { Button, Checkbox, Radio, RadioGroup, Switch, TextField } from '@medo/ui';
+import { Button, Checkbox, Radio, RadioGroup, Switch, TextField } from '@med-o/ui';
 
 /**
  * A complete form built only from system components.

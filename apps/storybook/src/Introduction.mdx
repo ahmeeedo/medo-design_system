@@ -22,8 +22,8 @@ import { DocPage, DocHeader, DocSection, DocFooter, SpecTable, Notes, Tok, Sourc
 <SpecTable
   head={['Package', 'Contents']}
   rows={[
-    [<Tok>@medo/design-tokens</Tok>, 'CSS variables (--medo-*), text style classes, Tailwind v4 theme, JS values. Works with every framework and plain HTML.'],
-    [<Tok>@medo/ui</Tok>, 'Components. Styles are plain CSS classes, React components on top. Vue, Angular or HTML can reuse the CSS.'],
+    [<Tok>@med-o/design-tokens</Tok>, 'CSS variables (--medo-*), text style classes, Tailwind v4 theme, JS values. Works with every framework and plain HTML.'],
+    [<Tok>@med-o/ui</Tok>, 'Components. Styles are plain CSS classes, React components on top. Vue, Angular or HTML can reuse the CSS.'],
   ]}
 />
 
@@ -32,14 +32,14 @@ import { DocPage, DocHeader, DocSection, DocFooter, SpecTable, Notes, Tok, Sourc
 <DocSection n={2} title="Install" meta="npm" description="Tokens alone work with any framework. The components need React 19.">
 
 ```bash
-npm install @medo/design-tokens            # tokens only
-npm install @medo/design-tokens @medo/ui   # tokens + React components
+npm install @med-o/design-tokens            # tokens only
+npm install @med-o/design-tokens @med-o/ui   # tokens + React components
 ```
 
 ```tsx
-import '@medo/design-tokens/css';
-import '@medo/ui/styles.css';
-import { Button } from '@medo/ui';
+import '@med-o/design-tokens/css';
+import '@med-o/ui/styles.css';
+import { Button } from '@med-o/ui';
 ```
 
 </DocSection>
@@ -48,8 +48,8 @@ import { Button } from '@medo/ui';
 
 ```css
 /* main.css */
-@import "@medo/design-tokens/css";               /* variables, light + dark */
-@import "@medo/design-tokens/css/typography.css"; /* optional: .medo-text-* classes */
+@import "@med-o/design-tokens/css";               /* variables, light + dark */
+@import "@med-o/design-tokens/css/typography.css"; /* optional: .medo-text-* classes */
 
 .card {
   background: var(--medo-color-surface-raised);
