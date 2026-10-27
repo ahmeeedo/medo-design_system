@@ -1,3 +1,4 @@
+/// <reference types="vite/client" />
 import type { Preview } from '@storybook/react-vite';
 import { withThemeByDataAttribute } from '@storybook/addon-themes';
 
@@ -29,6 +30,8 @@ const preview: Preview = {
       storySort: { order: ['Introduction', 'Foundations', ['Colors', 'Typography', 'Spacing & sizes', 'Elevation & motion'], 'Usage', 'Components'] },
     },
   },
+  // Start theme. The Vitest project „storybook-dark“ sets STORYBOOK_TEST_THEME, so every story is also tested in Dark.
+  initialGlobals: { theme: import.meta.env.STORYBOOK_TEST_THEME ?? 'Light' },
   // Theme switch in the toolbar sets data-theme on <html> – exactly like in a real app.
   decorators: [
     withThemeByDataAttribute({

@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "storybook dev -p 6006",
     "build": "storybook build -o storybook-static",
-    "test": "vitest --project=storybook --run"
+    "test": "vitest --run"
   },
   "dependencies": {
     "@medo/design-tokens": "0.1.0",
