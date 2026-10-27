@@ -52,7 +52,7 @@ const meta = {
     announce: semantic,
   },
   parameters: {
-    medo: { code: 'C20', subtitle: 'A persistent message inside the page. Stays until the cause is gone or it is dismissed.', figma: '210:87' },
+    medo: { subtitle: 'A persistent message inside the page. Stays until the cause is gone or it is dismissed.' },
     docs: {
       description: {
         component:

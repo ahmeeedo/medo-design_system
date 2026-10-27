@@ -23,7 +23,7 @@ export interface ColumnsMenuProps {
 }
 
 /**
- * Columns menu – shows or hides table columns (Figma: C37 Table · Column visibility). A ghost button sm in the
+ * Columns menu – shows or hides table columns. A ghost button sm in the
  * table toolbar opens a Popover sm with checkboxes; locked columns stay visible. Render only the visible columns.
  */
 export function ColumnsMenu({ columns, visibleColumns, onVisibleColumnsChange, label = 'Columns', title = 'Show columns' }: ColumnsMenuProps) {

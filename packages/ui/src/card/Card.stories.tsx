@@ -57,7 +57,7 @@ const meta = {
   /* Single cards get a realistic width; stories with parameters.width set their own. */
   decorators: [(Story, { parameters }) => <div style={{ maxInlineSize: parameters.width ?? '22rem' }}>{Story()}</div>],
   parameters: {
-    medo: { code: 'C16', subtitle: 'A container for one topic: title, optional media, content and actions.', figma: '178:736' },
+    medo: { subtitle: 'A container for one topic: title, optional media, content and actions.' },
     docs: {
       description: {
         component:

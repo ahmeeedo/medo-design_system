@@ -43,7 +43,7 @@ export interface QuickSearchProps<T extends object> {
 }
 
 /**
- * Quick search – find and open pages, files and people from anywhere (Figma: C43 Quick search). A modal with
+ * Quick search – find and open pages, files and people from anywhere. A modal with
  * React Aria Autocomplete: focus stays in the field while ↑ ↓ move through the suggestions, Enter opens the
  * highlighted hit, Esc closes and focus returns to the trigger. Desktop: overlay 640 wide · mobile: full screen with Cancel.
  */

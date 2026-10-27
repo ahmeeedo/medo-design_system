@@ -1,6 +1,6 @@
 import type { StorybookConfig } from '@storybook/react-vite';
 import tailwindcss from '@tailwindcss/vite';
-import { mergeConfig } from 'vite';
+import { defaultClientConditions, mergeConfig } from 'vite';
 import { createRequire } from 'node:module';
 import { dirname, join } from 'node:path';
 
@@ -23,8 +23,10 @@ const config: StorybookConfig = {
     { from: fontFiles('@fontsource/dm-sans'), to: '/fonts/dm-sans' },
     { from: fontFiles('@fontsource/dm-mono'), to: '/fonts/dm-mono' },
   ],
-  // Tailwind v4 runs as a Vite plugin.
-  viteFinal: (viteConfig) => mergeConfig(viteConfig, { plugins: [tailwindcss()] }),
+  // Tailwind v4 runs as a Vite plugin. The "@medo/source" export condition loads the workspace packages from src,
+  // so Storybook and its tests never need a package build first.
+  viteFinal: (viteConfig) =>
+    mergeConfig(viteConfig, { plugins: [tailwindcss()], resolve: { conditions: ['@medo/source', ...defaultClientConditions] } }),
 };
 
 export default config;

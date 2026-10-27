@@ -18,11 +18,11 @@ const meta = {
     labelPosition: { control: 'inline-radio', options: ['start', 'end'] },
   },
   parameters: {
-    medo: { code: 'C12', subtitle: 'Turns a single setting on or off. The change takes effect immediately.', figma: '147:58' },
+    medo: { subtitle: 'Turns a single setting on or off. The change takes effect immediately.' },
     docs: {
       description: {
         component:
-          'On / off with immediate effect – no save button. Figma: **C12 Switch**. ' +
+          'On / off with immediate effect – no save button. ' +
           'The label names the setting and never changes with the state. For choices that are submitted with a form, use a Checkbox. ' +
           'Built on React Aria `SwitchField` (role switch).',
       },

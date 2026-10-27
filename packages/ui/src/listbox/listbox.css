@@ -1,5 +1,5 @@
 /**
- * Option & Listbox – med.o Design System (Figma: C07 Option & Listbox)
+ * Option & Listbox – med.o Design System
  *
  * The popup list behind Select, Combobox and the Bottom Sheet.
  *   <div class="medo-popover medo-listbox-popover">
@@ -127,7 +127,7 @@
   background-color: var(--medo-color-state-hover);
 }
 
-/* Keyboard focus is the same neutral highlight (Figma has no extra ring on options). */
+/* Keyboard focus is the same neutral highlight (no extra ring on options). */
 
 .medo-option[data-disabled] {
   color: var(--medo-color-text-disabled);

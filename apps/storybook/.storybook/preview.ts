@@ -2,7 +2,7 @@
 import type { Preview } from '@storybook/react-vite';
 import { withThemeByDataAttribute } from '@storybook/addon-themes';
 
-// Fonts are self-hosted (no request to Google). Same weights as in Figma.
+// Fonts are self-hosted (no request to Google). Weights 400–700.
 import '@fontsource/dm-sans/400.css';
 import '@fontsource/dm-sans/500.css';
 import '@fontsource/dm-sans/600.css';
@@ -16,7 +16,7 @@ const preview: Preview = {
     layout: 'padded',
     // className and style are plain React props: not part of the Playground.
     controls: { expanded: true, exclude: ['className', 'style'] },
-    // Docs pages follow the structure of the Figma doc frames and the Light / Dark switch (src/docs-blocks).
+    // Docs pages use the doc blocks in src/docs-blocks and follow the Light / Dark switch.
     docs: { container: MedoDocsContainer, page: ComponentDocsPage },
     // Accessibility checks (axe) for every story. A violation fails the story's test (Vitest, CI).
     // Standard: WCAG 2.2 A + AA plus axe best practices. landmark-unique is off because stories show several

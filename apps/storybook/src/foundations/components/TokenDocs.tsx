@@ -1,6 +1,6 @@
 /**
  * Documentation blocks that read the generated token lists.
- * Everything updates automatically when the tokens are rebuilt from Figma.
+ * Everything updates automatically when the tokens are rebuilt.
  */
 import { useState, type ReactNode } from 'react';
 import { Button, StaticTable } from '@medo/ui';

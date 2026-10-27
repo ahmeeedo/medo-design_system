@@ -98,7 +98,7 @@ export interface DirtyGuardProps extends OpenProps {
 }
 
 /**
- * Open state with the „Discard changes?“ guard (Figma: protect input). Every way of closing
+ * Open state with the „Discard changes?“ guard (protects unsaved input). Every way of closing
  * (X, Cancel, Esc, swipe) goes through onOpenChange; with unsaved input it asks first.
  * Render `confirmDiscard` inside the dialog. Shared with Drawer (internal).
  */
@@ -175,7 +175,7 @@ const DISCARD: DialogDiscardText = {
 };
 
 /**
- * Dialog – a modal window for a focused task (Figma: C19 Dialog). Built on React Aria ModalOverlay,
+ * Dialog – a modal window for a focused task. Built on React Aria ModalOverlay,
  * Modal and Dialog: role dialog with aria-modal, the title names it, focus starts in the first field,
  * stays inside and returns to the trigger; the page behind does not scroll. Use inside a DialogTrigger or with isOpen.
  */
@@ -363,7 +363,7 @@ function SheetContent({ description, children }: { description: ReactNode; child
   );
 }
 
-/** Figma: focus starts in the first field, else on the first button. */
+/** Focus starts in the first field, else on the first button. */
 const FIELDS = 'input, textarea, select, [role="combobox"], button[aria-haspopup="listbox"]';
 export function useInitialFocus(ref: React.RefObject<HTMLElement | null>) {
   useEffect(() => {
@@ -379,7 +379,7 @@ export function useInitialFocus(ref: React.RefObject<HTMLElement | null>) {
 
 export type AlertDialogTone = 'danger' | 'warning' | 'info';
 
-/** Same icons as the Alert (C20): danger = circle-alert, warning = triangle-alert, info = info. */
+/** Same icons as the Alert: danger = circle-alert, warning = triangle-alert, info = info. */
 const TONE_ICONS: Record<AlertDialogTone, typeof Info> = {
   danger: CircleAlert,
   warning: TriangleAlert,
@@ -402,7 +402,7 @@ export interface AlertDialogProps extends OpenProps {
 }
 
 /**
- * Alert dialog – a decision that needs an answer before the user can go on (Figma: C19 Alert dialog).
+ * Alert dialog – a decision that needs an answer before the user can go on.
  * role alertdialog, no X, a click on the scrim never closes, Esc = Cancel. Focus starts on Cancel,
  * so an accidental Enter never deletes. Below 640 px: icon on top, buttons stacked (lg).
  */

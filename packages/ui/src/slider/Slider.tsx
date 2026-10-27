@@ -22,7 +22,7 @@ export interface SliderProps<T extends Value = number> extends Omit<AriaSliderPr
 }
 
 /**
- * Slider – pick an approximate value or a range by dragging (Figma: C32 Slider). Built on React Aria Slider:
+ * Slider – pick an approximate value or a range by dragging. Built on React Aria Slider:
  * arrow keys (step), Page Up/Down (10 %), Home/End, a click on the track moves the nearest thumb; range thumbs
  * never cross. The value is always shown next to the label and read out in the same format (`formatOptions`).
  * While dragging, a tooltip repeats it above the thumb. For exact values use SliderField.
@@ -112,7 +112,7 @@ export interface SliderFieldProps<T extends Value = number> extends Omit<SliderP
 }
 
 /**
- * Slider field – a Slider plus number inputs for exact values (Figma: C32 Slider field). Single: input on the
+ * Slider field – a Slider plus number inputs for exact values. Single: input on the
  * right (88). Range: two inputs below (min – max). Slider and inputs stay in sync; the inputs clamp on blur.
  */
 export function SliderField<T extends Value = number>({ value, onChange, inputLabels, ...props }: SliderFieldProps<T>) {

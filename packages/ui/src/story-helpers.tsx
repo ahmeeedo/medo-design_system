@@ -52,7 +52,7 @@ const scenes = [
   { sky: '#6f8f9c', hill: '#3d5560', sun: '#fbe7c0' },
 ];
 
-/** A landscape „photo“ as data URI (sample images of the Figma file). `tiny` gives a ≈ 20 px blur-up preview. */
+/** A landscape „photo“ as data URI (sample image). `tiny` gives a ≈ 20 px blur-up preview. */
 export function samplePhoto(variant = 0, { width = 1600, height = 900, tiny = false } = {}) {
   const { sky, hill, sun } = scenes[variant % scenes.length];
   const w = tiny ? 20 : width;

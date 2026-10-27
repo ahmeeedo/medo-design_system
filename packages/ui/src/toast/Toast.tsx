@@ -36,7 +36,7 @@ interface ToastContent {
   action?: ToastAction;
 }
 
-/** Figma timing: message only 5 s, with action 8 s, errors without timeout. */
+/** Timing: message only 5 s, with action 8 s, errors without timeout. */
 const TIMEOUT = 5000;
 const TIMEOUT_ACTION = 8000;
 const MAX_VISIBLE = 3;
@@ -54,14 +54,14 @@ const queue = new ToastQueue<ToastContent>({
 });
 
 /**
- * Shows a toast: short, temporary feedback after an action (Figma: C21 Toast).
+ * Shows a toast: short, temporary feedback after an action.
  * Write the result, not the process („Q3-Report.pdf deleted“), one line, max about 50 characters.
  * Returns the key for `toast.close(key)`. The same message is never shown twice at once.
  */
 export function toast(message: string, { action, persistent = false, onClose }: ToastOptions = {}): string {
   const same = queue.visibleToasts.find((t) => t.content.message === message);
   if (same) return same.key;
-  // Figma: max 3 – the oldest leaves first (React Aria would hold it back and show it again later).
+  // Max 3 – the oldest leaves first (React Aria would hold it back and show it again later).
   const visible = queue.visibleToasts;
   if (visible.length >= MAX_VISIBLE) queue.close(visible[visible.length - 1].key);
   return queue.add({ message, action }, { timeout: persistent ? undefined : action ? TIMEOUT_ACTION : TIMEOUT, onClose });
@@ -74,7 +74,7 @@ toast.clear = () => queue.clear();
 
 let regionMounted = false;
 
-/** Figma: Esc closes the focused toast (React Aria's Toast has no key handling of its own). React 19 ref cleanup removes the listener. */
+/** Esc closes the focused toast (React Aria's Toast has no key handling of its own). React 19 ref cleanup removes the listener. */
 function closeOnEscape(el: HTMLElement | null, key: string) {
   if (!el) return;
   const onKeyDown = (e: KeyboardEvent) => {

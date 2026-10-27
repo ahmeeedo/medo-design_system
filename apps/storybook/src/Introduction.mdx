@@ -1,5 +1,5 @@
 import { Meta } from '@storybook/addon-docs/blocks';
-import { DocPage, DocHeader, DocSection, DocFooter, SpecTable, Notes, Tok, FigmaLink } from './docs-blocks/DocBlocks';
+import { DocPage, DocHeader, DocSection, DocFooter, SpecTable, Notes, Tok, SourceLink } from './docs-blocks/DocBlocks';
 
 <Meta title="Introduction" />
 
@@ -11,10 +11,10 @@ import { DocPage, DocHeader, DocSection, DocFooter, SpecTable, Notes, Tok, Figma
   meta="Code · v2"
   subtitle="Rules for look, function and behaviour of med.o products – framework-neutral."
   description={<>
-    <p><strong className="doc-strong">Figma is the source of truth.</strong> This site shows the code side: design tokens, CSS, Tailwind theme and components.</p>
+    <p>This site documents the design tokens, the CSS, the Tailwind theme and the React components – with live examples, a playground per component and the rules for using them.</p>
     <p>Use the theme switch in the toolbar (Light / Dark). Every example follows it. Accessibility target: WCAG 2.2 AA.</p>
   </>}
-  nav={['Packages', 'Use the tokens', 'Light and Dark', 'Fonts', 'Updating from Figma']}
+  nav={['Packages', 'Install', 'Use the tokens', 'Light and Dark', 'Fonts']}
 />
 
 <DocSection n={1} title="Packages" meta="2 packages">
@@ -29,7 +29,22 @@ import { DocPage, DocHeader, DocSection, DocFooter, SpecTable, Notes, Tok, Figma
 
 </DocSection>
 
-<DocSection n={2} title="Use the tokens" meta="CSS · Tailwind" description="Import the variables once. Then use only semantic tokens.">
+<DocSection n={2} title="Install" meta="npm" description="Tokens alone work with any framework. The components need React 19.">
+
+```bash
+npm install @medo/design-tokens            # tokens only
+npm install @medo/design-tokens @medo/ui   # tokens + React components
+```
+
+```tsx
+import '@medo/design-tokens/css';
+import '@medo/ui/styles.css';
+import { Button } from '@medo/ui';
+```
+
+</DocSection>
+
+<DocSection n={3} title="Use the tokens" meta="CSS · Tailwind" description="Import the variables once. Then use only semantic tokens.">
 
 ```css
 /* main.css */
@@ -47,7 +62,7 @@ import { DocPage, DocHeader, DocSection, DocFooter, SpecTable, Notes, Tok, Figma
 
 </DocSection>
 
-<DocSection n={3} title="Light and Dark" meta="System · forced" description="The tokens follow the operating system. Force a theme for the whole page or for one area.">
+<DocSection n={4} title="Light and Dark" meta="System · forced" description="The tokens follow the operating system. Force a theme for the whole page or for one area.">
 
 ```html
 <html data-theme="dark">   <!-- "light", "dark" or no attribute = system -->
@@ -55,7 +70,7 @@ import { DocPage, DocHeader, DocSection, DocFooter, SpecTable, Notes, Tok, Figma
 
 </DocSection>
 
-<DocSection n={4} title="Fonts" meta="DM Sans · DM Mono" description="Both fonts use the SIL Open Font License. Self-host them – no request to Google.">
+<DocSection n={5} title="Fonts" meta="DM Sans · DM Mono" description="Both fonts use the SIL Open Font License. Self-host them – no request to Google.">
 
 <Notes>
   <p>Example: <Tok>@fontsource/dm-sans</Tok> and <Tok>@fontsource/dm-mono</Tok> (weights 400, 500, 600, 700).</p>
@@ -63,18 +78,10 @@ import { DocPage, DocHeader, DocSection, DocFooter, SpecTable, Notes, Tok, Figma
 
 </DocSection>
 
-<DocSection n={5} title="Updating from Figma" meta="Tokens" description="Generated files are never edited by hand.">
-
-1. Change variables or styles in Figma.
-2. Export them to `figma/variables.json` (see README).
-3. Run `npm run tokens:from-figma`, then `npm run build:tokens`.
-
-</DocSection>
-
 
 <DocFooter>
   {'med.o Design System · design.med-o.de'}
-  <FigmaLink>Open the Figma library</FigmaLink>
+  <SourceLink />
 </DocFooter>
 
 </DocPage>

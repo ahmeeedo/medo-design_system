@@ -71,7 +71,7 @@ export interface ComboboxProps<T extends object, M extends ComboMode = 'single'>
 }
 
 /**
- * Combobox – a Select you can type into; typing filters the list (Figma: C09 Combobox).
+ * Combobox – a Select you can type into; typing filters the list.
  * Built on React Aria ComboBox: opens on typing, arrow down or the chevron – never on focus.
  * Contains-match, case and accent insensitive; the first match is highlighted, Enter picks it.
  * Leaving without a selection restores the last valid value.
@@ -419,7 +419,7 @@ function ComboList<T extends object>({
   );
 }
 
-/* ---------- Mobile: Bottom Sheet with search (Figma: Select sheet, Search = true) ---------- */
+/* ---------- Mobile: Bottom Sheet with search ---------- */
 
 interface ComboboxSheetProps<T> {
   label: ReactNode;

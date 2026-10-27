@@ -21,7 +21,7 @@ export interface ListViewProps<T> extends Omit<GridListProps<T>, 'className' | '
 
 /**
  * List view – an interactive list of objects in apps: inbox, people, files, notifications, settings
- * (Figma: C29 List view). Built on React Aria GridList: ↑ ↓ move between rows, Enter opens a row, Tab reaches
+ *. Built on React Aria GridList: ↑ ↓ move between rows, Enter opens a row, Tab reaches
  * the controls inside a row (menu, switch, buttons). `selectionMode="multiple"` shows a checkbox per row and a click
  * toggles the row – use it without `onAction` (React Aria would run the action on click instead).
  * Rows can have swipe actions on touch (`swipeActions`) – the same actions always sit in the row's „…“ menu.
@@ -60,7 +60,7 @@ export function ListView<T extends object>({ variant = 'plain', isLoading = fals
     <GridList<T>
       {...props}
       items={items}
-      // Tab reaches the controls inside a row (Figma: accessibility).
+      // Tab reaches the controls inside a row.
       keyboardNavigationBehavior="tab"
       renderEmptyState={emptyState ? () => <div className="medo-list-view__empty">{emptyState}</div> : undefined}
       className={cx('medo-list-view', `medo-list-view--${variant}`, className)}
@@ -159,7 +159,7 @@ export function ListRow({ title, description, lines, leading, meta, trailing, ch
   );
 }
 
-/* ---------- Swipe (Figma: List row swipe) ---------- */
+/* ---------- Swipe ---------- */
 
 const SWIPE = {
   action: 88, // revealed action width – snaps open from here
@@ -339,7 +339,7 @@ export interface ListCardProps extends Omit<GridListItemProps, 'children' | 'cla
 }
 
 /**
- * List card – a record as a card (Figma: C37 Table card), the mobile form of a table row. Use inside
+ * List card – a record as a card, the mobile form of a table row. Use inside
  * `<ListView variant="cards">`: the whole card opens the record (`href` or `onAction`); in selection mode
  * a checkbox lg shows and a tap toggles the card.
  */

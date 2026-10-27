@@ -1,7 +1,6 @@
 /**
  * Building blocks for the documentation pages (styles: .storybook/preview.css).
- * Structure follows the Figma doc frames: header, numbered sections, examples,
- * spec tables, implementation notes, footer. Not a 1:1 copy.
+ * Structure: header, numbered sections, examples, spec tables, implementation notes, footer.
  * Used by the MDX pages, the component docs template and the docs container below.
  * Rule: the docs use our own components (Table, Alert, Link …) as soon as they exist.
  */
@@ -13,9 +12,8 @@ import { Canvas, Controls, Description, DocsContainer, DocsContext, useOf } from
 import { Alert, Link, StaticTable } from '@medo/ui';
 import { modeFromGlobals, themes } from '../../.storybook/theme';
 
-/** Link to a doc frame in the Figma library */
-export const figmaDoc = (nodeId: string) =>
-  `https://www.figma.com/design/vOTfMtcpCwAJjuSZUkfpfj/?node-id=${nodeId.replace(':', '-')}`;
+/** Public source repository. */
+export const repoUrl = 'https://github.com/ahmeeedo/medo-design_system';
 
 const pad = (n: number) => String(n).padStart(2, '0');
 export const sectionId = (n: number | string) => `section-${typeof n === 'number' ? pad(n) : n}`;
@@ -45,7 +43,7 @@ type HeaderProps = {
   /** e.g. "Components", "Foundations" */
   kind: string;
   title: string;
-  /** Right meta line, e.g. "Button · C01" */
+  /** Right meta line, e.g. "Button" */
   meta?: string;
   subtitle?: ReactNode;
   description?: ReactNode;
@@ -148,10 +146,10 @@ export function Notes({ title = 'Implementation notes', children }: { title?: st
   );
 }
 
-/** Link to a Figma doc frame (new tab). */
-export function FigmaLink({ node, children = 'Open the Figma documentation' }: { node?: string; children?: ReactNode }) {
+/** Link to a folder of the source repository (new tab). */
+export function SourceLink({ path = '', children = 'View the source on GitHub' }: { path?: string; children?: ReactNode }) {
   return (
-    <Link href={node ? figmaDoc(node) : 'https://www.figma.com/design/vOTfMtcpCwAJjuSZUkfpfj'} target="_blank" external>
+    <Link href={path ? `${repoUrl}/tree/main/${path}` : repoUrl} target="_blank" external>
       {children}
     </Link>
   );
@@ -179,11 +177,9 @@ export const Tok = ({ children }: { children: ReactNode }) => <code className="d
  * header → Playground → one section per story → footer.
  *
  * Optional per story file (meta.parameters.medo):
- *   code      Figma code, e.g. "C01"
- *   subtitle  one sentence under the title (from the Figma doc)
- *   figma     node id of the Figma doc frame, e.g. "58:2"
+ *   subtitle  one sentence under the title
  */
-type MedoDocsParams = { code?: string; subtitle?: string; figma?: string };
+type MedoDocsParams = { subtitle?: string };
 
 export function ComponentDocsPage() {
   const { csfFile, preparedMeta } = useOf('meta', ['meta']);
@@ -213,7 +209,7 @@ export function ComponentDocsPage() {
       <DocHeader
         kind={kind}
         title={name}
-        meta={[name, medo.code].filter(Boolean).join(' · ')}
+        meta={name}
         subtitle={medo.subtitle}
         description={<Description of="meta" />}
         nav={nav}
@@ -238,12 +234,8 @@ export function ComponentDocsPage() {
       ))}
 
       <DocFooter>
-        {`${kind === 'Components' ? 'Component' : kind}: ${name}${medo.code ? ` · Figma ${medo.code}` : ''} · @medo/ui`}
-        {medo.figma ? (
-          <FigmaLink node={medo.figma} />
-        ) : (
-          'Figma is the source of truth.'
-        )}
+        {`${kind === 'Components' ? 'Component' : kind}: ${name} · @medo/ui`}
+        <SourceLink path="packages/ui/src" />
       </DocFooter>
     </DocPage>
   );

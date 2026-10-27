@@ -19,7 +19,7 @@ export interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
 }
 
 /**
- * Badge – short, non-interactive status label (Figma: C17 Badge).
+ * Badge – short, non-interactive status label.
  * Plain text: never clickable. For a badge that changes live, pass role="status".
  */
 export function Badge({ tone = 'neutral', size = 'md', dot, icon, className, children, ...props }: BadgeProps) {
@@ -53,7 +53,7 @@ export interface BadgeCountProps extends Omit<HTMLAttributes<HTMLSpanElement>, '
   label?: string;
 }
 
-/** Count for notifications (Figma: Badge count). Hidden at 0. */
+/** Count for notifications. Hidden at 0. */
 export function BadgeCount({ count, max = 99, tone = 'danger', size = 'md', label, className, ...props }: BadgeCountProps) {
   if (count <= 0) return null;
   const text = count > max ? `${max}+` : String(count);
@@ -75,7 +75,7 @@ export interface BadgeDotProps extends Omit<HTMLAttributes<HTMLSpanElement>, 'ch
   label?: string;
 }
 
-/** Dot for unread or presence (Figma: Badge dot). Always pair it with text or a label. */
+/** Dot for unread or presence. Always pair it with text or a label. */
 export function BadgeDot({ tone = 'neutral', label, className, ...props }: BadgeDotProps) {
   return (
     <span

@@ -12,7 +12,7 @@ export interface RadioProps extends Omit<RadioFieldProps, 'children' | 'classNam
   className?: string;
 }
 
-/** One option of a RadioGroup (Figma: C11 Radio). */
+/** One option of a RadioGroup. */
 export function Radio({ children, description, size, className, ...props }: RadioProps) {
   const groupSize = useContext(ChoiceSizeContext);
   return (

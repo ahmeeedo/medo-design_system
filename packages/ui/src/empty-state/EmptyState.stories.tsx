@@ -14,7 +14,7 @@ const caption: React.CSSProperties = { font: 'var(--medo-typography-code-sm)', c
 const grid: React.CSSProperties = { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(20rem, 1fr))', gap: 'var(--medo-space-6)', alignItems: 'start' };
 const frame: React.CSSProperties = { border: 'var(--medo-border-width-thin) dashed var(--medo-color-border-default)', borderRadius: 'var(--medo-radius-lg)' };
 
-/** Copy per type (Figma: 04 Writing) – the component ships no text, the app writes it. */
+/** Copy per type – the component ships no text, the app writes it. */
 const examples: Record<NonNullable<EmptyStateProps['type']>, Omit<EmptyStateProps, 'type'>> = {
   'first-use': {
     title: 'No projects yet',
@@ -86,7 +86,7 @@ const meta = {
     headingLevel: semantic,
   },
   parameters: {
-    medo: { code: 'C36', subtitle: 'What users see when there is nothing to show – and what they can do next.', figma: '339:26' },
+    medo: { subtitle: 'What users see when there is nothing to show – and what they can do next.' },
     docs: {
       description: {
         component:
@@ -106,7 +106,7 @@ type Story = StoryObj<typeof meta>;
 export const Playground: Story = {};
 
 export const Types: Story = {
-  parameters: { docs: { description: { story: 'Each type with its default icon and tone, and example copy from Figma („Writing“). Section size.' } } },
+  parameters: { docs: { description: { story: 'Each type with its default icon and tone, and example copy. Section size.' } } },
   render: () => (
     <LightDark>
       {(Object.keys(examples) as (keyof typeof examples)[]).map((type) => (

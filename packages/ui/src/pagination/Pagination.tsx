@@ -53,7 +53,7 @@ export function getPageItems(page: number, totalPages: number): (number | 'ellip
 }
 
 /**
- * Pagination – move through long lists page by page (Figma: C35 Pagination). A navigation region:
+ * Pagination – move through long lists page by page. A navigation region:
  * buttons for apps (`onChange`) or real links for websites (`getPageHref`). Full on desktop, compact below 640 px.
  * After a change the app scrolls to the top of the list and focuses its heading. „Load more“ is a Button, not a variant.
  */
@@ -87,7 +87,7 @@ export function Pagination({
   const statusId = useId();
   const navRef = useRef<HTMLElement>(null);
 
-  // One page: nothing to navigate (Figma rule 07).
+  // One page: nothing to navigate.
   if (totalPages <= 1) return null;
 
   const go = (p: number) => {

@@ -49,9 +49,7 @@ const meta = {
   },
   parameters: {
     medo: {
-      code: 'C30',
       subtitle: 'Images, figures and third-party embeds – with reserved space, calm loading states and consent before anything loads.',
-      figma: '279:29',
     },
     docs: {
       description: {

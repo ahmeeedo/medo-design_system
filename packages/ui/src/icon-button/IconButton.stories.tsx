@@ -20,13 +20,13 @@ const meta = {
     onPress: { control: false },
   },
   parameters: {
-    medo: { code: 'C02', subtitle: 'A square button with an icon instead of a label.', figma: '68:122' },
+    medo: { subtitle: 'A square button with an icon instead of a label.' },
     docs: {
       description: {
         component:
-          'Square icon-only action. Figma: **C02 Icon Button**. `aria-label` is required because there is no visible label; ' +
+          'Square icon-only action. `aria-label` is required because there is no visible label; ' +
           'it is shown as a tooltip automatically (`tooltip={false}` turns it off, `shortcut` adds a key hint). ' +
-          'Shares the Button styles (`medo-button medo-button--icon-only`). On images and video (Figma: **Media icon button**): `media` (overlay/media circle) and `media-ghost` (no fill, on a gradient bar), sm 28 with a 44 px hit area.',
+          'Shares the Button styles (`medo-button medo-button--icon-only`). On images and video: `media` (overlay/media circle) and `media-ghost` (no fill, on a gradient bar), sm 28 with a 44 px hit area.',
       },
     },
   },

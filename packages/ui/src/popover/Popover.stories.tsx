@@ -12,7 +12,7 @@ const text: React.CSSProperties = { margin: 0, color: 'var(--medo-color-text-sec
 const form: React.CSSProperties = { display: 'grid', gap: 'var(--medo-space-3)' };
 const fieldRow: React.CSSProperties = { display: 'flex', alignItems: 'center', gap: 'var(--medo-space-1)', font: 'var(--medo-typography-label-md)' };
 
-/** The Figma filter example: applies live, no footer. */
+/** Filter example: applies live, no footer. */
 function StatusFilter() {
   const [status, setStatus] = useState(['open', 'progress']);
   return (
@@ -24,7 +24,7 @@ function StatusFilter() {
   );
 }
 
-/** The Figma link form: changes must be confirmed – header + footer. */
+/** Link form: changes must be confirmed – header + footer. */
 function LinkForm({ close }: { close: () => void }) {
   return (
     <form
@@ -58,7 +58,7 @@ const meta = {
     children: { control: false },
   },
   parameters: {
-    medo: { code: 'C23', subtitle: 'A small floating panel with interactive content, anchored to its trigger. The page stays usable.', figma: '224:78' },
+    medo: { subtitle: 'A small floating panel with interactive content, anchored to its trigger. The page stays usable.' },
     docs: {
       description: {
         component:

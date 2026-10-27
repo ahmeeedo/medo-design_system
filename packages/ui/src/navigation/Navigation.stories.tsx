@@ -9,7 +9,7 @@ import { IconButton } from '../icon-button/IconButton';
 import { TextField } from '../text-field/TextField';
 import { interactionTest, LightDark, slot } from '../story-helpers';
 
-/* ---------- Story placeholders (Figma: _Logo) ---------- */
+/* ---------- Story placeholders ---------- */
 
 const mark: React.CSSProperties = {
   display: 'inline-grid',
@@ -148,9 +148,7 @@ const meta = {
   parameters: {
     layout: 'fullscreen',
     medo: {
-      code: 'C24',
       subtitle: 'How people move between pages: header for websites and apps, side navigation for apps, tab bar and menus on mobile.',
-      figma: '231:242',
     },
     docs: {
       description: {

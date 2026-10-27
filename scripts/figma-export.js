@@ -5,8 +5,8 @@
  * med.o Design System file into the format of figma/variables.json.
  *
  * How to run (any of these):
- *  - Ask Claude (Figma MCP, use_figma) to run this script and save the result to figma/variables.json.
  *  - Paste it into a plugin that runs code, e.g. "Scripter", and copy the logged JSON.
+ *  - Or run it through the Figma Plugin API from any tool and save the returned object.
  *
  * Afterwards: npm run tokens:from-figma && npm run build:tokens
  */
@@ -78,6 +78,6 @@ for (const s of await figma.getLocalEffectStylesAsync()) {
   );
 }
 
-// Plugin API environments differ: return for MCP, log for console plugins.
+// Plugin API environments differ: some read the return value, others the console.
 console.log(JSON.stringify(out, null, 2));
 return out;

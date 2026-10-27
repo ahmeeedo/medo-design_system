@@ -60,7 +60,7 @@ const meta = {
     shortcut: { control: 'text', if: { arg: 'children', truthy: false } },
   },
   parameters: {
-    medo: { code: 'C15', subtitle: 'A button that stays pressed. Alone for one on/off action, in groups for views or formatting.', figma: '160:122' },
+    medo: { subtitle: 'A button that stays pressed. Alone for one on/off action, in groups for views or formatting.' },
     docs: {
       description: {
         component:

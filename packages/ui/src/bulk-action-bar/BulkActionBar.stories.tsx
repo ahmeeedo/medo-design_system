@@ -40,7 +40,7 @@ const meta = {
     'aria-label': semantic,
   },
   parameters: {
-    medo: { code: 'C37', subtitle: 'Actions for the selected rows of a Table or List view.', figma: '350:890' },
+    medo: { subtitle: 'Actions for the selected rows of a Table or List view.' },
     docs: {
       description: {
         component:

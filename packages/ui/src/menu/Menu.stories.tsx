@@ -19,7 +19,7 @@ const file: React.CSSProperties = {
   background: 'var(--medo-color-surface-default)',
 };
 
-/** The file actions from the Figma example. */
+/** File actions as an example. */
 function FileActions({ overlay, onAction }: { overlay?: 'auto' | 'popover' | 'sheet'; onAction?: (key: Key) => void }) {
   return (
     <Menu title="Q3-Report.pdf" overlay={overlay} onAction={onAction}>
@@ -78,7 +78,7 @@ const meta = {
     items: { control: false },
   },
   parameters: {
-    medo: { code: 'C18', subtitle: 'A list of actions that opens from a trigger. Popover on desktop, bottom sheet on mobile.', figma: '195:122' },
+    medo: { subtitle: 'A list of actions that opens from a trigger. Popover on desktop, bottom sheet on mobile.' },
     docs: {
       description: {
         component:

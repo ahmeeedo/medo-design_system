@@ -1,5 +1,5 @@
 /**
- * Tag – med.o Design System (Figma: C06 Tag)
+ * Tag – med.o Design System
  *
  * Compact pill for a value. Two roles, never mixed:
  *   removable  – a chosen value (multi-select): the x removes it
@@ -61,7 +61,7 @@
 }
 
 .medo-tag__label {
-  max-inline-size: 12.5rem; /* 200 px, then ellipsis (Figma) */
+  max-inline-size: 12.5rem; /* 200 px, then ellipsis */
   overflow: hidden;
   text-overflow: ellipsis;
 }

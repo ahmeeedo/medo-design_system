@@ -1,6 +1,6 @@
 import { Meta } from '@storybook/addon-docs/blocks';
 import { TypeScale, SimpleTable } from './components/TokenDocs';
-import { DocPage, DocHeader, DocSection, DocFooter, Notes, Tok, FigmaLink } from '../docs-blocks/DocBlocks';
+import { DocPage, DocHeader, DocSection, DocFooter, Notes, Tok, SourceLink } from '../docs-blocks/DocBlocks';
 
 <Meta title="Foundations/Typography" />
 
@@ -11,7 +11,7 @@ import { DocPage, DocHeader, DocSection, DocFooter, Notes, Tok, FigmaLink } from
   title="Typography"
   meta="Typography · 04"
   subtitle="DM Sans and DM Mono, 9 sizes, 4 weights."
-  description={<p>Sizes are px in Figma and rem in code (16 px = 1 rem), so text follows the user’s browser font size. Every size has a paired line height on the 4 px grid.</p>}
+  description={<p>Sizes are designed in px and shipped in rem (16 px = 1 rem), so text follows the user’s browser font size. Every size has a paired line height on the 4 px grid.</p>}
   nav={['Text styles', 'Usage', 'Font tokens']}
 />
 
@@ -41,8 +41,8 @@ import { DocPage, DocHeader, DocSection, DocFooter, Notes, Tok, FigmaLink } from
 
 
 <DocFooter>
-  {'Foundations: Typography · tokens generated from Figma'}
-  <FigmaLink node="39:2" />
+  {'Foundations: Typography · @medo/design-tokens'}
+  <SourceLink path="packages/tokens" />
 </DocFooter>
 
 </DocPage>

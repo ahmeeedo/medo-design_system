@@ -44,7 +44,7 @@ const meta = {
     onChangeEnd: { control: false },
   },
   parameters: {
-    medo: { code: 'C32', subtitle: 'Pick an approximate value or range by dragging – volume, radius, price filters.', figma: '296:26' },
+    medo: { subtitle: 'Pick an approximate value or range by dragging – volume, radius, price filters.' },
     docs: {
       description: {
         component:

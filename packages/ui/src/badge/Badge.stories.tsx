@@ -26,7 +26,7 @@ const meta = {
     children: { control: 'text' },
   },
   parameters: {
-    medo: { code: 'C17', subtitle: 'A short, non-interactive status label. Plus count and dot indicators.', figma: '184:38' },
+    medo: { subtitle: 'A short, non-interactive status label. Plus count and dot indicators.' },
     docs: {
       description: {
         component:

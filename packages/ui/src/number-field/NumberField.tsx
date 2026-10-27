@@ -17,7 +17,7 @@ export interface NumberFieldProps extends Omit<AriaNumberFieldProps, 'children' 
 }
 
 /**
- * Number field – a number with format and limits (Figma: C03 Input · Number field). Built on React Aria
+ * Number field – a number with format and limits. Built on React Aria
  * NumberField: formats with Intl (`formatOptions`: currency, percent, unit), clamps to min/max and rounds to the
  * step when the field is left, ↑ ↓ change by one step. Tabular figures.
  */

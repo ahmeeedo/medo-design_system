@@ -1,5 +1,5 @@
 /**
- * Tooltip – med.o Design System (Figma: C14 Tooltip)
+ * Tooltip – med.o Design System
  *
  * Short label on hover (after 500 ms) or keyboard focus (instantly). Never interactive.
  *   <div class="medo-tooltip" role="tooltip">Copy link<kbd class="medo-tooltip__shortcut">⌘C</kbd></div>

@@ -30,7 +30,7 @@ export interface BreadcrumbsProps {
 }
 
 /**
- * Breadcrumbs – where a page sits in the hierarchy, with links to the levels above (Figma: C44 Breadcrumbs).
+ * Breadcrumbs – where a page sits in the hierarchy, with links to the levels above.
  * Built on React Aria Breadcrumbs: a navigation region with an ordered list, the current page last with
  * aria-current="page". Not on the start page; place it above the page title.
  */

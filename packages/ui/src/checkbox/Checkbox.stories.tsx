@@ -10,11 +10,11 @@ const meta = {
   args: { children: 'Accept the terms', size: 'md', isDisabled: false, isInvalid: false, isIndeterminate: false, onChange: fn() },
   argTypes: { size: { control: 'inline-radio', options: ['md', 'lg'] }, onChange: { control: false }, children: { control: 'text' }, description: { control: 'text' } },
   parameters: {
-    medo: { code: 'C05', subtitle: 'Select one or several independent options.', figma: '102:79' },
+    medo: { subtitle: 'Select one or several independent options.' },
     docs: {
       description: {
         component:
-          'Select one or more options. Figma: **C05 Checkbox**. The whole row incl. label is clickable. ' +
+          'Select one or more options. The whole row incl. label is clickable. ' +
           'Use a CheckboxGroup for several options with one label. Built on React Aria `CheckboxField`.',
       },
     },

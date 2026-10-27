@@ -30,11 +30,11 @@ const meta = {
     onChange: { control: false },
   },
   parameters: {
-    medo: { code: 'C11', subtitle: 'Pick exactly one of 2–4 visible options. From 5 options use Select.', figma: '143:58' },
+    medo: { subtitle: 'Pick exactly one of 2–4 visible options. From 5 options use Select.' },
     docs: {
       description: {
         component:
-          'Pick exactly one of 2–4 visible options (5 or more: Select). Figma: **C11 Radio**. ' +
+          'Pick exactly one of 2–4 visible options (5 or more: Select). ' +
           'Arrow keys move and select. Built on React Aria `RadioGroup` + `RadioField`.',
       },
     },

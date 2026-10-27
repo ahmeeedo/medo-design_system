@@ -4,7 +4,7 @@ import { AlertDialog, DialogTrigger, type AlertDialogTone } from './Dialog';
 import { Button } from '../button/Button';
 import { interactionTest, row, semantic } from '../story-helpers';
 
-/** The Figma examples per tone. */
+/** Examples per tone. */
 const examples: Record<AlertDialogTone, { trigger: string; title: string; text: string; action: string; cancel: string }> = {
   danger: {
     trigger: 'Delete file',
@@ -54,7 +54,7 @@ const meta = {
     className: semantic,
   },
   parameters: {
-    medo: { code: 'C19', subtitle: 'A decision that needs an answer before the user can go on.', figma: '204:432' },
+    medo: { subtitle: 'A decision that needs an answer before the user can go on.' },
     docs: {
       description: {
         component:

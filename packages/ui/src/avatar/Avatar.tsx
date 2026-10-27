@@ -62,7 +62,7 @@ export interface AvatarProps {
   style?: CSSProperties;
 }
 
-/** Avatar – picture of a person or organization with fallback image → initials → icon (Figma: C28 Avatar). */
+/** Avatar – picture of a person or organization with fallback image → initials → icon. */
 export function Avatar({
   name,
   src,
@@ -134,7 +134,7 @@ export interface AvatarGroupProps {
   className?: string;
 }
 
-/** Overlapping avatars, max 4 + „+N“ (Figma: Avatar group). */
+/** Overlapping avatars, max 4 + „+N“. */
 export function AvatarGroup({
   children,
   max = 4,

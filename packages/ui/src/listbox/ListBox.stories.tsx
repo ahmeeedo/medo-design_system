@@ -31,7 +31,7 @@ const meta = {
       // second line as description (aria-describedby) – correct, but the rule counts all visible text.
       config: { rules: [{ id: 'landmark-unique', enabled: false }, { id: 'label-content-name-mismatch', enabled: false }] },
     },
-        medo: { code: 'C07', subtitle: 'The list behind Select, Combobox and the Bottom Sheet. Option is one row, Listbox the container.', figma: '115:252' },
+        medo: { subtitle: 'The list behind Select, Combobox and the Bottom Sheet. Option is one row, Listbox the container.' },
     docs: {
       description: {
         component:

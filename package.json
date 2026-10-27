@@ -1,7 +1,7 @@
 {
   "name": "medo-design-system",
   "private": true,
-  "description": "med.o Design System \u2013 tokens, CSS, Tailwind theme, React components and Storybook.",
+  "description": "med.o Design System – tokens, CSS, Tailwind theme, React components and Storybook.",
   "type": "module",
   "workspaces": [
     "packages/*",
@@ -13,9 +13,15 @@
   "scripts": {
     "tokens:from-figma": "node scripts/figma-to-dtcg.mjs",
     "build:tokens": "npm run build -w @medo/design-tokens",
+    "build:packages": "npm run build -w @medo/design-tokens -w @medo/ui",
     "storybook": "npm run build:tokens && npm run dev -w @medo/storybook",
     "build-storybook": "npm run build:tokens && npm run build -w @medo/storybook",
     "build": "npm run build-storybook",
-    "test": "npm run build:tokens && npm run test -w @medo/storybook"
+    "test": "npm run build:tokens && npm run test -w @medo/storybook",
+    "changeset": "changeset",
+    "release": "changeset publish"
+  },
+  "devDependencies": {
+    "@changesets/cli": "^2.31.1"
   }
 }

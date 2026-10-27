@@ -1,5 +1,5 @@
 /**
- * Pagination – med.o Design System (Figma: C35 Pagination)
+ * Pagination – med.o Design System
  *
  *   <nav class="medo-pagination medo-pagination--full" aria-label="Pagination">
  *     <div class="medo-pagination__info"><p class="medo-pagination__summary" role="status">81–100 of 380</p> [Rows per page]</div>
@@ -65,7 +65,7 @@
   list-style: none;
 }
 
-/* ---------- Page item (Figma: _Page item) – md 40 · lg 48 ---------- */
+/* ---------- Page item – md 40 · lg 48 ---------- */
 
 .medo-page-item {
   min-inline-size: var(--medo-size-control-md);

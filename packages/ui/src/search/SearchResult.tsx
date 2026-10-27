@@ -40,7 +40,7 @@ export interface SearchResultProps {
 const icons: Partial<Record<SearchResultType, ReactNode>> = { page: <Globe />, document: <FileText /> };
 
 /**
- * Search result – one hit (Figma: C43 Search result): path, title with the search term in bold, snippet,
+ * Search result – one hit: path, title with the search term in bold, snippet,
  * meta row with type badge. The whole result is one link (the title), so it is one tab stop.
  * Put results into `<ul role="list" className="medo-search-results">` with one `<li>` per hit.
  */

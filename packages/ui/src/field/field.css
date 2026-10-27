@@ -1,5 +1,5 @@
 /**
- * Field – med.o Design System (Figma: C04 Field)
+ * Field – med.o Design System
  * Label + control + helper / error text. Used by TextField, CheckboxGroup, RadioGroup.
  *
  * State contract (data attributes, set by React Aria – other frameworks set the same):

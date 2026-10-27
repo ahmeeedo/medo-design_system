@@ -82,7 +82,7 @@ const meta = {
     children: { control: false },
   },
   parameters: {
-    medo: { code: 'C31', subtitle: 'Sections that open and close in place – settings groups in apps, FAQs on websites.', figma: '288:26' },
+    medo: { subtitle: 'Sections that open and close in place – settings groups in apps, FAQs on websites.' },
     docs: {
       description: {
         component:

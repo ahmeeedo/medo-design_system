@@ -18,7 +18,7 @@ const meta = {
     children: { control: false },
   },
   parameters: {
-    medo: { code: 'C27', subtitle: 'Content lists in running text: bullets, numbers, feature lists and term–value pairs.', figma: '250:32' },
+    medo: { subtitle: 'Content lists in running text: bullets, numbers, feature lists and term–value pairs.' },
     docs: {
       description: {
         component:

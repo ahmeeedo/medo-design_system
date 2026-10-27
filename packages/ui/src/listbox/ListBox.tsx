@@ -27,7 +27,7 @@ export interface ListBoxProps<T> extends Omit<AriaListBoxProps<T>, 'className' |
 }
 
 /**
- * Listbox – the list behind Select, Combobox and Bottom Sheet (Figma: C07 Option & Listbox).
+ * Listbox – the list behind Select, Combobox and Bottom Sheet.
  * Built on React Aria ListBox: arrow keys, type-ahead, Home/End; sections and separators.
  */
 export function ListBox<T extends object>({ size = 'md', className, ...props }: ListBoxProps<T>) {

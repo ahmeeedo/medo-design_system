@@ -19,12 +19,33 @@
       "default": "./dist/js/tokens.js"
     },
     "./docs/*.json": "./dist/docs/*.json",
-    "./src/*": "./src/*"
+    "./src/*": "./src/*",
+    "./package.json": "./package.json"
   },
   "scripts": {
-    "build": "node build.mjs"
+    "build": "node build.mjs",
+    "prepack": "npm run build"
   },
   "devDependencies": {
     "style-dictionary": "^5.7.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ahmeeedo/medo-design_system.git",
+    "directory": "packages/tokens"
+  },
+  "homepage": "https://design.med-o.de",
+  "bugs": {
+    "url": "https://github.com/ahmeeedo/medo-design_system/issues"
+  },
+  "keywords": [
+    "design-system",
+    "design-tokens",
+    "dtcg",
+    "css-variables",
+    "tailwindcss"
+  ],
+  "publishConfig": {
+    "access": "public"
   }
 }

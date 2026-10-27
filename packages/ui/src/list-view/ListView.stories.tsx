@@ -55,7 +55,7 @@ const meta = {
     items: { control: false },
   },
   parameters: {
-    medo: { code: 'C29', subtitle: 'Interactive lists of objects in apps: inbox, people, files, notifications, settings.', figma: '266:248' },
+    medo: { subtitle: 'Interactive lists of objects in apps: inbox, people, files, notifications, settings.' },
     docs: {
       description: {
         component:

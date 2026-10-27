@@ -4,10 +4,21 @@
   "description": "React components of the med.o Design System. Styles are plain CSS on top of @medo/design-tokens and can be reused by other frameworks.",
   "type": "module",
   "license": "MIT",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "exports": {
-    ".": "./src/index.ts",
-    "./styles.css": "./src/styles.css"
+    ".": {
+      "@medo/source": "./src/index.ts",
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./styles.css": "./src/styles.css",
+    "./package.json": "./package.json"
   },
+  "files": [
+    "dist",
+    "src/**/*.css"
+  ],
   "sideEffects": [
     "*.css"
   ],
@@ -20,5 +31,50 @@
   "peerDependencies": {
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "tsup": "^8.5.1"
+  },
+  "scripts": {
+    "build": "tsup",
+    "prepack": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ahmeeedo/medo-design_system.git",
+    "directory": "packages/ui"
+  },
+  "homepage": "https://design.med-o.de",
+  "bugs": {
+    "url": "https://github.com/ahmeeedo/medo-design_system/issues"
+  },
+  "keywords": [
+    "design-system",
+    "react",
+    "react-aria",
+    "components",
+    "accessibility",
+    "wcag"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "tsup": {
+    "entry": [
+      "src/index.ts"
+    ],
+    "format": [
+      "esm"
+    ],
+    "target": "es2022",
+    "dts": true,
+    "sourcemap": true,
+    "clean": true,
+    "banner": {
+      "js": "\"use client\";"
+    },
+    "loader": {
+      ".css": "empty"
+    }
   }
 }

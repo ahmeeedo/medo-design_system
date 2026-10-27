@@ -110,7 +110,7 @@ const meta = {
   component: Table,
   tags: ['autodocs'],
   parameters: {
-    medo: { code: 'C37', subtitle: 'Shows records in rows and columns to compare, sort and act on them.', figma: '351:896' },
+    medo: { subtitle: 'Shows records in rows and columns to compare, sort and act on them.' },
     docs: {
       description: {
         component:

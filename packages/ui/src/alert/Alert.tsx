@@ -34,7 +34,7 @@ export interface AlertProps extends Omit<HTMLAttributes<HTMLDivElement>, 'title'
   announce?: boolean;
 }
 
-/** Alert – persistent message inside the page (Figma: C20 Alert). Plain markup, no library needed. */
+/** Alert – persistent message inside the page. Plain markup, no library needed. */
 export function Alert({
   tone = 'info',
   variant = 'inline',

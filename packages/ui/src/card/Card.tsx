@@ -30,7 +30,7 @@ export interface CardProps {
   style?: CSSProperties;
 }
 
-/** Card – a container for one topic (Figma: C16 Card). Rendered as an article with a heading. */
+/** Card – a container for one topic. Rendered as an article with a heading. */
 export function Card({
   title,
   subtitle,

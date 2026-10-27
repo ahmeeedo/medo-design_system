@@ -19,7 +19,7 @@ const meta = {
     children: { control: 'text' },
   },
   parameters: {
-    medo: { code: 'C45', subtitle: 'Navigates to a page, a place on the page or a file. Actions are buttons.', figma: '473:30' },
+    medo: { subtitle: 'Navigates to a page, a place on the page or a file. Actions are buttons.' },
     docs: {
       description: {
         component:

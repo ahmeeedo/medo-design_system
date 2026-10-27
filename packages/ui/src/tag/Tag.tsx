@@ -36,7 +36,7 @@ export interface TagGroupProps<T> extends Omit<AriaTagGroupProps, 'children' | '
 }
 
 /**
- * Tag group – a labelled list of tags (Figma: C06 Tag). Built on React Aria TagGroup:
+ * Tag group – a labelled list of tags. Built on React Aria TagGroup:
  * arrow keys move between tags, Backspace/Delete removes, Space/Enter toggles a filter.
  *
  * Two roles, never mixed in one group:

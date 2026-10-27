@@ -28,7 +28,7 @@ export interface AccordionProps extends Omit<DisclosureGroupProps, 'className' |
 const hashId = () => (typeof window === 'undefined' ? '' : decodeURIComponent(window.location.hash.slice(1)));
 
 /**
- * Accordion – sections that open and close in place (Figma: C31 Accordion). Built on React Aria DisclosureGroup:
+ * Accordion – sections that open and close in place. Built on React Aria DisclosureGroup:
  * each header is a button inside a real heading (aria-expanded, aria-controls); closed panels stay findable by
  * the browser search (hidden="until-found"). Several open by default. A link to an item's id (#billing) opens it.
  */

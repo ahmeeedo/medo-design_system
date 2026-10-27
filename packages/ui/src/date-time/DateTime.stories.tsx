@@ -58,12 +58,12 @@ const meta = {
     onChange: { control: false },
   },
   parameters: {
-    medo: { code: 'C34', subtitle: 'Type a date or pick it – date, range, time and date + time, formatted by locale.', figma: '324:26' },
+    medo: { subtitle: 'Type a date or pick it – date, range, time and date + time, formatted by locale.' },
     docs: {
       description: {
         component:
           'React Aria DateField · TimeField · DatePicker · DateRangePicker · Calendar · RangeCalendar with `@internationalized/date` values (`parseDate("2026-10-12")`, `toString()` for the API – no time-zone shifts). ' +
-          'Typing first: every segment is a spinbutton, digits only, complete segments jump to the next; ↑ ↓ change, Backspace clears, a pasted date fills all. Order, separators, week start and 12/24 h come from the locale; leading zeros as in Figma (09:30, 01.05.2026). ' +
+          'Typing first: every segment is a spinbutton, digits only, complete segments jump to the next; ↑ ↓ change, Backspace clears, a pasted date fills all. Order, separators, week start and 12/24 h come from the locale; always with leading zeros (09:30, 01.05.2026). ' +
           'The calendar is a helper: „Open calendar“ or Alt + ↓; the month-and-year button switches to months and years (far dates in three clicks). Ranges: two months, optional presets. Time: typed, optional slot list behind a clock button – no clock faces. ' +
           'Below 640 px the calendar opens in a Bottom Sheet (lg, „Done“). Validation names the rule (min, max, unavailable days, reversed range). Styles: `medo-date-box`, `medo-calendar`.',
       },
@@ -139,7 +139,7 @@ export const Range: Story = {
     docs: {
       description: {
         story:
-          'Two months side by side on desktop, one on mobile. The first click sets the start, the second the end; hovering previews the range. `presets` adds the Figma list (Today … Last month) or your own – for dashboards and filters.',
+          'Two months side by side on desktop, one on mobile. The first click sets the start, the second the end; hovering previews the range. `presets` adds the default list (Today … Last month) or your own – for dashboards and filters.',
       },
     },
   },

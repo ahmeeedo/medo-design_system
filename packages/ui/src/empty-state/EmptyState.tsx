@@ -50,7 +50,7 @@ const defaults: Record<EmptyStateType, { icon: ReactNode; tone: IconTileTone }> 
 const tileSize = { page: 'lg', section: 'md', inline: 'sm' } as const;
 
 /**
- * Empty state – what users see when there is nothing to show, and what they can do next (Figma: C36 Empty state).
+ * Empty state – what users see when there is nothing to show, and what they can do next.
  * Page and section render a `<section>` named by its heading; inline renders a plain block, so it does not add
  * a landmark inside a list or table. „No results“ puts its text in a polite status region; focus stays where it was.
  */
@@ -115,7 +115,7 @@ export function EmptyState({
   );
 }
 
-/* ---------- Icon tile (internal, Figma: _Icon tile – shared with Dropzone and Embed consent) ---------- */
+/* ---------- Icon tile (internal – shared with Dropzone and Embed consent) ---------- */
 
 /** raised: surface/default – on surface/subtle (Embed consent). */
 export type IconTileTone = 'neutral' | 'raised' | 'danger' | 'success';

@@ -35,7 +35,7 @@ export interface DatePickerTexts extends CalendarTexts {
   done: string;
   time: string;
   presets: string;
-  /** Validation – name the rule, never just „invalid date“ (Figma: Validation). */
+  /** Validation – name the rule, never just „invalid date“. */
   beforeMin: (date: string) => string;
   afterMax: (date: string) => string;
   unavailable: string;
@@ -56,7 +56,7 @@ export const defaultDatePickerTexts: Omit<DatePickerTexts, keyof CalendarTexts> 
 interface PickerBase {
   label?: ReactNode;
   description?: ReactNode;
-  /** Own message or a function of the validation details. Default: the Figma messages (min, max, unavailable, reversed). */
+  /** Own message or a function of the validation details. Default: the built-in messages (min, max, unavailable, reversed). */
   errorMessage?: ReactNode | ((validation: ValidationResult) => ReactNode);
   /** md 40 (desktop) · lg 48 (touch). */
   size?: 'md' | 'lg';
@@ -126,7 +126,7 @@ const textOf = (label: ReactNode, ariaLabel?: string) => (typeof label === 'stri
 export interface DatePickerProps<T extends DateValue> extends Omit<AriaDatePickerProps<T>, 'children' | 'className' | 'style'>, PickerBase {}
 
 /**
- * Date picker – type a date or pick it (Figma: C34 Date picker). The field is the main input, the calendar is a
+ * Date picker – type a date or pick it. The field is the main input, the calendar is a
  * helper: the button „Open calendar“ (or Alt + ↓) opens it, picking a day closes it and focus returns to the
  * field. `granularity="minute"` makes it a date + time picker with a time field in the panel.
  */
@@ -174,7 +174,7 @@ export interface DateRangePreset {
   value: { start: DateValue; end: DateValue };
 }
 
-/** The Figma list (Today … Last month), relative to today in the local time zone. */
+/** The default presets (Today … Last month), relative to today in the local time zone. */
 export function defaultDatePresets(
   labels: Partial<Record<'today' | 'yesterday' | 'last7' | 'last14' | 'last30' | 'thisMonth' | 'lastMonth', string>> = {},
 ): DateRangePreset[] {
@@ -220,12 +220,12 @@ function Presets({ presets, label, size }: { presets: DateRangePreset[]; label: 
 }
 
 export interface DateRangePickerProps<T extends DateValue> extends Omit<AriaDateRangePickerProps<T>, 'children' | 'className' | 'style'>, PickerBase {
-  /** true: the Figma list (Today … Last month) · own list · none. Fits dashboards and filters. */
+  /** true: the default presets (Today … Last month) · own list · none. Fits dashboards and filters. */
   presets?: boolean | DateRangePreset[];
 }
 
 /**
- * Date range picker – start and end in one field (Figma: C34 Date range). Two months side by side on desktop,
+ * Date range picker – start and end in one field. Two months side by side on desktop,
  * one on mobile; the first click sets the start, the second the end, hovering previews the range. Optional presets.
  */
 export function DateRangePicker<T extends DateValue>({

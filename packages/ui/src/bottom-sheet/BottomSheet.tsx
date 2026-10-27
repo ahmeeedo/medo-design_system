@@ -28,7 +28,7 @@ const CLOSE_DISTANCE = 0.25;
 const CLOSE_VELOCITY = 0.5; // px per ms
 
 /**
- * Bottom Sheet – a modal layer from the bottom on small screens (Figma: C10 Bottom Sheet).
+ * Bottom Sheet – a modal layer from the bottom on small screens.
  * Built on React Aria ModalOverlay + Modal + Dialog: focus stays inside and returns to the trigger,
  * page scroll is locked, Esc and a tap on the scrim close it. Swipe down on the handle or header closes it,
  * the close button is the non-drag alternative (WCAG 2.5.7). Use inside a DialogTrigger or with isOpen.
@@ -111,7 +111,7 @@ function SwipeArea({ onClose, children }: { onClose: () => void; children: React
 }
 
 /**
- * Bottom Sheet as the popover of a Select (Figma: Select sheet). React Aria builds the Select's list
+ * Bottom Sheet as the popover of a Select. React Aria builds the Select's list
  * from its Popover even while closed – a Modal would hide the options from it – so the sheet is a
  * full-screen popover here: same look, same closing (swipe, scrim, Esc, close button), focus stays inside.
  */

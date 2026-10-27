@@ -25,7 +25,7 @@ export interface CheckboxProps extends Omit<CheckboxFieldProps, 'children' | 'cl
   className?: string;
 }
 
-/** Checkbox – on its own or inside a CheckboxGroup (Figma: C05 Checkbox). */
+/** Checkbox – on its own or inside a CheckboxGroup. */
 export function Checkbox({ children, description, size, className, ...props }: CheckboxProps) {
   const groupSize = useContext(ChoiceSizeContext);
   return (
@@ -61,7 +61,7 @@ export interface CheckboxGroupProps extends Omit<AriaCheckboxGroupProps, 'childr
   className?: string;
 }
 
-/** Several checkboxes with one label, helper and error text (Figma: Checkbox group). */
+/** Several checkboxes with one label, helper and error text. */
 export function CheckboxGroup({ label, description, errorMessage, size = 'md', orientation = 'vertical', children, className, ...props }: CheckboxGroupProps) {
   return (
     <AriaCheckboxGroup {...props} className={cx('medo-field', 'medo-field--group', className)} data-orientation={orientation}>

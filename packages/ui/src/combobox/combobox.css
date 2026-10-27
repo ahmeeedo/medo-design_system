@@ -1,5 +1,5 @@
 /**
- * Combobox – med.o Design System (Figma: C09 Combobox)
+ * Combobox – med.o Design System
  *
  * A Select you can type into. Input anatomy; clear and chevron are separate buttons (_Input action).
  *   <div class="medo-field medo-combobox" data-open data-invalid data-disabled data-readonly>
@@ -23,7 +23,7 @@
   padding-inline-start: var(--medo-space-1);
 }
 
-/* Clear and toggle: 8 px apart, flush with the field padding (Figma). */
+/* Clear and toggle: 8 px apart, flush with the field padding. */
 .medo-combobox__field > .medo-input__action {
   margin-inline-end: 0;
 }
@@ -33,7 +33,7 @@
 }
 
 .medo-combobox__toggle[data-pressed]:not([data-hovered]) {
-  /* React Aria marks the toggle as pressed while the list is open: only the chevron flips (Figma). */
+  /* React Aria marks the toggle as pressed while the list is open: only the chevron flips. */
   background: transparent;
 }
 

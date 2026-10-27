@@ -13,7 +13,7 @@ import './tooltip.css';
 
 /**
  * Wraps a focusable trigger (e.g. Button, IconButton) and its Tooltip.
- * Timing from Figma: 500 ms delay on hover, 100 ms close delay, instant on keyboard focus.
+ * Timing: 500 ms delay on hover, 100 ms close delay, instant on keyboard focus.
  * React Aria handles warm-up between neighbours, Escape and touch (no tooltip on touch).
  */
 export function TooltipTrigger({ delay = 500, closeDelay = 100, ...props }: TooltipTriggerComponentProps) {
@@ -43,7 +43,7 @@ export const formatShortcut = (keys: string) =>
     .map((k) => KEY_LABELS[k] ?? k)
     .join(' ');
 
-/** Tooltip – short label on hover or focus (Figma: C14 Tooltip). Top, 8 px offset, flips if needed. */
+/** Tooltip – short label on hover or focus. Top, 8 px offset, flips if needed. */
 export function Tooltip({ children, shortcut, placement = 'top', offset = 8, className, ...props }: TooltipProps) {
   return (
     <AriaTooltip {...props} placement={placement} offset={offset} className={cx('medo-tooltip', className)}>

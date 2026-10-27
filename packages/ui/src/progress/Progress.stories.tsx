@@ -17,7 +17,7 @@ const meta = {
     status: { control: 'inline-radio', options: ['default', 'success', 'error'] },
   },
   parameters: {
-    medo: { code: 'C26', subtitle: 'Show that something is happening – and, when possible, how long it will take.', figma: '245:26' },
+    medo: { subtitle: 'Show that something is happening – and, when possible, how long it will take.' },
     docs: {
       description: {
         component:

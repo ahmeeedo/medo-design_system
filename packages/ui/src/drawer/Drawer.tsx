@@ -28,7 +28,7 @@ export interface DrawerProps extends DirtyGuardProps {
 }
 
 /**
- * Drawer – a modal panel that slides in from the side (Figma: C25 Drawer). Same building blocks and behaviour
+ * Drawer – a modal panel that slides in from the side. Same building blocks and behaviour
  * as the Dialog (React Aria ModalOverlay + Modal + Dialog): scrim, focus trap, no page scroll, Esc and the close
  * button close it, focus returns to the trigger; `isDirty` asks „Discard changes?“. Below 640 px it keeps its side,
  * viewport − 56 px wide; a swipe towards the edge closes it. Use inside a DialogTrigger or with isOpen.
@@ -99,7 +99,7 @@ const CLOSE_VELOCITY = 0.5; // px per ms
 const START = 10; // px before a horizontal drag starts – vertical scrolling stays native
 
 /**
- * Touch and pen: drag the drawer towards its edge to close it (Figma: swipe towards the edge).
+ * Touch and pen: drag the drawer towards its edge to close it.
  * An addition only – Esc, the close button and the scrim always work (WCAG 2.5.7).
  */
 function SwipeToClose({ target, side, onClose }: { target: React.RefObject<HTMLElement | null>; side: 'left' | 'right'; onClose: () => void }) {

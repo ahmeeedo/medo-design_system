@@ -1,0 +1,40 @@
+# Release: Changesets opens a "Version Packages" pull request when changesets are on main.
+# Merging that pull request publishes the new versions of @medo/design-tokens and @medo/ui to npm.
+# Authentication: npm trusted publishing (OIDC) – no token stored in GitHub. Provenance is added automatically.
+name: Release
+
+on:
+  push:
+    branches: [main]
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    permissions:
+      contents: write # version commit and tags
+      pull-requests: write # "Version Packages" pull request
+      id-token: write # npm trusted publishing
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: npm
+          registry-url: https://registry.npmjs.org
+
+      - run: npm ci
+
+      - uses: changesets/action@v1
+        with:
+          version: npx changeset version
+          publish: npm run release
+          title: Version Packages
+          commit: 'chore: version packages'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

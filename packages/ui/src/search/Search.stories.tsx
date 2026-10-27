@@ -124,7 +124,7 @@ const meta = {
     onClear: { control: false },
   },
   parameters: {
-    medo: { code: 'C43', subtitle: 'Find content fast: search field, results, search page and quick search.', figma: '422:30' },
+    medo: { subtitle: 'Find content fast: search field, results, search page and quick search.' },
     docs: {
       description: {
         component:

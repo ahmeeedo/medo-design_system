@@ -1,5 +1,5 @@
 /**
- * Toggle Button – med.o Design System (Figma: C15 Toggle Button)
+ * Toggle Button – med.o Design System
  *
  * A button that stays pressed. Builds on the Button classes (sizes, icon, focus, motion):
  *   <button class="medo-button medo-button--md medo-toggle" aria-pressed="true" data-selected>Bold</button>
@@ -58,7 +58,7 @@
   padding: var(--medo-space-1);
   border-radius: var(--medo-radius-md);
   background-color: var(--medo-color-surface-default);
-  /* Inside stroke like Figma: the border does not add to the height. */
+  /* Inside stroke: the border does not add to the height. */
   box-shadow: inset 0 0 0 var(--medo-border-width-thin) var(--medo-color-border-default);
 }
 

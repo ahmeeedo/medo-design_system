@@ -32,7 +32,7 @@ const meta = {
     onClose: { control: false },
   },
   parameters: {
-    medo: { code: 'C21', subtitle: 'Short, temporary feedback after an action. It floats above the page and disappears on its own.', figma: '212:32' },
+    medo: { subtitle: 'Short, temporary feedback after an action. It floats above the page and disappears on its own.' },
     docs: {
       description: {
         component:

@@ -32,11 +32,11 @@ const meta = {
     trailing: slot({ none: undefined, 'show password': <InputAction aria-label="Show password" icon={<Eye />} /> }),
   },
   parameters: {
-    medo: { code: 'C03 + C04', subtitle: 'Label, input and helper or error text as one unit.', figma: '81:9' },
+    medo: { subtitle: 'Label, input and helper or error text as one unit.' },
     docs: {
       description: {
         component:
-          'Label, input and helper or error text. Figma: **C04 Field + C03 Input / C13 Textarea**. ' +
+          'Label, input and helper or error text. ' +
           'Always a visible label (a placeholder is no label). On mobile and touch use size **lg** (16 px text prevents iOS zoom). ' +
           'Built on React Aria `TextField`: label, description and error are connected for screen readers automatically.',
       },

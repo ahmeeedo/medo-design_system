@@ -22,7 +22,7 @@ import { Drawer } from '../drawer/Drawer';
 import './navigation.css';
 
 /*
- * Navigation – med.o Design System (Figma: C24 Navigation)
+ * Navigation – med.o Design System
  * Navigation is always made of links in a named <nav> region; the current page has aria-current="page".
  * One NavItem renders in four forms, chosen by the container: header · sidebar · rail · sheet.
  */
@@ -54,7 +54,7 @@ export interface NavItemProps extends Omit<AriaLinkProps, 'children' | 'classNam
 }
 
 /**
- * One navigation link (Figma: Nav item). Built on React Aria Link, so client-side routing works
+ * One navigation link. Built on React Aria Link, so client-side routing works
  * with any router through RouterProvider. The container decides the form (header, sidebar, rail, sheet).
  */
 export function NavItem({ children, icon, isCurrent, count, countLabel, unread, ...props }: NavItemProps) {
@@ -312,7 +312,7 @@ export interface SiteHeaderProps {
 }
 
 /**
- * Website header (Figma: Header, Type=Website): logo, links, actions. Sticky, with a divider once the page scrolls.
+ * Website header: logo, links, actions. Sticky, with a divider once the page scrolls.
  * Below 768 px only the logo, the primary action and a menu button remain; the menu opens fullscreen.
  */
 export function SiteHeader({ logo, children, actions = [], 'aria-label': label = 'Main', menuLabel = 'Menu', closeLabel = 'Close', layout = 'auto' }: SiteHeaderProps) {
@@ -350,7 +350,7 @@ export function SiteHeader({ logo, children, actions = [], 'aria-label': label =
   );
 }
 
-/** Fullscreen menu of the website on mobile (Figma: Nav fullscreen): large links, groups inline, actions at the bottom. */
+/** Fullscreen menu of the website on mobile: large links, groups inline, actions at the bottom. */
 function NavFullscreen({
   logo,
   actions,
@@ -409,7 +409,7 @@ export interface AppHeaderProps {
   actions?: ReactNode;
 }
 
-/** App header (Figma: Header, Type=App): page title, search and actions. Navigation lives in the side navigation. */
+/** App header: page title, search and actions. Navigation lives in the side navigation. */
 export function AppHeader({ title, headingLevel = 1, logo, search, actions }: AppHeaderProps) {
   const scrolled = useScrolled();
   return (
@@ -454,9 +454,9 @@ export interface SideNavProps {
 }
 
 /**
- * Side navigation for apps (Figma: Side navigation): 256 px with icons, counts, sections and groups;
+ * Side navigation for apps: 256 px with icons, counts, sections and groups;
  * collapses to a 64 px rail with tooltips. 640–1023 px: always a rail; expanding opens the full navigation
- * as a Drawer on the left (Figma: Drawer, navigation). Below 640 px it is hidden – use the BottomTabBar there.
+ * as a Drawer on the left. Below 640 px it is hidden – use the BottomTabBar there.
  */
 export function SideNav({
   logo,
@@ -558,7 +558,7 @@ export interface BottomTabBarProps {
 }
 
 /**
- * Bottom tab bar (Figma: Bottom tab bar): the main destinations of an app on phones, in thumb reach.
+ * Bottom tab bar: the main destinations of an app on phones, in thumb reach.
  * Max 4 destinations + „More“. Fixed to the bottom with the safe area; set `--medo-toast-offset` so toasts stay above it.
  */
 export function BottomTabBar({ children, 'aria-label': label = 'App', display = 'mobile' }: BottomTabBarProps) {

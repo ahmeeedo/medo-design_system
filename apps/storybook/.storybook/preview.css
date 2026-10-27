@@ -16,7 +16,6 @@ body {
 
 /* ======================================================================
  * Documentation pages (blocks in src/docs-blocks/DocBlocks.tsx).
- * Structure follows the Figma doc frames, not a 1:1 copy.
  * Only system tokens, so the whole page follows Light / Dark.
  * ====================================================================== */
 

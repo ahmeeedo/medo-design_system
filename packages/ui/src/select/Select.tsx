@@ -63,7 +63,7 @@ export interface SelectProps<T extends object, M extends SelectMode = 'single'> 
 }
 
 /**
- * Select – choose one or several values from a list (Figma: C08 Select).
+ * Select – choose one or several values from a list.
  * Built on React Aria Select with a hidden native select: forms, autofill and validation keep working.
  * 2–4 options: Radio. 5–10: Select. More, or users know what to type: Combobox.
  */
@@ -119,7 +119,7 @@ export function Select<T extends object, M extends SelectMode = 'single'>({
               </span>
             )}
             <SelectValue<T> className="medo-select__value">
-              {/* The field shows only the label of the option – no description or option icon (Figma: one line, ellipsis). */}
+              {/* The field shows only the label of the option – no description or option icon (one line, ellipsis). */}
               {({ defaultChildren, isPlaceholder, selectedText }) => (
                 <>
                   {isPlaceholder ? defaultChildren : multiple ? <SelectedTags size={size} /> : selectedText}

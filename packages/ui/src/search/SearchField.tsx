@@ -22,7 +22,7 @@ export interface SearchFieldProps extends Omit<AriaSearchFieldProps, 'children' 
 }
 
 /**
- * Search field – a text field for a search term (Figma: C43 Search · Input with search icon). Built on React Aria
+ * Search field – a text field for a search term. Built on React Aria
  * SearchField: Enter submits (`onSubmit`), Esc or × clears. Put it in a `<search>` element (search landmark);
  * keep the term in the field after searching.
  */

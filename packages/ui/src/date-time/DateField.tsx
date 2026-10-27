@@ -50,7 +50,7 @@ interface FieldBase {
 export interface DateFieldProps<T extends DateValue> extends Omit<AriaDateFieldProps<T>, 'children' | 'className' | 'style'>, FieldBase {}
 
 /**
- * Date field – type a date without a calendar (Figma: C34 Date field). React Aria DateField: every segment is a
+ * Date field – type a date without a calendar. React Aria DateField: every segment is a
  * spinbutton („day“, „month“, „year“), ↑ ↓ change it, ← → move, Backspace clears, a pasted date fills all.
  * `granularity="minute"` adds the time. For a calendar use DatePicker.
  */
@@ -81,7 +81,7 @@ export interface TimeFieldProps extends Omit<AriaTimeFieldProps<TimeValue>, 'chi
 }
 
 /**
- * Time field – type a time (Figma: C34 Date field, Type Time). HH:MM, 24 h in de – from the locale. Typing only;
+ * Time field – type a time. HH:MM, 24 h in de – from the locale. Typing only;
  * with `slots` a clock button opens a list of fixed times (bookings), booked ones disabled with a reason.
  */
 export function TimeField({

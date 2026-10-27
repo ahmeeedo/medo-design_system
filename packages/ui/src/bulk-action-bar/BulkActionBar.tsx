@@ -37,7 +37,7 @@ export interface BulkActionBarProps {
 }
 
 /**
- * Bulk action bar – actions for the selected rows of a Table or List view (Figma: C37 Bulk action bar).
+ * Bulk action bar – actions for the selected rows of a Table or List view.
  * Appears with ≥ 1 selected item and floats, so selecting never shifts the layout. A toolbar: the count is
  * announced, Esc or × clears the selection. Render it right after the list, so Tab reaches it next.
  */

@@ -28,7 +28,7 @@ const meta = {
     unknownLabel: semantic,
   },
   parameters: {
-    medo: { code: 'C28', subtitle: 'A picture of a person or an organization – with a reliable fallback.', figma: '259:70' },
+    medo: { subtitle: 'A picture of a person or an organization – with a reliable fallback.' },
     docs: {
       description: {
         component:

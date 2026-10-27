@@ -17,7 +17,7 @@ const meta = {
     offset: { control: { type: 'number', min: 0, max: 24, step: 4 } },
   },
   parameters: {
-    medo: { code: 'C14', subtitle: 'A short text label on hover or keyboard focus. Mainly names icon-only buttons.', figma: '155:26' },
+    medo: { subtitle: 'A short text label on hover or keyboard focus. Mainly names icon-only buttons.' },
     docs: {
       description: {
         component:

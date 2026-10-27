@@ -1,5 +1,5 @@
 /**
- * Date & Time – med.o Design System (Figma: C34 Date & Time)
+ * Date & Time – med.o Design System
  *
  *   Field   <div class="medo-input medo-input--md medo-date-box">                    Input look, hugs its content
  *             <div class="medo-date-input"> segments (spinbuttons) </div> [– end] [calendar / clock action]
@@ -70,7 +70,7 @@
   color: var(--medo-color-text-secondary);
 }
 
-/* The format as in Figma: TT.MM.JJJJ · DD/MM/YYYY. */
+/* The format hint: TT.MM.JJJJ · DD/MM/YYYY. */
 .medo-date-segment[data-placeholder] {
   text-transform: uppercase;
 }

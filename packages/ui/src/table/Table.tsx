@@ -40,7 +40,7 @@ export interface StaticTableProps {
 }
 
 /**
- * Static table – a native, non-interactive table with the Table look (Figma: C37 Table).
+ * Static table – a native, non-interactive table with the Table look.
  * For content and simple data. Numbers: add className="medo-table__cell--number".
  */
 export function StaticTable({ children, caption, captionHidden, density = 'standard', striped, plain, className, style }: StaticTableProps) {
@@ -69,7 +69,7 @@ export interface TableProps extends Omit<AriaTableProps, 'className' | 'style'> 
 }
 
 /**
- * Table – interactive data table (Figma: C37 Table). Built on React Aria Table:
+ * Table – interactive data table. Built on React Aria Table:
  * arrow keys move between cells, Space selects, Enter opens, sortable headers announce the order.
  * Data logic (sorting, filtering, paging) stays in your code or a headless table library.
  */

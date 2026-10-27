@@ -1,5 +1,5 @@
 /**
- * Avatar – med.o Design System (Figma: C28 Avatar)
+ * Avatar – med.o Design System
  *
  * Fallback chain: image → initials → icon. Circle = person, square = organization.
  *   <span class="medo-avatar medo-avatar--md medo-avatar--circle medo-avatar--teal" role="img" aria-label="Lea M.">
@@ -41,7 +41,7 @@
   border-radius: var(--_radius);
 }
 
-/* Sizes (Figma). Initials use the avatar text styles. */
+/* Sizes. Initials use the avatar text styles. */
 .medo-avatar--xs {
   --_size: var(--medo-space-5);
   --_radius: var(--medo-radius-sm);
@@ -109,7 +109,7 @@
   display: inline-flex;
 }
 
-/* Icon: 12 / 14 / 16 / 20 / 28 / 40 px (Figma) = 60 % at xs, 58 % at sm, 50 % from md. */
+/* Icon: 12 / 14 / 16 / 20 / 28 / 40 px = 60 % at xs, 58 % at sm, 50 % from md. */
 .medo-avatar__icon > svg {
   inline-size: calc(var(--_size) * 0.5);
   block-size: calc(var(--_size) * 0.5);

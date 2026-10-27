@@ -10,7 +10,7 @@ import { interactionTest, LightDark, semantic } from '../story-helpers';
 const panel: React.CSSProperties = { margin: 0, font: 'var(--medo-typography-body-sm)', color: 'var(--medo-color-text-secondary)' };
 const caption: React.CSSProperties = { font: 'var(--medo-typography-code-sm)', color: 'var(--medo-color-text-secondary)' };
 
-/** The Figma example: a project page. The Settings panel has a field – its input survives switching tabs. */
+/** Example: a project page. The Settings panel has a field – its input survives switching tabs. */
 function ProjectTabs({ icons = false, count = true, ...props }: React.ComponentProps<typeof Tabs> & { icons?: boolean; count?: boolean }) {
   return (
     <Tabs {...props}>
@@ -63,7 +63,7 @@ const meta = {
     children: { control: false },
   },
   parameters: {
-    medo: { code: 'C22', subtitle: 'Switch between views of the same context – one panel visible at a time.', figma: '217:74' },
+    medo: { subtitle: 'Switch between views of the same context – one panel visible at a time.' },
     docs: {
       description: {
         component:

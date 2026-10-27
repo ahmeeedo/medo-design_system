@@ -1,5 +1,5 @@
 /**
- * Empty state – med.o Design System (Figma: C36 Empty state)
+ * Empty state – med.o Design System
  *
  *   <section class="medo-empty-state medo-empty-state--page|section|inline" aria-labelledby="…">
  *     <span class="medo-icon-tile medo-icon-tile--lg medo-icon-tile--neutral" aria-hidden="true"><svg/></span>
@@ -109,7 +109,7 @@
   object-fit: contain;
 }
 
-/* ---------- Icon tile (Figma: _Icon tile) – sm 40/20 · md 48/24 · lg 64/32 ---------- */
+/* ---------- Icon tile – sm 40/20 · md 48/24 · lg 64/32 ---------- */
 
 .medo-icon-tile {
   --_tile: var(--medo-size-control-lg);

@@ -19,11 +19,11 @@ const meta = {
     onPress: { control: false },
   },
   parameters: {
-    medo: { code: 'C01', subtitle: 'Triggers an action.', figma: '58:2' },
+    medo: { subtitle: 'Triggers an action.' },
     docs: {
       description: {
         component:
-          'Triggers an action. Figma: **C01 Button**. One Primary per area, Danger only for destructive actions. ' +
+          'Triggers an action. One Primary per area, Danger only for destructive actions. ' +
           'Styles are plain CSS (`medo-button`, `medo-button--primary`, `medo-button--md`) and can be used without React. Built on React Aria: use `onPress` and `isDisabled`.',
       },
     },

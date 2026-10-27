@@ -22,7 +22,7 @@ export interface ButtonProps extends Omit<AriaButtonProps, 'children' | 'classNa
 }
 
 /**
- * Button – triggers an action (Figma: C01 Button). Built on React Aria: consistent press,
+ * Button – triggers an action. Built on React Aria: consistent press,
  * hover and focus behaviour on mouse, touch, keyboard and screen readers.
  * Use onPress instead of onClick and isDisabled instead of disabled.
  * While saving, set isPending and change the label („Saving…“): the button keeps its look and size.
@@ -59,7 +59,7 @@ export interface ButtonGroupProps {
   className?: string;
 }
 
-/** Button group – spacing, alignment and mobile stacking for related buttons (Figma: C01 Button group). */
+/** Button group – spacing, alignment and mobile stacking for related buttons. */
 export function ButtonGroup({ context = 'footer', children, destructive, className, ...props }: ButtonGroupProps) {
   return (
     <div

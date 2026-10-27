@@ -37,7 +37,7 @@ const meta = {
     compactLabel: semantic,
   },
   parameters: {
-    medo: { code: 'C35', subtitle: 'Move through long lists page by page – or load more with a simple button.', figma: '338:26' },
+    medo: { subtitle: 'Move through long lists page by page – or load more with a simple button.' },
     docs: {
       description: {
         component:

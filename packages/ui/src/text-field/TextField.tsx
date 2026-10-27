@@ -34,7 +34,7 @@ export interface TextFieldProps extends Omit<AriaTextFieldProps, 'children' | 'c
   className?: string;
 }
 
-/** Text input with label, helper and error text (Figma: Field + Input / Textarea). */
+/** Text input with label, helper and error text (Field + Input / Textarea). */
 export function TextField({
   label,
   description,
@@ -128,7 +128,7 @@ export interface InputActionProps extends Omit<AriaButtonProps, 'className' | 'c
   icon: ReactNode;
 }
 
-/** Icon button inside an input, e.g. clear or show password (Figma: _Input action). */
+/** Icon button inside an input, e.g. clear or show password. */
 export function InputAction({ icon, ...props }: InputActionProps) {
   return (
     <AriaButton {...props} className="medo-input__action">

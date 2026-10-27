@@ -1,5 +1,5 @@
 # Builds the Storybook (design system documentation) and serves it with nginx.
-# Deploy: Coolify → Build pack "Dockerfile", domain storybook.med-o.de, port 80.
+# Run: docker build -t medo-storybook . && docker run -p 8080:80 medo-storybook
 FROM node:24-slim AS build
 WORKDIR /app
 

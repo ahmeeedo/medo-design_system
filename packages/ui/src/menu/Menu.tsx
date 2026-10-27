@@ -58,7 +58,7 @@ export interface MenuProps<T> extends Omit<AriaMenuProps<T>, 'className' | 'styl
 }
 
 /**
- * Menu – a list of actions (Figma: C18 Menu). Built on React Aria Menu: arrow keys, Enter runs the item,
+ * Menu – a list of actions. Built on React Aria Menu: arrow keys, Enter runs the item,
  * Esc closes, type to jump, Home/End. Every item has an icon, labels start with a verb; danger items last.
  * Not for values (Select) or site navigation (disclosure pattern).
  */

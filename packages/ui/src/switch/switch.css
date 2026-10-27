@@ -1,5 +1,5 @@
 /**
- * Switch – med.o Design System (Figma: C12 Switch)
+ * Switch – med.o Design System
  * On / off that takes effect immediately (no submit). The label never changes with the state.
  *
  * State contract: [data-selected] [data-hovered] [data-focus-visible] [data-disabled] [data-readonly]

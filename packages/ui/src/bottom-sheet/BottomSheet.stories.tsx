@@ -26,7 +26,7 @@ const meta = {
     isKeyboardDismissDisabled: { control: false },
   },
   parameters: {
-    medo: { code: 'C10', subtitle: 'A modal layer that slides up from the bottom on small screens.', figma: '134:436' },
+    medo: { subtitle: 'A modal layer that slides up from the bottom on small screens.' },
     docs: {
       description: {
         component:

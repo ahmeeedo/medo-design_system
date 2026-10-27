@@ -11,7 +11,7 @@ export interface IconButtonProps extends Omit<AriaButtonProps, 'children' | 'cla
   icon: ReactNode;
   /**
    * ghost (default for toolbars) · secondary · primary · danger.
-   * On images and video (Figma: Media icon button): media – round overlay/media fill for busy images ·
+   * On images and video: media – round overlay/media fill for busy images ·
    * media-ghost – no fill, on a gradient bar (video controls).
    */
   variant?: 'ghost' | 'secondary' | 'primary' | 'danger' | 'media' | 'media-ghost';
@@ -30,7 +30,7 @@ export interface IconButtonProps extends Omit<AriaButtonProps, 'children' | 'cla
   style?: CSSProperties;
 }
 
-/** Square icon-only action (Figma: C02 Icon Button). Shares the Button styles. Shows its label as a tooltip. */
+/** Square icon-only action. Shares the Button styles. Shows its label as a tooltip. */
 export function IconButton({ icon, variant = 'ghost', size = 'md', tooltip, shortcut, shortcutLabel, className, ...props }: IconButtonProps) {
   const button = (
     <AriaButton

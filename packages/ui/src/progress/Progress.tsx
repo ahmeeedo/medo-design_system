@@ -25,7 +25,7 @@ const SpinnerGraphic = () => (
   </svg>
 );
 
-/** Spinner – short wait of unknown length (Figma: C26 Spinner). */
+/** Spinner – short wait of unknown length. */
 export function Spinner({ size = 'md', tone = 'current', decorative, className, style, ...props }: SpinnerProps) {
   const classes = cx('medo-spinner', `medo-spinner--${size}`, tone !== 'current' && `medo-spinner--${tone}`, className);
   if (decorative) {
@@ -60,7 +60,7 @@ export interface ProgressBarProps extends Omit<AriaProgressBarProps, 'children' 
 }
 
 /**
- * Progress bar – measurable or long work (Figma: C26 Progress bar). Built on React Aria ProgressBar:
+ * Progress bar – measurable or long work. Built on React Aria ProgressBar:
  * role progressbar with value and value text. Use `valueLabel` for words („64 %, 2 of 3 files“).
  */
 export function ProgressBar({
@@ -124,7 +124,7 @@ export interface SkeletonProps {
 }
 
 /**
- * Skeleton – placeholder in the shape of the content (Figma: C26 Skeleton).
+ * Skeleton – placeholder in the shape of the content.
  * Hidden from screen readers; mark the loading region with aria-busy="true".
  */
 export function Skeleton({ shape = 'text', lines = 1, width, height, className }: SkeletonProps) {

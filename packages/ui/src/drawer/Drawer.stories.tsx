@@ -38,7 +38,7 @@ const profile: React.CSSProperties = {
   padding: 'var(--medo-space-2) var(--medo-space-2) var(--medo-space-3)',
 };
 
-/** Figma: _Example / Account – links act immediately, so no footer. */
+/** Example „Account“ – links act immediately, so no footer. */
 function AccountBody() {
   return (
     <>
@@ -121,7 +121,7 @@ const meta = {
     onOpenChange: { control: false },
   },
   parameters: {
-    medo: { code: 'C25', subtitle: 'A modal panel that slides in from the side – for account settings, filters, details or navigation.', figma: '240:88' },
+    medo: { subtitle: 'A modal panel that slides in from the side – for account settings, filters, details or navigation.' },
     docs: {
       description: {
         component:

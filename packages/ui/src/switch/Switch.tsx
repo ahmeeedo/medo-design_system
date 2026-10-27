@@ -17,7 +17,7 @@ export interface SwitchProps extends Omit<SwitchFieldProps, 'children' | 'classN
   className?: string;
 }
 
-/** Switch – on / off with immediate effect (Figma: C12 Switch). */
+/** Switch – on / off with immediate effect. */
 export function Switch({
   children,
   description,

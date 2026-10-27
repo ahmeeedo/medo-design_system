@@ -15,7 +15,7 @@ export interface MediaPlayButtonProps {
 }
 
 /**
- * Media play button – marks video on a thumbnail (Figma: C30 Media play button). Visual only: the whole
+ * Media play button – marks video on a thumbnail. Visual only: the whole
  * thumbnail is the hit area (a link or button around it); hover, pressed and focus come from there.
  */
 export function MediaPlayButton({ size = 'md', className }: MediaPlayButtonProps) {
@@ -56,7 +56,7 @@ export interface ImageProps extends Omit<ImgHTMLAttributes<HTMLImageElement>, 'a
 }
 
 /**
- * Image – an image with reserved space and calm loading states (Figma: C30 Image). Loading: blur-up preview or
+ * Image – an image with reserved space and calm loading states. Loading: blur-up preview or
  * Skeleton; the image fades in (250 ms; 100 ms with reduced motion). Error keeps the space and shows image-off;
  * the alt text stays available. Overlays (text, badge, play) only on the loaded image.
  */
@@ -150,7 +150,7 @@ export interface FigureProps {
   className?: string;
 }
 
-/** Figure – image with caption and credit (Figma: C30 Figure). A real figure + figcaption. */
+/** Figure – image with caption and credit. A real figure + figcaption. */
 export function Figure({ children, caption, credit, className }: FigureProps) {
   return (
     <figure className={cx('medo-figure', className)}>

@@ -23,7 +23,7 @@ export interface TabsProps extends Omit<AriaTabsProps, 'className' | 'style' | '
 }
 
 /**
- * Tabs – switch between views of the same context, one panel visible at a time (Figma: C22 Tabs).
+ * Tabs – switch between views of the same context, one panel visible at a time.
  * Built on React Aria Tabs: tablist / tab / tabpanel, only the selected tab is in the Tab order,
  * ← → move and select, Home / End. `keyboardActivation="manual"` for slow panels (select with Enter).
  * Keep the selected tab in the URL with `selectedKey` + `onSelectionChange`.

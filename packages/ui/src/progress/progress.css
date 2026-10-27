@@ -1,5 +1,5 @@
 /**
- * Loading & Progress – med.o Design System (Figma: C26 Loading & Progress)
+ * Loading & Progress – med.o Design System
  *
  * Spinner:      <span class="medo-spinner medo-spinner--md" role="progressbar" aria-label="Loading"><svg>…</svg></span>
  * Progress bar: label + value above, track, helper below. Modifiers --success · --error · --indeterminate

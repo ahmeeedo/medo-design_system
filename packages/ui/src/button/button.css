@@ -1,5 +1,5 @@
 /**
- * Button – med.o Design System (Figma: C01 Button)
+ * Button – med.o Design System
  *
  * Plain CSS on top of the design tokens. The same classes work in React, Vue,
  * Angular or plain HTML:
@@ -7,7 +7,7 @@
  *
  * Variants: primary · secondary · ghost · danger · text · ghost-danger
  * Sizes:    sm (32) · md (40) · lg (48)
- * Icon only: add medo-button--icon-only (Figma: C02 Icon Button), always with aria-label.
+ * Icon only: add medo-button--icon-only, always with aria-label.
  *
  * State contract: [data-hovered] [data-pressed] [data-focus-visible] [data-disabled] [data-pending]
  * (set by React Aria – other frameworks set the same). Plain HTML buttons without
@@ -204,7 +204,7 @@
   text-decoration: none;
 }
 
-/* ---------- Icon only (Figma: C02 Icon Button) ---------- */
+/* ---------- Icon only ---------- */
 
 .medo-button--icon-only {
   inline-size: var(--medo-size-control-md);
@@ -234,7 +234,7 @@
   block-size: var(--medo-size-icon-lg);
 }
 
-/* ---------- Media icon button (Figma: Media icon button) ----------
+/* ---------- Media icon button ----------
  * On images and video: media (overlay/media circle) · media-ghost (no fill, on a gradient bar).
  * Hover/pressed tint the fill with state/hover-on-media · state/pressed-on-media (same in both themes).
  * Focus: media 2 px ring outside · media-ghost 2 px ring inside. sm is 28 with a 44 px hit area.
@@ -276,7 +276,7 @@
   border-radius: var(--medo-radius-full);
 }
 
-/* ---------- Button group (Figma: C01 Button group) ----------
+/* ---------- Button group ----------
  * The main action sits at the end of the reading path.
  *   footer  – right, primary rightmost, destructive left (forms, dialogs, card footers)
  *   header  – right, next to a title, size sm

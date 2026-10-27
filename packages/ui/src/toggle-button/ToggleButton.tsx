@@ -37,7 +37,7 @@ export interface ToggleButtonProps extends Omit<AriaToggleButtonProps, 'children
 }
 
 /**
- * Toggle Button – a button that stays pressed (Figma: C15 Toggle Button).
+ * Toggle Button – a button that stays pressed.
  * Built on React Aria ToggleButton: announced as pressed / not pressed (aria-pressed).
  * For an immediate, local effect (bold, mute, favourite). Saved settings use Switch, navigation uses Tabs.
  */
@@ -90,7 +90,7 @@ export interface ToggleButtonGroupProps extends Omit<AriaToggleButtonGroupProps,
 }
 
 /**
- * Toggle button group (Figma: Toggle button group). Built on React Aria ToggleButtonGroup:
+ * Toggle button group. Built on React Aria ToggleButtonGroup:
  * Tab enters once on the selected item, arrow keys move between items.
  */
 export function ToggleButtonGroup({
@@ -145,7 +145,7 @@ export interface ToolbarProps extends Omit<AriaToolbarProps, 'className' | 'styl
 }
 
 /**
- * Toolbar – several toggle groups (and buttons) in one row (Figma: Toggle button group · Toolbar grouped).
+ * Toolbar – several toggle groups (and buttons) in one row.
  * Built on React Aria Toolbar: one Tab stop for the whole toolbar, arrow keys move across all groups.
  */
 export function Toolbar({ className, ...props }: ToolbarProps) {

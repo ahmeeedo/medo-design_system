@@ -22,7 +22,7 @@ export interface EmbedTexts {
   privacy: string;
 }
 
-/** Figma texts per type. provider: „YouTube“, „Google Maps“ · company: „Google“. */
+/** Texts per type. provider: „YouTube“, „Google Maps“ · company: „Google“. */
 export function defaultEmbedTexts(type: EmbedType, provider?: string, company?: string): EmbedTexts {
   const to = company ?? provider;
   if (type === 'video')
@@ -80,7 +80,7 @@ export interface EmbedConsentProps {
 }
 
 /**
- * Embed consent – two-click placeholder for third-party embeds (Figma: C30 Embed consent, GDPR / TTDSG § 25).
+ * Embed consent – two-click placeholder for third-party embeds.
  * Nothing loads from the provider – not even a thumbnail – until the user clicks. Then the iframe replaces the
  * placeholder in place and takes the focus. Compact below 480 px width (measured on the component).
  */

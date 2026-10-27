@@ -1,5 +1,5 @@
 /**
- * List view – med.o Design System (Figma: C29 List view)
+ * List view – med.o Design System
  *
  *   <div class="medo-list-view medo-list-view--plain|card" role="grid">
  *     <div class="medo-list-row medo-list-row--lines-1|2|3 [medo-list-row--unread]" role="row">
@@ -241,7 +241,7 @@
   }
 }
 
-/* ---------- Cards (Figma: C37 Table card – records on mobile) ---------- */
+/* ---------- Cards ---------- */
 
 .medo-list-view--cards {
   gap: var(--medo-space-3);
@@ -353,7 +353,7 @@
   }
 }
 
-/* ---------- Swipe (Figma: List row swipe) – touch only ----------
+/* ---------- Swipe – touch only ----------
  *   <div class="medo-list-row medo-list-row--swipe">
  *     <span class="medo-list-row__swipe-action --end|--start --danger|--primary" style="inline-size: |offset|">icon + label</span>
  *     <span class="medo-list-row__surface" style="transform">…row content…</span>

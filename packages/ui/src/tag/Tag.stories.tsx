@@ -74,7 +74,7 @@ const meta = {
     removedMessage: semantic,
   },
   parameters: {
-    medo: { code: 'C06', subtitle: 'Compact pill for a value. Removable in multi-select, selectable as a filter.', figma: '108:48' },
+    medo: { subtitle: 'Compact pill for a value. Removable in multi-select, selectable as a filter.' },
     docs: {
       description: {
         component:

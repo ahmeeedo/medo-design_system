@@ -22,7 +22,7 @@ export interface LinkProps extends Omit<AriaLinkProps, 'children' | 'className'>
 }
 
 /**
- * Link – navigates to a page, place or file (Figma: C45 Link). Built on React Aria Link:
+ * Link – navigates to a page, place or file. Built on React Aria Link:
  * a real `<a href>`, works with client-side routers through RouterProvider. For actions use Button.
  */
 export function Link({

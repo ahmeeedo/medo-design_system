@@ -35,7 +35,7 @@ const meta = {
     moreLabel: semantic,
   },
   parameters: {
-    medo: { code: 'C44', subtitle: 'Shows where a page sits in the hierarchy and links to the levels above.', figma: '431:30' },
+    medo: { subtitle: 'Shows where a page sits in the hierarchy and links to the levels above.' },
     docs: {
       description: {
         component:

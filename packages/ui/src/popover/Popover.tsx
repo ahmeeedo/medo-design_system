@@ -42,7 +42,7 @@ export interface PopoverProps {
 }
 
 /**
- * Popover – a small floating panel with interactive content, anchored to its trigger (Figma: C23 Popover).
+ * Popover – a small floating panel with interactive content, anchored to its trigger.
  * Opens on click, never on hover. Non-modal: the page stays usable; focus moves in, Esc or a click
  * outside closes it and focus returns to the trigger. One topic per popover, one popover at a time.
  */
@@ -144,7 +144,7 @@ export interface ToggletipProps {
 }
 
 /**
- * Toggletip – a short explanation behind an info button, next to a label or value (Figma: C23 Toggletip).
+ * Toggletip – a short explanation behind an info button, next to a label or value.
  * Opens on click, so it works with touch, keyboard and screen readers – unlike a tooltip.
  * Esc or a click outside closes it. Stays a popover on mobile (full width minus 16 px).
  */

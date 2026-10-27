@@ -19,7 +19,7 @@ export interface ListProps extends Omit<HTMLAttributes<HTMLUListElement | HTMLOL
 }
 
 /**
- * List – a real list in running text (Figma: C27 List): bullets, numbers or a feature list.
+ * List – a real list in running text: bullets, numbers or a feature list.
  * Plain markup, no library needed. Markers are neutral (text/secondary) in their own column; long items
  * wrap flush with their first line. Level 2 (a List inside a ListItem) switches the marker: ring, „a.“.
  */
@@ -75,7 +75,7 @@ export interface DescriptionListProps extends HTMLAttributes<HTMLDListElement> {
   children: ReactNode;
 }
 
-/** Description list – term–value pairs for details of a record, an order or a profile (Figma: Description list). */
+/** Description list – term–value pairs for details of a record, an order or a profile. */
 export function DescriptionList({ layout = 'auto', className, children, ...props }: DescriptionListProps) {
   return (
     <dl {...props} className={cx('medo-dl', `medo-dl--${layout}`, className)}>

@@ -71,7 +71,7 @@ const meta = {
       // second line as description (aria-describedby) – correct, but the rule counts all visible text.
       config: { rules: [{ id: 'landmark-unique', enabled: false }, { id: 'label-content-name-mismatch', enabled: false }] },
     },
-        medo: { code: 'C09', subtitle: 'A Select you can type into. Typing filters the list – for long lists, people, places or tags.', figma: '127:2306' },
+        medo: { subtitle: 'A Select you can type into. Typing filters the list – for long lists, people, places or tags.' },
     docs: {
       description: {
         component:

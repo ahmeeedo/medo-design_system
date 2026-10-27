@@ -291,7 +291,7 @@ function CalendarBody({ state, size, months, showWeekNumbers, t }: { state: View
 export interface CalendarProps<T extends DateValue> extends Omit<AriaCalendarProps<T>, 'children' | 'className' | 'style' | 'visibleDuration'>, SharedProps {}
 
 /**
- * Calendar – pick a day (Figma: C34 Calendar). React Aria Calendar: a grid with arrow keys (day/week),
+ * Calendar – pick a day. React Aria Calendar: a grid with arrow keys (day/week),
  * Page Up/Down (month), Shift + Page Up/Down (year), Home/End. The month-and-year button switches to a month
  * grid, then a year grid – far dates in three clicks. Weekdays and the first day of the week from the locale.
  */
@@ -312,7 +312,7 @@ export interface RangeCalendarProps<T extends DateValue> extends Omit<AriaRangeC
 }
 
 /**
- * Range calendar – pick a start and an end day (Figma: C34 Calendar, Selection Range). The first click sets the
+ * Range calendar – pick a start and an end day. The first click sets the
  * start, the second the end; hovering previews the range. Two months side by side on desktop, one on mobile.
  */
 export function RangeCalendar<T extends DateValue>({ size = 'md', showWeekNumbers, visibleMonths = 'auto', texts, className, ...props }: RangeCalendarProps<T>) {

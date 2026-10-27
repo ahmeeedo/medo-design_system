@@ -118,7 +118,7 @@ export interface UploadTexts {
   uploading: (name: string) => string;
   /** „1.6 of 2.4 MB · 64 %“ */
   progress: (loaded: string, total: string, percent: number) => string;
-  /** Validation (Figma: Validation table). */
+  /** Validation. */
   typeNotAllowed: (names: string, types: string) => string;
   tooLarge: (size: string, max: string) => string;
   tooMany: (max: number) => string;
@@ -164,7 +164,7 @@ export interface FileItemProps extends ItemActions {
 }
 
 /**
- * File item – one file in the upload list (Figma: C33 File item). Uploading: progress + cancel · Done: size +
+ * File item – one file in the upload list. Uploading: progress + cancel · Done: size +
  * remove · Error: the reason + retry + remove. Images show a 40 px thumbnail, other files a type icon.
  */
 export function FileItem({ file, onRemove, onCancel, onRetry, texts: own, className }: FileItemProps) {
@@ -232,7 +232,7 @@ export interface FileTileProps extends ItemActions {
 }
 
 /**
- * File tile – an image in the grid view (Figma: C33 File tile). Uploading: dark overlay with % and bar ·
+ * File tile – an image in the grid view. Uploading: dark overlay with % and bar ·
  * Done: remove top right · Error: danger border, the overlay retries, the caption names the problem.
  */
 export function FileTile({ file, onRemove, onCancel, onRetry, texts: own, className }: FileTileProps) {
@@ -329,7 +329,7 @@ async function filesFrom(e: DropEvent) {
 }
 
 /**
- * Dropzone – drag and drop files or choose them (Figma: C33 Dropzone). Built on React Aria DropZone +
+ * Dropzone – drag and drop files or choose them. Built on React Aria DropZone +
  * FileTrigger: the button always opens the system picker (drag and drop is only a shortcut, WCAG 2.5.7),
  * the zone is focusable for paste (Ctrl+V). Below 640 px use the FileTrigger instead.
  */
@@ -405,7 +405,7 @@ export interface FileTriggerProps extends PickerProps {
 }
 
 /**
- * File trigger – compact upload for forms and mobile (Figma: C33 File trigger): label, Button secondary with
+ * File trigger – compact upload for forms and mobile: label, Button secondary with
  * upload icon, hint, error. The system picker offers camera, photos and files on touch devices.
  */
 export function FileTrigger({
@@ -511,7 +511,7 @@ export interface UploadFieldProps extends Omit<ItemActions, 'texts'> {
 }
 
 /**
- * Upload field – ready composition (Figma: C33 Upload field). Checks type, size and count in the browser
+ * Upload field – ready composition. Checks type, size and count in the browser
  * before anything is uploaded (check again on the server). Rejected types and too many files show at the
  * picker, too large files as an error row – removable. Results are announced in a polite live region.
  */

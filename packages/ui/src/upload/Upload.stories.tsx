@@ -121,7 +121,7 @@ const meta = {
     onRetry: { control: false },
   },
   parameters: {
-    medo: { code: 'C33', subtitle: 'Add files by drag and drop or by choosing them – with clear limits, progress and fixable errors.', figma: '303:26' },
+    medo: { subtitle: 'Add files by drag and drop or by choosing them – with clear limits, progress and fixable errors.' },
     docs: {
       description: {
         component:

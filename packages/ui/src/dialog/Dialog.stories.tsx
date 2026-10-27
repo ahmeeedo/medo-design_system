@@ -16,7 +16,7 @@ const roles = [
 
 const form: React.CSSProperties = { display: 'grid', gap: 'var(--medo-space-4)' };
 
-/** The Figma example „Invite member“: the form submits through the main action (form id). */
+/** Example „Invite member“: the form submits through the main action (form id). */
 function InviteForm({ close, onChange }: { close: () => void; onChange?: (dirty: boolean) => void }) {
   return (
     <form
@@ -84,7 +84,7 @@ const meta = {
     onOpenChange: { control: false },
   },
   parameters: {
-    medo: { code: 'C19', subtitle: 'A modal window for a focused task. The page behind is blocked until it closes.', figma: '203:236' },
+    medo: { subtitle: 'A modal window for a focused task. The page behind is blocked until it closes.' },
     docs: {
       description: {
         component:

@@ -1,5 +1,6 @@
 # Storybook tests: every story renders in headless Chromium, axe checks WCAG 2.2 AA (Light and Dark),
 # play functions test keyboard, focus and pointer. Same command as locally: npm test.
+# Then the npm packages are built once, so a release never fails on a type error.
 name: Storybook tests
 
 on:
@@ -35,3 +36,6 @@ jobs:
       - run: npx playwright install --with-deps chromium
 
       - run: npm test
+
+      # The npm packages must build (types included) before they can be released.
+      - run: npm run build:packages
