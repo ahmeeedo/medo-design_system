@@ -167,7 +167,7 @@
   background-color: var(--medo-color-border-strong);
 }
 
-/* ---------- Group: max 4 + „+N“, 25 % overlap, 2 px ring ---------- */
+/* ---------- Group: max 4 + “+N”, 25 % overlap, 2 px ring ---------- */
 
 .medo-avatar-group {
   display: inline-flex;

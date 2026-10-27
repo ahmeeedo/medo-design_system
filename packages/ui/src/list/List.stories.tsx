@@ -1,13 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { DescriptionItem, DescriptionList, List, ListItem } from './List';
 import { Card } from '../card/Card';
-import { LightDark } from '../story-helpers';
+import { Examples } from '../story-helpers';
 
 const caption: React.CSSProperties = { font: 'var(--medo-typography-code-sm)', color: 'var(--medo-color-text-secondary)' };
 const cols: React.CSSProperties = { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(14rem, 1fr))', gap: 'var(--medo-space-8)' };
 
 const meta = {
-  title: 'Components/List',
+  title: 'Components/Data display/List',
   component: List,
   tags: ['autodocs'],
   args: { type: 'bullet', size: 'md', children: null },
@@ -24,8 +24,8 @@ const meta = {
         component:
           'Real lists – `ul`, `ol` and `dl`; the markers are drawn in CSS, so the lists set `role="list"` (Safari/VoiceOver drops it otherwise). Plain markup, no library. ' +
           'Markers are neutral (text/secondary) in their own column (24 px, numbers 28 px with tabular figures, right aligned); long items wrap flush with their first line. ' +
-          'A List inside a ListItem is level 2 (ring, „a.“) – max 2 levels. Without `size` the list follows the surrounding text. ' +
-          'Feature list: check in text/brand; `excluded` items are muted with a cross and a hidden „Not included:“. ' +
+          'A List inside a ListItem is level 2 (ring, “a.”) – max 2 levels. Without `size` the list follows the surrounding text. ' +
+          'Feature list: check in text/brand; `excluded` items are muted with a cross and a hidden “Not included:”. ' +
           '`DescriptionList` for term–value pairs: horizontal, stacked automatically when it is narrower than 22.5 rem (360 px) (container query). ' +
           'Styles: `medo-list`, `medo-list--{bullet|number|check}`, `medo-list--{sm|md|lg}`, `medo-list__item--excluded`, `medo-dl`.',
       },
@@ -48,7 +48,7 @@ export const Playground: Story = {};
 export const Types: Story = {
   parameters: { docs: { description: { story: 'Bullets for unordered points, numbers when order matters, check and cross for features.' } } },
   render: () => (
-    <LightDark>
+    <Examples>
       <div style={cols}>
         <List size="md">
           <ListItem>Design tokens</ListItem>
@@ -66,7 +66,7 @@ export const Types: Story = {
           <ListItem excluded>Single sign-on (SSO)</ListItem>
         </List>
       </div>
-    </LightDark>
+    </Examples>
   ),
 };
 
@@ -75,7 +75,7 @@ export const Nesting: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Level 2 is indented 24 px: ring instead of dot, „a.“ instead of „1.“. Long items wrap flush with their first line. Numbers line up: „9.“ and „10.“.',
+        story: 'Level 2 is indented 24 px: ring instead of dot, “a.” instead of “1.”. Long items wrap flush with their first line. Numbers line up: “9.” and “10.”.',
       },
     },
   },
@@ -135,7 +135,7 @@ export const Sizes: Story = {
 export const FeatureList: Story = {
   name: 'Feature list',
   parameters: {
-    docs: { description: { story: 'Check for included, cross for not included – muted, with „Not included:“ as hidden text. All items in one list, included first.' } },
+    docs: { description: { story: 'Check for included, cross for not included – muted, with “Not included:” as hidden text. All items in one list, included first.' } },
   },
   render: () => (
     <div style={{ maxInlineSize: '22.5rem' }}>
@@ -174,7 +174,7 @@ export const Description: Story = {
     },
   },
   render: () => (
-    <LightDark>
+    <Examples>
       <span style={caption}>auto · wide</span>
       <DescriptionList>
         <Details />
@@ -185,6 +185,6 @@ export const Description: Story = {
           <Details />
         </DescriptionList>
       </div>
-    </LightDark>
+    </Examples>
   ),
 };

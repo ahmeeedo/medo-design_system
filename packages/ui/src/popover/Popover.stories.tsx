@@ -42,7 +42,7 @@ function LinkForm({ close }: { close: () => void }) {
 }
 
 const meta = {
-  title: 'Components/Popover',
+  title: 'Components/Overlays/Popover',
   component: Popover,
   tags: ['autodocs'],
   args: { title: 'Filter', size: 'md', overlay: 'popover', primaryAction: 'none' as never, children: null, 'aria-label': 'Filter' },
@@ -152,7 +152,7 @@ export const ToggletipStory: Story = {
       description: {
         story:
           'For a short explanation next to a label or value. The info button opens it on click, so it works with touch, keyboard and screen readers – unlike a tooltip. ' +
-          'Its name names the topic („About billing email“). Text plus an optional link. On mobile it stays a popover.',
+          'Its name names the topic (“About billing email”). Text plus an optional link. On mobile it stays a popover.',
       },
     },
   },
@@ -167,7 +167,7 @@ export const ToggletipStory: Story = {
 };
 
 export const Mobile: Story = {
-  name: 'Mobile (below 640 px)',
+  name: 'On mobile',
   parameters: {
     docs: {
       description: {

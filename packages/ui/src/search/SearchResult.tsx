@@ -20,13 +20,13 @@ export interface SearchResultProps {
   href: string;
   /** Search term: shown in bold in title and snippet (every match), never by colour alone. */
   query?: string;
-  /** Where it lives („Help center › Billing“). */
+  /** Where it lives (“Help center › Billing”). */
   path?: ReactNode;
   /** Text around the match, max 2 lines. A string gets the highlight. */
   snippet?: ReactNode;
-  /** Type label as Badge sm („Page“, „PDF“, „Video“). */
+  /** Type label as Badge sm (“Page”, “PDF”, “Video”). */
   badge?: string;
-  /** Meta text next to the badge („Updated 3 days ago“). */
+  /** Meta text next to the badge (“Updated 3 days ago”). */
   meta?: ReactNode;
   /** Person: Avatar (sized lg automatically). Media: an image (4:3; 128 wide, 160 in aesthetic). Overrides the type icon. */
   leading?: ReactNode;

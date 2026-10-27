@@ -8,7 +8,7 @@ import { ListRow, ListView } from '../list-view/ListView';
 import { Avatar } from '../avatar/Avatar';
 import { Column, Table, TableBody, TableHeader } from '../table/Table';
 import { TextField } from '../text-field/TextField';
-import { LightDark, semantic, slot } from '../story-helpers';
+import { Examples, semantic, slot } from '../story-helpers';
 
 const caption: React.CSSProperties = { font: 'var(--medo-typography-code-sm)', color: 'var(--medo-color-text-secondary)' };
 const grid: React.CSSProperties = { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(20rem, 1fr))', gap: 'var(--medo-space-6)', alignItems: 'start' };
@@ -55,7 +55,7 @@ const illustration = (
 );
 
 const meta = {
-  title: 'Components/Empty State',
+  title: 'Components/Feedback/Empty State',
   component: EmptyState,
   tags: ['autodocs'],
   args: { type: 'first-use', size: 'page', ...examples['first-use'] },
@@ -90,10 +90,10 @@ const meta = {
     docs: {
       description: {
         component:
-          'Five types with their own icon and tone: first use (folder), no results (search), error (danger), no access (lock), all done (success). The text comes from the app – never „No data“. ' +
+          'Five types with their own icon and tone: first use (folder), no results (search), error (danger), no access (lock), all done (success). The text comes from the app – never “No data”. ' +
           'Sizes: page (a whole view, 480), section (a card or panel, 400), inline (a list or table, 320 – the header stays). ' +
-          'Actions are structured: `action` is primary for first use and secondary otherwise (at most one primary); `secondaryAction` is a text button or, with `href`, a Link. „All done“ needs no action. ' +
-          'Page and section are a `<section>` named by their heading (`headingLevel`); inline adds no landmark. „No results“ is announced politely (`role="status"`), focus stays in the search field. Icon and illustration are hidden from screen readers. ' +
+          'Actions are structured: `action` is primary for first use and secondary otherwise (at most one primary); `secondaryAction` is a text button or, with `href`, a Link. “All done” needs no action. ' +
+          'Page and section are a `<section>` named by their heading (`headingLevel`); inline adds no landmark. “No results” is announced politely (`role="status"`), focus stays in the search field. Icon and illustration are hidden from screen readers. ' +
           'Styles: `medo-empty-state`, `medo-empty-state--{page|section|inline}`, `medo-icon-tile`.',
       },
     },
@@ -108,13 +108,13 @@ export const Playground: Story = {};
 export const Types: Story = {
   parameters: { docs: { description: { story: 'Each type with its default icon and tone, and example copy. Section size.' } } },
   render: () => (
-    <LightDark>
+    <Examples>
       {(Object.keys(examples) as (keyof typeof examples)[]).map((type) => (
         <div key={type} style={frame}>
           <EmptyState type={type} size="section" {...examples[type]} />
         </div>
       ))}
-    </LightDark>
+    </Examples>
   ),
 };
 
@@ -220,7 +220,7 @@ export const NoResults: Story = {
     docs: {
       description: {
         story:
-          'Type to filter. The list keeps its frame; „No results“ is announced politely while focus stays in the search field. „Show all people“ clears the search and returns focus to the field.',
+          'Type to filter. The list keeps its frame; “No results” is announced politely while focus stays in the search field. “Show all people” clears the search and returns focus to the field.',
       },
     },
   },

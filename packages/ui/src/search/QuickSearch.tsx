@@ -27,9 +27,9 @@ export interface QuickSearchProps<T extends object> {
   items?: Iterable<T>;
   /** Opens the highlighted hit (Enter or click). */
   onAction?: (key: React.Key) => void;
-  /** „All results“: the search page with the same term. */
+  /** “All results”: the search page with the same term. */
   allResultsHref?: (query: string) => string;
-  /** Enter without a highlighted hit, and „Search all content“ when nothing matches. */
+  /** Enter without a highlighted hit, and “Search all content” when nothing matches. */
   onSearch?: (query: string) => void;
   /** Texts (localize). */
   'aria-label'?: string;
@@ -100,7 +100,7 @@ export function QuickSearch<T extends object>({
 
   const term = query.trim();
   const close = () => setOpen(false);
-  // The list reports when nothing matches; „Search all content“ then sits below it (a button may not live inside a listbox).
+  // The list reports when nothing matches; “Search all content” then sits below it (a button may not live inside a listbox).
   const [empty, setEmpty] = useState(false);
 
   return (
@@ -181,7 +181,7 @@ export function QuickSearch<T extends object>({
   );
 }
 
-/** Renders the „no results“ message and tells QuickSearch that the list is empty. */
+/** Renders the “no results” message and tells QuickSearch that the list is empty. */
 function EmptyReporter({ message, onChange }: { message: string; onChange: (empty: boolean) => void }) {
   useLayoutEffect(() => {
     onChange(true);

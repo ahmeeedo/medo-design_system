@@ -3,14 +3,14 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, fn } from 'storybook/test';
 import { Slider, SliderField } from './Slider';
 import { NumberField } from '../number-field/NumberField';
-import { interactionTest, LightDark, semantic } from '../story-helpers';
+import { interactionTest, Examples, semantic } from '../story-helpers';
 
 const box: React.CSSProperties = { maxInlineSize: '20rem' };
 const percent = { style: 'percent', maximumFractionDigits: 0 } as const;
 const euro = { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 } as const;
 
 const meta = {
-  title: 'Components/Slider',
+  title: 'Components/Forms/Slider',
   component: Slider,
   tags: ['autodocs'],
   args: {
@@ -49,7 +49,7 @@ const meta = {
       description: {
         component:
           'React Aria Slider. Single or range (`defaultValue={[120, 480]}`). The value is always shown next to the label and read out in the same format (`formatOptions`, Intl). ' +
-          'Track 4 px, fill action/primary, thumb 20 px with a 44 px hit area; hover and pressed show a halo, while dragging a tooltip repeats the value. Arrow keys one step, Page Up/Down 10 %, Home/End; a click on the track moves the nearest thumb; range thumbs never cross and get their own names („Minimum price“). ' +
+          'Track 4 px, fill action/primary, thumb 20 px with a 44 px hit area; hover and pressed show a halo, while dragging a tooltip repeats the value. Arrow keys one step, Page Up/Down 10 %, Home/End; a click on the track moves the nearest thumb; range thumbs never cross and get their own names (“Minimum price”). ' +
           'Ticks only for ≤ 10 steps. **SliderField** adds number inputs for exact values; **NumberField** is the number input on its own (Input look, Intl format, clamps on blur). Update the value while dragging, apply expensive filters on `onChangeEnd`. Styles: `medo-slider`, `medo-slider-field`.',
       },
     },
@@ -70,7 +70,7 @@ export const SingleAndRange: Story = {
   name: 'Single and range',
   parameters: { docs: { description: { story: 'Single for one value, range for from–to. Drag a thumb: the tooltip repeats the value above it.' } } },
   render: () => (
-    <LightDark>
+    <Examples>
       <div style={box}>
         <Slider label="Volume" defaultValue={0.4} maxValue={1} step={0.01} formatOptions={percent} />
       </div>
@@ -80,7 +80,7 @@ export const SingleAndRange: Story = {
       <div style={box}>
         <Slider label="Volume" defaultValue={0.4} maxValue={1} step={0.01} formatOptions={percent} isDisabled />
       </div>
-    </LightDark>
+    </Examples>
   ),
 };
 

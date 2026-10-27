@@ -34,20 +34,20 @@ function unitOf(bytes: number) {
   return { value, i, digits: i < 2 ? 0 : 1 };
 }
 
-/** „2.4 MB“, „860 kB“ – decimal units like the operating systems' file dialogs. */
+/** “2.4 MB”, “860 kB” – decimal units like the operating systems' file dialogs. */
 export function formatBytes(bytes: number, locale = 'en-US') {
   const { value, i, digits } = unitOf(bytes);
   return new Intl.NumberFormat(locale, { style: 'unit', unit: units[i], unitDisplay: 'short', maximumFractionDigits: digits }).format(value);
 }
 
-/** „1.6“ when both values share the unit („1.6 of 2.4 MB“), else the full size („860 kB“). */
+/** “1.6” when both values share the unit (“1.6 of 2.4 MB”), else the full size (“860 kB”). */
 function formatLoaded(loaded: number, total: number, locale: string) {
   const a = unitOf(loaded);
   if (a.i !== unitOf(total).i) return formatBytes(loaded, locale);
   return new Intl.NumberFormat(locale, { maximumFractionDigits: a.digits }).format(a.value);
 }
 
-/** Accept list as for <input accept>: „.pdf“, „image/*“, „application/pdf“. */
+/** Accept list as for <input accept>: “.pdf”, “image/*”, “application/pdf”. */
 function isAccepted(file: File, accepted?: string[]) {
   if (!accepted?.length) return true;
   const name = file.name.toLowerCase();
@@ -63,7 +63,7 @@ function isAccepted(file: File, accepted?: string[]) {
 /* ---------- File name (truncates in the middle) ---------- */
 
 /**
- * The start shrinks and gets the „…“, the last 12 characters (incl. extension) always stay visible.
+ * The start shrinks and gets the “…”, the last 12 characters (incl. extension) always stay visible.
  * No measuring: two spans and CSS. The full name is the accessible text and the hover title.
  */
 function FileName({ name, className }: { name: string; className?: string }) {
@@ -94,11 +94,11 @@ export interface UploadFile {
   status: 'uploading' | 'done' | 'error';
   /** Uploaded bytes (ProgressEvent.loaded). Without it the bar is indeterminate. */
   loaded?: number;
-  /** What happened and how to fix it („Upload interrupted. Check your connection and retry.“). No error codes. */
+  /** What happened and how to fix it (“Upload interrupted. Check your connection and retry.”). No error codes. */
   error?: string;
   /** Thumbnail (URL.createObjectURL(file) or the server URL). */
   previewUrl?: string;
-  /** false hides „Retry“ (e.g. the server rejected the file). Default true. */
+  /** false hides “Retry” (e.g. the server rejected the file). Default true. */
   canRetry?: boolean;
 }
 
@@ -116,7 +116,7 @@ export interface UploadTexts {
   retryShort: string;
   /** Name of the progress bar. */
   uploading: (name: string) => string;
-  /** „1.6 of 2.4 MB · 64 %“ */
+  /** “1.6 of 2.4 MB · 64 %” */
   progress: (loaded: string, total: string, percent: number) => string;
   /** Validation. */
   typeNotAllowed: (names: string, types: string) => string;
@@ -300,11 +300,11 @@ export function FileTile({ file, onRemove, onCancel, onRetry, texts: own, classN
 /* ---------- Dropzone ---------- */
 
 interface PickerProps {
-  /** Accepted types as for <input accept>: [„.pdf“, „image/*“]. Checked again before upload. */
+  /** Accepted types as for <input accept>: [“.pdf”, “image/*”]. Checked again before upload. */
   acceptedFileTypes?: string[];
   /** Several files at once. Default true. */
   allowsMultiple?: boolean;
-  /** Mobile: open the camera first („environment“ = back camera). */
+  /** Mobile: open the camera first (“environment” = back camera). */
   defaultCamera?: 'user' | 'environment';
   isDisabled?: boolean;
   /** Types, size and count – shown before the user picks a file. */
@@ -400,7 +400,7 @@ export function Dropzone({
 
 export interface FileTriggerProps extends PickerProps {
   label?: ReactNode;
-  /** Visual marker; check „at least one file“ on submit and pass `errorMessage`. */
+  /** Visual marker; check “at least one file” on submit and pass `errorMessage`. */
   isRequired?: boolean;
 }
 
@@ -493,14 +493,14 @@ export interface UploadFieldProps extends Omit<ItemActions, 'texts'> {
    */
   layout?: 'auto' | 'list' | 'compact' | 'grid';
   acceptedFileTypes?: string[];
-  /** Readable form of the types for hint and message („PDF, JPG or PNG“). */
+  /** Readable form of the types for hint and message (“PDF, JPG or PNG”). */
   typesLabel?: string;
   /** Max size per file in bytes. */
   maxSize?: number;
   /** Max number of files. 1 = single file picker. */
   maxFiles?: number;
   defaultCamera?: 'user' | 'environment';
-  /** Default: „{typesLabel} · max. {maxSize} each“. */
+  /** Default: “{typesLabel} · max. {maxSize} each”. */
   hint?: ReactNode;
   /** Field error from the app (e.g. required on submit). Wins over the built-in validation message. */
   errorMessage?: ReactNode;

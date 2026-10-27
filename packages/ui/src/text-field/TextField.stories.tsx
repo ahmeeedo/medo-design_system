@@ -4,10 +4,10 @@ import { expect } from 'storybook/test';
 import { useState } from 'react';
 import { Eye, EyeOff, Mail, Search } from 'lucide-react';
 import { InputAction, TextField } from './TextField';
-import { interactionTest, LightDark, slot, stack } from '../story-helpers';
+import { interactionTest, slot, stack } from '../story-helpers';
 
 const meta = {
-  title: 'Components/Text Field',
+  title: 'Components/Forms/Text Field',
   component: TextField,
   tags: ['autodocs'],
   args: {
@@ -118,18 +118,6 @@ export const Textarea: Story = {
         characterLimit={200}
       />
     </div>
-  ),
-};
-
-export const LightAndDark: Story = {
-  name: 'Light and Dark',
-  parameters: { layout: 'fullscreen' },
-  render: (args) => (
-    <LightDark>
-      <TextField {...args} label="Default" />
-      <TextField {...args} label="Invalid" defaultValue="name@" isInvalid />
-      <TextField {...args} label="Disabled" defaultValue="anna@example.com" isDisabled />
-    </LightDark>
   ),
 };
 

@@ -6,15 +6,15 @@ import '../utils/utilities.css';
 import './link.css';
 
 export interface LinkProps extends Omit<AriaLinkProps, 'children' | 'className'> {
-  /** The text says where it goes („Privacy policy“, not „click here“). */
+  /** The text says where it goes (“Privacy policy”, not “click here”). */
   children: ReactNode;
   /** inline: inside running text, always underlined · standalone: own line, underline on hover. */
   variant?: 'inline' | 'standalone';
   /** Standalone only: sm (label/sm) · md (label/md). Inline links take the size of the surrounding text. */
   size?: 'sm' | 'md';
-  /** Another website: shows the external icon. With target="_blank" screen readers also hear „opens in a new tab“. */
+  /** Another website: shows the external icon. With target="_blank" screen readers also hear “opens in a new tab”. */
   external?: boolean;
-  /** Standalone only: arrow after the text („View all →“). */
+  /** Standalone only: arrow after the text (“View all →”). */
   arrow?: boolean;
   /** Hidden text for links that open a new tab. */
   newTabLabel?: string;

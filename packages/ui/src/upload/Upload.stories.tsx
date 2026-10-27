@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, fn, waitFor } from 'storybook/test';
 import { Dropzone, FileItem, FileTile, FileTrigger, UploadField, type UploadFile } from './Upload';
-import { interactionTest, LightDark, samplePhoto, semantic } from '../story-helpers';
+import { interactionTest, Examples, samplePhoto, semantic } from '../story-helpers';
 
 /* Sample thumbnails (shared story images, inline SVG, no network). */
 const photo = samplePhoto(0, { width: 400, height: 400 });
@@ -17,7 +17,7 @@ const stack: React.CSSProperties = { display: 'grid', gap: 'var(--medo-space-2)'
 const tiles: React.CSSProperties = { display: 'flex', gap: 'var(--medo-space-6)', flexWrap: 'wrap' };
 const actions = { onRemove: fn(), onCancel: fn(), onRetry: fn() };
 
-/** Simulated uploads: progress every 300 ms; names containing „offline“ fail. */
+/** Simulated uploads: progress every 300 ms; names containing “offline” fail. */
 function useFakeUploads(initial: UploadFile[] = []) {
   const [files, setFiles] = useState<UploadFile[]>(initial);
   const timer = useRef<number>(undefined);
@@ -79,7 +79,7 @@ function Demo(args: Partial<PlaygroundArgs> & { initial?: UploadFile[] }) {
 }
 
 const meta = {
-  title: 'Components/Upload',
+  title: 'Components/Forms/Upload',
   component: UploadField,
   tags: ['autodocs'],
   args: {
@@ -103,11 +103,11 @@ const meta = {
       options: ['auto', 'list', 'compact', 'grid'],
       description: 'auto: Dropzone + list, File trigger below 640 px. grid: images only.',
     },
-    maxFiles: { control: { type: 'number', min: 1, max: 10 }, description: '1: single file picker („Choose file“).' },
+    maxFiles: { control: { type: 'number', min: 1, max: 10 }, description: '1: single file picker (“Choose file”).' },
     maxSize: { control: false },
     acceptedFileTypes: { control: false },
     typesLabel: { control: 'text' },
-    errorMessage: { control: 'text', description: 'Field error from the app, e.g. „Add at least one file.“ on submit.' },
+    errorMessage: { control: 'text', description: 'Field error from the app, e.g. “Add at least one file.” on submit.' },
     isRequired: { control: 'boolean' },
     isDisabled: { control: 'boolean' },
     hint: { control: 'text', description: 'Default: types and max size.' },
@@ -151,12 +151,12 @@ type Story = StoryObj<typeof meta>;
 export const Playground: Story = {};
 
 export const Layouts: Story = {
-  name: 'List · Grid · Compact',
+  name: 'Layouts',
   parameters: {
     docs: {
       description: {
         story:
-          'List for documents and mixed uploads: images show their thumbnail, other files the type icon. Grid only when nothing but images is allowed. Compact for forms and mobile. Try a file named „…offline….pdf“ to see the network error and Retry.',
+          'List for documents and mixed uploads: images show their thumbnail, other files the type icon. Grid only when nothing but images is allowed. Compact for forms and mobile. Try a file named “…offline….pdf” to see the network error and Retry.',
       },
     },
   },
@@ -200,23 +200,23 @@ export const DropzoneStates: Story = {
     docs: {
       description: {
         story:
-          'Dashed border = „drop here“. Dragging files over it turns the border solid action/primary on surface/brand-subtle and changes the text („Drop files to upload“). Focus (Tab) shows the focus ring – paste works then. Error: dashed border/danger + message. Disabled 50 %.',
+          'Dashed border = “drop here”. Dragging files over it turns the border solid action/primary on surface/brand-subtle and changes the text (“Drop files to upload”). Focus (Tab) shows the focus ring – paste works then. Error: dashed border/danger + message. Disabled 50 %.',
       },
     },
   },
   render: () => (
-    <LightDark>
+    <Examples>
       <div style={{ display: 'grid', gap: 'var(--medo-space-4)' }}>
         <Dropzone hint="PDF, JPG or PNG · max. 10 MB each" onSelect={fn()} />
         <Dropzone hint="PDF, JPG or PNG · max. 10 MB each" errorMessage="“Contract.docx” is not allowed. Use PDF, JPG or PNG." onSelect={fn()} />
         <Dropzone hint="PDF, JPG or PNG · max. 10 MB each" isDisabled onSelect={fn()} />
       </div>
-    </LightDark>
+    </Examples>
   ),
 };
 
 export const Files: Story = {
-  name: 'Files: uploading · done · error',
+  name: 'File states',
   parameters: {
     docs: {
       description: {
@@ -226,7 +226,7 @@ export const Files: Story = {
     },
   },
   render: () => (
-    <LightDark>
+    <Examples>
       <div style={{ display: 'grid', gap: 'var(--medo-space-6)' }}>
         <div style={stack}>
           <FileItem {...actions} file={{ id: '1', name: 'Invoice_2026-10_final.pdf', size: 2.4 * MB, type: pdf, status: 'uploading', loaded: 1.6 * MB }} />
@@ -251,7 +251,7 @@ export const Files: Story = {
           <FileTile {...actions} file={{ id: 'c', name: 'Team-offsite.jpg', size: 14 * MB, status: 'error', error: 'Too large · 14 MB', previewUrl: photo }} />
         </div>
       </div>
-    </LightDark>
+    </Examples>
   ),
 };
 
@@ -261,7 +261,7 @@ export const LongNames: Story = {
     docs: {
       description: {
         story:
-          'Names truncate in the middle, so the start and the extension stay visible. Always one line; the meta line never truncates. The full name is the hover title and part of the accessible names („Remove Quarterly-report_…_final-v3.pdf“), shown in the button tooltips.',
+          'Names truncate in the middle, so the start and the extension stay visible. Always one line; the meta line never truncates. The full name is the hover title and part of the accessible names (“Remove Quarterly-report_…_final-v3.pdf”), shown in the button tooltips.',
       },
     },
   },
@@ -292,22 +292,22 @@ export const LongNames: Story = {
 };
 
 export const Compact: Story = {
-  name: 'File trigger (compact)',
+  name: 'File trigger',
   parameters: {
     docs: {
       description: {
         story:
-          'Forms and mobile: no drag and drop on touch. The system picker offers camera, photos and files on its own; `acceptedFileTypes={["image/*"]}` shows the camera first. Required: check on submit and pass `errorMessage` („Add at least one file.“).',
+          'Forms and mobile: no drag and drop on touch. The system picker offers camera, photos and files on its own; `acceptedFileTypes={["image/*"]}` shows the camera first. Required: check on submit and pass `errorMessage` (“Add at least one file.”).',
       },
     },
   },
   render: () => (
-    <LightDark>
+    <Examples>
       <div style={{ display: 'grid', gap: 'var(--medo-space-6)' }}>
         <FileTrigger label="Attachments" hint="PDF or JPG · max. 10 MB" allowsMultiple={false} onSelect={fn()} />
         <FileTrigger label="Attachments" isRequired hint="PDF or JPG · max. 10 MB" errorMessage="Add at least one file." allowsMultiple={false} onSelect={fn()} />
       </div>
-    </LightDark>
+    </Examples>
   ),
 };
 
@@ -349,7 +349,7 @@ export const InteractionTest: Story = {
     // Too large: an error row at the file.
     pick(canvasElement, [new File([new Uint8Array(1_400_000)], 'Big.pdf', { type: 'application/pdf' })]);
     await expect((await canvas.findAllByText('File is 1.4 MB – max. 1 MB allowed')).some((el) => el.checkVisibility())).toBe(true);
-    // Valid: uploads with its own progress, then „uploaded“ is announced.
+    // Valid: uploads with its own progress, then “uploaded” is announced.
     pick(canvasElement, [new File([new Uint8Array(400_000)], 'Offer.pdf', { type: 'application/pdf' })]);
     await expect(await canvas.findByRole('progressbar', { name: 'Uploading Offer.pdf' })).toBeInTheDocument();
     await waitFor(() => expect(canvas.getByRole('status')).toHaveTextContent('Offer.pdf uploaded'), { timeout: 4000 });

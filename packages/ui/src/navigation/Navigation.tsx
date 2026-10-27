@@ -47,9 +47,9 @@ export interface NavItemProps extends Omit<AriaLinkProps, 'children' | 'classNam
   isCurrent?: boolean;
   /** Number in the item (Badge count, neutral). */
   count?: number;
-  /** Screen-reader text of the count („3 unread“, „12 projects“). */
+  /** Screen-reader text of the count (“3 unread”, “12 projects”). */
   countLabel?: string;
-  /** The count is new or unread: in the rail it turns into a dot. Plain totals („12 projects“) are hidden there. */
+  /** The count is new or unread: in the rail it turns into a dot. Plain totals (“12 projects”) are hidden there. */
   unread?: boolean;
 }
 
@@ -122,7 +122,7 @@ function containsCurrent(children: ReactNode) {
 /**
  * A group of links behind a disclosure button (aria-expanded) – never a menu.
  * Header: a dropdown panel on the popover surface; Tab moves through the links, Esc or a click outside closes.
- * Sidebar and sheet: opens in place, one level. The parent shows „current“ only while it is closed.
+ * Sidebar and sheet: opens in place, one level. The parent shows “current” only while it is closed.
  */
 export function NavGroup({ label, icon, children, defaultOpen }: NavGroupProps) {
   const variant = useContext(NavVariantContext);
@@ -211,7 +211,7 @@ export function NavGroup({ label, icon, children, defaultOpen }: NavGroupProps) 
 export interface NavListProps {
   /** Form of the items: header (row) · sidebar · rail · sheet. */
   variant?: NavVariant;
-  /** Name of the navigation region („Footer“, „Account“). */
+  /** Name of the navigation region (“Footer”, “Account”). */
   'aria-label': string;
   children: ReactNode;
   className?: string;
@@ -231,7 +231,7 @@ export function NavList({ variant = 'sidebar', 'aria-label': label, children, cl
 /* ---------- Section (sidebar) ---------- */
 
 export interface NavSectionProps {
-  /** Overline heading („Workspace“). In the rail the section is divided by a line. */
+  /** Overline heading (“Workspace”). In the rail the section is divided by a line. */
   title: string;
   children: ReactNode;
 }
@@ -264,7 +264,7 @@ export interface SkipLinkProps {
   children?: string;
 }
 
-/** „Skip to content“ – the first focusable element on every page (WCAG 2.4.1). Visible on focus only. */
+/** “Skip to content” – the first focusable element on every page (WCAG 2.4.1). Visible on focus only. */
 export function SkipLink({ href = '#main', children = 'Skip to content' }: SkipLinkProps) {
   return (
     <a href={href} className="medo-skip-link">
@@ -277,7 +277,7 @@ export function SkipLink({ href = '#main', children = 'Skip to content' }: SkipL
 
 export interface NavAction {
   label: string;
-  /** Usually a link („Log in“, „Get started“). */
+  /** Usually a link (“Log in”, “Get started”). */
   href?: string;
   onPress?: (e: PressEvent) => void;
   /** primary: max one · secondary · ghost. */
@@ -296,7 +296,7 @@ function ActionLink({ action, size }: { action: NavAction; size: 'sm' | 'md' | '
 /* ---------- Website header ---------- */
 
 export interface SiteHeaderProps {
-  /** Logo link with a name („med.o home“). */
+  /** Logo link with a name (“med.o home”). */
   logo: ReactNode;
   /** NavItems and NavGroups – max 5 links; more go into a group. */
   children: ReactNode;
@@ -559,7 +559,7 @@ export interface BottomTabBarProps {
 
 /**
  * Bottom tab bar: the main destinations of an app on phones, in thumb reach.
- * Max 4 destinations + „More“. Fixed to the bottom with the safe area; set `--medo-toast-offset` so toasts stay above it.
+ * Max 4 destinations + “More”. Fixed to the bottom with the safe area; set `--medo-toast-offset` so toasts stay above it.
  */
 export function BottomTabBar({ children, 'aria-label': label = 'App', display = 'mobile' }: BottomTabBarProps) {
   return (
@@ -610,7 +610,7 @@ export interface TabBarMoreProps {
   closeLabel?: string;
 }
 
-/** „More“: opens the remaining destinations in the Nav sheet (Bottom Sheet). Shows „current“ when one of them is. */
+/** “More”: opens the remaining destinations in the Nav sheet (Bottom Sheet). Shows “current” when one of them is. */
 export function TabBarMore({ label = 'More', children, closeLabel }: TabBarMoreProps) {
   const hasCurrent = containsCurrent(children);
   return (

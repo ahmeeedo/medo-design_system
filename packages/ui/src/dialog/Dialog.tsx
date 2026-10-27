@@ -14,7 +14,7 @@ export { DialogTrigger } from 'react-aria-components';
 /* ---------- Shared ---------- */
 
 export interface DialogAction {
-  /** Verb that says what happens („Send invite“, „Delete“). Never „OK“, „Yes“ or „Confirm“. */
+  /** Verb that says what happens (“Send invite”, “Delete”). Never “OK”, “Yes” or “Confirm”. */
   label: string;
   /**
    * Runs on press, then the dialog closes. Return a promise to show the pending state until it
@@ -98,7 +98,7 @@ export interface DirtyGuardProps extends OpenProps {
 }
 
 /**
- * Open state with the „Discard changes?“ guard (protects unsaved input). Every way of closing
+ * Open state with the “Discard changes?” guard (protects unsaved input). Every way of closing
  * (X, Cancel, Esc, swipe) goes through onOpenChange; with unsaved input it asks first.
  * Render `confirmDiscard` inside the dialog. Shared with Drawer (internal).
  */
@@ -138,7 +138,7 @@ export interface DialogDiscardText {
 }
 
 export interface DialogProps extends OpenProps {
-  /** Required. Names the task („Invite member“). Screen readers announce it when the dialog opens. */
+  /** Required. Names the task (“Invite member”). Screen readers announce it when the dialog opens. */
   title: ReactNode;
   /** One or two sentences under the title. */
   description?: ReactNode;
@@ -155,10 +155,10 @@ export interface DialogProps extends OpenProps {
   showClose?: boolean;
   /**
    * Unsaved input. While true, a click on the scrim no longer closes, and X, Esc and Cancel
-   * first ask „Discard changes?“ (Alert dialog).
+   * first ask “Discard changes?” (Alert dialog).
    */
   isDirty?: boolean;
-  /** Text of the „Discard changes?“ Alert dialog. */
+  /** Text of the “Discard changes?” Alert dialog. */
   discardText?: Partial<DialogDiscardText>;
   /** auto: dialog on desktop, `mobile` below 640 px · dialog · fullscreen · sheet. */
   overlay?: 'auto' | 'dialog' | 'fullscreen' | 'sheet';
@@ -258,7 +258,7 @@ interface FrameProps extends Pick<DialogProps, 'title' | 'description' | 'primar
   fullscreen: boolean;
   cancelLabel: string;
   closeLabel: string;
-  /** Rendered inside the dialog (focus scope): the „Discard changes?“ Alert dialog. */
+  /** Rendered inside the dialog (focus scope): the “Discard changes?” Alert dialog. */
   nested: ReactNode;
   /** Closes without asking: the main action and the content's `close` (after saving). */
   forceClose: () => void;
@@ -389,11 +389,11 @@ const TONE_ICONS: Record<AlertDialogTone, typeof Info> = {
 export interface AlertDialogProps extends OpenProps {
   /** danger: irreversible or destructive · warning: risk of data loss · info: must be acknowledged. */
   tone?: AlertDialogTone;
-  /** Required. A question („Delete Q3-Report.pdf?“). */
+  /** Required. A question (“Delete Q3-Report.pdf?”). */
   title: ReactNode;
-  /** The consequence („This cannot be undone.“). */
+  /** The consequence (“This cannot be undone.”). */
   children?: ReactNode;
-  /** Verb of the action („Delete“). Danger tone: danger button, else primary. */
+  /** Verb of the action (“Delete”). Danger tone: danger button, else primary. */
   actionLabel: string;
   /** Runs, then the dialog closes. A promise shows the pending state until it resolves. */
   onAction?: () => void | Promise<unknown>;

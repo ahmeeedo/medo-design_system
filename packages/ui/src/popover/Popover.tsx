@@ -134,7 +134,7 @@ function SheetBody({ children }: { children: (close: () => void) => ReactNode })
 }
 
 export interface ToggletipProps {
-  /** Required. Names the info button and the toggletip after the topic („About billing email“). */
+  /** Required. Names the info button and the toggletip after the topic (“About billing email”). */
   'aria-label': string;
   /** One or two short sentences. Text only. */
   children: ReactNode;

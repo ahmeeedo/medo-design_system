@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Checkbox, CheckboxGroup } from './Checkbox';
 import { expect, fn } from 'storybook/test';
-import { interactionTest, LightDark, stack } from '../story-helpers';
+import { interactionTest, stack } from '../story-helpers';
 
 const meta = {
-  title: 'Components/Checkbox',
+  title: 'Components/Forms/Checkbox',
   component: Checkbox,
   tags: ['autodocs'],
   args: { children: 'Accept the terms', size: 'md', isDisabled: false, isInvalid: false, isIndeterminate: false, onChange: fn() },
@@ -74,28 +74,6 @@ export const GroupInvalid: Story = {
       <Checkbox value="design">Design</Checkbox>
       <Checkbox value="code">Code</Checkbox>
     </CheckboxGroup>
-  ),
-};
-
-export const LightAndDark: Story = {
-  name: 'Light and Dark',
-  parameters: { layout: 'fullscreen' },
-  render: (args) => (
-    <LightDark>
-      <Checkbox {...args}>Unchecked</Checkbox>
-      <Checkbox {...args} defaultSelected>
-        Checked
-      </Checkbox>
-      <Checkbox {...args} isIndeterminate>
-        Indeterminate
-      </Checkbox>
-      <Checkbox {...args} isInvalid>
-        Invalid
-      </Checkbox>
-      <Checkbox {...args} isDisabled defaultSelected>
-        Disabled
-      </Checkbox>
-    </LightDark>
   ),
 };
 

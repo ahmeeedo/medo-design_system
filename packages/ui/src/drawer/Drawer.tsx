@@ -7,7 +7,7 @@ import { cx } from '../utils/cx';
 import './drawer.css';
 
 export interface DrawerProps extends DirtyGuardProps {
-  /** Says what it is („Account“, „Filter“, „Invoice #1042“). Can be a logo for a navigation drawer – then set aria-label. */
+  /** Says what it is (“Account”, “Filter”, “Invoice #1042”). Can be a logo for a navigation drawer – then set aria-label. */
   title: ReactNode;
   /** Name of the drawer when the title is not text (e.g. a logo). */
   'aria-label'?: string;
@@ -15,7 +15,7 @@ export interface DrawerProps extends DirtyGuardProps {
   children: ReactNode | ((close: () => void) => ReactNode);
   /**
    * Only for decisions (Apply, Save) – usually a ButtonGroup. Links and switches act immediately.
-   * A function gets `close` (after applying or saving, never asks) and `cancel` (asks „Discard changes?“ when isDirty).
+   * A function gets `close` (after applying or saving, never asks) and `cancel` (asks “Discard changes?” when isDirty).
    */
   footer?: ReactNode | ((close: () => void, cancel: () => void) => ReactNode);
   /** right: account, filters, details (default) · left: navigation only. */
@@ -30,7 +30,7 @@ export interface DrawerProps extends DirtyGuardProps {
 /**
  * Drawer – a modal panel that slides in from the side. Same building blocks and behaviour
  * as the Dialog (React Aria ModalOverlay + Modal + Dialog): scrim, focus trap, no page scroll, Esc and the close
- * button close it, focus returns to the trigger; `isDirty` asks „Discard changes?“. Below 640 px it keeps its side,
+ * button close it, focus returns to the trigger; `isDirty` asks “Discard changes?”. Below 640 px it keeps its side,
  * viewport − 56 px wide; a swipe towards the edge closes it. Use inside a DialogTrigger or with isOpen.
  */
 export function Drawer({

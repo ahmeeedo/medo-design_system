@@ -5,7 +5,7 @@ import { Accordion, AccordionItem } from './Accordion';
 import { Badge } from '../badge/Badge';
 import { Link } from '../link/Link';
 import { Switch } from '../switch/Switch';
-import { interactionTest, LightDark, semantic } from '../story-helpers';
+import { interactionTest, Examples, semantic } from '../story-helpers';
 
 const text: React.CSSProperties = { margin: 0, font: 'inherit', color: 'var(--medo-color-text-secondary)' };
 const stack: React.CSSProperties = { display: 'grid', gap: 'var(--medo-space-4)' };
@@ -68,13 +68,13 @@ function Faq({ size = 'lg' as 'md' | 'lg', count = 4 }) {
 }
 
 const meta = {
-  title: 'Components/Accordion',
+  title: 'Components/Data display/Accordion',
   component: Accordion,
   tags: ['autodocs'],
   args: { size: 'md', allowsMultipleExpanded: true, children: null },
   argTypes: {
     size: { control: 'inline-radio', options: ['md', 'lg'], description: 'md: apps and settings · lg: websites and FAQs.' },
-    allowsMultipleExpanded: { ...semantic, description: 'Several open at once (default). false: one at a time – see the story „One at a time“.' },
+    allowsMultipleExpanded: { ...semantic, description: 'Several open at once (default). false: one at a time – see the story “One at a time”.' },
     headingLevel: semantic,
     expandAll: { control: false, description: 'Shown above groups with more than 6 sections.' },
     expandAllLabel: semantic,
@@ -88,7 +88,7 @@ const meta = {
         component:
           'React Aria DisclosureGroup. One contained group (surface/default, border, radius/lg), dividers between items. Each header is a button inside a real heading (`headingLevel`, h2–h4), announced as expanded or collapsed; the whole header is the target. ' +
           '`AccordionItem`: optional icon, title, description (read as description), badge (part of the name), chevron. Several sections open by default; nothing the user opened closes by itself. ' +
-          'Closed panels stay findable by the browser search (hidden="until-found"). A link to an item’s `id` (#billing) opens and scrolls to it. More than 6 sections: „Expand all“. Styles: `medo-accordion`, `medo-accordion--{md|lg}`.',
+          'Closed panels stay findable by the browser search (hidden="until-found"). A link to an item’s `id` (#billing) opens and scrolls to it. More than 6 sections: “Expand all”. Styles: `medo-accordion`, `medo-accordion--{md|lg}`.',
       },
     },
   },
@@ -105,13 +105,13 @@ type Story = StoryObj<typeof meta>;
 export const Playground: Story = {};
 
 export const Sizes: Story = {
-  name: 'md settings · lg FAQ',
+  name: 'Sizes',
   parameters: { docs: { description: { story: 'md for apps and settings (icon, description, badge), lg for websites and FAQs (questions as titles).' } } },
   render: () => (
-    <LightDark>
+    <Examples>
       <Settings />
       <Faq />
-    </LightDark>
+    </Examples>
   ),
 };
 
@@ -150,7 +150,7 @@ export const Disabled: Story = {
 
 export const ExpandAll: Story = {
   name: 'More than 6 sections',
-  parameters: { docs: { description: { story: 'Groups with more than 6 sections get „Expand all“ / „Collapse all“ above them (only when several may be open).' } } },
+  parameters: { docs: { description: { story: 'Groups with more than 6 sections get “Expand all” / “Collapse all” above them (only when several may be open).' } } },
   render: () => (
     <div style={{ maxInlineSize: '45rem' }}>
       <Faq count={8} />

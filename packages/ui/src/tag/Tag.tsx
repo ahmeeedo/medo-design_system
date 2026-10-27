@@ -30,7 +30,7 @@ export interface TagGroupProps<T> extends Omit<AriaTagGroupProps, 'children' | '
   items?: Iterable<T>;
   /** Shown when there are no tags. */
   renderEmptyState?: () => ReactNode;
-  /** Text announced after a removal. Default: „{label} removed“. */
+  /** Text announced after a removal. Default: “{label} removed”. */
   removedMessage?: (labels: string[]) => string;
   className?: string;
 }

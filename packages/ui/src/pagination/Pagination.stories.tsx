@@ -6,13 +6,13 @@ import { Cell, Column, Row, Table, TableBody, TableHeader } from '../table/Table
 import { ListRow, ListView } from '../list-view/ListView';
 import { Avatar } from '../avatar/Avatar';
 import { Button } from '../button/Button';
-import { interactionTest, LightDark, semantic, slot } from '../story-helpers';
+import { interactionTest, Examples, semantic, slot } from '../story-helpers';
 
 const caption: React.CSSProperties = { font: 'var(--medo-typography-code-sm)', color: 'var(--medo-color-text-secondary)' };
 const stack: React.CSSProperties = { display: 'grid', gap: 'var(--medo-space-6)' };
 
 const meta = {
-  title: 'Components/Pagination',
+  title: 'Components/Navigation/Pagination',
   component: Pagination,
   tags: ['autodocs'],
   args: { totalItems: 380, pageSize: 20, defaultPage: 5, variant: 'full', size: 'md', onChange: fn() },
@@ -22,7 +22,7 @@ const meta = {
     defaultPage: { control: { type: 'number', min: 1 } },
     variant: { control: 'inline-radio', options: ['auto', 'full', 'compact'], description: 'auto: compact below 640 px.' },
     size: { control: 'inline-radio', options: ['md', 'lg'], if: { arg: 'variant', neq: 'compact' }, description: 'Full only: md 40 · lg 48 (touch).' },
-    onPageSizeChange: { ...slot({ none: undefined, shown: fn() }), description: 'Shows „Rows per page“ (Select sm).' },
+    onPageSizeChange: { ...slot({ none: undefined, shown: fn() }), description: 'Shows “Rows per page” (Select sm).' },
     getPageHref: { ...semantic, description: 'Websites: every page becomes a real link (same look).' },
     page: { control: false },
     totalPages: { control: false },
@@ -41,10 +41,10 @@ const meta = {
     docs: {
       description: {
         component:
-          'A navigation region („Pagination“). Full on desktop: summary („81–100 of 380“, a polite live region), rows per page (Select sm) and ‹ 1 … 4 5 6 … 19 ›. Compact below 640 px: ‹ Page 5 of 19 › with 48 px buttons (`variant="auto"`). ' +
+          'A navigation region (“Pagination”). Full on desktop: summary (“81–100 of 380”, a polite live region), rows per page (Select sm) and ‹ 1 … 4 5 6 … 19 ›. Compact below 640 px: ‹ Page 5 of 19 › with 48 px buttons (`variant="auto"`). ' +
           'Max 7 items: first and last always, the current page with one neighbour each side; an ellipsis never hides a single page; one page shows nothing. ' +
           'Apps: buttons with `onChange`. Websites: `getPageHref` makes every page a real link (works with RouterProvider). The current page has `aria-current="page"` and action/selected – calm, never the primary colour. ' +
-          'After a change the app scrolls to the top of the list and focuses its heading. „Load more“ is not a variant – a Button below the list. Styles: `medo-pagination`, `medo-page-item`.',
+          'After a change the app scrolls to the top of the list and focuses its heading. “Load more” is not a variant – a Button below the list. Styles: `medo-pagination`, `medo-page-item`.',
       },
     },
   },
@@ -83,12 +83,12 @@ export const Truncation: Story = {
 };
 
 export const Links: Story = {
-  name: 'Links (websites)',
+  name: 'As links',
   parameters: {
     docs: {
       description: {
         story:
-          'With `getPageHref` every page, previous and next are real links („?page=5“): shareable, crawlable, the back button works. Same look as the buttons. With RouterProvider the app router handles them.',
+          'With `getPageHref` every page, previous and next are real links (“?page=5”): shareable, crawlable, the back button works. Same look as the buttons. With RouterProvider the app router handles them.',
       },
     },
   },
@@ -96,31 +96,21 @@ export const Links: Story = {
 };
 
 export const Compact: Story = {
-  name: 'Compact (mobile)',
+  name: 'Compact',
   parameters: {
     docs: {
       description: { story: 'Below 640 px: ‹ Page 5 of 19 › with 48 px buttons, full width. No summary, no rows per page. Previous is disabled on the first page.' },
     },
   },
   render: () => (
-    <LightDark>
+    <Examples>
       <div style={{ maxInlineSize: '21.4375rem' }}>
         <Pagination variant="compact" defaultPage={5} totalPages={19} aria-label="Pagination, page 5" />
       </div>
       <div style={{ maxInlineSize: '21.4375rem' }}>
         <Pagination variant="compact" defaultPage={1} totalPages={19} aria-label="Pagination, first page" />
       </div>
-    </LightDark>
-  ),
-};
-
-export const LightAndDark: Story = {
-  name: 'Light and Dark',
-  parameters: { layout: 'fullscreen' },
-  render: () => (
-    <LightDark>
-      <Pagination variant="full" totalItems={380} defaultPage={5} onPageSizeChange={fn()} />
-    </LightDark>
+    </Examples>
   ),
 };
 
@@ -220,7 +210,7 @@ function LoadMoreExample() {
 }
 
 export const LoadMore: Story = {
-  name: 'Load more (pattern)',
+  name: 'Load more',
   parameters: {
     docs: {
       description: {
@@ -239,7 +229,7 @@ export const InteractionTest: Story = {
     await userEvent.click(canvas.getByRole('button', { name: 'Next page' }));
     await expect(canvas.getByRole('button', { name: 'Page 6' })).toHaveAttribute('aria-current', 'page');
     await expect(args.onChange).toHaveBeenLastCalledWith(6);
-    // The last page disables „Next“ – focus stays inside the pagination.
+    // The last page disables “Next” – focus stays inside the pagination.
     await userEvent.click(canvas.getByRole('button', { name: 'Page 19' }));
     await expect(canvas.getByRole('button', { name: 'Next page' })).toBeDisabled();
   },

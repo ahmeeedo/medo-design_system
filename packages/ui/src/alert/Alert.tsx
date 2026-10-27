@@ -18,7 +18,7 @@ export interface AlertProps extends Omit<HTMLAttributes<HTMLDivElement>, 'title'
   tone?: AlertTone;
   /** inline: in the content · banner: full width above the header, for app-wide states. */
   variant?: 'inline' | 'banner';
-  /** Required. Says what happened („Your trial ends in 3 days“). */
+  /** Required. Says what happened (“Your trial ends in 3 days”). */
   title: ReactNode;
   /** What to do next. */
   children?: ReactNode;

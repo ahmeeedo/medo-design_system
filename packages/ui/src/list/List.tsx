@@ -21,7 +21,7 @@ export interface ListProps extends Omit<HTMLAttributes<HTMLUListElement | HTMLOL
 /**
  * List – a real list in running text: bullets, numbers or a feature list.
  * Plain markup, no library needed. Markers are neutral (text/secondary) in their own column; long items
- * wrap flush with their first line. Level 2 (a List inside a ListItem) switches the marker: ring, „a.“.
+ * wrap flush with their first line. Level 2 (a List inside a ListItem) switches the marker: ring, “a.”.
  */
 export function List({ type = 'bullet', size, start, className, style, children, ...props }: ListProps) {
   const Tag = type === 'number' ? 'ol' : 'ul';
@@ -45,7 +45,7 @@ export function List({ type = 'bullet', size, start, className, style, children,
 
 export interface ListItemProps extends Omit<HTMLAttributes<HTMLLIElement>, 'children'> {
   children: ReactNode;
-  /** Feature list: not included – cross, muted text and a hidden „Not included:“ for screen readers. */
+  /** Feature list: not included – cross, muted text and a hidden “Not included:” for screen readers. */
   excluded?: boolean;
   /** Hidden prefix of excluded items. */
   excludedLabel?: string;
@@ -85,9 +85,9 @@ export function DescriptionList({ layout = 'auto', className, children, ...props
 }
 
 export interface DescriptionItemProps {
-  /** The term („Status“). */
+  /** The term (“Status”). */
   term: ReactNode;
-  /** The value („Active“). */
+  /** The value (“Active”). */
   children: ReactNode;
 }
 

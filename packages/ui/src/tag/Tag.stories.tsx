@@ -4,7 +4,7 @@ import { expect } from 'storybook/test';
 import { User } from 'lucide-react';
 import { Tag, TagGroup } from './Tag';
 import { Button } from '../button/Button';
-import { interactionTest, LightDark, semantic } from '../story-helpers';
+import { interactionTest, semantic } from '../story-helpers';
 
 const topics = [
   { id: 'design', name: 'Design' },
@@ -56,7 +56,7 @@ function FilterDemo({ size = 'md', label = 'Filter by topic', description, selec
 }
 
 const meta = {
-  title: 'Components/Tag',
+  title: 'Components/Data display/Tag',
   component: TagGroup,
   tags: ['autodocs'],
   argTypes: {
@@ -122,7 +122,7 @@ export const Filters: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'The whole tag toggles. Selected shows a check and the brand tint. Click again to deselect; with several filters active, offer „Clear filters“.',
+        story: 'The whole tag toggles. Selected shows a check and the brand tint. Click again to deselect; with several filters active, offer “Clear filters”.',
       },
     },
   },
@@ -131,18 +131,6 @@ export const Filters: Story = {
       <FilterDemo />
       <FilterDemo size="sm" />
     </div>
-  ),
-};
-
-export const LightAndDark: Story = {
-  name: 'Light and Dark',
-  args: { children: null },
-  parameters: { layout: 'fullscreen' },
-  render: () => (
-    <LightDark>
-      <RemovableDemo />
-      <FilterDemo />
-    </LightDark>
   ),
 };
 

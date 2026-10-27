@@ -5,7 +5,7 @@ import { expect, fn, waitFor, within } from 'storybook/test';
 import { ArrowUpDown, Globe, MapPin } from 'lucide-react';
 import { Select } from './Select';
 import { ListBoxSection, Option } from '../listbox/ListBox';
-import { interactionTest, LightDark, slot, stack } from '../story-helpers';
+import { interactionTest, slot, stack } from '../story-helpers';
 
 const countries = [
   { id: 'de', name: 'Germany' },
@@ -21,7 +21,7 @@ const countries = [
 const topics = ['Design', 'Code', 'Research', 'Marketing', 'Sales', 'Support'].map((name) => ({ id: name.toLowerCase(), name }));
 
 const meta = {
-  title: 'Components/Select',
+  title: 'Components/Forms/Select',
   component: Select,
   tags: ['autodocs'],
   args: {
@@ -71,14 +71,54 @@ const meta = {
       // second line as description (aria-describedby) – correct, but the rule counts all visible text.
       config: { rules: [{ id: 'landmark-unique', enabled: false }, { id: 'label-content-name-mismatch', enabled: false }] },
     },
-        medo: { subtitle: 'Choose one or several values from a list. Same anatomy as Input, plus a chevron.' },
+    medo: {
+      subtitle: 'Choose one or several values from a list.',
+      usage: {
+        when: ['Choose one value from about 5–10 options.', 'Choose several values in a compact field (`selectionMode="multiple"`).'],
+        whenNot: [
+          '2–4 options: use Radio, so all choices are visible at once.',
+          'More than 10 options or a search: use a Combobox.',
+          'A list of actions: use a Menu.',
+        ],
+        do: [
+          'Always show a label. Use `aria-label` only in filter bars where the context names the field.',
+          'Order the options in a way users expect: alphabetical, by size or by frequency.',
+          'Use `clearable` when a single value is optional.',
+        ],
+        dont: ['Put information into the placeholder that users still need after choosing.', 'Use a Select to navigate between pages.'],
+      },
+      a11y: {
+        keyboard: [
+          ['Enter / Space / ↓', 'Opens the list.'],
+          ['↑ / ↓', 'Moves through the options.'],
+          ['Home / End', 'First or last option.'],
+          ['Letters', 'Jumps to the matching option.'],
+          ['Enter', 'Picks the option. Single closes the list, multiple stays open.'],
+          ['Esc', 'Closes the list.'],
+        ],
+        notes: [
+          'A hidden native select carries the value: it is submitted with the form, and autofill and validation keep working.',
+          'Below 640 px a single Select opens the system picker, a multiple Select a Bottom Sheet.',
+          'Help and error texts are linked to the field and read with it.',
+          'Multiple: the values show as tags in one line (“+N” when they do not fit). Tags are display only; uncheck an option to remove it.',
+        ],
+      },
+      styling: {
+        classes: [
+          ['medo-select', 'Wrapper with label, field and help text.'],
+          ['medo-input medo-select__field', 'The field. Same look and sizes as a Text Field.'],
+          ['medo-select__value', 'Selected value or placeholder.'],
+          ['medo-select__tags', 'Tags of a multiple Select.'],
+          ['medo-select__clear', 'Clear button.'],
+          ['medo-listbox, medo-option', 'The list (see Listbox).'],
+        ],
+        states: ['data-open', 'data-placeholder', 'data-focus-visible', 'data-invalid', 'data-disabled', 'data-readonly'],
+      },
+    },
     docs: {
       description: {
         component:
-          'Built on React Aria Select with a hidden native select, so the value is submitted and autofill and validation keep working. ' +
-          'Always with a visible label. 2–4 options: Radio · 5–10: Select · more: Combobox. ' +
-          'Multi shows the values as tags in one line (overflow „+N“) and always offers clear-all; tags are display only – remove by unchecking. ' +
-          'Styles: `medo-select`, `medo-input medo-select__field`, list: `medo-listbox`.',
+          'A field that opens a list of options. Built on React Aria Select. Same anatomy and sizes as a Text Field, plus a chevron.',
       },
     },
   },
@@ -143,7 +183,7 @@ export const Multiple: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Tags in one line, overflow as „+N“; the field height stays the same. The list stays open, checkboxes on the left. Clear-all is always there.',
+        story: 'Tags in one line, overflow as “+N”; the field height stays the same. The list stays open, checkboxes on the left. Clear-all is always there.',
       },
     },
   },
@@ -203,13 +243,13 @@ function TeamFilter() {
 }
 
 export const Mobile: Story = {
-  name: 'Mobile (below 640 px)',
+  name: 'On mobile',
   parameters: {
     docs: {
       description: {
         story:
           'Below 640 px (`overlay="auto"`) a simple Select uses the system picker, multi opens a Bottom Sheet. Forced here with `overlay`. ' +
-          '**Live** (forms): „3 selected“ + Done. **On close** (filters): `onApply` runs once when the sheet closes – any way – if the selection changed; ' +
+          '**Live** (forms): “3 selected” + Done. **On close** (filters): `onApply` runs once when the sheet closes – any way – if the selection changed; ' +
           'the primary button shows the result count, Reset sits below.',
       },
     },
@@ -233,7 +273,7 @@ export const WithoutVisibleLabel: Story = {
     docs: {
       description: {
         story:
-          'In filter bars and toolbars the context names the field: no visible label, `aria-label` instead and a placeholder that says what it filters („Type“). Everywhere else keep the visible label.',
+          'In filter bars and toolbars the context names the field: no visible label, `aria-label` instead and a placeholder that says what it filters (“Type”). Everywhere else keep the visible label.',
       },
     },
   },
@@ -249,24 +289,6 @@ export const WithoutVisibleLabel: Story = {
         <Option id="newest">Newest</Option>
       </Select>
     </div>
-  ),
-};
-
-export const LightAndDark: Story = {
-  name: 'Light and Dark',
-  parameters: { layout: 'fullscreen', width: 'none' },
-  render: () => (
-    <LightDark>
-      <Select label="Country" defaultValue="de" clearable items={countries}>
-        {(item) => <Option id={item.id}>{item.name}</Option>}
-      </Select>
-      <Select label="Topics" selectionMode="multiple" defaultValue={['design', 'code', 'research']} items={topics}>
-        {(item) => <Option id={item.id}>{item.name}</Option>}
-      </Select>
-      <Select label="Country" isInvalid errorMessage="Choose a country." items={countries}>
-        {(item) => <Option id={item.id}>{item.name}</Option>}
-      </Select>
-    </LightDark>
   ),
 };
 

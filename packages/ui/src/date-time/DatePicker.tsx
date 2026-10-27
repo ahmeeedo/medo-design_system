@@ -35,7 +35,7 @@ export interface DatePickerTexts extends CalendarTexts {
   done: string;
   time: string;
   presets: string;
-  /** Validation – name the rule, never just „invalid date“. */
+  /** Validation – name the rule, never just “invalid date”. */
   beforeMin: (date: string) => string;
   afterMax: (date: string) => string;
   unavailable: string;
@@ -68,7 +68,7 @@ interface PickerBase {
   className?: string;
 }
 
-/** Messages that name the rule. Unavailable days: pass `texts.unavailable` with the reason („We don’t deliver on weekends.“). */
+/** Messages that name the rule. Unavailable days: pass `texts.unavailable` with the reason (“We don’t deliver on weekends.”). */
 function useMessages(t: DatePickerTexts, minValue?: DateValue | null, maxValue?: DateValue | null) {
   const { locale } = useLocale();
   const format = useMemo(() => new DateFormatter(locale, { day: '2-digit', month: '2-digit', year: 'numeric', timeZone: getLocalTimeZone() }), [locale]);
@@ -82,7 +82,7 @@ function useMessages(t: DatePickerTexts, minValue?: DateValue | null, maxValue?:
   };
 }
 
-/** Popover on desktop (Popover Size Auto), Bottom Sheet with „Done“ on mobile. */
+/** Popover on desktop (Popover Size Auto), Bottom Sheet with “Done” on mobile. */
 function PickerOverlay({ title, sheet, t, children }: { title: string; sheet: boolean; t: DatePickerTexts; children: ReactNode }) {
   if (sheet) {
     return (
@@ -127,7 +127,7 @@ export interface DatePickerProps<T extends DateValue> extends Omit<AriaDatePicke
 
 /**
  * Date picker – type a date or pick it. The field is the main input, the calendar is a
- * helper: the button „Open calendar“ (or Alt + ↓) opens it, picking a day closes it and focus returns to the
+ * helper: the button “Open calendar” (or Alt + ↓) opens it, picking a day closes it and focus returns to the
  * field. `granularity="minute"` makes it a date + time picker with a time field in the panel.
  */
 export function DatePicker<T extends DateValue>({

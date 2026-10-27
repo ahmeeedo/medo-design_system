@@ -3,7 +3,7 @@
  *
  * Compact pill for a value. Two roles, never mixed:
  *   removable  – a chosen value (multi-select): the x removes it
- *   selectable – a filter: the whole tag toggles, a check marks „selected“
+ *   selectable – a filter: the whole tag toggles, a check marks “selected”
  *
  * Structure:
  *   <div class="medo-tag medo-tag--md [medo-tag--selectable]">

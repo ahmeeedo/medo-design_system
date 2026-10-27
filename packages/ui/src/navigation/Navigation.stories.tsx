@@ -7,7 +7,7 @@ import { AppHeader, BottomTabBar, NavGroup, NavItem, NavList, NavSection, SideNa
 import { Avatar } from '../avatar/Avatar';
 import { IconButton } from '../icon-button/IconButton';
 import { TextField } from '../text-field/TextField';
-import { interactionTest, LightDark, slot } from '../story-helpers';
+import { interactionTest, Examples, slot } from '../story-helpers';
 
 /* ---------- Story placeholders ---------- */
 
@@ -132,7 +132,7 @@ function HeaderActions() {
 }
 
 const meta = {
-  title: 'Components/Navigation',
+  title: 'Components/Navigation/Navigation',
   component: SiteHeader,
   tags: ['autodocs'],
   args: { layout: 'desktop', actions: 'Log in + Get started' as never, logo: null, children: null },
@@ -178,12 +178,12 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Playground: Story = {
-  name: 'Website header',
+  name: 'Playground',
   parameters: {
     docs: {
       description: {
         story:
-          'Press Tab first: „Skip to content“ appears. „Products“ opens a dropdown of links (Tab moves through, Esc closes). With layout mobile the menu button opens the links fullscreen.',
+          'Press Tab first: “Skip to content” appears. “Products” opens a dropdown of links (Tab moves through, Esc closes). With layout mobile the menu button opens the links fullscreen.',
       },
     },
   },
@@ -192,6 +192,7 @@ export const Playground: Story = {
 export const NavItems: Story = {
   name: 'Nav item forms',
   parameters: {
+    layout: 'padded',
     docs: {
       description: {
         story:
@@ -200,7 +201,7 @@ export const NavItems: Story = {
     },
   },
   render: () => (
-    <LightDark>
+    <Examples>
       {(['header', 'sidebar', 'rail', 'sheet'] as const).map((variant) => (
         <div key={variant} style={{ display: 'grid', gap: 'var(--medo-space-2)', maxInlineSize: variant === 'header' ? undefined : variant === 'rail' ? 64 : 256 }}>
           <span style={caption}>{variant}</span>
@@ -220,12 +221,12 @@ export const NavItems: Story = {
           </NavList>
         </div>
       ))}
-    </LightDark>
+    </Examples>
   ),
 };
 
 export const AppShell: Story = {
-  name: 'App: side navigation',
+  name: 'Side navigation',
   parameters: {
     docs: {
       description: {
@@ -263,12 +264,12 @@ export const AppShell: Story = {
 };
 
 export const TabBar: Story = {
-  name: 'App: bottom tab bar',
+  name: 'Bottom tab bar',
   parameters: {
     docs: {
       description: {
         story:
-          'On phones the main destinations sit at the bottom: max 4 + „More“, labels always visible. „More“ opens the rest in the Nav sheet. Shown here with `display="always"` inside a phone frame.',
+          'On phones the main destinations sit at the bottom: max 4 + “More”, labels always visible. “More” opens the rest in the Nav sheet. Shown here with `display="always"` inside a phone frame.',
       },
     },
   },

@@ -25,7 +25,7 @@ export interface ButtonProps extends Omit<AriaButtonProps, 'children' | 'classNa
  * Button – triggers an action. Built on React Aria: consistent press,
  * hover and focus behaviour on mouse, touch, keyboard and screen readers.
  * Use onPress instead of onClick and isDisabled instead of disabled.
- * While saving, set isPending and change the label („Saving…“): the button keeps its look and size.
+ * While saving, set isPending and change the label (“Saving…”): the button keeps its look and size.
  */
 export function Button({ variant = 'primary', size = 'md', startIcon, endIcon, className, children, ...props }: ButtonProps) {
   // isPending: React Aria keeps focus and announces the pending state; a spinner replaces the start icon.

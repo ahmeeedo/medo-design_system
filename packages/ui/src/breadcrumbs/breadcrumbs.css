@@ -9,7 +9,7 @@
  *     </ol>
  *   </nav>
  * sm: caption, current label/sm, height 24, icons 16, separator 12, gap 2 · md: body/sm, label/md, 28, 20, 16, gap 4.
- * Parts: padding space/1, radius/sm, gap icon–text space/0-5. Labels max 200 px with „…“.
+ * Parts: padding space/1, radius/sm, gap icon–text space/0-5. Labels max 200 px with “…”.
  * State contract: [data-hovered] [data-pressed] [data-focus-visible] [data-current] (React Aria).
  */
 
@@ -97,7 +97,7 @@
   white-space: nowrap;
 }
 
-/* Home and „…“: square, a soft surface on hover so the target is visible. */
+/* Home and “…”: square, a soft surface on hover so the target is visible. */
 .medo-breadcrumbs__icon-part {
   justify-content: center;
   inline-size: var(--_height);

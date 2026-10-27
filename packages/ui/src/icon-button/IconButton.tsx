@@ -6,7 +6,7 @@ import { cx } from '../utils/cx';
 import '../button/button.css';
 
 export interface IconButtonProps extends Omit<AriaButtonProps, 'children' | 'className' | 'style'> {
-  /** Required: describes the action („Delete file“), because there is no visible label. */
+  /** Required: describes the action (“Delete file”), because there is no visible label. */
   'aria-label': string;
   icon: ReactNode;
   /**
@@ -22,9 +22,9 @@ export interface IconButtonProps extends Omit<AriaButtonProps, 'children' | 'cla
    * Pass false to turn it off (e.g. when a visible label is next to the button).
    */
   tooltip?: ReactNode | false;
-  /** Keyboard shortcut in aria-keyshortcuts syntax (e.g. „Control+C“). Exposed to screen readers and shown in the tooltip. */
+  /** Keyboard shortcut in aria-keyshortcuts syntax (e.g. “Control+C”). Exposed to screen readers and shown in the tooltip. */
   shortcut?: string;
-  /** Visible form of the shortcut. Default: „Control+C“ → „Ctrl C“, „Meta+C“ → „⌘ C“. */
+  /** Visible form of the shortcut. Default: “Control+C” → “Ctrl C”, “Meta+C” → “⌘ C”. */
   shortcutLabel?: string;
   className?: string;
   style?: CSSProperties;

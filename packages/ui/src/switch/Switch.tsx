@@ -5,7 +5,7 @@ import { cx } from '../utils/cx';
 import './switch.css';
 
 export interface SwitchProps extends Omit<SwitchFieldProps, 'children' | 'className' | 'style'> {
-  /** Label. Describes the setting, never the state („Notifications“, not „On“). */
+  /** Label. Describes the setting, never the state (“Notifications”, not “On”). */
   children: ReactNode;
   description?: ReactNode;
   /** md (36 × 20) · lg (44 × 24, mobile). */

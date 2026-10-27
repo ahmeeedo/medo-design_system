@@ -1,10 +1,10 @@
 import { useLayoutEffect, useState, type RefObject } from 'react';
 
 /**
- * How many items of a one-line row fit, keeping room for a „+N“ item (Select and Combobox tags).
+ * How many items of a one-line row fit, keeping room for a “+N” item (Select and Combobox tags).
  *
  * The caller renders a hidden measure row (same gap as the visible row): one child per item and,
- * as the last child, a „+N“ probe. `reserve` keeps extra space free, e.g. for a text input.
+ * as the last child, a “+N” probe. `reserve` keeps extra space free, e.g. for a text input.
  * At least one item stays visible (it may truncate).
  */
 export function useFitCount(

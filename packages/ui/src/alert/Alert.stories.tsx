@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Alert, type AlertTone } from './Alert';
 import { Button } from '../button/Button';
 import { expect, fn, waitFor } from 'storybook/test';
-import { interactionTest, LightDark, semantic, slot } from '../story-helpers';
+import { interactionTest, semantic, slot } from '../story-helpers';
 
 const examples: { tone: AlertTone; title: string; text: string }[] = [
   { tone: 'info', title: 'New export format', text: 'You can now export reports as CSV.' },
@@ -28,7 +28,7 @@ function DismissDemo() {
 }
 
 const meta = {
-  title: 'Components/Alert',
+  title: 'Components/Feedback/Alert',
   component: Alert,
   tags: ['autodocs'],
   args: { tone: 'info', variant: 'inline', actions: 'none', title: 'New export format', children: 'You can now export reports as CSV.' },
@@ -121,20 +121,6 @@ export const Banner: Story = {
       <Alert variant="banner" tone="warning" title="Scheduled maintenance on Sunday, 2–4 am." actions={<Button variant="text" size="sm">Details</Button>} />
       <Alert variant="banner" tone="danger" title="You are offline. Changes are saved when you reconnect." />
     </div>
-  ),
-};
-
-export const LightAndDark: Story = {
-  name: 'Light and Dark',
-  parameters: { layout: 'fullscreen' },
-  render: () => (
-    <LightDark>
-      {examples.map((e) => (
-        <Alert key={e.tone} tone={e.tone} title={e.title}>
-          {e.text}
-        </Alert>
-      ))}
-    </LightDark>
   ),
 };
 

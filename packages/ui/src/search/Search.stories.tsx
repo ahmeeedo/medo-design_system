@@ -25,7 +25,7 @@ import { Tab, TabList, TabPanel, Tabs } from '../tabs/Tabs';
 import { Tag, TagGroup } from '../tag/Tag';
 import { ToggleButton, ToggleButtonGroup } from '../toggle-button/ToggleButton';
 import { Image } from '../media/Image';
-import { interactionTest, LightDark, samplePhoto, semantic, slot } from '../story-helpers';
+import { interactionTest, Examples, samplePhoto, semantic, slot } from '../story-helpers';
 
 /** Placeholder thumbnail (stories only). */
 const thumb = <Image src={samplePhoto(1)} alt="" ratio="4:3" radius="none" />;
@@ -107,7 +107,7 @@ const hits: Hit[] = [
 const leadingFor = (h: Hit) => (h.type === 'person' ? <Avatar name={h.title} decorative /> : h.type === 'media' ? thumb : undefined);
 
 const meta = {
-  title: 'Components/Search',
+  title: 'Components/Forms/Search',
   component: SearchField,
   tags: ['autodocs'],
   args: { label: 'Search', placeholder: 'Search invoices', size: 'md', onSubmit: fn(), onChange: fn(), onClear: fn() },
@@ -159,7 +159,7 @@ export const Results: Story = {
     },
   },
   render: () => (
-    <LightDark>
+    <Examples>
       {(['base', 'aesthetic'] as const).map((variant) => (
         <ul key={variant} role="list" className="medo-search-results" aria-label={`Results, ${variant}`}>
           {hits.slice(0, 4).map((h) => (
@@ -180,7 +180,7 @@ export const Results: Story = {
           ))}
         </ul>
       ))}
-    </LightDark>
+    </Examples>
   ),
 };
 
@@ -376,7 +376,7 @@ export const Page: Story = {
     docs: {
       description: {
         story:
-          'Search field lg, tabs with counts, count as status („7 results for “invoice”“), filter bar (Select sm), sort (Relevance), list / grid. Active filters are removable tags plus „Clear all“. Search for „invoyce“: no results with „Did you mean“ and a way out. Keep query, filters, sort and page in the URL.',
+          'Search field lg, tabs with counts, count as status (“7 results for ”invoice”“), filter bar (Select sm), sort (Relevance), list / grid. Active filters are removable tags plus “Clear all”. Search for “invoyce”: no results with “Did you mean” and a way out. Keep query, filters, sort and page in the URL.',
       },
     },
   },
@@ -564,13 +564,13 @@ function SidebarPage({ forceMobile = false }: { forceMobile?: boolean }) {
 }
 
 export const Sidebar: Story = {
-  name: 'Search page: sidebar filters',
+  name: 'Search page with filters',
   parameters: {
     layout: 'padded',
     docs: {
       description: {
         story:
-          'More than 4 filter groups: a sidebar (264) with an Accordion – Type and Date open. Every group is named by its Accordion title (CheckboxGroup / RadioGroup with `aria-label`). Active filters are removable tags plus „Clear all“; the count is announced.',
+          'More than 4 filter groups: a sidebar (264) with an Accordion – Type and Date open. Every group is named by its Accordion title (CheckboxGroup / RadioGroup with `aria-label`). Active filters are removable tags plus “Clear all”; the count is announced.',
       },
     },
   },
@@ -578,12 +578,12 @@ export const Sidebar: Story = {
 };
 
 export const MobileFilters: Story = {
-  name: 'Search page: mobile filter sheet',
+  name: 'Search page on mobile',
   parameters: {
     docs: {
       description: {
         story:
-          'Below 640 px the filters move into a Bottom Sheet behind „Filters (2)“. The sheet button names the result count („Show 3 results“). Tabs scroll sideways; Quick search opens full screen.',
+          'Below 640 px the filters move into a Bottom Sheet behind “Filters (2)”. The sheet button names the result count (“Show 3 results”). Tabs scroll sideways; Quick search opens full screen.',
       },
     },
   },
@@ -654,7 +654,7 @@ export const Quick: Story = {
     docs: {
       description: {
         story:
-          'Press Cmd / Ctrl + K or the button. Empty: recent searches and suggestions. Type „inv“: hits grouped by type (max 5 each), the match in bold. ↑ ↓ move while focus stays in the field, Enter opens, Esc closes. „All results“ opens the search page with the same term. Below 640 px it opens full screen with „Cancel“.',
+          'Press Cmd / Ctrl + K or the button. Empty: recent searches and suggestions. Type “inv”: hits grouped by type (max 5 each), the match in bold. ↑ ↓ move while focus stays in the field, Enter opens, Esc closes. “All results” opens the search page with the same term. Below 640 px it opens full screen with “Cancel”.',
       },
     },
   },

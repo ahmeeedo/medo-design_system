@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Radio, RadioGroup } from './Radio';
 import { expect, fn } from 'storybook/test';
-import { interactionTest, LightDark } from '../story-helpers';
+import { interactionTest } from '../story-helpers';
 
 const meta = {
-  title: 'Components/Radio',
+  title: 'Components/Forms/Radio',
   component: RadioGroup,
   tags: ['autodocs'],
   args: {
@@ -63,22 +63,6 @@ export const Horizontal: Story = { args: { orientation: 'horizontal', descriptio
 export const Invalid: Story = { args: { isInvalid: true, defaultValue: undefined } };
 
 export const Large: Story = { args: { size: 'lg' } };
-
-export const LightAndDark: Story = {
-  name: 'Light and Dark',
-  parameters: { layout: 'fullscreen' },
-  render: (args) => (
-    <LightDark>
-      <RadioGroup {...args}>
-        <Radio value="standard">Standard</Radio>
-        <Radio value="express">Express</Radio>
-        <Radio value="pickup" isDisabled>
-          Pick-up (unavailable)
-        </Radio>
-      </RadioGroup>
-    </LightDark>
-  ),
-};
 
 export const InteractionTest: Story = {
   ...interactionTest,

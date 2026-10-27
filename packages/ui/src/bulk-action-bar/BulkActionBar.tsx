@@ -10,19 +10,19 @@ import '../toast/toast.css';
 import './bulk-action-bar.css';
 
 export interface BulkAction {
-  /** Verb („Export“, „Archive“, „Delete“). */
+  /** Verb (“Export”, “Archive”, “Delete”). */
   label: string;
   onAction: () => void;
   /** danger: destructive – confirm it (Alert dialog) or offer Undo (Toast). Mobile: ghost danger. */
   variant?: 'default' | 'danger';
-  /** Icon for the „…“ menu (actions after the third). */
+  /** Icon for the “…” menu (actions after the third). */
   icon?: ReactNode;
 }
 
 export interface BulkActionBarProps {
   /** Number of selected items. 0 hides the bar. */
   count: number;
-  /** Max 3 are shown; more go into the „…“ menu. Destructive last. */
+  /** Max 3 are shown; more go into the “…” menu. Destructive last. */
   actions: BulkAction[];
   /** Clears the selection (× and Esc). */
   onClear: () => void;

@@ -10,7 +10,7 @@ type Value = number | number[];
 export interface SliderProps<T extends Value = number> extends Omit<AriaSliderProps<T>, 'children' | 'className' | 'style'> {
   /** Visible label. Without it set `aria-label`. */
   label?: ReactNode;
-  /** Range: a name per thumb („Minimum price“, „Maximum price“). Default: „Minimum“ / „Maximum“ + label. */
+  /** Range: a name per thumb (“Minimum price”, “Maximum price”). Default: “Minimum” / “Maximum” + label. */
   thumbLabels?: [string, string];
   /** Tick marks for few fixed steps (≤ 10) – the thumb snaps to them. */
   showTicks?: boolean;

@@ -5,9 +5,9 @@ import { Button } from '../button/Button';
 import { interactionTest, row, slot } from '../story-helpers';
 
 interface ToastArgs {
-  /** The result in one line, max about 50 characters („Q3-Report.pdf deleted“). */
+  /** The result in one line, max about 50 characters (“Q3-Report.pdf deleted”). */
   message: string;
-  /** Max one action: „Undo“, „View“ or „Retry“. With an action the toast stays 8 s instead of 5 s. */
+  /** Max one action: “Undo”, “View” or “Retry”. With an action the toast stays 8 s instead of 5 s. */
   action?: ToastAction;
   /** Errors: stays until closed. */
   persistent: boolean;
@@ -17,7 +17,7 @@ interface ToastArgs {
 const onAction = fn();
 
 const meta = {
-  title: 'Components/Toast',
+  title: 'Components/Feedback/Toast',
   tags: ['autodocs'],
   args: { message: 'Q3-Report.pdf deleted', action: 'Undo' as never, persistent: false, onClose: fn() },
   argTypes: {
@@ -93,10 +93,10 @@ export const Examples: Story = {
 };
 
 export const Error: Story = {
-  name: 'Error (until closed)',
+  name: 'Errors',
   parameters: {
     docs: {
-      description: { story: 'An error stays until the user closes it and offers „Retry“. If the user must read it to continue, use an Alert or Alert dialog instead.' },
+      description: { story: 'An error stays until the user closes it and offers “Retry”. If the user must read it to continue, use an Alert or Alert dialog instead.' },
     },
   },
   render: () => (

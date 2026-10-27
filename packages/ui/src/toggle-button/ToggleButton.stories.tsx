@@ -4,7 +4,7 @@ import { useArgs } from 'storybook/preview-api';
 import { expect, fn } from 'storybook/test';
 import { AlignCenter, AlignLeft, AlignRight, Bold, Heart, Italic, LayoutGrid, List, Map as MapIcon, Underline } from 'lucide-react';
 import { ToggleButton, ToggleButtonGroup, Toolbar, ToolbarSeparator } from './ToggleButton';
-import { interactionTest, LightDark, row, slot } from '../story-helpers';
+import { interactionTest, row, slot } from '../story-helpers';
 
 const col: React.CSSProperties = { display: 'grid', gap: 'var(--medo-space-6)', justifyItems: 'start' };
 const caption: React.CSSProperties = { font: 'var(--medo-typography-code-sm)', color: 'var(--medo-color-text-secondary)' };
@@ -45,7 +45,7 @@ function Formatting({ size = 'md' as 'md' | 'lg' }) {
 }
 
 const meta = {
-  title: 'Components/Toggle Button',
+  title: 'Components/Actions/Toggle Button',
   component: ToggleButton,
   tags: ['autodocs'],
   args: { children: 'Favourite', icon: 'heart', size: 'md', isSelected: false, isDisabled: false, onChange: fn() },
@@ -178,26 +178,6 @@ export const ToolbarGroups: Story = {
       <Formatting />
       <Formatting size="lg" />
     </div>
-  ),
-};
-
-export const LightAndDark: Story = {
-  name: 'Light and Dark',
-  parameters: { layout: 'fullscreen' },
-  render: () => (
-    <LightDark>
-      <div style={row}>
-        <ToggleButton icon={<Bold />}>Bold</ToggleButton>
-        <ToggleButton icon={<Bold />} defaultSelected>
-          Bold
-        </ToggleButton>
-        <ToggleButton icon={<Bold />} defaultSelected isDisabled>
-          Bold
-        </ToggleButton>
-      </div>
-      <ViewSwitch />
-      <Formatting />
-    </LightDark>
   ),
 };
 

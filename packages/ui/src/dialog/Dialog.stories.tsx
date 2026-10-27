@@ -16,7 +16,7 @@ const roles = [
 
 const form: React.CSSProperties = { display: 'grid', gap: 'var(--medo-space-4)' };
 
-/** Example „Invite member“: the form submits through the main action (form id). */
+/** Example “Invite member”: the form submits through the main action (form id). */
 function InviteForm({ close, onChange }: { close: () => void; onChange?: (dirty: boolean) => void }) {
   return (
     <form
@@ -45,7 +45,7 @@ function InviteForm({ close, onChange }: { close: () => void; onChange?: (dirty:
 const paragraph: React.CSSProperties = { margin: '0 0 var(--medo-space-3)', color: 'var(--medo-color-text-primary)' };
 
 const meta = {
-  title: 'Components/Dialog',
+  title: 'Components/Overlays/Dialog',
   component: Dialog,
   tags: ['autodocs'],
   args: {
@@ -69,7 +69,7 @@ const meta = {
       description: 'auto: dialog on desktop, `mobile` below 640 px. Here forced to show each pattern.',
     },
     showClose: { control: 'boolean' },
-    isDirty: { control: 'boolean', description: 'Unsaved input: X, Esc and Cancel ask „Discard changes?“, the scrim no longer closes.' },
+    isDirty: { control: 'boolean', description: 'Unsaved input: X, Esc and Cancel ask “Discard changes?”, the scrim no longer closes.' },
     primaryAction: slot({
       none: undefined,
       'Send invite': { label: 'Send invite', form: 'invite-form' },
@@ -84,15 +84,53 @@ const meta = {
     onOpenChange: { control: false },
   },
   parameters: {
-    medo: { subtitle: 'A modal window for a focused task. The page behind is blocked until it closes.' },
+    medo: {
+      subtitle: 'A modal window for a focused task. The page behind is blocked until it closes.',
+      usage: {
+        when: ['A short task that needs full attention: a small form, settings for one item.', 'Details the user must check before an action.'],
+        whenNot: [
+          'A yes or no about a consequence: use an Alert Dialog.',
+          'Long or multi-step content: use a page or a Drawer.',
+          'Feedback that should not interrupt: use a Toast or an Alert.',
+          'A hint next to a control: use a Popover.',
+        ],
+        do: [
+          'One task per dialog, with a title that names it.',
+          'Put the main action at the end of the footer and name it with a verb.',
+          'Set `isDirty` once the user has typed something, so closing asks “Discard changes?”.',
+          'Submit a form with `primaryAction.form`; return a promise from `onAction` to show the pending state.',
+        ],
+        dont: ['Open a dialog on top of a dialog. Only an Alert Dialog may open on top.', 'Open a dialog without a user action.', 'Put navigation or tabs into a dialog.'],
+      },
+      a11y: {
+        keyboard: [
+          ['Tab / Shift + Tab', 'Moves through the dialog. The focus stays inside.'],
+          ['Esc', 'Closes the dialog. With `isDirty` it asks first.'],
+          ['Enter', 'In a field: submits the form.'],
+        ],
+        notes: [
+          'The title names the dialog; the description is linked to it.',
+          'Focus starts in the first field, else on the first button, and returns to the trigger when the dialog closes.',
+          'The page behind does not scroll and is hidden from screen readers.',
+          'Only the body scrolls; header and footer stay visible.',
+          'Below 640 px forms open fullscreen, short content as a Bottom Sheet (`mobile="sheet"`).',
+        ],
+      },
+      styling: {
+        classes: [
+          ['medo-dialog-overlay', 'Scrim behind the dialog.'],
+          ['medo-dialog', 'The window.'],
+          ['medo-dialog--{size}', '`sm`, `lg` or `fullscreen`. Without it: md.'],
+          ['medo-dialog__header, __title, __description', 'Header with title and description.'],
+          ['medo-dialog__body', 'Content; the only part that scrolls.'],
+          ['medo-dialog__footer', 'Actions (a Button group).'],
+        ],
+        states: ['data-entering', 'data-exiting', 'data-scrolled'],
+      },
+    },
     docs: {
       description: {
-        component:
-          'Built on React Aria ModalOverlay + Modal + Dialog: the title names the dialog, focus starts in the first field (else the first button), stays inside and returns to the trigger; the page does not scroll. ' +
-          'Only the body scrolls – header and footer then get dividers. The main action sits at the end of the footer (Button group); `primaryAction.form` submits a form, a promise from `onAction` shows the pending state. ' +
-          '`isDirty` protects input: the scrim no longer closes, X, Esc and Cancel ask „Discard changes?“. ' +
-          'Below 640 px forms open fullscreen (Cancel · title · action), short content as Bottom Sheet (`mobile="sheet"`). One task per dialog, never a dialog on a dialog (only an Alert dialog). ' +
-          'Styles: `medo-dialog-overlay`, `medo-dialog`, `medo-dialog--{sm|md|lg|fullscreen}`, `medo-dialog__header`, `medo-dialog__body`, `medo-dialog__footer`.',
+        component: 'Use a dialog for a short, focused task like a small form. Built on React Aria Modal and Dialog.',
       },
     },
   },
@@ -104,7 +142,7 @@ const meta = {
           args.primaryAction?.form ? (
             <InviteForm close={close} />
           ) : (
-            <p style={{ margin: 0 }}>All files, members and settings of „Website relaunch“ will be removed. This cannot be undone.</p>
+            <p style={{ margin: 0 }}>All files, members and settings of “Website relaunch” will be removed. This cannot be undone.</p>
           )
         }
       </Dialog>
@@ -177,7 +215,7 @@ export const UnsavedChanges: Story = {
     docs: {
       description: {
         story:
-          'Type an email, then press Cancel, X or Esc: „Discard changes?“ asks first. Keep editing returns to the form, Discard closes. ' +
+          'Type an email, then press Cancel, X or Esc: “Discard changes?” asks first. Keep editing returns to the form, Discard closes. ' +
           'While the form has input, a click on the scrim does nothing.',
       },
     },
@@ -201,7 +239,7 @@ export const UnsavedChanges: Story = {
 };
 
 export const AsyncAction: Story = {
-  name: 'Saving (pending)',
+  name: 'Pending',
   parameters: {
     docs: {
       description: {
@@ -223,7 +261,7 @@ export const AsyncAction: Story = {
 };
 
 export const Mobile: Story = {
-  name: 'Mobile (below 640 px)',
+  name: 'On mobile',
   parameters: {
     docs: {
       description: {

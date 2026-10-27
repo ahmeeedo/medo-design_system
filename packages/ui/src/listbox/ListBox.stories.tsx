@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect } from 'storybook/test';
 import { Building2, Globe, User, Users } from 'lucide-react';
 import { ListBox, ListBoxMessage, ListBoxSection, Option } from './ListBox';
-import { interactionTest, LightDark, row } from '../story-helpers';
+import { interactionTest, row } from '../story-helpers';
 
 /* Stories show the list inline. In Select and Combobox it sits in a popover. */
 const frame: React.CSSProperties = {
@@ -14,7 +14,7 @@ const frame: React.CSSProperties = {
 };
 
 const meta = {
-  title: 'Components/Option & Listbox',
+  title: 'Components/Forms/Listbox',
   component: ListBox,
   tags: ['autodocs'],
   args: { size: 'md', selectionMode: 'single' },
@@ -88,7 +88,7 @@ export const Types: Story = {
 };
 
 export const Content: Story = {
-  name: 'Groups, descriptions, wrapping',
+  name: 'Content',
   parameters: {
     docs: {
       description: { story: 'Headings only with two or more groups; a line divides the groups automatically. Long labels wrap; icon and check stay on the first line.' },
@@ -141,28 +141,6 @@ export const Empty: Story = {
         {[]}
       </ListBox>
     </div>
-  ),
-};
-
-export const LightAndDark: Story = {
-  name: 'Light and Dark',
-  parameters: { layout: 'fullscreen' },
-  render: () => (
-    <LightDark>
-      <div style={frame}>
-        <ListBox aria-label="Topics" selectionMode="multiple" defaultSelectedKeys={['design']}>
-          <ListBoxSection title="Topics">
-            <Option id="design" description="UI and UX">
-              Design
-            </Option>
-            <Option id="code">Code</Option>
-            <Option id="marketing" isDisabled>
-              Marketing
-            </Option>
-          </ListBoxSection>
-        </ListBox>
-      </div>
-    </LightDark>
   ),
 };
 

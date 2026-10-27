@@ -9,7 +9,7 @@ import { Children, useContext, useEffect, useState } from 'react';
 import type { DocsContextProps } from 'storybook/internal/types';
 import { GLOBALS_UPDATED, SET_GLOBALS, UPDATE_STORY_ARGS } from 'storybook/internal/core-events';
 import { Canvas, Controls, Description, DocsContainer, DocsContext, useOf } from '@storybook/addon-docs/blocks';
-import { Alert, Link, StaticTable } from '@med-o/ui';
+import { Alert, Link, List, ListItem, StaticTable } from '@med-o/ui';
 import { modeFromGlobals, themes } from '../../.storybook/theme';
 
 /** Public source repository. */
@@ -172,14 +172,55 @@ export const Tok = ({ children }: { children: ReactNode }) => <code className="d
 
 /* ---------- component docs template ---------- */
 
+/** Text with `code` in backticks, as in the story descriptions. */
+export function Rich({ children }: { children: string }) {
+  return <>{children.split(/(`[^`]+`)/).map((part, i) => (part.startsWith('`') ? <Tok key={i}>{part.slice(1, -1)}</Tok> : part))}</>;
+}
+
+/** Usage guidance: when to use it and when not, do and don't. */
+export function UsageGuide({ usage }: { usage: MedoUsage }) {
+  const block = (title: string, items: string[] | undefined, kind: 'bullet' | 'do' | 'dont') =>
+    items?.length ? (
+      <div className="doc-guide">
+        <h3 className="medo-text-heading-sm">{title}</h3>
+        <List type={kind === 'bullet' ? 'bullet' : 'check'} size="md">
+          {items.map((item) => (
+            <ListItem key={item} excluded={kind === 'dont'} excludedLabel="Don't:">
+              <Rich>{item}</Rich>
+            </ListItem>
+          ))}
+        </List>
+      </div>
+    ) : null;
+  return (
+    <>
+      <div className="doc-columns">
+        {block('When to use', usage.when, 'bullet')}
+        {block('When not to use', usage.whenNot, 'bullet')}
+      </div>
+      <div className="doc-columns">
+        {block('Do', usage.do, 'do')}
+        {block("Don't", usage.dont, 'dont')}
+      </div>
+    </>
+  );
+}
+
+type MedoUsage = { when?: string[]; whenNot?: string[]; do?: string[]; dont?: string[] };
+type MedoA11y = { keyboard?: [string, string][]; notes?: string[] };
+type MedoStyling = { classes?: [string, string][]; states?: string[] };
+
 /**
  * Docs page for every story file with the "autodocs" tag:
- * header → Playground → one section per story → footer.
+ * header → Usage → Playground → one section per story → Accessibility → Styling → footer.
  *
- * Optional per story file (meta.parameters.medo):
+ * Optional per story file (meta.parameters.medo), texts may contain `code`:
  *   subtitle  one sentence under the title
+ *   usage     { when, whenNot, do, dont }: lists
+ *   a11y      { keyboard: [key, action][], notes: string[] }
+ *   styling   { classes: [class, use][], states: data attributes the CSS reads }
  */
-type MedoDocsParams = { subtitle?: string };
+type MedoDocsParams = { subtitle?: string; usage?: MedoUsage; a11y?: MedoA11y; styling?: MedoStyling };
 
 export function ComponentDocsPage() {
   const { csfFile, preparedMeta } = useOf('meta', ['meta']);
@@ -194,14 +235,20 @@ export function ComponentDocsPage() {
 
   /*
    * Storybook quirk: the docs Controls block starts with the *mapped* args, so select controls
-   * with a mapping (slot()) show „Choose option…“ until the first change. An empty update makes
+   * with a mapping (slot()) show “Choose option…” until the first change. An empty update makes
    * the preview send the real (unmapped) args once.
    */
   const primaryId = primary?.id;
   useEffect(() => {
     if (primaryId) context.channel.emit(UPDATE_STORY_ARGS, { storyId: primaryId, updatedArgs: {} });
   }, [context.channel, primaryId]);
-  const nav = [primary ? 'Playground' : null, ...examples.map((s) => s.name)].filter(Boolean) as string[];
+  const nav = [
+    medo.usage ? 'Usage' : null,
+    primary ? 'Playground' : null,
+    ...examples.map((s) => s.name),
+    medo.a11y ? 'Accessibility' : null,
+    medo.styling ? 'Styling' : null,
+  ].filter(Boolean) as string[];
   let n = 0;
 
   return (
@@ -214,6 +261,12 @@ export function ComponentDocsPage() {
         description={<Description of="meta" />}
         nav={nav}
       />
+
+      {medo.usage ? (
+        <DocSection n={++n} title="Usage" meta="Guidelines">
+          <UsageGuide usage={medo.usage} />
+        </DocSection>
+      ) : null}
 
       {primary ? (
         <DocSection n={++n} title="Playground" meta="Controls" description="Change the properties below.">
@@ -232,6 +285,47 @@ export function ComponentDocsPage() {
           <Canvas of={story.moduleExport} />
         </DocSection>
       ))}
+
+      {medo.a11y ? (
+        <DocSection n={++n} title="Accessibility" meta="WCAG 2.2 AA">
+          {medo.a11y.keyboard?.length ? (
+            <SpecTable head={['Key', 'Action']} rows={medo.a11y.keyboard.map(([key, action]) => [<Tok>{key}</Tok>, <Rich>{action}</Rich>])} />
+          ) : null}
+          {medo.a11y.notes?.length ? (
+            <List size="md">
+              {medo.a11y.notes.map((note) => (
+                <ListItem key={note}>
+                  <Rich>{note}</Rich>
+                </ListItem>
+              ))}
+            </List>
+          ) : null}
+        </DocSection>
+      ) : null}
+
+      {medo.styling ? (
+        <DocSection
+          n={++n}
+          title="Styling"
+          meta="Plain CSS"
+          description="The look is plain CSS on the design tokens. Other frameworks can use the same classes and set the same data attributes."
+        >
+          {medo.styling.classes?.length ? (
+            <SpecTable head={['Class', 'Use']} rows={medo.styling.classes.map(([cls, use]) => [<Tok>{cls}</Tok>, <Rich>{use}</Rich>])} />
+          ) : null}
+          {medo.styling.states?.length ? (
+            <p>
+              <strong>States</strong> (set by React Aria):{' '}
+              {medo.styling.states.map((state, i) => (
+                <span key={state}>
+                  {i ? ', ' : ''}
+                  <Tok>{state}</Tok>
+                </span>
+              ))}
+            </p>
+          ) : null}
+        </DocSection>
+      ) : null}
 
       <DocFooter>
         {`${kind === 'Components' ? 'Component' : kind}: ${name} · @med-o/ui`}

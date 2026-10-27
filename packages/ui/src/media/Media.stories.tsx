@@ -3,7 +3,7 @@ import { expect, fn, waitFor } from 'storybook/test';
 import { Image, Figure, MediaPlayButton, type ImageRatio } from './Image';
 import { EmbedConsent } from './EmbedConsent';
 import { Badge } from '../badge/Badge';
-import { interactionTest, LightDark, samplePhoto, sampleScreenshot, semantic, slot } from '../story-helpers';
+import { interactionTest, Examples, samplePhoto, sampleScreenshot, semantic, slot } from '../story-helpers';
 
 const ratios: ImageRatio[] = ['1:1', '3:4', '4:3', '3:2', '16:9', '21:9', 'original'];
 const grid: React.CSSProperties = { display: 'grid', gap: 'var(--medo-space-6)', gridTemplateColumns: 'repeat(auto-fill, minmax(12rem, 1fr))', alignItems: 'start' };
@@ -14,7 +14,7 @@ const preview = samplePhoto(0, { tiny: true });
 const demoEmbed = `data:text/html,${encodeURIComponent('<body style="margin:0;display:grid;place-items:center;height:100vh;font:16px sans-serif;background:#0f1a1f;color:#fff">Embedded content loads here</body>')}`;
 
 const meta = {
-  title: 'Components/Image & Media',
+  title: 'Components/Data display/Image & Media',
   component: Image,
   tags: ['autodocs'],
   args: {
@@ -76,7 +76,7 @@ export const Ratios: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Fixed ratios reserve the space. „original“ keeps the file’s ratio – pass width and height so the space is reserved too. 3:4 for portrait tiles.',
+        story: 'Fixed ratios reserve the space. “original” keeps the file’s ratio – pass width and height so the space is reserved too. 3:4 for portrait tiles.',
       },
     },
   },
@@ -93,7 +93,7 @@ export const Ratios: Story = {
 };
 
 export const States: Story = {
-  name: 'Loaded · Blur · Skeleton · Error',
+  name: 'Loading states',
   parameters: {
     docs: {
       description: {
@@ -103,7 +103,7 @@ export const States: Story = {
     },
   },
   render: () => (
-    <LightDark>
+    <Examples>
       <div style={{ ...grid, gridTemplateColumns: 'repeat(2, 1fr)' }}>
         {[
           { name: 'Loaded', props: { src: photo } },
@@ -117,12 +117,12 @@ export const States: Story = {
           </div>
         ))}
       </div>
-    </LightDark>
+    </Examples>
   ),
 };
 
 export const Fit: Story = {
-  name: 'Cover · contain',
+  name: 'Fit',
   parameters: {
     docs: {
       description: {
@@ -150,7 +150,7 @@ export const Fit: Story = {
 };
 
 export const Overlays: Story = {
-  name: 'Overlays: text · badge · play',
+  name: 'Overlays',
   parameters: {
     docs: {
       description: {
@@ -209,7 +209,7 @@ export const Embed: Story = {
     docs: {
       description: {
         story:
-          'Nothing loads from the provider – not even its thumbnail – until the click (GDPR, TTDSG § 25); youtube-nocookie.com still sends the IP address. Default from 480 px width, Compact below (measured on the component). After the click the iframe replaces the placeholder and takes the focus; „Always load …“ goes to `onConsent(true)` – store it in the consent manager. Here the iframe shows a local demo page.',
+          'Nothing loads from the provider – not even its thumbnail – until the click (GDPR, TTDSG § 25); youtube-nocookie.com still sends the IP address. Default from 480 px width, Compact below (measured on the component). After the click the iframe replaces the placeholder and takes the focus; “Always load …” goes to `onConsent(true)` – store it in the consent manager. Here the iframe shows a local demo page.',
       },
     },
   },

@@ -16,12 +16,12 @@ const box: React.CSSProperties = { maxInlineSize: '35rem' };
 
 const inbox = [
   { id: 'lea', name: 'Lea M.', text: 'Approved the budget for Q4', meta: '09:41', unread: true },
-  { id: 'sam', name: 'Sam K.', text: 'Shared „Roadmap 2027“ with you', meta: 'Yesterday' },
+  { id: 'sam', name: 'Sam K.', text: 'Shared “Roadmap 2027” with you', meta: 'Yesterday' },
   { id: 'jonas', name: 'Jonas B.', text: 'Mentioned you in Website relaunch', meta: 'Mon' },
   { id: 'ahmet', name: 'Ahmet D.', text: 'Updated the Q3 report', meta: 'Sep 28' },
 ];
 
-/** „…“ menu of a row – every action of the row lives here (also the swipe actions). */
+/** “…” menu of a row – every action of the row lives here (also the swipe actions). */
 function RowMenu({ name, onAction }: { name: string; onAction?: (key: 'archive' | 'delete') => void }) {
   return (
     <MenuTrigger>
@@ -39,7 +39,7 @@ function RowMenu({ name, onAction }: { name: string; onAction?: (key: 'archive' 
 }
 
 const meta = {
-  title: 'Components/List View',
+  title: 'Components/Data display/List View',
   component: ListView,
   tags: ['autodocs'],
   args: { 'aria-label': 'Inbox', variant: 'plain', selectionMode: 'none', isLoading: false, onAction: fn(), onSelectionChange: fn(), children: null },
@@ -61,9 +61,9 @@ const meta = {
         component:
           'Built on React Aria GridList: ↑ ↓ move between rows, Enter opens a row (`onAction` or `href`), Tab reaches the controls inside a row. Each row is named by its title. ' +
           '`ListRow`: leading (Avatar – sized automatically –, `ListRowIcon` or thumbnail), title and description (48 · 64 · 88), meta, one trailing type per list (Menu, Badge, Switch, chevron or max 2 Button sm – then the row has no action). ' +
-          '`unread`: strong text, meta in brand, a dot and „Unread“ for screen readers. Plain or card; inset dividers start at the text. `isLoading` shows 3 skeleton rows. ' +
+          '`unread`: strong text, meta in brand, a dot and “Unread” for screen readers. Plain or card; inset dividers start at the text. `isLoading` shows 3 skeleton rows. ' +
           '`variant="cards"` with `ListCard` shows records as cards – the mobile form of a Table row. Selection works with the Bulk action bar. ' +
-          'Swipe on touch (`swipeActions`): left reveals Delete, right Archive – the „…“ menu holds the same actions. Styles: `medo-list-view`, `medo-list-view--card`, `medo-list-row`, `medo-list-row--unread`.',
+          'Swipe on touch (`swipeActions`): left reveals Delete, right Archive – the “…” menu holds the same actions. Styles: `medo-list-view`, `medo-list-view--card`, `medo-list-row`, `medo-list-row--unread`.',
       },
     },
   },
@@ -91,7 +91,7 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Playground: Story = {
-  parameters: { docs: { description: { story: 'Inbox example: Enter or a click opens a row (Actions panel), Tab reaches the „…“ menu.' } } },
+  parameters: { docs: { description: { story: 'Inbox example: Enter or a click opens a row (Actions panel), Tab reaches the “…” menu.' } } },
 };
 
 export const Trailing: Story = {
@@ -156,7 +156,7 @@ export const Trailing: Story = {
 };
 
 export const Lines: Story = {
-  name: 'Rows: 1 · 2 · 3 lines',
+  name: 'Rows',
   parameters: {
     docs: { description: { story: 'Height follows the lines: 48, 64, 88. The title truncates after one line, the description after one or two (`lines={3}`).' } },
   },
@@ -178,7 +178,7 @@ export const Lines: Story = {
           id="three"
           lines={3}
           title="Sam K."
-          description="Shared „Roadmap 2027“ with you and asked for feedback on the second milestone before Friday, when the board meets."
+          description="Shared “Roadmap 2027” with you and asked for feedback on the second milestone before Friday, when the board meets."
           leading={<Avatar name="Sam K." decorative />}
           meta="Yesterday"
           trailing={
@@ -249,7 +249,7 @@ const invoices = [
 ];
 
 export const Cards: Story = {
-  name: 'Cards (records on mobile)',
+  name: 'Cards',
   parameters: {
     docs: {
       description: {
@@ -301,7 +301,7 @@ export const Cards: Story = {
   ),
 };
 
-/** Inbox with swipe actions: delete and archive remove the row at once and offer „Undo“ (8 s). */
+/** Inbox with swipe actions: delete and archive remove the row at once and offer “Undo” (8 s). */
 function SwipeInbox({ onOpen }: { onOpen?: (key: unknown) => void }) {
   const [items, setItems] = useState(inbox);
   const remove = (id: string, verb: 'deleted' | 'archived') => {
@@ -337,14 +337,14 @@ function SwipeInbox({ onOpen }: { onOpen?: (key: unknown) => void }) {
 }
 
 export const Swipe: Story = {
-  name: 'Swipe (touch)',
+  name: 'Swipe actions',
   parameters: {
     viewport: { defaultViewport: 'mobile1' },
     docs: {
       description: {
         story:
           'Touch only (use device mode in the browser): swipe left reveals Delete, right Archive. From 88 px the action snaps open – tap it; a full swipe (≥ 50 % or a flick) triggers it at once. Only one row is open; a tap elsewhere, scrolling or Esc closes it. ' +
-          'Delete and archive remove the row at once and a Toast offers „Undo“ for 8 s – no confirmation dialog. Mouse, keyboard and screen readers use the „…“ menu with the same actions.',
+          'Delete and archive remove the row at once and a Toast offers “Undo” for 8 s – no confirmation dialog. Mouse, keyboard and screen readers use the “…” menu with the same actions.',
       },
     },
   },

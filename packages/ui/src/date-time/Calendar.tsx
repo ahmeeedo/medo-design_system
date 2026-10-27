@@ -40,7 +40,7 @@ export interface CalendarTexts {
   nextYear: string;
   previousYears: string;
   nextYears: string;
-  /** Name of the month-and-year button: „October 2026 – choose month and year“. */
+  /** Name of the month-and-year button: “October 2026 – choose month and year”. */
   chooseMonth: (title: string) => string;
   chooseYear: (year: string) => string;
   weekNumber: string;

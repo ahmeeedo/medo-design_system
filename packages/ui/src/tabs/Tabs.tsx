@@ -33,7 +33,7 @@ export function Tabs({ size = 'md', fullWidth = false, className, ...props }: Ta
 }
 
 export interface TabListProps<T> extends Omit<AriaTabListProps<T>, 'className' | 'style'> {
-  /** Names the tabs when there is no visible heading („Project“). */
+  /** Names the tabs when there is no visible heading (“Project”). */
   'aria-label'?: string;
   className?: string;
 }
@@ -49,13 +49,13 @@ export function TabList<T extends object>({ className, ...props }: TabListProps<
 }
 
 export interface TabProps extends Omit<AriaTabProps, 'className' | 'style' | 'children'> {
-  /** Required. 1–2 words, a noun („Activity“). */
+  /** Required. 1–2 words, a noun (“Activity”). */
   children: string;
   /** Optional, then on all tabs. Decorative – the label carries the meaning. */
   icon?: ReactNode;
   /** Items waiting in the tab (Badge count, neutral). Hidden at 0. */
   count?: number;
-  /** Screen-reader text of the count („3 new“). Without it the number is read as part of the name. */
+  /** Screen-reader text of the count (“3 new”). Without it the number is read as part of the name. */
   countLabel?: string;
 }
 

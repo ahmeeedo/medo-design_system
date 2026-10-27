@@ -2,10 +2,10 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { FileText } from 'lucide-react';
 import { ProgressBar, Skeleton, Spinner } from './Progress';
 import { Button } from '../button/Button';
-import { LightDark, row } from '../story-helpers';
+import { row } from '../story-helpers';
 
 const meta = {
-  title: 'Components/Loading & Progress',
+  title: 'Components/Feedback/Progress',
   component: ProgressBar,
   tags: ['autodocs'],
   args: { label: 'Uploading 3 files', value: 64, description: '2 of 3 files · about 12 s left', size: 'md', status: 'default', showValue: true },
@@ -36,7 +36,7 @@ export const Playground: Story = {};
 
 export const Spinners: Story = {
   parameters: {
-    docs: { description: { story: 'Uses the text colour of its parent. In a button use `isPending`: the spinner replaces the icon, the label says what happens („Saving…“).' } },
+    docs: { description: { story: 'Uses the text colour of its parent. In a button use `isPending`: the spinner replaces the icon, the label says what happens (“Saving…”).' } },
   },
   render: () => (
     <div style={{ display: 'grid', gap: 'var(--medo-space-6)' }}>
@@ -87,24 +87,5 @@ export const Skeletons: Story = {
         <Skeleton shape="rect" />
       </div>
     </div>
-  ),
-};
-
-export const LightAndDark: Story = {
-  name: 'Light and Dark',
-  parameters: { layout: 'fullscreen' },
-  decorators: [],
-  render: () => (
-    <LightDark>
-      <div style={row}>
-        <Spinner tone="brand" />
-        <Spinner tone="neutral" />
-      </div>
-      <ProgressBar label="Uploading 3 files" value={64} description="2 of 3 files · about 12 s left" />
-      <ProgressBar label="Upload failed" value={64} status="error" description="Connection lost. Try again." />
-      <div aria-busy="true" style={{ display: 'grid', gap: 'var(--medo-space-2)' }}>
-        <Skeleton lines={2} />
-      </div>
-    </LightDark>
   ),
 };

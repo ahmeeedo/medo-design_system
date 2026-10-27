@@ -16,7 +16,7 @@ const examples: Record<AlertDialogTone, { trigger: string; title: string; text: 
   warning: {
     trigger: 'Leave form',
     title: 'Discard changes?',
-    text: 'Your changes to „Invite member“ will be lost.',
+    text: 'Your changes to “Invite member” will be lost.',
     action: 'Discard',
     cancel: 'Keep editing',
   },
@@ -30,7 +30,7 @@ const examples: Record<AlertDialogTone, { trigger: string; title: string; text: 
 };
 
 const meta = {
-  title: 'Components/Alert Dialog',
+  title: 'Components/Overlays/Alert Dialog',
   component: AlertDialog,
   tags: ['autodocs'],
   args: {
@@ -61,7 +61,7 @@ const meta = {
           'Built on React Aria Modal + Dialog with role `alertdialog`. The icon shows the tone (decorative), the title asks a question, the description names the consequence, the action button names the verb. ' +
           'No X: the user decides with the buttons. A click on the scrim never closes, Esc = Cancel. Focus starts on Cancel, so an accidental Enter never deletes, and returns to the trigger. ' +
           'Danger uses a danger button, Warning and Info a primary one. Below 640 px the icon moves on top and the buttons stack (main action on top). ' +
-          'The only dialog allowed on top of a Dialog (e.g. „Discard changes?“). Styles: `medo-alert-dialog`, `medo-alert-dialog--{danger|warning|info}`.',
+          'The only dialog allowed on top of a Dialog (e.g. “Discard changes?”). Styles: `medo-alert-dialog`, `medo-alert-dialog--{danger|warning|info}`.',
       },
     },
   },
@@ -100,7 +100,7 @@ export const Tones: Story = {
 };
 
 export const Pending: Story = {
-  name: 'Deleting (pending)',
+  name: 'Pending',
   parameters: { docs: { description: { story: 'When `onAction` returns a promise, the action shows the pending state; the dialog closes when it resolves.' } } },
   render: () => (
     <DialogTrigger>

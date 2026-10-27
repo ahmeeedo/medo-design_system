@@ -27,10 +27,20 @@ const preview: Preview = {
       config: { rules: [{ id: 'landmark-unique', enabled: false }] },
     },
     options: {
-      storySort: { order: ['Introduction', 'Foundations', ['Colors', 'Typography', 'Spacing & sizes', 'Elevation & motion'], 'Usage', 'Components'] },
+      storySort: {
+        order: [
+          'Introduction',
+          'Foundations',
+          ['Colors', 'Typography', 'Spacing & sizes', 'Elevation & motion', 'Icons', 'Accessibility'],
+          'Usage',
+          ['Theming', 'Form', 'Tailwind'],
+          'Components',
+          ['Actions', 'Forms', 'Overlays', 'Feedback', 'Navigation', 'Data display'],
+        ],
+      },
     },
   },
-  // Start theme. The Vitest project „storybook-dark“ sets STORYBOOK_TEST_THEME, so every story is also tested in Dark.
+  // Start theme. The Vitest project “storybook-dark” sets STORYBOOK_TEST_THEME, so every story is also tested in Dark.
   initialGlobals: { theme: import.meta.env.STORYBOOK_TEST_THEME ?? 'Light' },
   // Theme switch in the toolbar sets data-theme on <html> – exactly like in a real app.
   decorators: [

@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Bell, CircleCheck, CircleAlert, Clock, Info, Sparkles, FileText } from 'lucide-react';
 import { Badge, BadgeCount, BadgeDot, type BadgeTone } from './Badge';
 import { IconButton } from '../icon-button/IconButton';
-import { LightDark, row, slot } from '../story-helpers';
+import { row, slot } from '../story-helpers';
 
 const tones: { tone: BadgeTone; label: string; icon: React.ReactNode }[] = [
   { tone: 'neutral', label: 'Draft', icon: <FileText /> },
@@ -14,7 +14,7 @@ const tones: { tone: BadgeTone; label: string; icon: React.ReactNode }[] = [
 ];
 
 const meta = {
-  title: 'Components/Badge',
+  title: 'Components/Feedback/Badge',
   component: Badge,
   tags: ['autodocs'],
   args: { children: 'Active', tone: 'success', size: 'md', dot: true, icon: 'none' },
@@ -84,13 +84,13 @@ export const Sizes: Story = {
 };
 
 export const CountAndDot: Story = {
-  name: 'Count & dot',
+  name: 'Count and dot',
   parameters: {
     docs: {
       description: {
         story:
           'The count sits on the top-right corner of an icon button. Its number is hidden; the button name says it. ' +
-          'From 100 it shows „99+“, at 0 it disappears. A dot always comes with text.',
+          'From 100 it shows “99+”, at 0 it disappears. A dot always comes with text.',
       },
     },
   },
@@ -110,28 +110,5 @@ export const CountAndDot: Story = {
         Anna is online
       </span>
     </div>
-  ),
-};
-
-export const LightAndDark: Story = {
-  name: 'Light and Dark',
-  parameters: { layout: 'fullscreen' },
-  render: () => (
-    <LightDark>
-      <div style={row}>
-        {tones.map((t) => (
-          <Badge key={t.tone} tone={t.tone} dot>
-            {t.label}
-          </Badge>
-        ))}
-      </div>
-      <div style={row}>
-        <BadgeCount count={3} label="3 unread" />
-        <BadgeCount count={12} tone="brand" label="12 new" />
-        <BadgeCount count={7} tone="neutral" label="7 drafts" />
-        <BadgeDot tone="success" label="Online" />
-        <BadgeDot tone="danger" label="Unread" />
-      </div>
-    </LightDark>
   ),
 };

@@ -12,7 +12,7 @@ export interface SpinnerProps {
   tone?: 'current' | 'brand' | 'neutral' | 'on-brand';
   /** Name for screen readers. */
   'aria-label'?: string;
-  /** Inside a control that already says what happens („Saving…“): hide the spinner from screen readers. */
+  /** Inside a control that already says what happens (“Saving…”): hide the spinner from screen readers. */
   decorative?: boolean;
   className?: string;
   style?: CSSProperties;
@@ -45,7 +45,7 @@ export function Spinner({ size = 'md', tone = 'current', decorative, className, 
 /* ---------- Progress bar ---------- */
 
 export interface ProgressBarProps extends Omit<AriaProgressBarProps, 'children' | 'className' | 'style'> {
-  /** Visible label („Uploading 3 files“). Without it, set aria-label. */
+  /** Visible label (“Uploading 3 files”). Without it, set aria-label. */
   label?: ReactNode;
   /** Helper below the bar: files, time left, or what to do after an error. */
   description?: ReactNode;
@@ -53,7 +53,7 @@ export interface ProgressBarProps extends Omit<AriaProgressBarProps, 'children' 
   size?: 'sm' | 'md';
   /** success when done, error when it failed. Announced politely. */
   status?: 'default' | 'success' | 'error';
-  /** Show the value („64 %“) next to the label. Hidden when indeterminate. */
+  /** Show the value (“64 %”) next to the label. Hidden when indeterminate. */
   showValue?: boolean;
   className?: string;
   style?: CSSProperties;
@@ -61,7 +61,7 @@ export interface ProgressBarProps extends Omit<AriaProgressBarProps, 'children' 
 
 /**
  * Progress bar – measurable or long work. Built on React Aria ProgressBar:
- * role progressbar with value and value text. Use `valueLabel` for words („64 %, 2 of 3 files“).
+ * role progressbar with value and value text. Use `valueLabel` for words (“64 %, 2 of 3 files”).
  */
 export function ProgressBar({
   label,
@@ -99,7 +99,7 @@ export function ProgressBar({
             <div className="medo-progress__fill" style={isIndeterminate ? undefined : { inlineSize: `${percentage}%` }} />
           </div>
           {description && (
-            // Live only for the final state, so regular updates („12 s left“) do not chatter.
+            // Live only for the final state, so regular updates (“12 s left”) do not chatter.
             <span id={descriptionId} className="medo-progress__description" aria-live={status === 'default' ? undefined : 'polite'}>
               {description}
             </span>

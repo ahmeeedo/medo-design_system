@@ -38,7 +38,7 @@ const profile: React.CSSProperties = {
   padding: 'var(--medo-space-2) var(--medo-space-2) var(--medo-space-3)',
 };
 
-/** Example „Account“ – links act immediately, so no footer. */
+/** Example “Account” – links act immediately, so no footer. */
 function AccountBody() {
   return (
     <>
@@ -103,7 +103,7 @@ const filterFooter = (close: () => void) => (
 );
 
 const meta = {
-  title: 'Components/Drawer',
+  title: 'Components/Overlays/Drawer',
   component: Drawer,
   tags: ['autodocs'],
   args: { title: 'Account', side: 'right', size: 'sm', footer: 'none' as never, isDirty: false, children: null, onOpenChange: fn() },
@@ -112,7 +112,7 @@ const meta = {
     side: { control: 'inline-radio', options: ['right', 'left'], description: 'right: account, filters, details · left: navigation only.' },
     size: { control: 'inline-radio', options: ['sm', 'md', 'lg'] },
     footer: slot({ none: undefined, 'Reset and Apply': filterFooter }),
-    isDirty: { control: 'boolean', description: 'Unsaved input: the scrim no longer closes, X and Esc ask „Discard changes?“.' },
+    isDirty: { control: 'boolean', description: 'Unsaved input: the scrim no longer closes, X and Esc ask “Discard changes?”.' },
     'aria-label': semantic,
     closeLabel: semantic,
     discardText: semantic,
@@ -125,7 +125,7 @@ const meta = {
     docs: {
       description: {
         component:
-          'Same building blocks and behaviour as the Dialog (React Aria ModalOverlay + Modal + Dialog): scrim, focus trap, no page scroll, Esc and the close button close it, focus returns to the trigger; `isDirty` asks „Discard changes?“. ' +
+          'Same building blocks and behaviour as the Dialog (React Aria ModalOverlay + Modal + Dialog): scrim, focus trap, no page scroll, Esc and the close button close it, focus returns to the trigger; `isDirty` asks “Discard changes?”. ' +
           'Right for account, filters and details (triggers sit on the right), left only for navigation; sm 320 · md 400 · lg 560, full height, only the body scrolls. ' +
           'A footer only for decisions (Apply, Save) – links and switches act immediately. Below 640 px it keeps its side, viewport − 56 px wide; a swipe towards the edge closes it. ' +
           'One drawer at a time; an Alert dialog on top is fine. The SideNav uses a left drawer on tablets. Styles: `medo-drawer`, `medo-drawer--{left|right}`, `medo-drawer--{sm|md|lg}`.',
@@ -216,7 +216,7 @@ export const UnsavedChanges: Story = {
     docs: {
       description: {
         story:
-          'Type a name, then press Cancel, X or Esc: „Discard changes?“ asks first. While there is input, a click on the scrim does nothing. Save closes without asking (`close` from the render function).',
+          'Type a name, then press Cancel, X or Esc: “Discard changes?” asks first. While there is input, a click on the scrim does nothing. Save closes without asking (`close` from the render function).',
       },
     },
   },

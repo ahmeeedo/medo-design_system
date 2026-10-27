@@ -66,7 +66,7 @@ function FileActions({ overlay, onAction }: { overlay?: 'auto' | 'popover' | 'sh
 }
 
 const meta = {
-  title: 'Components/Menu',
+  title: 'Components/Actions/Menu',
   component: Menu,
   tags: ['autodocs'],
   args: { overlay: 'popover', onAction: fn() },
@@ -108,7 +108,7 @@ const meta = {
             }}
           />
         </MenuTrigger>
-        {/* „Delete…“ – the ellipsis means a second step: an Alert dialog confirms. */}
+        {/* “Delete…” – the ellipsis means a second step: an Alert dialog confirms. */}
         <AlertDialog isOpen={confirm} onOpenChange={setConfirm} title="Delete Q3-Report.pdf?" actionLabel="Delete">
           The file will be deleted for everyone in this workspace. This cannot be undone.
         </AlertDialog>
@@ -121,12 +121,12 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Playground: Story = {
-  parameters: { docs: { description: { story: 'Open the menu with the ••• button. The Actions panel shows the chosen item; „Delete…“ opens an Alert dialog.' } } },
+  parameters: { docs: { description: { story: 'Open the menu with the ••• button. The Actions panel shows the chosen item; “Delete…” opens an Alert dialog.' } } },
 };
 
 export const TextTrigger: Story = {
   name: 'Button as trigger',
-  parameters: { docs: { description: { story: 'Any button can open a menu, e.g. a split or „More“ button.' } } },
+  parameters: { docs: { description: { story: 'Any button can open a menu, e.g. a split or “More” button.' } } },
   render: () => (
     <MenuTrigger>
       <Button variant="secondary">Export</Button>
@@ -143,7 +143,7 @@ export const TextTrigger: Story = {
 };
 
 export const Mobile: Story = {
-  name: 'Mobile (below 640 px)',
+  name: 'On mobile',
   args: { overlay: 'sheet' },
   parameters: {
     docs: {

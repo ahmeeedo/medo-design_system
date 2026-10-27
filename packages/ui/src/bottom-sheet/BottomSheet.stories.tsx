@@ -9,7 +9,7 @@ import { interactionTest, semantic } from '../story-helpers';
 const text: React.CSSProperties = { margin: 0, padding: '0 var(--medo-space-4) var(--medo-space-4)', font: 'var(--medo-typography-body-md)', color: 'var(--medo-color-text-secondary)' };
 
 const meta = {
-  title: 'Components/Bottom Sheet',
+  title: 'Components/Overlays/Bottom Sheet',
   component: BottomSheet,
   tags: ['autodocs'],
   args: { title: 'Share project', height: 'content', children: null, onOpenChange: fn() },

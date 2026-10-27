@@ -6,7 +6,7 @@ import { Button, ButtonGroup } from '../button/Button';
 import { IconButton } from '../icon-button/IconButton';
 import { Badge } from '../badge/Badge';
 import { Image } from '../media/Image';
-import { interactionTest, LightDark, samplePhoto, semantic, slot } from '../story-helpers';
+import { interactionTest, samplePhoto, semantic, slot } from '../story-helpers';
 
 /** Sample media: the Image component (decorative – the card title names the content). In cards the image takes the card's radius. */
 const media = <Image src={samplePhoto(0)} alt="" ratio="16:9" radius="none" />;
@@ -14,7 +14,7 @@ const media = <Image src={samplePhoto(0)} alt="" ratio="16:9" radius="none" />;
 const grid: React.CSSProperties = { display: 'grid', gap: 'var(--medo-space-6)', gridTemplateColumns: 'repeat(auto-fill, minmax(16rem, 1fr))', alignItems: 'stretch' };
 
 const meta = {
-  title: 'Components/Card',
+  title: 'Components/Data display/Card',
   component: Card,
   tags: ['autodocs'],
   args: {
@@ -144,29 +144,6 @@ export const Horizontal: Story = {
         Three steps instead of five.
       </Card>
     </div>
-  ),
-};
-
-export const LightAndDark: Story = {
-  name: 'Light and Dark',
-  parameters: { layout: 'fullscreen', width: 'none' },
-  render: () => (
-    <LightDark>
-      <Card href="#" title="Design tokens 2.0" subtitle="Article · 5 min read">
-        What changed in colours, spacing and typography.
-      </Card>
-      <Card
-        variant="brand"
-        title="Upgrade to Pro"
-        footer={
-          <ButtonGroup>
-            <Button size="sm">Upgrade</Button>
-          </ButtonGroup>
-        }
-      >
-        Unlimited projects and version history.
-      </Card>
-    </LightDark>
   ),
 };
 

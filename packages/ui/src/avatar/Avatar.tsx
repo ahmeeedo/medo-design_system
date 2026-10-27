@@ -50,7 +50,7 @@ export interface AvatarProps {
   shape?: 'circle' | 'square';
   /** Stable id (user id) for the initials colour, so it survives name changes. */
   colorKey?: string;
-  /** Presence dot. Also added to the accessible name („Lea M., online“). */
+  /** Presence dot. Also added to the accessible name (“Lea M., online”). */
   status?: AvatarStatus;
   /** Words for the status in the accessible name. */
   statusLabels?: Partial<Record<AvatarStatus, string>>;
@@ -121,20 +121,20 @@ export function Avatar({
 export interface AvatarGroupProps {
   /** Avatars, most relevant first (owner, you). */
   children: ReactNode;
-  /** Visible avatars before „+N“. */
+  /** Visible avatars before “+N”. */
   max?: number;
   /** xs · sm · md · lg. */
   size?: Exclude<AvatarSize, 'xl' | '2xl'>;
-  /** Name of the group, e.g. „Assignees“. */
+  /** Name of the group, e.g. “Assignees”. */
   'aria-label': string;
-  /** Opens the full list (e.g. a popover). Without it „+N“ is plain text. */
+  /** Opens the full list (e.g. a popover). Without it “+N” is plain text. */
   onMorePress?: () => void;
-  /** Accessible name of „+N“. Default: „N more“. */
+  /** Accessible name of “+N”. Default: “N more”. */
   moreLabel?: (count: number) => string;
   className?: string;
 }
 
-/** Overlapping avatars, max 4 + „+N“. */
+/** Overlapping avatars, max 4 + “+N”. */
 export function AvatarGroup({
   children,
   max = 4,

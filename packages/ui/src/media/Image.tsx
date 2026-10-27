@@ -145,7 +145,7 @@ export interface FigureProps {
   children: ReactNode;
   /** Describes what matters (adds to the image – never repeat the alt text). */
   caption?: ReactNode;
-  /** Names the source („© Photographer“). */
+  /** Names the source (“© Photographer”). */
   credit?: ReactNode;
   className?: string;
 }

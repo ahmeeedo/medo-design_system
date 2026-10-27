@@ -83,10 +83,10 @@ export function TextField({
 }
 
 /**
- * „Reward early, punish late“: an error disappears as soon as the input is valid while typing –
+ * “Reward early, punish late”: an error disappears as soon as the input is valid while typing –
  * new errors still only appear on blur or submit. React Aria commits validation on the native
  * change event (blur), so a valid input dispatches it early. Without this the error text vanished
- * on the next mousedown, the layout shifted and the click on e.g. „Save“ missed its target.
+ * on the next mousedown, the layout shifted and the click on e.g. “Save” missed its target.
  * Checked after the render, when React Aria has updated custom validity (validate functions).
  */
 function clearErrorWhenValid(e: FormEvent<HTMLInputElement | HTMLTextAreaElement>) {

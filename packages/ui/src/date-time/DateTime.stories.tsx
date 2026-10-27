@@ -5,7 +5,7 @@ import { getLocalTimeZone, isWeekend, parseDate, parseDateTime, parseTime, today
 import { Calendar, RangeCalendar } from './Calendar';
 import { DateField, TimeField } from './DateField';
 import { DatePicker, DateRangePicker } from './DatePicker';
-import { interactionTest, LightDark, semantic } from '../story-helpers';
+import { interactionTest, Examples, semantic } from '../story-helpers';
 
 const stack: React.CSSProperties = { display: 'grid', gap: 'var(--medo-space-6)', alignContent: 'start' };
 const columns: React.CSSProperties = { display: 'flex', flexWrap: 'wrap', gap: 'var(--medo-space-8)', alignItems: 'start' };
@@ -23,7 +23,7 @@ const slots = ['09:00', '09:15', '09:30', '09:45', '10:00', '10:15', '10:30', '1
 }));
 
 const meta = {
-  title: 'Components/Date & Time',
+  title: 'Components/Forms/Date & Time',
   component: DatePicker,
   tags: ['autodocs'],
   args: {
@@ -64,8 +64,8 @@ const meta = {
         component:
           'React Aria DateField · TimeField · DatePicker · DateRangePicker · Calendar · RangeCalendar with `@internationalized/date` values (`parseDate("2026-10-12")`, `toString()` for the API – no time-zone shifts). ' +
           'Typing first: every segment is a spinbutton, digits only, complete segments jump to the next; ↑ ↓ change, Backspace clears, a pasted date fills all. Order, separators, week start and 12/24 h come from the locale; always with leading zeros (09:30, 01.05.2026). ' +
-          'The calendar is a helper: „Open calendar“ or Alt + ↓; the month-and-year button switches to months and years (far dates in three clicks). Ranges: two months, optional presets. Time: typed, optional slot list behind a clock button – no clock faces. ' +
-          'Below 640 px the calendar opens in a Bottom Sheet (lg, „Done“). Validation names the rule (min, max, unavailable days, reversed range). Styles: `medo-date-box`, `medo-calendar`.',
+          'The calendar is a helper: “Open calendar” or Alt + ↓; the month-and-year button switches to months and years (far dates in three clicks). Ranges: two months, optional presets. Time: typed, optional slot list behind a clock button – no clock faces. ' +
+          'Below 640 px the calendar opens in a Bottom Sheet (lg, “Done”). Validation names the rule (min, max, unavailable days, reversed range). Styles: `medo-date-box`, `medo-calendar`.',
       },
     },
   },
@@ -82,7 +82,7 @@ type Story = StoryObj<typeof meta>;
 export const Playground: Story = {};
 
 export const Fields: Story = {
-  name: 'Fields: date · range · time · date + time',
+  name: 'Fields',
   parameters: {
     docs: {
       description: {
@@ -91,7 +91,7 @@ export const Fields: Story = {
     },
   },
   render: () => (
-    <LightDark>
+    <Examples>
       <I18nProvider locale="de-DE">
         <div style={stack}>
           <DatePicker label="Date" defaultValue={day} />
@@ -103,7 +103,7 @@ export const Fields: Story = {
           <DatePicker label="Disabled" defaultValue={day} isDisabled />
         </div>
       </I18nProvider>
-    </LightDark>
+    </Examples>
   ),
 };
 
@@ -118,7 +118,7 @@ export const CalendarStory: Story = {
     },
   },
   render: () => (
-    <LightDark>
+    <Examples>
       <I18nProvider locale="en-GB">
         <div style={stack}>
           <div style={card}>
@@ -129,7 +129,7 @@ export const CalendarStory: Story = {
           </div>
         </div>
       </I18nProvider>
-    </LightDark>
+    </Examples>
   ),
 };
 
@@ -156,7 +156,7 @@ export const Range: Story = {
 };
 
 export const DateAndTime: Story = {
-  name: 'Date & time',
+  name: 'Date and time',
   parameters: {
     docs: {
       description: {
@@ -181,7 +181,7 @@ export const Validation: Story = {
     docs: {
       description: {
         story:
-          'Unavailable days are disabled in the calendar and checked again when typed. The message names the rule – never just „invalid date“. Here: from tomorrow on, no weekends, until 31.12.2026.',
+          'Unavailable days are disabled in the calendar and checked again when typed. The message names the rule – never just “invalid date”. Here: from tomorrow on, no weekends, until 31.12.2026.',
       },
     },
   },
@@ -207,13 +207,13 @@ export const Validation: Story = {
 };
 
 export const Mobile: Story = {
-  name: 'Mobile (Bottom Sheet)',
+  name: 'On mobile',
   parameters: {
     viewport: { defaultViewport: 'mobile1' },
     docs: {
       description: {
         story:
-          'Below 640 px everything grows: field lg 48, calendar lg with 48 px days in the Bottom Sheet (handle, close, „Done“). Typing still works with the numeric keyboard. Here forced with `overlay="sheet"` – open the calendar.',
+          'Below 640 px everything grows: field lg 48, calendar lg with 48 px days in the Bottom Sheet (handle, close, “Done”). Typing still works with the numeric keyboard. Here forced with `overlay="sheet"` – open the calendar.',
       },
     },
   },

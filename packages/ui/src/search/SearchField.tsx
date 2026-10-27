@@ -12,7 +12,7 @@ export interface SearchFieldProps extends Omit<AriaSearchFieldProps, 'children' 
   label?: ReactNode;
   /** Helper text below the field. */
   description?: ReactNode;
-  /** A hint like „Search invoices“. Never the only label. */
+  /** A hint like “Search invoices”. Never the only label. */
   placeholder?: string;
   /** sm 32 (toolbars) · md 40 · lg 48 (search page, Quick search, mobile). */
   size?: InputSize;

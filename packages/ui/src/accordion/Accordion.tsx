@@ -16,7 +16,7 @@ export interface AccordionProps extends Omit<DisclosureGroupProps, 'className' |
   headingLevel?: 2 | 3 | 4;
   /** Several sections open at once (default). false: one at a time – only for short, mutually exclusive steps. */
   allowsMultipleExpanded?: boolean;
-  /** „Expand all“ / „Collapse all“ above groups with more than 6 sections (multiple only). */
+  /** “Expand all” / “Collapse all” above groups with more than 6 sections (multiple only). */
   expandAll?: boolean;
   expandAllLabel?: string;
   collapseAllLabel?: string;
@@ -111,7 +111,7 @@ export interface AccordionItemProps {
   description?: ReactNode;
   /** Decorative icon before the title (20 md / 24 lg). */
   icon?: ReactNode;
-  /** Badge sm – part of the button name („Billing, Payment failed“). */
+  /** Badge sm – part of the button name (“Billing, Payment failed”). */
   badge?: ReactNode;
   isDisabled?: boolean;
   /** Panel content – text, a form or a list. No accordion inside. */

@@ -25,14 +25,14 @@ const five = [
 ];
 
 const meta = {
-  title: 'Components/Bulk Action Bar',
+  title: 'Components/Data display/Bulk Action Bar',
   component: BulkActionBar,
   tags: ['autodocs'],
   args: { count: 3, variant: 'desktop', actions: three, onClear: fn() },
   argTypes: {
     count: { control: { type: 'number', min: 0 }, description: 'Selected items. 0 hides the bar.' },
     variant: { control: 'inline-radio', options: ['auto', 'desktop', 'mobile'], description: 'auto: mobile below 640 px.' },
-    actions: { ...slot({ three, 'five - overflow': five }), description: 'Max 3 shown, more in „…“. Destructive last.' },
+    actions: { ...slot({ three, 'five - overflow': five }), description: 'Max 3 shown, more in “…”. Destructive last.' },
     onClear: { control: false },
     countLabel: semantic,
     clearLabel: semantic,
@@ -44,9 +44,9 @@ const meta = {
     docs: {
       description: {
         component:
-          'Appears with ≥ 1 selected item and floats, so selecting never shifts the layout (slides up with a smooth spring; a fade with reduced motion). A toolbar named „Bulk actions“: the count is announced, Esc or × clears the selection. ' +
+          'Appears with ≥ 1 selected item and floats, so selecting never shifts the layout (slides up with a smooth spring; a fade with reduced motion). A toolbar named “Bulk actions”: the count is announced, Esc or × clears the selection. ' +
           'Desktop: bottom centre, 24 px above the viewport edge, surface/inverse with the Toast buttons. Mobile: full width at the bottom, Button ghost lg (Delete as ghost danger), safe area. ' +
-          'Actions are structured: max 3, more go into the „…“ menu; destructive actions confirm (Alert dialog) or offer Undo (Toast). Render it right after the list so Tab reaches it next. Styles: `medo-bulk-bar`.',
+          'Actions are structured: max 3, more go into the “…” menu; destructive actions confirm (Alert dialog) or offer Undo (Toast). Render it right after the list so Tab reaches it next. Styles: `medo-bulk-bar`.',
       },
     },
   },
@@ -63,11 +63,11 @@ type Story = StoryObj<typeof meta>;
 export const Playground: Story = {};
 
 export const Mobile: Story = {
-  name: 'Mobile (below 640 px)',
+  name: 'On mobile',
   parameters: {
     docs: {
       description: {
-        story: 'Full width at the bottom on surface/raised: × and the count on the left, Button ghost lg on the right. Fewer actions fit – more go into „…“.',
+        story: 'Full width at the bottom on surface/raised: × and the count on the left, Button ghost lg on the right. Fewer actions fit – more go into “…”.',
       },
     },
   },
@@ -88,7 +88,7 @@ export const Mobile: Story = {
 
 const inbox = [
   { id: 'lea', name: 'Lea M.', text: 'Approved the budget for Q4' },
-  { id: 'sam', name: 'Sam K.', text: 'Shared „Roadmap 2027“ with you' },
+  { id: 'sam', name: 'Sam K.', text: 'Shared “Roadmap 2027” with you' },
   { id: 'jonas', name: 'Jonas B.', text: 'Mentioned you in Website relaunch' },
   { id: 'ahmet', name: 'Ahmet D.', text: 'Updated the Q3 report' },
 ];

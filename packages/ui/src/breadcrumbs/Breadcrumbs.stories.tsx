@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, waitFor, within } from 'storybook/test';
 import { Breadcrumbs } from './Breadcrumbs';
-import { interactionTest, LightDark, semantic, slot } from '../story-helpers';
+import { interactionTest, Examples, semantic, slot } from '../story-helpers';
 
 const caption: React.CSSProperties = { font: 'var(--medo-typography-code-sm)', color: 'var(--medo-color-text-secondary)' };
 
@@ -22,7 +22,7 @@ const long = [
 ];
 
 const meta = {
-  title: 'Components/Breadcrumbs',
+  title: 'Components/Navigation/Breadcrumbs',
   component: Breadcrumbs,
   tags: ['autodocs'],
   args: { items: four, size: 'md', homeIcon: true, layout: 'full' },
@@ -39,8 +39,8 @@ const meta = {
     docs: {
       description: {
         component:
-          'React Aria Breadcrumbs: a navigation region „Breadcrumb“ with an ordered list. Starts with the house icon (named „Home“), chevron separators are not read, the current page comes last – not a link, `aria-current="page"`. ' +
-          'Links in text/secondary, on hover text/primary and underlined; icon parts get a soft surface. From 5 levels the middle collapses into „…“ – a Menu with the hidden levels (sheet on mobile), named „Show 2 more levels“. Labels over 200 px end with „…“ and show the full name in a Tooltip. ' +
+          'React Aria Breadcrumbs: a navigation region “Breadcrumb” with an ordered list. Starts with the house icon (named “Home”), chevron separators are not read, the current page comes last – not a link, `aria-current="page"`. ' +
+          'Links in text/secondary, on hover text/primary and underlined; icon parts get a soft surface. From 5 levels the middle collapses into “…” – a Menu with the hidden levels (sheet on mobile), named “Show 2 more levels”. Labels over 200 px end with “…” and show the full name in a Tooltip. ' +
           'Below 640 px (`layout="auto"`) only a link to the parent page. Not on the start page; above the page title. Styles: `medo-breadcrumbs`, `medo-breadcrumbs--{sm|md}`.',
       },
     },
@@ -53,10 +53,10 @@ type Story = StoryObj<typeof meta>;
 export const Playground: Story = {};
 
 export const Layouts: Story = {
-  name: 'Full, collapsed, sm and md',
-  parameters: { docs: { description: { story: 'md for websites, sm for dense apps. From 5 levels: Home, „…“, the last two levels and the current page.' } } },
+  name: 'Layouts',
+  parameters: { docs: { description: { story: 'md for websites, sm for dense apps. From 5 levels: Home, “…”, the last two levels and the current page.' } } },
   render: () => (
-    <LightDark>
+    <Examples>
       {(['md', 'sm'] as const).map((size) => (
         <div key={size} style={{ display: 'grid', gap: 'var(--medo-space-3)' }}>
           <span style={caption}>full · {size}</span>
@@ -65,20 +65,20 @@ export const Layouts: Story = {
           <Breadcrumbs layout="full" size={size} items={six} aria-label={`Breadcrumb, collapsed ${size}`} />
         </div>
       ))}
-    </LightDark>
+    </Examples>
   ),
 };
 
 export const LongLabel: Story = {
   name: 'Long label',
   parameters: {
-    docs: { description: { story: 'Labels over 200 px end with „…“; the full name appears in a Tooltip on hover and focus and stays the accessible name.' } },
+    docs: { description: { story: 'Labels over 200 px end with “…”; the full name appears in a Tooltip on hover and focus and stays the accessible name.' } },
   },
   args: { items: long },
 };
 
 export const MobileBack: Story = {
-  name: 'Mobile: back link',
+  name: 'On mobile',
   parameters: {
     docs: {
       description: {
@@ -112,7 +112,7 @@ export const InteractionTest: Story = {
   ...interactionTest,
   args: { items: six },
   play: async ({ canvas, userEvent }) => {
-    // Current page is not a link; hidden levels sit in the „…“ menu.
+    // Current page is not a link; hidden levels sit in the “…” menu.
     // findBy: the collapsed trail renders after its first measurement.
     await expect((await canvas.findByText('Button states')).closest('[aria-current="page"]')).not.toBeNull();
     await userEvent.click(canvas.getByRole('button', { name: 'Show 2 more levels' }));

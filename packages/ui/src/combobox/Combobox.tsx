@@ -34,7 +34,7 @@ import './combobox.css';
 type ComboMode = 'single' | 'multiple';
 type Value = Key | null | Key[];
 
-/** Key of the „Add …“ row. Never stored as a value. */
+/** Key of the “Add …” row. Never stored as a value. */
 const CREATE_KEY = '__medo_create__';
 
 export interface ComboboxProps<T extends object, M extends ComboMode = 'single'>
@@ -45,7 +45,7 @@ export interface ComboboxProps<T extends object, M extends ComboMode = 'single'>
   description?: ReactNode;
   /** Error text shown when the field is invalid. */
   errorMessage?: ReactNode;
-  /** A hint like „Search…“. */
+  /** A hint like “Search…”. */
   placeholder?: string;
   /** sm 32 · md 40 · lg 48 px. lg on mobile. */
   size?: InputSize;
@@ -53,15 +53,15 @@ export interface ComboboxProps<T extends object, M extends ComboMode = 'single'>
   leadingIcon?: ReactNode;
   /** Server search: shows a loading row (previous results stay) and marks the list busy. */
   isLoading?: boolean;
-  /** Empty list text. Default: „No results for „…““. */
+  /** Empty list text. Default: “No results for “…””. */
   noResultsMessage?: (inputValue: string) => ReactNode;
-  /** Multi only: shows an „Add …“ row for text without an exact match. Return the key of the new item to select it. */
+  /** Multi only: shows an “Add …” row for text without an exact match. Return the key of the new item to select it. */
   onCreate?: (text: string) => Key | void;
   /** Option and ListBoxSection elements, or a render function with items / defaultItems. */
   children: ReactNode | ((item: T) => ReactNode);
   /** auto (default): popover on desktop, Bottom Sheet with search below 640 px · popover · sheet. */
   overlay?: 'auto' | 'popover' | 'sheet';
-  /** Multi in the sheet: live (forms, footer „Done“) · onClose (filters: onApply once when the sheet closes, if changed). */
+  /** Multi in the sheet: live (forms, footer “Done”) · onClose (filters: onApply once when the sheet closes, if changed). */
   commit?: 'live' | 'onClose';
   /** commit="onClose": apply the selection (load results, write the URL …). */
   onApply?: (value: Key[]) => void;
@@ -85,7 +85,7 @@ export function Combobox<T extends object, M extends ComboMode = 'single'>({
   size = 'md',
   leadingIcon,
   isLoading,
-  noResultsMessage = (text) => (text ? `No results for „${text}“` : 'No results'),
+  noResultsMessage = (text) => (text ? `No results for “${text}”` : 'No results'),
   onCreate,
   children,
   overlay = 'auto',
@@ -109,7 +109,7 @@ export function Combobox<T extends object, M extends ComboMode = 'single'>({
   const [exact, setExact] = useState(false);
   const [announcement, setAnnouncement] = useState('');
 
-  // Own value state, so the „Add …“ row can be intercepted before it becomes a value.
+  // Own value state, so the “Add …” row can be intercepted before it becomes a value.
   const [inner, setInner] = useState<Value>((defaultValue as Value) ?? (multiple ? [] : null));
   const value = (valueProp !== undefined ? valueProp : inner) as Value;
   const setValue = (next: Value) => {
@@ -285,7 +285,7 @@ function ClearButton({ inputRef, isDisabled }: { inputRef: React.RefObject<HTMLI
   );
 }
 
-/** Multi: chosen values as removable tags in one line, the rest as „+N“; the caret sits after them. */
+/** Multi: chosen values as removable tags in one line, the rest as “+N”; the caret sits after them. */
 function SelectedTags({
   entryRef,
   size,
@@ -343,7 +343,7 @@ function SelectedTags({
 }
 
 /**
- * The list: options, optional „Add …“ row, empty message and loading row.
+ * The list: options, optional “Add …” row, empty message and loading row.
  * Note: React Aria builds the collection from these children before the ComboBox state exists,
  * so everything inside the ListBox depends on props (`text`, `exact`), never on the state.
  */
@@ -376,7 +376,7 @@ function ComboList<T extends object>({
     if (state && exactNow !== exact) onExactChange(exactNow);
   });
 
-  // „First match ready“: while typing, the first enabled option is highlighted, so Enter picks it.
+  // “First match ready”: while typing, the first enabled option is highlighted, so Enter picks it.
   const typing = !!state?.isOpen && text !== '';
   useEffect(() => {
     if (!state || !typing) return;
@@ -408,7 +408,7 @@ function ComboList<T extends object>({
         {creatable && text && !exact && (
           <ListBoxSection aria-label="Create">
             <Option id={CREATE_KEY} icon={<Plus />} textValue={text}>
-              {`Add „${text}“`}
+              {`Add “${text}”`}
             </Option>
           </ListBoxSection>
         )}
@@ -644,7 +644,7 @@ function ComboboxSheet<T extends object>({
                     {multiple && onCreate && query && !exact && (
                       <ListBoxSection aria-label="Create">
                         <Option id={CREATE_KEY} icon={<Plus />} textValue={query}>
-                          {`Add „${query}“`}
+                          {`Add “${query}”`}
                         </Option>
                       </ListBoxSection>
                     )}

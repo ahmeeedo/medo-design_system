@@ -8,7 +8,7 @@ import { cx } from '../utils/cx';
 import './list-view.css';
 
 export interface ListViewProps<T> extends Omit<GridListProps<T>, 'className' | 'style' | 'layout' | 'keyboardNavigationBehavior'> {
-  /** Required: names the list („Inbox“). */
+  /** Required: names the list (“Inbox”). */
   'aria-label'?: string;
   /** plain: full-page lists (inbox) · card: inside settings or dashboards (border, radius/lg) · cards: records on mobile (Table cards, use ListCard). */
   variant?: 'plain' | 'card' | 'cards';
@@ -24,7 +24,7 @@ export interface ListViewProps<T> extends Omit<GridListProps<T>, 'className' | '
  *. Built on React Aria GridList: ↑ ↓ move between rows, Enter opens a row, Tab reaches
  * the controls inside a row (menu, switch, buttons). `selectionMode="multiple"` shows a checkbox per row and a click
  * toggles the row – use it without `onAction` (React Aria would run the action on click instead).
- * Rows can have swipe actions on touch (`swipeActions`) – the same actions always sit in the row's „…“ menu.
+ * Rows can have swipe actions on touch (`swipeActions`) – the same actions always sit in the row's “…” menu.
  */
 export function ListView<T extends object>({ variant = 'plain', isLoading = false, emptyState, className, children, items, ...props }: ListViewProps<T>) {
   if (isLoading) {
@@ -81,26 +81,26 @@ export interface ListRowProps extends Omit<GridListItemProps, 'children' | 'clas
   leading?: ReactNode;
   /** Meta text (time, size) in caption. */
   meta?: ReactNode;
-  /** One trailing type per list: Badge, Menu („…“), Switch or max 2 Button sm. With buttons the row has no action. */
+  /** One trailing type per list: Badge, Menu (“…”), Switch or max 2 Button sm. With buttons the row has no action. */
   trailing?: ReactNode;
   /** The row navigates (href) – shows a chevron. */
   chevron?: boolean;
-  /** New or unread: title and excerpt strong, meta in brand, dot below the meta, „Unread“ for screen readers. */
+  /** New or unread: title and excerpt strong, meta in brand, dot below the meta, “Unread” for screen readers. */
   unread?: boolean;
   /** Screen-reader word for unread rows. */
   unreadLabel?: string;
   /**
    * Touch only: end = swipe toward the start (left in LTR, e.g. Delete) · start = swipe toward the end (a safe action,
-   * e.g. Archive). Always put the same actions into the row's „…“ menu – swipe is a shortcut, never the only way.
+   * e.g. Archive). Always put the same actions into the row's “…” menu – swipe is a shortcut, never the only way.
    */
   swipeActions?: { start?: SwipeAction; end?: SwipeAction };
 }
 
 export interface SwipeAction {
-  /** Short verb („Delete“, „Archive“). */
+  /** Short verb (“Delete”, “Archive”). */
   label: string;
   icon: ReactNode;
-  /** Runs on a full swipe or a tap on the revealed action. Delete: remove at once and offer „Undo“ in a Toast. */
+  /** Runs on a full swipe or a tap on the revealed action. Delete: remove at once and offer “Undo” in a Toast. */
   onAction: () => void;
   /** danger: feedback/danger/solid (Delete) · primary: action/primary (Archive). */
   tone?: 'danger' | 'primary';
@@ -206,7 +206,7 @@ function Swipeable({ actions, children }: { actions: { start?: SwipeAction; end?
   const actionFor = (value: number) => (value < 0 ? actions.end : value > 0 ? actions.start : undefined);
 
   const trigger = (action: SwipeAction, side: number) => {
-    // The row slides out (250 ms, accelerating), then the action runs – the app removes the row and shows „Undo“.
+    // The row slides out (250 ms, accelerating), then the action runs – the app removes the row and shows “Undo”.
     setLeaving(true);
     setOffset(side * width());
     window.setTimeout(() => {
@@ -217,7 +217,7 @@ function Swipeable({ actions, children }: { actions: { start?: SwipeAction; end?
   };
 
   const onPointerDown = (e: ReactPointerEvent) => {
-    if (e.pointerType === 'mouse') return; // touch and pen only – mouse and keyboard use the „…“ menu
+    if (e.pointerType === 'mouse') return; // touch and pen only – mouse and keyboard use the “…” menu
     drag.current = { x: e.clientX, y: e.clientY, t: e.timeStamp, base: offset, lock: null, id: e.pointerId, buzzed: false };
   };
 
@@ -265,7 +265,7 @@ function Swipeable({ actions, children }: { actions: { start?: SwipeAction; end?
   return (
     <>
       {revealed && (
-        // Visual shortcut for touch; keyboard and screen readers use the „…“ menu, so it is hidden from them.
+        // Visual shortcut for touch; keyboard and screen readers use the “…” menu, so it is hidden from them.
         <span
           className={cx(
             'medo-list-row__swipe-action',
@@ -326,7 +326,7 @@ export function ListRowIcon({ children }: { children: ReactNode }) {
 }
 
 export interface ListCardProps extends Omit<GridListItemProps, 'children' | 'className' | 'style' | 'textValue'> {
-  /** Required. The record („INV-2026-0140“). Also the card's accessible name. */
+  /** Required. The record (“INV-2026-0140”). Also the card's accessible name. */
   title: string;
   /** Key number on the right of the title (amount, count) – strong, never truncated. */
   amount?: ReactNode;

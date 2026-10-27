@@ -6,7 +6,7 @@
  *     <label class="medo-field__label">Assignee</label>
  *     <div class="medo-input medo-input--md medo-combobox__field" role="group">
  *       <span class="medo-input__icon">…</span>
- *       <span class="medo-combobox__tags-row">tags · „+N“</span>   (multi)
+ *       <span class="medo-combobox__tags-row">tags · “+N”</span>   (multi)
  *       <input class="medo-input__control medo-combobox__input" role="combobox">
  *       <button class="medo-input__action" aria-label="Clear">×</button>
  *       <button class="medo-input__action medo-combobox__toggle">⌄</button>

@@ -9,11 +9,11 @@ export type EmptyStateType = 'first-use' | 'no-results' | 'error' | 'no-access' 
 export type EmptyStateSize = 'page' | 'section' | 'inline';
 
 export interface EmptyStateAction {
-  /** Verb that says what happens („Create project“, „Clear filters“, „Try again“). */
+  /** Verb that says what happens (“Create project”, “Clear filters”, “Try again”). */
   label: string;
   /** Runs the action. */
   onPress?: () => void;
-  /** Second action only: navigates – rendered as a Link („Learn more“, „View archive“). */
+  /** Second action only: navigates – rendered as a Link (“Learn more”, “View archive”). */
   href?: string;
   isDisabled?: boolean;
 }
@@ -23,11 +23,11 @@ export interface EmptyStateProps extends Omit<HTMLAttributes<HTMLElement>, 'titl
   type?: EmptyStateType;
   /** page: a whole view · section: a card or panel · inline: inside a list or table (header stays). */
   size?: EmptyStateSize;
-  /** Required. The situation in plain words – never „No data“. */
+  /** Required. The situation in plain words – never “No data”. */
   title: ReactNode;
   /** Why it is empty or what comes next, in one or two sentences. */
   description?: ReactNode;
-  /** Main action: primary for first use, secondary for all other types. „All done“ needs none. */
+  /** Main action: primary for first use, secondary for all other types. “All done” needs none. */
   action?: EmptyStateAction;
   /** Second action as a text button, or a Link with `href`. */
   secondaryAction?: EmptyStateAction;
@@ -52,7 +52,7 @@ const tileSize = { page: 'lg', section: 'md', inline: 'sm' } as const;
 /**
  * Empty state – what users see when there is nothing to show, and what they can do next.
  * Page and section render a `<section>` named by its heading; inline renders a plain block, so it does not add
- * a landmark inside a list or table. „No results“ puts its text in a polite status region; focus stays where it was.
+ * a landmark inside a list or table. “No results” puts its text in a polite status region; focus stays where it was.
  */
 export function EmptyState({
   type = 'first-use',
@@ -85,7 +85,7 @@ export function EmptyState({
           {icon ?? defaultIcon}
         </IconTile>
       )}
-      {/* „No results“ after a search or filter is announced politely. */}
+      {/* “No results” after a search or filter is announced politely. */}
       <div className="medo-empty-state__content" role={type === 'no-results' ? 'status' : undefined}>
         <Title id={titleId} className="medo-empty-state__title">
           {title}

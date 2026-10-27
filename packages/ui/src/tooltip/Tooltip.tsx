@@ -23,20 +23,20 @@ export function TooltipTrigger({ delay = 500, closeDelay = 100, ...props }: Tool
 export interface TooltipProps extends Omit<AriaTooltipProps, 'children' | 'className'> {
   /** A few words, at most one sentence. No links or buttons. */
   children: ReactNode;
-  /** Keyboard shortcut, shown dimmed after the text (e.g. „⌘C“). */
+  /** Keyboard shortcut, shown dimmed after the text (e.g. “⌘C”). */
   shortcut?: string;
   className?: string;
 }
 
 const KEY_LABELS: Record<string, string> = { Control: 'Ctrl', Meta: '⌘', Shift: '⇧', Alt: 'Alt' };
 
-/** True on macOS and iOS: „Mod“ means ⌘ there, Ctrl everywhere else. */
+/** True on macOS and iOS: “Mod” means ⌘ there, Ctrl everywhere else. */
 const isApple = () => typeof navigator !== 'undefined' && /Mac|iPhone|iPad/.test(navigator.platform || navigator.userAgent);
 
-/** „Mod+D“ → „Meta+D“ on Apple devices, „Control+D“ elsewhere (aria-keyshortcuts syntax). */
+/** “Mod+D” → “Meta+D” on Apple devices, “Control+D” elsewhere (aria-keyshortcuts syntax). */
 export const resolveShortcut = (keys: string) => keys.replace(/\bMod\b/g, isApple() ? 'Meta' : 'Control');
 
-/** Visible form of an aria-keyshortcuts value: „Control+C“ → „Ctrl C“, „Meta+C“ → „⌘ C“, „Mod+C“ → per platform. */
+/** Visible form of an aria-keyshortcuts value: “Control+C” → “Ctrl C”, “Meta+C” → “⌘ C”, “Mod+C” → per platform. */
 export const formatShortcut = (keys: string) =>
   resolveShortcut(keys)
     .split('+')

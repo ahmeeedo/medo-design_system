@@ -51,7 +51,7 @@ export interface DateFieldProps<T extends DateValue> extends Omit<AriaDateFieldP
 
 /**
  * Date field – type a date without a calendar. React Aria DateField: every segment is a
- * spinbutton („day“, „month“, „year“), ↑ ↓ change it, ← → move, Backspace clears, a pasted date fills all.
+ * spinbutton (“day”, “month”, “year”), ↑ ↓ change it, ← → move, Backspace clears, a pasted date fills all.
  * `granularity="minute"` adds the time. For a calendar use DatePicker.
  */
 export function DateField<T extends DateValue>({ label, description, errorMessage, size = 'md', className, ...props }: DateFieldProps<T>) {
@@ -68,7 +68,7 @@ export function DateField<T extends DateValue>({ label, description, errorMessag
 
 export interface TimeSlot {
   value: TimeValue;
-  /** Booked slots stay visible, disabled, with the reason („Booked“). */
+  /** Booked slots stay visible, disabled, with the reason (“Booked”). */
   isDisabled?: boolean;
   reason?: string;
 }

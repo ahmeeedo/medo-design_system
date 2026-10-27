@@ -6,7 +6,7 @@ import './badge.css';
 export type BadgeTone = 'neutral' | 'brand' | 'success' | 'warning' | 'danger' | 'info';
 
 export interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
-  /** Meaning: success, warning, danger, info. Brand for „New“, neutral for everything else. */
+  /** Meaning: success, warning, danger, info. Brand for “New”, neutral for everything else. */
   tone?: BadgeTone;
   /** sm 20 px · md 24 px. */
   size?: 'sm' | 'md';
@@ -41,14 +41,14 @@ export function Badge({ tone = 'neutral', size = 'md', dot, icon, className, chi
 
 export interface BadgeCountProps extends Omit<HTMLAttributes<HTMLSpanElement>, 'children'> {
   count: number;
-  /** Above this number the badge shows „99+“. */
+  /** Above this number the badge shows “99+”. */
   max?: number;
   tone?: 'danger' | 'brand' | 'neutral';
   /** sm 16 px · md 20 px. */
   size?: 'sm' | 'md';
   /**
-   * Text for screen readers, e.g. „3 unread messages“.
-   * Without it the number is hidden: then the parent names it („Notifications, 3 unread“).
+   * Text for screen readers, e.g. “3 unread messages”.
+   * Without it the number is hidden: then the parent names it (“Notifications, 3 unread”).
    */
   label?: string;
 }
@@ -71,7 +71,7 @@ export function BadgeCount({ count, max = 99, tone = 'danger', size = 'md', labe
 
 export interface BadgeDotProps extends Omit<HTMLAttributes<HTMLSpanElement>, 'children'> {
   tone?: BadgeTone;
-  /** Text for screen readers („Unread“, „Online“). Without it the dot is decorative. */
+  /** Text for screen readers (“Unread”, “Online”). Without it the dot is decorative. */
   label?: string;
 }
 

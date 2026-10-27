@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Avatar, AvatarGroup, type AvatarSize } from './Avatar';
-import { LightDark, row, semantic, slot } from '../story-helpers';
+import { row, semantic, slot } from '../story-helpers';
 
 // Local sample "photo" (no external request): a soft gradient with a silhouette.
 const photo =
@@ -13,7 +13,7 @@ const sizes: AvatarSize[] = ['xs', 'sm', 'md', 'lg', 'xl', '2xl'];
 const people = ['Anna Dietrich', 'Lea Meyer', 'Sven Kraus', 'Jonas Bauer', 'Mia Schulz', 'Tom Wagner'];
 
 const meta = {
-  title: 'Components/Avatar',
+  title: 'Components/Data display/Avatar',
   component: Avatar,
   tags: ['autodocs'],
   args: { name: 'Lea Meyer', size: 'lg', shape: 'circle', src: 'photo' },
@@ -59,7 +59,7 @@ export const Fallback: Story = {
 };
 
 export const ShapesAndSizes: Story = {
-  name: 'Shapes & sizes',
+  name: 'Shapes and sizes',
   render: () => (
     <div style={{ display: 'grid', gap: 'var(--medo-space-6)' }}>
       <div style={row}>
@@ -100,7 +100,7 @@ export const Status: Story = {
 };
 
 export const Group: Story = {
-  parameters: { docs: { description: { story: 'Max 4, then „+N“. With `onMorePress`, „+N“ is a button that opens the full list.' } } },
+  parameters: { docs: { description: { story: 'Max 4, then “+N”. With `onMorePress`, “+N” is a button that opens the full list.' } } },
   render: () => (
     <div style={{ display: 'grid', gap: 'var(--medo-space-6)' }}>
       {(['sm', 'md', 'lg'] as const).map((s) => (
@@ -111,27 +111,5 @@ export const Group: Story = {
         </AvatarGroup>
       ))}
     </div>
-  ),
-};
-
-export const LightAndDark: Story = {
-  name: 'Light and Dark',
-  parameters: { layout: 'fullscreen' },
-  render: () => (
-    <LightDark>
-      <div style={row}>
-        <Avatar name="Lea Meyer" src={photo} status="online" size="lg" />
-        {people.slice(1).map((p) => (
-          <Avatar key={p} name={p} size="lg" />
-        ))}
-        <Avatar size="lg" />
-        <Avatar name="med.o GmbH" shape="square" size="lg" />
-      </div>
-      <AvatarGroup aria-label="Assignees" size="md">
-        {people.map((p) => (
-          <Avatar key={p} name={p} />
-        ))}
-      </AvatarGroup>
-    </LightDark>
   ),
 };

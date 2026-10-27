@@ -5,7 +5,7 @@ import { expect, fn } from 'storybook/test';
 import { Activity, LayoutGrid, Settings, Users } from 'lucide-react';
 import { Tab, TabList, TabPanel, Tabs } from './Tabs';
 import { TextField } from '../text-field/TextField';
-import { interactionTest, LightDark, semantic } from '../story-helpers';
+import { interactionTest, Examples, semantic } from '../story-helpers';
 
 const panel: React.CSSProperties = { margin: 0, font: 'var(--medo-typography-body-sm)', color: 'var(--medo-color-text-secondary)' };
 const caption: React.CSSProperties = { font: 'var(--medo-typography-code-sm)', color: 'var(--medo-color-text-secondary)' };
@@ -47,7 +47,7 @@ function ProjectTabs({ icons = false, count = true, ...props }: React.ComponentP
 }
 
 const meta = {
-  title: 'Components/Tabs',
+  title: 'Components/Navigation/Tabs',
   component: Tabs,
   tags: ['autodocs'],
   args: { size: 'md', fullWidth: false, defaultSelectedKey: 'overview', onSelectionChange: fn() },
@@ -86,7 +86,7 @@ export const Playground: Story = {};
 export const Sizes: Story = {
   parameters: { docs: { description: { story: 'md (tab 32, track 40) on desktop. lg (40 / 48) for touch – automatic below 640 px.' } } },
   render: () => (
-    <LightDark>
+    <Examples>
       <span style={caption}>md</span>
       <ProjectTabs size="md" />
       <span style={caption}>lg · fullWidth</span>
@@ -108,7 +108,7 @@ export const Sizes: Story = {
           <p style={panel}>Name, members and access.</p>
         </TabPanel>
       </Tabs>
-    </LightDark>
+    </Examples>
   ),
 };
 

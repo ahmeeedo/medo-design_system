@@ -34,7 +34,7 @@ export interface SelectProps<T extends object, M extends SelectMode = 'single'> 
   description?: ReactNode;
   /** Error text shown when the field is invalid. Validate on submit or blur, not while open. */
   errorMessage?: ReactNode;
-  /** A hint like „Select…“. Never required information. */
+  /** A hint like “Select…”. Never required information. */
   placeholder?: string;
   /** sm 32 · md 40 · lg 48 px. lg on mobile (opens the lg list). */
   size?: InputSize;
@@ -57,7 +57,7 @@ export interface SelectProps<T extends object, M extends SelectMode = 'single'> 
   commit?: 'live' | 'onClose';
   /** commit="onClose": apply the selection (load results, write the URL …). */
   onApply?: (value: ValueOf<M>) => void;
-  /** commit="onClose": label of the primary sheet button, ideally with the live result count („Show 128 results“). */
+  /** commit="onClose": label of the primary sheet button, ideally with the live result count (“Show 128 results”). */
   resultLabel?: (value: ValueOf<M>) => ReactNode;
   className?: string;
 }
@@ -196,7 +196,7 @@ function ClearButton({ enabled, onHasValue }: { enabled: boolean; onHasValue: (v
   );
 }
 
-/** Selected values as tags in one line; what does not fit becomes „+N“. Screen readers get the full list. */
+/** Selected values as tags in one line; what does not fit becomes “+N”. Screen readers get the full list. */
 function SelectedTags({ size }: { size: InputSize }) {
   const state = useContext(SelectStateContext);
   const labels = state?.selectedItems.map((item) => item.textValue) ?? [];
@@ -275,7 +275,7 @@ function NativePicker({ label, placeholder, isRequired }: { label: ReactNode; pl
   );
 }
 
-/** Sheet footer for multi: live → „3 selected“ + Done · onClose → result button + Reset below (thumb reach). */
+/** Sheet footer for multi: live → “3 selected” + Done · onClose → result button + Reset below (thumb reach). */
 function SheetFooter({ commit, resultLabel }: { commit: 'live' | 'onClose'; resultLabel: (value: Key[] | Key | null) => ReactNode }) {
   const state = useContext(SelectStateContext);
   if (!state) return null;

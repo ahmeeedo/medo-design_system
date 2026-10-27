@@ -214,14 +214,30 @@ body {
   color: var(--medo-color-text-secondary);
 }
 
-/* Storybook „func“ / „union“ type toggles in the props table: brand colour too dark in Dark mode. */
+/* Storybook “func” / “union” type toggles in the props table: brand colour too dark in Dark mode. */
 .medo-doc .sbdocs-expandable {
   color: var(--medo-color-text-primary);
+}
+
+/* ---------- usage guide: two columns (when / when not, do / don't) ---------- */
+.doc-columns {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+  gap: var(--medo-space-6) var(--medo-space-10);
+  max-inline-size: 60rem;
+}
+.doc-guide {
+  display: grid;
+  gap: var(--medo-space-3);
+  align-content: start;
 }
 
 /* ---------- tables (StaticTable) and token cells ---------- */
 .doc-spec tbody th {
   inline-size: 12.5rem;
+}
+.doc-spec tbody th .doc-code {
+  white-space: nowrap;
 }
 .medo-doc .doc-cell-muted {
   color: var(--medo-color-text-secondary);

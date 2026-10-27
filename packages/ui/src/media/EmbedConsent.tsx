@@ -22,7 +22,7 @@ export interface EmbedTexts {
   privacy: string;
 }
 
-/** Texts per type. provider: „YouTube“, „Google Maps“ · company: „Google“. */
+/** Texts per type. provider: “YouTube”, “Google Maps” · company: “Google”. */
 export function defaultEmbedTexts(type: EmbedType, provider?: string, company?: string): EmbedTexts {
   const to = company ?? provider;
   if (type === 'video')
@@ -57,13 +57,13 @@ const icons = { video: <Play />, map: <MapPin />, generic: <Globe /> };
 
 export interface EmbedConsentProps {
   type?: EmbedType;
-  /** „YouTube“, „Google Maps“, „Vimeo“ … */
+  /** “YouTube”, “Google Maps”, “Vimeo” … */
   provider?: string;
-  /** Who receives the data, when it differs („Google“). */
+  /** Who receives the data, when it differs (“Google”). */
   company?: string;
   /** The embed URL – requested only after consent. Prefer privacy-friendly URLs (youtube-nocookie.com). */
   src: string;
-  /** Required: names the iframe („Video: Product tour“). */
+  /** Required: names the iframe (“Video: Product tour”). */
   title: string;
   /** Ratio of the final embed. The placeholder may grow so text never clips. */
   ratio?: Exclude<ImageRatio, 'original'>;
@@ -71,9 +71,9 @@ export interface EmbedConsentProps {
   privacyHref: string;
   /** Stored consent from the consent manager – loads at once. */
   isConsented?: boolean;
-  /** The user clicked „Load“; `remember` = „Always load …“ checked – store it per provider in the consent manager. */
+  /** The user clicked “Load”; `remember` = “Always load …” checked – store it per provider in the consent manager. */
   onConsent?: (remember: boolean) => void;
-  /** iframe permissions, e.g. „autoplay; encrypted-media; picture-in-picture; fullscreen“. */
+  /** iframe permissions, e.g. “autoplay; encrypted-media; picture-in-picture; fullscreen”. */
   allow?: string;
   texts?: Partial<EmbedTexts>;
   className?: string;

@@ -4,10 +4,10 @@ import { Bell, Copy, Download, Link2, Settings } from 'lucide-react';
 import { Tooltip, TooltipTrigger } from './Tooltip';
 import { IconButton } from '../icon-button/IconButton';
 import { Button } from '../button/Button';
-import { interactionTest, LightDark, row } from '../story-helpers';
+import { interactionTest, row } from '../story-helpers';
 
 const meta = {
-  title: 'Components/Tooltip',
+  title: 'Components/Overlays/Tooltip',
   component: Tooltip,
   tags: ['autodocs'],
   args: { children: 'Copy link', placement: 'top', offset: 8 },
@@ -74,22 +74,6 @@ export const OnIconButtons: Story = {
       <IconButton aria-label="Notifications" icon={<Bell />} />
       <IconButton aria-label="Settings" shortcut="Control+," icon={<Settings />} />
     </div>
-  ),
-};
-
-export const LightAndDark: Story = {
-  name: 'Light and Dark',
-  parameters: { layout: 'fullscreen' },
-  decorators: [],
-  render: () => (
-    <LightDark>
-      <div style={{ paddingBlock: 'var(--medo-space-10)' }}>
-        <TooltipTrigger defaultOpen>
-          <IconButton aria-label="Copy link" tooltip={false} icon={<Link2 />} variant="secondary" />
-          <Tooltip shortcut="Ctrl L">Copy link</Tooltip>
-        </TooltipTrigger>
-      </div>
-    </LightDark>
   ),
 };
 

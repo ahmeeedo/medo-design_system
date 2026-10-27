@@ -19,9 +19,9 @@ export interface BreadcrumbsProps {
   items: BreadcrumbItem[];
   /** sm: dense apps (caption, 24) · md: websites (body/sm, 28). */
   size?: 'sm' | 'md';
-  /** The first item shows a house icon; its label stays the accessible name („Home“). */
+  /** The first item shows a house icon; its label stays the accessible name (“Home”). */
   homeIcon?: boolean;
-  /** auto: full path, below 640 px only a link to the parent page · full · back. From 5 levels the middle collapses into „…“. */
+  /** auto: full path, below 640 px only a link to the parent page · full · back. From 5 levels the middle collapses into “…”. */
   layout?: 'auto' | 'full' | 'back';
   /** Texts (localize). */
   'aria-label'?: string;
@@ -61,7 +61,7 @@ export function Breadcrumbs({
     );
   }
 
-  // From 5 levels: start page, „…“, the last two levels and the current page.
+  // From 5 levels: start page, “…”, the last two levels and the current page.
   const collapse = items.length >= 5;
   const hidden = collapse ? items.slice(1, -3) : [];
   const shown = collapse ? [items[0], null, ...items.slice(-3)] : items;

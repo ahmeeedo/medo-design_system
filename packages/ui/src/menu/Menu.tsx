@@ -43,14 +43,14 @@ export function MenuTrigger(props: MenuTriggerProps) {
 
 /**
  * Default trigger: ghost Icon Button with an ellipsis. The name includes the object
- * („More actions for Q3-Report.pdf“); it looks pressed while the menu is open.
+ * (“More actions for Q3-Report.pdf”); it looks pressed while the menu is open.
  */
 export function MenuButton({ 'aria-label': label, size = 'md' }: { 'aria-label': string; size?: 'sm' | 'md' | 'lg' }) {
   return <IconButton variant="ghost" size={size} icon={<Ellipsis />} aria-label={label} />;
 }
 
 export interface MenuProps<T> extends Omit<AriaMenuProps<T>, 'className' | 'style'> {
-  /** Mobile sheet title: the object the actions apply to („Q3-Report.pdf“). */
+  /** Mobile sheet title: the object the actions apply to (“Q3-Report.pdf”). */
   title?: ReactNode;
   /** auto: popover on desktop, Bottom Sheet below 640 px · popover · sheet. */
   overlay?: 'auto' | 'popover' | 'sheet';
@@ -98,11 +98,11 @@ function SheetMenu<T extends object>({ title, className, ...props }: Omit<MenuPr
 }
 
 export interface MenuItemProps extends Omit<AriaMenuItemProps, 'children' | 'className' | 'style'> {
-  /** Label, starting with a verb („Duplicate“). „…“ only when a dialog or second step follows. */
+  /** Label, starting with a verb (“Duplicate”). “…” only when a dialog or second step follows. */
   children: string;
   /** Required: shows the action. Decorative for screen readers – the label carries the meaning. */
   icon: ReactNode;
-  /** Keyboard shortcut in aria-keyshortcuts syntax; „Mod“ = ⌘ on Apple, Ctrl elsewhere. Desktop only. It must also work without the menu. */
+  /** Keyboard shortcut in aria-keyshortcuts syntax; “Mod” = ⌘ on Apple, Ctrl elsewhere. Desktop only. It must also work without the menu. */
   shortcut?: string;
   /** Destructive action: red, last in its own group. Irreversible actions open a confirmation dialog. */
   variant?: 'default' | 'danger';

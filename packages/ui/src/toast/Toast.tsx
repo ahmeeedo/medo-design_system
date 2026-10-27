@@ -17,7 +17,7 @@ import './toast.css';
  */
 
 export interface ToastAction {
-  /** „Undo“, „View“ or „Retry“. It must also be reachable elsewhere in the app. */
+  /** “Undo”, “View” or “Retry”. It must also be reachable elsewhere in the app. */
   label: string;
   onAction: () => void;
 }
@@ -25,7 +25,7 @@ export interface ToastAction {
 export interface ToastOptions {
   /** Max one action. Pressing it runs the action and closes the toast. */
   action?: ToastAction;
-  /** Errors („Could not save“): stays until closed. Otherwise 5 s, with an action 8 s. */
+  /** Errors (“Could not save”): stays until closed. Otherwise 5 s, with an action 8 s. */
   persistent?: boolean;
   /** Called when the toast closes (timeout, close button, Esc or action). */
   onClose?: () => void;
@@ -55,7 +55,7 @@ const queue = new ToastQueue<ToastContent>({
 
 /**
  * Shows a toast: short, temporary feedback after an action.
- * Write the result, not the process („Q3-Report.pdf deleted“), one line, max about 50 characters.
+ * Write the result, not the process (“Q3-Report.pdf deleted”), one line, max about 50 characters.
  * Returns the key for `toast.close(key)`. The same message is never shown twice at once.
  */
 export function toast(message: string, { action, persistent = false, onClose }: ToastOptions = {}): string {
@@ -87,9 +87,9 @@ function closeOnEscape(el: HTMLElement | null, key: string) {
 }
 
 export interface ToastRegionProps {
-  /** Accessible name of the landmark. Default: „Notifications“ (localized by React Aria). */
+  /** Accessible name of the landmark. Default: “Notifications” (localized by React Aria). */
   'aria-label'?: string;
-  /** Accessible name of the close buttons. Default: „Close“ (localized by React Aria). */
+  /** Accessible name of the close buttons. Default: “Close” (localized by React Aria). */
   closeLabel?: string;
 }
 

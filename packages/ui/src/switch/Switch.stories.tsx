@@ -3,10 +3,10 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useState } from 'react';
 import { Switch } from './Switch';
 import { expect, fn } from 'storybook/test';
-import { interactionTest, LightDark, stack } from '../story-helpers';
+import { interactionTest, stack } from '../story-helpers';
 
 const meta = {
-  title: 'Components/Switch',
+  title: 'Components/Forms/Switch',
   component: Switch,
   tags: ['autodocs'],
   args: { children: 'Email notifications', size: 'md', labelPosition: 'end', isDisabled: false, isLoading: false, onChange: fn() },
@@ -55,7 +55,7 @@ export const States: Story = {
 
 export const SettingsList: Story = {
   decorators: narrow,
-  name: 'Settings list (label start)',
+  name: 'Settings list',
   render: () => (
     <div style={{ display: 'grid', gap: 'var(--medo-space-4)' }}>
       <Switch labelPosition="start" defaultSelected description="Get an email for new comments.">Email</Switch>
@@ -87,18 +87,6 @@ function SavingDemo() {
 }
 
 export const WhileSaving: Story = { decorators: narrow, name: 'While saving', render: () => <SavingDemo /> };
-
-export const LightAndDark: Story = {
-  name: 'Light and Dark',
-  parameters: { layout: 'fullscreen' },
-  render: (args) => (
-    <LightDark>
-      <Switch {...args}>Off</Switch>
-      <Switch {...args} defaultSelected>On</Switch>
-      <Switch {...args} isDisabled defaultSelected>Disabled</Switch>
-    </LightDark>
-  ),
-};
 
 export const InteractionTest: Story = {
   ...interactionTest,

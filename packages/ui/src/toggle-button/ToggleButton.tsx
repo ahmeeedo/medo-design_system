@@ -22,7 +22,7 @@ const ToggleSizeContext = createContext<ToggleSize | null>(null);
 const SegmentedContext = createContext(false);
 
 export interface ToggleButtonProps extends Omit<AriaToggleButtonProps, 'children' | 'className' | 'style'> {
-  /** Visible label. It never changes with the state („Bold“ stays „Bold“). Leave out for icon only. */
+  /** Visible label. It never changes with the state (“Bold” stays “Bold”). Leave out for icon only. */
   children?: ReactNode;
   /** Leading icon; alone it makes an icon-only toggle (then aria-label is required). */
   icon?: ReactNode;
@@ -30,7 +30,7 @@ export interface ToggleButtonProps extends Omit<AriaToggleButtonProps, 'children
   size?: ToggleSize;
   /** Icon only: tooltip text. Default: the aria-label. false turns it off. */
   tooltip?: ReactNode | false;
-  /** Keyboard shortcut in aria-keyshortcuts syntax (e.g. „Control+B“), shown in the tooltip. */
+  /** Keyboard shortcut in aria-keyshortcuts syntax (e.g. “Control+B”), shown in the tooltip. */
   shortcut?: string;
   className?: string;
   style?: CSSProperties;
@@ -82,7 +82,7 @@ export interface ToggleButtonGroupProps extends Omit<AriaToggleButtonGroupProps,
   size?: 'md' | 'lg';
   /** Segmented only: full width, items share the space (mobile). */
   fullWidth?: boolean;
-  /** Required when there is no visible label: names the group („View“). */
+  /** Required when there is no visible label: names the group (“View”). */
   'aria-label'?: string;
   children: ReactNode;
   className?: string;
@@ -138,7 +138,7 @@ export function ToggleButtonGroup({
 }
 
 export interface ToolbarProps extends Omit<AriaToolbarProps, 'className' | 'style'> {
-  /** Required: names the toolbar („Text formatting“). */
+  /** Required: names the toolbar (“Text formatting”). */
   'aria-label': string;
   className?: string;
   style?: CSSProperties;

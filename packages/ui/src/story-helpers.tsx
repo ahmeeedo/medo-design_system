@@ -4,30 +4,9 @@ import type { CSSProperties, ReactNode } from 'react';
 export const row: CSSProperties = { display: 'flex', gap: 'var(--medo-space-4)', alignItems: 'center', flexWrap: 'wrap' };
 export const stack: CSSProperties = { display: 'grid', gap: 'var(--medo-space-6)', maxInlineSize: '24rem' };
 
-/** Renders the same content in Light and Dark side by side (data-theme islands). */
-export function LightDark({ children }: { children: ReactNode }) {
-  return (
-    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr' }}>
-      {(['light', 'dark'] as const).map((theme) => (
-        <div
-          key={theme}
-          data-theme={theme}
-          style={{
-            display: 'grid',
-            gap: 'var(--medo-space-6)',
-            padding: 'var(--medo-space-8)',
-            background: 'var(--medo-color-surface-default)',
-            color: 'var(--medo-color-text-primary)',
-          }}
-        >
-          <span className="medo-text-overline" style={{ color: 'var(--medo-color-text-secondary)' }}>
-            {theme}
-          </span>
-          {children}
-        </div>
-      ))}
-    </div>
-  );
+/** Several examples under each other. The theme comes from the toolbar switch (Light / Dark). */
+export function Examples({ children }: { children: ReactNode }) {
+  return <div style={{ display: 'grid', gap: 'var(--medo-space-6)' }}>{children}</div>;
 }
 
 /* ---------- Playground controls (rule: a control must change what you see) ---------- */
@@ -52,7 +31,7 @@ const scenes = [
   { sky: '#6f8f9c', hill: '#3d5560', sun: '#fbe7c0' },
 ];
 
-/** A landscape „photo“ as data URI (sample image). `tiny` gives a ≈ 20 px blur-up preview. */
+/** A landscape “photo” as data URI (sample image). `tiny` gives a ≈ 20 px blur-up preview. */
 export function samplePhoto(variant = 0, { width = 1600, height = 900, tiny = false } = {}) {
   const { sky, hill, sun } = scenes[variant % scenes.length];
   const w = tiny ? 20 : width;
@@ -61,7 +40,7 @@ export function samplePhoto(variant = 0, { width = 1600, height = 900, tiny = fa
   return `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`;
 }
 
-/** A „screenshot“ (UI with text lines) – shows why screenshots use fit contain. */
+/** A “screenshot” (UI with text lines) – shows why screenshots use fit contain. */
 export function sampleScreenshot() {
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1200" viewBox="0 0 120 120"><rect width="120" height="120" rx="4" fill="#ffffff"/><rect width="120" height="14" fill="#e9eef3"/><circle cx="8" cy="7" r="2.5" fill="#d96b6b"/><circle cx="15" cy="7" r="2.5" fill="#e7c06a"/><circle cx="22" cy="7" r="2.5" fill="#6bbf8a"/><rect x="10" y="24" width="60" height="6" rx="2" fill="#1d2b33"/><rect x="10" y="36" width="100" height="4" rx="2" fill="#9aa7b2"/><rect x="10" y="44" width="92" height="4" rx="2" fill="#9aa7b2"/><rect x="10" y="58" width="46" height="40" rx="3" fill="#0f5b4f"/><rect x="62" y="58" width="48" height="40" rx="3" fill="#e9eef3"/><rect x="10" y="106" width="100" height="6" rx="3" fill="#0f5b4f"/></svg>`;
   return `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`;

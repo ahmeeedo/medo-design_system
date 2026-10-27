@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Link } from './Link';
-import { LightDark, row, semantic } from '../story-helpers';
+import { row, semantic } from '../story-helpers';
 
 const text: React.CSSProperties = { font: 'var(--medo-typography-body-md)', color: 'var(--medo-color-text-primary)', margin: 0, maxInlineSize: '36rem' };
 
 const meta = {
-  title: 'Components/Link',
+  title: 'Components/Actions/Link',
   component: Link,
   tags: ['autodocs'],
   args: { children: 'View all projects', href: '#', variant: 'standalone', size: 'md', arrow: true },
@@ -50,7 +50,7 @@ export const Inline: Story = {
 };
 
 export const Standalone: Story = {
-  parameters: { docs: { description: { story: 'For „View all“, „Back to overview“ or links in lists. Arrow for moving forward, external icon for other websites.' } } },
+  parameters: { docs: { description: { story: 'For “View all”, “Back to overview” or links in lists. Arrow for moving forward, external icon for other websites.' } } },
   render: () => (
     <div style={{ display: 'grid', gap: 'var(--medo-space-3)', justifyItems: 'start' }}>
       <div style={row}>
@@ -70,20 +70,5 @@ export const Standalone: Story = {
         </Link>
       </div>
     </div>
-  ),
-};
-
-export const LightAndDark: Story = {
-  name: 'Light and Dark',
-  parameters: { layout: 'fullscreen' },
-  render: () => (
-    <LightDark>
-      <p style={text}>
-        Read the <Link href="#">privacy policy</Link> before you continue.
-      </p>
-      <Link variant="standalone" href="#" arrow>
-        View all projects
-      </Link>
-    </LightDark>
   ),
 };

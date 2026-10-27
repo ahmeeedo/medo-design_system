@@ -7,7 +7,7 @@
  *   </ul>
  *   <dl class="medo-dl medo-dl--auto"><div class="medo-dl__row"><dt class="medo-dl__term"/><dd class="medo-dl__value"/></div></dl>
  * Without a size class the list takes the size of the surrounding text; markers scale with it.
- * Marker column 24 (numbers 28), aligned to the first line. Item spacing space/2. Level 2: ring, „a.“.
+ * Marker column 24 (numbers 28), aligned to the first line. Item spacing space/2. Level 2: ring, “a.”.
  */
 
 .medo-list {
@@ -79,7 +79,7 @@
   background-color: transparent;
 }
 
-/* Number: same style as the text, tabular figures, right aligned so „9.“ and „10.“ line up. */
+/* Number: same style as the text, tabular figures, right aligned so “9.” and “10.” line up. */
 .medo-list--number > .medo-list__item {
   counter-increment: medo-list;
 }

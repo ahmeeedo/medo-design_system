@@ -5,7 +5,7 @@ import { Button, ButtonGroup } from './Button';
 import { interactionTest, slot } from '../story-helpers';
 
 const meta = {
-  title: 'Components/Button',
+  title: 'Components/Actions/Button',
   component: Button,
   tags: ['autodocs'],
   args: { children: 'Button', variant: 'primary', size: 'md', isDisabled: false, isPending: false, startIcon: 'none', endIcon: 'none', onPress: fn() },
@@ -19,12 +19,51 @@ const meta = {
     onPress: { control: false },
   },
   parameters: {
-    medo: { subtitle: 'Triggers an action.' },
+    medo: {
+      subtitle: 'Triggers an action.',
+      usage: {
+        when: ['Start an action on the current page: save, send, delete, open a dialog.', 'Submit a form (`type="submit"`).'],
+        whenNot: [
+          'Go to another page: use a Link.',
+          'Turn a setting on or off: use a Switch or a Toggle Button.',
+          'An action shown only as an icon: use an Icon Button.',
+        ],
+        do: [
+          'One primary button per area.',
+          'Name the action with a verb: “Save changes”, not “OK”.',
+          'Show `isPending` while the action runs.',
+          'Put related buttons into a `ButtonGroup`.',
+        ],
+        dont: ['Several primary buttons side by side.', '`danger` for actions that are not destructive.', 'Disable a button without telling why.'],
+      },
+      a11y: {
+        keyboard: [
+          ['Tab', 'Moves the focus to the button.'],
+          ['Enter / Space', 'Runs the action.'],
+        ],
+        notes: [
+          'The label names the button. Icons are decorative and hidden from screen readers.',
+          'While pending, the button keeps its size and focus; the label says what happens (“Saving…”).',
+          'Disabled buttons are skipped by the keyboard.',
+          'Heights: sm 32 px, md 40 px, lg 48 px for touch.',
+        ],
+      },
+      styling: {
+        classes: [
+          ['medo-button', 'Base class.'],
+          ['medo-button--{variant}', '`primary`, `secondary`, `ghost`, `danger`, `text`, `ghost-danger`.'],
+          ['medo-button--{size}', '`sm` or `lg`. Without it: md.'],
+          ['medo-button__icon', 'Icon before or after the label.'],
+          ['medo-button-group', 'Spacing and order of related buttons; `--footer`, `--header`.'],
+        ],
+        states: ['data-hovered', 'data-pressed', 'data-focus-visible', 'data-disabled', 'data-pending'],
+      },
+    },
     docs: {
       description: {
         component:
-          'Triggers an action. One Primary per area, Danger only for destructive actions. ' +
-          'Styles are plain CSS (`medo-button`, `medo-button--primary`, `medo-button--md`) and can be used without React. Built on React Aria: use `onPress` and `isDisabled`.',
+          'Use a button to start an action, like saving or sending. Built on React Aria: use `onPress` instead of `onClick` and `isDisabled` instead of `disabled`. ' +
+          'The CSS also works on a plain HTML `<button>`.',
       },
     },
   },
@@ -127,33 +166,6 @@ export const Group: Story = {
         <Button>Get started</Button>
         <Button variant="secondary">Learn more</Button>
       </ButtonGroup>
-    </div>
-  ),
-};
-
-export const LightAndDark: Story = {
-  name: 'Light and Dark',
-  parameters: { layout: 'fullscreen' },
-  render: (args) => (
-    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr' }}>
-      {(['light', 'dark'] as const).map((theme) => (
-        <div
-          key={theme}
-          data-theme={theme}
-          style={{ ...col, padding: 'var(--medo-space-8)', background: 'var(--medo-color-surface-default)' }}
-        >
-          <span className="medo-text-overline" style={{ color: 'var(--medo-color-text-secondary)' }}>
-            {theme}
-          </span>
-          <div style={row}>
-            {(['primary', 'secondary', 'ghost', 'danger', 'text'] as const).map((v) => (
-              <Button key={v} {...args} variant={v}>
-                {v[0].toUpperCase() + v.slice(1)}
-              </Button>
-            ))}
-          </div>
-        </div>
-      ))}
     </div>
   ),
 };

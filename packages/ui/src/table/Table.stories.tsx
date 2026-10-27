@@ -16,7 +16,7 @@ import { Avatar } from '../avatar/Avatar';
 import { Menu, MenuButton, MenuItem, MenuTrigger } from '../menu/Menu';
 import { ListCard, ListView } from '../list-view/ListView';
 import { MOBILE_QUERY, useMediaQuery } from '../utils/useMediaQuery';
-import { interactionTest, LightDark } from '../story-helpers';
+import { interactionTest } from '../story-helpers';
 
 /** Stories only: a transformed box is the containing block for the fixed bulk bar, so it stays inside the preview. */
 const stage: React.CSSProperties = { transform: 'translateZ(0)', paddingBlockEnd: 'var(--medo-space-20)' };
@@ -106,7 +106,7 @@ function InvoiceTable({ density = 'standard' as 'standard' | 'compact', selectab
 }
 
 const meta = {
-  title: 'Components/Table',
+  title: 'Components/Data display/Table',
   component: Table,
   tags: ['autodocs'],
   parameters: {
@@ -133,7 +133,7 @@ export const Playground: Story = {
     density: { control: 'inline-radio', options: ['standard', 'compact'] },
     striped: { control: 'boolean' },
     plain: { control: 'boolean', description: 'Without border and radius, e.g. inside a card.' },
-    toolbar: { control: false, description: 'Bar above the header – see „Toolbar, columns, bulk actions, pagination“.' },
+    toolbar: { control: false, description: 'Bar above the header – see “Toolbar, columns, bulk actions, pagination”.' },
     footer: { control: false, description: 'Bar below the rows, usually Pagination.' },
     className: { control: false },
     style: { control: false },
@@ -251,16 +251,6 @@ export const Empty: Story = {
         {[]}
       </TableBody>
     </Table>
-  ),
-};
-
-export const LightAndDark: Story = {
-  name: 'Light and Dark',
-  parameters: { layout: 'fullscreen' },
-  render: () => (
-    <LightDark>
-      <InvoiceTable selectable />
-    </LightDark>
   ),
 };
 
@@ -512,13 +502,13 @@ function InvoiceWorkspace({ forceMobile = false }: { forceMobile?: boolean }) {
 }
 
 export const FullExample: Story = {
-  name: 'Toolbar, columns, bulk actions, pagination',
+  name: 'Full table',
   parameters: {
     docs: {
       description: {
         story:
           'Toolbar (search Input sm 240, Filter, ColumnsMenu, primary action), sortable header, selection with the Bulk action bar, Pagination in the footer – one bordered surface. ' +
-          '„Columns“ shows or hides columns; Invoice and Actions are locked. Search for „xyz“ for the empty state. Below 640 px the same data becomes Table cards (next story).',
+          '“Columns” shows or hides columns; Invoice and Actions are locked. Search for “xyz” for the empty state. Below 640 px the same data becomes Table cards (next story).',
       },
     },
   },
@@ -526,12 +516,12 @@ export const FullExample: Story = {
 };
 
 export const MobileCards: Story = {
-  name: 'Mobile: cards',
+  name: 'On mobile',
   parameters: {
     docs: {
       description: {
         story:
-          'Below 640 px records become a List view with `variant="cards"` (ListCard: title + amount, customer, date + status). The whole card opens the record. „Select“ shows checkboxes lg and the bar at the bottom incl. safe area. Comparison data (prices, specs) scrolls horizontally instead.',
+          'Below 640 px records become a List view with `variant="cards"` (ListCard: title + amount, customer, date + status). The whole card opens the record. “Select” shows checkboxes lg and the bar at the bottom incl. safe area. Comparison data (prices, specs) scrolls horizontally instead.',
       },
     },
   },

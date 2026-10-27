@@ -8,7 +8,7 @@ const plain = (text: string) =>
 
 /**
  * Splits a text into parts that match the query and parts that don't – contains match, case and
- * accent insensitive („mul“ → „Müller“). Indices stay in the original text. `all`: every match, else the first.
+ * accent insensitive (“mul” → “Müller”). Indices stay in the original text. `all`: every match, else the first.
  */
 export function matchParts(text: string, query: string, all = false): { text: string; match: boolean }[] {
   const q = plain(query.trim());

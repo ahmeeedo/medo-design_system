@@ -127,7 +127,7 @@ export const OptionHighlightContext = createContext<string | null>(null);
 
 /**
  * Inside a Combobox: shows the typed text in bold within the option label (contains match,
- * case and accent insensitive, „mul“ → „Müller“). Visual only; screen readers read plain text.
+ * case and accent insensitive, “mul” → “Müller”). Visual only; screen readers read plain text.
  */
 function Highlight({ children }: { children: ReactNode }) {
   const combo = useContext(ComboBoxStateContext);

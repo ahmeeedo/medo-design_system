@@ -5,7 +5,7 @@ import { expect, fn, waitFor, within } from 'storybook/test';
 import { Search, User } from 'lucide-react';
 import { Combobox } from './Combobox';
 import { Option } from '../listbox/ListBox';
-import { interactionTest, LightDark, slot, stack } from '../story-helpers';
+import { interactionTest, slot, stack } from '../story-helpers';
 
 type Person = { id: string; name: string; role: string };
 
@@ -27,12 +27,12 @@ const people: Person[] = [
 const initialTags = ['Design', 'Code', 'Research', 'Marketing', 'Sales', 'Support'].map((name) => ({ id: name.toLowerCase(), name }));
 
 const meta = {
-  title: 'Components/Combobox',
+  title: 'Components/Forms/Combobox',
   component: Combobox,
   tags: ['autodocs'],
   args: {
     label: 'Assignee',
-    description: 'Type a name, e.g. „mul“.',
+    description: 'Type a name, e.g. “mul”.',
     placeholder: 'Search…',
     size: 'md',
     selectionMode: 'single',
@@ -148,7 +148,7 @@ export const Multiple: Story = {
     docs: {
       description: {
         story:
-          'Chosen values become tags, the caret sits after them; overflow as „+N“. The list stays open and uses checkboxes. ' +
+          'Chosen values become tags, the caret sits after them; overflow as “+N”. The list stays open and uses checkboxes. ' +
           'Backspace in the empty input removes the last tag; Shift+Tab reaches the tags, Delete removes one.',
       },
     },
@@ -171,7 +171,7 @@ function CreatableDemo() {
   return (
     <Combobox
       label="Tags"
-      description="Type a new tag and choose „Add …“."
+      description="Type a new tag and choose “Add …”."
       selectionMode="multiple"
       value={value}
       onChange={setValue}
@@ -190,7 +190,7 @@ function CreatableDemo() {
 export const Creatable: Story = {
   name: 'Create new values',
   parameters: {
-    docs: { description: { story: 'Multi only, off by default: an „Add …“ row appears for text without an exact match. Use it where new values make sense (tags).' } },
+    docs: { description: { story: 'Multi only, off by default: an “Add …” row appears for text without an exact match. Use it where new values make sense (tags).' } },
   },
   render: () => <CreatableDemo />,
 };
@@ -227,7 +227,7 @@ function ServerDemo() {
       inputValue={list.filterText}
       onInputChange={list.setFilterText}
       isLoading={list.isLoading}
-      noResultsMessage={(text) => (text.length < 2 ? 'Type at least 2 characters' : `No results for „${text}“`)}
+      noResultsMessage={(text) => (text.length < 2 ? 'Type at least 2 characters' : `No results for “${text}”`)}
     >
       {(item) => (
         <Option id={item.id} description={item.role}>
@@ -253,13 +253,13 @@ export const Server: Story = {
 };
 
 export const Mobile: Story = {
-  name: 'Mobile (below 640 px)',
+  name: 'On mobile',
   parameters: {
     docs: {
       description: {
         story:
           'Below 640 px (`overlay="auto"`) the field opens a Bottom Sheet: search on top, fixed 90 % height so it does not jump with the keyboard, options lg. ' +
-          'Single closes on tap; multi has „Done“ (or a result button with `commit="onClose"`). Forced here with `overlay="sheet"`.',
+          'Single closes on tap; multi has “Done” (or a result button with `commit="onClose"`). Forced here with `overlay="sheet"`.',
       },
     },
   },
@@ -276,24 +276,6 @@ export const Mobile: Story = {
         {(item) => <Option id={item.id}>{item.name}</Option>}
       </Combobox>
     </div>
-  ),
-};
-
-export const LightAndDark: Story = {
-  name: 'Light and Dark',
-  parameters: { layout: 'fullscreen', width: 'none' },
-  render: () => (
-    <LightDark>
-      <Combobox label="Assignee" defaultValue="mueller" defaultItems={people}>
-        {(item) => <Option id={item.id}>{item.name}</Option>}
-      </Combobox>
-      <Combobox label="Reviewers" selectionMode="multiple" defaultValue={['mueller', 'lorenz', 'cetin', 'dietrich']} defaultItems={people}>
-        {(item) => <Option id={item.id}>{item.name}</Option>}
-      </Combobox>
-      <Combobox label="Assignee" isInvalid errorMessage="Choose a person." defaultItems={people}>
-        {(item) => <Option id={item.id}>{item.name}</Option>}
-      </Combobox>
-    </LightDark>
   ),
 };
 

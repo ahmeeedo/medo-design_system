@@ -2,19 +2,19 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Maximize2, Pause, Pencil, Plus, Trash2, Volume2, X } from 'lucide-react';
 import { IconButton } from './IconButton';
 import { expect, fn, waitFor, within } from 'storybook/test';
-import { interactionTest, LightDark, row, semantic, slot } from '../story-helpers';
+import { interactionTest, row, semantic, slot } from '../story-helpers';
 
 const meta = {
-  title: 'Components/Icon Button',
+  title: 'Components/Actions/Icon Button',
   component: IconButton,
   tags: ['autodocs'],
   args: { 'aria-label': 'Add item', icon: 'plus', variant: 'ghost', size: 'md', isDisabled: false, onPress: fn() },
   argTypes: {
-    variant: { control: 'inline-radio', options: ['ghost', 'secondary', 'primary', 'danger'], description: 'media · media-ghost: on images and video – see „On media“.' },
+    variant: { control: 'inline-radio', options: ['ghost', 'secondary', 'primary', 'danger'], description: 'media · media-ghost: on images and video – see “On media”.' },
     size: { control: 'inline-radio', options: ['sm', 'md', 'lg'] },
     icon: slot({ plus: <Plus />, edit: <Pencil />, delete: <Trash2 />, close: <X /> }),
     'aria-label': { control: 'text', description: 'Accessible name. Also shown as the tooltip (hover or focus).' },
-    shortcut: { control: 'text', description: 'Shown in the tooltip (hover or focus), e.g. „Control+C“.' },
+    shortcut: { control: 'text', description: 'Shown in the tooltip (hover or focus), e.g. “Control+C”.' },
     tooltip: { control: 'text', description: 'Own tooltip text instead of the label. false hides it.' },
     shortcutLabel: semantic,
     onPress: { control: false },
@@ -55,21 +55,6 @@ export const Sizes: Story = {
       <IconButton {...args} size="md" variant="secondary" />
       <IconButton {...args} size="lg" variant="secondary" />
     </div>
-  ),
-};
-
-export const LightAndDark: Story = {
-  name: 'Light and Dark',
-  parameters: { layout: 'fullscreen' },
-  render: (args) => (
-    <LightDark>
-      <div style={row}>
-        {(['ghost', 'secondary', 'primary', 'danger'] as const).map((v) => (
-          <IconButton key={v} {...args} variant={v} />
-        ))}
-        <IconButton {...args} variant="primary" isDisabled />
-      </div>
-    </LightDark>
   ),
 };
 

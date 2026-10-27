@@ -15,15 +15,15 @@ export interface PaginationProps {
   defaultPage?: number;
   /** Called with the new page (apps). Not needed with `getPageHref`. */
   onChange?: (page: number) => void;
-  /** Websites: every page becomes a real link („?page=5“) – shareable, back button works. Works with RouterProvider. */
+  /** Websites: every page becomes a real link (“?page=5”) – shareable, back button works. Works with RouterProvider. */
   getPageHref?: (page: number) => string;
   /** Number of pages. Default: totalItems / pageSize. With 1 page nothing is shown. */
   totalPages?: number;
-  /** Total count: shows the summary („81–100 of 380“). */
+  /** Total count: shows the summary (“81–100 of 380”). */
   totalItems?: number;
   /** Rows per page. */
   pageSize?: number;
-  /** Shows „Rows per page“ (Select sm). */
+  /** Shows “Rows per page” (Select sm). */
   onPageSizeChange?: (pageSize: number) => void;
   pageSizeOptions?: number[];
   /** auto: compact below 640 px · full: summary, rows per page and pages · compact: ‹ Page 5 of 19 › (narrow panels). */
@@ -55,7 +55,7 @@ export function getPageItems(page: number, totalPages: number): (number | 'ellip
 /**
  * Pagination – move through long lists page by page. A navigation region:
  * buttons for apps (`onChange`) or real links for websites (`getPageHref`). Full on desktop, compact below 640 px.
- * After a change the app scrolls to the top of the list and focuses its heading. „Load more“ is a Button, not a variant.
+ * After a change the app scrolls to the top of the list and focuses its heading. “Load more” is a Button, not a variant.
  */
 export function Pagination({
   page: pageProp,
@@ -93,7 +93,7 @@ export function Pagination({
   const go = (p: number) => {
     if (pageProp === undefined) setInnerPage(p);
     onChange?.(p);
-    // „Next“ on the second-last page becomes disabled and drops focus. If the app did not move focus
+    // “Next” on the second-last page becomes disabled and drops focus. If the app did not move focus
     // (to the list heading), keep it in the pagination: on the current page, or on the other arrow.
     requestAnimationFrame(() => {
       const nav = navRef.current;
