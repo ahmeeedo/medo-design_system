@@ -17,7 +17,9 @@ permissions:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    # Fixed OS: Playwright only installs system libraries on Ubuntu versions it knows (1.56: up to 24.04).
+    # Raise this together with a Playwright update.
+    runs-on: ubuntu-24.04
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@v5
@@ -29,14 +31,7 @@ jobs:
 
       - run: npm ci
 
-      # Browser download is cached per Playwright version; system libraries are installed every run.
-      - name: Playwright version
-        id: pw
-        run: echo "version=$(node -p "require('playwright/package.json').version")" >> "$GITHUB_OUTPUT"
-      - uses: actions/cache@v4
-        with:
-          path: ~/.cache/ms-playwright
-          key: playwright-${{ runner.os }}-${{ steps.pw.outputs.version }}
+      # Chromium plus the system libraries it needs (download takes seconds, no cache needed).
       - run: npx playwright install --with-deps chromium
 
       - run: npm test
