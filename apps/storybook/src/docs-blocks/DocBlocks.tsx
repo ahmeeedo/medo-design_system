@@ -260,13 +260,30 @@ export function UsageGuide({ usage }: { usage: MedoUsage }) {
           <span className="doc-guide-icon" aria-hidden="true">{icon}</span>
           {title}
         </h3>
-        <List type={list} size="md">
-          {items.map((item) => (
-            <ListItem key={item} excluded={list === 'check' && tone === 'negative'} excludedLabel="Don't:">
-              <Rich>{item}</Rich>
-            </ListItem>
-          ))}
-        </List>
+        {list === 'bullet' ? (
+          <List type="bullet" size="md">
+            {items.map((item) => (
+              <ListItem key={item}>
+                <Rich>{item}</Rich>
+              </ListItem>
+            ))}
+          </List>
+        ) : (
+          /* Rules: a check or a cross in the tone colour, full text colour. The heading (Do / Don't) names the
+             list, so the items need no hidden prefix. role="list": Safari keeps the list without bullets. */
+          <ul className="doc-rules medo-text-body-md" role="list">
+            {items.map((item) => (
+              <li key={item}>
+                <span className="doc-rules-icon" aria-hidden="true">
+                  {tone === 'positive' ? <Check /> : <X />}
+                </span>
+                <span>
+                  <Rich>{item}</Rich>
+                </span>
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
     ) : null;
   return (

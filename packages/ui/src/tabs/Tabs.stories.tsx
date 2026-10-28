@@ -70,7 +70,7 @@ const meta = {
         whenNot: [
           'A view mode of the same content (list or grid): use a Toggle Button group.',
           'Other pages: use Navigation.',
-          'Steps of a process: use a stepper.',
+          'Steps of a process: one step per view, with Back and Next.',
         ],
         do: ['Use short nouns as labels.', 'Use icons on all tabs or on none.', 'Put the selected tab into the URL (`selectedKey`).'],
         dont: ['Put tabs inside tabs.', 'Use more than 6 tabs.'],

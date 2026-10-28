@@ -468,6 +468,31 @@ body {
   inline-size: 20px;
   block-size: 20px;
 }
+/* Do / Don't rules: marker column like the List (24), icon in the tone colour, text at full contrast. */
+.doc-rules {
+  display: grid;
+  gap: var(--medo-space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.doc-rules li {
+  display: grid;
+  grid-template-columns: var(--medo-space-6) minmax(0, 1fr);
+  align-items: start;
+}
+.doc-rules-icon {
+  display: inline-flex;
+  align-items: center;
+  /* centred on the first line */
+  block-size: 1lh;
+  color: var(--_icon);
+}
+.doc-rules-icon svg {
+  inline-size: var(--medo-size-icon-sm);
+  block-size: var(--medo-size-icon-sm);
+  stroke-width: 2.5;
+}
 
 /* ---------- tables (StaticTable) and token cells ---------- */
 .doc-spec tbody th {

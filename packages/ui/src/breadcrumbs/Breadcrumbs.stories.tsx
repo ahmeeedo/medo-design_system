@@ -39,7 +39,7 @@ const meta = {
       subtitle: 'Shows where a page sits in the hierarchy and links to the levels above.',
       usage: {
         when: ['Deep hierarchies with 3 or more levels: docs, shops, file trees.', 'Users arrive from search and need to see where they are.'],
-        whenNot: ['On the start page.', 'Flat sites with 1–2 levels.', 'Steps of a process: use a stepper or progress.'],
+        whenNot: ['On the start page.', 'Flat sites with 1–2 levels.', 'Steps of a process: show the current step on the page, with Back and Next.'],
         do: [
           'Put it above the page title.',
           'Start with Home and end with the current page.',
