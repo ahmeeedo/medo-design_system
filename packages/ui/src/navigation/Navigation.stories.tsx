@@ -281,6 +281,7 @@ export const TabBar: Story = {
           position: 'relative',
           transform: 'translateZ(0)',
           inlineSize: 375,
+          maxInlineSize: '100%',
           blockSize: 640,
           overflow: 'hidden',
           border: 'var(--medo-border-width-thin) solid var(--medo-color-border-default)',

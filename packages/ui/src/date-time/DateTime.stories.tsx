@@ -146,8 +146,8 @@ export const Range: Story = {
   render: () => (
     <I18nProvider locale="en-GB">
       <div style={stack}>
-        <div style={{ ...card, inlineSize: 'max-content' }}>
-          <RangeCalendar aria-label="Period" visibleMonths={2} defaultValue={{ start: parseDate('2026-09-29'), end: parseDate('2026-10-12') }} onChange={fn()} />
+        <div style={{ ...card, inlineSize: 'max-content', maxInlineSize: '100%' }}>
+          <RangeCalendar aria-label="Period" defaultValue={{ start: parseDate('2026-09-29'), end: parseDate('2026-10-12') }} onChange={fn()} />
         </div>
         <DateRangePicker label="Period" presets defaultValue={{ start: parseDate('2026-09-29'), end: parseDate('2026-10-12') }} onChange={fn()} />
       </div>

@@ -154,7 +154,7 @@ export const Segmented: Story = {
         <ViewSwitch size="lg" />
         <ViewSwitch size="lg" icons />
       </div>
-      <div style={{ inlineSize: '22rem', display: 'grid', gap: 'var(--medo-space-2)' }}>
+      <div style={{ inlineSize: '100%', maxInlineSize: '22rem', display: 'grid', gap: 'var(--medo-space-2)' }}>
         <span style={caption}>fullWidth</span>
         <ViewSwitch fullWidth />
       </div>
