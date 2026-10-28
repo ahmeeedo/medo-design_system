@@ -14,8 +14,11 @@ import './input.css';
 export type InputSize = 'sm' | 'md' | 'lg';
 
 export interface TextFieldProps extends Omit<AriaTextFieldProps, 'children' | 'className' | 'style'> {
-  /** Visible label. Always set one – a placeholder is no label. */
-  label: ReactNode;
+  /**
+   * Visible label. Always set one – a placeholder is no label. Without it set `aria-label` – only where the
+   * context names the field (a table row, a filter bar), like Select and NumberField.
+   */
+  label?: ReactNode;
   /** Helper text below the field. Replaced by the error message when invalid. */
   description?: ReactNode;
   /** Error text shown when the field is invalid (isInvalid or failed validation). */
@@ -61,7 +64,7 @@ export function TextField({
         onChange?.(value);
       }}
     >
-      <FieldLabel isRequired={props.isRequired}>{label}</FieldLabel>
+      {label && <FieldLabel isRequired={props.isRequired}>{label}</FieldLabel>}
       {multiline ? (
         <AriaTextArea className={cx('medo-textarea', `medo-textarea--${size === 'lg' ? 'lg' : 'md'}`)} placeholder={placeholder} onInput={clearErrorWhenValid} />
       ) : (

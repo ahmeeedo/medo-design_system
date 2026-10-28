@@ -8,10 +8,14 @@ import type { PropsWithChildren, ReactNode } from 'react';
 import { Children, createContext, useContext, useEffect, useRef, useState } from 'react';
 import { Ban, Check, CircleCheck, X } from 'lucide-react';
 import type { DocsContextProps } from 'storybook/internal/types';
-import { GLOBALS_UPDATED, SET_GLOBALS, UPDATE_STORY_ARGS } from 'storybook/internal/core-events';
-import { Canvas, Controls, Description, DocsContainer, DocsContext, useOf } from '@storybook/addon-docs/blocks';
+import { GLOBALS_UPDATED, SET_GLOBALS } from 'storybook/internal/core-events';
+import { Canvas, Description, DocsContainer, DocsContext, useOf } from '@storybook/addon-docs/blocks';
 import { Alert, Link, List, ListItem, StaticTable } from '@med-o/ui';
 import { modeFromGlobals, themes } from '../../.storybook/theme';
+import { Rich, Tok } from './text';
+import { PropsTable } from './PropsTable';
+
+export { Rich, Tok };
 
 /** Public source repository. */
 export const repoUrl = 'https://github.com/ahmeeedo/medo-design_system';
@@ -239,15 +243,9 @@ export function DocFooter({ children }: { children: ReactNode }) {
   );
 }
 
-/** Inline code token, e.g. <Tok>space/4</Tok> */
-export const Tok = ({ children }: { children: ReactNode }) => <code className="doc-code">{children}</code>;
 
 /* ---------- component docs template ---------- */
 
-/** Text with `code` in backticks, as in the story descriptions. */
-export function Rich({ children }: { children: string }) {
-  return <>{children.split(/(`[^`]+`)/).map((part, i) => (part.startsWith('`') ? <Tok key={i}>{part.slice(1, -1)}</Tok> : part))}</>;
-}
 
 /**
  * Usage guidance on coloured surfaces (feedback tokens, so Light and Dark keep the contrast):
@@ -316,15 +314,6 @@ export function ComponentDocsPage() {
   const kind = path[0];
   const [primary, ...examples] = stories;
 
-  /*
-   * Storybook quirk: the docs Controls block starts with the *mapped* args, so select controls
-   * with a mapping (slot()) show “Choose option…” until the first change. An empty update makes
-   * the preview send the real (unmapped) args once.
-   */
-  const primaryId = primary?.id;
-  useEffect(() => {
-    if (primaryId) context.channel.emit(UPDATE_STORY_ARGS, { storyId: primaryId, updatedArgs: {} });
-  }, [context.channel, primaryId]);
   const nav = [
     medo.usage ? 'Usage' : null,
     primary ? 'Playground' : null,
@@ -354,7 +343,7 @@ export function ComponentDocsPage() {
       {primary ? (
         <DocSection n={++n} title="Playground" meta="Controls" description="Change the properties below.">
           <Canvas of={primary.moduleExport} />
-          <Controls of={primary.moduleExport} />
+          <PropsTable of={primary.moduleExport} />
         </DocSection>
       ) : null}
 

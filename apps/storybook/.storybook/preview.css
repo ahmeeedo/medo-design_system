@@ -293,164 +293,122 @@ body {
 .medo-doc .sbdocs-preview-actions {
   margin: calc(var(--medo-space-2) - var(--medo-space-5)) 0 0;
 }
-.medo-doc .doc-body > div:has(.docblock-argstable) {
-  margin: 0;
-}
 
-/* ---------- Playground controls: Storybook's args table in the look of our Table (medo-table) ---------- */
-.medo-doc div:has(> .docblock-argstable) {
-  container: argstable / inline-size;
-  overflow-x: auto;
-  border: var(--medo-border-width-thin) solid var(--medo-color-border-default);
-  border-radius: var(--medo-radius-lg);
-  background: var(--medo-color-surface-default);
+/* ---------- Playground props table (PropsTable: StaticTable + our controls) ---------- */
+.doc-props {
+  container: props / inline-size;
 }
-.medo-doc .docblock-argstable {
-  inline-size: 100%;
-  margin: 0 !important;
-  border-collapse: separate;
-  border-spacing: 0;
-  font: var(--medo-typography-body-sm);
-  color: var(--medo-color-text-primary);
+.medo-doc .doc-props tbody th[scope='row'] {
+  inline-size: 12rem;
 }
-/* Reset button (↺): inside the header row, at the end. */
-.medo-doc div:has(> .docblock-argstable) > :not(table) {
+.doc-props-name {
   display: flex;
-  inline-size: auto !important;
-  inset-block-start: var(--medo-space-1-5) !important;
-  /* The button has a negative end margin (bigger hit area): 16 px keeps it inside the frame. */
-  inset-inline-end: var(--medo-space-4) !important;
-  z-index: 1;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--medo-space-2);
 }
-/* Native radios and checkboxes of the controls in the brand colour. */
-.medo-doc .docblock-argstable input {
-  accent-color: var(--medo-color-action-primary);
+.doc-props-desc {
+  display: grid;
+  gap: var(--medo-space-1);
+  color: var(--medo-color-text-secondary);
+  overflow-wrap: anywhere;
 }
-.medo-doc .docblock-argstable :is(thead, tbody, tr, th, td) {
-  box-shadow: none !important;
-  filter: none !important;
+.doc-props-type {
+  font-family: var(--medo-font-family-mono);
+  font-size: var(--medo-font-size-xs);
 }
-.medo-doc .docblock-argstable thead th {
+.medo-doc .doc-props .doc-props-default {
+  min-inline-size: 7rem;
+  overflow-wrap: anywhere;
+}
+.medo-doc .doc-props .doc-props-control {
+  inline-size: 16rem;
+  padding-block: var(--medo-space-2);
+}
+/* Fields fill the cell; switches, radios and checkboxes keep their size. */
+.doc-props-control > :is(.medo-field:not(.medo-field--group), .medo-slider) {
+  inline-size: 100%;
+}
+.doc-props-control-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--medo-space-2);
+}
+/* Category (e.g. “Semantics (no visual change)”): a sub-header row. */
+.medo-doc .doc-props .doc-props-group th {
   block-size: var(--medo-space-10);
-  padding: 0 var(--medo-space-4) !important;
-  border-block-end: var(--medo-border-width-thin) solid var(--medo-color-border-default);
   background: var(--medo-color-surface-subtle);
   font: var(--medo-typography-label-sm);
   color: var(--medo-color-text-secondary);
   text-align: start;
-  vertical-align: middle;
-}
-.medo-doc .docblock-argstable tbody {
-  background: transparent !important;
-}
-.medo-doc .docblock-argstable tbody tr {
-  background: transparent !important;
-}
-.medo-doc .docblock-argstable tbody td {
-  block-size: var(--medo-space-12);
-  padding: var(--medo-space-2) var(--medo-space-4) !important;
-  border: 0 !important;
-  border-block-end: var(--medo-border-width-thin) solid var(--medo-color-border-default) !important;
-  border-radius: 0 !important;
-  background: transparent !important;
-  vertical-align: middle;
-  color: var(--medo-color-text-secondary);
-}
-/* Long types and defaults (unions, ReactNode lists) wrap instead of widening the table. */
-.medo-doc .docblock-argstable tbody td:is(:nth-child(2), :nth-child(3)) {
-  overflow-wrap: anywhere;
-}
-.medo-doc .docblock-argstable tbody tr:last-child td {
-  border-block-end: 0 !important;
-}
-/* Name column: like a row header (medium weight, primary text). */
-.medo-doc .docblock-argstable tbody td:first-child,
-.medo-doc .docblock-argstable tbody td:first-child span {
-  font-weight: var(--medo-font-weight-medium);
-  color: var(--medo-color-text-primary);
-}
-/* Type and default values: our inline code token. */
-.medo-doc .docblock-argstable tbody td:is(:nth-child(2), :nth-child(3)) span[class] {
-  font-family: var(--medo-font-family-mono);
-  font-size: var(--medo-font-size-xs);
-  border: 0;
-  border-radius: var(--medo-radius-sm);
-  background: var(--medo-color-surface-subtle);
-  color: var(--medo-color-text-primary);
-}
-.medo-doc .docblock-argstable tbody td:is(:nth-child(2), :nth-child(3)) span[class]:empty {
-  background: none;
 }
 
 /*
- * Narrow (table under 40rem, e.g. phones): no scrolling, every property becomes a block.
+ * Narrow (table under 40rem, e.g. phones): no sideways scrolling, every property becomes a block.
  *   name ··········· default
  *   description + type
  *   control (full width)
- * The header row keeps “Name” only; the reset button sits at its end.
+ * The header keeps “Property” and “Control” with the reset button.
  */
-@container argstable (max-width: 40rem) {
-  .medo-doc .docblock-argstable,
-  .medo-doc .docblock-argstable :is(thead, tbody) {
-    display: block !important;
+@container props (max-width: 40rem) {
+  .medo-doc .doc-props :is(table, thead, tbody, th, td) {
+    display: block;
   }
-  .medo-doc .docblock-argstable thead tr {
-    display: flex !important;
+  .medo-doc .doc-props thead tr {
+    display: flex;
+    justify-content: space-between;
     align-items: center;
-    block-size: var(--medo-space-10);
     border-block-end: var(--medo-border-width-thin) solid var(--medo-color-border-default);
     background: var(--medo-color-surface-subtle);
   }
-  .medo-doc .docblock-argstable thead th {
-    block-size: auto;
+  .medo-doc .doc-props thead th {
+    display: flex;
+    align-items: center;
     border: 0;
   }
-  .medo-doc .docblock-argstable thead th:not(:first-child) {
+  .medo-doc .doc-props thead th:is(:nth-child(2), :nth-child(3)) {
     display: none;
   }
-  .medo-doc .docblock-argstable tbody tr {
-    display: grid !important;
+  .medo-doc .doc-props tbody tr {
+    display: grid;
     grid-template-columns: minmax(0, 1fr) auto;
-    gap: var(--medo-space-1) var(--medo-space-4);
+    gap: var(--medo-space-2) var(--medo-space-4);
     padding: var(--medo-space-3) var(--medo-space-4);
     border-block-end: var(--medo-border-width-thin) solid var(--medo-color-border-default);
   }
-  .medo-doc .docblock-argstable tbody tr:last-child {
+  .medo-doc .doc-props tbody:last-child tr:last-child {
     border-block-end: 0;
   }
-  .medo-doc .docblock-argstable tbody td {
-    display: block !important;
-    inline-size: auto !important;
+  .medo-doc .doc-props tbody :is(th, td) {
+    inline-size: auto;
     block-size: auto;
     min-inline-size: 0;
-    padding: 0 !important;
-    border: 0 !important;
+    padding: 0;
+    border: 0;
   }
-  /* Rows with a single cell (section titles) span the row. */
-  .medo-doc .docblock-argstable tbody td:only-child,
-  .medo-doc .docblock-argstable tbody td:nth-child(2),
-  .medo-doc .docblock-argstable tbody td:nth-child(4) {
+  .medo-doc .doc-props tbody tr > :is(:only-child, :nth-child(2), :nth-child(4)) {
     grid-column: 1 / -1;
   }
-  .medo-doc .docblock-argstable tbody td:nth-child(1) { grid-row: 1; }
-  .medo-doc .docblock-argstable tbody td:nth-child(3) {
+  .medo-doc .doc-props tbody tr > :nth-child(3) {
     grid-row: 1;
     grid-column: 2;
     justify-self: end;
-    text-align: end;
   }
-  .medo-doc .docblock-argstable tbody td:nth-child(3) > div {
-    display: flex;
-    justify-content: flex-end;
+  .medo-doc .doc-props tbody th[scope='row'],
+  .medo-doc .doc-props .doc-props-default,
+  .medo-doc .doc-props .doc-props-control {
+    inline-size: auto;
+    min-inline-size: 0;
+    padding: 0;
   }
-  .medo-doc .docblock-argstable tbody td:nth-child(4) {
-    margin-block-start: var(--medo-space-2);
+  .medo-doc .doc-props .doc-props-group {
+    padding-block: var(--medo-space-2);
+    background: var(--medo-color-surface-subtle);
   }
-  /* Text, number, select and textarea controls fill the width; boolean toggles and radios keep theirs. */
-  .medo-doc .docblock-argstable tbody td:nth-child(4) :is(label:has(> textarea), :has(> select), select, textarea, input:is([type='text'], [type='number'], :not([type]))) {
-    inline-size: 100%;
-    max-inline-size: 100%;
-    box-sizing: border-box;
+  .medo-doc .doc-props .doc-props-group th {
+    block-size: auto;
+    background: none;
   }
 }
 
@@ -470,16 +428,6 @@ body {
 }
 .medo-doc .docs-story {
   overflow-x: auto;
-}
-
-/* Storybook boolean control: its unselected label is too light (contrast < 4.5 : 1) */
-.medo-doc label:has(> input[role='switch']) > span {
-  color: var(--medo-color-text-secondary);
-}
-
-/* Storybook “func” / “union” type toggles in the props table: brand colour too dark in Dark mode. */
-.medo-doc .sbdocs-expandable {
-  color: var(--medo-color-text-primary);
 }
 
 /* ---------- usage guide: two columns (when / when not, do / don't) ---------- */
