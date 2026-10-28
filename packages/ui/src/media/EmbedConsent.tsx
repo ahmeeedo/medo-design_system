@@ -6,6 +6,7 @@ import { IconTile } from '../empty-state/EmptyState';
 import { Link } from '../link/Link';
 import { cx } from '../utils/cx';
 import type { ImageRatio } from './Image';
+import { en, useMessages, type Messages } from '../i18n/I18n';
 
 export type EmbedType = 'video' | 'map' | 'generic';
 
@@ -20,34 +21,20 @@ export interface EmbedTexts {
   privacy: string;
 }
 
-/** Texts per type. provider: “YouTube”, “Google Maps” · company: “Google”. */
-export function defaultEmbedTexts(type: EmbedType, provider?: string, company?: string): EmbedTexts {
+/**
+ * Texts per type. provider: “YouTube”, “Google Maps” · company: “Google”.
+ * `messages`: the language (default English); the component passes the current one.
+ */
+export function defaultEmbedTexts(type: EmbedType, provider?: string, company?: string, messages: Messages = en): EmbedTexts {
   const to = company ?? provider;
-  if (type === 'video')
-    return {
-      title: 'Load external video',
-      body: `This video is provided by ${provider ?? 'a third party'}. Loading it sends data such as your IP address to ${to ?? 'the provider'}.`,
-      bodyCompact: `Loading this video sends data to ${provider && company && provider !== company ? `${provider} (${company})` : (to ?? 'a third party')}.`,
-      load: 'Load video',
-      remember: provider ? `Always load ${provider} videos` : 'Always load videos from this provider',
-      privacy: 'Privacy policy',
-    };
-  if (type === 'map')
-    return {
-      title: 'Load map',
-      body: `This map is provided by ${provider ?? 'a third party'}. Loading it sends data such as your IP address to ${to ?? 'the provider'}.`,
-      bodyCompact: `Loading this map sends data to ${to ?? 'a third party'}.`,
-      load: 'Load map',
-      remember: provider ? `Always load ${provider}` : 'Always load maps from this provider',
-      privacy: 'Privacy policy',
-    };
+  const e = messages.embed[type];
   return {
-    title: 'Load external content',
-    body: `This content is provided by ${provider ?? 'a third party'}. Loading it sends data such as your IP address to ${to ?? 'the provider'}.`,
-    bodyCompact: `Loading this content sends data to ${to ?? 'a third party'}.`,
-    load: 'Load content',
-    remember: provider ? `Always load content from ${provider}` : 'Always load content from this provider',
-    privacy: 'Privacy policy',
+    title: e.title,
+    body: e.body(provider, to),
+    bodyCompact: e.bodyCompact(provider, company, to),
+    load: e.load,
+    remember: e.remember(provider),
+    privacy: messages.embed.privacy,
   };
 }
 
@@ -96,7 +83,8 @@ export function EmbedConsent({
   texts,
   className,
 }: EmbedConsentProps) {
-  const t = { ...defaultEmbedTexts(type, provider, company), ...texts };
+  const m = useMessages();
+  const t = { ...defaultEmbedTexts(type, provider, company, m), ...texts };
   const ref = useRef<HTMLDivElement>(null);
   const frame = useRef<HTMLIFrameElement>(null);
   const [clicked, setClicked] = useState(false);

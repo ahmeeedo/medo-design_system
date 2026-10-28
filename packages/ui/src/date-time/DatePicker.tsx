@@ -24,7 +24,8 @@ import { ListBox, Option } from '../listbox/ListBox';
 import { InputAction } from '../text-field/TextField';
 import { cx } from '../utils/cx';
 import { MOBILE_QUERY, useMediaQuery } from '../utils/useMediaQuery';
-import { Calendar, defaultCalendarTexts, RangeCalendar, type CalendarTexts } from './Calendar';
+import { Calendar, RangeCalendar, type CalendarTexts } from './Calendar';
+import { en, useMessages, type Messages } from '../i18n/I18n';
 import { TimeField } from './DateField';
 
 export interface DatePickerTexts extends CalendarTexts {
@@ -39,16 +40,23 @@ export interface DatePickerTexts extends CalendarTexts {
   reversed: string;
 }
 
-export const defaultDatePickerTexts: Omit<DatePickerTexts, keyof CalendarTexts> = {
-  openCalendar: 'Open calendar',
-  done: 'Done',
-  time: 'Time',
-  presets: 'Periods',
-  beforeMin: (date) => `Choose a date from ${date} on.`,
-  afterMax: (date) => `Choose a date until ${date}.`,
-  unavailable: 'This day is not available. Choose another day.',
-  reversed: 'The end date must be after the start date.',
-};
+/** Picker texts of one language (without the calendar texts). */
+function pickerTexts(m: Messages): Omit<DatePickerTexts, keyof CalendarTexts> {
+  const d = m.datePicker;
+  return {
+    openCalendar: d.openCalendar,
+    done: m.common.done,
+    time: d.time,
+    presets: d.presets,
+    beforeMin: d.beforeMin,
+    afterMax: d.afterMax,
+    unavailable: d.unavailable,
+    reversed: d.reversed,
+  };
+}
+
+/** English defaults. The components use the texts of the current language (see i18n). */
+export const defaultDatePickerTexts: Omit<DatePickerTexts, keyof CalendarTexts> = pickerTexts(en);
 
 interface PickerBase {
   label?: ReactNode;
@@ -66,7 +74,7 @@ interface PickerBase {
 }
 
 /** Messages that name the rule. Unavailable days: pass `texts.unavailable` with the reason (“We don’t deliver on weekends.”). */
-function useMessages(t: DatePickerTexts, minValue?: DateValue | null, maxValue?: DateValue | null) {
+function useValidationMessages(t: DatePickerTexts, minValue?: DateValue | null, maxValue?: DateValue | null) {
   const { locale } = useLocale();
   const format = useMemo(() => new DateFormatter(locale, { day: '2-digit', month: '2-digit', year: 'numeric', timeZone: getLocalTimeZone() }), [locale]);
   const show = (d: DateValue) => format.format(d.toDate(getLocalTimeZone()));
@@ -138,10 +146,11 @@ export function DatePicker<T extends DateValue>({
   className,
   ...props
 }: DatePickerProps<T>) {
-  const t: DatePickerTexts = { ...defaultCalendarTexts, ...defaultDatePickerTexts, ...texts };
+  const m = useMessages();
+  const t: DatePickerTexts = { ...m.calendar, ...pickerTexts(m), ...texts };
   const mobile = useMediaQuery(MOBILE_QUERY);
   const sheet = overlay === 'sheet' || (overlay === 'auto' && mobile);
-  const messages = useMessages(t, props.minValue, props.maxValue);
+  const messages = useValidationMessages(t, props.minValue, props.maxValue);
   const hasTime = !!props.granularity && props.granularity !== 'day';
 
   return (
@@ -171,20 +180,25 @@ export interface DateRangePreset {
   value: { start: DateValue; end: DateValue };
 }
 
-/** The default presets (Today … Last month), relative to today in the local time zone. */
+/**
+ * The default presets (Today … Last month), relative to today in the local time zone.
+ * Labels: own ones win, else those of `messages` (default English; the DateRangePicker passes the current language).
+ */
 export function defaultDatePresets(
   labels: Partial<Record<'today' | 'yesterday' | 'last7' | 'last14' | 'last30' | 'thisMonth' | 'lastMonth', string>> = {},
+  messages: Messages = en,
 ): DateRangePreset[] {
+  const d = messages.datePicker;
   const now: CalendarDate = today(getLocalTimeZone());
   const lastMonth = now.subtract({ months: 1 });
   return [
-    { label: labels.today ?? 'Today', value: { start: now, end: now } },
-    { label: labels.yesterday ?? 'Yesterday', value: { start: now.subtract({ days: 1 }), end: now.subtract({ days: 1 }) } },
-    { label: labels.last7 ?? 'Last 7 days', value: { start: now.subtract({ days: 6 }), end: now } },
-    { label: labels.last14 ?? 'Last 14 days', value: { start: now.subtract({ days: 13 }), end: now } },
-    { label: labels.last30 ?? 'Last 30 days', value: { start: now.subtract({ days: 29 }), end: now } },
-    { label: labels.thisMonth ?? 'This month', value: { start: startOfMonth(now), end: now } },
-    { label: labels.lastMonth ?? 'Last month', value: { start: startOfMonth(lastMonth), end: endOfMonth(lastMonth) } },
+    { label: labels.today ?? d.today, value: { start: now, end: now } },
+    { label: labels.yesterday ?? d.yesterday, value: { start: now.subtract({ days: 1 }), end: now.subtract({ days: 1 }) } },
+    { label: labels.last7 ?? d.last7Days, value: { start: now.subtract({ days: 6 }), end: now } },
+    { label: labels.last14 ?? d.last14Days, value: { start: now.subtract({ days: 13 }), end: now } },
+    { label: labels.last30 ?? d.last30Days, value: { start: now.subtract({ days: 29 }), end: now } },
+    { label: labels.thisMonth ?? d.thisMonth, value: { start: startOfMonth(now), end: now } },
+    { label: labels.lastMonth ?? d.lastMonth, value: { start: startOfMonth(lastMonth), end: endOfMonth(lastMonth) } },
   ];
 }
 
@@ -237,11 +251,12 @@ export function DateRangePicker<T extends DateValue>({
   className,
   ...props
 }: DateRangePickerProps<T>) {
-  const t: DatePickerTexts = { ...defaultCalendarTexts, ...defaultDatePickerTexts, ...texts };
+  const m = useMessages();
+  const t: DatePickerTexts = { ...m.calendar, ...pickerTexts(m), ...texts };
   const mobile = useMediaQuery(MOBILE_QUERY);
   const sheet = overlay === 'sheet' || (overlay === 'auto' && mobile);
-  const messages = useMessages(t, props.minValue, props.maxValue);
-  const list = presets === true ? defaultDatePresets() : presets || undefined;
+  const messages = useValidationMessages(t, props.minValue, props.maxValue);
+  const list = presets === true ? defaultDatePresets({}, m) : presets || undefined;
 
   return (
     <AriaDateRangePicker<T> shouldForceLeadingZeros {...props} className={cx('medo-field', 'medo-date-field', 'medo-date-picker', 'medo-date-picker--range', className)}>

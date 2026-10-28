@@ -2,6 +2,7 @@ import { useMemo, type ReactNode } from 'react';
 import { Label, Slider as AriaSlider, SliderOutput, SliderThumb, SliderTrack, useLocale, type SliderProps as AriaSliderProps } from 'react-aria-components';
 import { NumberField } from '../number-field/NumberField';
 import { cx } from '../utils/cx';
+import { useMessages } from '../i18n/I18n';
 
 type Value = number | number[];
 
@@ -38,6 +39,7 @@ export function Slider<T extends Value = number>({
   className,
   ...props
 }: SliderProps<T>) {
+  const m = useMessages();
   const { locale } = useLocale();
   const format = useMemo(() => new Intl.NumberFormat(locale, formatOptions), [locale, formatOptions]);
   const steps = Math.round((maxValue - minValue) / step);
@@ -75,7 +77,7 @@ export function Slider<T extends Value = number>({
                 <SliderThumb
                   key={i}
                   index={i}
-                  aria-label={range ? (thumbLabels?.[i] ?? `${i === 0 ? 'Minimum' : 'Maximum'} ${labelText}`.trim()) : undefined}
+                  aria-label={range ? (thumbLabels?.[i] ?? (i === 0 ? m.slider.minimum(labelText) : m.slider.maximum(labelText))) : undefined}
                   className="medo-slider__thumb"
                 >
                   {({ isDragging }) =>
@@ -114,13 +116,14 @@ export interface SliderFieldProps<T extends Value = number> extends Omit<SliderP
  * right (88). Range: two inputs below (min – max). Slider and inputs stay in sync; the inputs clamp on blur.
  */
 export function SliderField<T extends Value = number>({ value, onChange, inputLabels, ...props }: SliderFieldProps<T>) {
+  const m = useMessages();
   const { minValue = 0, maxValue = 100, step = 1, formatOptions, isDisabled, label, thumbLabels } = props;
   const labelText = typeof label === 'string' ? label : (props['aria-label'] ?? '');
   const field = { step, formatOptions, isDisabled, size: 'md' as const };
 
   if (Array.isArray(value)) {
     const [lo, hi] = value as number[];
-    const names = inputLabels ?? thumbLabels ?? [`Minimum ${labelText}`.trim(), `Maximum ${labelText}`.trim()];
+    const names = inputLabels ?? thumbLabels ?? [m.slider.minimum(labelText), m.slider.maximum(labelText)];
     return (
       <div className="medo-slider-field medo-slider-field--range">
         <Slider<T> {...props} value={value} onChange={onChange} />

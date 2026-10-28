@@ -18,6 +18,7 @@ import { ListBox, Option } from '../listbox/ListBox';
 import { Popover, PopoverTrigger } from '../popover/Popover';
 import { InputAction } from '../text-field/TextField';
 import { cx } from '../utils/cx';
+import { useMessages } from '../i18n/I18n';
 
 /**
  * The segments inside the Input look. Digits only; a complete segment jumps to the next one. Separators come
@@ -88,12 +89,14 @@ export function TimeField({
   errorMessage,
   size = 'md',
   slots,
-  slotsLabel = 'Available times',
+  slotsLabel: slotsLabelProp,
   className,
   defaultValue,
   onChange,
   ...props
 }: TimeFieldProps) {
+  const m = useMessages();
+  const slotsLabel = slotsLabelProp ?? m.datePicker.availableTimes;
   // Controlled inside, so a picked slot shows also when the app passes only defaultValue.
   const [inner, setInner] = useState<TimeValue | null>(defaultValue ?? null);
   const value = props.value !== undefined ? props.value : inner;

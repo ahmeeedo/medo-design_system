@@ -1,6 +1,8 @@
 /// <reference types="vite/client" />
 import type { Preview } from '@storybook/react-vite';
 import { withThemeByDataAttribute } from '@storybook/addon-themes';
+import { createElement } from 'react';
+import { I18nProvider } from 'react-aria-components';
 
 // Fonts are self-hosted (no request to Google). Weights 400–700.
 import '@fontsource/dm-sans/400.css';
@@ -43,9 +45,25 @@ const preview: Preview = {
     },
   },
   // Start theme. The Vitest project “storybook-dark” sets STORYBOOK_TEST_THEME, so every story is also tested in Dark.
-  initialGlobals: { theme: import.meta.env.STORYBOOK_TEST_THEME ?? 'Light' },
+  // Language of the built-in texts, dates and numbers – the same I18nProvider an app sets.
+  globalTypes: {
+    locale: {
+      description: 'Language of the components',
+      toolbar: {
+        title: 'Language',
+        icon: 'globe',
+        items: [
+          { value: 'en-US', title: 'English' },
+          { value: 'de-DE', title: 'Deutsch' },
+        ],
+        dynamicTitle: true,
+      },
+    },
+  },
+  initialGlobals: { theme: import.meta.env.STORYBOOK_TEST_THEME ?? 'Light', locale: 'en-US' },
   // Theme switch in the toolbar sets data-theme on <html> – exactly like in a real app.
   decorators: [
+    (Story, { globals }) => createElement(I18nProvider, { locale: (globals.locale as string) ?? 'en-US' }, createElement(Story)),
     withThemeByDataAttribute({
       themes: { Light: 'light', Dark: 'dark' },
       defaultTheme: 'Light',

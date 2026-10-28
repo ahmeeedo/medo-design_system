@@ -6,6 +6,7 @@ import { Button, ButtonGroup, type ButtonSize } from '../button/Button';
 import { IconButton } from '../icon-button/IconButton';
 import { cx } from '../utils/cx';
 import { MOBILE_QUERY, useMediaQuery } from '../utils/useMediaQuery';
+import { useMessages } from '../i18n/I18n';
 
 /** Opens a Dialog or Alert dialog from a trigger (React Aria DialogTrigger). Focus returns to the trigger. */
 export { DialogTrigger } from 'react-aria-components';
@@ -108,7 +109,14 @@ export function useDirtyGuard({ isDirty = false, discardText, ...openProps }: Di
     if (next || !isDirty) setOpen(next);
     else setConfirm(true);
   };
-  const discard = { ...DISCARD, ...discardText };
+  const m = useMessages();
+  const discard: DialogDiscardText = {
+    title: m.dialog.discardTitle,
+    description: m.dialog.discardDescription,
+    actionLabel: m.dialog.discardAction,
+    cancelLabel: m.dialog.discardCancel,
+    ...discardText,
+  };
   const confirmDiscard = (
     <Nested>
       <AlertDialog
@@ -166,13 +174,6 @@ export interface DialogProps extends OpenProps {
   className?: string;
 }
 
-const DISCARD: DialogDiscardText = {
-  title: 'Discard changes?',
-  description: 'Your changes will be lost.',
-  actionLabel: 'Discard',
-  cancelLabel: 'Keep editing',
-};
-
 /**
  * Dialog – a modal window for a focused task. Built on React Aria ModalOverlay,
  * Modal and Dialog: role dialog with aria-modal, the title names it, focus starts in the first field,
@@ -184,8 +185,8 @@ export function Dialog({
   children,
   size = 'md',
   primaryAction,
-  cancelLabel = 'Cancel',
-  closeLabel = 'Close',
+  cancelLabel: cancelLabelProp,
+  closeLabel: closeLabelProp,
   showClose = true,
   isDirty = false,
   discardText,
@@ -194,6 +195,9 @@ export function Dialog({
   className,
   ...openProps
 }: DialogProps) {
+  const m = useMessages();
+  const cancelLabel = cancelLabelProp ?? m.common.cancel;
+  const closeLabel = closeLabelProp ?? m.common.close;
   const { open, onOpenChange, confirmDiscard, forceClose } = useDirtyGuard({ isDirty, discardText, ...openProps });
   const isMobile = useMediaQuery(MOBILE_QUERY);
   const layout = overlay === 'auto' ? (isMobile ? mobile : 'dialog') : overlay;
@@ -405,7 +409,9 @@ export interface AlertDialogProps extends OpenProps {
  * role alertdialog, no X, a click on the scrim never closes, Esc = Cancel. Focus starts on Cancel,
  * so an accidental Enter never deletes. Below 640 px: icon on top, buttons stacked (lg).
  */
-export function AlertDialog({ tone = 'danger', title, children, actionLabel, onAction, cancelLabel = 'Cancel', className, ...openProps }: AlertDialogProps) {
+export function AlertDialog({ tone = 'danger', title, children, actionLabel, onAction, cancelLabel: cancelLabelProp, className, ...openProps }: AlertDialogProps) {
+  const m = useMessages();
+  const cancelLabel = cancelLabelProp ?? m.common.cancel;
   const [open, setOpen] = useOpenState(openProps);
   const isMobile = useMediaQuery(MOBILE_QUERY);
   const descriptionId = useId();

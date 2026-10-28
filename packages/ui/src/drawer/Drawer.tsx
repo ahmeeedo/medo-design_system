@@ -4,6 +4,7 @@ import { X } from 'lucide-react';
 import { useDirtyGuard, type DirtyGuardProps } from '../dialog/Dialog';
 import { IconButton } from '../icon-button/IconButton';
 import { cx } from '../utils/cx';
+import { useMessages } from '../i18n/I18n';
 
 export interface DrawerProps extends DirtyGuardProps {
   /** Says what it is (“Account”, “Filter”, “Invoice #1042”). Can be a logo for a navigation drawer – then set aria-label. */
@@ -39,12 +40,13 @@ export function Drawer({
   footer,
   side = 'right',
   size = 'sm',
-  closeLabel = 'Close',
+  closeLabel,
   isDirty = false,
   discardText,
   className,
   ...openProps
 }: DrawerProps) {
+  const m = useMessages();
   const { open, onOpenChange, confirmDiscard, forceClose } = useDirtyGuard({ isDirty, discardText, ...openProps });
   return (
     <ModalOverlay isOpen={open} onOpenChange={onOpenChange} isDismissable={!isDirty} className={cx('medo-drawer-overlay', `medo-drawer-overlay--${side}`)}>
@@ -60,7 +62,7 @@ export function Drawer({
                     {title}
                   </Heading>
                 )}
-                <IconButton variant="ghost" size="md" icon={<X />} aria-label={closeLabel} tooltip={false} onPress={close} />
+                <IconButton variant="ghost" size="md" icon={<X />} aria-label={closeLabel ?? m.common.close} tooltip={false} onPress={close} />
               </div>
               <div className="medo-drawer__body">{typeof children === 'function' ? children(forceClose) : children}</div>
               {footer && <div className="medo-drawer__footer">{typeof footer === 'function' ? footer(forceClose, close) : footer}</div>}

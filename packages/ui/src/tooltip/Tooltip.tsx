@@ -27,7 +27,7 @@ export interface TooltipProps extends Omit<AriaTooltipProps, 'children' | 'class
   className?: string;
 }
 
-const KEY_LABELS: Record<string, string> = { Control: 'Ctrl', Meta: '⌘', Shift: '⇧', Alt: 'Alt' };
+const KEY_LABELS: Record<string, string> = { Meta: '⌘', Shift: '⇧', Alt: 'Alt' };
 
 /** True on macOS and iOS: “Mod” means ⌘ there, Ctrl everywhere else. */
 const isApple = () => typeof navigator !== 'undefined' && /Mac|iPhone|iPad/.test(navigator.platform || navigator.userAgent);
@@ -35,11 +35,14 @@ const isApple = () => typeof navigator !== 'undefined' && /Mac|iPhone|iPad/.test
 /** “Mod+D” → “Meta+D” on Apple devices, “Control+D” elsewhere (aria-keyshortcuts syntax). */
 export const resolveShortcut = (keys: string) => keys.replace(/\bMod\b/g, isApple() ? 'Meta' : 'Control');
 
-/** Visible form of an aria-keyshortcuts value: “Control+C” → “Ctrl C”, “Meta+C” → “⌘ C”, “Mod+C” → per platform. */
-export const formatShortcut = (keys: string) =>
+/**
+ * Visible form of an aria-keyshortcuts value: “Control+C” → “Ctrl C”, “Meta+C” → “⌘ C”, “Mod+C” → per platform.
+ * `control`: the name of the Control key in the current language (“Strg” in German).
+ */
+export const formatShortcut = (keys: string, control = 'Ctrl') =>
   resolveShortcut(keys)
     .split('+')
-    .map((k) => KEY_LABELS[k] ?? k)
+    .map((k) => (k === 'Control' ? control : (KEY_LABELS[k] ?? k)))
     .join(' ');
 
 /** Tooltip – short label on hover or focus. Top, 8 px offset, flips if needed. */

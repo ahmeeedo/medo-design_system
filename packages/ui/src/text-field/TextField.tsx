@@ -9,6 +9,7 @@ import {
 } from 'react-aria-components';
 import { FieldFooter, FieldLabel } from '../field/Field';
 import { cx } from '../utils/cx';
+import { useMessages } from '../i18n/I18n';
 
 export type InputSize = 'sm' | 'md' | 'lg';
 
@@ -100,17 +101,18 @@ function clearErrorWhenValid(e: FormEvent<HTMLInputElement | HTMLTextAreaElement
 
 /** Visible counter plus a calm, delayed announcement for screen readers (pattern of GOV.UK). */
 function CharacterCount({ count, limit }: { count: number; limit: number }) {
+  const m = useMessages();
   const over = count - limit;
-  const text = over > 0 ? `${over} too many` : `${count} / ${limit}`;
+  const text = over > 0 ? m.textField.tooMany(over) : m.textField.counter(count, limit);
   const [announcement, setAnnouncement] = useState('');
 
   useEffect(() => {
     const id = setTimeout(
-      () => setAnnouncement(over > 0 ? `${over} characters too many` : `${limit - count} characters left`),
+      () => setAnnouncement(over > 0 ? m.textField.charactersTooMany(over) : m.textField.charactersLeft(limit - count)),
       1000,
     );
     return () => clearTimeout(id);
-  }, [count, limit, over]);
+  }, [count, limit, over, m]);
 
   return (
     <>

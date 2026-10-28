@@ -2,6 +2,7 @@ import { Columns3 } from 'lucide-react';
 import { Button } from '../button/Button';
 import { Checkbox, CheckboxGroup } from '../checkbox/Checkbox';
 import { Popover, PopoverTrigger } from '../popover/Popover';
+import { useMessages } from '../i18n/I18n';
 
 export interface ColumnOption {
   id: string;
@@ -26,7 +27,10 @@ export interface ColumnsMenuProps {
  * Columns menu – shows or hides table columns. A ghost button sm in the
  * table toolbar opens a Popover sm with checkboxes; locked columns stay visible. Render only the visible columns.
  */
-export function ColumnsMenu({ columns, visibleColumns, onVisibleColumnsChange, label = 'Columns', title = 'Show columns' }: ColumnsMenuProps) {
+export function ColumnsMenu({ columns, visibleColumns, onVisibleColumnsChange, label: labelProp, title: titleProp }: ColumnsMenuProps) {
+  const m = useMessages();
+  const label = labelProp ?? m.table.columns;
+  const title = titleProp ?? m.table.showColumns;
   const locked = columns.filter((c) => c.isLocked).map((c) => c.id);
   return (
     <PopoverTrigger>

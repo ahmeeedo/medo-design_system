@@ -5,6 +5,7 @@ import { Select } from '../select/Select';
 import { Option } from '../listbox/ListBox';
 import { cx } from '../utils/cx';
 import { MOBILE_QUERY, useMediaQuery } from '../utils/useMediaQuery';
+import { useMessages } from '../i18n/I18n';
 
 export interface PaginationProps {
   /** Current page (1-based, controlled). */
@@ -67,15 +68,23 @@ export function Pagination({
   pageSizeOptions = [10, 20, 50, 100],
   variant = 'auto',
   size = 'md',
-  'aria-label': ariaLabel = 'Pagination',
-  summary = (from, to, total) => `${from}–${to} of ${total}`,
-  pageSizeLabel = 'Rows per page',
-  previousLabel = 'Previous page',
-  nextLabel = 'Next page',
-  pageLabel = (p) => `Page ${p}`,
-  compactLabel = (p, total) => `Page ${p} of ${total}`,
+  'aria-label': ariaLabelProp,
+  summary: summaryProp,
+  pageSizeLabel: pageSizeLabelProp,
+  previousLabel: previousLabelProp,
+  nextLabel: nextLabelProp,
+  pageLabel: pageLabelProp,
+  compactLabel: compactLabelProp,
   className,
 }: PaginationProps) {
+  const m = useMessages();
+  const ariaLabel = ariaLabelProp ?? m.pagination.label;
+  const summary = summaryProp ?? m.pagination.summary;
+  const pageSizeLabel = pageSizeLabelProp ?? m.pagination.pageSize;
+  const previousLabel = previousLabelProp ?? m.pagination.previous;
+  const nextLabel = nextLabelProp ?? m.pagination.next;
+  const pageLabel = pageLabelProp ?? m.pagination.page;
+  const compactLabel = compactLabelProp ?? m.pagination.pageOf;
   const [innerPage, setInnerPage] = useState(defaultPage);
   const mobile = useMediaQuery(MOBILE_QUERY);
   const totalPages = totalPagesProp ?? (totalItems !== undefined ? Math.ceil(totalItems / pageSize) : 1);

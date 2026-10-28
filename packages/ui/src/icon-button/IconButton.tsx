@@ -3,6 +3,7 @@ import { Button as AriaButton, type ButtonProps as AriaButtonProps } from 'react
 import { Spinner } from '../progress/Progress';
 import { Tooltip, TooltipTrigger, formatShortcut, resolveShortcut } from '../tooltip/Tooltip';
 import { cx } from '../utils/cx';
+import { useMessages } from '../i18n/I18n';
 
 export interface IconButtonProps extends Omit<AriaButtonProps, 'children' | 'className' | 'style'> {
   /** Required: describes the action (“Delete file”), because there is no visible label. */
@@ -31,6 +32,7 @@ export interface IconButtonProps extends Omit<AriaButtonProps, 'children' | 'cla
 
 /** Square icon-only action. Shares the Button styles. Shows its label as a tooltip. */
 export function IconButton({ icon, variant = 'ghost', size = 'md', tooltip, shortcut, shortcutLabel, className, ...props }: IconButtonProps) {
+  const m = useMessages();
   const button = (
     <AriaButton
       {...props}
@@ -47,7 +49,7 @@ export function IconButton({ icon, variant = 'ghost', size = 'md', tooltip, shor
   return (
     <TooltipTrigger>
       {button}
-      <Tooltip shortcut={shortcutLabel ?? (shortcut && formatShortcut(shortcut))}>{tooltip ?? props['aria-label']}</Tooltip>
+      <Tooltip shortcut={shortcutLabel ?? (shortcut && formatShortcut(shortcut, m.keys.control))}>{tooltip ?? props['aria-label']}</Tooltip>
     </TooltipTrigger>
   );
 }

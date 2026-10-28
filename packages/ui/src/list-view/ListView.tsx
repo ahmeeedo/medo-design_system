@@ -5,6 +5,7 @@ import { AvatarSizeContext } from '../avatar/Avatar';
 import { Checkbox } from '../checkbox/Checkbox';
 import { Skeleton } from '../progress/Progress';
 import { cx } from '../utils/cx';
+import { useMessages } from '../i18n/I18n';
 
 export interface ListViewProps<T> extends Omit<GridListProps<T>, 'className' | 'style' | 'layout' | 'keyboardNavigationBehavior'> {
   /** Required: names the list (“Inbox”). */
@@ -106,7 +107,8 @@ export interface SwipeAction {
 }
 
 /** One row of a List view: leading – content – trailing. Height 48, 64 or 88 by lines. */
-export function ListRow({ title, description, lines, leading, meta, trailing, chevron, unread, unreadLabel = 'Unread', swipeActions, ...props }: ListRowProps) {
+export function ListRow({ title, description, lines, leading, meta, trailing, chevron, unread, unreadLabel, swipeActions, ...props }: ListRowProps) {
+  const m = useMessages();
   const rowLines = description ? (lines ?? 2) : 1;
   const swipe = swipeActions?.start || swipeActions?.end;
   return (
@@ -132,7 +134,7 @@ export function ListRow({ title, description, lines, leading, meta, trailing, ch
             <span className="medo-list-row__main">
               <span className="medo-list-row__content">
                 <span className="medo-list-row__title">
-                  {unread && <span className="medo-visually-hidden">{unreadLabel}: </span>}
+                  {unread && <span className="medo-visually-hidden">{unreadLabel ?? m.listView.unread}: </span>}
                   {title}
                 </span>
                 {description && <span className="medo-list-row__description">{description}</span>}

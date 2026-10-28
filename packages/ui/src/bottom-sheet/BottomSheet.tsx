@@ -3,6 +3,7 @@ import { Dialog, Heading, Modal, ModalOverlay, OverlayTriggerStateContext, Popov
 import { ChevronLeft, X } from 'lucide-react';
 import { IconButton } from '../icon-button/IconButton';
 import { cx } from '../utils/cx';
+import { useMessages } from '../i18n/I18n';
 
 export interface BottomSheetProps extends Omit<ModalOverlayProps, 'children' | 'className' | 'style'> {
   /** Required: names the dialog (for a Select sheet: the field label). */
@@ -37,13 +38,14 @@ export function BottomSheet({
   children,
   footer,
   height = 'content',
-  closeLabel = 'Close',
+  closeLabel,
   onBack,
-  backLabel = 'Back',
+  backLabel,
   isDismissable = true,
   className,
   ...props
 }: BottomSheetProps) {
+  const m = useMessages();
   return (
     <ModalOverlay {...props} isDismissable={isDismissable} className="medo-sheet-overlay">
       <Modal className={cx('medo-sheet', height === 'full' && 'medo-sheet--full', className)}>
@@ -54,12 +56,12 @@ export function BottomSheet({
                 <span className="medo-sheet__handle" aria-hidden="true" />
                 <div className="medo-sheet__header">
                   {onBack && (
-                    <IconButton variant="ghost" size="lg" icon={<ChevronLeft />} aria-label={backLabel} tooltip={false} onPress={onBack} />
+                    <IconButton variant="ghost" size="lg" icon={<ChevronLeft />} aria-label={backLabel ?? m.common.back} tooltip={false} onPress={onBack} />
                   )}
                   <Heading slot="title" className="medo-sheet__title">
                     {title}
                   </Heading>
-                  <IconButton variant="ghost" size="lg" icon={<X />} aria-label={closeLabel} tooltip={false} onPress={close} />
+                  <IconButton variant="ghost" size="lg" icon={<X />} aria-label={closeLabel ?? m.common.close} tooltip={false} onPress={close} />
                 </div>
               </SwipeArea>
               <div className="medo-sheet__content">{children}</div>
@@ -119,7 +121,7 @@ export function BottomSheetPopover({
   children,
   footer,
   height = 'content',
-  closeLabel = 'Close',
+  closeLabel,
 }: Pick<BottomSheetProps, 'title' | 'children' | 'footer' | 'height' | 'closeLabel'>) {
   return (
     <Popover className="medo-sheet-overlay medo-sheet-overlay--popover" offset={0} containerPadding={0}>
@@ -131,6 +133,7 @@ export function BottomSheetPopover({
 }
 
 function SheetPopoverBody({ title, children, footer, height, closeLabel }: Omit<BottomSheetProps, 'isDismissable' | 'className'>) {
+  const m = useMessages();
   const state = useContext(OverlayTriggerStateContext);
   const titleId = useId();
   const close = () => state?.close();
@@ -144,7 +147,7 @@ function SheetPopoverBody({ title, children, footer, height, closeLabel }: Omit<
             <h2 id={titleId} className="medo-sheet__title">
               {title}
             </h2>
-            <IconButton slot={null} variant="ghost" size="lg" icon={<X />} aria-label={closeLabel ?? 'Close'} tooltip={false} onPress={close} />
+            <IconButton slot={null} variant="ghost" size="lg" icon={<X />} aria-label={closeLabel ?? m.common.close} tooltip={false} onPress={close} />
           </div>
         </SwipeArea>
         <div className="medo-sheet__content">{children}</div>

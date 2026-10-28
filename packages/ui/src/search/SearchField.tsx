@@ -4,6 +4,7 @@ import { Search, X } from 'lucide-react';
 import { FieldFooter, FieldLabel } from '../field/Field';
 import type { InputSize } from '../text-field/TextField';
 import { cx } from '../utils/cx';
+import { useMessages } from '../i18n/I18n';
 
 export interface SearchFieldProps extends Omit<AriaSearchFieldProps, 'children' | 'className' | 'style'> {
   /** Visible label. Without it set `aria-label` (e.g. in a table toolbar or the header). */
@@ -24,7 +25,8 @@ export interface SearchFieldProps extends Omit<AriaSearchFieldProps, 'children' 
  * SearchField: Enter submits (`onSubmit`), Esc or × clears. Put it in a `<search>` element (search landmark);
  * keep the term in the field after searching.
  */
-export function SearchField({ label, description, placeholder, size = 'md', clearLabel = 'Clear search', className, ...props }: SearchFieldProps) {
+export function SearchField({ label, description, placeholder, size = 'md', clearLabel, className, ...props }: SearchFieldProps) {
+  const m = useMessages();
   return (
     <AriaSearchField {...props} className={cx('medo-field', 'medo-search-field', className)}>
       {label && <FieldLabel isRequired={props.isRequired}>{label}</FieldLabel>}
@@ -34,7 +36,7 @@ export function SearchField({ label, description, placeholder, size = 'md', clea
         </span>
         <AriaInput className="medo-input__control" placeholder={placeholder} />
         {/* React Aria keeps it out of the tab order – Esc clears from the field. */}
-        <AriaButton aria-label={clearLabel} className="medo-input__action medo-search-field__clear">
+        <AriaButton aria-label={clearLabel ?? m.searchField.clear} className="medo-input__action medo-search-field__clear">
           <X />
         </AriaButton>
       </div>

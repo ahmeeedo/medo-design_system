@@ -1,0 +1,161 @@
+import type { EmbedMessages, Messages } from './messages';
+
+/*
+ * Deutsch. Buttons im Infinitiv („Schließen“), Meldungen ohne Anrede („Bitte ein Datum … wählen“).
+ * „Ihre“ nur, wo es nicht anders geht (IP-Adresse). Deutsche Anführungszeichen „…“.
+ */
+
+const embed = (
+  title: string,
+  subject: { nominative: string; dativeArticle: string },
+  load: string,
+  remember: (p: string | undefined) => string,
+): EmbedMessages => ({
+  title,
+  body: (provider, to) =>
+    `${subject.nominative} von ${provider ?? 'einem Drittanbieter'} bereitgestellt. Beim Laden werden Daten wie Ihre IP-Adresse an ${to ?? 'den Anbieter'} übertragen.`,
+  bodyCompact: (provider, company, to) =>
+    `Beim Laden ${subject.dativeArticle} werden Daten an ${
+      provider && company && provider !== company ? `${provider} (${company})` : (to ?? 'einen Drittanbieter')
+    } übertragen.`,
+  load,
+  remember,
+});
+
+export const de: Messages = {
+  common: {
+    close: 'Schließen',
+    cancel: 'Abbrechen',
+    back: 'Zurück',
+    more: 'Mehr',
+    done: 'Fertig',
+    search: 'Suche',
+    showResults: 'Ergebnisse anzeigen',
+    loading: 'Wird geladen',
+    clear: 'Eingabe löschen',
+    clearAll: 'Alle entfernen',
+    noResults: 'Keine Ergebnisse',
+    noResultsFor: (q) => `Keine Ergebnisse für „${q}“`,
+    selected: (name) => `${name}: ausgewählt`,
+    removed: (labels) => `${labels.join(', ')} entfernt`,
+    add: (text) => `„${text}“ hinzufügen`,
+    create: 'Erstellen',
+    reset: 'Zurücksetzen',
+    countSelected: (n) => `${n} ausgewählt`,
+    selectedValues: 'Ausgewählt',
+  },
+  keys: { control: 'Strg' },
+  accordion: { expandAll: 'Alle aufklappen', collapseAll: 'Alle zuklappen' },
+  alert: { dismiss: 'Ausblenden' },
+  avatar: {
+    status: { online: 'online', away: 'abwesend', busy: 'beschäftigt', offline: 'offline' },
+    unknownPerson: 'Unbekannte Person',
+    unknownOrganization: 'Unbekannte Organisation',
+    more: (n) => `${n} weitere`,
+  },
+  breadcrumbs: { label: 'Pfadnavigation', more: (n) => (n === 1 ? '1 weitere Ebene anzeigen' : `${n} weitere Ebenen anzeigen`) },
+  bulkActionBar: { label: 'Sammelaktionen', count: (n) => `${n} ausgewählt`, clear: 'Auswahl aufheben', more: 'Weitere Aktionen' },
+  calendar: {
+    previousMonth: 'Vorheriger Monat',
+    nextMonth: 'Nächster Monat',
+    previousYear: 'Vorheriges Jahr',
+    nextYear: 'Nächstes Jahr',
+    previousYears: 'Vorherige Jahre',
+    nextYears: 'Nächste Jahre',
+    chooseMonth: (title) => `${title} – Monat und Jahr wählen`,
+    chooseYear: (year) => `${year} – Jahr wählen`,
+    weekNumber: 'KW',
+  },
+  datePicker: {
+    openCalendar: 'Kalender öffnen',
+    time: 'Uhrzeit',
+    presets: 'Zeiträume',
+    beforeMin: (date) => `Bitte ein Datum ab dem ${date} wählen.`,
+    afterMax: (date) => `Bitte ein Datum bis zum ${date} wählen.`,
+    unavailable: 'Dieser Tag ist nicht verfügbar. Bitte einen anderen Tag wählen.',
+    reversed: 'Das Enddatum muss nach dem Startdatum liegen.',
+    today: 'Heute',
+    yesterday: 'Gestern',
+    last7Days: 'Letzte 7 Tage',
+    last14Days: 'Letzte 14 Tage',
+    last30Days: 'Letzte 30 Tage',
+    thisMonth: 'Dieser Monat',
+    lastMonth: 'Letzter Monat',
+    availableTimes: 'Verfügbare Uhrzeiten',
+  },
+  dialog: {
+    discardTitle: 'Änderungen verwerfen?',
+    discardDescription: 'Die Änderungen gehen verloren.',
+    discardAction: 'Verwerfen',
+    discardCancel: 'Weiter bearbeiten',
+  },
+  embed: {
+    video: embed('Externes Video laden', { nominative: 'Dieses Video wird', dativeArticle: 'dieses Videos' }, 'Video laden', (p) =>
+      p ? `${p}-Videos immer laden` : 'Videos dieses Anbieters immer laden',
+    ),
+    map: embed('Karte laden', { nominative: 'Diese Karte wird', dativeArticle: 'dieser Karte' }, 'Karte laden', (p) =>
+      p ? `${p} immer laden` : 'Karten dieses Anbieters immer laden',
+    ),
+    generic: embed('Externe Inhalte laden', { nominative: 'Diese Inhalte werden', dativeArticle: 'dieser Inhalte' }, 'Inhalte laden', (p) =>
+      p ? `Inhalte von ${p} immer laden` : 'Inhalte dieses Anbieters immer laden',
+    ),
+    privacy: 'Datenschutzerklärung',
+  },
+  list: { notIncluded: 'Nicht enthalten:' },
+  listView: { unread: 'Ungelesen' },
+  navigation: {
+    skipToContent: 'Zum Inhalt springen',
+    main: 'Hauptnavigation',
+    app: 'App',
+    menu: 'Menü',
+    collapse: 'Navigation einklappen',
+    expand: 'Navigation ausklappen',
+  },
+  pagination: {
+    label: 'Seitennavigation',
+    summary: (from, to, total) => `${from}–${to} von ${total}`,
+    pageSize: 'Zeilen pro Seite',
+    previous: 'Vorherige Seite',
+    next: 'Nächste Seite',
+    page: (p) => `Seite ${p}`,
+    pageOf: (p, total) => `Seite ${p} von ${total}`,
+  },
+  quickSearch: {
+    placeholder: 'Seiten, Dateien, Personen suchen …',
+    suggestions: 'Vorschläge',
+    allResults: (q) => `Alle Ergebnisse für „${q}“`,
+    noResults: (q) => `Keine Ergebnisse für „${q}“. Bitte die Schreibweise prüfen oder andere Begriffe versuchen.`,
+    searchAll: (q) => `Alle Inhalte nach „${q}“ durchsuchen`,
+    navigate: 'Navigieren',
+    open: 'Öffnen',
+  },
+  searchField: { clear: 'Suche löschen' },
+  select: { placeholder: 'Auswählen…', clearSelection: 'Auswahl entfernen' },
+  combobox: { placeholder: 'Suchen…' },
+  slider: { minimum: (label) => (label ? `${label}, Minimum` : 'Minimum'), maximum: (label) => (label ? `${label}, Maximum` : 'Maximum') },
+  table: { columns: 'Spalten', showColumns: 'Spalten anzeigen' },
+  textField: {
+    counter: (count, limit) => `${count} / ${limit}`,
+    tooMany: (over) => `${over} zu viel`,
+    charactersLeft: (left) => `Noch ${left} Zeichen`,
+    charactersTooMany: (over) => `${over} Zeichen zu viel`,
+  },
+  upload: {
+    title: 'Dateien hierher ziehen',
+    dropTitle: 'Dateien zum Hochladen ablegen',
+    chooseFiles: 'Dateien auswählen',
+    chooseFile: 'Datei auswählen',
+    listLabel: 'Hochgeladene Dateien',
+    cancel: (name) => `Hochladen von ${name} abbrechen`,
+    remove: (name) => `${name} entfernen`,
+    retry: (name) => `${name} erneut hochladen`,
+    retryShort: 'Wiederholen',
+    uploading: (name) => `${name} wird hochgeladen`,
+    progress: (loaded, total, percent) => `${loaded} von ${total} · ${percent} %`,
+    typeNotAllowed: (names, types) => `${names} ${names.includes(',') ? 'sind' : 'ist'} nicht erlaubt.${types ? ` Erlaubt: ${types}.` : ''}`,
+    tooLarge: (size, max) => `Datei ist ${size} groß – max. ${max} erlaubt`,
+    tooMany: (max) => `Höchstens ${max} Dateien. Zum Hinzufügen bitte erst eine entfernen.`,
+    uploaded: (name) => `${name} hochgeladen`,
+    failed: (name, error) => `${name}: ${error}`,
+  },
+};

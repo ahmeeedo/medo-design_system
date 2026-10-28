@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, fn, waitFor, within } from 'storybook/test';
 import { I18nProvider } from 'react-aria-components';
-import { getLocalTimeZone, isWeekend, parseDate, parseDateTime, parseTime, today, Time } from '@internationalized/date';
+import { isWeekend, parseDate, parseDateTime, parseTime, Time } from '@internationalized/date';
 import { Calendar, RangeCalendar } from './Calendar';
 import { DateField, TimeField } from './DateField';
 import { DatePicker, DateRangePicker } from './DatePicker';
@@ -239,20 +239,19 @@ export const Validation: Story = {
     docs: {
       description: {
         story:
-          'Unavailable days are disabled in the calendar and checked again when typed. The message names the rule – never just “invalid date”. Here: from tomorrow on, no weekends, until 31.12.2026.',
+          'Unavailable days are disabled in the calendar and checked again when typed. The message names the rule – never just “invalid date”. Here: from 12 October 2026 on, no weekends, until 31 December 2026. A fixed date, so the example looks the same every day.',
       },
     },
   },
   render: () => {
-    const tomorrow = today(getLocalTimeZone()).add({ days: 1 });
     return (
-      <I18nProvider locale="de-DE">
+      <I18nProvider locale="en-GB">
         <div style={stack}>
           <DatePicker
             label="Delivery date"
-            minValue={tomorrow}
+            minValue={parseDate('2026-10-12')}
             maxValue={parseDate('2026-12-31')}
-            isDateUnavailable={(d) => isWeekend(d, 'de-DE')}
+            isDateUnavailable={(d) => isWeekend(d, 'en-GB')}
             texts={{ unavailable: 'We don’t deliver on weekends. Choose a weekday.' }}
             defaultValue={parseDate('2026-10-01')}
             validationBehavior="aria"

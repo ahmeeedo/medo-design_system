@@ -136,3 +136,7 @@ export { Image, Figure, MediaPlayButton } from './media/Image';
 export type { ImageProps, ImageRatio, FigureProps, MediaPlayButtonProps } from './media/Image';
 export { EmbedConsent, defaultEmbedTexts } from './media/EmbedConsent';
 export type { EmbedConsentProps, EmbedTexts, EmbedType } from './media/EmbedConsent';
+
+// Built-in texts: English and German, the language comes from React Aria's I18nProvider (else the browser).
+export { MessagesProvider, useMessages, en as enMessages, de as deMessages } from './i18n/I18n';
+export type { Messages, EmbedMessages } from './i18n/I18n';

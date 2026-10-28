@@ -13,6 +13,7 @@ import {
 import { Check, X } from 'lucide-react';
 import { FieldLabel } from '../field/Field';
 import { cx } from '../utils/cx';
+import { useMessages } from '../i18n/I18n';
 
 type TagSize = 'sm' | 'md';
 const TagSizeContext = createContext<TagSize>('md');
@@ -50,10 +51,12 @@ export function TagGroup<T extends object>({
   items,
   renderEmptyState,
   onRemove,
-  removedMessage = (labels) => `${labels.join(', ')} removed`,
+  removedMessage: removedMessageProp,
   className,
   ...props
 }: TagGroupProps<T>) {
+  const m = useMessages();
+  const removedMessage = removedMessageProp ?? m.common.removed;
   const ref = useRef<HTMLDivElement>(null);
   const [announcement, setAnnouncement] = useState('');
 

@@ -15,6 +15,7 @@ import { IconTile } from '../empty-state/EmptyState';
 import { ProgressBar } from '../progress/Progress';
 import { cx } from '../utils/cx';
 import { MOBILE_QUERY, useMediaQuery } from '../utils/useMediaQuery';
+import { en, useMessages } from '../i18n/I18n';
 
 /* ---------- Helpers ---------- */
 
@@ -123,24 +124,8 @@ export interface UploadTexts {
   failed: (name: string, error: string) => string;
 }
 
-export const defaultUploadTexts: UploadTexts = {
-  title: 'Drag and drop files here',
-  dropTitle: 'Drop files to upload',
-  chooseFiles: 'Choose files',
-  chooseFile: 'Choose file',
-  listLabel: 'Uploaded files',
-  cancel: (name) => `Cancel upload of ${name}`,
-  remove: (name) => `Remove ${name}`,
-  retry: (name) => `Retry ${name}`,
-  retryShort: 'Retry',
-  uploading: (name) => `Uploading ${name}`,
-  progress: (loaded, total, percent) => `${loaded} of ${total} · ${percent} %`,
-  typeNotAllowed: (names, types) => `${names} ${names.includes(',') ? 'are' : 'is'} not allowed.${types ? ` Use ${types}.` : ''}`,
-  tooLarge: (size, max) => `File is ${size} – max. ${max} allowed`,
-  tooMany: (max) => `You can add up to ${max} files. Remove one to add another.`,
-  uploaded: (name) => `${name} uploaded`,
-  failed: (name, error) => `${name}: ${error}`,
-};
+/** English defaults. The components use the texts of the current language (see i18n). */
+export const defaultUploadTexts: UploadTexts = en.upload;
 
 interface ItemActions {
   onRemove: (id: string) => void;
@@ -164,7 +149,8 @@ export interface FileItemProps extends ItemActions {
  * remove · Error: the reason + retry + remove. Images show a 40 px thumbnail, other files a type icon.
  */
 export function FileItem({ file, onRemove, onCancel, onRetry, texts: own, className }: FileItemProps) {
-  const t = { ...defaultUploadTexts, ...own };
+  const m = useMessages();
+  const t = { ...m.upload, ...own };
   const { locale } = useLocale();
   const percent = percentOf(file);
   const size = formatBytes(file.size, locale);
@@ -232,7 +218,8 @@ export interface FileTileProps extends ItemActions {
  * Done: remove top right · Error: danger border, the overlay retries, the caption names the problem.
  */
 export function FileTile({ file, onRemove, onCancel, onRetry, texts: own, className }: FileTileProps) {
-  const t = { ...defaultUploadTexts, ...own };
+  const m = useMessages();
+  const t = { ...m.upload, ...own };
   const percent = percentOf(file);
   const retry = file.status === 'error' && onRetry && file.canRetry !== false;
 
@@ -341,7 +328,8 @@ export function Dropzone({
   className,
   ...props
 }: DropzoneProps) {
-  const t = { ...defaultUploadTexts, ...own };
+  const m = useMessages();
+  const t = { ...m.upload, ...own };
   const hintId = useId();
   const errorId = useId();
   return (
@@ -417,7 +405,8 @@ export function FileTrigger({
   texts: own,
   className,
 }: FileTriggerProps) {
-  const t = { ...defaultUploadTexts, ...own };
+  const m = useMessages();
+  const t = { ...m.upload, ...own };
   const labelId = useId();
   const buttonId = useId();
   const hintId = useId();
@@ -532,7 +521,8 @@ export function UploadField({
   texts: own,
   className,
 }: UploadFieldProps) {
-  const t = useMemo(() => ({ ...defaultUploadTexts, ...own }), [own]);
+  const m = useMessages();
+  const t = useMemo(() => ({ ...m.upload, ...own }), [m, own]);
   const { locale } = useLocale();
   const mobile = useMediaQuery(MOBILE_QUERY);
   const labelId = useId();

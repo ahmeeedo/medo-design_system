@@ -17,6 +17,7 @@ import { InputAction, type InputSize } from '../text-field/TextField';
 import { cx } from '../utils/cx';
 import { useFitCount } from '../utils/useFitCount';
 import { MOBILE_QUERY, useMediaQuery } from '../utils/useMediaQuery';
+import { useMessages } from '../i18n/I18n';
 
 type SelectMode = 'single' | 'multiple';
 type ValueOf<M extends SelectMode> = M extends 'multiple' ? Key[] : Key | null;
@@ -68,7 +69,7 @@ export function Select<T extends object, M extends SelectMode = 'single'>({
   label,
   description,
   errorMessage,
-  placeholder = 'Select…',
+  placeholder: placeholderProp,
   size = 'md',
   leadingIcon,
   clearable,
@@ -78,11 +79,14 @@ export function Select<T extends object, M extends SelectMode = 'single'>({
   overlay = 'auto',
   commit = 'live',
   onApply,
-  resultLabel = () => 'Show results',
+  resultLabel: resultLabelProp,
   className,
   selectionMode,
   ...props
 }: SelectProps<T, M>) {
+  const m = useMessages();
+  const placeholder = placeholderProp ?? m.select.placeholder;
+  const resultLabel = resultLabelProp ?? (() => m.common.showResults);
   const multiple = selectionMode === 'multiple';
   const mobile = useMediaQuery(MOBILE_QUERY);
   const mode = overlay === 'auto' ? (mobile ? (multiple ? 'sheet' : 'native') : 'popover') : overlay === 'native' && multiple ? 'sheet' : overlay;
@@ -171,6 +175,7 @@ function ReadOnlyKeys({ isReadOnly, children }: { isReadOnly?: boolean; children
 
 /** Clear (single, optional) or clear-all (multi). Next to the trigger, never inside it. */
 function ClearButton({ enabled, onHasValue }: { enabled: boolean; onHasValue: (v: boolean) => void }) {
+  const m = useMessages();
   const state = useContext(SelectStateContext);
   const hasValue = !!state && (Array.isArray(state.value) ? state.value.length > 0 : state.value != null);
   useLayoutEffect(() => onHasValue(hasValue), [hasValue, onHasValue]);
@@ -181,7 +186,7 @@ function ClearButton({ enabled, onHasValue }: { enabled: boolean; onHasValue: (v
       <InputAction
         // slot={null}: opts out of the Select's trigger context, so this stays its own button.
         slot={null}
-        aria-label={Array.isArray(state.value) ? 'Clear all' : 'Clear selection'}
+        aria-label={Array.isArray(state.value) ? m.common.clearAll : m.select.clearSelection}
         icon={<X />}
         onPress={() => {
           state.setValue(Array.isArray(state.value) ? [] : null);
@@ -274,6 +279,7 @@ function NativePicker({ label, placeholder, isRequired }: { label: ReactNode; pl
 
 /** Sheet footer for multi: live → “3 selected” + Done · onClose → result button + Reset below (thumb reach). */
 function SheetFooter({ commit, resultLabel }: { commit: 'live' | 'onClose'; resultLabel: (value: Key[] | Key | null) => ReactNode }) {
+  const m = useMessages();
   const state = useContext(SelectStateContext);
   if (!state) return null;
   const count = Array.isArray(state.value) ? state.value.length : state.value == null ? 0 : 1;
@@ -283,16 +289,16 @@ function SheetFooter({ commit, resultLabel }: { commit: 'live' | 'onClose'; resu
         {resultLabel(state.value as Key[])}
       </Button>
       <Button size="lg" variant="secondary" onPress={() => state.setValue([])} isDisabled={count === 0}>
-        Reset
+        {m.common.reset}
       </Button>
     </>
   ) : (
     <>
       <p className="medo-sheet__count" aria-live="polite">
-        {count} selected
+        {m.common.countSelected(count)}
       </p>
       <Button size="lg" onPress={() => state.close()}>
-        Done
+        {m.common.done}
       </Button>
     </>
   );

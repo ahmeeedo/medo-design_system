@@ -1,6 +1,7 @@
 import { useId, type CSSProperties, type ReactNode } from 'react';
 import { Label, ProgressBar as AriaProgressBar, type ProgressBarProps as AriaProgressBarProps } from 'react-aria-components';
 import { cx } from '../utils/cx';
+import { useMessages } from '../i18n/I18n';
 
 /* ---------- Spinner ---------- */
 
@@ -26,6 +27,7 @@ const SpinnerGraphic = () => (
 
 /** Spinner – short wait of unknown length. */
 export function Spinner({ size = 'md', tone = 'current', decorative, className, style, ...props }: SpinnerProps) {
+  const m = useMessages();
   const classes = cx('medo-spinner', `medo-spinner--${size}`, tone !== 'current' && `medo-spinner--${tone}`, className);
   if (decorative) {
     return (
@@ -35,7 +37,7 @@ export function Spinner({ size = 'md', tone = 'current', decorative, className, 
     );
   }
   return (
-    <AriaProgressBar isIndeterminate aria-label={props['aria-label'] ?? 'Loading'} className={classes} style={style}>
+    <AriaProgressBar isIndeterminate aria-label={props['aria-label'] ?? m.common.loading} className={classes} style={style}>
       <SpinnerGraphic />
     </AriaProgressBar>
   );

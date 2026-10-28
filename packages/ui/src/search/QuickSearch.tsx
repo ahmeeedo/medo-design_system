@@ -8,6 +8,7 @@ import { ListBox, OptionHighlightContext } from '../listbox/ListBox';
 import { cx } from '../utils/cx';
 import { MOBILE_QUERY, useMediaQuery } from '../utils/useMediaQuery';
 import { SearchField } from './SearchField';
+import { useMessages } from '../i18n/I18n';
 
 export interface QuickSearchProps<T extends object> {
   isOpen?: boolean;
@@ -58,15 +59,24 @@ export function QuickSearch<T extends object>({
   onAction,
   allResultsHref,
   onSearch,
-  'aria-label': ariaLabel = 'Search',
-  placeholder = 'Search pages, files, people …',
-  cancelLabel = 'Cancel',
-  suggestionsLabel = 'Suggestions',
-  allResultsLabel = (q) => `All results for “${q}”`,
-  noResultsLabel = (q) => `No results for “${q}”. Check the spelling or try other words.`,
-  searchAllLabel = (q) => `Search all content for “${q}”`,
-  hints = { navigate: 'Navigate', open: 'Open', close: 'Close' },
+  'aria-label': ariaLabelProp,
+  placeholder: placeholderProp,
+  cancelLabel: cancelLabelProp,
+  suggestionsLabel: suggestionsLabelProp,
+  allResultsLabel: allResultsLabelProp,
+  noResultsLabel: noResultsLabelProp,
+  searchAllLabel: searchAllLabelProp,
+  hints: hintsProp,
 }: QuickSearchProps<T>) {
+  const m = useMessages();
+  const ariaLabel = ariaLabelProp ?? m.common.search;
+  const placeholder = placeholderProp ?? m.quickSearch.placeholder;
+  const cancelLabel = cancelLabelProp ?? m.common.cancel;
+  const suggestionsLabel = suggestionsLabelProp ?? m.quickSearch.suggestions;
+  const allResultsLabel = allResultsLabelProp ?? m.quickSearch.allResults;
+  const noResultsLabel = noResultsLabelProp ?? m.quickSearch.noResults;
+  const searchAllLabel = searchAllLabelProp ?? m.quickSearch.searchAll;
+  const hints = hintsProp ?? { navigate: m.quickSearch.navigate, open: m.quickSearch.open, close: m.common.close };
   const mobile = useMediaQuery(MOBILE_QUERY);
   const [innerOpen, setInnerOpen] = useState(defaultOpen ?? false);
   const open = isOpen ?? innerOpen;

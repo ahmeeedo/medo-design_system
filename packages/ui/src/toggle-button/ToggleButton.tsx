@@ -11,6 +11,7 @@ import {
 } from 'react-aria-components';
 import { Tooltip, TooltipTrigger, formatShortcut, resolveShortcut } from '../tooltip/Tooltip';
 import { cx } from '../utils/cx';
+import { useMessages } from '../i18n/I18n';
 
 type ToggleSize = 'sm' | 'md' | 'lg';
 
@@ -40,6 +41,7 @@ export interface ToggleButtonProps extends Omit<AriaToggleButtonProps, 'children
  * For an immediate, local effect (bold, mute, favourite). Saved settings use Switch, navigation uses Tabs.
  */
 export function ToggleButton({ children, icon, size, tooltip, shortcut, className, ...props }: ToggleButtonProps) {
+  const m = useMessages();
   const groupSize = useContext(ToggleSizeContext);
   const segmented = useContext(SegmentedContext);
   const s = groupSize ?? size ?? 'md';
@@ -65,7 +67,7 @@ export function ToggleButton({ children, icon, size, tooltip, shortcut, classNam
   return (
     <TooltipTrigger>
       {button}
-      <Tooltip shortcut={shortcut && formatShortcut(shortcut)}>{tooltip ?? props['aria-label']}</Tooltip>
+      <Tooltip shortcut={shortcut && formatShortcut(shortcut, m.keys.control)}>{tooltip ?? props['aria-label']}</Tooltip>
     </TooltipTrigger>
   );
 }

@@ -19,6 +19,7 @@ import { IconButton } from '../icon-button/IconButton';
 import { formatShortcut } from '../tooltip/Tooltip';
 import { cx } from '../utils/cx';
 import { MOBILE_QUERY, useMediaQuery } from '../utils/useMediaQuery';
+import { useMessages } from '../i18n/I18n';
 
 type MenuSize = 'md' | 'lg';
 
@@ -108,6 +109,7 @@ export interface MenuItemProps extends Omit<AriaMenuItemProps, 'children' | 'cla
 
 /** One action in a Menu. */
 export function MenuItem({ children, icon, shortcut, variant = 'default', textValue, ...props }: MenuItemProps) {
+  const m = useMessages();
   const { size } = useContext(MenuModeContext);
   return (
     <AriaMenuItem
@@ -124,7 +126,7 @@ export function MenuItem({ children, icon, shortcut, variant = 'default', textVa
             {children}
           </Text>
           {/* Keyboard is linked to the item (aria-describedby), so screen readers hear the shortcut. */}
-          {shortcut && size === 'md' && <Keyboard className="medo-menu-item__shortcut">{formatShortcut(shortcut)}</Keyboard>}
+          {shortcut && size === 'md' && <Keyboard className="medo-menu-item__shortcut">{formatShortcut(shortcut, m.keys.control)}</Keyboard>}
           {hasSubmenu && (
             <span className="medo-menu-item__chevron" aria-hidden="true">
               <ChevronRight />

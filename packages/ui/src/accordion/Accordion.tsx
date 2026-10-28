@@ -3,6 +3,7 @@ import { Button as AriaButton, Disclosure, DisclosureGroup, DisclosurePanel, Hea
 import { ChevronDown } from 'lucide-react';
 import { Button } from '../button/Button';
 import { cx } from '../utils/cx';
+import { useMessages } from '../i18n/I18n';
 
 type AccordionSize = 'md' | 'lg';
 
@@ -36,8 +37,8 @@ export function Accordion({
   headingLevel = 3,
   allowsMultipleExpanded = true,
   expandAll = true,
-  expandAllLabel = 'Expand all',
-  collapseAllLabel = 'Collapse all',
+  expandAllLabel,
+  collapseAllLabel,
   expandedKeys: expandedProp,
   defaultExpandedKeys,
   onExpandedChange,
@@ -45,6 +46,7 @@ export function Accordion({
   className,
   ...props
 }: AccordionProps) {
+  const m = useMessages();
   const ids = Children.toArray(children)
     .filter((c): c is ReactElement<AccordionItemProps> => isValidElement(c))
     .filter((c) => !c.props.isDisabled)
@@ -83,7 +85,7 @@ export function Accordion({
         {showToggle && (
           <div className="medo-accordion__toolbar">
             <Button variant="text" size="sm" onPress={() => setExpanded(allOpen ? new Set() : new Set(ids))}>
-              {allOpen ? collapseAllLabel : expandAllLabel}
+              {allOpen ? (collapseAllLabel ?? m.accordion.collapseAll) : (expandAllLabel ?? m.accordion.expandAll)}
             </Button>
           </div>
         )}

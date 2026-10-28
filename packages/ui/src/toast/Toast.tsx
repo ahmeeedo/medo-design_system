@@ -9,6 +9,7 @@ import {
   UNSTABLE_ToastRegion as AriaToastRegion,
 } from 'react-aria-components';
 import { X } from 'lucide-react';
+import { useMessages } from '../i18n/I18n';
 
 /*
  * React Aria's Toast is still marked UNSTABLE. Only this file imports it, so an API change
@@ -99,6 +100,7 @@ export interface ToastRegionProps {
  * Hover, focus and a hidden window pause the timers (WCAG 2.2.1).
  */
 export function ToastRegion({ closeLabel, ...props }: ToastRegionProps) {
+  const m = useMessages();
   // One region per page: a second one (e.g. several Storybook stories) stays empty instead of duplicating toasts.
   const [active, setActive] = useState(false);
   useEffect(() => {
@@ -140,7 +142,7 @@ export function ToastRegion({ closeLabel, ...props }: ToastRegionProps) {
               {t.content.action.label}
             </Button>
           )}
-          <Button slot="close" aria-label={closeLabel} className="medo-toast__button medo-toast__close">
+          <Button slot="close" aria-label={closeLabel ?? m.common.close} className="medo-toast__button medo-toast__close">
             <X aria-hidden="true" />
           </Button>
         </AriaToast>

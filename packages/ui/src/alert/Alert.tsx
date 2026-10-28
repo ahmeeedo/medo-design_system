@@ -2,6 +2,7 @@ import type { HTMLAttributes, ReactNode } from 'react';
 import { CircleAlert, CircleCheck, Info, TriangleAlert, X } from 'lucide-react';
 import { IconButton } from '../icon-button/IconButton';
 import { cx } from '../utils/cx';
+import { useMessages } from '../i18n/I18n';
 
 export type AlertTone = 'info' | 'success' | 'warning' | 'danger';
 
@@ -41,11 +42,12 @@ export function Alert({
   children,
   actions,
   onDismiss,
-  dismissLabel = 'Dismiss',
+  dismissLabel,
   announce,
   className,
   ...props
 }: AlertProps) {
+  const m = useMessages();
   const Icon = ICONS[tone];
   const role = announce ? (tone === 'danger' || tone === 'warning' ? 'alert' : 'status') : undefined;
   return (
@@ -57,7 +59,7 @@ export function Alert({
         {actions && <div className="medo-alert__actions">{actions}</div>}
       </div>
       {onDismiss && (
-        <IconButton className="medo-alert__close" variant="ghost" size="sm" icon={<X />} aria-label={dismissLabel} onPress={onDismiss} />
+        <IconButton className="medo-alert__close" variant="ghost" size="sm" icon={<X />} aria-label={dismissLabel ?? m.alert.dismiss} onPress={onDismiss} />
       )}
     </div>
   );

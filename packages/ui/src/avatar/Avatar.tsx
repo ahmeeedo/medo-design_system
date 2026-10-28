@@ -13,6 +13,7 @@ import {
 import { Button as AriaButton } from 'react-aria-components';
 import { Building2, User } from 'lucide-react';
 import { cx } from '../utils/cx';
+import { useMessages } from '../i18n/I18n';
 
 export type AvatarSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl';
 export type AvatarStatus = 'online' | 'away' | 'busy' | 'offline';
@@ -36,7 +37,6 @@ export function initialsOf(name: string) {
   return (Array.from(words[0])[0] + Array.from(words[words.length - 1])[0]).toUpperCase();
 }
 
-const STATUS_TEXT: Record<AvatarStatus, string> = { online: 'online', away: 'away', busy: 'busy', offline: 'offline' };
 
 export interface AvatarProps {
   /** Person or organization name. Used for alt text, initials and (without `colorKey`) the tone. */
@@ -75,6 +75,7 @@ export function Avatar({
   className,
   style,
 }: AvatarProps) {
+  const m = useMessages();
   const groupSize = useContext(AvatarSizeContext);
   const finalSize = size ?? groupSize ?? 'md';
   const [failed, setFailed] = useState(false);
@@ -83,8 +84,8 @@ export function Avatar({
   const initials = name ? initialsOf(name) : '';
   const showImage = Boolean(src) && !failed;
   const tone = initials ? toneFor(colorKey ?? name!) : 'neutral';
-  const statusText = status ? (statusLabels?.[status] ?? STATUS_TEXT[status]) : undefined;
-  const fallbackName = unknownLabel ?? (shape === 'square' ? 'Unknown organization' : 'Unknown person');
+  const statusText = status ? (statusLabels?.[status] ?? m.avatar.status[status]) : undefined;
+  const fallbackName = unknownLabel ?? (shape === 'square' ? m.avatar.unknownOrganization : m.avatar.unknownPerson);
   const label = [name || fallbackName, statusText].filter(Boolean).join(', ');
 
   return (
@@ -139,10 +140,12 @@ export function AvatarGroup({
   max = 4,
   size = 'md',
   onMorePress,
-  moreLabel = (n) => `${n} more`,
+  moreLabel: moreLabelProp,
   className,
   ...props
 }: AvatarGroupProps) {
+  const m = useMessages();
+  const moreLabel = moreLabelProp ?? m.avatar.more;
   const items = Children.toArray(children);
   const visible = items.slice(0, max);
   const hidden = items.length - visible.length;

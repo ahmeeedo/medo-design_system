@@ -6,6 +6,7 @@ import { IconButton } from '../icon-button/IconButton';
 import { Menu, MenuButton, MenuItem, MenuTrigger } from '../menu/Menu';
 import { cx } from '../utils/cx';
 import { MOBILE_QUERY, useMediaQuery } from '../utils/useMediaQuery';
+import { useMessages } from '../i18n/I18n';
 
 export interface BulkAction {
   /** Verb (“Export”, “Archive”, “Delete”). */
@@ -44,12 +45,17 @@ export function BulkActionBar({
   actions,
   onClear,
   variant = 'auto',
-  countLabel = (n) => `${n} selected`,
-  clearLabel = 'Clear selection',
-  moreLabel = 'More actions',
-  'aria-label': ariaLabel = 'Bulk actions',
+  countLabel: countLabelProp,
+  clearLabel: clearLabelProp,
+  moreLabel: moreLabelProp,
+  'aria-label': ariaLabelProp,
   className,
 }: BulkActionBarProps) {
+  const m = useMessages();
+  const countLabel = countLabelProp ?? m.bulkActionBar.count;
+  const clearLabel = clearLabelProp ?? m.bulkActionBar.clear;
+  const moreLabel = moreLabelProp ?? m.bulkActionBar.more;
+  const ariaLabel = ariaLabelProp ?? m.bulkActionBar.label;
   const mobile = useMediaQuery(MOBILE_QUERY);
   const isMobile = variant === 'mobile' || (variant === 'auto' && mobile);
   const visible = count > 0;

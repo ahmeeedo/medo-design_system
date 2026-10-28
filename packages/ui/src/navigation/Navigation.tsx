@@ -19,6 +19,7 @@ import { Tooltip, TooltipLink, TooltipTrigger } from '../tooltip/Tooltip';
 import { cx } from '../utils/cx';
 import { useMediaQuery } from '../utils/useMediaQuery';
 import { Drawer } from '../drawer/Drawer';
+import { useMessages } from '../i18n/I18n';
 
 /*
  * Navigation – med.o Design System
@@ -264,10 +265,11 @@ export interface SkipLinkProps {
 }
 
 /** “Skip to content” – the first focusable element on every page (WCAG 2.4.1). Visible on focus only. */
-export function SkipLink({ href = '#main', children = 'Skip to content' }: SkipLinkProps) {
+export function SkipLink({ href = '#main', children }: SkipLinkProps) {
+  const m = useMessages();
   return (
     <a href={href} className="medo-skip-link">
-      {children}
+      {children ?? m.navigation.skipToContent}
     </a>
   );
 }
@@ -314,7 +316,11 @@ export interface SiteHeaderProps {
  * Website header: logo, links, actions. Sticky, with a divider once the page scrolls.
  * Below 768 px only the logo, the primary action and a menu button remain; the menu opens fullscreen.
  */
-export function SiteHeader({ logo, children, actions = [], 'aria-label': label = 'Main', menuLabel = 'Menu', closeLabel = 'Close', layout = 'auto' }: SiteHeaderProps) {
+export function SiteHeader({ logo, children, actions = [], 'aria-label': labelProp, menuLabel: menuLabelProp, closeLabel: closeLabelProp, layout = 'auto' }: SiteHeaderProps) {
+  const m = useMessages();
+  const label = labelProp ?? m.navigation.main;
+  const menuLabel = menuLabelProp ?? m.navigation.menu;
+  const closeLabel = closeLabelProp ?? m.common.close;
   const narrow = useMediaQuery(SITE_MENU_QUERY);
   const compact = layout === 'mobile' || (layout === 'auto' && narrow);
   const scrolled = useScrolled();
@@ -465,11 +471,16 @@ export function SideNav({
   isCollapsed,
   defaultCollapsed = false,
   onCollapsedChange,
-  'aria-label': label = 'App',
-  collapseLabel = 'Collapse navigation',
-  expandLabel = 'Expand navigation',
-  closeLabel = 'Close',
+  'aria-label': labelProp,
+  collapseLabel: collapseLabelProp,
+  expandLabel: expandLabelProp,
+  closeLabel: closeLabelProp,
 }: SideNavProps) {
+  const m = useMessages();
+  const label = labelProp ?? m.navigation.app;
+  const collapseLabel = collapseLabelProp ?? m.navigation.collapse;
+  const expandLabel = expandLabelProp ?? m.navigation.expand;
+  const closeLabel = closeLabelProp ?? m.common.close;
   const [ownCollapsed, setOwnCollapsed] = useState(defaultCollapsed);
   const tablet = useMediaQuery(TABLET_QUERY);
   const [drawer, setDrawer] = useState(false);
@@ -560,7 +571,9 @@ export interface BottomTabBarProps {
  * Bottom tab bar: the main destinations of an app on phones, in thumb reach.
  * Max 4 destinations + “More”. Fixed to the bottom with the safe area; set `--medo-toast-offset` so toasts stay above it.
  */
-export function BottomTabBar({ children, 'aria-label': label = 'App', display = 'mobile' }: BottomTabBarProps) {
+export function BottomTabBar({ children, 'aria-label': labelProp, display = 'mobile' }: BottomTabBarProps) {
+  const m = useMessages();
+  const label = labelProp ?? m.navigation.app;
   return (
     <nav aria-label={label} className={cx('medo-tab-bar', display === 'always' && 'medo-tab-bar--always')}>
       <ul className="medo-tab-bar__list">{children}</ul>
@@ -610,7 +623,9 @@ export interface TabBarMoreProps {
 }
 
 /** “More”: opens the remaining destinations in the Nav sheet (Bottom Sheet). Shows “current” when one of them is. */
-export function TabBarMore({ label = 'More', children, closeLabel }: TabBarMoreProps) {
+export function TabBarMore({ label: labelProp, children, closeLabel }: TabBarMoreProps) {
+  const m = useMessages();
+  const label = labelProp ?? m.common.more;
   const hasCurrent = containsCurrent(children);
   return (
     <li className="medo-tab-bar__entry">

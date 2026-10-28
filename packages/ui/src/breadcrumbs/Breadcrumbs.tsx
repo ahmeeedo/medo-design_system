@@ -5,6 +5,7 @@ import { Menu, MenuItem, MenuTrigger } from '../menu/Menu';
 import { Tooltip, TooltipLink, TooltipTrigger } from '../tooltip/Tooltip';
 import { cx } from '../utils/cx';
 import { MOBILE_QUERY, useMediaQuery } from '../utils/useMediaQuery';
+import { useMessages } from '../i18n/I18n';
 
 export interface BreadcrumbItem {
   /** The page name – the same words as its title. */
@@ -38,10 +39,13 @@ export function Breadcrumbs({
   size = 'md',
   homeIcon = true,
   layout = 'auto',
-  'aria-label': ariaLabel = 'Breadcrumb',
-  moreLabel = (n) => `Show ${n} more levels`,
+  'aria-label': ariaLabelProp,
+  moreLabel: moreLabelProp,
   className,
 }: BreadcrumbsProps) {
+  const m = useMessages();
+  const ariaLabel = ariaLabelProp ?? m.breadcrumbs.label;
+  const moreLabel = moreLabelProp ?? m.breadcrumbs.more;
   const mobile = useMediaQuery(MOBILE_QUERY);
   const back = layout === 'back' || (layout === 'auto' && mobile);
 

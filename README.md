@@ -86,6 +86,25 @@ import { Button, TextField } from '@med-o/ui';
 - ESM only, marked `"use client"`: works in Vite, Next.js (App Router) and other modern bundlers.
 - Dates use [`@internationalized/date`](https://react-spectrum.adobe.com/internationalized/date/). Its helpers (`parseDate`, `today` …) are re-exported from `@med-o/ui`.
 
+#### Language
+
+The built-in texts (close buttons, screen-reader names, announcements, validation messages) are English and German. The language comes from React Aria – the same source as date and number formats: `I18nProvider`, else the browser. Pin it once at the root:
+
+```tsx
+import { I18nProvider } from 'react-aria-components';
+
+<I18nProvider locale="de-DE">{app}</I18nProvider>
+```
+
+Regional variants use their language (`de-AT`, `de-CH` → German); other languages fall back to English. A prop of a single component (`closeLabel`, `texts` …) always wins. For another language or a different tone, pass your own texts – TypeScript checks that none is missing:
+
+```tsx
+import { MessagesProvider, enMessages, type Messages } from '@med-o/ui';
+
+const fr: Messages = { ...enMessages, common: { ...enMessages.common, close: 'Fermer' /* … */ } };
+<MessagesProvider messages={fr}>{app}</MessagesProvider>
+```
+
 #### Overriding styles
 
 All component styles sit in the cascade layer `components`. Your own CSS without a layer always wins over it – whatever the specificity, no `!important`:

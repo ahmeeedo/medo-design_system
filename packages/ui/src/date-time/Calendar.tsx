@@ -19,6 +19,7 @@ import { Button } from '../button/Button';
 import { IconButton } from '../icon-button/IconButton';
 import { cx } from '../utils/cx';
 import { MOBILE_QUERY, useMediaQuery } from '../utils/useMediaQuery';
+import { en, useMessages } from '../i18n/I18n';
 
 type View = 'days' | 'months' | 'years';
 
@@ -45,17 +46,8 @@ export interface CalendarTexts {
   weekNumber: string;
 }
 
-export const defaultCalendarTexts: CalendarTexts = {
-  previousMonth: 'Previous month',
-  nextMonth: 'Next month',
-  previousYear: 'Previous year',
-  nextYear: 'Next year',
-  previousYears: 'Previous years',
-  nextYears: 'Next years',
-  chooseMonth: (title) => `${title} – choose month and year`,
-  chooseYear: (year) => `${year} – choose year`,
-  weekNumber: 'Wk',
-};
+/** English defaults. The components use the texts of the current language (see i18n). */
+export const defaultCalendarTexts: CalendarTexts = en.calendar;
 
 interface SharedProps {
   /** md: 40 px days for desktop popovers · lg: 48 px for touch (Bottom Sheet). */
@@ -295,7 +287,8 @@ export interface CalendarProps<T extends DateValue> extends Omit<AriaCalendarPro
  * grid, then a year grid – far dates in three clicks. Weekdays and the first day of the week from the locale.
  */
 export function Calendar<T extends DateValue>({ size = 'md', showWeekNumbers, texts, className, ...props }: CalendarProps<T>) {
-  const t = { ...defaultCalendarTexts, ...texts };
+  const m = useMessages();
+  const t = { ...m.calendar, ...texts };
   return (
     <AriaCalendar<T> {...props} className={cx('medo-calendar', `medo-calendar--${size}`, className)}>
       {({ state }) => <CalendarBody state={state} size={size} months={1} showWeekNumbers={showWeekNumbers} t={t} />}
@@ -315,7 +308,8 @@ export interface RangeCalendarProps<T extends DateValue> extends Omit<AriaRangeC
  * start, the second the end; hovering previews the range. Two months side by side on desktop, one on mobile.
  */
 export function RangeCalendar<T extends DateValue>({ size = 'md', showWeekNumbers, visibleMonths = 'auto', texts, className, ...props }: RangeCalendarProps<T>) {
-  const t = { ...defaultCalendarTexts, ...texts };
+  const m = useMessages();
+  const t = { ...m.calendar, ...texts };
   const mobile = useMediaQuery(MOBILE_QUERY);
   const months = visibleMonths === 'auto' ? (mobile ? 1 : 2) : visibleMonths;
   return (

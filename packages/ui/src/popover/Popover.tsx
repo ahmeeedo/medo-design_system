@@ -15,6 +15,7 @@ import { IconButton } from '../icon-button/IconButton';
 import { Link } from '../link/Link';
 import { cx } from '../utils/cx';
 import { MOBILE_QUERY, useMediaQuery } from '../utils/useMediaQuery';
+import { useMessages } from '../i18n/I18n';
 
 /** Opens a Popover from a trigger on click (React Aria DialogTrigger). The trigger is pressed and aria-expanded while open. */
 export const PopoverTrigger = DialogTrigger;
@@ -51,12 +52,15 @@ export function Popover({
   children,
   size = 'md',
   primaryAction,
-  cancelLabel = 'Cancel',
-  closeLabel = 'Close',
+  cancelLabel: cancelLabelProp,
+  closeLabel: closeLabelProp,
   overlay = 'auto',
   placement = 'bottom start',
   className,
 }: PopoverProps) {
+  const m = useMessages();
+  const cancelLabel = cancelLabelProp ?? m.common.cancel;
+  const closeLabel = closeLabelProp ?? m.common.close;
   const mobile = useMediaQuery(MOBILE_QUERY);
   const content = (close: () => void) => (typeof children === 'function' ? children(close) : children);
 

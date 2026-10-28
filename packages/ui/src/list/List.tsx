@@ -1,6 +1,7 @@
 import { createContext, useContext, type HTMLAttributes, type ReactNode } from 'react';
 import { Check, X } from 'lucide-react';
 import { cx } from '../utils/cx';
+import { useMessages } from '../i18n/I18n';
 
 export type ListType = 'bullet' | 'number' | 'check';
 
@@ -51,7 +52,8 @@ export interface ListItemProps extends Omit<HTMLAttributes<HTMLLIElement>, 'chil
 }
 
 /** One item of a List. */
-export function ListItem({ children, excluded, excludedLabel = 'Not included:', className, ...props }: ListItemProps) {
+export function ListItem({ children, excluded, excludedLabel, className, ...props }: ListItemProps) {
+  const m = useMessages();
   const type = useContext(ListTypeContext);
   const check = type === 'check';
   return (
@@ -61,7 +63,7 @@ export function ListItem({ children, excluded, excludedLabel = 'Not included:', 
           {excluded ? <X /> : <Check />}
         </span>
       )}
-      {check && excluded && <span className="medo-visually-hidden">{excludedLabel} </span>}
+      {check && excluded && <span className="medo-visually-hidden">{excludedLabel ?? m.list.notIncluded} </span>}
       {children}
     </li>
   );

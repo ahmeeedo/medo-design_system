@@ -5,12 +5,20 @@
  *
  * Skipped: stories hidden from the docs (tagged `!autodocs`, e.g. interaction tests) and stories tagged `!visual`.
  */
-import { afterEach, expect } from 'vitest';
+import { afterEach, beforeEach, expect, vi } from 'vitest';
 import { page } from 'vitest/browser';
 
 type StoryInContext = { id: string; tags: string[] };
 
+// A fixed “today”: calendars mark today and presets count from it – without this the shots change every day.
+// Only Date is faked; timers run normally, so animations and play functions are not affected.
+beforeEach(() => {
+  vi.useFakeTimers({ toFake: ['Date'] });
+  vi.setSystemTime(new Date('2026-10-15T10:00:00'));
+});
+
 afterEach(async (context) => {
+  vi.useRealTimers();
   const story = (context as unknown as { story?: StoryInContext }).story;
   if (!story || context.task.result?.state === 'fail') return;
   // `!tag` removes a tag: test-only stories lack `autodocs`, opted-out stories lack `visual` (set in preview.ts).

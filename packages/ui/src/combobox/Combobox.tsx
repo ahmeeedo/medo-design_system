@@ -25,6 +25,7 @@ import { Tag, TagGroup } from '../tag/Tag';
 import { InputAction, type InputSize } from '../text-field/TextField';
 import { cx } from '../utils/cx';
 import { useFitCount } from '../utils/useFitCount';
+import { useMessages } from '../i18n/I18n';
 
 type ComboMode = 'single' | 'multiple';
 type Value = Key | null | Key[];
@@ -76,17 +77,17 @@ export function Combobox<T extends object, M extends ComboMode = 'single'>({
   label,
   description,
   errorMessage,
-  placeholder = 'Search…',
+  placeholder: placeholderProp,
   size = 'md',
   leadingIcon,
   isLoading,
-  noResultsMessage = (text) => (text ? `No results for “${text}”` : 'No results'),
+  noResultsMessage: noResultsProp,
   onCreate,
   children,
   overlay = 'auto',
   commit = 'live',
   onApply,
-  resultLabel = () => 'Show results',
+  resultLabel: resultLabelProp,
   className,
   selectionMode,
   value: valueProp,
@@ -95,6 +96,10 @@ export function Combobox<T extends object, M extends ComboMode = 'single'>({
   onInputChange,
   ...props
 }: ComboboxProps<T, M>) {
+  const m = useMessages();
+  const placeholder = placeholderProp ?? m.combobox.placeholder;
+  const noResultsMessage = noResultsProp ?? ((text: string) => (text ? m.common.noResultsFor(text) : m.common.noResults));
+  const resultLabel = resultLabelProp ?? (() => m.common.showResults);
   const multiple = selectionMode === 'multiple';
   const groupRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -239,13 +244,14 @@ function ComboInput({
   multiple: boolean;
   onRemoved: (message: string) => void;
 }) {
+  const m = useMessages();
   const state = useContext(ComboBoxStateContext);
   const values = Array.isArray(state?.value) ? state.value : [];
   const onKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (!multiple || !state || e.key !== 'Backspace' || state.inputValue !== '' || values.length === 0) return;
     const last = state.selectedItems.at(-1);
     state.setValue(values.slice(0, -1));
-    if (last) onRemoved(`${last.textValue} removed`);
+    if (last) onRemoved(m.common.removed([last.textValue]));
   };
   return (
     <Input
@@ -260,6 +266,7 @@ function ComboInput({
 
 /** Clears text and value. Visible with text or a value. Beside the toggle, never inside another button. */
 function ClearButton({ inputRef, isDisabled }: { inputRef: React.RefObject<HTMLInputElement | null>; isDisabled?: boolean }) {
+  const m = useMessages();
   const state = useContext(ComboBoxStateContext);
   if (!state || isDisabled) return null;
   const hasValue = Array.isArray(state.value) ? state.value.length > 0 : state.value != null;
@@ -269,7 +276,7 @@ function ClearButton({ inputRef, isDisabled }: { inputRef: React.RefObject<HTMLI
       // slot={null}: not the ComboBox's own toggle button.
       slot={null}
       excludeFromTabOrder
-      aria-label={Array.isArray(state.value) ? 'Clear all' : 'Clear'}
+      aria-label={Array.isArray(state.value) ? m.common.clearAll : m.common.clear}
       icon={<X />}
       onPress={() => {
         state.setValue(Array.isArray(state.value) ? [] : null);
@@ -294,6 +301,7 @@ function SelectedTags({
   isDisabled?: boolean;
   isReadOnly?: boolean;
 }) {
+  const m = useMessages();
   const state = useContext(ComboBoxStateContext);
   const items = (state?.selectedItems ?? []).filter(Boolean);
   const values = Array.isArray(state?.value) ? state.value : [];
@@ -304,7 +312,7 @@ function SelectedTags({
   if (!state || items.length === 0) return null;
   const tagSize = size === 'lg' ? 'md' : 'sm';
   const hidden = items.length - visible;
-  const name = typeof label === 'string' ? label : 'Selected';
+  const name = typeof label === 'string' ? label : m.common.selectedValues;
 
   return (
     <span className="medo-combobox__tags-row">
@@ -318,7 +326,7 @@ function SelectedTags({
         <span className={cx('medo-tag', `medo-tag--${tagSize}`)}>+{items.length}</span>
       </span>
       <TagGroup
-        aria-label={`${name}: selected`}
+        aria-label={m.common.selected(name)}
         size={tagSize}
         className="medo-combobox__tags"
         items={items.slice(0, visible)}
@@ -363,6 +371,7 @@ function ComboList<T extends object>({
   onExactChange: (exact: boolean) => void;
   children: ReactNode | ((item: T) => ReactNode);
 }) {
+  const m = useMessages();
   const state = useContext(ComboBoxStateContext);
   const nodes = state ? [...state.collection].filter((node) => node.key !== CREATE_KEY) : [];
   const hasItems = nodes.length > 0;
@@ -397,19 +406,19 @@ function ComboList<T extends object>({
     <>
       <ListBox<T>
         size={size === 'lg' ? 'lg' : 'md'}
-        renderEmptyState={() => <ListBoxMessage>{isLoading ? 'Loading…' : noResultsMessage(text)}</ListBoxMessage>}
+        renderEmptyState={() => <ListBoxMessage>{isLoading ? `${m.common.loading}…` : noResultsMessage(text)}</ListBoxMessage>}
       >
         {typeof children === 'function' ? <Collection items={items}>{children}</Collection> : children}
         {creatable && text && !exact && (
-          <ListBoxSection aria-label="Create">
+          <ListBoxSection aria-label={m.common.create}>
             <Option id={CREATE_KEY} icon={<Plus />} textValue={text}>
-              {`Add “${text}”`}
+              {m.common.add(text)}
             </Option>
           </ListBoxSection>
         )}
       </ListBox>
       {/* Server search: previous results stay, the loading row sits below them. */}
-      {isLoading && hasItems && <ListBoxMessage>Loading…</ListBoxMessage>}
+      {isLoading && hasItems && <ListBoxMessage>{m.common.loading}…</ListBoxMessage>}
     </>
   );
 }
@@ -479,6 +488,7 @@ function ComboboxSheet<T extends object>({
   onApply,
   resultLabel,
 }: ComboboxSheetProps<T>) {
+  const m = useMessages();
   const id = useId();
   const [isOpen, setOpen] = useState(false);
   const [ownSearch, setOwnSearch] = useState('');
@@ -600,17 +610,17 @@ function ComboboxSheet<T extends object>({
                             {resultLabel(keys)}
                           </Button>
                           <Button size="lg" variant="secondary" onPress={() => onValueChange([])} isDisabled={keys.length === 0}>
-                            Reset
+                            {m.common.reset}
                           </Button>
                         </>
                       )
                     : (close) => (
                         <>
                           <p className="medo-sheet__count" aria-live="polite">
-                            {keys.length} selected
+                            {m.common.countSelected(keys.length)}
                           </p>
                           <Button size="lg" onPress={close}>
-                            Done
+                            {m.common.done}
                           </Button>
                         </>
                       )
@@ -619,7 +629,7 @@ function ComboboxSheet<T extends object>({
             >
               <Autocomplete inputValue={search} onInputChange={setSearch} filter={items ? undefined : contains}>
                 <div className="medo-sheet__search">
-                  <AriaTextField aria-label="Search" autoFocus className="medo-input medo-input--lg">
+                  <AriaTextField aria-label={m.common.search} autoFocus className="medo-input medo-input--lg">
                     <span className="medo-input__icon" aria-hidden="true">
                       <Search />
                     </span>
@@ -633,13 +643,13 @@ function ComboboxSheet<T extends object>({
                     selectionMode={multiple ? 'multiple' : 'single'}
                           selectedKeys={keys}
                     onSelectionChange={onSelectionChange}
-                    renderEmptyState={() => <ListBoxMessage>{isLoading ? 'Loading…' : noResultsMessage(query)}</ListBoxMessage>}
+                    renderEmptyState={() => <ListBoxMessage>{isLoading ? `${m.common.loading}…` : noResultsMessage(query)}</ListBoxMessage>}
                   >
                     {content}
                     {multiple && onCreate && query && !exact && (
-                      <ListBoxSection aria-label="Create">
+                      <ListBoxSection aria-label={m.common.create}>
                         <Option id={CREATE_KEY} icon={<Plus />} textValue={query}>
-                          {`Add “${query}”`}
+                          {m.common.add(query)}
                         </Option>
                       </ListBoxSection>
                     )}
