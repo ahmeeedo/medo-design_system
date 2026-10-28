@@ -108,6 +108,8 @@ The tokens follow the operating system. Force a theme with `data-theme` on `<htm
 <html data-theme="dark">  <!-- "light" | "dark" | no attribute = system -->
 ```
 
+With “Increase contrast” in the system settings (`prefers-contrast: more`) secondary text and borders get stronger: secondary text ≥ 9.4 : 1 on every surface, borders ≥ 4.3 : 1. Nothing to set up.
+
 ### Responsive layout tokens
 
 `--medo-layout-columns`, `--medo-layout-gutter`, `--medo-layout-margin` and `--medo-layout-section` change automatically:
