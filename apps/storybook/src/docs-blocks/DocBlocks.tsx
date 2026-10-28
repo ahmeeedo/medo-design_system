@@ -5,7 +5,8 @@
  * Rule: the docs use our own components (Table, Alert, Link …) as soon as they exist.
  */
 import type { PropsWithChildren, ReactNode } from 'react';
-import { Children, useContext, useEffect, useState } from 'react';
+import { Children, createContext, useContext, useEffect, useRef, useState } from 'react';
+import { Ban, Check, CircleCheck, X } from 'lucide-react';
 import type { DocsContextProps } from 'storybook/internal/types';
 import { GLOBALS_UPDATED, SET_GLOBALS, UPDATE_STORY_ARGS } from 'storybook/internal/core-events';
 import { Canvas, Controls, Description, DocsContainer, DocsContext, useOf } from '@storybook/addon-docs/blocks';
@@ -28,12 +29,90 @@ function jump(e: React.MouseEvent<Element>, id: string) {
 
 /* ---------- page ---------- */
 
+/** DocHeader hands its section list to DocPage, which shows it as a sticky side navigation. */
+const SetNavContext = createContext<(nav: string[]) => void>(() => {});
+
 export function DocPage({ children }: { children: ReactNode }) {
+  const [nav, setNav] = useState<string[]>([]);
   // sb-unstyled keeps Storybook's default docs typography away; preview.css styles the page.
   return (
-    <div className="medo-doc sb-unstyled">
-      {children}
-    </div>
+    <SetNavContext.Provider value={setNav}>
+      <div className={`medo-doc sb-unstyled${nav.length ? ' medo-doc--toc' : ''}`}>
+        {/* First in the DOM, so keyboard users reach it right after the page title; shown on the right. */}
+        {nav.length ? <DocToc items={nav} variant="rail" /> : null}
+        <div className="doc-main">{children}</div>
+      </div>
+    </SetNavContext.Provider>
+  );
+}
+
+/* ---------- table of contents ---------- */
+
+/** Number of the section that is currently at the top of the viewport (1-based). */
+function useActiveSection(count: number) {
+  const [active, setActive] = useState(1);
+  useEffect(() => {
+    let frame = 0;
+    const update = () => {
+      frame = 0;
+      // A section counts as current once its top passes the upper third of the viewport.
+      const line = Math.max(96, window.innerHeight * 0.3);
+      let current = 1;
+      for (let i = 1; i <= count; i++) {
+        const section = document.getElementById(sectionId(i))?.closest('section');
+        if (section && section.getBoundingClientRect().top <= line) current = i;
+      }
+      setActive(current);
+    };
+    const schedule = () => {
+      if (!frame) frame = requestAnimationFrame(update);
+    };
+    update();
+    window.addEventListener('scroll', schedule, { passive: true });
+    window.addEventListener('resize', schedule);
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener('scroll', schedule);
+      window.removeEventListener('resize', schedule);
+    };
+  }, [count]);
+  return [active, setActive] as const;
+}
+
+/**
+ * “On this page”. Two looks with the same links:
+ *   box   in the header, below 68rem
+ *   rail  sticky on the right from 68rem, marks the current section (aria-current)
+ * Only one is displayed at a time; the other is display: none and so hidden from screen readers too.
+ */
+export function DocToc({ items, variant }: { items: string[]; variant: 'box' | 'rail' }) {
+  const [active, setActive] = useActiveSection(variant === 'rail' ? items.length : 0);
+  return (
+    <nav aria-label="On this page" className={`doc-toc doc-toc--${variant}`}>
+      <p className="medo-text-overline doc-muted">On this page</p>
+      <ol>
+        {items.map((label, i) => {
+          const id = sectionId(i + 1);
+          const current = variant === 'rail' && active === i + 1;
+          return (
+            <li key={label}>
+              <a
+                className="doc-toc-link"
+                href={`#${id}`}
+                aria-current={current ? 'location' : undefined}
+                onClick={(e) => {
+                  setActive(i + 1);
+                  jump(e, id);
+                }}
+              >
+                <span className="doc-toc-num" aria-hidden="true">{pad(i + 1)}</span>
+                <span>{label}</span>
+              </a>
+            </li>
+          );
+        })}
+      </ol>
+    </nav>
   );
 }
 
@@ -52,6 +131,14 @@ type HeaderProps = {
 };
 
 export function DocHeader({ kind, title, meta, subtitle, description, nav }: HeaderProps) {
+  const setNav = useContext(SetNavContext);
+  const navKey = nav?.join('\u0000') ?? '';
+  const navRef = useRef(nav);
+  navRef.current = nav;
+  useEffect(() => {
+    setNav(navRef.current ?? []);
+  }, [setNav, navKey]);
+
   return (
     <header className="doc-header">
       <div className="doc-topline">
@@ -59,26 +146,11 @@ export function DocHeader({ kind, title, meta, subtitle, description, nav }: Hea
         {meta ? <span className="medo-text-code-sm doc-muted doc-upper">{meta}</span> : null}
       </div>
       <div className="doc-intro">
-        <div className="doc-intro-main">
-          <h1 className="medo-text-display-lg">{title}</h1>
-          {subtitle ? <p className="medo-text-body-lg doc-muted">{subtitle}</p> : null}
-        </div>
-        {description ? <div className="doc-intro-aside medo-text-body-sm doc-muted">{description}</div> : null}
+        <h1 className="medo-text-display-lg">{title}</h1>
+        {subtitle ? <p className="medo-text-body-lg doc-muted">{subtitle}</p> : null}
+        {description ? <div className="doc-intro-text medo-text-body-md">{description}</div> : null}
       </div>
-      {nav?.length ? (
-        <nav aria-label="On this page" className="doc-nav">
-          <ol>
-            {nav.map((label, i) => (
-              <li key={label}>
-                <Link variant="standalone" size="sm" href={`#${sectionId(i + 1)}`} onClick={(e) => jump(e, sectionId(i + 1))}>
-                  <span className="medo-text-code-sm doc-muted">{pad(i + 1)}</span>
-                  {label}
-                </Link>
-              </li>
-            ))}
-          </ol>
-        </nav>
-      ) : null}
+      {nav?.length ? <DocToc items={nav} variant="box" /> : null}
     </header>
   );
 }
@@ -177,15 +249,22 @@ export function Rich({ children }: { children: string }) {
   return <>{children.split(/(`[^`]+`)/).map((part, i) => (part.startsWith('`') ? <Tok key={i}>{part.slice(1, -1)}</Tok> : part))}</>;
 }
 
-/** Usage guidance: when to use it and when not, do and don't. */
+/**
+ * Usage guidance on coloured surfaces (feedback tokens, so Light and Dark keep the contrast):
+ * green for “When to use” and “Do”, red for “When not to use” and “Don't”.
+ * The heading and the icon carry the meaning too, never the colour alone (WCAG 1.4.1).
+ */
 export function UsageGuide({ usage }: { usage: MedoUsage }) {
-  const block = (title: string, items: string[] | undefined, kind: 'bullet' | 'do' | 'dont') =>
+  const block = (title: string, items: string[] | undefined, tone: 'positive' | 'negative', icon: ReactNode, list: 'bullet' | 'check') =>
     items?.length ? (
-      <div className="doc-guide">
-        <h3 className="medo-text-heading-sm">{title}</h3>
-        <List type={kind === 'bullet' ? 'bullet' : 'check'} size="md">
+      <div className={`doc-guide doc-guide--${tone}`}>
+        <h3 className="doc-guide-title medo-text-heading-sm">
+          <span className="doc-guide-icon" aria-hidden="true">{icon}</span>
+          {title}
+        </h3>
+        <List type={list} size="md">
           {items.map((item) => (
-            <ListItem key={item} excluded={kind === 'dont'} excludedLabel="Don't:">
+            <ListItem key={item} excluded={list === 'check' && tone === 'negative'} excludedLabel="Don't:">
               <Rich>{item}</Rich>
             </ListItem>
           ))}
@@ -194,14 +273,18 @@ export function UsageGuide({ usage }: { usage: MedoUsage }) {
     ) : null;
   return (
     <>
-      <div className="doc-columns">
-        {block('When to use', usage.when, 'bullet')}
-        {block('When not to use', usage.whenNot, 'bullet')}
-      </div>
-      <div className="doc-columns">
-        {block('Do', usage.do, 'do')}
-        {block("Don't", usage.dont, 'dont')}
-      </div>
+      {usage.when?.length || usage.whenNot?.length ? (
+        <div className="doc-columns">
+          {block('When to use', usage.when, 'positive', <CircleCheck />, 'bullet')}
+          {block('When not to use', usage.whenNot, 'negative', <Ban />, 'bullet')}
+        </div>
+      ) : null}
+      {usage.do?.length || usage.dont?.length ? (
+        <div className="doc-columns">
+          {block('Do', usage.do, 'positive', <Check />, 'check')}
+          {block("Don't", usage.dont, 'negative', <X />, 'check')}
+        </div>
+      ) : null}
     </>
   );
 }
