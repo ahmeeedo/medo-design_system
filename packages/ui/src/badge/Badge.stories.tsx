@@ -26,7 +26,40 @@ const meta = {
     children: { control: 'text' },
   },
   parameters: {
-    medo: { subtitle: 'A short, non-interactive status label. Plus count and dot indicators.' },
+    medo: {
+      subtitle: 'A short, non-interactive status label. Plus count and dot indicators.',
+      usage: {
+        when: [
+          'A short status next to an object: Active, Draft, Overdue.',
+          'A count on a tab or nav item (`BadgeCount`).',
+          'Unread or presence indicators (`BadgeDot`).',
+        ],
+        whenNot: ['Something clickable: use a Button or a Tag.', 'A removable value or a filter: use a Tag.', 'A longer message: use an Alert.'],
+        do: [
+          'Use 1–2 words in sentence case.',
+          'Add a dot or an icon, so the status does not rely on colour alone.',
+          'Use neutral for everything without a meaning.',
+        ],
+        dont: ['Make a badge clickable.', 'Put several badges with the same tone side by side.'],
+      },
+      a11y: {
+        notes: [
+          'Badges are plain text; screen readers read the label.',
+          'Counts above `max` show “99+”. Give a count a `label` like “3 unread messages”, or let the parent name it.',
+          'A dot alone needs a hidden text that says what it means.',
+        ],
+      },
+      styling: {
+        classes: [
+          ['medo-badge', 'The label; neutral by default.'],
+          ['medo-badge--{tone}', '`brand`, `success`, `warning`, `danger`, `info`.'],
+          ['medo-badge--{size}', '`sm` 20 or `md` 24.'],
+          ['medo-badge__dot, __icon', 'Leading dot or icon.'],
+          ['medo-badge-count', 'Number in a pill.'],
+          ['medo-badge-dot', 'Dot indicator.'],
+        ],
+      },
+    },
     docs: {
       description: {
         component:

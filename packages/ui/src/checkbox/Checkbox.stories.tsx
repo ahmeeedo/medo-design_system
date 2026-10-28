@@ -10,7 +10,53 @@ const meta = {
   args: { children: 'Accept the terms', size: 'md', isDisabled: false, isInvalid: false, isIndeterminate: false, onChange: fn() },
   argTypes: { size: { control: 'inline-radio', options: ['md', 'lg'] }, onChange: { control: false }, children: { control: 'text' }, description: { control: 'text' } },
   parameters: {
-    medo: { subtitle: 'Select one or several independent options.' },
+    medo: {
+      subtitle: 'Select one or several independent options.',
+      usage: {
+        when: ['Agree to something, e.g. terms.', 'Pick several independent options from a short list (`CheckboxGroup`).'],
+        whenNot: [
+          'Exactly one of several options: use Radio.',
+          'A setting with immediate effect: use a Switch.',
+          'Many options: use a Select with `selectionMode="multiple"`.',
+        ],
+        do: [
+          'Write labels as positive statements: “Send me updates”.',
+          'Use the indeterminate state for “select all” when only some items are selected.',
+          'Give a group a label, or `aria-label` where the context names it.',
+        ],
+        dont: ['Use a checkbox to start an action.', 'Disable options without saying why.'],
+      },
+      a11y: {
+        keyboard: [
+          ['Tab', 'Moves to the next checkbox.'],
+          ['Space', 'Checks or unchecks it.'],
+        ],
+        notes: [
+          'The whole row incl. label is clickable.',
+          'A real checkbox input: forms and validation keep working.',
+          'Description and error texts are linked to the checkbox.',
+        ],
+      },
+      styling: {
+        classes: [
+          ['medo-choice medo-checkbox', 'One checkbox row; `medo-choice--lg` for touch.'],
+          ['medo-choice__button', 'Clickable row: box and label.'],
+          ['medo-choice__control', 'The box with check or dash.'],
+          ['medo-choice__description', 'Helper text below the label.'],
+          ['medo-field medo-field--group', 'Group with label and options.'],
+        ],
+        states: [
+          'data-selected',
+          'data-indeterminate',
+          'data-hovered',
+          'data-pressed',
+          'data-focus-visible',
+          'data-invalid',
+          'data-disabled',
+          'data-readonly',
+        ],
+      },
+    },
     docs: {
       description: {
         component:

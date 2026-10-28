@@ -37,7 +37,40 @@ const meta = {
     compactLabel: semantic,
   },
   parameters: {
-    medo: { subtitle: 'Move through long lists page by page – or load more with a simple button.' },
+    medo: {
+      subtitle: 'Move through long lists page by page – or load more with a simple button.',
+      usage: {
+        when: ['Long lists and tables where users need a place to come back to.', 'Search results on websites (real links with `getPageHref`).'],
+        whenNot: ['Feeds and short lists: use a “Load more” button below the list.', 'Fewer than one page: nothing is shown.'],
+        do: [
+          'Show the summary (“81–100 of 380”).',
+          'After a change scroll to the top of the list and focus its heading.',
+          'Use real links on websites so every page has a URL.',
+        ],
+        dont: ['Use infinite scroll for lists with a footer or actions below.', 'Hide the first and last page.'],
+      },
+      a11y: {
+        keyboard: [
+          ['Tab', 'Moves through the page buttons.'],
+          ['Enter / Space', 'Opens the page.'],
+        ],
+        notes: [
+          'A navigation region named “Pagination”.',
+          'The current page has `aria-current="page"`.',
+          'The summary is a polite live region.',
+          'Below 640 px: “‹ Page 5 of 19 ›” with 48 px buttons.',
+        ],
+      },
+      styling: {
+        classes: [
+          ['medo-pagination', 'Navigation; `--full` or `--compact`.'],
+          ['medo-pagination__info, __summary, __size', 'Summary and rows per page.'],
+          ['medo-pagination__pages', 'List of pages.'],
+          ['medo-page-item', 'One page (ghost button); `--ellipsis`, `--lg`.'],
+        ],
+        states: ['aria-current', 'data-disabled'],
+      },
+    },
     docs: {
       description: {
         component:

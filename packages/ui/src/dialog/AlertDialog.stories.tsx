@@ -54,7 +54,50 @@ const meta = {
     className: semantic,
   },
   parameters: {
-    medo: { subtitle: 'A decision that needs an answer before the user can go on.' },
+    medo: {
+      subtitle: 'A decision that needs an answer before the user can go on.',
+      usage: {
+        when: [
+          'Confirm a destructive or irreversible action: delete, leave without saving.',
+          'A warning that needs a decision before the user can go on.',
+        ],
+        whenNot: [
+          'A task with fields: use a Dialog.',
+          'Information without a decision: use an Alert or a Toast.',
+          'An action that can be undone: do it and offer Undo in a Toast.',
+        ],
+        do: [
+          'Ask a question in the title: “Delete Q3-Report.pdf?”.',
+          'Name the consequence in the description.',
+          'Name the action button with the verb: “Delete”, not “OK”.',
+          'Use `tone="danger"` only for destructive actions.',
+        ],
+        dont: ['Use it for routine confirmations; people stop reading them.', 'Add a close button: the user decides with the buttons.'],
+      },
+      a11y: {
+        keyboard: [
+          ['Tab / Shift + Tab', 'Moves between the buttons. The focus stays inside.'],
+          ['Esc', 'Cancels.'],
+          ['Enter / Space', 'Runs the focused button.'],
+        ],
+        notes: [
+          'Role `alertdialog`: title and description are read when it opens.',
+          'Focus starts on Cancel, so an accidental Enter never deletes, and returns to the trigger.',
+          'A click on the scrim never closes it.',
+          'The icon shows the tone and is hidden from screen readers.',
+        ],
+      },
+      styling: {
+        classes: [
+          ['medo-dialog medo-alert-dialog', 'The window.'],
+          ['medo-alert-dialog--{tone}', '`danger`, `warning` or `info`.'],
+          ['medo-alert-dialog__icon', 'Tone icon.'],
+          ['medo-alert-dialog__title, __description', 'Question and consequence.'],
+          ['medo-dialog__footer', 'Cancel and action.'],
+        ],
+        states: ['data-entering', 'data-exiting'],
+      },
+    },
     docs: {
       description: {
         component:

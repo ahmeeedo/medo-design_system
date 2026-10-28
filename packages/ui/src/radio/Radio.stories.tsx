@@ -30,7 +30,42 @@ const meta = {
     onChange: { control: false },
   },
   parameters: {
-    medo: { subtitle: 'Pick exactly one of 2–4 visible options. From 5 options use Select.' },
+    medo: {
+      subtitle: 'Pick exactly one of 2–4 visible options. From 5 options use Select.',
+      usage: {
+        when: ['Pick exactly one of 2–4 options that should all be visible.', 'The difference between the options needs a short description.'],
+        whenNot: [
+          '5 or more options: use a Select.',
+          'A single on / off option: use a Checkbox or a Switch.',
+          'Switching views: use a Toggle Button group.',
+        ],
+        do: [
+          'Preselect a sensible default when there is one.',
+          'Order the options logically: by size, frequency or time.',
+          'Use horizontal layout only for 2–3 short options.',
+        ],
+        dont: ['Use radios for actions.', 'Leave a group without a label.'],
+      },
+      a11y: {
+        keyboard: [
+          ['Tab', 'Moves into the group, to the selected option.'],
+          ['↑ ↓ / ← →', 'Moves to the next option and selects it.'],
+        ],
+        notes: [
+          'The group is announced with its label, the number of options and the selected one.',
+          'A selection cannot be removed again – add a “None” option if needed.',
+          'Real radio inputs: forms and validation keep working.',
+        ],
+      },
+      styling: {
+        classes: [
+          ['medo-field medo-field--group', 'Group with label and options.'],
+          ['medo-choice medo-radio', 'One option; `medo-choice--lg` for touch.'],
+          ['medo-choice__button, __control, __description', 'Row, circle and helper text.'],
+        ],
+        states: ['data-selected', 'data-hovered', 'data-pressed', 'data-focus-visible', 'data-invalid', 'data-disabled', 'data-readonly'],
+      },
+    },
     docs: {
       description: {
         component:

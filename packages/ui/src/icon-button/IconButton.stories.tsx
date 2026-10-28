@@ -20,7 +20,47 @@ const meta = {
     onPress: { control: false },
   },
   parameters: {
-    medo: { subtitle: 'A square button with an icon instead of a label.' },
+    medo: {
+      subtitle: 'A square button with an icon instead of a label.',
+      usage: {
+        when: ['An action that is clear from its icon alone: close, more, edit, copy.', 'Toolbars, table rows and headers with little space.'],
+        whenNot: [
+          'The icon is not obvious: use a Button with a label.',
+          'The main action of an area: use a Button.',
+          'Going to another page: use a Link.',
+        ],
+        do: [
+          'Always set `aria-label` with a verb: “Close dialog”, “Copy link”. It is shown as the tooltip.',
+          'Use common icons only (Lucide), the same icon for the same action everywhere.',
+          'Use `media` or `media-ghost` on images and video.',
+        ],
+        dont: [
+          'Rely on the tooltip for important information.',
+          'Put two different actions behind similar icons side by side.',
+          'Use `tooltip={false}` unless a visible text already names the button.',
+        ],
+      },
+      a11y: {
+        keyboard: [
+          ['Tab', 'Moves the focus to the button and shows the tooltip.'],
+          ['Enter / Space', 'Runs the action.'],
+          ['Esc', 'Hides the tooltip.'],
+        ],
+        notes: [
+          'The `aria-label` names the button; the icon is hidden from screen readers.',
+          '`shortcut` adds `aria-keyshortcuts` and shows the keys in the tooltip.',
+          'Sizes: sm 32, md 40, lg 48 px. Media variants: sm 28 with a 44 px hit area.',
+        ],
+      },
+      styling: {
+        classes: [
+          ['medo-button medo-button--icon-only', 'Base: the Button styles, square.'],
+          ['medo-button--{variant}', '`ghost`, `secondary`, `primary`, `danger`, `media`, `media-ghost`.'],
+          ['medo-button--{size}', '`sm`, `md` or `lg`.'],
+        ],
+        states: ['data-hovered', 'data-pressed', 'data-focus-visible', 'data-disabled'],
+      },
+    },
     docs: {
       description: {
         component:

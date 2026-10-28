@@ -18,7 +18,43 @@ const meta = {
     labelPosition: { control: 'inline-radio', options: ['start', 'end'] },
   },
   parameters: {
-    medo: { subtitle: 'Turns a single setting on or off. The change takes effect immediately.' },
+    medo: {
+      subtitle: 'Turns a single setting on or off. The change takes effect immediately.',
+      usage: {
+        when: ['A single setting that takes effect immediately: notifications, dark mode, auto-save.', 'Settings lists.'],
+        whenNot: [
+          'A choice that is saved with a form: use a Checkbox.',
+          'Several related options: use a CheckboxGroup.',
+          'An action like “Delete”: use a Button.',
+        ],
+        do: [
+          'Name the setting in the label: “Notifications”, not “On”.',
+          'Use `isLoading` while the change is saved.',
+          'Settings lists: label first (`labelPosition="start"`), switch at the end.',
+        ],
+        dont: ['Change the label with the state.', 'Ask for confirmation after switching. If it needs confirmation, it is not a switch.'],
+      },
+      a11y: {
+        keyboard: [
+          ['Tab', 'Moves the focus to the switch.'],
+          ['Space', 'Turns it on or off.'],
+        ],
+        notes: [
+          'Announced as a switch with its state (role switch).',
+          'The thumb shows a check or a cross, so the state never relies on colour.',
+          'While loading the switch is read-only and `aria-busy`.',
+        ],
+      },
+      styling: {
+        classes: [
+          ['medo-switch', 'Wrapper; `--lg` for touch.'],
+          ['medo-switch--label-{start|end}', 'Label before or after the switch.'],
+          ['medo-switch__button, __track, __thumb', 'Clickable row, track and thumb.'],
+          ['medo-switch__description', 'Helper text.'],
+        ],
+        states: ['data-selected', 'data-hovered', 'data-focus-visible', 'data-disabled', 'data-readonly'],
+      },
+    },
     docs: {
       description: {
         component:

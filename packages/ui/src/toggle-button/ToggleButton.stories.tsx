@@ -60,7 +60,49 @@ const meta = {
     shortcut: { control: 'text', if: { arg: 'children', truthy: false } },
   },
   parameters: {
-    medo: { subtitle: 'A button that stays pressed. Alone for one on/off action, in groups for views or formatting.' },
+    medo: {
+      subtitle: 'A button that stays pressed. Alone for one on/off action, in groups for views or formatting.',
+      usage: {
+        when: [
+          'An on / off action with an immediate, local effect: bold, mute, pin.',
+          'Switching between views of the same content (segmented).',
+          'A toolbar with formatting options.',
+        ],
+        whenNot: [
+          'A setting that is saved: use a Switch.',
+          'Navigation between panels: use Tabs.',
+          'A choice that is submitted with a form: use Radio or Checkbox.',
+        ],
+        do: [
+          'Keep the label the same in both states.',
+          'Use a segmented group for 2–5 views; exactly one is on.',
+          'Use `fullWidth` for a segmented group on mobile.',
+        ],
+        dont: ['Change the label or icon to show the state.', 'Mix single and multiple selection in one group.'],
+      },
+      a11y: {
+        keyboard: [
+          ['Tab', 'Moves the focus into the group.'],
+          ['← / →', 'Moves between the buttons of a group.'],
+          ['Enter / Space', 'Toggles the button.'],
+        ],
+        notes: [
+          'Announced as pressed or not pressed (`aria-pressed`).',
+          'On is shown by fill and text colour together, never by colour alone.',
+          'Icon-only toggle buttons need an `aria-label`.',
+        ],
+      },
+      styling: {
+        classes: [
+          ['medo-button medo-toggle', 'One toggle button (with the Button size class).'],
+          ['medo-toggle-group--segmented', 'Single selection in a container.'],
+          ['medo-toggle-group--toolbar', 'Multiple selection without a container.'],
+          ['medo-toggle-group--full', 'Segmented group over the full width.'],
+          ['medo-toolbar, medo-toolbar__separator', 'Several groups with dividers.'],
+        ],
+        states: ['data-selected', 'data-hovered', 'data-pressed', 'data-focus-visible', 'data-disabled'],
+      },
+    },
     docs: {
       description: {
         component:

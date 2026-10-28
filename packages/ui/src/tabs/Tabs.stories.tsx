@@ -63,7 +63,42 @@ const meta = {
     children: { control: false },
   },
   parameters: {
-    medo: { subtitle: 'Switch between views of the same context – one panel visible at a time.' },
+    medo: {
+      subtitle: 'Switch between views of the same context – one panel visible at a time.',
+      usage: {
+        when: ['2–6 views of the same context: overview, activity, settings.', 'Content that users switch between, not compare.'],
+        whenNot: [
+          'A view mode of the same content (list or grid): use a Toggle Button group.',
+          'Other pages: use Navigation.',
+          'Steps of a process: use a stepper.',
+        ],
+        do: ['Use short nouns as labels.', 'Use icons on all tabs or on none.', 'Put the selected tab into the URL (`selectedKey`).'],
+        dont: ['Put tabs inside tabs.', 'Use more than 6 tabs.'],
+      },
+      a11y: {
+        keyboard: [
+          ['Tab', 'Moves to the selected tab, then into the panel.'],
+          ['← / →', 'Moves to the next tab and selects it.'],
+          ['Home / End', 'First or last tab.'],
+        ],
+        notes: [
+          'tablist, tab and tabpanel; only the selected tab is in the Tab order.',
+          '`keyboardActivation="manual"` for slow panels: arrows move, Enter selects.',
+          'Counts are read with the tab name.',
+          'Panels stay mounted, so input is never lost.',
+        ],
+      },
+      styling: {
+        classes: [
+          ['medo-tabs', 'Wrapper; `--md` or `--lg`, `--full`.'],
+          ['medo-tabs__list', 'Track with the tabs.'],
+          ['medo-tab', 'One tab.'],
+          ['medo-tab__thumb, __icon', 'Selected thumb and icon.'],
+          ['medo-tabs__panel', 'Panel.'],
+        ],
+        states: ['data-selected', 'data-hovered', 'data-pressed', 'data-focus-visible', 'data-disabled', 'data-scroll-start', 'data-scroll-end'],
+      },
+    },
     docs: {
       description: {
         component:

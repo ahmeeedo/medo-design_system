@@ -82,7 +82,37 @@ const meta = {
     children: { control: false },
   },
   parameters: {
-    medo: { subtitle: 'Sections that open and close in place – settings groups in apps, FAQs on websites.' },
+    medo: {
+      subtitle: 'Sections that open and close in place – settings groups in apps, FAQs on websites.',
+      usage: {
+        when: ['Settings groups and long forms in apps.', 'FAQs and details on websites that not everyone needs.'],
+        whenNot: ['Content everyone needs: show it.', 'Switching between views: use Tabs.', 'A single “show more”: use a disclosure button.'],
+        do: ['Write titles that say what is inside.', 'Open the most important sections by default.', 'Use “Expand all” from 7 sections.'],
+        dont: ['Close sections the user opened.', 'Put an accordion inside an accordion.'],
+      },
+      a11y: {
+        keyboard: [
+          ['Tab', 'Moves between the headers and into open panels.'],
+          ['Enter / Space', 'Opens or closes the section.'],
+        ],
+        notes: [
+          'Each header is a button inside a real heading (`headingLevel`).',
+          'Announced as expanded or collapsed; description and badge are read with the title.',
+          'Closed panels stay findable by the browser search (`hidden="until-found"`).',
+          'A link to an item’s `id` opens and scrolls to it.',
+        ],
+      },
+      styling: {
+        classes: [
+          ['medo-accordion', 'Group; `--md` or `--lg`.'],
+          ['medo-accordion__item', 'One section.'],
+          ['medo-accordion__heading, __trigger', 'Heading and header button.'],
+          ['medo-accordion__icon, __title, __description, __badge, __chevron', 'Parts of the header.'],
+          ['medo-accordion__panel, __content', 'Panel.'],
+        ],
+        states: ['data-expanded', 'data-hovered', 'data-pressed', 'data-focus-visible', 'data-disabled'],
+      },
+    },
     docs: {
       description: {
         component:

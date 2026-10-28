@@ -28,7 +28,36 @@ const meta = {
     unknownLabel: semantic,
   },
   parameters: {
-    medo: { subtitle: 'A picture of a person or an organization – with a reliable fallback.' },
+    medo: {
+      subtitle: 'A picture of a person or an organization – with a reliable fallback.',
+      usage: {
+        when: ['Show who did something: comments, assignees, accounts.', 'Show an organization (square).'],
+        whenNot: ['Decorative pictures: use an Image.', 'Status without a person: use a Badge.'],
+        do: [
+          'Pass `colorKey` (the user id), so the colour stays the same.',
+          'Set `decorative` when the name is visible next to it.',
+          'Use an `AvatarGroup` with max 4 and “+N”.',
+        ],
+        dont: ['Rely on the colour to tell people apart.', 'Use the status dot alone without a text for important states.'],
+      },
+      a11y: {
+        notes: [
+          'The avatar is an image named by the person (`role="img"`); `decorative` hides it.',
+          'Fallback: image → initials → icon; a broken image never shows.',
+          'The status is part of the name, e.g. “Lea M., online”.',
+        ],
+      },
+      styling: {
+        classes: [
+          ['medo-avatar', 'The avatar.'],
+          ['medo-avatar--{size}', '`xs` to `2xl`.'],
+          ['medo-avatar--square', 'Organization.'],
+          ['medo-avatar--{colour}', '`blue`, `violet`, `pink`, `amber`, `green`, `teal`.'],
+          ['medo-avatar__image, __initials, __icon, __status', 'Parts.'],
+          ['medo-avatar-group', 'Group with “+N”.'],
+        ],
+      },
+    },
     docs: {
       description: {
         component:

@@ -18,7 +18,31 @@ const meta = {
     children: { control: false },
   },
   parameters: {
-    medo: { subtitle: 'Content lists in running text: bullets, numbers, feature lists and term–value pairs.' },
+    medo: {
+      subtitle: 'Content lists in running text: bullets, numbers, feature lists and term–value pairs.',
+      usage: {
+        when: ['Bullets and steps in running text.', 'Feature lists with included and excluded items.', 'Term–value pairs (`DescriptionList`).'],
+        whenNot: ['Interactive lists of objects: use a List view.', 'Data to compare in columns: use a Table.'],
+        do: ['Use numbers only when the order matters.', 'Keep items parallel in form.', 'Mark excluded features with `excluded`.'],
+        dont: ['Nest more than 2 levels.', 'Use a list for layout.'],
+      },
+      a11y: {
+        notes: [
+          'Real `ul`, `ol` and `dl`; `role="list"` keeps the list for Safari / VoiceOver.',
+          'Excluded items get a hidden “Not included:”.',
+          'The DescriptionList stacks below 22.5 rem (container query).',
+        ],
+      },
+      styling: {
+        classes: [
+          ['medo-list', 'The list.'],
+          ['medo-list--{type}', '`bullet`, `number`, `check`.'],
+          ['medo-list--{size}', '`sm`, `md`, `lg`; without it the list follows the text.'],
+          ['medo-list__item, --excluded', 'One item.'],
+          ['medo-dl, __row, __term, __value', 'Description list.'],
+        ],
+      },
+    },
     docs: {
       description: {
         component:

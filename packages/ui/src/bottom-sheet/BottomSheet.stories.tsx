@@ -26,7 +26,48 @@ const meta = {
     isKeyboardDismissDisabled: { control: false },
   },
   parameters: {
-    medo: { subtitle: 'A modal layer that slides up from the bottom on small screens.' },
+    medo: {
+      subtitle: 'A modal layer that slides up from the bottom on small screens.',
+      usage: {
+        when: [
+          'Short choices or actions on phones: options of a Select, a Menu, filters.',
+          'A mobile replacement for a Popover or a small Dialog.',
+        ],
+        whenNot: [
+          'On desktop: use a Popover, Menu or Dialog.',
+          'Long forms: use a fullscreen Dialog.',
+          'Navigation: use the Nav sheet of the Bottom tab bar.',
+        ],
+        do: [
+          'One task per sheet with a clear title.',
+          'Put a confirm button in the footer only when changes must be applied.',
+          'Use `full` when the content has a search, so the height does not jump.',
+        ],
+        dont: ['Open a sheet from a sheet.', 'Make swiping the only way to close it.'],
+      },
+      a11y: {
+        keyboard: [
+          ['Tab / Shift + Tab', 'Moves through the sheet. The focus stays inside.'],
+          ['Esc', 'Closes the sheet.'],
+        ],
+        notes: [
+          'A modal dialog: the title names it, the page behind does not scroll and is hidden from screen readers.',
+          'Closes by swiping down, a tap on the scrim, Esc or the close button (WCAG 2.5.7).',
+          'Focus returns to the trigger when it closes.',
+          'The footer respects the safe area of the device.',
+        ],
+      },
+      styling: {
+        classes: [
+          ['medo-sheet-overlay', 'Scrim behind the sheet.'],
+          ['medo-sheet', 'The sheet; `--full` for a fixed 90 % height.'],
+          ['medo-sheet__grab, __handle, __header, __title', 'Handle and header with close button.'],
+          ['medo-sheet__content', 'Content; the part that scrolls.'],
+          ['medo-sheet__footer', 'Sticky footer.'],
+        ],
+        states: ['data-entering', 'data-exiting', 'data-dragging'],
+      },
+    },
     docs: {
       description: {
         component:

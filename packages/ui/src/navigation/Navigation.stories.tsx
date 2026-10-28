@@ -149,6 +149,50 @@ const meta = {
     layout: 'fullscreen',
     medo: {
       subtitle: 'How people move between pages: header for websites and apps, side navigation for apps, tab bar and menus on mobile.',
+      usage: {
+        when: [
+          'SiteHeader: websites with up to 5 main links.',
+          'SideNav: apps with many sections.',
+          'AppHeader: page title, search and actions of an app.',
+          'BottomTabBar: apps below 640 px with 3–5 main sections.',
+        ],
+        whenNot: ['Actions like “New project”: use a Button.', 'Views of one page: use Tabs.', 'A list of links in content: use Links or a List.'],
+        do: [
+          'Put `SkipLink` first on the page.',
+          'Mark the current page (`aria-current="page"`).',
+          'Group links with `NavSection` or `NavGroup`, one level deep.',
+        ],
+        dont: [
+          'Use a Menu for navigation; groups are disclosures.',
+          'Show more than 5 links in a header or tab bar.',
+          'Hide the current location.',
+        ],
+      },
+      a11y: {
+        keyboard: [
+          ['Tab', 'Moves through the links.'],
+          ['Enter', 'Follows a link or opens a group.'],
+          ['Esc', 'Closes an open group or the fullscreen menu.'],
+        ],
+        notes: [
+          'Always links in a named `<nav>`.',
+          'Groups are disclosure buttons, announced as expanded or collapsed.',
+          'Rail items show their label as a tooltip.',
+          'Works with any router through `RouterProvider`.',
+        ],
+      },
+      styling: {
+        classes: [
+          ['medo-nav-item--{form}', 'One item: `header`, `sidebar`, `rail`, `sheet`.'],
+          ['medo-nav-group, medo-nav-section', 'Disclosure group and titled section.'],
+          ['medo-site-header', 'Website header.'],
+          ['medo-sidenav, --collapsed', 'Side navigation and rail.'],
+          ['medo-app-header', 'App header.'],
+          ['medo-tab-bar, medo-tab-bar-item', 'Bottom tab bar.'],
+          ['medo-skip-link', 'Skip link.'],
+        ],
+        states: ['aria-current', 'aria-expanded', 'data-hovered', 'data-pressed', 'data-focus-visible', 'data-scrolled'],
+      },
     },
     docs: {
       description: {

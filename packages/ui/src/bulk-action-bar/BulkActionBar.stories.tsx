@@ -40,7 +40,39 @@ const meta = {
     'aria-label': semantic,
   },
   parameters: {
-    medo: { subtitle: 'Actions for the selected rows of a Table or List view.' },
+    medo: {
+      subtitle: 'Actions for the selected rows of a Table or List view.',
+      usage: {
+        when: ['Actions for several selected rows of a Table or List view: export, archive, delete.'],
+        whenNot: ['Actions for one row: put them into the row.', 'Actions for the whole page: put them into the page header.'],
+        do: [
+          'Show at most 3 actions; more go into the “…” menu.',
+          'Confirm destructive actions or offer Undo.',
+          'Render it right after the list, so Tab reaches it next.',
+        ],
+        dont: ['Show it without a selection.', 'Hide the count.'],
+      },
+      a11y: {
+        keyboard: [
+          ['Tab', 'Moves from the list to the bar.'],
+          ['Esc', 'Clears the selection; focus returns to the list.'],
+        ],
+        notes: [
+          'A toolbar named “Bulk actions”.',
+          'The count is announced when the selection changes.',
+          'It floats, so selecting never shifts the layout.',
+          'Mobile: full width at the bottom with the safe area.',
+        ],
+      },
+      styling: {
+        classes: [
+          ['medo-bulk-bar', 'The bar; `--desktop` or `--mobile`.'],
+          ['medo-bulk-bar__count', 'Number of selected items.'],
+          ['medo-bulk-bar__actions', 'Actions.'],
+          ['medo-bulk-bar__divider', 'Divider.'],
+        ],
+      },
+    },
     docs: {
       description: {
         component:

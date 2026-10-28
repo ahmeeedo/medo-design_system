@@ -35,7 +35,42 @@ const meta = {
     moreLabel: semantic,
   },
   parameters: {
-    medo: { subtitle: 'Shows where a page sits in the hierarchy and links to the levels above.' },
+    medo: {
+      subtitle: 'Shows where a page sits in the hierarchy and links to the levels above.',
+      usage: {
+        when: ['Deep hierarchies with 3 or more levels: docs, shops, file trees.', 'Users arrive from search and need to see where they are.'],
+        whenNot: ['On the start page.', 'Flat sites with 1–2 levels.', 'Steps of a process: use a stepper or progress.'],
+        do: [
+          'Put it above the page title.',
+          'Start with Home and end with the current page.',
+          'Use the page names users see in the navigation.',
+        ],
+        dont: ['Link the current page.', 'Use breadcrumbs as the only navigation.'],
+      },
+      a11y: {
+        keyboard: [
+          ['Tab', 'Moves through the links.'],
+          ['Enter', 'Follows the link or opens the “…” menu.'],
+        ],
+        notes: [
+          'A navigation region “Breadcrumb” with an ordered list.',
+          'The current page is last, not a link, with `aria-current="page"`.',
+          'Separators are hidden from screen readers; the Home icon is named “Home”.',
+          'Below 640 px (`layout="auto"`) only a back link to the parent page.',
+        ],
+      },
+      styling: {
+        classes: [
+          ['medo-breadcrumbs', 'Navigation; `--sm` or `--md`.'],
+          ['medo-breadcrumbs__list, __item', 'Ordered list and its items.'],
+          ['medo-breadcrumbs__link, __label', 'Link and label (max 200 px).'],
+          ['medo-breadcrumbs__icon-part', 'Home icon and “…” button.'],
+          ['medo-breadcrumbs__current', 'Current page.'],
+          ['medo-breadcrumbs__separator', 'Chevron.'],
+        ],
+        states: ['data-hovered', 'data-pressed', 'data-focus-visible', 'data-current'],
+      },
+    },
     docs: {
       description: {
         component:

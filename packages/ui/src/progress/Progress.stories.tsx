@@ -17,7 +17,40 @@ const meta = {
     status: { control: 'inline-radio', options: ['default', 'success', 'error'] },
   },
   parameters: {
-    medo: { subtitle: 'Show that something is happening – and, when possible, how long it will take.' },
+    medo: {
+      subtitle: 'Show that something is happening – and, when possible, how long it will take.',
+      usage: {
+        when: [
+          'Spinner: a short wait inside a button or a small area.',
+          'Skeleton: while content loads, in its final shape.',
+          'Progress bar: long or measurable work like uploads and exports.',
+        ],
+        whenNot: ['Waits under 300 ms: show nothing.', 'A whole page that blocks: show the Skeleton of the page instead of a full-screen spinner.'],
+        do: [
+          'Name what is loading: `aria-label="Loading invoices"`.',
+          'Show the percentage when it is known.',
+          'Set `aria-busy="true"` on the region that loads.',
+        ],
+        dont: ['Show several spinners at once.', 'Animate a progress bar that never moves.'],
+      },
+      a11y: {
+        notes: [
+          'Spinner and progress bar are a `progressbar` with a name; the bar also has its value.',
+          'Skeletons are hidden from screen readers.',
+          'Reduced motion: a slower spinner, a static skeleton and segment.',
+        ],
+      },
+      styling: {
+        classes: [
+          ['medo-spinner medo-spinner--{size}', 'Spinner; `sm` to `xl`.'],
+          ['medo-spinner--{tone}', '`brand`, `neutral`, `on-brand`.'],
+          ['medo-progress', 'Progress bar; `--sm`.'],
+          ['medo-progress--{state}', '`success`, `error`, `indeterminate`.'],
+          ['medo-progress__header, __track, __fill, __description', 'Parts of the bar.'],
+          ['medo-skeleton', 'Placeholder; `--circle`, `--rect`.'],
+        ],
+      },
+    },
     docs: {
       description: {
         component:

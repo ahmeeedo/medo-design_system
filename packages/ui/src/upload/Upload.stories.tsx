@@ -121,7 +121,46 @@ const meta = {
     onRetry: { control: false },
   },
   parameters: {
-    medo: { subtitle: 'Add files by drag and drop or by choosing them – with clear limits, progress and fixable errors.' },
+    medo: {
+      subtitle: 'Add files by drag and drop or by choosing them – with clear limits, progress and fixable errors.',
+      usage: {
+        when: ['Attach documents or images to a form or a record.', 'Upload several files with progress.'],
+        whenNot: [
+          'Choose one image as a profile picture with cropping: use a dedicated flow.',
+          'Very large or many files: a dedicated upload page.',
+        ],
+        do: [
+          'Say which types, size and count are allowed before the user chooses.',
+          'Upload right away in `onAdd` and show the progress per file.',
+          'Keep errors at the file with Retry and Remove.',
+        ],
+        dont: ['Make drag and drop the only way.', 'Remove a file without a way back when it was uploaded already.'],
+      },
+      a11y: {
+        keyboard: [
+          ['Tab', 'Moves to the button and the file actions.'],
+          ['Enter / Space', 'Opens the system file picker.'],
+          ['Ctrl + V / ⌘ + V', 'Pastes files into the focused drop zone.'],
+        ],
+        notes: [
+          'The button always opens the picker; drag and drop is a shortcut (WCAG 2.5.7).',
+          'Results and errors are announced politely.',
+          'Icon buttons name the file: “Remove invoice.pdf”.',
+          'After a remove the focus moves to the file at the same place, else to the button.',
+        ],
+      },
+      styling: {
+        classes: [
+          ['medo-upload', 'Wrapper; `--compact` for forms and mobile.'],
+          ['medo-dropzone', 'Drop zone; `--invalid` with an error.'],
+          ['medo-upload__list, --grid', 'List or grid of files.'],
+          ['medo-file-item', 'One file in a list; `--error`.'],
+          ['medo-file-tile', 'One image in a grid; `--error`.'],
+          ['medo-file-name', 'Name truncated in the middle.'],
+        ],
+        states: ['data-drop-target', 'data-hovered', 'data-focus-visible', 'data-disabled'],
+      },
+    },
     docs: {
       description: {
         component:

@@ -44,7 +44,46 @@ const meta = {
     onChangeEnd: { control: false },
   },
   parameters: {
-    medo: { subtitle: 'Pick an approximate value or range by dragging – volume, radius, price filters.' },
+    medo: {
+      subtitle: 'Pick an approximate value or range by dragging – volume, radius, price filters.',
+      usage: {
+        when: [
+          'An approximate value where the effect is visible: volume, zoom, radius.',
+          'A range filter: price, size (`SliderField` with inputs).',
+        ],
+        whenNot: ['An exact value: use a NumberField or a SliderField.', 'A few named options: use Radio or a Toggle Button group.'],
+        do: [
+          'Show the value with its unit (`formatOptions`).',
+          'Use `onChangeEnd` for expensive filters.',
+          'Name both thumbs of a range (`thumbLabels`).',
+        ],
+        dont: ['Use ticks for more than 10 steps.', 'Hide the value.'],
+      },
+      a11y: {
+        keyboard: [
+          ['← / → or ↑ / ↓', 'One step.'],
+          ['Page Up / Page Down', '10 % of the range.'],
+          ['Home / End', 'Minimum or maximum.'],
+        ],
+        notes: [
+          'The value is read in the same format as shown.',
+          'Range thumbs never cross.',
+          'The thumb has a 44 px hit area.',
+          'SliderField offers number inputs as an alternative to dragging (WCAG 2.5.7).',
+        ],
+      },
+      styling: {
+        classes: [
+          ['medo-slider', 'Wrapper with header, track and limits.'],
+          ['medo-slider__header, __label, __value', 'Label and value.'],
+          ['medo-slider__track, __rail, __fill', 'Track and fill.'],
+          ['medo-slider__thumb', 'Thumb.'],
+          ['medo-slider__ticks, __limits', 'Tick marks, min and max.'],
+          ['medo-slider-field', 'Slider with number inputs.'],
+        ],
+        states: ['data-hovered', 'data-dragging', 'data-focus-visible', 'data-disabled'],
+      },
+    },
     docs: {
       description: {
         component:

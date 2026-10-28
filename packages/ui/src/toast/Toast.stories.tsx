@@ -32,7 +32,49 @@ const meta = {
     onClose: { control: false },
   },
   parameters: {
-    medo: { subtitle: 'Short, temporary feedback after an action. It floats above the page and disappears on its own.' },
+    medo: {
+      subtitle: 'Short, temporary feedback after an action. It floats above the page and disappears on its own.',
+      usage: {
+        when: ['Short feedback after an action: saved, sent, deleted.', 'An Undo for an action that was done right away.'],
+        whenNot: [
+          'Information users must read or keep: use an Alert.',
+          'Errors of a form: show them at the fields.',
+          'A decision: use an Alert Dialog.',
+        ],
+        do: [
+          'Render `<ToastRegion />` once at the root and call `toast()` from anywhere.',
+          'Write one short sentence; one action at most.',
+          'Use `persistent` for errors that need attention.',
+        ],
+        dont: [
+          'Put the only copy of important information into a toast.',
+          'Show a toast on page load.',
+          'Add icons or tones; that is what Alerts are for.',
+        ],
+      },
+      a11y: {
+        keyboard: [
+          ['F6', 'Moves the focus into the toast region.'],
+          ['Tab', 'Moves to the action and the close button.'],
+          ['Esc', 'Closes the focused toast.'],
+        ],
+        notes: [
+          'The region is a landmark; new toasts are announced.',
+          'Timers pause on hover, on focus and while the window is hidden (WCAG 2.2.1).',
+          '5 s, with an action 8 s; `persistent` stays until closed.',
+          'Max 3 at a time; the same message is not shown twice.',
+        ],
+      },
+      styling: {
+        classes: [
+          ['medo-toast-region', 'Region; bottom right on desktop, full width on mobile.'],
+          ['medo-toast', 'One toast.'],
+          ['medo-toast__content, __message', 'Message.'],
+          ['medo-toast__button, __action, __close', 'Action and close button.'],
+        ],
+        states: ['data-hovered', 'data-pressed', 'data-focus-visible'],
+      },
+    },
     docs: {
       description: {
         component:

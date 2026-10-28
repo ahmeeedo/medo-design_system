@@ -17,7 +17,41 @@ const meta = {
     offset: { control: { type: 'number', min: 0, max: 24, step: 4 } },
   },
   parameters: {
-    medo: { subtitle: 'A short text label on hover or keyboard focus. Mainly names icon-only buttons.' },
+    medo: {
+      subtitle: 'A short text label on hover or keyboard focus. Mainly names icon-only buttons.',
+      usage: {
+        when: [
+          'Name an icon-only button (automatic for Icon Buttons).',
+          'Show a keyboard shortcut.',
+          'Show the full text of a truncated label.',
+        ],
+        whenNot: [
+          'Information users need: put it on the page.',
+          'Interactive content: use a Popover or a Toggletip.',
+          'On touch devices: there is no hover.',
+        ],
+        do: ['Keep it to a few words.', 'Use it on focusable elements only.'],
+        dont: ['Put links or buttons inside.', 'Repeat the visible label in a tooltip.'],
+      },
+      a11y: {
+        keyboard: [
+          ['Tab', 'Focus shows the tooltip at once.'],
+          ['Esc', 'Hides the tooltip.'],
+        ],
+        notes: [
+          'Opens after 500 ms on hover and instantly on keyboard focus.',
+          'Icon Buttons show their `aria-label` as the tooltip, so sighted users see the same name.',
+          'Esc hides it without moving the focus (WCAG 1.4.13).',
+        ],
+      },
+      styling: {
+        classes: [
+          ['medo-tooltip', 'The tooltip.'],
+          ['medo-tooltip__shortcut', 'Keyboard shortcut inside.'],
+        ],
+        states: ['data-entering', 'data-exiting', 'data-placement'],
+      },
+    },
     docs: {
       description: {
         component:

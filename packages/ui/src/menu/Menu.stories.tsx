@@ -78,7 +78,53 @@ const meta = {
     items: { control: false },
   },
   parameters: {
-    medo: { subtitle: 'A list of actions that opens from a trigger. Popover on desktop, bottom sheet on mobile.' },
+    medo: {
+      subtitle: 'A list of actions that opens from a trigger. Popover on desktop, bottom sheet on mobile.',
+      usage: {
+        when: ['Several actions for one object behind a “…” or a button.', 'Actions that are needed now and then, not all the time.'],
+        whenNot: [
+          'Choosing a value: use a Select.',
+          'Switching views: use a Toggle Button group or Tabs.',
+          'Navigation between pages: use Navigation or Links.',
+          'One or two actions: show them as buttons.',
+        ],
+        do: [
+          'Give every item an icon and a verb label.',
+          'Group related items; put destructive items last in their own group.',
+          'Confirm destructive items or offer Undo.',
+        ],
+        dont: [
+          'Use checkmarks for a selected state.',
+          'Nest more than one submenu level.',
+          'Hide the only way to do an important task in a menu.',
+        ],
+      },
+      a11y: {
+        keyboard: [
+          ['Enter / Space / ↓', 'Opens the menu on the trigger.'],
+          ['↑ / ↓', 'Moves through the items.'],
+          ['Letters', 'Jumps to the matching item.'],
+          ['→ / ←', 'Opens or closes a submenu.'],
+          ['Enter', 'Runs the item and closes the menu.'],
+          ['Esc', 'Closes the menu; focus returns to the trigger.'],
+        ],
+        notes: [
+          'The trigger is announced as a menu button and shows whether it is open.',
+          'Shortcuts are shown on desktop only (`Mod` = ⌘ on Apple, Ctrl elsewhere).',
+          'Below 640 px the menu opens as a Bottom Sheet; a submenu becomes a second view with a back button.',
+        ],
+      },
+      styling: {
+        classes: [
+          ['medo-menu-popover', 'Surface around the menu.'],
+          ['medo-menu', 'The list of items; `--lg` on mobile.'],
+          ['medo-menu__section', 'A group with an optional header.'],
+          ['medo-menu-item', 'One item; `--danger` for destructive actions.'],
+          ['medo-menu-item__icon, __label, __shortcut, __chevron', 'Parts of an item.'],
+        ],
+        states: ['data-focused', 'data-hovered', 'data-pressed', 'data-disabled', 'data-has-submenu', 'data-open'],
+      },
+    },
     docs: {
       description: {
         component:

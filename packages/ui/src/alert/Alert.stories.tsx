@@ -52,7 +52,50 @@ const meta = {
     announce: semantic,
   },
   parameters: {
-    medo: { subtitle: 'A persistent message inside the page. Stays until the cause is gone or it is dismissed.' },
+    medo: {
+      subtitle: 'A persistent message inside the page. Stays until the cause is gone or it is dismissed.',
+      usage: {
+        when: [
+          'A message that stays on the page until its cause is gone: missing data, a failed sync, a trial ending.',
+          'A banner for the whole app: maintenance, an outage.',
+        ],
+        whenNot: [
+          'Short feedback after an action: use a Toast.',
+          'An error of one field: use the field’s error text.',
+          'A decision: use an Alert Dialog.',
+        ],
+        do: [
+          'Always give it a title and a tone that matches the message.',
+          'Offer a way forward with an action.',
+          'Set `announce` when it appears after the page has loaded.',
+        ],
+        dont: [
+          'Stack several alerts; combine them.',
+          'Use danger for information.',
+          'Show an alert that cannot be acted on and never goes away.',
+        ],
+      },
+      a11y: {
+        keyboard: [
+          ['Tab', 'Moves to the actions and the close button.'],
+          ['Enter / Space', 'Runs the action or closes the alert.'],
+        ],
+        notes: [
+          'The tone is shown by colour, icon and title together.',
+          'With `announce` the alert is read when it appears: danger and warning at once (`role="alert"`), info and success politely (`role="status"`).',
+          'The icon is decorative and hidden from screen readers.',
+        ],
+      },
+      styling: {
+        classes: [
+          ['medo-alert', 'The alert; info by default.'],
+          ['medo-alert--{tone}', '`success`, `warning`, `danger`.'],
+          ['medo-alert--banner', 'Full width at the top of a page.'],
+          ['medo-alert__icon, __content, __title, __description', 'Parts of the message.'],
+          ['medo-alert__actions, __close', 'Actions and close button.'],
+        ],
+      },
+    },
     docs: {
       description: {
         component:

@@ -124,7 +124,49 @@ const meta = {
     onClear: { control: false },
   },
   parameters: {
-    medo: { subtitle: 'Find content fast: search field, results, search page and quick search.' },
+    medo: {
+      subtitle: 'Find content fast: search field, results, search page and quick search.',
+      usage: {
+        when: [
+          'Find content on a site or in an app.',
+          'A search page with results, filters and sort.',
+          'Quick search (Cmd / Ctrl + K) for pages and objects.',
+        ],
+        whenNot: ['Filter a short visible list: use a Text Field or filters.', 'Pick a value from a long list: use a Combobox.'],
+        do: [
+          'Put the search area in a `<search>` element.',
+          'Show every match in bold and the number of results.',
+          'Keep query and filters in the URL.',
+        ],
+        dont: ['Show “No results” without a way forward.', 'Highlight matches by colour only.'],
+      },
+      a11y: {
+        keyboard: [
+          ['Enter', 'Submits the search.'],
+          ['Esc', 'Clears the field.'],
+          ['Cmd / Ctrl + K', 'Opens the quick search.'],
+          ['↑ / ↓', 'Quick search: moves through the hits while the focus stays in the field.'],
+          ['Enter', 'Quick search: opens the highlighted hit.'],
+        ],
+        notes: [
+          'The result count is announced politely.',
+          'One link per result: the title covers the whole hit.',
+          'The quick search is a modal; Esc closes it and the focus returns.',
+          'Mobile: filters open in a Bottom Sheet.',
+        ],
+      },
+      styling: {
+        classes: [
+          ['medo-search-field', 'Search field with icon and clear button.'],
+          ['medo-search-results', 'List of results.'],
+          ['medo-search-result--{base|aesthetic}', 'One hit in two looks.'],
+          ['medo-search-result__title, __path, __snippet, __meta', 'Parts of a hit.'],
+          ['medo-search-result__match', 'A match (bold).'],
+          ['medo-quick-search', 'Quick search dialog.'],
+        ],
+        states: ['data-empty', 'data-hovered', 'data-focus-visible'],
+      },
+    },
     docs: {
       description: {
         component:

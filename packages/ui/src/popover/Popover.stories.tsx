@@ -58,7 +58,50 @@ const meta = {
     children: { control: false },
   },
   parameters: {
-    medo: { subtitle: 'A small floating panel with interactive content, anchored to its trigger. The page stays usable.' },
+    medo: {
+      subtitle: 'A small floating panel with interactive content, anchored to its trigger. The page stays usable.',
+      usage: {
+        when: [
+          'Extra content or a few controls next to a trigger: a filter, a share panel, details.',
+          'A Toggletip: an info button with a short explanation and a link.',
+        ],
+        whenNot: [
+          'Only a label on hover: use a Tooltip.',
+          'A list of actions: use a Menu.',
+          'Content that needs scrolling or many fields: use a Dialog.',
+        ],
+        do: [
+          'One topic per popover.',
+          'Apply changes live; add a footer (`primaryAction`) only when they must be confirmed.',
+          'Use `title` for titled content and forms.',
+        ],
+        dont: ['Open a popover on hover.', 'Put a popover inside a popover.', 'Show more than one at a time.'],
+      },
+      a11y: {
+        keyboard: [
+          ['Enter / Space', 'Opens the popover on the trigger.'],
+          ['Tab', 'Moves through the content.'],
+          ['Esc', 'Closes it; focus returns to the trigger.'],
+        ],
+        notes: [
+          'The trigger is announced as expanded or collapsed.',
+          'Focus moves into the popover when it opens.',
+          'A click outside closes it; the page stays usable.',
+          'Below 640 px it opens as a Bottom Sheet.',
+        ],
+      },
+      styling: {
+        classes: [
+          ['medo-popover', 'The panel.'],
+          ['medo-popover--{size}', '`sm` 240, `md` 320, `lg` 400, `auto`.'],
+          ['medo-popover__header, __title', 'Header with close button.'],
+          ['medo-popover__body', 'Content; scrolls if needed.'],
+          ['medo-popover__footer', 'Confirm buttons.'],
+          ['medo-toggletip, __text', 'Info popover with text and link.'],
+        ],
+        states: ['data-entering', 'data-exiting', 'data-placement'],
+      },
+    },
     docs: {
       description: {
         component:

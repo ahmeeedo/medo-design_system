@@ -55,7 +55,39 @@ const meta = {
     items: { control: false },
   },
   parameters: {
-    medo: { subtitle: 'Interactive lists of objects in apps: inbox, people, files, notifications, settings.' },
+    medo: {
+      subtitle: 'Interactive lists of objects in apps: inbox, people, files, notifications, settings.',
+      usage: {
+        when: ['Interactive lists of objects in apps: inbox, people, files, settings.', 'The mobile form of a Table (`variant="cards"`).'],
+        whenNot: ['Content lists in text: use a List.', 'Data to compare in columns: use a Table.'],
+        do: ['Use one trailing type per list.', 'Name each row by its title.', 'Offer the same actions in the “…” menu as in swipe actions.'],
+        dont: ['Put more than 2 buttons in a row.', 'Make swiping the only way to an action.'],
+      },
+      a11y: {
+        keyboard: [
+          ['↑ / ↓', 'Moves between rows.'],
+          ['Enter', 'Opens the row.'],
+          ['Tab', 'Reaches the controls inside the row.'],
+          ['Space', 'Selects the row (with selection).'],
+        ],
+        notes: [
+          'A React Aria GridList; each row is named by its title.',
+          'Unread rows have strong text, a dot and a hidden “Unread”.',
+          '`isLoading` shows skeleton rows.',
+          'Swipe actions work on touch only; the menu holds the same actions.',
+        ],
+      },
+      styling: {
+        classes: [
+          ['medo-list-view', 'The list; `--plain` or `--card`, `--cards`.'],
+          ['medo-list-row', 'One row; `--lines-{1|2|3}`, `--unread`.'],
+          ['medo-list-row__leading, __content, __title, __description', 'Parts of a row.'],
+          ['medo-list-row__meta, __trailing, __chevron', 'End of the row.'],
+          ['medo-list-card', 'A record as a card.'],
+        ],
+        states: ['data-hovered', 'data-pressed', 'data-selected', 'data-focus-visible', 'data-disabled'],
+      },
+    },
     docs: {
       description: {
         component:

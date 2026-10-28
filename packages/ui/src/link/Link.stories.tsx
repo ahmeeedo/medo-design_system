@@ -19,7 +19,47 @@ const meta = {
     children: { control: 'text' },
   },
   parameters: {
-    medo: { subtitle: 'Navigates to a page, a place on the page or a file. Actions are buttons.' },
+    medo: {
+      subtitle: 'Navigates to a page, a place on the page or a file. Actions are buttons.',
+      usage: {
+        when: ['Go to another page, a place on the page or a file.', 'References inside running text.'],
+        whenNot: [
+          'Start an action (save, delete, open a dialog): use a Button.',
+          'Navigation menus and side navigation: use the Navigation items.',
+        ],
+        do: [
+          'Name the target: “View all projects”, not “Click here”.',
+          'Use `external` for other sites; the icon and the hidden text say that it opens a new tab.',
+          'Use standalone links on their own line, e.g. below a list.',
+        ],
+        dont: [
+          'Remove the underline from inline links.',
+          'Style a button as a link or a link as a button.',
+          'Open internal pages in a new tab.',
+        ],
+      },
+      a11y: {
+        keyboard: [
+          ['Tab', 'Moves the focus to the link.'],
+          ['Enter', 'Follows the link.'],
+        ],
+        notes: [
+          'A real `<a href>`: opening in a new tab, copying and the context menu keep working.',
+          'Inline links are always underlined, so they never rely on colour (WCAG 1.4.1).',
+          'With `target="_blank"` a hidden “(opens in a new tab)” is added.',
+          'Works with any router through `RouterProvider`.',
+        ],
+      },
+      styling: {
+        classes: [
+          ['medo-link', 'Inline link in running text.'],
+          ['medo-link--standalone', 'Link on its own line, underline on hover.'],
+          ['medo-link--{size}', '`sm` or `md` for standalone links.'],
+          ['medo-link__icon', 'Arrow or external icon.'],
+        ],
+        states: ['data-hovered', 'data-pressed', 'data-focus-visible', 'data-disabled'],
+      },
+    },
     docs: {
       description: {
         component:

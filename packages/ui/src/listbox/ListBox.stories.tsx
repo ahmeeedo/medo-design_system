@@ -31,7 +31,42 @@ const meta = {
       // second line as description (aria-describedby) – correct, but the rule counts all visible text.
       config: { rules: [{ id: 'landmark-unique', enabled: false }, { id: 'label-content-name-mismatch', enabled: false }] },
     },
-        medo: { subtitle: 'The list behind Select, Combobox and the Bottom Sheet. Option is one row, Listbox the container.' },
+    medo: {
+      subtitle: 'The list behind Select, Combobox and the Bottom Sheet. Option is one row, Listbox the container.',
+      usage: {
+        when: ['A list of options inside Select, Combobox or a Bottom Sheet.', 'A visible list to pick from, e.g. in a side panel.'],
+        whenNot: ['Actions: use a Menu.', 'Objects with controls in each row: use a List view.'],
+        do: [
+          'Use groups with a header for more than about 8 options.',
+          'Add a short description when options are similar.',
+          'Let labels wrap.',
+        ],
+        dont: ['Truncate labels.', 'Put buttons or links inside an option.'],
+      },
+      a11y: {
+        keyboard: [
+          ['↑ / ↓', 'Moves through the options.'],
+          ['Home / End', 'First or last option.'],
+          ['Letters', 'Jumps to the matching option.'],
+          ['Enter / Space', 'Selects the option.'],
+        ],
+        notes: [
+          'Highlight and selection look different: grey highlight, check or checkbox for the selection.',
+          'Group headers are read before their first option.',
+          'Empty and loading messages are shown inside the list.',
+        ],
+      },
+      styling: {
+        classes: [
+          ['medo-listbox medo-listbox--{size}', 'The list; `md` or `lg`.'],
+          ['medo-listbox__section, __header', 'Group and its title.'],
+          ['medo-option', 'One option.'],
+          ['medo-option__icon, __content, __label, __description', 'Parts of an option.'],
+          ['medo-option__check, __checkbox', 'Single or multiple selection mark.'],
+        ],
+        states: ['data-focused', 'data-hovered', 'data-selected', 'data-disabled', 'data-selection-mode'],
+      },
+    },
     docs: {
       description: {
         component:

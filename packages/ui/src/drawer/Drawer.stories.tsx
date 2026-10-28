@@ -121,7 +121,45 @@ const meta = {
     onOpenChange: { control: false },
   },
   parameters: {
-    medo: { subtitle: 'A modal panel that slides in from the side – for account settings, filters, details or navigation.' },
+    medo: {
+      subtitle: 'A modal panel that slides in from the side – for account settings, filters, details or navigation.',
+      usage: {
+        when: ['Account settings, filters or details next to a list.', 'Navigation on tablets (left).'],
+        whenNot: [
+          'A short focused task: use a Dialog.',
+          'A decision: use an Alert Dialog.',
+          'Content that should stay open while working: use a side panel in the layout.',
+        ],
+        do: [
+          'Open from the right for account, filters and details; left only for navigation.',
+          'Add a footer only for decisions like Apply or Save.',
+          'Set `isDirty` when the user changed something.',
+        ],
+        dont: ['Open two drawers at once.', 'Put a long multi-step flow into a drawer.'],
+      },
+      a11y: {
+        keyboard: [
+          ['Tab / Shift + Tab', 'Moves through the drawer. The focus stays inside.'],
+          ['Esc', 'Closes the drawer. With `isDirty` it asks first.'],
+        ],
+        notes: [
+          'Same behaviour as the Dialog: the title names it, the page behind is blocked.',
+          'Focus returns to the trigger when it closes.',
+          'Below 640 px it is the viewport − 56 px wide; a swipe towards the edge closes it.',
+          'Only the body scrolls; header and footer stay visible.',
+        ],
+      },
+      styling: {
+        classes: [
+          ['medo-drawer-overlay', 'Scrim; `--left` or `--right`.'],
+          ['medo-drawer', 'The panel.'],
+          ['medo-drawer--{side}', '`left` or `right`.'],
+          ['medo-drawer--{size}', '`sm` 320, `md` 400, `lg` 560.'],
+          ['medo-drawer__header, __title, __body, __footer', 'Parts of the panel.'],
+        ],
+        states: ['data-entering', 'data-exiting', 'data-dragging'],
+      },
+    },
     docs: {
       description: {
         component:

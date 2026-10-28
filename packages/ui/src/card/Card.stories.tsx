@@ -57,7 +57,41 @@ const meta = {
   /* Single cards get a realistic width; stories with parameters.width set their own. */
   decorators: [(Story, { parameters }) => <div style={{ maxInlineSize: parameters.width ?? '22rem' }}>{Story()}</div>],
   parameters: {
-    medo: { subtitle: 'A container for one topic: title, optional media, content and actions.' },
+    medo: {
+      subtitle: 'A container for one topic: title, optional media, content and actions.',
+      usage: {
+        when: ['One topic with a title, optional media, content and actions.', 'Teasers that link to a detail page.'],
+        whenNot: ['Lists of similar objects: use a List view or a Table.', 'Grouping fields of a form: use a section with a heading.'],
+        do: [
+          'Give every card a title.',
+          'Either link the whole card (`href`) or put actions in the footer.',
+          'Use the same variant for cards side by side.',
+        ],
+        dont: ['Put a link card inside a link card.', 'Mix many variants on one page.'],
+      },
+      a11y: {
+        keyboard: [
+          ['Tab', 'Moves to the card link and then to the buttons.'],
+          ['Enter', 'Follows the card link.'],
+        ],
+        notes: [
+          'An `<article>` with a real heading.',
+          'An interactive card has one link: the title, stretched over the card.',
+          'Buttons stay clickable above the link.',
+        ],
+      },
+      styling: {
+        classes: [
+          ['medo-card', 'The card; outlined by default.'],
+          ['medo-card--{variant}', '`elevated`, `filled`, `brand`, `plain`.'],
+          ['medo-card--compact, --horizontal', 'Density and layout.'],
+          ['medo-card__media, __header, __title, __subtitle', 'Media and header.'],
+          ['medo-card__body, __footer', 'Content and actions.'],
+          ['medo-card__link', 'Stretched title link.'],
+        ],
+        states: ['data-hovered', 'data-pressed', 'data-focus-visible'],
+      },
+    },
     docs: {
       description: {
         component:

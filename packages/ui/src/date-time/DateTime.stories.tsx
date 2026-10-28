@@ -58,7 +58,65 @@ const meta = {
     onChange: { control: false },
   },
   parameters: {
-    medo: { subtitle: 'Type a date or pick it – date, range, time and date + time, formatted by locale.' },
+    medo: {
+      subtitle: 'Type a date or pick it – date, range, time and date + time, formatted by locale.',
+      usage: {
+        when: [
+          'A known date like a birthday: DateField (typing only).',
+          'An appointment or deadline: DatePicker.',
+          'A period for reports or filters: DateRangePicker.',
+          'A time or date + time.',
+        ],
+        whenNot: [
+          'A relative period (“last 7 days”) only: use a Select.',
+          'Very far dates without context: a DateField is faster than a calendar.',
+        ],
+        do: [
+          'Use `@internationalized/date` values; send `toString()` to the API.',
+          'Set `minValue`, `maxValue` and unavailable days; the message names the rule.',
+          'Offer `presets` for ranges in dashboards and filters.',
+        ],
+        dont: ['Format dates yourself; the locale decides order and separators.', 'Use a clock face for times.'],
+      },
+      a11y: {
+        keyboard: [
+          ['Digits', 'Fill the segment; a complete segment jumps to the next.'],
+          ['↑ / ↓', 'Change the segment.'],
+          ['← / →', 'Move between segments.'],
+          ['Backspace', 'Clears the segment.'],
+          ['Alt + ↓', 'Opens the calendar.'],
+          ['Arrow keys / Page Up / Page Down', 'In the calendar: day, week, month; with Shift: year.'],
+        ],
+        notes: [
+          'Each segment is a spinbutton with its own name (day, month, year).',
+          'Order, separators, week start and 12/24 h come from the locale.',
+          'Today has a ring; the selected day is filled.',
+          'Below 640 px the calendar opens in a Bottom Sheet.',
+        ],
+      },
+      styling: {
+        classes: [
+          ['medo-input medo-date-box', 'The field (Input look).'],
+          ['medo-date-input, medo-date-segment', 'Segments of the date or time.'],
+          ['medo-calendar, medo-calendar--range', 'Calendar and range calendar; `--lg` for touch.'],
+          ['medo-calendar__day', 'One day.'],
+          ['medo-date-panel, __presets, __time', 'Popover content with presets and time.'],
+          ['medo-time-slots', 'List of time slots.'],
+        ],
+        states: [
+          'data-selected',
+          'data-selection-start',
+          'data-selection-end',
+          'data-today',
+          'data-unavailable',
+          'data-outside-month',
+          'data-invalid',
+          'data-placeholder',
+          'data-focus-visible',
+          'data-disabled',
+        ],
+      },
+    },
     docs: {
       description: {
         component:

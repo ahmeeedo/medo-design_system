@@ -50,6 +50,42 @@ const meta = {
   parameters: {
     medo: {
       subtitle: 'Images, figures and third-party embeds – with reserved space, calm loading states and consent before anything loads.',
+      usage: {
+        when: [
+          'Images in content and cards (`Image`).',
+          'An image with caption and credit (`Figure`).',
+          'Videos and maps from other providers (`EmbedConsent`).',
+        ],
+        whenNot: ['Icons: use Lucide icons.', 'People: use an Avatar.'],
+        do: [
+          'Always set `alt`; `alt=""` only for decorative images.',
+          'Set a ratio, so nothing jumps while loading.',
+          'Use `priority` only for the hero image.',
+        ],
+        dont: ['Put text into images.', 'Load embeds before the user agrees.'],
+      },
+      a11y: {
+        keyboard: [
+          ['Tab', 'Moves to links, play and consent buttons.'],
+          ['Enter / Space', 'Loads the embed after consent.'],
+        ],
+        notes: [
+          '`alt` is required; decorative images use `alt=""` on purpose.',
+          'Nothing loads from the provider before the click (GDPR).',
+          'After consent the iframe takes the focus.',
+          'Reduced motion: a shorter fade-in.',
+        ],
+      },
+      styling: {
+        classes: [
+          ['medo-image', 'Image frame; `--cover` or `--contain`.'],
+          ['medo-image--radius-{size}', '`none`, `sm`, `md`, `lg`.'],
+          ['medo-image__img, __overlay, __badge, __play', 'Image and overlays.'],
+          ['medo-figure, __caption, __credit', 'Figure.'],
+          ['medo-embed', 'Consent placeholder; `--compact`.'],
+        ],
+        states: ['data-state', 'data-hovered', 'data-focus-visible'],
+      },
     },
     docs: {
       description: {

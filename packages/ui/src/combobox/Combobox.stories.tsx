@@ -71,7 +71,46 @@ const meta = {
       // second line as description (aria-describedby) – correct, but the rule counts all visible text.
       config: { rules: [{ id: 'landmark-unique', enabled: false }, { id: 'label-content-name-mismatch', enabled: false }] },
     },
-        medo: { subtitle: 'A Select you can type into. Typing filters the list – for long lists, people, places or tags.' },
+    medo: {
+      subtitle: 'A Select you can type into. Typing filters the list – for long lists, people, places or tags.',
+      usage: {
+        when: ['More than about 10 options: countries, people, places.', 'Users know what to type.', 'Tags with “Add …” for new values.'],
+        whenNot: ['Fewer than about 10 options: use a Select.', 'Free text without suggestions: use a Text Field.', 'A site search: use Search.'],
+        do: [
+          'Show a label and, if helpful, a description of what can be searched.',
+          'Use `isLoading` while results load from the server.',
+          'Keep the list short; show the best matches first.',
+        ],
+        dont: ['Open the list on focus.', 'Allow values that are not in the list unless “Add …” is wanted.'],
+      },
+      a11y: {
+        keyboard: [
+          ['Letters', 'Filter the list.'],
+          ['↓ / Alt + ↓', 'Opens the list.'],
+          ['↑ / ↓', 'Moves through the options while the focus stays in the field.'],
+          ['Enter', 'Picks the highlighted option.'],
+          ['Esc', 'Closes the list.'],
+          ['Backspace', 'Multiple: removes the last tag when the field is empty.'],
+        ],
+        notes: [
+          'Screen readers hear how many options are available while typing.',
+          'Leaving without a selection restores the last valid value.',
+          'Matches are bold for sighted users only; the option name is read as usual.',
+          'Below 640 px the list opens in a Bottom Sheet with its own search field.',
+        ],
+      },
+      styling: {
+        classes: [
+          ['medo-field medo-combobox', 'Wrapper with label and field.'],
+          ['medo-input medo-combobox__field', 'The field (Input look).'],
+          ['medo-combobox__input', 'The text input.'],
+          ['medo-combobox__tags-row, __more', 'Tags of a multiple Combobox and “+N”.'],
+          ['medo-combobox__toggle', 'Chevron button.'],
+          ['medo-listbox, medo-option', 'The list (see Listbox).'],
+        ],
+        states: ['data-open', 'data-hovered', 'data-invalid', 'data-disabled'],
+      },
+    },
     docs: {
       description: {
         component:

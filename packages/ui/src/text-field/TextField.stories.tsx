@@ -32,7 +32,46 @@ const meta = {
     trailing: slot({ none: undefined, 'show password': <InputAction aria-label="Show password" icon={<Eye />} /> }),
   },
   parameters: {
-    medo: { subtitle: 'Label, input and helper or error text as one unit.' },
+    medo: {
+      subtitle: 'Label, input and helper or error text as one unit.',
+      usage: {
+        when: ['Short free text: names, emails, search terms.', 'Longer text with `multiline` (Textarea).'],
+        whenNot: [
+          'Choosing from known values: use Select or Combobox.',
+          'Numbers with steps: use a NumberField.',
+          'Dates and times: use Date & Time.',
+        ],
+        do: [
+          'Always show a label; use the placeholder only for an example.',
+          'Set the right `type` and `autoComplete`, so keyboards and autofill help.',
+          'Validate on blur or submit and say how to fix the error.',
+          'Use size lg on mobile and touch.',
+        ],
+        dont: ['Use the placeholder as the label.', 'Show errors while the user is still typing.', 'Disable copy and paste.'],
+      },
+      a11y: {
+        keyboard: [
+          ['Tab', 'Moves the focus to the field.'],
+          ['Enter', 'Submits the surrounding form (single line).'],
+        ],
+        notes: [
+          'Label, description and error text are linked to the input.',
+          'An error disappears as soon as the input is valid; new errors show on blur or submit.',
+          '`characterLimit` shows a counter and announces the remaining characters after a pause.',
+          'Size lg uses 16 px text, which prevents the zoom on iOS.',
+        ],
+      },
+      styling: {
+        classes: [
+          ['medo-field', 'Wrapper with label, input and footer.'],
+          ['medo-field__label, __footer, __description, __error', 'Label and helper texts.'],
+          ['medo-input medo-input--{size}', 'The input frame; `sm`, `md`, `lg`.'],
+          ['medo-input__control, __icon, __action', 'Input, leading icon, trailing action.'],
+          ['medo-textarea', 'Multi-line field.'],
+        ],
+        states: ['data-hovered', 'data-focus-visible', 'data-invalid', 'data-disabled'],
+      },
+    },
     docs: {
       description: {
         component:

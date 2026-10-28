@@ -86,7 +86,38 @@ const meta = {
     headingLevel: semantic,
   },
   parameters: {
-    medo: { subtitle: 'What users see when there is nothing to show – and what they can do next.' },
+    medo: {
+      subtitle: 'What users see when there is nothing to show – and what they can do next.',
+      usage: {
+        when: ['A list, table or view without content: first use, no results, error, no access, all done.'],
+        whenNot: ['While content loads: use a Skeleton.', 'An error of a single field: use the field’s error text.'],
+        do: [
+          'Say what is missing and what users can do next.',
+          'Use the primary action only for first use.',
+          'Match the size to the place: page, section or inline.',
+        ],
+        dont: ['Write “No data”.', 'Show an empty state while content is still loading.', 'Offer more than one primary action.'],
+      },
+      a11y: {
+        keyboard: [
+          ['Tab', 'Moves to the actions.'],
+        ],
+        notes: [
+          'Page and section are a `<section>` named by their heading (`headingLevel`).',
+          '“No results” is announced politely (`role="status"`); the focus stays in the search field.',
+          'Icon and illustration are hidden from screen readers.',
+        ],
+      },
+      styling: {
+        classes: [
+          ['medo-empty-state', 'Wrapper; page size by default.'],
+          ['medo-empty-state--{size}', '`section` or `inline`.'],
+          ['medo-empty-state__content, __title, __description', 'Text.'],
+          ['medo-empty-state__actions', 'Actions.'],
+          ['medo-icon-tile', 'Icon on a tile with the tone of the type.'],
+        ],
+      },
+    },
     docs: {
       description: {
         component:

@@ -74,7 +74,32 @@ const meta = {
     removedMessage: semantic,
   },
   parameters: {
-    medo: { subtitle: 'Compact pill for a value. Removable in multi-select, selectable as a filter.' },
+    medo: {
+      subtitle: 'Compact pill for a value. Removable in multi-select, selectable as a filter.',
+      usage: {
+        when: ['Removable values in a multiple Select or Combobox.', 'Filters that users turn on and off.'],
+        whenNot: ['A status: use a Badge.', 'An action: use a Button.', 'Navigation: use Links.'],
+        do: ['Use one role per group: removable or selectable.', 'Keep labels short.', 'Name the remove button: “Remove Design”.'],
+        dont: ['Mix removable and selectable tags.', 'Use tags for long text.'],
+      },
+      a11y: {
+        keyboard: [
+          ['← / →', 'Moves between the tags.'],
+          ['Backspace / Delete', 'Removes the focused tag.'],
+          ['Space', 'Toggles a filter tag.'],
+        ],
+        notes: ['A React Aria TagGroup; the group needs a label.', 'Removals are announced.', 'Selected filters show a check, not colour alone.'],
+      },
+      styling: {
+        classes: [
+          ['medo-tag', 'One tag; `--sm` or `--md`.'],
+          ['medo-tag--selectable', 'Filter tag.'],
+          ['medo-tag__icon, __label, __remove', 'Parts.'],
+          ['medo-tag-list', 'Group.'],
+        ],
+        states: ['data-selected', 'data-hovered', 'data-pressed', 'data-focus-visible', 'data-disabled', 'data-allows-removing'],
+      },
+    },
     docs: {
       description: {
         component:

@@ -110,7 +110,42 @@ const meta = {
   component: Table,
   tags: ['autodocs'],
   parameters: {
-    medo: { subtitle: 'Shows records in rows and columns to compare, sort and act on them.' },
+    medo: {
+      subtitle: 'Shows records in rows and columns to compare, sort and act on them.',
+      usage: {
+        when: ['Records to compare, sort and act on.', 'Simple data in content (`StaticTable`).'],
+        whenNot: ['Lists of objects with one main line: use a List view.', 'Layout: use the grid.', 'On phones: show records as List view cards.'],
+        do: [
+          'Align text left and numbers right.',
+          'Put search, columns and actions into the `toolbar`, Pagination into the `footer`.',
+          'Use the Bulk action bar for selected rows.',
+        ],
+        dont: ['Put many actions in each row; use a menu.', 'Hide important columns on small screens without an alternative.'],
+      },
+      a11y: {
+        keyboard: [
+          ['Arrow keys', 'Interactive table: move between cells.'],
+          ['Enter', 'Sorts a sortable column or opens a row.'],
+          ['Space', 'Selects the row.'],
+          ['Tab', 'Leaves the table.'],
+        ],
+        notes: [
+          'StaticTable is a native `<table>`, read like a table.',
+          'Table is a React Aria grid; sortable headers set `aria-sort`.',
+          'Data logic (sort, filter, paging) stays in your code.',
+        ],
+      },
+      styling: {
+        classes: [
+          ['medo-table-container', 'Frame with scrolling.'],
+          ['medo-table', 'The table; `--compact`, `--striped`.'],
+          ['medo-table__column, __row, __cell', 'Header, row, cell.'],
+          ['medo-table__cell--number', 'Numbers, right aligned.'],
+          ['medo-table__toolbar, __footer', 'Toolbar and footer.'],
+        ],
+        states: ['data-hovered', 'data-pressed', 'data-selected', 'data-focus-visible', 'data-disabled', 'data-allows-sorting', 'aria-sort'],
+      },
+    },
     docs: {
       description: {
         component:
