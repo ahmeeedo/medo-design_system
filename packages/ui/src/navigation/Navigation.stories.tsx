@@ -378,6 +378,7 @@ export const InteractionTest: Story = {
     await expect(within(dialog).getAllByRole('link').length).toBeGreaterThan(0);
     await userEvent.keyboard('{Escape}');
     await waitFor(() => expect(within(document.body).queryByRole('dialog')).toBeNull());
-    await expect(menu).toHaveFocus();
+    // React Aria returns the focus one frame after the overlay is gone: wait for it.
+    await waitFor(() => expect(menu).toHaveFocus());
   },
 };

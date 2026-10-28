@@ -167,7 +167,8 @@ export const InteractionTest: Story = {
     await userEvent.keyboard('{Escape}');
     await waitFor(() => expect(within(document.body).queryByRole('alertdialog')).toBeNull());
     await expect(args.onAction).not.toHaveBeenCalled();
-    await expect(trigger).toHaveFocus();
+    // React Aria returns the focus one frame after the overlay is gone: wait for it.
+    await waitFor(() => expect(trigger).toHaveFocus());
     // The action button runs the action and closes.
     await userEvent.click(trigger);
     await userEvent.click(await within(document.body).findByRole('button', { name: 'Delete' }));

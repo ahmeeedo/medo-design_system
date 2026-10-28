@@ -141,6 +141,7 @@ export const InteractionTest: Story = {
     // The close button and Esc close it; focus returns.
     await userEvent.click(within(sheet).getByRole('button', { name: 'Close' }));
     await waitFor(() => expect(body.queryByRole('dialog')).toBeNull());
-    await expect(trigger).toHaveFocus();
+    // React Aria returns the focus one frame after the overlay is gone: wait for it.
+    await waitFor(() => expect(trigger).toHaveFocus());
   },
 };
