@@ -19,8 +19,6 @@ import { IconButton } from '../icon-button/IconButton';
 import { formatShortcut } from '../tooltip/Tooltip';
 import { cx } from '../utils/cx';
 import { MOBILE_QUERY, useMediaQuery } from '../utils/useMediaQuery';
-import '../listbox/listbox.css';
-import './menu.css';
 
 type MenuSize = 'md' | 'lg';
 

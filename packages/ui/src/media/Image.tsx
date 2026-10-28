@@ -2,7 +2,6 @@ import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties, type 
 import { ImageOff, Play } from 'lucide-react';
 import { Skeleton } from '../progress/Progress';
 import { cx } from '../utils/cx';
-import './media.css';
 
 export type ImageRatio = '1:1' | '3:4' | '4:3' | '3:2' | '16:9' | '21:9' | 'original';
 

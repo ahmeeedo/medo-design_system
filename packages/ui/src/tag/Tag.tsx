@@ -13,7 +13,6 @@ import {
 import { Check, X } from 'lucide-react';
 import { FieldLabel } from '../field/Field';
 import { cx } from '../utils/cx';
-import './tag.css';
 
 type TagSize = 'sm' | 'md';
 const TagSizeContext = createContext<TagSize>('md');

@@ -19,7 +19,6 @@ import { Tooltip, TooltipLink, TooltipTrigger } from '../tooltip/Tooltip';
 import { cx } from '../utils/cx';
 import { useMediaQuery } from '../utils/useMediaQuery';
 import { Drawer } from '../drawer/Drawer';
-import './navigation.css';
 
 /*
  * Navigation – med.o Design System

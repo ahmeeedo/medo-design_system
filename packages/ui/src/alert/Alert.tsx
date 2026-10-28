@@ -2,7 +2,6 @@ import type { HTMLAttributes, ReactNode } from 'react';
 import { CircleAlert, CircleCheck, Info, TriangleAlert, X } from 'lucide-react';
 import { IconButton } from '../icon-button/IconButton';
 import { cx } from '../utils/cx';
-import './alert.css';
 
 export type AlertTone = 'info' | 'success' | 'warning' | 'danger';
 

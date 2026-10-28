@@ -3,7 +3,6 @@ import { RadioButton, RadioField, RadioGroup as AriaRadioGroup, Text, type Radio
 import { FieldFooter, FieldLabel } from '../field/Field';
 import { ChoiceSizeContext, type ChoiceSize } from '../checkbox/Checkbox';
 import { cx } from '../utils/cx';
-import '../checkbox/choice.css';
 
 export interface RadioProps extends Omit<RadioFieldProps, 'children' | 'className' | 'style'> {
   children?: ReactNode;

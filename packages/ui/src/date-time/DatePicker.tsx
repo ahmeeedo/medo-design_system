@@ -26,9 +26,6 @@ import { cx } from '../utils/cx';
 import { MOBILE_QUERY, useMediaQuery } from '../utils/useMediaQuery';
 import { Calendar, defaultCalendarTexts, RangeCalendar, type CalendarTexts } from './Calendar';
 import { TimeField } from './DateField';
-import '../popover/popover.css';
-import '../text-field/input.css';
-import './date-time.css';
 
 export interface DatePickerTexts extends CalendarTexts {
   openCalendar: string;

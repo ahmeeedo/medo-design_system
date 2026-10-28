@@ -6,8 +6,6 @@ import { IconButton } from '../icon-button/IconButton';
 import { Menu, MenuButton, MenuItem, MenuTrigger } from '../menu/Menu';
 import { cx } from '../utils/cx';
 import { MOBILE_QUERY, useMediaQuery } from '../utils/useMediaQuery';
-import '../toast/toast.css';
-import './bulk-action-bar.css';
 
 export interface BulkAction {
   /** Verb (“Export”, “Archive”, “Delete”). */

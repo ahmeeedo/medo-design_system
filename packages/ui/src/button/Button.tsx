@@ -2,7 +2,6 @@ import type { CSSProperties, ReactNode } from 'react';
 import { Button as AriaButton, type ButtonProps as AriaButtonProps } from 'react-aria-components';
 import { Spinner } from '../progress/Progress';
 import { cx } from '../utils/cx';
-import './button.css';
 
 export type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'danger' | 'text' | 'ghost-danger';
 export type ButtonSize = 'sm' | 'md' | 'lg';

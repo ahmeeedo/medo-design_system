@@ -3,7 +3,6 @@ import { Dialog, Heading, Modal, ModalOverlay, OverlayTriggerStateContext, Popov
 import { ChevronLeft, X } from 'lucide-react';
 import { IconButton } from '../icon-button/IconButton';
 import { cx } from '../utils/cx';
-import './bottom-sheet.css';
 
 export interface BottomSheetProps extends Omit<ModalOverlayProps, 'children' | 'className' | 'style'> {
   /** Required: names the dialog (for a Select sheet: the field label). */

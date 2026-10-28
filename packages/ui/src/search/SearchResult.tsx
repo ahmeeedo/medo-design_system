@@ -6,7 +6,6 @@ import { Badge } from '../badge/Badge';
 import { IconTile } from '../empty-state/EmptyState';
 import { cx } from '../utils/cx';
 import { Highlight } from '../utils/highlight';
-import './search.css';
 
 export type SearchResultType = 'page' | 'document' | 'person' | 'media';
 

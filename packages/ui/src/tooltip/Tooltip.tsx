@@ -9,7 +9,6 @@ import {
   type TooltipTriggerComponentProps,
 } from 'react-aria-components';
 import { cx } from '../utils/cx';
-import './tooltip.css';
 
 /**
  * Wraps a focusable trigger (e.g. Button, IconButton) and its Tooltip.

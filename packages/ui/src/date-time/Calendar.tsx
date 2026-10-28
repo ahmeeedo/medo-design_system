@@ -19,7 +19,6 @@ import { Button } from '../button/Button';
 import { IconButton } from '../icon-button/IconButton';
 import { cx } from '../utils/cx';
 import { MOBILE_QUERY, useMediaQuery } from '../utils/useMediaQuery';
-import './date-time.css';
 
 type View = 'days' | 'months' | 'years';
 

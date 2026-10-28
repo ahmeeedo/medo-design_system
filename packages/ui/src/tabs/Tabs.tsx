@@ -12,7 +12,6 @@ import {
 } from 'react-aria-components';
 import { BadgeCount } from '../badge/Badge';
 import { cx } from '../utils/cx';
-import './tabs.css';
 
 export interface TabsProps extends Omit<AriaTabsProps, 'className' | 'style' | 'orientation'> {
   /** md: tab 32 / track 40 · lg: 40 / 48. Below 640 px tabs are always lg. */

@@ -2,7 +2,6 @@ import type { ReactNode } from 'react';
 import { SwitchButton, SwitchField, Text, type SwitchFieldProps } from 'react-aria-components';
 import { Check, LoaderCircle, X } from 'lucide-react';
 import { cx } from '../utils/cx';
-import './switch.css';
 
 export interface SwitchProps extends Omit<SwitchFieldProps, 'children' | 'className' | 'style'> {
   /** Label. Describes the setting, never the state (“Notifications”, not “On”). */

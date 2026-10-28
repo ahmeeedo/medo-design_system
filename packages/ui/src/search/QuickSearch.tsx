@@ -8,8 +8,6 @@ import { ListBox, OptionHighlightContext } from '../listbox/ListBox';
 import { cx } from '../utils/cx';
 import { MOBILE_QUERY, useMediaQuery } from '../utils/useMediaQuery';
 import { SearchField } from './SearchField';
-import '../dialog/dialog.css';
-import './search.css';
 
 export interface QuickSearchProps<T extends object> {
   isOpen?: boolean;

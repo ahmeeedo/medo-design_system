@@ -3,7 +3,6 @@ import { Button as AriaButton, type ButtonProps as AriaButtonProps } from 'react
 import { Spinner } from '../progress/Progress';
 import { Tooltip, TooltipTrigger, formatShortcut, resolveShortcut } from '../tooltip/Tooltip';
 import { cx } from '../utils/cx';
-import '../button/button.css';
 
 export interface IconButtonProps extends Omit<AriaButtonProps, 'children' | 'className' | 'style'> {
   /** Required: describes the action (“Delete file”), because there is no visible label. */

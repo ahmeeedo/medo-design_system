@@ -1,40 +1,48 @@
-/* All component styles of @med-o/ui. Needs the tokens: @import "@med-o/design-tokens/css"; */
-@import './utils/utilities.css';
-@import './button/button.css';
-@import './field/field.css';
-@import './text-field/input.css';
-@import './checkbox/choice.css';
-@import './switch/switch.css';
-@import './badge/badge.css';
-@import './tag/tag.css';
-@import './avatar/avatar.css';
-@import './tooltip/tooltip.css';
-@import './progress/progress.css';
-@import './list/list.css';
-@import './list-view/list-view.css';
-@import './bulk-action-bar/bulk-action-bar.css';
-@import './empty-state/empty-state.css';
-@import './pagination/pagination.css';
-@import './search/search.css';
-@import './breadcrumbs/breadcrumbs.css';
-@import './accordion/accordion.css';
-@import './slider/slider.css';
-@import './toggle-button/toggle-button.css';
-@import './listbox/listbox.css';
-@import './select/select.css';
-@import './combobox/combobox.css';
-@import './bottom-sheet/bottom-sheet.css';
-@import './menu/menu.css';
-@import './dialog/dialog.css';
-@import './drawer/drawer.css';
-@import './link/link.css';
-@import './alert/alert.css';
-@import './toast/toast.css';
-@import './tabs/tabs.css';
-@import './popover/popover.css';
-@import './navigation/navigation.css';
-@import './card/card.css';
-@import './table/table.css';
-@import './upload/upload.css';
-@import './date-time/date-time.css';
-@import './media/media.css';
+/*
+ * All component styles of @med-o/ui. Needs the tokens: @import "@med-o/design-tokens/css";
+ *
+ * Cascade layers: every component style sits in the layer `components`. CSS without a layer (your app) always
+ * wins over it, whatever the specificity – no !important needed. With Tailwind v4 the utilities win as well.
+ * The first line fixes the order of the layers (the same as Tailwind v4), so it holds in any import order.
+ */
+@layer theme, base, components, utilities;
+
+@import './utils/utilities.css' layer(components);
+@import './button/button.css' layer(components);
+@import './field/field.css' layer(components);
+@import './text-field/input.css' layer(components);
+@import './checkbox/choice.css' layer(components);
+@import './switch/switch.css' layer(components);
+@import './badge/badge.css' layer(components);
+@import './tag/tag.css' layer(components);
+@import './avatar/avatar.css' layer(components);
+@import './tooltip/tooltip.css' layer(components);
+@import './progress/progress.css' layer(components);
+@import './list/list.css' layer(components);
+@import './list-view/list-view.css' layer(components);
+@import './bulk-action-bar/bulk-action-bar.css' layer(components);
+@import './empty-state/empty-state.css' layer(components);
+@import './pagination/pagination.css' layer(components);
+@import './search/search.css' layer(components);
+@import './breadcrumbs/breadcrumbs.css' layer(components);
+@import './accordion/accordion.css' layer(components);
+@import './slider/slider.css' layer(components);
+@import './toggle-button/toggle-button.css' layer(components);
+@import './listbox/listbox.css' layer(components);
+@import './select/select.css' layer(components);
+@import './combobox/combobox.css' layer(components);
+@import './bottom-sheet/bottom-sheet.css' layer(components);
+@import './menu/menu.css' layer(components);
+@import './dialog/dialog.css' layer(components);
+@import './drawer/drawer.css' layer(components);
+@import './link/link.css' layer(components);
+@import './alert/alert.css' layer(components);
+@import './toast/toast.css' layer(components);
+@import './tabs/tabs.css' layer(components);
+@import './popover/popover.css' layer(components);
+@import './navigation/navigation.css' layer(components);
+@import './card/card.css' layer(components);
+@import './table/table.css' layer(components);
+@import './upload/upload.css' layer(components);
+@import './date-time/date-time.css' layer(components);
+@import './media/media.css' layer(components);

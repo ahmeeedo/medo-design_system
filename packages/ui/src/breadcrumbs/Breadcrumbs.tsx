@@ -5,7 +5,6 @@ import { Menu, MenuItem, MenuTrigger } from '../menu/Menu';
 import { Tooltip, TooltipLink, TooltipTrigger } from '../tooltip/Tooltip';
 import { cx } from '../utils/cx';
 import { MOBILE_QUERY, useMediaQuery } from '../utils/useMediaQuery';
-import './breadcrumbs.css';
 
 export interface BreadcrumbItem {
   /** The page name – the same words as its title. */

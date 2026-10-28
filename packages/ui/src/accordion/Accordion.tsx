@@ -3,7 +3,6 @@ import { Button as AriaButton, Disclosure, DisclosureGroup, DisclosurePanel, Hea
 import { ChevronDown } from 'lucide-react';
 import { Button } from '../button/Button';
 import { cx } from '../utils/cx';
-import './accordion.css';
 
 type AccordionSize = 'md' | 'lg';
 

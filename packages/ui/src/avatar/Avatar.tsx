@@ -13,7 +13,6 @@ import {
 import { Button as AriaButton } from 'react-aria-components';
 import { Building2, User } from 'lucide-react';
 import { cx } from '../utils/cx';
-import './avatar.css';
 
 export type AvatarSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl';
 export type AvatarStatus = 'online' | 'away' | 'busy' | 'offline';

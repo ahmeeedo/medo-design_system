@@ -1,7 +1,6 @@
 import { createContext, useContext, type HTMLAttributes, type ReactNode } from 'react';
 import { Check, X } from 'lucide-react';
 import { cx } from '../utils/cx';
-import './list.css';
 
 export type ListType = 'bullet' | 'number' | 'check';
 

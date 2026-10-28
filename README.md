@@ -86,6 +86,20 @@ import { Button, TextField } from '@med-o/ui';
 - ESM only, marked `"use client"`: works in Vite, Next.js (App Router) and other modern bundlers.
 - Dates use [`@internationalized/date`](https://react-spectrum.adobe.com/internationalized/date/). Its helpers (`parseDate`, `today` …) are re-exported from `@med-o/ui`.
 
+#### Overriding styles
+
+All component styles sit in the cascade layer `components`. Your own CSS without a layer always wins over it – whatever the specificity, no `!important`:
+
+```css
+.medo-button { border-radius: 0; } /* wins, even though it comes from a single class */
+```
+
+With Tailwind v4 the utilities win as well (`<Button className="mt-4">`). The layer order is the one of Tailwind: `theme, base, components, utilities`.
+
+#### Without a bundler
+
+`@med-o/ui/styles.min.css` is all component CSS in one minified file (about 20 KB gzip), e.g. for a CDN link. With a bundler import `@med-o/ui/styles.css`; it inlines and minifies the files itself.
+
 ### Light and Dark
 
 The tokens follow the operating system. Force a theme with `data-theme` on `<html>` or on any element:

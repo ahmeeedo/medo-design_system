@@ -9,7 +9,6 @@ import {
   UNSTABLE_ToastRegion as AriaToastRegion,
 } from 'react-aria-components';
 import { X } from 'lucide-react';
-import './toast.css';
 
 /*
  * React Aria's Toast is still marked UNSTABLE. Only this file imports it, so an API change

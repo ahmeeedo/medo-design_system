@@ -23,9 +23,6 @@ type ValueOf<M extends SelectMode> = M extends 'multiple' ? Key[] : Key | null;
 
 /** Where the options open. auto: popover on desktop; below 640 px native picker (single) or Bottom Sheet (multi). */
 export type SelectOverlay = 'auto' | 'popover' | 'sheet' | 'native';
-import '../text-field/input.css';
-import '../tag/tag.css';
-import './select.css';
 
 export interface SelectProps<T extends object, M extends SelectMode = 'single'> extends Omit<AriaSelectProps<T, M>, 'children' | 'className' | 'style' | 'placeholder'> {
   /** Visible label. Without it set `aria-label` – only where the context names the field (filter bars, toolbars). */

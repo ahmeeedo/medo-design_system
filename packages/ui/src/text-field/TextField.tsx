@@ -9,7 +9,6 @@ import {
 } from 'react-aria-components';
 import { FieldFooter, FieldLabel } from '../field/Field';
 import { cx } from '../utils/cx';
-import './input.css';
 
 export type InputSize = 'sm' | 'md' | 'lg';
 

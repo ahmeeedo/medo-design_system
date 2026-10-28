@@ -1,7 +1,5 @@
 import type { HTMLAttributes, ReactNode } from 'react';
 import { cx } from '../utils/cx';
-import '../utils/utilities.css';
-import './badge.css';
 
 export type BadgeTone = 'neutral' | 'brand' | 'success' | 'warning' | 'danger' | 'info';
 

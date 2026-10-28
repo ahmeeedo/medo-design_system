@@ -5,8 +5,6 @@ import { Select } from '../select/Select';
 import { Option } from '../listbox/ListBox';
 import { cx } from '../utils/cx';
 import { MOBILE_QUERY, useMediaQuery } from '../utils/useMediaQuery';
-import '../button/button.css';
-import './pagination.css';
 
 export interface PaginationProps {
   /** Current page (1-based, controlled). */

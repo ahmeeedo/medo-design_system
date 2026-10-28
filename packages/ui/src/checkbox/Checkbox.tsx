@@ -10,7 +10,6 @@ import {
 import { Check, Minus } from 'lucide-react';
 import { FieldFooter, FieldLabel } from '../field/Field';
 import { cx } from '../utils/cx';
-import './choice.css';
 
 export type ChoiceSize = 'md' | 'lg';
 export const ChoiceSizeContext = createContext<ChoiceSize>('md');

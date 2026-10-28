@@ -6,7 +6,6 @@ import { Button, ButtonGroup, type ButtonSize } from '../button/Button';
 import { IconButton } from '../icon-button/IconButton';
 import { cx } from '../utils/cx';
 import { MOBILE_QUERY, useMediaQuery } from '../utils/useMediaQuery';
-import './dialog.css';
 
 /** Opens a Dialog or Alert dialog from a trigger (React Aria DialogTrigger). Focus returns to the trigger. */
 export { DialogTrigger } from 'react-aria-components';

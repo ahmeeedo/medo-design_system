@@ -4,7 +4,6 @@ import { X } from 'lucide-react';
 import { useDirtyGuard, type DirtyGuardProps } from '../dialog/Dialog';
 import { IconButton } from '../icon-button/IconButton';
 import { cx } from '../utils/cx';
-import './drawer.css';
 
 export interface DrawerProps extends DirtyGuardProps {
   /** Says what it is (“Account”, “Filter”, “Invoice #1042”). Can be a logo for a navigation drawer – then set aria-label. */

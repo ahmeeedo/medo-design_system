@@ -18,8 +18,6 @@ import { ListBox, Option } from '../listbox/ListBox';
 import { Popover, PopoverTrigger } from '../popover/Popover';
 import { InputAction } from '../text-field/TextField';
 import { cx } from '../utils/cx';
-import '../text-field/input.css';
-import './date-time.css';
 
 /**
  * The segments inside the Input look. Digits only; a complete segment jumps to the next one. Separators come

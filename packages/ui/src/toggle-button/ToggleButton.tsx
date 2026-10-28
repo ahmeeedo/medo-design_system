@@ -11,8 +11,6 @@ import {
 } from 'react-aria-components';
 import { Tooltip, TooltipTrigger, formatShortcut, resolveShortcut } from '../tooltip/Tooltip';
 import { cx } from '../utils/cx';
-import '../button/button.css';
-import './toggle-button.css';
 
 type ToggleSize = 'sm' | 'md' | 'lg';
 

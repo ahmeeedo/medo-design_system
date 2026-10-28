@@ -13,6 +13,7 @@
       "default": "./dist/index.js"
     },
     "./styles.css": "./src/styles.css",
+    "./styles.min.css": "./dist/styles.css",
     "./package.json": "./package.json"
   },
   "files": [
@@ -33,10 +34,11 @@
     "react-dom": "^19.0.0"
   },
   "devDependencies": {
-    "tsup": "^8.5.1"
+    "tsup": "^8.5.1",
+    "lightningcss": "^1.32.0"
   },
   "scripts": {
-    "build": "tsup",
+    "build": "tsup && node build-css.mjs",
     "prepack": "npm run build"
   },
   "repository": {
@@ -72,9 +74,6 @@
     "clean": true,
     "banner": {
       "js": "\"use client\";"
-    },
-    "loader": {
-      ".css": "empty"
     }
   }
 }

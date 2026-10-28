@@ -3,7 +3,6 @@ import { CircleAlert, CircleCheck, Folder, Lock, Search } from 'lucide-react';
 import { Button } from '../button/Button';
 import { Link } from '../link/Link';
 import { cx } from '../utils/cx';
-import './empty-state.css';
 
 export type EmptyStateType = 'first-use' | 'no-results' | 'error' | 'no-access' | 'all-done';
 export type EmptyStateSize = 'page' | 'section' | 'inline';

@@ -25,11 +25,6 @@ import { Tag, TagGroup } from '../tag/Tag';
 import { InputAction, type InputSize } from '../text-field/TextField';
 import { cx } from '../utils/cx';
 import { useFitCount } from '../utils/useFitCount';
-import '../text-field/input.css';
-import '../tag/tag.css';
-import '../select/select.css';
-import '../bottom-sheet/bottom-sheet.css';
-import './combobox.css';
 
 type ComboMode = 'single' | 'multiple';
 type Value = Key | null | Key[];

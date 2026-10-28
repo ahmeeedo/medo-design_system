@@ -15,10 +15,6 @@ import { IconTile } from '../empty-state/EmptyState';
 import { ProgressBar } from '../progress/Progress';
 import { cx } from '../utils/cx';
 import { MOBILE_QUERY, useMediaQuery } from '../utils/useMediaQuery';
-import '../utils/utilities.css';
-import '../field/field.css';
-import '../empty-state/empty-state.css';
-import './upload.css';
 
 /* ---------- Helpers ---------- */
 

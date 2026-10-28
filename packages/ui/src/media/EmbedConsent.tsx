@@ -6,8 +6,6 @@ import { IconTile } from '../empty-state/EmptyState';
 import { Link } from '../link/Link';
 import { cx } from '../utils/cx';
 import type { ImageRatio } from './Image';
-import '../empty-state/empty-state.css';
-import './media.css';
 
 export type EmbedType = 'video' | 'map' | 'generic';
 

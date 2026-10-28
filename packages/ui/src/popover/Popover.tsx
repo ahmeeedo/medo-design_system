@@ -15,7 +15,6 @@ import { IconButton } from '../icon-button/IconButton';
 import { Link } from '../link/Link';
 import { cx } from '../utils/cx';
 import { MOBILE_QUERY, useMediaQuery } from '../utils/useMediaQuery';
-import './popover.css';
 
 /** Opens a Popover from a trigger on click (React Aria DialogTrigger). The trigger is pressed and aria-expanded while open. */
 export const PopoverTrigger = DialogTrigger;

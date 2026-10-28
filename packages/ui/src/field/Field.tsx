@@ -1,8 +1,6 @@
 import type { ReactNode } from 'react';
 import { FieldError, Label, Text, type ValidationResult } from 'react-aria-components';
 import { CircleAlert } from 'lucide-react';
-import '../utils/utilities.css';
-import './field.css';
 
 /** Label with the visual required marker. The field itself is announced as required. */
 export function FieldLabel({ children, isRequired }: { children: ReactNode; isRequired?: boolean }) {

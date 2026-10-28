@@ -13,8 +13,6 @@ import {
 import { Check } from 'lucide-react';
 import { cx } from '../utils/cx';
 import { Highlight as SharedHighlight } from '../utils/highlight';
-import '../checkbox/choice.css';
-import './listbox.css';
 
 export type ListBoxSize = 'md' | 'lg';
 

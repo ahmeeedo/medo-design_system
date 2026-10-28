@@ -2,8 +2,6 @@ import type { ReactNode } from 'react';
 import { Link as AriaLink, type LinkProps as AriaLinkProps } from 'react-aria-components';
 import { ArrowRight, ExternalLink } from 'lucide-react';
 import { cx } from '../utils/cx';
-import '../utils/utilities.css';
-import './link.css';
 
 export interface LinkProps extends Omit<AriaLinkProps, 'children' | 'className'> {
   /** The text says where it goes (“Privacy policy”, not “click here”). */

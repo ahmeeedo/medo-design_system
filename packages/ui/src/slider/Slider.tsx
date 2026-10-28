@@ -2,8 +2,6 @@ import { useMemo, type ReactNode } from 'react';
 import { Label, Slider as AriaSlider, SliderOutput, SliderThumb, SliderTrack, useLocale, type SliderProps as AriaSliderProps } from 'react-aria-components';
 import { NumberField } from '../number-field/NumberField';
 import { cx } from '../utils/cx';
-import '../tooltip/tooltip.css';
-import './slider.css';
 
 type Value = number | number[];
 

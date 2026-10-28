@@ -3,7 +3,6 @@ import { Input as AriaInput, NumberField as AriaNumberField, type NumberFieldPro
 import { FieldFooter, FieldLabel } from '../field/Field';
 import type { InputSize } from '../text-field/TextField';
 import { cx } from '../utils/cx';
-import '../text-field/input.css';
 
 export interface NumberFieldProps extends Omit<AriaNumberFieldProps, 'children' | 'className' | 'style'> {
   /** Visible label. Without it set `aria-label` – only where the context names the field (e.g. next to a Slider). */

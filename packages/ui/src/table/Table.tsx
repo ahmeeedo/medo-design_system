@@ -18,8 +18,6 @@ import {
 } from 'react-aria-components';
 import { ArrowDown, ArrowUp, ArrowUpDown, Check, Minus } from 'lucide-react';
 import { cx } from '../utils/cx';
-import '../checkbox/choice.css';
-import './table.css';
 
 type Density = 'standard' | 'compact';
 

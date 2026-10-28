@@ -4,8 +4,6 @@ import { Search, X } from 'lucide-react';
 import { FieldFooter, FieldLabel } from '../field/Field';
 import type { InputSize } from '../text-field/TextField';
 import { cx } from '../utils/cx';
-import '../text-field/input.css';
-import './search.css';
 
 export interface SearchFieldProps extends Omit<AriaSearchFieldProps, 'children' | 'className' | 'style'> {
   /** Visible label. Without it set `aria-label` (e.g. in a table toolbar or the header). */

@@ -5,7 +5,6 @@ import { AvatarSizeContext } from '../avatar/Avatar';
 import { Checkbox } from '../checkbox/Checkbox';
 import { Skeleton } from '../progress/Progress';
 import { cx } from '../utils/cx';
-import './list-view.css';
 
 export interface ListViewProps<T> extends Omit<GridListProps<T>, 'className' | 'style' | 'layout' | 'keyboardNavigationBehavior'> {
   /** Required: names the list (“Inbox”). */
