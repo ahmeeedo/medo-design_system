@@ -1,0 +1,82 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import { DocPage, DocHeader, DocSection, DocFooter, SpecTable, Notes, Tok, SourceLink } from '../docs-blocks/DocBlocks';
+
+<Meta title="Foundations/Accessibility" />
+
+<DocPage>
+
+<DocHeader
+  kind="Foundations"
+  title="Accessibility"
+  meta="WCAG 2.2 AA"
+  subtitle="What the system guarantees – and what stays your job."
+  description={<p>Every component meets WCAG 2.2 AA in Light and Dark. Behaviour, keyboard and screen-reader support come from React Aria Components; the look is tested with axe in every story.</p>}
+  nav={['Built in', 'Your job', 'Settings we follow', 'How it is tested']}
+/>
+
+<DocSection n={1} title="Built in" meta="Components">
+
+<SpecTable
+  head={['Topic', 'What the components do']}
+  rows={[
+    ['Keyboard', 'Every action works with the keyboard; the patterns of the ARIA Authoring Practices (arrow keys in lists, Esc closes). See Accessibility on each component page.'],
+    ['Focus', 'Always visible (:focus-visible), 2 px ring with 3 : 1. Dialogs and sheets keep the focus inside and return it to the trigger.'],
+    ['Names', 'Roles, states and names for screen readers; icon-only controls require a label.'],
+    ['Announcements', 'Results, removals, uploads, page changes and toasts are announced politely.'],
+    ['Contrast', 'Text 4.5 : 1, controls and focus 3 : 1 – in Light and Dark.'],
+    ['Targets', 'At least 24 × 24 px; touch sizes 44 – 48 px.'],
+    ['Alternatives', 'Every drag has a button (Upload, Slider with fields, swipe actions in the menu).'],
+  ]}
+/>
+
+</DocSection>
+
+<DocSection n={2} title="Your job" meta="App">
+
+<Notes title="The system cannot do these for you">
+  <ul>
+    <li>Page structure: one <Tok>h1</Tok>, headings in order, landmarks (<Tok>header</Tok>, <Tok>nav</Tok>, <Tok>main</Tok>), <Tok>SkipLink</Tok> first.</li>
+    <li>The language of the page: <Tok>{'<html lang="de">'}</Tok> and the same locale in the I18nProvider.</li>
+    <li>Real texts: labels for every field, alt text for images, link texts that name the target.</li>
+    <li>Focus after changes: e.g. to the list heading after a page change, to the next item after a delete.</li>
+    <li>Time limits: avoid them; if needed, allow more time (WCAG 2.2.1).</li>
+  </ul>
+</Notes>
+
+</DocSection>
+
+<DocSection n={3} title="Settings we follow" meta="User preferences">
+
+<SpecTable
+  head={['Setting', 'Effect']}
+  rows={[
+    [<Tok>prefers-color-scheme</Tok>, 'Light or Dark (unless data-theme is set).'],
+    [<Tok>prefers-reduced-motion</Tok>, 'Movement becomes a short fade; spinners slow down, skeletons stand still.'],
+    [<Tok>prefers-contrast: more</Tok>, 'Stronger secondary text and borders.'],
+    [<Tok>forced-colors</Tok>, 'Windows high contrast: focus, selection and borders in system colours.'],
+    ['Text size', 'Sizes in rem: text and controls follow the text size set in the browser.'],
+  ]}
+/>
+
+</DocSection>
+
+<DocSection n={4} title="How it is tested" meta="CI">
+
+<SpecTable
+  head={['Check', 'Where']}
+  rows={[
+    ['axe (WCAG 2.2 A + AA and best practices)', 'Every story, Light and Dark, in every pull request.'],
+    ['Interaction tests', 'Keyboard, focus and pointer for every interactive component.'],
+    ['Visual check', 'A screenshot per story and theme catches lost focus rings or contrast.'],
+    ['Manual (recommended)', 'A new component with VoiceOver and NVDA before it ships – automatic checks cannot find every problem.'],
+  ]}
+/>
+
+</DocSection>
+
+<DocFooter>
+  {'Foundations: Accessibility · WCAG 2.2 AA'}
+  <SourceLink path="apps/storybook/.storybook/preview.ts" />
+</DocFooter>
+
+</DocPage>

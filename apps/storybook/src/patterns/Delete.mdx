@@ -1,0 +1,68 @@
+import { Meta, Canvas } from '@storybook/addon-docs/blocks';
+import { DocPage, DocHeader, DocSection, DocFooter, SpecTable, Notes, Tok, SourceLink } from '../docs-blocks/DocBlocks';
+import * as ToastStories from '../../../../packages/ui/src/toast/Toast.stories';
+import * as AlertDialogStories from '../../../../packages/ui/src/dialog/AlertDialog.stories';
+import * as BulkStories from '../../../../packages/ui/src/bulk-action-bar/BulkActionBar.stories';
+import * as ListViewStories from '../../../../packages/ui/src/list-view/ListView.stories';
+
+<Meta title="Patterns/Delete" />
+
+<DocPage>
+
+<DocHeader
+  kind="Patterns"
+  title="Delete"
+  meta="Undo · Confirm · Bulk · Swipe"
+  subtitle="Undo when you can, confirm when you must."
+  description={<p>Asking before every deletion trains people to click “Delete” without reading. Do reversible deletions at once and offer Undo; ask only when the result cannot be taken back or affects other people.</p>}
+  nav={['Decide', 'Undo with a Toast', 'Confirm with an Alert dialog', 'Several items', 'Swipe on touch', 'Texts']}
+/>
+
+<DocSection n={1} title="Decide" meta="Undo or confirm">
+
+<SpecTable
+  head={['Situation', 'Pattern']}
+  rows={[
+    ['Can be restored (trash, archive, soft delete)', 'Delete at once, Toast “… deleted” with Undo (8 s).'],
+    ['Cannot be restored, or affects others (a shared project, an account)', 'Alert dialog: a question as title, the consequence, a danger button with the verb.'],
+    ['Many items at once', 'Bulk action bar; confirm above a threshold or when items cannot be restored.'],
+    ['Lists on touch devices', 'Swipe left reveals Delete; the “…” menu holds the same action.'],
+  ]}
+/>
+
+</DocSection>
+
+<DocSection n={2} title="Undo with a Toast" meta="Reversible" description="Write the result, not the question. The item disappears at once; Undo puts it back.">
+  <Canvas of={ToastStories.Playground} />
+</DocSection>
+
+<DocSection n={3} title="Confirm with an Alert dialog" meta="Irreversible" description="Focus starts on Cancel, so an accidental Enter never deletes. The button names the verb.">
+  <Canvas of={AlertDialogStories.Playground} />
+</DocSection>
+
+<DocSection n={4} title="Several items" meta="Bulk action bar" description="Select rows, then act on all of them. The count is announced; destructive actions come last.">
+  <Canvas of={BulkStories.WithListView} />
+</DocSection>
+
+<DocSection n={5} title="Swipe on touch" meta="List view" description="A shortcut on touch only – mouse and keyboard use the “…” menu with the same actions.">
+  <Canvas of={ListViewStories.Swipe} />
+</DocSection>
+
+<DocSection n={6} title="Texts" meta="Wording">
+
+<Notes title="Name the object, say the consequence once">
+  <ul>
+    <li>Name the object: “Delete Q3-Report.pdf?”, then “Q3-Report.pdf deleted”.</li>
+    <li>Say the consequence once: “This cannot be undone.” – not in the title and the body.</li>
+    <li>Never “Are you sure?”, “OK” or “Yes”.</li>
+  </ul>
+</Notes>
+
+</DocSection>
+
+<DocFooter>
+  {'Pattern: Delete · @med-o/ui'}
+  <SourceLink path="packages/ui/src" />
+</DocFooter>
+
+</DocPage>

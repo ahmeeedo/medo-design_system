@@ -225,7 +225,7 @@ Project structure:
 ```
 packages/tokens     @med-o/design-tokens – DTCG source tokens (src/) and the Style Dictionary build (build.mjs)
 packages/ui         @med-o/ui – one folder per component: React component, CSS and stories
-apps/storybook      Documentation site: foundations, usage examples, Storybook and test configuration
+apps/storybook      Documentation site: foundations, guides, patterns, Storybook and test configuration
 ```
 
 ## Contributing

@@ -1,0 +1,95 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import { DocPage, DocHeader, DocSection, DocFooter, SpecTable, Notes, Tok, SourceLink } from '../docs-blocks/DocBlocks';
+
+<Meta title="Foundations/Content" />
+
+<DocPage>
+
+<DocHeader
+  kind="Foundations"
+  title="Content"
+  meta="Voice · English · Deutsch"
+  subtitle="Short, clear, helpful – texts that say what happens and what to do."
+  description={<p>The rules behind the built-in texts of the components. Use them for your own labels, messages and empty states, so an app reads like one voice.</p>}
+  nav={['Principles', 'Buttons and links', 'Messages', 'Formats', 'Deutsch']}
+/>
+
+<DocSection n={1} title="Principles" meta="Voice">
+
+<SpecTable
+  head={['Principle', 'Example']}
+  rows={[
+    ['Short sentences, common words', '“Choose a date until 31 Dec.” – not “The selected date exceeds the permissible range.”'],
+    ['Sentence case', '“Rows per page”, not “Rows Per Page”.'],
+    ['Say what happens, not how it works', '“Q3-Report.pdf deleted” – not “The delete request was successful.”'],
+    ['Same thing, same word', 'Delete is always “Delete” – not “Remove” in one place and “Erase” in another.'],
+    ['No blame, no jokes in errors', '“The connection was lost. Retry.” – not “Oops! You broke it.”'],
+  ]}
+/>
+
+</DocSection>
+
+<DocSection n={2} title="Buttons and links" meta="Actions">
+
+<SpecTable
+  head={['Rule', 'Do · Don’t']}
+  rows={[
+    ['A verb that names the result', '“Save changes”, “Send invite” · “OK”, “Yes”, “Submit”'],
+    ['Name the object when it helps', '“Delete project”, “Remove Design” (a tag) · “Delete”'],
+    ['Links name the target', '“View all invoices” · “Click here”, “More”'],
+    ['Icon-only: the label is the action', '“Close dialog”, “Copy link” · “X”, “Icon”'],
+  ]}
+/>
+
+</DocSection>
+
+<DocSection n={3} title="Messages" meta="Errors · Empty states · Toasts">
+
+<Notes title="An error message says what to do">
+  <ul>
+    <li>Name the rule and the fix: “Choose a date from 12 Oct 2026 on.”, “You can add up to 10 files. Remove one to add another.”</li>
+    <li>Show it where the problem is: at the field, at the file – not only at the top of the page.</li>
+    <li>Empty states say what is missing and what to do next – never just “No data”.</li>
+    <li>A toast states the result: “Link copied”. Errors that need action stay until closed.</li>
+  </ul>
+</Notes>
+
+</DocSection>
+
+<DocSection n={4} title="Formats" meta="Locale">
+
+<SpecTable
+  head={['Topic', 'Rule']}
+  rows={[
+    ['Dates and times', 'Formatted by the locale (Intl / React Aria) – never build them by hand. Leading zeros: 09:30, 01.05.2026.'],
+    ['Numbers and units', 'Intl.NumberFormat with the locale; a space before the unit: 2.4 MB, 64 %.'],
+    ['Ranges', 'En dash without spaces between numbers: 81–100; with spaces between words or dates: 1 Oct – 14 Oct.'],
+    ['Quotes', 'English “…”, German „…“.'],
+    ['Ellipsis', 'One character … for “continues” and loading: “Saving…”.'],
+  ]}
+/>
+
+</DocSection>
+
+<DocSection n={5} title="Deutsch" meta="Tone">
+
+<SpecTable
+  head={['Rule', 'Example']}
+  rows={[
+    ['Buttons im Infinitiv', '„Speichern“, „Dateien auswählen“ – nicht „Speichere“'],
+    ['Meldungen ohne Anrede', '„Bitte ein Datum ab dem 12.10.2026 wählen.“'],
+    ['„Sie“ nur, wo es nicht anders geht', '„Beim Laden werden Daten wie Ihre IP-Adresse übertragen.“'],
+    ['Tastennamen', '„Strg“ statt „Ctrl“'],
+  ]}
+/>
+
+The German built-in texts follow these rules. To use another tone (“du”), pass your own texts – see Guides / Languages.
+
+</DocSection>
+
+<DocFooter>
+  {'Foundations: Content · English · Deutsch'}
+  <SourceLink path="packages/ui/src/i18n" />
+</DocFooter>
+
+</DocPage>

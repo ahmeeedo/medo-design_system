@@ -1,0 +1,92 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import { DocPage, DocHeader, DocSection, DocFooter, SpecTable, Notes, Tok, SourceLink } from '../docs-blocks/DocBlocks';
+import { LanguageDemo } from './LanguageDemo';
+
+<Meta title="Guides/Languages" />
+
+<DocPage>
+
+<DocHeader
+  kind="Guides"
+  title="Languages"
+  meta="English · Deutsch"
+  subtitle="Built-in texts, dates and numbers in the language of your app."
+  description={<p>Components bring their own texts: close buttons, names for screen readers, announcements and validation messages. They come in English and German and follow the same language as dates and numbers.</p>}
+  nav={['Set the language', 'Example', 'Order of texts', 'Other languages', 'Writing rules']}
+/>
+
+<DocSection n={1} title="Set the language" meta="I18nProvider" description="The language comes from React Aria. Without a provider it follows the browser.">
+
+```tsx
+import { I18nProvider } from 'react-aria-components';
+
+<I18nProvider locale="de-DE">
+  <App />
+</I18nProvider>
+```
+
+Pin the language once at the root – also for an app in one language only (<Tok>locale="en-US"</Tok>). Otherwise a German browser shows German texts next to your English content. Regional variants use their language: <Tok>de-AT</Tok> and <Tok>de-CH</Tok> are German. Any other language falls back to English.
+
+</DocSection>
+
+<DocSection n={2} title="Example" meta="Live" description="The same components, once per language. Use the Language switch in the toolbar to see every example in German.">
+
+<LanguageDemo />
+
+</DocSection>
+
+<DocSection n={3} title="Order of texts" meta="Who wins">
+
+<SpecTable
+  head={['Source', 'Use']}
+  rows={[
+    ['1. Prop of the component', <>One place: <Tok>closeLabel="Close filter"</Tok>, <Tok>texts</Tok> of Upload or Date picker.</>],
+    ['2. MessagesProvider', 'Your own texts for everything below – another language or a different tone.'],
+    ['3. Built-in language', 'English or German, from the I18nProvider or the browser.'],
+  ]}
+/>
+
+</DocSection>
+
+<DocSection n={4} title="Other languages" meta="MessagesProvider" description="Start from the English texts and replace them. TypeScript reports every missing text and wrong parameter.">
+
+```tsx
+import { MessagesProvider, enMessages, type Messages } from '@med-o/ui';
+
+const fr: Messages = {
+  ...enMessages,
+  common: { ...enMessages.common, close: 'Fermer', cancel: 'Annuler' /* … */ },
+  // …
+};
+
+<I18nProvider locale="fr-FR">
+  <MessagesProvider messages={fr}>
+    <App />
+  </MessagesProvider>
+</I18nProvider>
+```
+
+Texts with numbers are functions, so every language can use its own plural forms: <Tok>{'more: (n) => n === 1 ? \'1 weitere Ebene anzeigen\' : `${n} weitere Ebenen anzeigen`'}</Tok>.
+
+</DocSection>
+
+<DocSection n={5} title="Writing rules" meta="German">
+
+<Notes title="How the German texts are written">
+  <ul>
+    <li>Buttons in the infinitive: „Schließen“, „Dateien auswählen“ – never „Schließe“ or „Klicken Sie hier“.</li>
+    <li>Messages without addressing the user: „Bitte ein Datum ab dem 12.10.2026 wählen.“ „Ihre“ only where there is no other way.</li>
+    <li>German quotation marks „…“, the Control key is „Strg“.</li>
+  </ul>
+</Notes>
+
+See also Foundations / Content for the rules in both languages.
+
+</DocSection>
+
+<DocFooter>
+  {'Guide: Languages · @med-o/ui'}
+  <SourceLink path="packages/ui/src/i18n" />
+</DocFooter>
+
+</DocPage>

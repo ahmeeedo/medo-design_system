@@ -1,0 +1,54 @@
+import { Meta, Canvas } from '@storybook/addon-docs/blocks';
+import { DocPage, DocHeader, DocSection, DocFooter, SpecTable, Notes, Tok, SourceLink } from '../docs-blocks/DocBlocks';
+import * as SearchStories from '../../../../packages/ui/src/search/Search.stories';
+
+<Meta title="Patterns/Search" />
+
+<DocPage>
+
+<DocHeader
+  kind="Patterns"
+  title="Search"
+  meta="Search field · Results · Filters · Quick search"
+  subtitle="From a query to the right result: search page, filters on desktop and mobile, quick search."
+  description={<p>Built from Search field, Search result, Tabs, Tag, Accordion, Checkbox and Radio groups, Select, Bottom Sheet and Pagination. The components are documented one by one; this page shows how they work together.</p>}
+  nav={['Search page', 'Filters on desktop', 'Filters on mobile', 'Quick search', 'Rules']}
+/>
+
+<DocSection n={1} title="Search page" meta="Up to 4 filters" description="Result count, type tabs, filters above the list, sort. Query and filters live in the URL.">
+  <Canvas of={SearchStories.Page} />
+</DocSection>
+
+<DocSection n={2} title="Filters on desktop" meta="5 or more filters" description="More filters move into a sidebar (264 px) with Accordion groups. Active filters show as removable tags with “Clear all”.">
+  <Canvas of={SearchStories.Sidebar} />
+</DocSection>
+
+<DocSection n={3} title="Filters on mobile" meta="Below 640 px" description="One “Filters” button with the count opens a Bottom Sheet. The result button applies the filters and shows how many results remain.">
+  <Canvas of={SearchStories.MobileFilters} />
+</DocSection>
+
+<DocSection n={4} title="Quick search" meta="Cmd / Ctrl + K" description="A modal for pages and objects: recent and suggested while empty, hits grouped by type while typing, “All results” at the end.">
+  <Canvas of={SearchStories.Quick} />
+</DocSection>
+
+<DocSection n={5} title="Rules" meta="Do">
+
+<SpecTable
+  head={['Topic', 'Rule']}
+  rows={[
+    ['Landmark', <>Put the search area in a <Tok>{'<search>'}</Tok> element; name the field (label or <Tok>aria-label</Tok>).</>],
+    ['Results', 'Announce the count politely. Every match in bold, never colour alone. One link per result.'],
+    ['Filters', 'Up to 4 above the list, 5 or more in a sidebar (desktop) or a Bottom Sheet (mobile). Apply on mobile with one button.'],
+    ['URL', 'Query, filters, sort and page in the URL – links can be shared and the back button works.'],
+    ['No results', 'An Empty state of type “no results”: say what was searched and offer a way out (clear filters, other words).'],
+  ]}
+/>
+
+</DocSection>
+
+<DocFooter>
+  {'Pattern: Search · @med-o/ui'}
+  <SourceLink path="packages/ui/src/search" />
+</DocFooter>
+
+</DocPage>

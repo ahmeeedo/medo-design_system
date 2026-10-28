@@ -12,7 +12,9 @@ import { Button } from '@med-o/ui';
  * ```
  */
 const meta = {
-  title: 'Usage/Tailwind',
+  title: 'Guides/Tailwind',
+  // Keeps the URL of the former “Usage” group (…/usage-tailwind--docs).
+  id: 'usage-tailwind',
   tags: ['autodocs'],
   parameters: { layout: 'centered', medo: { subtitle: 'Utility classes on top of the tokens. Only system values exist.' } },
 } satisfies Meta;

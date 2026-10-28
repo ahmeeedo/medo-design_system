@@ -1,0 +1,99 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import { DocPage, DocHeader, DocSection, DocFooter, SpecTable, Notes, Tok, SourceLink } from '../docs-blocks/DocBlocks';
+
+<Meta title="Guides/Theming" />
+
+<DocPage>
+
+<DocHeader
+  kind="Guides"
+  title="Theming"
+  meta="Light · Dark · Contrast · Overrides"
+  subtitle="Light and Dark, higher contrast and your own styles – without touching the components."
+  description={<p>Themes are token values only. Components read semantic tokens, so a theme, a contrast setting or your own override changes every component at once.</p>}
+  nav={['Light and Dark', 'Theme islands', 'Higher contrast', 'Override styles', 'Change tokens']}
+/>
+
+<DocSection n={1} title="Light and Dark" meta="data-theme" description="The tokens follow the operating system. Nothing to set up.">
+
+```html
+<html>                     <!-- follows the system setting -->
+<html data-theme="light">  <!-- always Light -->
+<html data-theme="dark">   <!-- always Dark -->
+```
+
+A theme switch in your app only sets the attribute. Store the choice (e.g. in `localStorage`) and set it before the first paint, so the page does not flash.
+
+</DocSection>
+
+<DocSection n={2} title="Theme islands" meta="Any element" description="data-theme works on any element. Everything inside uses that theme.">
+
+```html
+<main data-theme="light">
+  …
+  <aside data-theme="dark">A dark promo band on a light page</aside>
+</main>
+```
+
+Shadows and the colour scheme of form controls (`color-scheme`) switch with the island.
+
+</DocSection>
+
+<DocSection n={3} title="Higher contrast" meta="prefers-contrast" description="“Increase contrast” in the system settings strengthens secondary text and borders – automatically.">
+
+<SpecTable
+  head={['Token', 'With higher contrast']}
+  rows={[
+    [<Tok>color/text/secondary</Tok>, 'neutral 700 (Light) · neutral 300 (Dark): at least 9.4 : 1 on every surface'],
+    [<Tok>color/border/default</Tok>, 'same as border/strong: at least 4.3 : 1'],
+  ]}
+/>
+
+Windows high contrast (`forced-colors`) is handled in the components: focus rings, selected states and borders use system colours there.
+
+</DocSection>
+
+<DocSection n={4} title="Override styles" meta="Cascade layers" description="Component styles sit in the cascade layer components. Your CSS without a layer always wins – whatever its specificity.">
+
+```css
+/* Your app – no !important, no long selectors */
+.medo-button { border-radius: 0; }
+.medo-card--outlined { border-color: var(--medo-color-border-strong); }
+```
+
+With Tailwind v4 the utilities win too: `<Button className="mt-4 w-full">`. The layer order is the one of Tailwind: <Tok>theme, base, components, utilities</Tok>.
+
+<Notes title="Prefer tokens over overrides">
+  <ul>
+    <li>Change a token when the change belongs to the brand (all buttons, all cards).</li>
+    <li>Override a class only for a local exception.</li>
+    <li>Never style the inner parts (<Tok>__icon</Tok>, <Tok>__label</Tok> …) – they can change in a minor release. Classes on the root and modifiers are stable.</li>
+  </ul>
+</Notes>
+
+</DocSection>
+
+<DocSection n={5} title="Change tokens" meta="CSS variables" description="Set a semantic token on :root or on any element. Components inside follow.">
+
+```css
+:root {
+  --medo-color-action-primary: #0b5cad;
+  --medo-radius-md: 0.25rem;
+}
+
+/* Dark values for the same tokens */
+[data-theme="dark"] {
+  --medo-color-action-primary: #5aa2f0;
+}
+```
+
+Keep the contrast: text on <Tok>action/primary</Tok> must reach 4.5 : 1. The token values of the design system come from the design library – for a lasting change of med.o itself, please open an issue.
+
+</DocSection>
+
+<DocFooter>
+  {'Guide: Theming · @med-o/design-tokens · @med-o/ui'}
+  <SourceLink path="packages/tokens/src" />
+</DocFooter>
+
+</DocPage>

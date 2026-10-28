@@ -1,0 +1,58 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import { DocPage, DocHeader, DocSection, DocFooter, Notes, Tok, SourceLink } from '../docs-blocks/DocBlocks';
+import { IconSizes, IconMeanings } from './components/IconDocs';
+
+<Meta title="Foundations/Icons" />
+
+<DocPage>
+
+<DocHeader
+  kind="Foundations"
+  title="Icons"
+  meta="Lucide · 16 · 20 · 24"
+  subtitle="One icon set, three sizes, one meaning per icon."
+  description={<p>med.o uses <a href="https://lucide.dev" target="_blank" rel="noreferrer">Lucide</a> (ISC license): outlined, 2 px stroke on a 24 px grid. The components set size and colour; icons inherit the text colour (<Tok>currentColor</Tok>).</p>}
+  nav={['Sizes', 'Meanings', 'Accessibility', 'Use']}
+/>
+
+<DocSection n={1} title="Sizes" meta="size/icon/*" description="The size follows the control, not the content.">
+  <IconSizes />
+</DocSection>
+
+<DocSection n={2} title="Meanings" meta="Fixed" description="These icons mean the same everywhere in med.o. Use another icon for another meaning.">
+  <IconMeanings />
+</DocSection>
+
+<DocSection n={3} title="Accessibility" meta="WCAG 1.1.1">
+
+<Notes title="Icons are decorative – the name comes from the text">
+  <ul>
+    <li>Next to a label: <Tok>aria-hidden="true"</Tok>. The components do this for their icon slots.</li>
+    <li>Icon only: an Icon Button with <Tok>aria-label</Tok> (“Close dialog”). The label is shown as a tooltip.</li>
+    <li>Status: never the icon alone – a text or a hidden text says what it means (“Error:”, “Unread”).</li>
+    <li>Contrast: an icon that carries meaning needs 3 : 1 against its background.</li>
+  </ul>
+</Notes>
+
+</DocSection>
+
+<DocSection n={4} title="Use" meta="React · HTML">
+
+```tsx
+import { Download } from 'lucide-react';
+import { Button, IconButton } from '@med-o/ui';
+
+<Button startIcon={<Download />}>Export</Button>
+<IconButton icon={<Download />} aria-label="Export report" />
+```
+
+Without React: the same icons as SVG from `lucide-static`, sized with `width/height: var(--medo-size-icon-md)`.
+
+</DocSection>
+
+<DocFooter>
+  {'Foundations: Icons · lucide-react'}
+  <SourceLink path="apps/storybook/src/foundations/components/IconDocs.tsx" />
+</DocFooter>
+
+</DocPage>

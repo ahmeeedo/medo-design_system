@@ -7,7 +7,9 @@ import { Button, Checkbox, Radio, RadioGroup, Switch, TextField } from '@med-o/u
  * Validation runs on submit (native + React Aria): try sending it empty.
  */
 const meta = {
-  title: 'Usage/Form',
+  title: 'Patterns/Form',
+  // Keeps the URL of the former “Usage” group (…/usage-form--docs).
+  id: 'usage-form',
   tags: ['autodocs'],
   parameters: { layout: 'padded', medo: { subtitle: 'A complete form built from the components, with validation.' } },
 } satisfies Meta;
