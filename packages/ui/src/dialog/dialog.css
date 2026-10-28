@@ -54,7 +54,7 @@
 /* ---------- Motion: scrim fades, dialog scales 0.96 → 1 and fades ---------- */
 
 /*
- * Motion (iOS): the scrim fades, the dialog settles from 96 % with a smooth spring (fullscreen: slides up);
+ * Motion: the scrim fades, the dialog settles from 96 % with a smooth spring (fullscreen: slides up);
  * out: everything fades quickly. Transitions – an interrupted open or close reverses smoothly.
  * React Aria waits for the overlay's own transition, so the dialog's exit is never longer than the overlay's.
  */

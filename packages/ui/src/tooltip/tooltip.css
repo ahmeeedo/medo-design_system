@@ -30,7 +30,7 @@
   white-space: nowrap;
 }
 
-/* Motion (iOS): fades in and settles from 96 % at the trigger; out: a quick fade without movement. */
+/* Motion: fades in and settles from 96 % at the trigger; out: a quick fade without movement. */
 .medo-tooltip {
   transform-origin: var(--trigger-anchor-point, top);
   transition:

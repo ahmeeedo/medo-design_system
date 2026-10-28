@@ -51,7 +51,8 @@ export function IconSizes() {
             </th>
             <td>{px}</td>
             <td>
-              <Settings aria-hidden="true" style={{ inlineSize: px, blockSize: px, display: 'block' }} />
+              {/* The size from the token itself, so the example shows what the token says. */}
+              <Settings aria-hidden="true" style={{ inlineSize: `var(--medo-${token.replaceAll('/', '-')})`, blockSize: `var(--medo-${token.replaceAll('/', '-')})`, display: 'block' }} />
             </td>
             <td className="doc-cell-muted">{use}</td>
           </tr>

@@ -344,7 +344,7 @@
   color: var(--medo-color-feedback-danger-text);
 }
 
-/* New files slide in softly (iOS list insert). */
+/* New files slide in softly, so the eye finds them. */
 .medo-upload__item {
   transition:
     opacity var(--medo-motion-duration-normal) var(--medo-motion-easing-enter),

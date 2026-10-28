@@ -22,7 +22,7 @@ export interface EmbedTexts {
 }
 
 /**
- * Texts per type. provider: “YouTube”, “Google Maps” · company: “Google”.
+ * Texts per type. provider: the service (“Example Video”) · company: who runs it, when it differs (“Example Inc.”).
  * `messages`: the language (default English); the component passes the current one.
  */
 export function defaultEmbedTexts(type: EmbedType, provider?: string, company?: string, messages: Messages = en): EmbedTexts {
@@ -42,11 +42,11 @@ const icons = { video: <Play />, map: <MapPin />, generic: <Globe /> };
 
 export interface EmbedConsentProps {
   type?: EmbedType;
-  /** “YouTube”, “Google Maps”, “Vimeo” … */
+  /** Name of the service that provides the content (“Example Video”). */
   provider?: string;
-  /** Who receives the data, when it differs (“Google”). */
+  /** Who receives the data, when it differs from the service (“Example Inc.”). */
   company?: string;
-  /** The embed URL – requested only after consent. Prefer privacy-friendly URLs (youtube-nocookie.com). */
+  /** The embed URL – requested only after consent. Prefer the privacy-friendly embed URL of the service, if it offers one. */
   src: string;
   /** Required: names the iframe (“Video: Product tour”). */
   title: string;

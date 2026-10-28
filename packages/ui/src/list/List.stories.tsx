@@ -28,7 +28,7 @@ const meta = {
       },
       a11y: {
         notes: [
-          'Real `ul`, `ol` and `dl`; `role="list"` keeps the list for Safari / VoiceOver.',
+          'Real `ul`, `ol` and `dl`; `role="list"` keeps the list for screen readers when the markers come from CSS.',
           'Excluded items get a hidden “Not included:”.',
           'The DescriptionList stacks below 22.5 rem (container query).',
         ],
@@ -46,7 +46,7 @@ const meta = {
     docs: {
       description: {
         component:
-          'Real lists – `ul`, `ol` and `dl`; the markers are drawn in CSS, so the lists set `role="list"` (Safari/VoiceOver drops it otherwise). Plain markup, no library. ' +
+          'Real lists – `ul`, `ol` and `dl`; the markers are drawn in CSS, so the lists set `role="list"` (some browser and screen reader combinations drop it otherwise). Plain markup, no library. ' +
           'Markers are neutral (text/secondary) in their own column (24 px, numbers 28 px with tabular figures, right aligned); long items wrap flush with their first line. ' +
           'A List inside a ListItem is level 2 (ring, “a.”) – max 2 levels. Without `size` the list follows the surrounding text. ' +
           'Feature list: check in text/brand; `excluded` items are muted with a cross and a hidden “Not included:”. ' +

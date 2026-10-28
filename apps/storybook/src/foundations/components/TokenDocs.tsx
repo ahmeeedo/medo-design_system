@@ -277,7 +277,7 @@ export function Elevation() {
     <div className="doc-stages" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(20rem, 1fr))' }}>
       {(['light', 'dark'] as const).map((theme) => (
         <div key={theme} data-theme={theme} className="doc-stage" style={{ background: 'var(--medo-color-surface-canvas)' }}>
-          <span className="doc-stage-label medo-text-code-sm doc-upper">{theme}</span>
+          <span className="doc-stage-label medo-text-code-sm">{theme}</span>
           <div style={{ display: 'flex', gap: 24, flexWrap: 'wrap' }}>
             {byGroup('shadow').map((t) => (
               <div

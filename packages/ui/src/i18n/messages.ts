@@ -137,7 +137,7 @@ export interface Messages {
   };
 }
 
-/** Texts of the Embed consent for one type. provider: “YouTube”, to: who receives the data (“Google”). */
+/** Texts of the Embed consent for one type. provider: the service (“Example Video”), to: who receives the data (“Example Inc.”). */
 export interface EmbedMessages {
   title: string;
   body: (provider: string | undefined, to: string | undefined) => string;

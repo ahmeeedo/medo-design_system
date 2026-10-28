@@ -46,10 +46,6 @@ body {
 .doc-muted {
   color: var(--medo-color-text-secondary);
 }
-.doc-upper {
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-}
 .doc-strong {
   font-weight: var(--medo-font-weight-semibold);
   color: var(--medo-color-text-primary);
@@ -233,10 +229,15 @@ body {
   line-height: 1.6;
   color: var(--medo-color-text-secondary);
 }
+/* Plain lists in docs text (also inside notes): Tailwind's reset removes the markers, so they are set again. */
 .doc-body :where(ul, ol):not([class]) {
+  list-style: disc;
   padding-left: var(--medo-space-5);
   display: grid;
   gap: var(--medo-space-1);
+}
+.doc-body :where(ol):not([class]) {
+  list-style: decimal;
 }
 .doc-body > :where(p, ul, ol) strong {
   color: var(--medo-color-text-primary);

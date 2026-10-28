@@ -167,7 +167,7 @@
   padding-inline: var(--medo-space-4) 0;
 }
 
-/* Row feedback fades; pressed shows at once (iOS highlight). */
+/* Row feedback fades; pressed shows at once, so a tap feels immediate. */
 .medo-table__row > .medo-table__cell {
   transition: background-color var(--medo-motion-duration-fast) var(--medo-motion-easing-standard);
 }

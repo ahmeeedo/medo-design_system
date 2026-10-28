@@ -99,7 +99,7 @@ function clearErrorWhenValid(e: FormEvent<HTMLInputElement | HTMLTextAreaElement
   });
 }
 
-/** Visible counter plus a calm, delayed announcement for screen readers (pattern of GOV.UK). */
+/** Visible counter plus a calm announcement for screen readers, one second after typing stops (not on every key). */
 function CharacterCount({ count, limit }: { count: number; limit: number }) {
   const m = useMessages();
   const over = count - limit;

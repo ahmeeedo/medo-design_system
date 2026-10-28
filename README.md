@@ -197,7 +197,7 @@ Marketing components (carousel, video player, hero sections) are not part of the
 
 - Target: WCAG 2.2 AA in Light and Dark. Contrast values are documented in the token descriptions.
 - Behaviour, keyboard and screen reader support come from React Aria Components.
-- Focus is always visible (`:focus-visible`), with a fallback for Windows high contrast mode (`forced-colors`).
+- Focus is always visible (`:focus-visible`), with a fallback for the high contrast mode of the operating system (`forced-colors`).
 - Motion uses interruptible spring transitions (`--medo-motion-spring-*`). With `prefers-reduced-motion` only cross-fades remain.
 - Every story is checked with axe, and every interactive component has an interaction test (keyboard, focus, pointer). Both run in CI.
 

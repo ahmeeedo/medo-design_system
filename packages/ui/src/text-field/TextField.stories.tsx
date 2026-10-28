@@ -58,7 +58,7 @@ const meta = {
           'Label, description and error text are linked to the input.',
           'An error disappears as soon as the input is valid; new errors show on blur or submit.',
           '`characterLimit` shows a counter and announces the remaining characters after a pause.',
-          'Size lg uses 16 px text, which prevents the zoom on iOS.',
+          'Size lg uses 16 px text, which prevents the automatic zoom of mobile browsers when the field gets the focus.',
         ],
       },
       styling: {
@@ -76,7 +76,7 @@ const meta = {
       description: {
         component:
           'Label, input and helper or error text. ' +
-          'Always a visible label (a placeholder is no label). On mobile and touch use size **lg** (16 px text prevents iOS zoom). ' +
+          'Always a visible label (a placeholder is no label). On mobile and touch use size **lg** (16 px text prevents the automatic zoom of mobile browsers). ' +
           'Built on React Aria `TextField`: label, description and error are connected for screen readers automatically.',
       },
     },

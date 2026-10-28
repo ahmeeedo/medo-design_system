@@ -35,7 +35,7 @@
   overflow: hidden;
 }
 
-/* Motion (iOS): unfolds from the field with a snappy spring and fades in; out: a quick fade. */
+/* Motion: unfolds from the field with a snappy spring and fades in; out: a quick fade. */
 .medo-listbox-popover {
   transform-origin: var(--trigger-anchor-point, top);
   transition:

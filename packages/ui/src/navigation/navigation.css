@@ -196,7 +196,6 @@
   padding: var(--medo-space-2) var(--medo-space-2) var(--medo-space-1);
   font: var(--medo-typography-overline);
   color: var(--medo-color-text-secondary);
-  text-transform: uppercase;
 }
 
 .medo-nav-section__divider {

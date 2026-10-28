@@ -17,7 +17,7 @@ type ToggleSize = 'sm' | 'md' | 'lg';
 
 /** Item size set by a group (segmented items are one size smaller than the group). */
 const ToggleSizeContext = createContext<ToggleSize | null>(null);
-/** Segmented groups show a sliding indicator (iOS segmented control). */
+/** Segmented groups show a sliding indicator: it moves to the new item, so the eye follows the selection. */
 const SegmentedContext = createContext(false);
 
 export interface ToggleButtonProps extends Omit<AriaToggleButtonProps, 'children' | 'className' | 'style'> {

@@ -76,7 +76,7 @@
   box-shadow: var(--_focus);
 }
 
-/* Windows high contrast mode hides box-shadows: fall back to a real outline. */
+/* High contrast mode of the operating system (forced-colors) hides box-shadows: fall back to a real outline. */
 @media (forced-colors: active) {
   .medo-button:is([data-focus-visible], :not([data-rac]):focus-visible) {
     outline: var(--medo-focus-ring-width) solid CanvasText;
@@ -96,7 +96,7 @@
   cursor: not-allowed;
 }
 
-/* iOS highlight: pressed shows at once and fades out on release. Color fades stay with reduced motion. */
+/* Pressed shows at once and fades out on release, so a tap feels immediate. Color fades stay with reduced motion. */
 .medo-button:is([data-pressed], :not([data-rac]):active) {
   transition-duration: 0s;
 }

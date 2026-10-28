@@ -139,7 +139,7 @@
   border-radius: inherit;
   background-color: var(--medo-color-surface-thumb);
   box-shadow: var(--medo-shadow-elevation-1);
-  /* SelectionIndicator animates translate and size from the previous tab – a snappy spring like the iOS segmented control. */
+  /* SelectionIndicator animates translate and size from the previous tab – a snappy spring, so the eye follows the selection. */
   transition:
     translate var(--medo-motion-spring-snappy-duration) var(--medo-motion-spring-snappy),
     width var(--medo-motion-spring-snappy-duration) var(--medo-motion-spring-snappy);

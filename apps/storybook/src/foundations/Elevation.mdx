@@ -23,10 +23,10 @@ import { DocPage, DocHeader, DocSection, DocFooter, Notes, Tok, SourceLink } fro
   <SimpleTable path={['blur']} />
 </DocSection>
 
-<DocSection n={3} title="Motion" meta="Durations · easings · springs" description="Like iOS: short, purposeful and physical. Feedback within 100 ms, things that move use springs, exits are shorter than entries.">
+<DocSection n={3} title="Motion" meta="Durations · easings · springs" description="Short, purposeful and physical. Feedback within 100 ms, things that move use springs, exits are shorter than entries.">
   <Motion />
   <Notes>
-    <p><strong>Feedback</strong> (hover, pressed, focus): color and opacity with <Tok>motion/duration/fast</Tok> + <Tok>motion/easing/standard</Tok>. Pressed shows at once and fades out on release (iOS highlight).</p>
+    <p><strong>Feedback</strong> (hover, pressed, focus): color and opacity with <Tok>motion/duration/fast</Tok> + <Tok>motion/easing/standard</Tok>. Pressed shows at once and fades out on release, so a tap feels immediate.</p>
     <p><strong>Movement</strong> (sheets, drawers, dialogs, toasts, accordion, swipe): <Tok>motion/spring/smooth</Tok>. <strong>Small controls</strong> (switch, tab and segment indicator, checkbox and radio marks, slider thumb, chevrons): <Tok>motion/spring/snappy</Tok>. A spring uses its curve with its settle time: <Tok>transition: transform var(--medo-motion-spring-smooth-duration) var(--medo-motion-spring-smooth)</Tok>.</p>
     <p><strong>Overlays</strong> grow from their trigger (<Tok>transform-origin: var(--trigger-anchor-point)</Tok>) and fade in; out: <Tok>motion/duration/fast</Tok> + <Tok>motion/easing/exit</Tok>. Use transitions (with <Tok>[data-entering]</Tok> or <Tok>@starting-style</Tok>) instead of keyframes, so an interrupted open or close reverses smoothly.</p>
     <p><strong>Reduced motion</strong> (<Tok>prefers-reduced-motion: reduce</Tok>): no sliding and no scaling – a short cross-fade with <Tok>motion/duration/fast</Tok>, so states never jump. Color fades stay.</p>

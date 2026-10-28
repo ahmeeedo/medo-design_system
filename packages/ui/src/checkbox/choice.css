@@ -84,7 +84,7 @@
   transition: transform var(--medo-motion-spring-snappy-duration) var(--medo-motion-spring-snappy);
 }
 
-/* The check pops in with a snappy spring (iOS). */
+/* The check pops in with a snappy spring. */
 .medo-checkbox .medo-choice__control > svg {
   transition:
     scale var(--medo-motion-spring-snappy-duration) var(--medo-motion-spring-snappy),

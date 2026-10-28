@@ -68,7 +68,7 @@
   border-radius: var(--medo-radius-sm);
 }
 
-/* The selected fill is an indicator that slides between the items with a snappy spring (iOS segmented control). */
+/* The selected fill is an indicator that slides between the items with a snappy spring. */
 .medo-toggle-group--segmented .medo-toggle:is([data-selected], [aria-pressed='true']) {
   --_bg: transparent;
 }

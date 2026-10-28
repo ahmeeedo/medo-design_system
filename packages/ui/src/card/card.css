@@ -201,7 +201,7 @@
   }
 }
 
-/* Interactive cards give way a little while pressed (iOS) and spring back. */
+/* Interactive cards give way a little while pressed and spring back. */
 .medo-card--interactive {
   transition: scale var(--medo-motion-spring-snappy-duration) var(--medo-motion-spring-snappy);
 }

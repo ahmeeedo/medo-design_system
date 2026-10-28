@@ -115,7 +115,7 @@
 
 /* ---------- Mobile: native picker (single) ---------- */
 
-/* Invisible native select over the field: taps open the system picker. 16 px prevents iOS zoom. */
+/* Invisible native select over the field: taps open the system picker. 16 px prevents the automatic zoom of mobile browsers. */
 .medo-select__native {
   position: absolute;
   inset: 0;

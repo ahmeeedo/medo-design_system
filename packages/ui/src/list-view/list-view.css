@@ -58,7 +58,7 @@
   cursor: pointer;
 }
 
-/* Row feedback fades; pressed shows at once (iOS highlight). */
+/* Row feedback fades; pressed shows at once, so a tap feels immediate. */
 .medo-list-row {
   transition: background-color var(--medo-motion-duration-fast) var(--medo-motion-easing-standard);
 }

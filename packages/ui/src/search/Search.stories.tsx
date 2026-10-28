@@ -381,7 +381,7 @@ function SearchPage() {
     <Tabs selectedKey={tab} onSelectionChange={setTab}>
       <div style={{ display: 'grid', gap: 'var(--medo-space-6)' }}>
         <search style={{ display: 'grid', gap: 'var(--medo-space-6)', justifyItems: 'center' }}>
-          <div style={{ inlineSize: '100%', maxInlineSize: '48rem' }}>
+          <div style={{ inlineSize: '100%' }}>
             <SearchField
               aria-label="Search"
               placeholder="Search pages, files, people …"

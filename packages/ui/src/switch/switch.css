@@ -63,7 +63,7 @@
   border-radius: var(--medo-radius-full);
   background-color: var(--medo-color-text-on-action);
   color: var(--_track);
-  /* The thumb moves with a snappy spring (iOS). */
+  /* The thumb moves with a snappy spring. */
   transition:
     transform var(--medo-motion-spring-snappy-duration) var(--medo-motion-spring-snappy),
     color var(--medo-motion-duration-fast) var(--medo-motion-easing-standard);

@@ -7,7 +7,7 @@
           "value": 100,
           "unit": "ms"
         },
-        "$description": "100 ms: feedback – hover, pressed, focus, color and opacity. Pressed starts at once and fades out (iOS highlight)."
+        "$description": "100 ms: feedback – hover, pressed, focus, color and opacity. Pressed starts at once and fades out, so a tap feels immediate."
       },
       "normal": {
         "$type": "duration",
@@ -51,7 +51,7 @@
           0,
           1
         ],
-        "$description": "cubic-bezier(0.32, 0.72, 0, 1): the iOS ease-out – state changes and movement within the view where no spring is used."
+        "$description": "cubic-bezier(0.32, 0.72, 0, 1): a strong ease-out (fast start, long soft landing) – state changes and movement within the view where no spring is used."
       },
       "enter": {
         "$type": "cubicBezier",

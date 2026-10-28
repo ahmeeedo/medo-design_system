@@ -420,12 +420,7 @@
         "fontSize": "{font.size.xs}",
         "fontWeight": "{font.weight.semibold}",
         "lineHeight": 1.3333,
-        "letterSpacing": "{font.tracking.wide}"
-      },
-      "$extensions": {
-        "com.medo": {
-          "textTransform": "uppercase"
-        }
+        "letterSpacing": "{font.tracking.normal}"
       }
     },
     "code": {

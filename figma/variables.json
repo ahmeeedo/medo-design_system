@@ -150,12 +150,12 @@
     "Layout": { "modes": ["Mobile", "Tablet", "Desktop"], "vars": { "layout/columns": [4, 8, 12], "layout/gutter": [16, 24, 24], "layout/margin": [16, 24, 32], "layout/section": [48, 64, 96] } }
   },
   "descriptions": {
-    "motion/duration/fast": "100 ms: feedback – hover, pressed, focus, color and opacity. Pressed starts at once and fades out (iOS highlight).",
+    "motion/duration/fast": "100 ms: feedback – hover, pressed, focus, color and opacity. Pressed starts at once and fades out, so a tap feels immediate.",
     "motion/duration/normal": "250 ms: small changes in place – fades, overlays in (popover, menu, tooltip), content swaps.",
     "motion/duration/slow": "350 ms: larger fades and the fallback where a spring cannot be used.",
     "motion/duration/smooth": "Perceptual duration of spring/smooth (SwiftUI .smooth: 0.5 s). Code turns spring + duration into a CSS linear() curve and its settle time.",
     "motion/duration/snappy": "Perceptual duration of spring/snappy. Code turns spring + duration into a CSS linear() curve and its settle time.",
-    "motion/easing/standard": "cubic-bezier(0.32, 0.72, 0, 1): the iOS ease-out – state changes and movement within the view where no spring is used.",
+    "motion/easing/standard": "cubic-bezier(0.32, 0.72, 0, 1): a strong ease-out (fast start, long soft landing) – state changes and movement within the view where no spring is used.",
     "motion/easing/enter": "cubic-bezier(0.16, 1, 0.3, 1): elements appearing – fast start, long soft landing.",
     "motion/easing/exit": "cubic-bezier(0.32, 0, 0.67, 0): elements leaving – accelerate out; exits are always shorter than entries.",
     "motion/spring/smooth": "Spring like SwiftUI .smooth (bounce 0, with duration/smooth): no overshoot. Everything that moves – sheets, drawers, dialogs, toasts, accordion, swipe.",
@@ -260,7 +260,7 @@
     ["label/sm-strong", "DM Sans", 700, 12, 16, 0, "none"],
     ["label/xs", "DM Sans", 500, 11, 16, 0, "none"],
     ["caption", "DM Sans", 400, 12, 16, 0, "none"],
-    ["overline", "DM Sans", 600, 12, 16, 4, "uppercase"],
+    ["overline", "DM Sans", 600, 12, 16, 0, "none"],
     ["code/md", "DM Mono", 400, 14, 20, 0, "none"],
     ["code/sm", "DM Mono", 400, 12, 16, 0, "none"],
     ["avatar/xs", "DM Sans", 600, 9, "100%", 0, "none"],

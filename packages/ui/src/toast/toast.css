@@ -129,7 +129,7 @@
   }
 }
 
-/* ---------- Motion (View Transitions, iOS): in slides up with a smooth spring, out fades and shrinks a little;
+/* ---------- Motion (View Transitions): in slides up with a smooth spring, out fades and shrinks a little;
  * the other toasts glide to their new place with the same spring. ---------- */
 
 ::view-transition-group(.medo-toast) {

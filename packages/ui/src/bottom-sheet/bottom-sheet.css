@@ -48,7 +48,7 @@
   color: var(--medo-color-text-primary);
   outline: none;
   touch-action: pan-y;
-  /* Slides with a smooth spring (iOS sheet) – also back when a swipe is too short. */
+  /* Slides with a smooth spring – also back when a swipe is too short. */
   transition: transform var(--medo-motion-spring-smooth-duration) var(--medo-motion-spring-smooth);
 }
 

@@ -245,17 +245,17 @@ export const Embed: Story = {
     docs: {
       description: {
         story:
-          'Nothing loads from the provider – not even its thumbnail – until the click (GDPR, TTDSG § 25); youtube-nocookie.com still sends the IP address. Default from 480 px width, Compact below (measured on the component). After the click the iframe replaces the placeholder and takes the focus; “Always load …” goes to `onConsent(true)` – store it in the consent manager. Here the iframe shows a local demo page.',
+          'Nothing loads from the provider – not even its thumbnail – until the click (GDPR, TTDSG § 25); even “privacy-enhanced” embed URLs still send the IP address. Default from 480 px width, Compact below (measured on the component). After the click the iframe replaces the placeholder and takes the focus; “Always load …” goes to `onConsent(true)` – store it in the consent manager. Here the iframe shows a local demo page.',
       },
     },
   },
   render: () => (
     <div style={{ display: 'grid', gap: 'var(--medo-space-6)', maxInlineSize: '40rem' }}>
-      <EmbedConsent type="video" provider="YouTube" company="Google" src={demoEmbed} title="Video: Product tour" privacyHref="#privacy" onConsent={fn()} />
+      <EmbedConsent type="video" provider="Example Video" company="Example Inc." src={demoEmbed} title="Video: Product tour" privacyHref="#privacy" onConsent={fn()} />
       <div style={{ maxInlineSize: '20rem' }}>
-        <EmbedConsent type="video" provider="YouTube" company="Google" src={demoEmbed} title="Video: Product tour" privacyHref="#privacy" onConsent={fn()} />
+        <EmbedConsent type="video" provider="Example Video" company="Example Inc." src={demoEmbed} title="Video: Product tour" privacyHref="#privacy" onConsent={fn()} />
       </div>
-      <EmbedConsent type="map" provider="Google Maps" company="Google" src={demoEmbed} title="Map: Our office" privacyHref="#privacy" onConsent={fn()} />
+      <EmbedConsent type="map" provider="Example Maps" company="Example Inc." src={demoEmbed} title="Map: Our office" privacyHref="#privacy" onConsent={fn()} />
       <EmbedConsent type="generic" src={demoEmbed} title="Booking widget" privacyHref="#privacy" onConsent={fn()} />
     </div>
   ),
@@ -265,13 +265,13 @@ export const InteractionTest: Story = {
   ...interactionTest,
   render: () => (
     <div style={{ maxInlineSize: '40rem' }}>
-      <EmbedConsent type="video" provider="YouTube" company="Google" src={demoEmbed} title="Video: Product tour" privacyHref="#privacy" onConsent={fn()} />
+      <EmbedConsent type="video" provider="Example Video" company="Example Inc." src={demoEmbed} title="Video: Product tour" privacyHref="#privacy" onConsent={fn()} />
     </div>
   ),
   play: async ({ canvas, userEvent, canvasElement }) => {
     // Nothing loads before the click.
     await expect(canvasElement.querySelector('iframe')).toBeNull();
-    await userEvent.click(canvas.getByRole('checkbox', { name: 'Always load YouTube videos' }));
+    await userEvent.click(canvas.getByRole('checkbox', { name: 'Always load Example Video videos' }));
     await userEvent.click(canvas.getByRole('button', { name: 'Load video' }));
     // The iframe replaces the placeholder in place and takes the focus.
     const frame = await canvas.findByTitle('Video: Product tour');

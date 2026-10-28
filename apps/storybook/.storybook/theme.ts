@@ -19,13 +19,15 @@ const maps = {
 /** Toolbar global "theme" ("Light" | "Dark") → mode */
 export const modeFromGlobals = (globals?: Record<string, unknown>): Mode => (globals?.theme === 'Dark' ? 'dark' : 'light');
 
+/** A token value of one mode. The dark list only contains values that differ (colors); everything else comes from light. */
+export const token = (mode: Mode, name: string) => {
+  const value = maps[mode].get(name) ?? maps.light.get(name);
+  if (value === undefined) throw new Error(`Unknown token: ${name}`);
+  return value;
+};
+
 const build = (mode: Mode): ThemeVars => {
-  const t = (name: string) => {
-    // The dark list only contains values that differ (colors); everything else comes from light.
-    const value = maps[mode].get(name) ?? maps.light.get(name);
-    if (value === undefined) throw new Error(`Unknown token: ${name}`);
-    return value;
-  };
+  const t = (name: string) => token(mode, name);
   return create({
     base: mode,
     brandTitle: 'med.o Design System', // also the alt text of the logo

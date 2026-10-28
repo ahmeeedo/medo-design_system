@@ -4,7 +4,7 @@ import { withThemeByDataAttribute } from '@storybook/addon-themes';
 import { createElement } from 'react';
 import { I18nProvider } from 'react-aria-components';
 
-// Fonts are self-hosted (no request to Google). Weights 400–700.
+// Fonts are self-hosted (no request to a font service). Weights 400–700.
 import '@fontsource/dm-sans/400.css';
 import '@fontsource/dm-sans/500.css';
 import '@fontsource/dm-sans/600.css';
@@ -50,9 +50,10 @@ const preview: Preview = {
   // Language of the built-in texts, dates and numbers – the same I18nProvider an app sets.
   globalTypes: {
     locale: {
-      description: 'Language of the components',
+      // Shown as the tooltip: the switch changes the components, not the docs text.
+      description: 'Language of the components: built-in texts (buttons, messages, screen-reader names), dates and numbers. The docs text stays English.',
       toolbar: {
-        title: 'Language',
+        title: 'Component language',
         icon: 'globe',
         items: [
           { value: 'en-US', title: 'English' },

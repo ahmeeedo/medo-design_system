@@ -33,7 +33,7 @@ export function List({ type = 'bullet', size, start, className, style, children,
         {...props}
         start={type === 'number' ? start : undefined}
         style={{ ...counter, ...style }}
-        // The markers are drawn in CSS (list-style: none) – Safari/VoiceOver then drops the list semantics, so set the role.
+        // The markers are drawn in CSS (list-style: none) – some browser and screen reader combinations then drop the list semantics, so set the role.
         role="list"
         className={cx('medo-list', `medo-list--${type}`, size && `medo-list--${size}`, className)}
       >

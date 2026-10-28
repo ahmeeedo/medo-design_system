@@ -139,7 +139,7 @@
   background-color: var(--medo-color-feedback-info-solid);
 }
 
-/* Windows high contrast mode removes backgrounds: keep the shapes visible. */
+/* High contrast mode of the operating system (forced-colors) removes backgrounds: keep the shapes visible. */
 @media (forced-colors: active) {
   .medo-badge,
   .medo-badge-count {

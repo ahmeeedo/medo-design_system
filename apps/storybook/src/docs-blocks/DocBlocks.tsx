@@ -147,7 +147,7 @@ export function DocHeader({ kind, title, meta, subtitle, description, nav }: Hea
     <header className="doc-header">
       <div className="doc-topline">
         <span className="medo-text-overline">Design system / {kind}</span>
-        {meta ? <span className="medo-text-code-sm doc-muted doc-upper">{meta}</span> : null}
+        {meta ? <span className="medo-text-code-sm doc-muted">{meta}</span> : null}
       </div>
       <div className="doc-intro">
         <h1 className="medo-text-display-lg">{title}</h1>
@@ -181,7 +181,7 @@ export function DocSection({ n, title, meta, description, children }: SectionPro
           <span id={id} tabIndex={-1} className="doc-anchor" />
           {title}
         </h2>
-        {meta ? <span className="medo-text-code-sm doc-muted doc-upper doc-section-meta">{meta}</span> : null}
+        {meta ? <span className="medo-text-code-sm doc-muted doc-section-meta">{meta}</span> : null}
       </div>
       {description ? <div className="doc-lead medo-text-body-md doc-muted">{description}</div> : null}
       {children ? <div className="doc-body">{children}</div> : null}
@@ -270,7 +270,7 @@ export function UsageGuide({ usage }: { usage: MedoUsage }) {
           </List>
         ) : (
           /* Rules: a check or a cross in the tone colour, full text colour. The heading (Do / Don't) names the
-             list, so the items need no hidden prefix. role="list": Safari keeps the list without bullets. */
+             list, so the items need no hidden prefix. role="list": screen readers keep the list without bullets. */
           <ul className="doc-rules medo-text-body-md" role="list">
             {items.map((item) => (
               <li key={item}>

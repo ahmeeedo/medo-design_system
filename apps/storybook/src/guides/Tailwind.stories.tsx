@@ -25,7 +25,7 @@ type Story = StoryObj<typeof meta>;
 export const Card: Story = {
   render: () => (
     <article className="w-full max-w-[22rem] rounded-lg bg-surface-raised p-6 shadow-elevation-2 text-text-primary">
-      <p className="text-overline uppercase text-text-secondary">Project</p>
+      <p className="text-overline text-text-secondary">Project</p>
       <h2 className="mt-1 text-heading-md">Website relaunch</h2>
       <p className="mt-2 text-body-sm text-text-secondary">
         All classes come from the design tokens. Switch the theme in the toolbar – nothing in this markup changes.

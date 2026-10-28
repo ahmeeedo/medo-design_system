@@ -8,7 +8,7 @@
  * </div>
  * <textarea class="medo-textarea medo-textarea--md"></textarea>
  *
- * Sizes sm / md / lg = 32 / 40 / 48 px. Mobile and touch: always lg (16 px text prevents iOS zoom).
+ * Sizes sm / md / lg = 32 / 40 / 48 px. Mobile and touch: always lg (16 px text prevents the automatic zoom of mobile browsers).
  * Focus: the border turns focus/ring plus 1 px inside (flush, no outer band).
  */
 
