@@ -4,3 +4,6 @@
 *.woff2 binary
 *.png binary
 *.jpg binary
+
+# Reference screenshots of the visual regression check: binary, created in CI.
+apps/storybook/__screenshots__/** binary linguist-generated

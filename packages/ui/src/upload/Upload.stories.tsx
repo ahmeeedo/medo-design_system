@@ -187,10 +187,12 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Playground: Story = {};
+// Simulated uploads move every 300 ms, so no two screenshots match: left out of the visual check.
+export const Playground: Story = { tags: ['!visual'] };
 
 export const Layouts: Story = {
   name: 'Layouts',
+  tags: ['!visual'],
   parameters: {
     docs: {
       description: {

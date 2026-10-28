@@ -12,6 +12,8 @@ import './preview.css';
 import { ComponentDocsPage, MedoDocsContainer } from '../src/docs-blocks/DocBlocks';
 
 const preview: Preview = {
+  // Every story is part of the visual regression check (VISUAL=1); `tags: ['!visual']` leaves one out.
+  tags: ['visual'],
   parameters: {
     layout: 'padded',
     // className and style are plain React props: not part of the Playground.

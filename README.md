@@ -203,7 +203,8 @@ Issues and pull requests are welcome. Please follow these rules:
 - **State contract.** CSS reads states only from data attributes (`data-hovered`, `data-pressed`, `data-focus-visible`, `data-selected`, `data-invalid`, `data-disabled` …), so other frameworks can reuse it.
 - **Accessibility.** WCAG 2.2 AA, visible `:focus-visible`, `forced-colors` fallback, `prefers-reduced-motion`.
 - **Stories.** Every component has stories for its variants, sizes and states, Light and Dark, and an interaction test for interactive behaviour. The playground renders from its args, and every control must change what you see.
-- **Tests pass.** Run `npm test` before you open a pull request. CI runs the same tests.
+- **Tests pass.** Run `npm test` before you open a pull request. CI runs the same tests, plus the visual check.
+- **Visual check.** CI compares a screenshot of every documented story, Light and Dark, with its reference in `apps/storybook/__screenshots__/`. On a mismatch the workflow run has the actual and diff images as artifact `screenshot-diffs`. If the change is intended, run the workflow **Update screenshots** on your branch (Actions → Update screenshots → Run workflow); it commits the new references. References are made in CI only, because fonts render differently on every OS. Stories that cannot be stable (live timers) set `tags: ['!visual']`.
 - **Changesets.** If your change affects a published package, run `npm run changeset` and commit the generated file. It sets the version bump (patch, minor, major) and the changelog entry.
 
 Token values come from the design library and are generated (see [Maintaining](#maintaining)). To propose a token change, please open an issue.

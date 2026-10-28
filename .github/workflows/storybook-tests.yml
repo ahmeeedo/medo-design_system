@@ -35,7 +35,19 @@ jobs:
       # Chromium plus the system libraries it needs (download takes seconds, no cache needed).
       - run: npx playwright install --with-deps chromium
 
+      # VISUAL=1 adds the screenshot comparison – once references exist (workflow “Update screenshots” creates them).
       - run: npm test
+        env:
+          VISUAL: ${{ hashFiles('apps/storybook/__screenshots__/**/*.png') != '' && '1' || '' }}
+
+      # On a visual mismatch: actual and diff images to download (Summary → Artifacts).
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: screenshot-diffs
+          path: apps/storybook/.vitest/
+          if-no-files-found: ignore
+          retention-days: 14
 
       # The npm packages must build (types included) before they can be released.
       - run: npm run build:packages

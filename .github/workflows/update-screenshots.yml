@@ -1,0 +1,52 @@
+# Update screenshots: creates the reference screenshots of the visual regression check and commits them.
+# Run it from the Actions tab (“Run workflow”) on the branch whose look is correct – after an intended visual
+# change, or once to create the first references. References are only made here: fonts render slightly
+# differently on every OS, so screenshots from a laptop would never match CI.
+name: Update screenshots
+
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: update-screenshots-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: write # commit the references to the branch
+
+jobs:
+  update:
+    # Same OS and browser as “Storybook tests”, or the references would not match there.
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: npm
+
+      - run: npm ci
+
+      - run: npx playwright install --with-deps chromium
+
+      # Start from an empty folder, so references of removed stories go away. PNG output is deterministic:
+      # unchanged stories produce identical files, and the commit shows only real changes.
+      - name: Create references
+        run: |
+          rm -rf apps/storybook/__screenshots__
+          npm run build:tokens
+          cd apps/storybook && VISUAL=1 npx vitest --run --update
+
+      - name: Commit references
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add apps/storybook/__screenshots__
+          if git diff --cached --quiet; then
+            echo "Screenshots unchanged."
+          else
+            git commit -m "test: update reference screenshots"
+            git push
+          fi
