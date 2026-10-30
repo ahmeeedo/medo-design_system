@@ -101,10 +101,7 @@ const meta = {
     docs: {
       description: {
         component:
-          'Built on React Aria Modal + Dialog with role `alertdialog`. The icon shows the tone (decorative), the title asks a question, the description names the consequence, the action button names the verb. ' +
-          'No X: the user decides with the buttons. A click on the scrim never closes, Esc = Cancel. Focus starts on Cancel, so an accidental Enter never deletes, and returns to the trigger. ' +
-          'Danger uses a danger button, Warning and Info a primary one. Below 640 px the icon moves on top and the buttons stack (main action on top). ' +
-          'The only dialog allowed on top of a Dialog (e.g. “Discard changes?”). Styles: `medo-alert-dialog`, `medo-alert-dialog--{danger|warning|info}`.',
+          'Use an alert dialog for a decision that needs an answer before the user can go on, like confirming a deletion. Built on React Aria Modal and Dialog with role `alertdialog`.',
       },
     },
   },

@@ -35,6 +35,18 @@ const paintToolbar = (mode: Mode) => {
       : '';
 };
 
+/*
+ * Browser tab: Storybook names every page “… ⋅ Storybook”. Visitors look for the design system, so the suffix
+ * names it instead (tabs, bookmarks, history).
+ */
+const SUFFIX = ' ⋅ med.o Design System';
+const renameTitle = () => {
+  const fixed = document.title.replace(/ ⋅ Storybook$/, SUFFIX);
+  if (fixed !== document.title) document.title = fixed;
+};
+renameTitle();
+new MutationObserver(renameTitle).observe(document.querySelector('title') ?? document.head, { childList: true, subtree: true, characterData: true });
+
 addons.register('medo/theme', (api) => {
   const apply = ({ globals }: { globals?: Record<string, unknown> }) => {
     const mode = modeFromGlobals(globals);

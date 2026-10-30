@@ -102,10 +102,7 @@ const meta = {
     },
     docs: {
       description: {
-        component:
-          'Two roles, never mixed: **removable** values (pass `onRemove`) and **filters** (pass `selectionMode`). ' +
-          'Built on React Aria TagGroup: arrow keys move between tags, Backspace/Delete removes, Space toggles a filter. ' +
-          'Removals are announced to screen readers. Styles: `medo-tag medo-tag--md`, `medo-tag--selectable`.',
+        component: 'Use tags for removable values (`onRemove`) or as filters (`selectionMode`) – never both in one group. Built on React Aria TagGroup.',
       },
     },
   },

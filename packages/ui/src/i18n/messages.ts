@@ -109,7 +109,8 @@ export interface Messages {
   select: { placeholder: string; clearSelection: string };
   combobox: { placeholder: string };
   slider: { minimum: (label: string) => string; maximum: (label: string) => string };
-  table: { columns: string; showColumns: string };
+  /** scrollRegion: name of a table that scrolls sideways and has no caption. */
+  table: { columns: string; showColumns: string; scrollRegion: string };
   textField: {
     counter: (count: number, limit: number) => string;
     tooMany: (over: number) => string;

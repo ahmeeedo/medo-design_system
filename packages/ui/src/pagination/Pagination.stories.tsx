@@ -15,7 +15,7 @@ const meta = {
   title: 'Components/Navigation/Pagination',
   component: Pagination,
   tags: ['autodocs'],
-  args: { totalItems: 380, pageSize: 20, defaultPage: 5, variant: 'full', size: 'md', onChange: fn() },
+  args: { totalItems: 380, pageSize: 20, defaultPage: 5, variant: 'auto', size: 'md', onChange: fn() },
   argTypes: {
     totalItems: { control: { type: 'number', min: 0 }, description: 'Total count: the summary and the number of pages.' },
     pageSize: { control: 'inline-radio', options: [10, 20, 50, 100] },
@@ -74,10 +74,7 @@ const meta = {
     docs: {
       description: {
         component:
-          'A navigation region (“Pagination”). Full on desktop: summary (“81–100 of 380”, a polite live region), rows per page (Select sm) and ‹ 1 … 4 5 6 … 19 ›. Compact below 640 px: ‹ Page 5 of 19 › with 48 px buttons (`variant="auto"`). ' +
-          'Max 7 items: first and last always, the current page with one neighbour each side; an ellipsis never hides a single page; one page shows nothing. ' +
-          'Apps: buttons with `onChange`. Websites: `getPageHref` makes every page a real link (works with RouterProvider). The current page has `aria-current="page"` and action/selected – calm, never the primary colour. ' +
-          'After a change the app scrolls to the top of the list and focuses its heading. “Load more” is not a variant – a Button below the list. Styles: `medo-pagination`, `medo-page-item`.',
+          'Use pagination to move through long lists page by page. Buttons with `onChange` in apps, real links with `getPageHref` on websites; `variant="auto"` switches to the compact form below 640 px.',
       },
     },
   },
@@ -165,9 +162,9 @@ function TableExample() {
   };
   return (
     <div style={{ display: 'grid', gap: 'var(--medo-space-4)' }}>
-      <h2 ref={heading} tabIndex={-1} className="medo-text-heading-sm" style={{ margin: 0, outline: 'none' }}>
+      <h3 ref={heading} tabIndex={-1} className="medo-text-heading-sm" style={{ margin: 0, outline: 'none' }}>
         Invoices
-      </h2>
+      </h3>
       <Table aria-label="Invoices">
         <TableHeader>
           <Column isRowHeader>Invoice</Column>

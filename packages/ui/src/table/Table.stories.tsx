@@ -149,11 +149,7 @@ const meta = {
     docs: {
       description: {
         component:
-          'Two components, one look. **StaticTable** is a native `<table>` for content and simple data. ' +
-          '**Table** is interactive (React Aria Table): arrow keys move between cells, sortable headers set `aria-sort`, Space selects a row. ' +
-          'Text left, numbers right with tabular figures. Data logic (sort, filter, paging) stays in your code. ' +
-          '`toolbar` and `footer` put search, ColumnsMenu, actions and Pagination into the same bordered surface; selection shows the Bulk action bar; below 640 px records become List view cards. ' +
-          'Styles: `medo-table-container`, `medo-table`, `medo-table--compact`.',
+          'Two components, one look: `StaticTable` is a native `<table>` for content and simple data, `Table` an interactive data table built on React Aria Table. Sorting, filtering and paging stay in your code.',
       },
     },
   },
@@ -176,9 +172,8 @@ export const Playground: Story = {
   render: (args) => <InvoiceTable density={args.density} striped={args.striped} plain={args.plain} />,
 };
 
-export const Static: Story = {
-  parameters: { docs: { description: { story: 'For reading, not for navigating: no grid keyboard model. Row headers use `<th scope="row">`.' } } },
-  render: () => (
+function PlansTable() {
+  return (
     <StaticTable caption="Plans" captionHidden>
       <thead>
         <tr>
@@ -207,7 +202,20 @@ export const Static: Story = {
         </tr>
       </tbody>
     </StaticTable>
-  ),
+  );
+}
+
+export const Static: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'For reading, not for navigating: no grid keyboard model. Row headers use `<th scope="row">`. ' +
+          'Wider than its container, it scrolls sideways and the frame takes the keyboard focus (arrow keys scroll).',
+      },
+    },
+  },
+  render: () => <PlansTable />,
 };
 
 export const Sortable: Story = {
@@ -392,9 +400,9 @@ function InvoiceWorkspace({ forceMobile = false }: { forceMobile?: boolean }) {
     return (
       <div style={{ ...stage, display: 'grid', gap: 'var(--medo-space-3)', maxInlineSize: '23.4375rem' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <h2 className="medo-text-heading-sm" style={{ margin: 0 }}>
+          <h3 className="medo-text-heading-sm" style={{ margin: 0 }}>
             Invoices
-          </h2>
+          </h3>
           <Button
             variant="ghost"
             onPress={() => {
@@ -581,5 +589,23 @@ export const InteractionTest: Story = {
     await expect(canvas.getAllByRole('row').filter((r) => r.getAttribute('aria-selected') === 'true')).toHaveLength(1);
     await userEvent.click(boxes[0]);
     await expect(canvas.getAllByRole('row').filter((r) => r.getAttribute('aria-selected') === 'true').length).toBeGreaterThan(1);
+  },
+};
+
+export const StaticScrollTest: Story = {
+  ...interactionTest,
+  name: 'Interaction test: static table scrolls',
+  render: () => (
+    <div style={{ inlineSize: '12rem' }}>
+      <PlansTable />
+    </div>
+  ),
+  play: async ({ canvas, userEvent }) => {
+    // Too wide for its container: a focusable region named by the caption, so the keyboard can scroll it.
+    const region = await canvas.findByRole('region', { name: 'Plans' });
+    await userEvent.tab();
+    await expect(region).toHaveFocus();
+    // The browser scrolls a focused scroll container with the arrow keys (simulated keys do not scroll).
+    await expect(region.scrollWidth).toBeGreaterThan(region.clientWidth);
   },
 };

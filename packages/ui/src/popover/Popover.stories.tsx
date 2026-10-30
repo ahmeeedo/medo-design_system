@@ -105,11 +105,7 @@ const meta = {
     docs: {
       description: {
         component:
-          'Built on React Aria DialogTrigger + Popover + Dialog: opens on click (never on hover), the trigger is pressed and expanded while open, focus moves in, Esc or a click outside closes it and focus returns. ' +
-          'Bottom start, 8 px from the trigger, flips when there is no space, no arrow. Same surface as Menu. sm 240 · md 320 · lg 400 · auto (hugs, no padding). ' +
-          'Header (`title`) with close button for titled content or forms; a footer (`primaryAction`) only when changes must be confirmed – otherwise apply live. Below 640 px it opens as Bottom Sheet. ' +
-          'One topic per popover, one at a time, no popover in a popover; if it needs scrolling or many fields, use a Dialog. ' +
-          'Styles: `medo-popover`, `medo-popover--{sm|md|lg|auto}`, `medo-popover__header`, `medo-popover__body`, `medo-popover__footer`, `medo-toggletip`.',
+          'Use a popover for a small floating panel with interactive content, anchored to its trigger; the page stays usable. Built on React Aria Popover and Dialog. `Toggletip` adds a short explanation behind an info button.',
       },
     },
   },

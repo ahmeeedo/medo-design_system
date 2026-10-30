@@ -164,10 +164,7 @@ const meta = {
     docs: {
       description: {
         component:
-          'React Aria DropZone + FileTrigger. The button always opens the system picker – drag and drop is a shortcut (WCAG 2.5.7); the zone is focusable for paste (Ctrl+V). ' +
-          '**UploadField** is controlled: the app holds `files` (status, `loaded`, `error`, `previewUrl`), uploads in `onAdd` right away and updates the list. Type, size and count are checked before upload (check again on the server); wrong types and too many files show at the picker, too large files as a removable error row. ' +
-          'Every file shows its own progress; errors stay at the file with Retry and Remove; icon buttons name the file. Names truncate in the middle (start + last 12 characters). Results are announced politely. ' +
-          'Layouts: list (documents and mixed uploads – images get a thumbnail), grid (images only), compact (forms, mobile; auto below 640 px). Parts: `Dropzone`, `FileTrigger`, `FileItem`, `FileTile`. Styles: `medo-upload`, `medo-dropzone`, `medo-file-item`, `medo-file-tile`.',
+          'Use these components to add files by drag and drop or by choosing them. `UploadField` is controlled: your app holds `files`, uploads in `onAdd` and updates each file\'s status. Built on React Aria DropZone and FileTrigger.',
       },
     },
   },

@@ -106,10 +106,7 @@ const meta = {
     docs: {
       description: {
         component:
-          'Built on React Aria ToggleButton: announced as pressed or not pressed; the label never changes. ' +
-          'Off looks like a ghost button, on uses `action/selected` + `text/brand` – two cues, not colour alone. ' +
-          'Use it for an immediate, local effect. Saved settings: Switch. Navigation: Tabs. Form choices: Radio or Checkbox. ' +
-          'Styles: `medo-button medo-button--md medo-toggle`, `medo-toggle-group--segmented`, `medo-toolbar`.',
+          'Use a toggle button for an on/off action with an immediate, local effect – alone, as a segmented control or in a toolbar. Built on React Aria ToggleButton.',
       },
     },
   },

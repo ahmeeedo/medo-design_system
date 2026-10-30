@@ -127,11 +127,7 @@ const meta = {
     },
     docs: {
       description: {
-        component:
-          'Built on React Aria Menu: arrow keys move, Enter runs the item, Esc closes and focus returns to the trigger, letters jump. ' +
-          'Every item has an icon and a verb label; shortcuts on desktop (`Mod` = ⌘ on Apple, Ctrl elsewhere); danger items last in their own group. ' +
-          'One submenu level: to the side on desktop, a second view with a back button on mobile. No checkmarks – values belong in Select, views in Toggle Button. ' +
-          'Styles: `medo-menu-popover`, `medo-menu`, `medo-menu-item`, `medo-menu-item--danger`.',
+        component: 'Use a menu for a list of actions that opens from a trigger. Built on React Aria Menu; a popover on desktop, a Bottom Sheet on mobile.',
       },
     },
   },

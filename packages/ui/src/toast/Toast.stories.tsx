@@ -78,12 +78,7 @@ const meta = {
     docs: {
       description: {
         component:
-          'Render `<ToastRegion />` once at the root of the app, then call `toast(message, { action, persistent })` from anywhere – also outside components, e.g. after an API call. ' +
-          'Built on React Aria Toast: the region is a landmark (F6 moves focus into it), new toasts are announced, Esc closes the focused toast. ' +
-          'Timing: 5 s, with an action 8 s, `persistent` (errors) until closed. Hover, focus and a hidden window pause the timers (WCAG 2.2.1). ' +
-          'Max 3, newest at the edge; the same message is not shown twice. Desktop bottom right, mobile full width (`--medo-toast-offset` for a bottom navigation). ' +
-          'Inverted surface, no icon, no tone – messages with a tone belong in an Alert. Never put information only in a toast. ' +
-          'Styles: `medo-toast-region`, `medo-toast`, `medo-toast__action`, `medo-toast__close`.',
+          'Use a toast for short, temporary feedback after an action. Render `<ToastRegion />` once at the root of your app, then call `toast(message, { action, persistent })` from anywhere.',
       },
     },
   },

@@ -133,7 +133,7 @@ export const de: Messages = {
   select: { placeholder: 'Auswählen…', clearSelection: 'Auswahl entfernen' },
   combobox: { placeholder: 'Suchen…' },
   slider: { minimum: (label) => (label ? `${label}, Minimum` : 'Minimum'), maximum: (label) => (label ? `${label}, Maximum` : 'Maximum') },
-  table: { columns: 'Spalten', showColumns: 'Spalten anzeigen' },
+  table: { columns: 'Spalten', showColumns: 'Spalten anzeigen', scrollRegion: 'Tabelle' },
   textField: {
     counter: (count, limit) => `${count} / ${limit}`,
     tooMany: (over) => `${over} zu viel`,

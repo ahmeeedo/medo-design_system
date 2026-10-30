@@ -1,5 +1,6 @@
 import { Meta } from '@storybook/addon-docs/blocks';
 import { DocPage, DocHeader, DocSection, DocFooter, SpecTable, Notes, Tok, SourceLink } from './docs-blocks/DocBlocks';
+import ui from '@med-o/ui/package.json';
 
 <Meta title="Introduction" />
 
@@ -8,7 +9,7 @@ import { DocPage, DocHeader, DocSection, DocFooter, SpecTable, Notes, Tok, Sourc
 <DocHeader
   kind="Overview"
   title="med.o Design System"
-  meta="Code · v2"
+  meta={`Version ${ui.version}`}
   subtitle="Rules for look, function and behaviour of med.o products – framework-neutral."
   description={<>
     <p>This site documents the design tokens, the CSS, the Tailwind theme and the React components – with live examples, a playground per component and the rules for using them.</p>

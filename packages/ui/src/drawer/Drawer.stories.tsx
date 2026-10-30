@@ -162,11 +162,7 @@ const meta = {
     },
     docs: {
       description: {
-        component:
-          'Same building blocks and behaviour as the Dialog (React Aria ModalOverlay + Modal + Dialog): scrim, focus trap, no page scroll, Esc and the close button close it, focus returns to the trigger; `isDirty` asks “Discard changes?”. ' +
-          'Right for account, filters and details (triggers sit on the right), left only for navigation; sm 320 · md 400 · lg 560, full height, only the body scrolls. ' +
-          'A footer only for decisions (Apply, Save) – links and switches act immediately. Below 640 px it keeps its side, viewport − 56 px wide; a swipe towards the edge closes it. ' +
-          'One drawer at a time; an Alert dialog on top is fine. The SideNav uses a left drawer on tablets. Styles: `medo-drawer`, `medo-drawer--{left|right}`, `medo-drawer--{sm|md|lg}`.',
+        component: 'Use a drawer for a panel that slides in from the side: account, filters, details or navigation. Same building blocks and behaviour as the Dialog.',
       },
     },
   },

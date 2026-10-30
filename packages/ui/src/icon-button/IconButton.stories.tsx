@@ -63,10 +63,7 @@ const meta = {
     },
     docs: {
       description: {
-        component:
-          'Square icon-only action. `aria-label` is required because there is no visible label; ' +
-          'it is shown as a tooltip automatically (`tooltip={false}` turns it off, `shortcut` adds a key hint). ' +
-          'Shares the Button styles (`medo-button medo-button--icon-only`). On images and video: `media` (overlay/media circle) and `media-ghost` (no fill, on a gradient bar), sm 28 with a 44 px hit area.',
+        component: 'Use an icon button for an action shown only as an icon. `aria-label` is required; it also appears as a tooltip. Shares the Button styles.',
       },
     },
   },

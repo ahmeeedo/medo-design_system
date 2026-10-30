@@ -70,11 +70,7 @@ const meta = {
     },
     docs: {
       description: {
-        component:
-          'Built on React Aria ModalOverlay + Modal + Dialog: focus stays inside and returns to the trigger, the page does not scroll, the title names the dialog. ' +
-          'Closes by swiping down on the handle or header, a tap on the scrim, Esc or the close button (the non-drag alternative, WCAG 2.5.7). ' +
-          'Height = content, max 90 %; `full` keeps 90 % (with search). One task per sheet, never a sheet from a sheet. ' +
-          'Select and Combobox use it automatically below 640 px. Styles: `medo-sheet-overlay`, `medo-sheet`, `medo-sheet__footer`.',
+        component: 'Use a bottom sheet for a short task on small screens. Built on React Aria Modal and Dialog; Select and Combobox open one automatically below 640 px.',
       },
     },
   },

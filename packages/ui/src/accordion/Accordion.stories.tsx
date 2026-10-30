@@ -116,9 +116,7 @@ const meta = {
     docs: {
       description: {
         component:
-          'React Aria DisclosureGroup. One contained group (surface/default, border, radius/lg), dividers between items. Each header is a button inside a real heading (`headingLevel`, h2–h4), announced as expanded or collapsed; the whole header is the target. ' +
-          '`AccordionItem`: optional icon, title, description (read as description), badge (part of the name), chevron. Several sections open by default; nothing the user opened closes by itself. ' +
-          'Closed panels stay findable by the browser search (hidden="until-found"). A link to an item’s `id` (#billing) opens and scrolls to it. More than 6 sections: “Expand all”. Styles: `medo-accordion`, `medo-accordion--{md|lg}`.',
+          'Use an accordion to show and hide sections in place, like settings groups or FAQs. Built on React Aria DisclosureGroup; each header is a button inside a real heading (`headingLevel`).',
       },
     },
   },

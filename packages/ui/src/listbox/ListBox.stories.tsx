@@ -69,10 +69,7 @@ const meta = {
     },
     docs: {
       description: {
-        component:
-          'Built on React Aria ListBox: arrow keys, type-ahead, Home/End. Highlighted = neutral grey; selected has no fill – a check (single, right) ' +
-          'or a checkbox (multi, left) shows it. Labels wrap, never truncate. Usually used through Select or Combobox. ' +
-          'Styles: `medo-listbox medo-listbox--md`, `medo-option`, `medo-listbox__header`, `medo-listbox__section`.',
+        component: 'The list behind Select, Combobox and the Bottom Sheet. Built on React Aria ListBox; usually used through those components.',
       },
     },
   },

@@ -23,6 +23,12 @@
 }
 
 /* Without the frame, e.g. inside a card or a documentation page. */
+/* Scrolls sideways: the container takes the focus (see StaticTable), so it needs a visible ring. */
+.medo-table-container:focus-visible {
+  outline: none;
+  box-shadow: var(--medo-shadow-focus-ring);
+}
+
 .medo-table-container--plain {
   border: 0;
   border-radius: 0;
@@ -234,6 +240,10 @@
   }
   .medo-table__row[data-focus-visible] {
     outline-color: Highlight;
+  }
+  .medo-table-container:focus-visible {
+    outline: 2px solid Highlight;
+    outline-offset: 2px;
   }
 }
 

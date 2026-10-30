@@ -120,12 +120,7 @@ const meta = {
     },
     docs: {
       description: {
-        component:
-          'Five types with their own icon and tone: first use (folder), no results (search), error (danger), no access (lock), all done (success). The text comes from the app – never “No data”. ' +
-          'Sizes: page (a whole view, 480), section (a card or panel, 400), inline (a list or table, 320 – the header stays). ' +
-          'Actions are structured: `action` is primary for first use and secondary otherwise (at most one primary); `secondaryAction` is a text button or, with `href`, a Link. “All done” needs no action. ' +
-          'Page and section are a `<section>` named by their heading (`headingLevel`); inline adds no landmark. “No results” is announced politely (`role="status"`), focus stays in the search field. Icon and illustration are hidden from screen readers. ' +
-          'Styles: `medo-empty-state`, `medo-empty-state--{page|section|inline}`, `medo-icon-tile`.',
+        component: 'Use an empty state when there is nothing to show, to say why and what to do next. The text always comes from your app.',
       },
     },
   },

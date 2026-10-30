@@ -46,12 +46,7 @@ const meta = {
     docs: {
       description: {
         component:
-          'Real lists – `ul`, `ol` and `dl`; the markers are drawn in CSS, so the lists set `role="list"` (some browser and screen reader combinations drop it otherwise). Plain markup, no library. ' +
-          'Markers are neutral (text/secondary) in their own column (24 px, numbers 28 px with tabular figures, right aligned); long items wrap flush with their first line. ' +
-          'A List inside a ListItem is level 2 (ring, “a.”) – max 2 levels. Without `size` the list follows the surrounding text. ' +
-          'Feature list: check in text/brand; `excluded` items are muted with a cross and a hidden “Not included:”. ' +
-          '`DescriptionList` for term–value pairs: horizontal, stacked automatically when it is narrower than 22.5 rem (360 px) (container query). ' +
-          'Styles: `medo-list`, `medo-list--{bullet|number|check}`, `medo-list--{sm|md|lg}`, `medo-list__item--excluded`, `medo-dl`.',
+          'Use a list for content in running text: bullets, numbers, feature lists, or term–value pairs (`DescriptionList`). Real `ul`, `ol` and `dl` elements, no library.',
       },
     },
   },

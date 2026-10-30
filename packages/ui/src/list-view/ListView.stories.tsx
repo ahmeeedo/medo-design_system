@@ -91,11 +91,7 @@ const meta = {
     docs: {
       description: {
         component:
-          'Built on React Aria GridList: ↑ ↓ move between rows, Enter opens a row (`onAction` or `href`), Tab reaches the controls inside a row. Each row is named by its title. ' +
-          '`ListRow`: leading (Avatar – sized automatically –, `ListRowIcon` or thumbnail), title and description (48 · 64 · 88), meta, one trailing type per list (Menu, Badge, Switch, chevron or max 2 Button sm – then the row has no action). ' +
-          '`unread`: strong text, meta in brand, a dot and “Unread” for screen readers. Plain or card; inset dividers start at the text. `isLoading` shows 3 skeleton rows. ' +
-          '`variant="cards"` with `ListCard` shows records as cards – the mobile form of a Table row. Selection works with the Bulk action bar. ' +
-          'Swipe on touch (`swipeActions`): left reveals Delete, right Archive – the “…” menu holds the same actions. Styles: `medo-list-view`, `medo-list-view--card`, `medo-list-row`, `medo-list-row--unread`.',
+          'Use a list view for interactive lists of objects in apps: inbox, people, files, settings. Built on React Aria GridList; `onAction` or `href` opens a row.',
       },
     },
   },

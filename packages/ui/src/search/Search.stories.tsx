@@ -170,11 +170,7 @@ const meta = {
     docs: {
       description: {
         component:
-          '**SearchField** (React Aria SearchField): search icon, × to clear once filled, Esc clears, Enter submits. Visible label or `aria-label`; put the search area in a `<search>` element (landmark). ' +
-          '**SearchResult**: one hit – path, title (one link for the whole hit), snippet (2 lines), meta with type badge. `query` shows every match in bold, never colour alone. Base: divider, title in brand · Aesthetic: no divider, larger title, rounded hover. ' +
-          '**QuickSearch** (Cmd / Ctrl + K): a modal with React Aria Autocomplete – focus stays in the field while ↑ ↓ move, Enter opens, Esc closes and returns focus. Recent and suggested while empty, hits grouped by type while typing. ' +
-          'Search page: result count announced, sort by relevance, active filters as removable tags, query and filters in the URL. Many filters: a sidebar with Accordion groups; mobile: a filter Bottom Sheet. ' +
-          'Styles: `medo-search-field`, `medo-search-result--{base|aesthetic}`, `medo-search-results`, `medo-quick-search`.',
+          'Components for search: `SearchField` for the query, `SearchResult` for one hit, `QuickSearch` (Cmd / Ctrl + K) to find and open anything. Built on React Aria SearchField and Autocomplete.',
       },
     },
   },
@@ -337,9 +333,9 @@ function SearchPage() {
   const results = (
     <>
       {/* Polite live region: the count is announced after every search. */}
-      <h2 className="medo-text-heading-lg" style={{ margin: 0 }}>
+      <h3 className="medo-text-heading-lg" style={{ margin: 0 }}>
         <span role="status">{loading ? 'Searching …' : `${shown.length} ${noun} for “${submitted}”`}</span>
-      </h2>
+      </h3>
       <div style={row}>
         <Select aria-label="Type" placeholder="Type" size="sm" selectionMode="multiple" value={types} onChange={(v) => setTypes(v as string[])}>
           {['Page', 'PDF', 'Word', 'Video', 'Person'].map((t) => (
@@ -568,16 +564,16 @@ function SidebarPage({ forceMobile = false }: { forceMobile?: boolean }) {
       </search>
       <div style={{ display: 'grid', gridTemplateColumns: '16.5rem 1fr', gap: 'var(--medo-space-8)', alignItems: 'start' }}>
         <aside aria-labelledby="filters-heading" style={{ display: 'grid', gap: 'var(--medo-space-2)' }}>
-          <h2 id="filters-heading" className="medo-text-heading-sm" style={{ margin: 0 }}>
+          <h3 id="filters-heading" className="medo-text-heading-sm" style={{ margin: 0 }}>
             Filters
-          </h2>
+          </h3>
           <Filters types={types} setTypes={setTypes} date={date} setDate={setDate} counts={counts} />
         </aside>
         <div style={{ display: 'grid', gap: 'var(--medo-space-4)', minInlineSize: 0 }}>
           <div style={{ ...row, justifyContent: 'space-between' }}>
-            <h2 style={{ margin: 0, font: 'var(--medo-typography-label-md)' }}>
+            <h3 style={{ margin: 0, font: 'var(--medo-typography-label-md)' }}>
               <span role="status">{`${n} for “invoice”`}</span>
-            </h2>
+            </h3>
             <Select aria-label="Sort by" size="sm" leadingIcon={<ArrowUpDown />} defaultValue="relevance">
               <Option id="relevance">Relevance</Option>
               <Option id="newest">Newest</Option>

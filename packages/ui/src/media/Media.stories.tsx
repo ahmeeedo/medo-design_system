@@ -90,9 +90,7 @@ const meta = {
     docs: {
       description: {
         component:
-          '**Image**: the ratio reserves the space before the file arrives – nothing jumps (CLS). `alt` is required (decorative: `alt=""` on purpose). Loading: blur-up with `placeholder` (≈ 20 px data URI or BlurHash), otherwise a Skeleton; the image fades in (250 ms; 100 ms with reduced motion). Error keeps the space and shows image-off. ' +
-          '`fit` cover for photos, contain for logos, screenshots and charts. Lazy by default; `priority` for the hero (eager, fetchpriority high). Pass `srcSet`/`sizes`, `width`/`height`. Overlays only on the loaded image: text on a gradient, one badge, play. ' +
-          '**Figure**: figure + figcaption with caption and credit. **Embed consent**: two-click placeholder – nothing loads from the provider before the click. Styles: `medo-image`, `medo-figure`, `medo-embed`.',
+          'Use `Image` for images with reserved space and calm loading states, `Figure` for a caption and credit, and `EmbedConsent` for third-party embeds that load only after a click. `alt` is required.',
       },
     },
   },

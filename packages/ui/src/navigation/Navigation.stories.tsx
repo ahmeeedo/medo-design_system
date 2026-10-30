@@ -135,7 +135,7 @@ const meta = {
   title: 'Components/Navigation/Navigation',
   component: SiteHeader,
   tags: ['autodocs'],
-  args: { layout: 'desktop', actions: 'Log in + Get started' as never, logo: null, children: null },
+  args: { layout: 'auto', actions: 'Log in + Get started' as never, logo: null, children: null },
   argTypes: {
     layout: { control: 'inline-radio', options: ['auto', 'desktop', 'mobile'], description: 'auto: menu button below 768 px.' },
     actions: slot({ none: [], 'Log in + Get started': siteActions }),
@@ -197,11 +197,7 @@ const meta = {
     docs: {
       description: {
         component:
-          'Navigation is always made of links (React Aria Link, works with any router via RouterProvider) in a named `<nav>`; the current page has `aria-current="page"` and looks the same everywhere: action/selected + strong label. ' +
-          '`SkipLink` is the first focusable element. `SiteHeader` (websites): logo, max 5 links, max 2 actions; `NavGroup` opens a dropdown – a disclosure, never a menu; below 768 px a menu button opens the links fullscreen with the actions at the bottom. ' +
-          '`SideNav` (apps): 256 px with icons, counts, `NavSection` and `NavGroup` (one level), collapses to a 64 px rail with tooltips; 640–1023 px always a rail that expands as overlay; hidden below 640 px. ' +
-          '`AppHeader`: page title, search, actions. `BottomTabBar` (apps < 640 px): 3–5 `TabBarItem`s, `TabBarMore` opens the rest in the Nav sheet. ' +
-          'Styles: `medo-nav-item--{header|sidebar|rail|sheet}`, `medo-site-header`, `medo-sidenav`, `medo-app-header`, `medo-tab-bar`, `medo-skip-link`.',
+          'Components to move between pages: `SiteHeader` for websites, `SideNav`, `AppHeader` and `BottomTabBar` for apps, `SkipLink` for all. Built on React Aria Link; any router works through `RouterProvider`.',
       },
     },
   },
@@ -211,9 +207,10 @@ const meta = {
       <SiteHeader {...args} logo={<Logo />}>
         <SiteLinks />
       </SiteHeader>
-      <main id="main" tabIndex={-1} style={content}>
+      {/* In an app this is <main>; inside the docs page a plain target, the page has its own landmarks. */}
+      <div id="main" tabIndex={-1} style={content}>
         <div style={block} />
-      </main>
+      </div>
     </div>
   ),
 } satisfies Meta<typeof SiteHeader>;
@@ -291,6 +288,7 @@ export const AppShell: Story = {
           </SideNav>
           <div style={{ flex: 1, minInlineSize: 0, overflow: 'auto' }}>
             <AppHeader
+              headingLevel={3}
               title={current.charAt(0).toUpperCase() + current.slice(1)}
               logo={<Logo full={false} />}
               search={<TextField label={<span className="medo-visually-hidden">Search</span>} type="search" placeholder="Search…" size="sm" />}
@@ -333,7 +331,7 @@ export const TabBar: Story = {
           background: 'var(--medo-color-surface-subtle)',
         }}
       >
-        <AppHeader title="Dashboard" logo={<Logo full={false} />} actions={<HeaderActions />} />
+        <AppHeader headingLevel={3} title="Dashboard" logo={<Logo full={false} />} actions={<HeaderActions />} />
         <div style={content}>
           <div style={block} />
           <div style={block} />

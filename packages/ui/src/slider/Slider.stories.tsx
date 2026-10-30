@@ -87,9 +87,7 @@ const meta = {
     docs: {
       description: {
         component:
-          'React Aria Slider. Single or range (`defaultValue={[120, 480]}`). The value is always shown next to the label and read out in the same format (`formatOptions`, Intl). ' +
-          'Track 4 px, fill action/primary, thumb 20 px with a 44 px hit area; hover and pressed show a halo, while dragging a tooltip repeats the value. Arrow keys one step, Page Up/Down 10 %, Home/End; a click on the track moves the nearest thumb; range thumbs never cross and get their own names (“Minimum price”). ' +
-          'Ticks only for ≤ 10 steps. **SliderField** adds number inputs for exact values; **NumberField** is the number input on its own (Input look, Intl format, clamps on blur). Update the value while dragging, apply expensive filters on `onChangeEnd`. Styles: `medo-slider`, `medo-slider-field`.',
+          'Use a slider to pick an approximate value or range by dragging. Built on React Aria Slider. `SliderField` adds number inputs for exact values, `NumberField` is the number input on its own.',
       },
     },
   },

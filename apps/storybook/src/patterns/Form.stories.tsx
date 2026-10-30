@@ -11,7 +11,42 @@ const meta = {
   // Keeps the URL of the former “Usage” group (…/usage-form--docs).
   id: 'usage-form',
   tags: ['autodocs'],
-  parameters: { layout: 'padded', medo: { subtitle: 'A complete form built from the components, with validation.' } },
+  parameters: {
+    layout: 'padded',
+    medo: {
+      subtitle: 'A complete form built from the components, with validation.',
+      usage: {
+        when: ['Collect data the user types or chooses: contact, sign-up, settings, checkout.'],
+        whenNot: ['One setting with an immediate effect: a Switch on its own, no form.', 'Filters that apply live: no submit button.'],
+        do: [
+          'One column, in the order people think about the data.',
+          'A visible label on every field; help text below the label, never in the placeholder.',
+          'Mark the few optional fields, or all required ones – not both.',
+          'Use `autoComplete` and the right `type` (`email`, `tel`), so browsers and password managers can fill in.',
+          'Group related choices: RadioGroup or CheckboxGroup with their own label.',
+          'Name the submit button with the result: “Send message”, “Create account”.',
+        ],
+        dont: [
+          'Disable the submit button until the form is valid – let people submit and show what is missing.',
+          'Validate while someone is still typing; check on leaving the field or on submit.',
+          'Clear what the user entered after an error.',
+        ],
+      },
+      a11y: {
+        keyboard: [
+          ['Tab / Shift + Tab', 'Moves through the fields in reading order.'],
+          ['Enter', 'In a single-line field: submits the form.'],
+          ['Space', 'Toggles a checkbox or switch, picks a radio.'],
+        ],
+        notes: [
+          'Use React Aria `Form`: on submit the focus moves to the first invalid field and its message is read.',
+          'Error messages say how to fix the problem (“Enter a valid email address”), not only that something is wrong.',
+          'Help and error texts are linked to their field, so they are read with it.',
+          'Required fields are marked visibly and set `isRequired`, so screen readers announce them.',
+        ],
+      },
+    },
+  },
 } satisfies Meta;
 
 export default meta;
@@ -47,7 +82,7 @@ export const ContactForm: Story = {
         I agree to the privacy policy.
       </Checkbox>
       <div style={{ display: 'flex', gap: 'var(--medo-space-3)' }}>
-        <Button type="submit">Send</Button>
+        <Button type="submit">Send message</Button>
         <Button type="reset" variant="ghost">
           Reset
         </Button>

@@ -1,4 +1,4 @@
-import type { CSSProperties, ReactNode } from 'react';
+import { useEffect, useId, useRef, useState, type CSSProperties, type ReactNode } from 'react';
 import {
   Cell as AriaCell,
   Checkbox as AriaCheckbox,
@@ -18,6 +18,7 @@ import {
 } from 'react-aria-components';
 import { ArrowDown, ArrowUp, ArrowUpDown, Check, Minus } from 'lucide-react';
 import { cx } from '../utils/cx';
+import { useMessages } from '../i18n/I18n';
 
 type Density = 'standard' | 'compact';
 
@@ -38,14 +39,48 @@ export interface StaticTableProps {
 }
 
 /**
+ * True while the element is wider inside than outside, i.e. it scrolls sideways.
+ * Scrolling content must be reachable by keyboard (WCAG 2.1.1), so the container then becomes a focusable region.
+ */
+function useScrollsSideways<T extends HTMLElement>() {
+  const ref = useRef<T>(null);
+  const [scrolls, setScrolls] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || typeof ResizeObserver === 'undefined') return;
+    const check = () => setScrolls(el.scrollWidth > el.clientWidth + 1);
+    const observer = new ResizeObserver(check);
+    observer.observe(el);
+    if (el.firstElementChild) observer.observe(el.firstElementChild);
+    check();
+    return () => observer.disconnect();
+  }, []);
+  return [ref, scrolls] as const;
+}
+
+/**
  * Static table – a native, non-interactive table with the Table look.
  * For content and simple data. Numbers: add className="medo-table__cell--number".
+ * When it is wider than its container it scrolls sideways; the container then takes the keyboard focus
+ * (arrow keys scroll) and is announced as a region named by the caption.
  */
 export function StaticTable({ children, caption, captionHidden, density = 'standard', striped, plain, className, style }: StaticTableProps) {
+  const [ref, scrolls] = useScrollsSideways<HTMLDivElement>();
+  const captionId = useId();
+  const m = useMessages();
+  const region = scrolls
+    ? caption
+      ? { role: 'region', tabIndex: 0, 'aria-labelledby': captionId }
+      : { role: 'region', tabIndex: 0, 'aria-label': m.table.scrollRegion }
+    : {};
   return (
-    <div className={cx('medo-table-container', plain && 'medo-table-container--plain', className)} style={style}>
+    <div ref={ref} {...region} className={cx('medo-table-container', plain && 'medo-table-container--plain', className)} style={style}>
       <table className={cx('medo-table', density === 'compact' && 'medo-table--compact', striped && 'medo-table--striped')}>
-        {caption && <caption className={captionHidden ? 'medo-visually-hidden' : undefined}>{caption}</caption>}
+        {caption && (
+          <caption id={captionId} className={captionHidden ? 'medo-visually-hidden' : undefined}>
+            {caption}
+          </caption>
+        )}
         {children}
       </table>
     </div>

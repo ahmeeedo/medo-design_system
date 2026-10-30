@@ -101,12 +101,7 @@ const meta = {
     },
     docs: {
       description: {
-        component:
-          'Built on React Aria Tabs: tablist / tab / tabpanel, only the selected tab is in the Tab order, ← → move and select, Home / End; `keyboardActivation="manual"` for slow panels. ' +
-          'Contained style: a track with a raised thumb that slides to the new tab. Label required, icons on all tabs or none, a count as neutral Badge count with a screen-reader text. ' +
-          'Panels stay mounted (hidden) so input is never lost – `keepMounted={false}` unmounts heavy panels. Below 640 px tabs are lg; up to 3 fill the width, more scroll with a fade. ' +
-          '2–6 tabs, short nouns, no tabs inside tabs; a view mode of the same content is a Toggle Button group, other pages are navigation. ' +
-          'Styles: `medo-tabs`, `medo-tabs--{md|lg}`, `medo-tabs--full`, `medo-tabs__list`, `medo-tab`, `medo-tabs__panel`.',
+        component: 'Use tabs to switch between views of the same context, one panel at a time. Built on React Aria Tabs; panels stay mounted, so input is never lost.',
       },
     },
   },

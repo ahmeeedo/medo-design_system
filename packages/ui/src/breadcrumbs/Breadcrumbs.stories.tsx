@@ -74,9 +74,7 @@ const meta = {
     docs: {
       description: {
         component:
-          'React Aria Breadcrumbs: a navigation region “Breadcrumb” with an ordered list. Starts with the house icon (named “Home”), chevron separators are not read, the current page comes last – not a link, `aria-current="page"`. ' +
-          'Links in text/secondary, on hover text/primary and underlined; icon parts get a soft surface. From 5 levels the middle collapses into “…” – a Menu with the hidden levels (sheet on mobile), named “Show 2 more levels”. Labels over 200 px end with “…” and show the full name in a Tooltip. ' +
-          'Below 640 px (`layout="auto"`) only a link to the parent page. Not on the start page; above the page title. Styles: `medo-breadcrumbs`, `medo-breadcrumbs--{sm|md}`.',
+          'Use breadcrumbs to show where a page sits in the hierarchy and to go up a level. Built on React Aria Breadcrumbs; the current page comes last and is not a link.',
       },
     },
   },
@@ -135,9 +133,10 @@ export const InPageHeader: Story = {
   render: () => (
     <header style={{ display: 'grid', gap: 'var(--medo-space-3)' }}>
       <Breadcrumbs items={four} aria-label="Breadcrumb, page header" />
-      <h1 className="medo-text-heading-xl" style={{ margin: 0 }}>
+      {/* The page title is an h1 in an app; inside the docs page it is one level below the section. */}
+      <h3 className="medo-text-heading-xl" style={{ margin: 0 }}>
         Design review
-      </h1>
+      </h3>
       <p style={{ margin: 0, font: 'var(--medo-typography-body-md)', color: 'var(--medo-color-text-secondary)' }}>Feedback round for the new start page.</p>
     </header>
   ),

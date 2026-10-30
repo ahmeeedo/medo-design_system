@@ -120,10 +120,7 @@ const meta = {
     docs: {
       description: {
         component:
-          'React Aria DateField · TimeField · DatePicker · DateRangePicker · Calendar · RangeCalendar with `@internationalized/date` values (`parseDate("2026-10-12")`, `toString()` for the API – no time-zone shifts). ' +
-          'Typing first: every segment is a spinbutton, digits only, complete segments jump to the next; ↑ ↓ change, Backspace clears, a pasted date fills all. Order, separators, week start and 12/24 h come from the locale; always with leading zeros (09:30, 01.05.2026). ' +
-          'The calendar is a helper: “Open calendar” or Alt + ↓; the month-and-year button switches to months and years (far dates in three clicks). Ranges: two months, optional presets. Time: typed, optional slot list behind a clock button – no clock faces. ' +
-          'Below 640 px the calendar opens in a Bottom Sheet (lg, “Done”). Validation names the rule (min, max, unavailable days, reversed range). Styles: `medo-date-box`, `medo-calendar`.',
+          'Use these fields to enter dates, ranges and times – typing first, the calendar as a helper. Built on React Aria; values are `@internationalized/date` objects (`parseDate("2026-10-12")`, `toString()` for your API), so there are no time-zone shifts.',
       },
     },
   },

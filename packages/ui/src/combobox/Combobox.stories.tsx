@@ -113,10 +113,7 @@ const meta = {
     },
     docs: {
       description: {
-        component:
-          'Built on React Aria ComboBox. Opens on typing, arrow down or the chevron – never on focus. Contains-match, case and accent insensitive; ' +
-          'the match is bold (visual only) and the first result is highlighted, Enter picks it. Leaving without a selection restores the last valid value. ' +
-          'Fewer than about 10 options: Select. Styles: `medo-combobox`, `medo-input medo-combobox__field`, list: `medo-listbox`.',
+        component: 'Use a combobox when users choose from a long list by typing. Built on React Aria ComboBox; typing filters the list, the match is bold.',
       },
     },
   },

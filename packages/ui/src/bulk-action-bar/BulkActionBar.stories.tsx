@@ -28,7 +28,7 @@ const meta = {
   title: 'Components/Data display/Bulk Action Bar',
   component: BulkActionBar,
   tags: ['autodocs'],
-  args: { count: 3, variant: 'desktop', actions: three, onClear: fn() },
+  args: { count: 3, variant: 'auto', actions: three, onClear: fn() },
   argTypes: {
     count: { control: { type: 'number', min: 0 }, description: 'Selected items. 0 hides the bar.' },
     variant: { control: 'inline-radio', options: ['auto', 'desktop', 'mobile'], description: 'auto: mobile below 640 px.' },
@@ -76,9 +76,7 @@ const meta = {
     docs: {
       description: {
         component:
-          'Appears with ≥ 1 selected item and floats, so selecting never shifts the layout (slides up with a smooth spring; a fade with reduced motion). A toolbar named “Bulk actions”: the count is announced, Esc or × clears the selection. ' +
-          'Desktop: bottom centre, 24 px above the viewport edge, surface/inverse with the Toast buttons. Mobile: full width at the bottom, Button ghost lg (Delete as ghost danger), safe area. ' +
-          'Actions are structured: max 3, more go into the “…” menu; destructive actions confirm (Alert dialog) or offer Undo (Toast). Render it right after the list so Tab reaches it next. Styles: `medo-bulk-bar`.',
+          'Use the bulk action bar for actions on the rows selected in a Table or List view. It appears with the first selection and floats, so the layout never shifts. Render it right after the list.',
       },
     },
   },
