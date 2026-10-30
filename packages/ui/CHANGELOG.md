@@ -1,5 +1,16 @@
 # @med-o/ui
 
+## 0.3.0
+
+### Minor Changes
+
+- e4a8577: `StaticTable`: when the table is wider than its container, the container becomes a focusable region named by the caption (or “Table”), so keyboard users can scroll it with the arrow keys. It shows the focus ring. New text `table.scrollRegion` in `Messages`: own message sets for other languages need it.
+
+### Patch Changes
+
+- 5f6b6e9: `BulkActionBar` on mobile shows 2 actions; with more, the first stays and “…” holds the rest. Before, 3 actions made the bar wider than a 375 px screen.
+  - @med-o/design-tokens@0.3.0
+
 ## 0.2.0
 
 ### Minor Changes
