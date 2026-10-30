@@ -41,7 +41,7 @@ jobs:
           VISUAL: ${{ hashFiles('apps/storybook/__screenshots__/**/*.png') != '' && '1' || '' }}
 
       # On a visual mismatch: actual and diff images to download (Summary → Artifacts).
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: failure()
         with:
           name: screenshot-diffs

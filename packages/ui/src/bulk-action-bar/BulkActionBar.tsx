@@ -14,14 +14,14 @@ export interface BulkAction {
   onAction: () => void;
   /** danger: destructive – confirm it (Alert dialog) or offer Undo (Toast). Mobile: ghost danger. */
   variant?: 'default' | 'danger';
-  /** Icon for the “…” menu (actions after the third). */
+  /** Icon for the “…” menu (actions that do not fit in the bar). */
   icon?: ReactNode;
 }
 
 export interface BulkActionBarProps {
   /** Number of selected items. 0 hides the bar. */
   count: number;
-  /** Max 3 are shown; more go into the “…” menu. Destructive last. */
+  /** Desktop shows 3, mobile 2 (with more: 1 and “…”); the rest go into the “…” menu. Most important first, destructive last. */
   actions: BulkAction[];
   /** Clears the selection (× and Esc). */
   onClear: () => void;
@@ -69,8 +69,10 @@ export function BulkActionBar({
     if (returnTo.current?.isConnected) returnTo.current.focus();
   }, [visible]);
 
-  const shown = actions.slice(0, 3);
-  const more = actions.slice(3);
+  // Mobile has room for two buttons next to × and the count: with more actions, the first stays and “…” takes the rest.
+  const max = isMobile ? (actions.length > 2 ? 1 : 2) : 3;
+  const shown = actions.slice(0, max);
+  const more = actions.slice(max);
 
   const onKeyDown = (e: KeyboardEvent) => {
     if (e.key === 'Escape' && !e.defaultPrevented) {

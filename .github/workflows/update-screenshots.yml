@@ -2,6 +2,9 @@
 # Run it from the Actions tab (“Run workflow”) on the branch whose look is correct – after an intended visual
 # change, or once to create the first references. References are only made here: fonts render slightly
 # differently on every OS, so screenshots from a laptop would never match CI.
+#
+# With the secret RELEASE_TOKEN (see release.yml) the commit starts “Storybook tests” right away. With the
+# built-in token GitHub starts no workflow for it, and the tests run again with the next push.
 name: Update screenshots
 
 on:
@@ -21,6 +24,9 @@ jobs:
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@v5
+        with:
+          # The references are pushed with these credentials.
+          token: ${{ secrets.RELEASE_TOKEN || github.token }}
 
       - uses: actions/setup-node@v5
         with:

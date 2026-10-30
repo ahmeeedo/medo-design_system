@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import type { Selection } from 'react-aria-components';
-import { expect, fn } from 'storybook/test';
+import { expect, fn, within } from 'storybook/test';
 import { Archive, Download, FolderInput, Tag, Trash2 } from 'lucide-react';
 import { BulkActionBar } from './BulkActionBar';
 import { ListRow, ListView } from '../list-view/ListView';
@@ -32,7 +32,7 @@ const meta = {
   argTypes: {
     count: { control: { type: 'number', min: 0 }, description: 'Selected items. 0 hides the bar.' },
     variant: { control: 'inline-radio', options: ['auto', 'desktop', 'mobile'], description: 'auto: mobile below 640 px.' },
-    actions: { ...slot({ three, 'five - overflow': five }), description: 'Max 3 shown, more in “…”. Destructive last.' },
+    actions: { ...slot({ three, 'five - overflow': five }), description: 'Desktop 3, mobile 2 (with more: 1 and “…”); the rest in “…”. Destructive last.' },
     onClear: { control: false },
     countLabel: semantic,
     clearLabel: semantic,
@@ -46,7 +46,7 @@ const meta = {
         when: ['Actions for several selected rows of a Table or List view: export, archive, delete.'],
         whenNot: ['Actions for one row: put them into the row.', 'Actions for the whole page: put them into the page header.'],
         do: [
-          'Show at most 3 actions; more go into the “…” menu.',
+          'Order actions by importance: desktop shows 3, mobile 2; the rest go into the “…” menu.',
           'Confirm destructive actions or offer Undo.',
           'Render it right after the list, so Tab reaches it next.',
         ],
@@ -97,7 +97,7 @@ export const Mobile: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Full width at the bottom on surface/raised: × and the count on the left, Button ghost lg on the right. Fewer actions fit – more go into “…”.',
+        story: 'Full width at the bottom on surface/raised: × and the count on the left, Button ghost lg on the right. Two actions fit; with more, the first stays and “…” holds the rest.',
       },
     },
   },
@@ -148,6 +148,7 @@ export const WithListView: Story = {
 
 export const InteractionTest: Story = {
   ...interactionTest,
+  args: { variant: 'desktop' },
   play: async ({ canvas, userEvent, args }) => {
     const bar = canvas.getByRole('toolbar', { name: 'Bulk actions' });
     await expect(bar).toHaveTextContent('3 selected');
@@ -157,5 +158,20 @@ export const InteractionTest: Story = {
     canvas.getByRole('button', { name: 'Archive' }).focus();
     await userEvent.keyboard('{Escape}');
     await expect(args.onClear).toHaveBeenCalled();
+  },
+};
+
+export const MobileOverflowTest: Story = {
+  ...interactionTest,
+  name: 'Interaction test: mobile keeps two',
+  args: { variant: 'mobile' },
+  play: async ({ canvas, userEvent }) => {
+    // Three actions on mobile: the first stays, “…” holds the other two, so the bar fits 375 px.
+    await expect(canvas.getByRole('button', { name: 'Export' })).toBeInTheDocument();
+    await expect(canvas.queryByRole('button', { name: 'Archive' })).toBeNull();
+    await userEvent.click(canvas.getByRole('button', { name: 'More actions' }));
+    const menu = await within(document.body).findByRole('menu');
+    await expect(within(menu).getAllByRole('menuitem').map((i) => i.textContent)).toEqual(['Archive', 'Delete']);
+    await userEvent.keyboard('{Escape}');
   },
 };
