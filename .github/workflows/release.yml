@@ -33,7 +33,8 @@ jobs:
         with:
           node-version: 24
           cache: npm
-          registry-url: https://registry.npmjs.org
+          # No registry-url: it writes an .npmrc with a placeholder token, and npm would send that token
+          # instead of using trusted publishing (the publish then fails with E404).
 
       - run: npm ci
 
