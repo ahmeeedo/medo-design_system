@@ -1,6 +1,10 @@
 # Release: Changesets opens a "Version Packages" pull request when changesets are on main.
 # Merging that pull request publishes the new versions of @med-o/design-tokens and @med-o/ui to npm.
-# Authentication: npm trusted publishing (OIDC) – no token stored in GitHub. Provenance is added automatically.
+# Authentication: npm trusted publishing (OIDC) – no npm token stored in GitHub. Provenance is added automatically.
+#
+# Optional secret RELEASE_TOKEN (fine-grained token: this repository, Contents + Pull requests read/write):
+# GitHub does not start workflows for pull requests opened with its built-in token, so the checks of the
+# “Version Packages” pull request wait for an approval. Opened with RELEASE_TOKEN, they run on their own.
 name: Release
 
 on:
@@ -21,6 +25,9 @@ jobs:
       id-token: write # npm trusted publishing
     steps:
       - uses: actions/checkout@v5
+        with:
+          # The version commit is pushed with these credentials.
+          token: ${{ secrets.RELEASE_TOKEN || github.token }}
 
       - uses: actions/setup-node@v5
         with:
@@ -30,6 +37,9 @@ jobs:
 
       - run: npm ci
 
+      # Trusted publishing needs npm 11.5.1 or newer; the npm bundled with Node may be older.
+      - run: npm install -g npm@latest && npm --version
+
       - uses: changesets/action@v1
         with:
           version: npx changeset version
@@ -37,4 +47,4 @@ jobs:
           title: Version Packages
           commit: 'chore: version packages'
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN || secrets.GITHUB_TOKEN }}
