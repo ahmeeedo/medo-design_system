@@ -1,6 +1,6 @@
 {
   "name": "@med-o/design-tokens",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "Design tokens of the med.o Design System (DTCG source, CSS variables, Tailwind v4 theme, JS).",
   "type": "module",
   "license": "MIT",
