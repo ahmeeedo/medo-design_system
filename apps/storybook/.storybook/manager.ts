@@ -70,6 +70,43 @@ uiStyle.textContent = `
 .search-field:focus-within { box-shadow: var(--medo-ui-focus); }
 .search-field input { box-shadow: none !important; background: transparent; }
 
+/* Icon buttons around the sidebar (settings, expand all, clear search, filters): IconButton ghost. */
+:is(.sidebar-header, .search-field) button,
+#storybook-explorer-menu .sidebar-subheading-action {
+  border-radius: var(--medo-ui-radius-md);
+  background: transparent;
+  color: var(--medo-ui-text-secondary);
+}
+:is(.sidebar-header, .search-field) button:hover,
+#storybook-explorer-menu .sidebar-subheading-action:hover,
+#storybook-explorer-menu .sidebar-subheading > button:first-child:hover {
+  background: var(--medo-ui-hover);
+  color: var(--medo-ui-text-primary);
+}
+.sidebar-header button[aria-expanded='true'] {
+  background: var(--medo-ui-selected);
+  color: var(--medo-ui-text-brand);
+}
+:is(.sidebar-header, .search-field) button:focus-visible,
+#storybook-explorer-menu .sidebar-subheading-action:focus-visible { outline: none; box-shadow: var(--medo-ui-focus); }
+
+/* Search results: the highlighted result (mouse or arrow keys) and the hovered one look the same – no flicker. */
+#storybook-explorer-menu li { border-radius: var(--medo-ui-radius-sm); }
+#storybook-explorer-menu li > :is(a, button, div) { background: transparent; }
+#storybook-explorer-menu li svg { color: var(--medo-ui-text-secondary); }
+#storybook-explorer-menu li:is([aria-selected='true'], :hover) {
+  background: var(--medo-ui-hover);
+  color: var(--medo-ui-text-primary);
+}
+
+/* Menus from the settings button and the toolbar: Menu item states. */
+.react-aria-Popover li > :is(a, button):is(:hover, :focus-visible),
+[role='listbox'] [role='option']:is(:hover, :focus-visible, [data-focused]) {
+  background: var(--medo-ui-hover);
+  color: var(--medo-ui-text-primary);
+  outline: none;
+}
+
 [role='toolbar'] :is(button, a) { color: var(--medo-ui-text-secondary); }
 [role='toolbar'] :is(button, a):not([aria-disabled='true'], :disabled):hover {
   background: var(--medo-ui-hover);

@@ -39,8 +39,9 @@ const build = (mode: Mode): ThemeVars => {
     fontCode: t('font/family/mono'),
 
     colorPrimary: t('action/primary'),
-    // Storybook's accent (tabs, toggles in the addon panel). The sidebar and toolbar states come from manager.ts.
-    colorSecondary: t('surface/brand-bold'),
+    // Storybook's accent. Its own hover states are this colour as text on a 7–14 % tint of it, so Dark needs the light
+    // brand text colour (brand-bold would vanish on the dark bar). Sidebar, toolbar and menus get our states in manager.ts.
+    colorSecondary: mode === 'dark' ? t('text/brand') : t('surface/brand-bold'),
 
     appBg: t('surface/canvas'),
     appContentBg: t('surface/default'),
