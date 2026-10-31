@@ -42,7 +42,7 @@ const preview: Preview = {
           'Foundations',
           ['Colors', 'Typography', 'Spacing & sizes', 'Elevation & motion', 'Icons', 'Accessibility', 'Content'],
           'Guides',
-          ['Theming', 'Languages', 'Tailwind'],
+          ['Theming', 'Languages', 'Tailwind', 'Versioning & support'],
           'Patterns',
           ['Account', 'Form', 'Search', 'Delete'],
           'Components',

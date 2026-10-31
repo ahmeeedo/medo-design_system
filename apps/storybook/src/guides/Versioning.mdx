@@ -1,0 +1,101 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import { DocPage, DocHeader, DocSection, DocFooter, SpecTable, Notes, Tok, SourceLink } from '../docs-blocks/DocBlocks';
+
+<Meta title="Guides/Versioning & support" />
+
+<DocPage>
+
+<DocHeader
+  kind="Guides"
+  title="Versioning & support"
+  meta="Browsers · Versions · Deprecations"
+  subtitle="What you can rely on: which browsers work, what a new version may change and how long old APIs stay."
+  description={<p>Both packages, <Tok>@med-o/design-tokens</Tok> and <Tok>@med-o/ui</Tok>, are released together with the same version number. Every release has a changelog entry on npm and GitHub.</p>}
+  nav={['Browsers', 'Versions', 'Breaking changes', 'Deprecations', 'Requirements']}
+/>
+
+<DocSection n={1} title="Browsers" meta="Last two major versions" description="The last two major versions of Chrome, Edge, Firefox, Safari (macOS and iOS) and Samsung Internet. Everything works from these versions on.">
+
+<SpecTable
+  head={['Browser', 'From version']}
+  rows={[
+    ['Chrome, Edge', '117'],
+    ['Safari (macOS, iOS)', '17.5'],
+    ['Firefox', '129'],
+    ['Samsung Internet', '24'],
+  ]}
+/>
+
+Older browsers still work, without a few enhancements: entry animations (<Tok>@starting-style</Tok>), text areas that grow with their text (<Tok>field-sizing</Tok>) and finding text in closed accordions (<Tok>hidden="until-found"</Tok>). Every story is tested in Chromium in CI.
+
+</DocSection>
+
+<DocSection n={2} title="Versions" meta="0.x · from 1.0" description="What the version number tells you.">
+
+<SpecTable
+  head={['Release', 'May contain']}
+  rows={[
+    ['Patch – 0.4.1, later 1.2.1', 'Bug fixes only. Update without checking.'],
+    ['Minor – 0.5.0', <>New features, and while the packages are 0.x also breaking changes, each marked <strong>Breaking:</strong> in the changelog.</>],
+    ['Minor – from 1.0 (1.3.0)', 'New features only. Nothing you use stops working.'],
+    ['Major – 2.0.0', 'Breaking changes, each with how to update.'],
+  ]}
+/>
+
+Fixes go into the latest version only. Pin a version range that matches how you want to update, e.g. <Tok>"@med-o/ui": "~0.4.1"</Tok> (patches only) or <Tok>"^1.0.0"</Tok> from 1.0.
+
+</DocSection>
+
+<DocSection n={3} title="Breaking changes" meta="Changelog" description="A breaking change says what changed and what to do – in the changelog of the release.">
+
+```md
+## 0.5.0
+
+### Minor Changes
+
+- **Breaking:** `Pagination` – `onPageChange` is now `onChange`, like every other component.
+  Rename the prop; the value is the same page number.
+```
+
+</DocSection>
+
+<DocSection n={4} title="Deprecations" meta="@deprecated" description="Nothing disappears without warning. Old APIs are marked first and keep working for a while.">
+
+```tsx
+export interface ButtonProps {
+  /** @deprecated Use `variant="ghost"` instead. Removed in 0.6.0. */
+  subtle?: boolean;
+}
+```
+
+<SpecTable
+  head={['Step', 'What happens']}
+  rows={[
+    ['1. Marked', <>The prop, component or token gets <Tok>@deprecated</Tok> with its replacement – your editor strikes it through. The changelog lists it.</>],
+    ['2. Still works', 'At least one more minor version while the packages are 0.x; until the next major version from 1.0 on.'],
+    ['3. Removed', <>In a later release, marked <strong>Breaking:</strong> in its changelog.</>],
+  ]}
+/>
+
+A renamed token keeps its old name as an alias for the same time, so no project breaks because of a rename.
+
+</DocSection>
+
+<DocSection n={5} title="Requirements" meta="React 19 · ESM">
+
+<Notes title="What the packages need">
+  <ul>
+    <li>React 19 and React DOM 19 (peer dependencies).</li>
+    <li>ESM only. The components are marked <code>"use client"</code> and work in the Next.js App Router.</li>
+    <li>Accessibility target WCAG 2.2 AA in Light and Dark. Please report a violation as a GitHub issue – it is treated as a bug.</li>
+  </ul>
+</Notes>
+
+</DocSection>
+
+<DocFooter>
+  {'Guide: Versioning & support · @med-o/ui · @med-o/design-tokens'}
+  <SourceLink path=".changeset" />
+</DocFooter>
+
+</DocPage>
