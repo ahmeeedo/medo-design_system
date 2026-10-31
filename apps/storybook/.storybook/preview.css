@@ -65,14 +65,15 @@ body {
 /* ---------- header ---------- */
 .doc-header {
   display: grid;
-  gap: var(--medo-space-10);
-  padding: var(--medo-space-8) var(--doc-gutter) var(--medo-space-12);
+  gap: var(--medo-layout-gap-group);
+  /* Bottom: half the section rule – with the top of the first section it adds up to one rule section. */
+  padding: var(--medo-space-8) var(--doc-gutter) calc(var(--medo-layout-gap-section) / 2);
   border-bottom: 1px solid var(--medo-color-border-default);
 }
 .doc-topline {
   display: flex;
   justify-content: space-between;
-  gap: var(--medo-space-4);
+  gap: var(--medo-layout-gap-content);
   flex-wrap: wrap;
   padding-bottom: var(--medo-space-6);
   border-bottom: 1px solid var(--medo-color-border-default);
@@ -80,12 +81,12 @@ body {
 /* Title, subtitle and description stacked in one column (no aside on the right). */
 .doc-intro {
   display: grid;
-  gap: var(--medo-space-4);
+  gap: var(--medo-layout-gap-content);
   max-inline-size: 48rem;
 }
 .doc-intro-text {
   display: grid;
-  gap: var(--medo-space-3);
+  gap: var(--medo-layout-gap-content);
   line-height: 1.65;
   color: var(--medo-color-text-secondary);
 }
@@ -190,16 +191,18 @@ body {
 }
 
 /* ---------- section ---------- */
+/* Spacing rules: sections are one rule section apart (half above, half below the divider), the parts of a
+   section one rule group, text inside a part content, examples and guide boxes side by side items. */
 .doc-section {
   display: grid;
-  gap: var(--medo-space-6);
-  padding: var(--medo-space-12) var(--doc-gutter);
+  gap: var(--medo-layout-gap-group);
+  padding: calc(var(--medo-layout-gap-section) / 2) var(--doc-gutter);
   border-bottom: 1px solid var(--medo-color-border-default);
 }
 .doc-section-head {
   display: flex;
   align-items: baseline;
-  gap: var(--medo-space-5);
+  gap: var(--medo-layout-gap-content);
   flex-wrap: wrap;
 }
 .doc-section-meta {
@@ -217,11 +220,11 @@ body {
 }
 .doc-lead {
   display: grid;
-  gap: var(--medo-space-3);
+  gap: var(--medo-layout-gap-content);
 }
 .doc-body {
   display: grid;
-  gap: var(--medo-space-5);
+  gap: var(--medo-layout-gap-content);
   min-width: 0;
 }
 .doc-body > :where(p, ul, ol) {
@@ -264,14 +267,14 @@ body {
 /* ---------- stage: examples in Light and Dark ---------- */
 .doc-stages {
   display: grid;
-  gap: var(--medo-space-4);
+  gap: var(--medo-layout-gap-items);
 }
 .doc-stage-label {
   color: var(--medo-color-text-secondary);
 }
 .doc-stage {
   display: grid;
-  gap: var(--medo-space-6);
+  gap: var(--medo-layout-gap-content);
   padding: var(--medo-space-8);
   border: 1px solid var(--medo-color-border-default);
   border-radius: var(--medo-radius-md);
@@ -432,10 +435,15 @@ body {
 }
 
 /* ---------- usage guide: two columns (when / when not, do / don't) ---------- */
+.doc-guides {
+  display: grid;
+  gap: var(--medo-layout-gap-items);
+  min-inline-size: 0;
+}
 .doc-columns {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
-  gap: var(--medo-space-6);
+  gap: var(--medo-layout-gap-items);
   max-inline-size: 60rem;
   min-inline-size: 0;
 }

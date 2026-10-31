@@ -106,7 +106,7 @@ const PRIMITIVE_GROUPS = ['brand', 'slate', 'red', 'amber', 'green', 'sky', 'vio
 
 export function Palette() {
   return (
-    <div style={{ display: 'grid', gap: 16 }}>
+    <div style={{ display: 'grid', gap: 'var(--medo-layout-gap-content)' }}>
       {PRIMITIVE_GROUPS.map((g) => {
         const tokens = L.filter((t) => t.path[0] === 'color' && t.path[1] === g);
         return (
@@ -201,7 +201,7 @@ export function SpacingScale() {
 
 export function Radii() {
   return (
-    <div style={{ display: 'flex', gap: 24, flexWrap: 'wrap' }}>
+    <div style={{ display: 'flex', gap: 'var(--medo-layout-gap-items)', flexWrap: 'wrap' }}>
       {byGroup('radius').map((t) => (
         <div key={t.cssVar} style={{ textAlign: 'center' }}>
           <div style={{ width: 72, height: 72, background: 'var(--medo-color-surface-brand-muted)', border: '2px solid var(--medo-color-action-primary)', borderRadius: `var(${t.cssVar})` }} />
@@ -344,7 +344,7 @@ export function Elevation() {
       {(['light', 'dark'] as const).map((theme) => (
         <div key={theme} data-theme={theme} className="doc-stage" style={{ background: 'var(--medo-color-surface-canvas)' }}>
           <span className="doc-stage-label medo-text-code-sm">{theme}</span>
-          <div style={{ display: 'flex', gap: 24, flexWrap: 'wrap' }}>
+          <div style={{ display: 'flex', gap: 'var(--medo-layout-gap-items)', flexWrap: 'wrap' }}>
             {byGroup('shadow').map((t) => (
               <div
                 key={t.cssVar}
@@ -386,7 +386,7 @@ const curves = [
 function MotionPlayground() {
   const [on, setOn] = useState(false);
   return (
-    <div className="doc-stage" style={{ display: 'grid', gap: 12 }}>
+    <div className="doc-stage" style={{ display: 'grid', gap: 'var(--medo-layout-gap-content)' }}>
       <div>
         <Button size="sm" variant="secondary" onPress={() => setOn((v) => !v)}>
           {on ? 'Play back' : 'Play'}

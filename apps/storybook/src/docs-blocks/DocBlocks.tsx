@@ -286,8 +286,9 @@ export function UsageGuide({ usage }: { usage: MedoUsage }) {
         )}
       </div>
     ) : null;
+  // One grid for both rows, so the boxes are the rule items apart in both directions.
   return (
-    <>
+    <div className="doc-guides">
       {usage.when?.length || usage.whenNot?.length ? (
         <div className="doc-columns">
           {block('When to use', usage.when, 'positive', <CircleCheck />, 'bullet')}
@@ -300,7 +301,7 @@ export function UsageGuide({ usage }: { usage: MedoUsage }) {
           {block("Don't", usage.dont, 'negative', <X />, 'check')}
         </div>
       ) : null}
-    </>
+    </div>
   );
 }
 

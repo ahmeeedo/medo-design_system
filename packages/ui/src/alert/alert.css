@@ -85,6 +85,7 @@
 .medo-alert__actions {
   display: flex;
   flex-wrap: wrap;
+  /* Exception to the rule inline (8): the actions are text buttons without padding, 8 px would join them. */
   gap: var(--medo-space-4);
   margin-block-start: var(--medo-space-2);
 }

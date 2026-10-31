@@ -13,27 +13,105 @@ addons.setConfig({
 });
 
 /*
- * Toolbar in Dark: Storybook colours the active and the hover state with colorSecondary (brand-bold), which is
- * far too dark on the dark bar (≈ 1.9 : 1). colorSecondary cannot simply be lighter: the selected sidebar item uses
- * it as background behind white text. So the toolbar gets its own states, from the tokens:
- * hover text/primary, active text/brand (≈ 6.5 : 1), both on a text/brand tint. Light keeps Storybook's states.
+ * Sidebar and toolbar in our component styles, from the tokens (Light and Dark):
+ * - Sidebar items look like NavItem (sidebar): 36 px, label/md, text/secondary; hover state/hover + text/primary;
+ *   the current page action/selected + label/md-strong; one icon colour; focus ring inset.
+ * - Group titles use the overline style (sentence case, like everywhere in the system).
+ * - The search field has the frame and focus of SearchField.
+ * - Toolbar buttons behave like ToggleButton: hover state/hover + text/primary, on or open action/selected + text/brand.
+ * The values are CSS variables on :root, so one rule set serves both modes. The selectors are Storybook's own
+ * (ids, sidebar-item, role, aria) – the test “Storybook UI” checks them after a Storybook update.
  */
-const toolbarStyle = document.createElement('style');
-document.head.append(toolbarStyle);
-const paintToolbar = (mode: Mode) => {
-  const brand = token('dark', 'text/brand');
-  toolbarStyle.textContent =
-    mode === 'dark'
-      ? `[role='toolbar'] button[aria-haspopup='listbox'], [role='toolbar'] button[aria-expanded='true'] {
-           color: ${brand};
-           background: color-mix(in srgb, ${brand} 14%, transparent);
-         }
-         [role='toolbar'] button:hover, [role='toolbar'] button:focus-visible {
-           color: ${token('dark', 'text/primary')};
-           background: color-mix(in srgb, ${brand} 16%, transparent);
-         }`
-      : '';
+const uiStyle = document.createElement('style');
+uiStyle.id = 'medo-ui';
+uiStyle.textContent = `
+#storybook-explorer-menu .sidebar-item {
+  min-block-size: 2.25rem;
+  border-radius: var(--medo-ui-radius-sm);
+  color: var(--medo-ui-text-secondary);
+  background: transparent;
+}
+#storybook-explorer-menu .sidebar-item > :is(a, button):first-child {
+  min-block-size: 2.25rem;
+  align-items: center;
+  font: var(--medo-ui-label);
+  color: inherit;
+}
+#storybook-explorer-menu .sidebar-item svg { color: var(--medo-ui-text-secondary); }
+#storybook-explorer-menu .sidebar-item:hover {
+  background: var(--medo-ui-hover);
+  color: var(--medo-ui-text-primary);
+}
+#storybook-explorer-menu .sidebar-item:active { background: var(--medo-ui-pressed); }
+#storybook-explorer-menu .sidebar-item[data-selected='true'] {
+  background: var(--medo-ui-selected);
+  color: var(--medo-ui-text-primary);
+}
+#storybook-explorer-menu .sidebar-item[data-selected='true'] > :is(a, button):first-child { font: var(--medo-ui-label-strong); }
+#storybook-explorer-menu .sidebar-item[data-selected='true'] svg { color: var(--medo-ui-text-primary); }
+#storybook-explorer-menu .sidebar-item[data-selected='true']:hover { background: var(--medo-ui-selected-hover); }
+#storybook-explorer-menu .sidebar-item:has(:focus-visible),
+#storybook-explorer-menu .sidebar-item[data-highlighted='true'] { box-shadow: var(--medo-ui-focus-inset); }
+#storybook-explorer-menu :is(a, button):focus-visible { outline: none; }
+
+#storybook-explorer-menu .sidebar-subheading > button:first-child {
+  font: var(--medo-ui-overline);
+  text-transform: none;
+  letter-spacing: normal;
+  color: var(--medo-ui-text-secondary);
+}
+#storybook-explorer-menu .sidebar-subheading > button:focus-visible { outline: none; box-shadow: var(--medo-ui-focus-inset); }
+
+.search-field {
+  border: 1px solid var(--medo-ui-border-strong);
+  border-radius: var(--medo-ui-radius-md);
+  background: var(--medo-ui-surface);
+}
+.search-field:focus-within { box-shadow: var(--medo-ui-focus); }
+.search-field input { box-shadow: none !important; background: transparent; }
+
+[role='toolbar'] :is(button, a) { color: var(--medo-ui-text-secondary); }
+[role='toolbar'] :is(button, a):not([aria-disabled='true'], :disabled):hover {
+  background: var(--medo-ui-hover);
+  color: var(--medo-ui-text-primary);
+}
+[role='toolbar'] :is([aria-checked='true'], [aria-expanded='true'], [aria-pressed='true']) {
+  background: var(--medo-ui-selected);
+  color: var(--medo-ui-text-brand);
+}
+[role='toolbar'] :is([aria-checked='true'], [aria-expanded='true'], [aria-pressed='true']):hover {
+  background: var(--medo-ui-selected-hover);
+  color: var(--medo-ui-text-brand);
+}
+[role='toolbar'] :is(button, a):focus-visible { outline: none; box-shadow: var(--medo-ui-focus); }
+`;
+document.head.append(uiStyle);
+
+const paintUi = (mode: Mode) => {
+  const t = (name: string) => token(mode, name);
+  const ring = t('focus/ring');
+  const halo = t('focus/halo');
+  const vars: Record<string, string> = {
+    'text-primary': t('text/primary'),
+    'text-secondary': t('text/secondary'),
+    'text-brand': t('text/brand'),
+    hover: t('state/hover'),
+    pressed: t('state/pressed'),
+    selected: t('action/selected'),
+    'selected-hover': t('action/selected-hover'),
+    'border-strong': t('border/strong'),
+    surface: t('surface/default'),
+    'radius-sm': t('radius/sm'),
+    'radius-md': t('radius/md'),
+    label: t('typography/label/md'),
+    'label-strong': t('typography/label/md-strong'),
+    overline: t('typography/overline'),
+    focus: `0 0 0 2px ${halo}, 0 0 0 4px ${ring}`,
+    'focus-inset': `inset 0 0 0 2px ${ring}, inset 0 0 0 3px ${halo}`,
+  };
+  for (const [k, v] of Object.entries(vars)) document.documentElement.style.setProperty(`--medo-ui-${k}`, v);
 };
+paintUi('light');
 
 /*
  * Browser tab: Storybook names every page “… ⋅ Storybook”. Visitors look for the design system, so the suffix
@@ -51,7 +129,7 @@ addons.register('medo/theme', (api) => {
   const apply = ({ globals }: { globals?: Record<string, unknown> }) => {
     const mode = modeFromGlobals(globals);
     api.setOptions({ theme: themes[mode] });
-    paintToolbar(mode);
+    paintUi(mode);
   };
   const channel = api.getChannel();
   channel?.on(SET_GLOBALS, apply);

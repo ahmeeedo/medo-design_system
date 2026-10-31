@@ -244,7 +244,7 @@
 /* ---------- Cards ---------- */
 
 .medo-list-view--cards {
-  gap: var(--medo-space-3);
+  gap: var(--medo-layout-gap-items); /* spacing rule: cards in a list */
 }
 
 .medo-list-card {

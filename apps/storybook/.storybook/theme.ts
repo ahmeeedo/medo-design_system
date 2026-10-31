@@ -39,7 +39,7 @@ const build = (mode: Mode): ThemeVars => {
     fontCode: t('font/family/mono'),
 
     colorPrimary: t('action/primary'),
-    // Selected sidebar item has white text: brand-bold keeps ≥ 4.5 : 1 in both modes.
+    // Storybook's accent (tabs, toggles in the addon panel). The sidebar and toolbar states come from manager.ts.
     colorSecondary: t('surface/brand-bold'),
 
     appBg: t('surface/canvas'),

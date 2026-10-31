@@ -276,7 +276,7 @@
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  gap: var(--medo-space-2) var(--medo-space-4);
+  gap: var(--medo-layout-gap-inline); /* spacing rule: buttons side by side */
 }
 
 .medo-embed--loaded {
