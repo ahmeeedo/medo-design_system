@@ -20,7 +20,7 @@ addons.setConfig({
  * Sidebar and toolbar in our component styles, from the tokens (Light and Dark):
  * - Sidebar items look like NavItem (sidebar): 36 px, label/md, text/secondary; hover state/hover + text/primary;
  *   the current page action/selected + label/md-strong; one icon colour; focus ring inset.
- * - Group titles use the overline style (sentence case, like everywhere in the system).
+ * - Group titles (Foundations, Guides …) open and close like a NavGroup: 36 px, label/md-strong, text/primary.
  * - The search field has the frame and focus of SearchField.
  * - Toolbar buttons behave like ToggleButton: hover state/hover + text/primary, on or open action/selected + text/brand.
  * The values are CSS variables on :root, so one rule set serves both modes. The selectors are Storybook's own
@@ -58,11 +58,14 @@ uiStyle.textContent = `
 #storybook-explorer-menu .sidebar-item[data-highlighted='true'] { box-shadow: var(--medo-ui-focus-inset); }
 #storybook-explorer-menu :is(a, button):focus-visible { outline: none; }
 
+#storybook-explorer-menu .sidebar-subheading { min-block-size: 2.25rem; }
 #storybook-explorer-menu .sidebar-subheading > button:first-child {
-  font: var(--medo-ui-overline);
+  min-block-size: 2.25rem;
+  border-radius: var(--medo-ui-radius-sm);
+  font: var(--medo-ui-label-strong);
   text-transform: none;
   letter-spacing: normal;
-  color: var(--medo-ui-text-secondary);
+  color: var(--medo-ui-text-primary);
 }
 #storybook-explorer-menu .sidebar-subheading > button:focus-visible { outline: none; box-shadow: var(--medo-ui-focus-inset); }
 
@@ -146,7 +149,6 @@ const paintUi = (mode: Mode) => {
     'radius-md': t('radius/md'),
     label: t('typography/label/md'),
     'label-strong': t('typography/label/md-strong'),
-    overline: t('typography/overline'),
     focus: `0 0 0 2px ${halo}, 0 0 0 4px ${ring}`,
     'focus-inset': `inset 0 0 0 2px ${ring}, inset 0 0 0 3px ${halo}`,
   };
