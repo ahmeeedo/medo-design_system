@@ -16,8 +16,32 @@ const maps = {
   dark: new Map((dark as Token[]).map((t) => [t.name, String(t.value)])),
 };
 
-/** Toolbar global "theme" ("Light" | "Dark") → mode */
-export const modeFromGlobals = (globals?: Record<string, unknown>): Mode => (globals?.theme === 'Dark' ? 'dark' : 'light');
+/*
+ * The theme switch is not a Storybook global: changing a global re-renders every story on a docs page, and Storybook
+ * reloads the page when a story is still rendering – a white flash on every switch. Instead the toolbar button
+ * (manager.ts) stores the mode and sets data-theme on the preview's <html>, exactly like an app does; nothing
+ * re-renders. The preview reads the stored mode before its first render, so a reload keeps the theme.
+ */
+const STORAGE_KEY = 'medo-theme';
+
+/** The stored mode, else the system setting. */
+export const startMode = (): Mode => {
+  try {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (stored === 'light' || stored === 'dark') return stored;
+  } catch {
+    // Storage blocked (private mode): fall back to the system setting.
+  }
+  return matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+};
+
+export const storeMode = (mode: Mode) => {
+  try {
+    localStorage.setItem(STORAGE_KEY, mode);
+  } catch {
+    // Not stored: the switch still works for this visit.
+  }
+};
 
 /** A token value of one mode. The dark list only contains values that differ (colors); everything else comes from light. */
 export const token = (mode: Mode, name: string) => {

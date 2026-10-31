@@ -1,6 +1,5 @@
 /// <reference types="vite/client" />
 import type { Preview } from '@storybook/react-vite';
-import { withThemeByDataAttribute } from '@storybook/addon-themes';
 import { createElement } from 'react';
 import { I18nProvider } from 'react-aria-components';
 
@@ -12,6 +11,12 @@ import '@fontsource/dm-sans/700.css';
 import '@fontsource/dm-mono/400.css';
 import './preview.css';
 import { ComponentDocsPage, MedoDocsContainer } from '../src/docs-blocks/DocBlocks';
+import { startMode } from './theme';
+
+// Theme before the first render: the stored mode (toolbar switch in manager.ts) – in tests the mode of the Vitest
+// project (“storybook-dark” sets STORYBOOK_TEST_THEME). data-theme on <html>, exactly like a real app.
+const testTheme = import.meta.env.STORYBOOK_TEST_THEME as 'Light' | 'Dark' | undefined;
+document.documentElement.setAttribute('data-theme', testTheme ? testTheme.toLowerCase() : startMode());
 
 const preview: Preview = {
   // Every story is part of the visual regression check (VISUAL=1); `tags: ['!visual']` leaves one out.
@@ -46,7 +51,6 @@ const preview: Preview = {
       },
     },
   },
-  // Start theme. The Vitest project “storybook-dark” sets STORYBOOK_TEST_THEME, so every story is also tested in Dark.
   // Language of the built-in texts, dates and numbers – the same I18nProvider an app sets.
   globalTypes: {
     locale: {
@@ -63,15 +67,9 @@ const preview: Preview = {
       },
     },
   },
-  initialGlobals: { theme: import.meta.env.STORYBOOK_TEST_THEME ?? 'Light', locale: 'en-US' },
-  // Theme switch in the toolbar sets data-theme on <html> – exactly like in a real app.
+  initialGlobals: { locale: 'en-US' },
   decorators: [
     (Story, { globals }) => createElement(I18nProvider, { locale: (globals.locale as string) ?? 'en-US' }, createElement(Story)),
-    withThemeByDataAttribute({
-      themes: { Light: 'light', Dark: 'dark' },
-      defaultTheme: 'Light',
-      attributeName: 'data-theme',
-    }),
   ],
 };
 

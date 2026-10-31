@@ -14,6 +14,19 @@ body {
   font-family: var(--medo-font-family-sans);
 }
 
+/*
+ * Storybook lays a loader over the page while it renders – also on every switch of theme or language. Its own
+ * loader is white with grey placeholder blocks, which flashed on every switch in Dark. Here it takes the page colour,
+ * and once a theme is set (every render after the first) it stays empty: the switch looks like a colour change.
+ */
+.sb-preparing-story,
+.sb-preparing-docs {
+  background-color: var(--medo-color-surface-default);
+}
+html[data-theme] :is(.sb-preparing-story, .sb-preparing-docs) > * {
+  visibility: hidden;
+}
+
 /* ======================================================================
  * Documentation pages (blocks in src/docs-blocks/DocBlocks.tsx).
  * Only system tokens, so the whole page follows Light / Dark.

@@ -1,12 +1,16 @@
 /**
  * Storybook UI (sidebar, toolbar): med.o theme, switches with the Light / Dark toolbar button.
  */
-import { addons } from 'storybook/manager-api';
-import { GLOBALS_UPDATED, SET_GLOBALS } from 'storybook/internal/core-events';
-import { modeFromGlobals, themes, token, type Mode } from './theme';
+import { createElement, useState } from 'react';
+import { addons, types, type API } from 'storybook/manager-api';
+import { Button } from 'storybook/internal/components';
+import { PaintBrushIcon } from '@storybook/icons';
+import { startMode, storeMode, themes, token, type Mode } from './theme';
+
+let mode: Mode = startMode();
 
 addons.setConfig({
-  theme: themes.light,
+  theme: themes[mode],
   // A documentation site: one entry per page. The examples live on the docs pages; the stories stay
   // reachable by URL and run as tests, but do not fill the sidebar.
   sidebar: { filters: { docsOnly: (item) => item.type !== 'story' } },
@@ -148,7 +152,7 @@ const paintUi = (mode: Mode) => {
   };
   for (const [k, v] of Object.entries(vars)) document.documentElement.style.setProperty(`--medo-ui-${k}`, v);
 };
-paintUi('light');
+paintUi(mode);
 
 /*
  * Browser tab: Storybook names every page “… ⋅ Storybook”. Visitors look for the design system, so the suffix
@@ -162,13 +166,35 @@ const renameTitle = () => {
 renameTitle();
 new MutationObserver(renameTitle).observe(document.querySelector('title') ?? document.head, { childList: true, subtree: true, characterData: true });
 
-addons.register('medo/theme', (api) => {
-  const apply = ({ globals }: { globals?: Record<string, unknown> }) => {
-    const mode = modeFromGlobals(globals);
-    api.setOptions({ theme: themes[mode] });
+/* ---------- Theme switch ---------- */
+
+/** data-theme on the preview's <html>: the tokens switch, no story renders again. */
+const setPreviewTheme = () => {
+  const frame = document.querySelector<HTMLIFrameElement>('#storybook-preview-iframe');
+  frame?.contentDocument?.documentElement.setAttribute('data-theme', mode);
+};
+
+let managerApi: API | undefined;
+
+function ThemeSwitch() {
+  const [current, setCurrent] = useState(mode);
+  const toggle = () => {
+    mode = current === 'dark' ? 'light' : 'dark';
+    storeMode(mode);
+    setCurrent(mode);
     paintUi(mode);
+    setPreviewTheme();
+    managerApi?.setOptions({ theme: themes[mode] });
   };
-  const channel = api.getChannel();
-  channel?.on(SET_GLOBALS, apply);
-  channel?.on(GLOBALS_UPDATED, apply);
+  return createElement(
+    Button,
+    { ariaLabel: 'Theme', tooltip: 'Change theme', variant: 'ghost', onClick: toggle },
+    createElement(PaintBrushIcon),
+    current === 'dark' ? 'Dark theme' : 'Light theme',
+  );
+}
+
+addons.register('medo/theme', (api) => {
+  managerApi = api;
+  addons.add('medo/theme-switch', { type: types.TOOL, title: 'Theme', match: () => true, render: ThemeSwitch });
 });

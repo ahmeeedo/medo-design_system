@@ -8,10 +8,9 @@ import type { PropsWithChildren, ReactNode } from 'react';
 import { Children, createContext, useContext, useEffect, useRef, useState } from 'react';
 import { Ban, Check, CircleCheck, X } from 'lucide-react';
 import type { DocsContextProps } from 'storybook/internal/types';
-import { GLOBALS_UPDATED, SET_GLOBALS } from 'storybook/internal/core-events';
 import { Canvas, Description, DocsContainer, DocsContext, useOf } from '@storybook/addon-docs/blocks';
 import { Alert, Link, List, ListItem, StaticTable } from '@med-o/ui';
-import { modeFromGlobals, themes } from '../../.storybook/theme';
+import { themes, type Mode } from '../../.storybook/theme';
 import { Rich, Tok } from './text';
 import { PropsTable } from './PropsTable';
 
@@ -428,24 +427,15 @@ export function ComponentDocsPage() {
 /* ---------- docs container: whole page follows Light / Dark ---------- */
 
 export function MedoDocsContainer({ context, children }: PropsWithChildren<{ context: DocsContextProps }>) {
-  // Current toolbar value; `store` is not part of the public type, so read it defensively.
-  const initial = () => modeFromGlobals((context as unknown as { store?: { userGlobals?: { get(): Record<string, unknown> } } }).store?.userGlobals?.get());
-  const [mode, setMode] = useState(initial);
+  // The theme switch sets data-theme on <html> (see .storybook/theme.ts); the docs blocks follow it.
+  const read = (): Mode => (document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light');
+  const [mode, setMode] = useState(read);
 
   useEffect(() => {
-    const update = ({ globals }: { globals?: Record<string, unknown> }) => setMode(modeFromGlobals(globals));
-    context.channel.on(SET_GLOBALS, update);
-    context.channel.on(GLOBALS_UPDATED, update);
-    return () => {
-      context.channel.off(SET_GLOBALS, update);
-      context.channel.off(GLOBALS_UPDATED, update);
-    };
-  }, [context]);
-
-  // Same attribute a real app sets; pages without stories need it too.
-  useEffect(() => {
-    document.documentElement.setAttribute('data-theme', mode);
-  }, [mode]);
+    const observer = new MutationObserver(() => setMode(read()));
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <DocsContainer context={context} theme={themes[mode]}>
