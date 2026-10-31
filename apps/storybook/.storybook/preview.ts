@@ -51,26 +51,9 @@ const preview: Preview = {
       },
     },
   },
-  // Language of the built-in texts, dates and numbers – the same I18nProvider an app sets.
-  globalTypes: {
-    locale: {
-      // Shown as the tooltip: the switch changes the components, not the docs text.
-      description: 'Language of the components: built-in texts (buttons, messages, screen-reader names), dates and numbers. The docs text stays English.',
-      toolbar: {
-        title: 'Component language',
-        icon: 'globe',
-        items: [
-          { value: 'en-US', title: 'English' },
-          { value: 'de-DE', title: 'Deutsch' },
-        ],
-        dynamicTitle: true,
-      },
-    },
-  },
-  initialGlobals: { locale: 'en-US' },
-  decorators: [
-    (Story, { globals }) => createElement(I18nProvider, { locale: (globals.locale as string) ?? 'en-US' }, createElement(Story)),
-  ],
+  // Every example in English, whatever the browser language – the I18nProvider an app sets once at the root.
+  // Guides / Languages shows English and German side by side.
+  decorators: [(Story) => createElement(I18nProvider, { locale: 'en-US' }, createElement(Story))],
 };
 
 export default preview;
