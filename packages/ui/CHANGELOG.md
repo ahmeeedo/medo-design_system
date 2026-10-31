@@ -1,5 +1,16 @@
 # @med-o/ui
 
+## 0.4.0
+
+### Minor Changes
+
+- d1ca3a6: Spacing rules and layout components. Six rules for the space between elements – `inline`, `content`, `fields`, `items`, `group`, `section` – as tokens `--medo-layout-gap-*` that follow the layout mode (mobile · tablet · desktop), as Tailwind utilities (`gap-items`, `space-y-fields`, `py-section` …) and as classes (`medo-gap-items`). New components `Stack` (vertical `content`, horizontal `inline`), `Grid` (as many columns as fit, fixed columns or the 4 · 8 · 12 layout grid, gap `items`), `GridItem` and `Container` (content width plus page margin). `ButtonGroup` uses the rule `inline` (same value as before).
+
+### Patch Changes
+
+- Updated dependencies [d1ca3a6]
+  - @med-o/design-tokens@0.4.0
+
 ## 0.3.0
 
 ### Minor Changes
