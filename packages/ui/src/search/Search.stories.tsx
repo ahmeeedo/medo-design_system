@@ -725,7 +725,11 @@ export const QuickSearchTest: Story = {
     await waitFor(() => expect(field).toHaveFocus());
     await userEvent.type(field, 'inv');
     await waitFor(() => expect(within(dialog).getAllByRole('option').length).toBeGreaterThan(0));
-    await userEvent.keyboard('{Escape}{Escape}');
+    // Esc with text clears the field first; wait for it, so a slower engine (WebKit) does not see the second Esc too early.
+    await userEvent.keyboard('{Escape}');
+    await waitFor(() => expect(field).toHaveValue(''));
+    // Esc in the empty field closes the quick search.
+    await userEvent.keyboard('{Escape}');
     await waitFor(() => expect(body.queryByRole('dialog')).toBeNull());
   },
 };
