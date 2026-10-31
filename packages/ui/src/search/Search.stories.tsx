@@ -727,9 +727,12 @@ export const QuickSearchTest: Story = {
     await waitFor(() => expect(within(dialog).getAllByRole('option').length).toBeGreaterThan(0));
     // Esc with text clears the field first; wait for it, so a slower engine (WebKit) does not see the second Esc too early.
     await userEvent.keyboard('{Escape}');
-    await waitFor(() => expect(field).toHaveValue(''));
-    // Esc in the empty field closes the quick search.
+    await waitFor(() => {
+      expect(field).toHaveValue('');
+      expect(field).toHaveFocus();
+    });
+    // Esc in the empty field closes the quick search. The exit animation can take longer than 1 s on a busy CI runner.
     await userEvent.keyboard('{Escape}');
-    await waitFor(() => expect(body.queryByRole('dialog')).toBeNull());
+    await waitFor(() => expect(body.queryByRole('dialog')).toBeNull(), { timeout: 3000 });
   },
 };
