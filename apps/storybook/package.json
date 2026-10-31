@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "storybook dev -p 6006",
     "build": "storybook build -o storybook-static",
-    "test": "vitest --run"
+    "test": "vitest --run",
+    "test:webkit": "vitest --run --project storybook-webkit"
   },
   "dependencies": {
     "@med-o/design-tokens": "0.4.1",

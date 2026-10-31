@@ -1,6 +1,8 @@
 # Storybook tests: every story renders in headless Chromium, axe checks WCAG 2.2 AA (Light and Dark),
 # play functions test keyboard, focus and pointer. Same command as locally: npm test.
 # Then the npm packages are built once, so a release never fails on a type error.
+# A second job runs every story in WebKit (Safari's engine) at the same time: layout, focus and events that only
+# Safari handles differently.
 name: Storybook tests
 
 on:
@@ -51,3 +53,22 @@ jobs:
 
       # The npm packages must build (types included) before they can be released.
       - run: npm run build:packages
+
+  webkit:
+    # Same OS as the job above; WebKit's system libraries are installed by Playwright.
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: npm
+
+      - run: npm ci
+
+      - run: npx playwright install --with-deps webkit
+
+      # Light only, without screenshots (references come from Chromium).
+      - run: npm run test:webkit

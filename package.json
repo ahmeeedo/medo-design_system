@@ -18,6 +18,7 @@
     "build-storybook": "npm run build:tokens && npm run build -w @med-o/storybook",
     "build": "npm run build-storybook",
     "test": "npm run build:tokens && npm run test -w @med-o/storybook",
+    "test:webkit": "npm run build:tokens && npm run test:webkit -w @med-o/storybook",
     "changeset": "changeset",
     "release": "changeset publish"
   },

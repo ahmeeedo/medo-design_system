@@ -254,6 +254,7 @@ npm run storybook   # http://localhost:6006
 | --- | --- |
 | `npm run storybook` | Builds the tokens and starts Storybook with hot reload |
 | `npm test` | Runs every story in a headless browser, in Light and Dark: rendering, axe (WCAG 2.2 AA) and the interaction tests. Once before: `npx playwright install chromium` |
+| `npm run test:webkit` | The same tests in WebKit (Safari's engine), Light, without screenshots. Once before: `npx playwright install webkit` |
 | `npm run build:packages` | Builds `@med-o/design-tokens` and `@med-o/ui` for npm |
 | `npm run build-storybook` | Builds Storybook as a static site (`apps/storybook/storybook-static`) |
 | `npm run changeset` | Describes a change for the next release (see [Contributing](#contributing)) |
@@ -276,7 +277,7 @@ Issues and pull requests are welcome. Please follow these rules:
 - **State contract.** CSS reads states only from data attributes (`data-hovered`, `data-pressed`, `data-focus-visible`, `data-selected`, `data-invalid`, `data-disabled` …), so other frameworks can reuse it.
 - **Accessibility.** WCAG 2.2 AA, visible `:focus-visible`, `forced-colors` fallback, `prefers-reduced-motion`.
 - **Stories.** Every component has stories for its variants, sizes and states, Light and Dark, and an interaction test for interactive behaviour. The playground renders from its args, and every control must change what you see.
-- **Tests pass.** Run `npm test` before you open a pull request. CI runs the same tests, plus the visual check.
+- **Tests pass.** Run `npm test` before you open a pull request. CI runs the same tests, plus the visual check and the tests in WebKit.
 - **Visual check.** CI compares a screenshot of every documented story, Light and Dark, with its reference in `apps/storybook/__screenshots__/`. On a mismatch the workflow run has the actual and diff images as artifact `screenshot-diffs`. If the change is intended, run the workflow **Update screenshots** on your branch (Actions → Update screenshots → Run workflow); it commits the new references. References are made in CI only, because fonts render differently on every OS. Stories that cannot be stable (live timers) set `tags: ['!visual']`.
 - **Changesets.** If your change affects a published package, run `npm run changeset` and commit the generated file. It sets the version bump (patch, minor, major) and the changelog entry. A breaking change starts its summary with `**Breaking:**` and says how to update.
 - **Deprecate before you remove.** Mark the old API `@deprecated` with its replacement, keep it working for the time given in [Support and versioning](#support-and-versioning), and remove it in a later release.
