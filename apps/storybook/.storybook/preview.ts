@@ -41,7 +41,7 @@ const preview: Preview = {
           'Patterns',
           ['Form', 'Search', 'Delete'],
           'Components',
-          ['Actions', 'Forms', 'Overlays', 'Feedback', 'Navigation', 'Data display'],
+          ['Layout', 'Actions', 'Forms', 'Overlays', 'Feedback', 'Navigation', 'Data display'],
         ],
       },
     },

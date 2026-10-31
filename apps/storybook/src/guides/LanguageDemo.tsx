@@ -2,7 +2,7 @@
 import { I18nProvider } from 'react-aria-components';
 import { Option, Pagination, Select, TextField } from '@med-o/ui';
 
-const column = { display: 'grid', gap: 'var(--medo-space-5)', alignContent: 'start', minInlineSize: 0 } as const;
+const column = { display: 'grid', gap: 'var(--medo-layout-gap-content)', alignContent: 'start', minInlineSize: 0 } as const;
 
 function Example({ locale, title }: { locale: string; title: string }) {
   return (

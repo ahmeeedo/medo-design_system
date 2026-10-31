@@ -198,7 +198,10 @@ L.modes.forEach((mode, i) => {
   for (const [name, values] of Object.entries(L.vars)) {
     const v = values[i];
     const isCount = name.endsWith('columns');
-    set(layout[mode], figmaPath(name), isCount ? { $type: 'number', $value: v } : { $type: 'dimension', $value: dim(v) });
+    // Spacing rules (layout/gap/*) are aliases: "{space/4}" → "{space.4}", "{layout/gutter}" → "{layout.gutter}".
+    const value = typeof v === 'string' ? `{${figmaPath(v.slice(1, -1))}}` : isCount ? v : dim(v);
+    const description = desc[name] ? { $description: desc[name] } : {};
+    set(layout[mode], figmaPath(name), { $type: isCount ? 'number' : 'dimension', $value: value, ...description });
   }
 });
 

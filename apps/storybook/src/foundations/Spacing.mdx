@@ -1,6 +1,6 @@
 import { Meta } from '@storybook/addon-docs/blocks';
-import { SpacingScale, Radii, SimpleTable, LayoutTable } from './components/TokenDocs';
-import { DocPage, DocHeader, DocSection, DocFooter, Tok, SourceLink } from '../docs-blocks/DocBlocks';
+import { SpacingScale, SpacingRules, Radii, SimpleTable, LayoutTable } from './components/TokenDocs';
+import { DocPage, DocHeader, DocSection, DocFooter, Tok, SourceLink, UsageGuide } from '../docs-blocks/DocBlocks';
 
 <Meta title="Foundations/Spacing & sizes" />
 
@@ -9,34 +9,53 @@ import { DocPage, DocHeader, DocSection, DocFooter, Tok, SourceLink } from '../d
 <DocHeader
   kind="Foundations"
   title="Spacing & sizes"
-  meta="Spacing · Radius · Layout · 02 + 03 + F08"
-  subtitle="One 4 px base unit for spacing, six radius steps, responsive layout values."
+  meta="Spacing rules · Spacing · Radius · Layout · 02 + 03 + F08"
+  subtitle="Six spacing rules for the space between elements, one 4 px scale, six radius steps, responsive layout values."
   description={<p>The step number times 4 px is the value. In Tailwind one step is exactly <Tok>space/1</Tok>, so <Tok>p-4</Tok> = <Tok>space/4</Tok> = 16 px.</p>}
-  nav={['Spacing', 'Radius', 'Control & icon sizes', 'Layout', 'Breakpoints & containers', 'Layers']}
+  nav={['Spacing rules', 'Spacing', 'Radius', 'Control & icon sizes', 'Layout', 'Breakpoints & containers', 'Layers']}
 />
 
-<DocSection n={1} title="Spacing" meta="4 px grid">
+<DocSection n={1} title="Spacing rules" meta="inline · content · fields · items · group · section" description={<p>The space <em>between</em> elements always comes from one of six rules – never from a free number. The closer things belong together, the smaller the gap: the page shows its structure without lines. The values grow with the layout mode, so spacing needs no breakpoints. <Tok>Stack</Tok> and <Tok>Grid</Tok> use the rules as defaults: a stack gets <Tok>content</Tok> (horizontal: <Tok>inline</Tok>), a grid of cards <Tok>items</Tok>.</p>}>
+  <SpacingRules />
+  <UsageGuide
+    usage={{
+      do: [
+        'Pick the rule by meaning: how closely do the elements belong together?',
+        'Nest them: page sections → groups → content of a block.',
+        'Use Stack and Grid, or in Tailwind gap-items, space-y-fields, py-section …',
+      ],
+      dont: [
+        'Choose a value from the 4 px scale for the space between elements.',
+        'Use different gaps for the same thing, e.g. cards 16 px apart on one page and 24 px on another.',
+        'Add margins to children to fix a gap – change the rule of the parent.',
+      ],
+    }}
+  />
+  <p>The padding <em>inside</em> components (buttons, cards, fields) is part of the component and uses the scale below.</p>
+</DocSection>
+
+<DocSection n={2} title="Spacing" meta="4 px grid" description="The scale behind the rules and the padding inside components.">
   <SpacingScale />
 </DocSection>
 
-<DocSection n={2} title="Radius" meta="Square to pill" description="Bigger element, bigger radius. Inner radius = outer radius − padding.">
+<DocSection n={3} title="Radius" meta="Square to pill" description="Bigger element, bigger radius. Inner radius = outer radius − padding.">
   <Radii />
 </DocSection>
 
-<DocSection n={3} title="Control & icon sizes" meta="sm · md · lg">
+<DocSection n={4} title="Control & icon sizes" meta="sm · md · lg">
   <SimpleTable path={['size']} />
 </DocSection>
 
-<DocSection n={4} title="Layout" meta="Mobile · Tablet · Desktop" description="These tokens change with the screen width – one variable, three values.">
+<DocSection n={5} title="Layout" meta="Mobile · Tablet · Desktop" description="These tokens change with the screen width – one variable, three values.">
   <LayoutTable />
 </DocSection>
 
-<DocSection n={5} title="Breakpoints & containers">
+<DocSection n={6} title="Breakpoints & containers">
   <SimpleTable path={['breakpoint']} />
   <SimpleTable path={['container']} />
 </DocSection>
 
-<DocSection n={6} title="Layers" meta="z-index" description="Never invent z-index values. Use the layer scale.">
+<DocSection n={7} title="Layers" meta="z-index" description="Never invent z-index values. Use the layer scale.">
   <SimpleTable path={['layer']} />
 </DocSection>
 

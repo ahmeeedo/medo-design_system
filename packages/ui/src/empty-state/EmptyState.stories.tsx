@@ -11,7 +11,7 @@ import { TextField } from '../text-field/TextField';
 import { Examples, semantic, slot } from '../story-helpers';
 
 const caption: React.CSSProperties = { font: 'var(--medo-typography-code-sm)', color: 'var(--medo-color-text-secondary)' };
-const grid: React.CSSProperties = { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(20rem, 1fr))', gap: 'var(--medo-space-6)', alignItems: 'start' };
+const grid: React.CSSProperties = { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(20rem, 1fr))', gap: 'var(--medo-layout-gap-items)', alignItems: 'start' };
 const frame: React.CSSProperties = { border: 'var(--medo-border-width-thin) dashed var(--medo-color-border-default)', borderRadius: 'var(--medo-radius-lg)' };
 
 /** Copy per type – the component ships no text, the app writes it. */
@@ -154,19 +154,19 @@ export const Sizes: Story = {
   },
   render: () => (
     <div style={grid}>
-      <div style={{ display: 'grid', gap: 'var(--medo-space-2)' }}>
+      <div style={{ display: 'grid', gap: 'var(--medo-layout-gap-content)' }}>
         <span style={caption}>page</span>
         <div style={frame}>
           <EmptyState type="first-use" {...examples['first-use']} />
         </div>
       </div>
-      <div style={{ display: 'grid', gap: 'var(--medo-space-2)' }}>
+      <div style={{ display: 'grid', gap: 'var(--medo-layout-gap-content)' }}>
         <span style={caption}>section · in a card</span>
         <Card title="Recent activity">
           <EmptyState type="all-done" size="section" headingLevel={4} title="No activity yet" description="Changes to your projects will show up here." />
         </Card>
       </div>
-      <div style={{ display: 'grid', gap: 'var(--medo-space-2)' }}>
+      <div style={{ display: 'grid', gap: 'var(--medo-layout-gap-content)' }}>
         <span style={caption}>inline · in a table</span>
         <Table aria-label="Invoices">
           <TableHeader>
@@ -211,7 +211,7 @@ function SearchExample() {
   const field = useRef<HTMLDivElement>(null);
   const items = people.filter((p) => p.name.toLowerCase().includes(query.trim().toLowerCase()));
   return (
-    <div ref={field} style={{ display: 'grid', gap: 'var(--medo-space-3)', maxInlineSize: '30rem' }}>
+    <div ref={field} style={{ display: 'grid', gap: 'var(--medo-layout-gap-content)', maxInlineSize: '30rem' }}>
       <TextField label="Search people" type="search" value={query} onChange={setQuery} />
       <ListView
         aria-label="People"

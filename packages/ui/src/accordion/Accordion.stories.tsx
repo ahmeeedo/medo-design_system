@@ -8,7 +8,7 @@ import { Switch } from '../switch/Switch';
 import { interactionTest, Examples, semantic } from '../story-helpers';
 
 const text: React.CSSProperties = { margin: 0, font: 'inherit', color: 'var(--medo-color-text-secondary)' };
-const stack: React.CSSProperties = { display: 'grid', gap: 'var(--medo-space-4)' };
+const stack: React.CSSProperties = { display: 'grid', gap: 'var(--medo-layout-gap-content)' };
 
 const answer = 'Answers stay short: two to four sentences. Link to a detail page instead of nesting another accordion.';
 const faq = [
@@ -190,7 +190,7 @@ export const DeepLink: Story = {
   name: 'Deep link',
   parameters: { docs: { description: { story: 'A link to an item’s id opens it and scrolls to it – on load and on every hash change. Try the link below.' } } },
   render: () => (
-    <div style={{ display: 'grid', gap: 'var(--medo-space-4)', maxInlineSize: '35rem' }}>
+    <div style={{ display: 'grid', gap: 'var(--medo-layout-gap-content)', maxInlineSize: '35rem' }}>
       <p style={{ margin: 0 }}>
         Something wrong with a payment? <Link href="#billing">Open billing</Link>
       </p>

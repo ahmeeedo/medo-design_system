@@ -14,7 +14,7 @@ const network = 'Upload interrupted. Check your connection and retry.';
 
 const box: React.CSSProperties = { maxInlineSize: '35rem' };
 const stack: React.CSSProperties = { display: 'grid', gap: 'var(--medo-space-2)', maxInlineSize: '30rem' };
-const tiles: React.CSSProperties = { display: 'flex', gap: 'var(--medo-space-6)', flexWrap: 'wrap' };
+const tiles: React.CSSProperties = { display: 'flex', gap: 'var(--medo-layout-gap-items)', flexWrap: 'wrap' };
 const actions = { onRemove: fn(), onCancel: fn(), onRetry: fn() };
 
 /** Simulated uploads: progress every 300 ms; names containing “offline” fail. */
@@ -199,7 +199,7 @@ export const Layouts: Story = {
     },
   },
   render: () => (
-    <div style={{ display: 'grid', gap: 'var(--medo-space-12)', ...box }}>
+    <div style={{ display: 'grid', gap: 'var(--medo-layout-gap-group)', ...box }}>
       <Demo
         label="Documents and photos"
         layout="list"
@@ -244,7 +244,7 @@ export const DropzoneStates: Story = {
   },
   render: () => (
     <Examples>
-      <div style={{ display: 'grid', gap: 'var(--medo-space-4)' }}>
+      <div style={{ display: 'grid', gap: 'var(--medo-layout-gap-content)' }}>
         <Dropzone hint="PDF, JPG or PNG · max. 10 MB each" onSelect={fn()} />
         <Dropzone hint="PDF, JPG or PNG · max. 10 MB each" errorMessage="“Contract.docx” is not allowed. Use PDF, JPG or PNG." onSelect={fn()} />
         <Dropzone hint="PDF, JPG or PNG · max. 10 MB each" isDisabled onSelect={fn()} />
@@ -265,7 +265,7 @@ export const Files: Story = {
   },
   render: () => (
     <Examples>
-      <div style={{ display: 'grid', gap: 'var(--medo-space-6)' }}>
+      <div style={{ display: 'grid', gap: 'var(--medo-layout-gap-group)' }}>
         <div style={stack}>
           <FileItem {...actions} file={{ id: '1', name: 'Invoice_2026-10_final.pdf', size: 2.4 * MB, type: pdf, status: 'uploading', loaded: 1.6 * MB }} />
           <FileItem {...actions} file={{ id: '2', name: 'Invoice_2026-10_final.pdf', size: 2.4 * MB, type: pdf, status: 'done' }} />
@@ -304,7 +304,7 @@ export const LongNames: Story = {
     },
   },
   render: () => (
-    <div style={{ display: 'grid', gap: 'var(--medo-space-6)' }}>
+    <div style={{ display: 'grid', gap: 'var(--medo-layout-gap-group)' }}>
       <div style={stack}>
         <FileItem
           {...actions}
@@ -341,7 +341,7 @@ export const Compact: Story = {
   },
   render: () => (
     <Examples>
-      <div style={{ display: 'grid', gap: 'var(--medo-space-6)' }}>
+      <div style={{ display: 'grid', gap: 'var(--medo-layout-gap-group)' }}>
         <FileTrigger label="Attachments" hint="PDF or JPG · max. 10 MB" allowsMultiple={false} onSelect={fn()} />
         <FileTrigger label="Attachments" isRequired hint="PDF or JPG · max. 10 MB" errorMessage="Add at least one file." allowsMultiple={false} onSelect={fn()} />
       </div>

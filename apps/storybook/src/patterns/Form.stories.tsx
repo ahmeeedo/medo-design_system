@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Form } from 'react-aria-components';
-import { Button, Checkbox, Radio, RadioGroup, Switch, TextField } from '@med-o/ui';
+import { Button, ButtonGroup, Checkbox, Radio, RadioGroup, Switch, TextField } from '@med-o/ui';
 
 /**
  * A complete form built only from system components.
@@ -20,6 +20,7 @@ const meta = {
         whenNot: ['One setting with an immediate effect: a Switch on its own, no form.', 'Filters that apply live: no submit button.'],
         do: [
           'One column, in the order people think about the data.',
+          'Space the fields with the rule `fields` (`<Stack gap="fields">` or the class `medo-gap-fields`), fieldsets with `group`.',
           'A visible label on every field; help text below the label, never in the placeholder.',
           'Mark the few optional fields, or all required ones – not both.',
           'Use `autoComplete` and the right `type` (`email`, `tel`), so browsers and password managers can fill in.',
@@ -55,10 +56,8 @@ type Story = StoryObj<typeof meta>;
 export const ContactForm: Story = {
   name: 'Contact form',
   render: () => (
-    <Form
-      onSubmit={(e) => e.preventDefault()}
-      style={{ display: 'grid', gap: 'var(--medo-space-6)', maxInlineSize: '28rem' }}
-    >
+    // React Aria's Form validates; the classes of Stack give it the spacing rule fields.
+    <Form onSubmit={(e) => e.preventDefault()} className="medo-stack medo-gap-fields" style={{ maxInlineSize: '28rem' }}>
       <TextField label="Name" name="name" isRequired autoComplete="name" />
       <TextField
         label="Email"
@@ -81,12 +80,12 @@ export const ContactForm: Story = {
       <Checkbox name="privacy" isRequired>
         I agree to the privacy policy.
       </Checkbox>
-      <div style={{ display: 'flex', gap: 'var(--medo-space-3)' }}>
+      <ButtonGroup context="content">
         <Button type="submit">Send message</Button>
         <Button type="reset" variant="ghost">
           Reset
         </Button>
-      </div>
+      </ButtonGroup>
     </Form>
   ),
 };

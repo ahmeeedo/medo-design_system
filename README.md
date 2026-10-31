@@ -65,6 +65,7 @@ Use the semantic tokens (`surface`, `text`, `border`, `action`, `feedback` …).
 
 - Only system values exist: the default Tailwind colors, shadows, radii and text sizes are removed.
 - Spacing: one Tailwind step is 4 px (`p-4` = `--medo-space-4`, `p-0.5` = `--medo-space-0-5`).
+- Spacing rules: `gap-items`, `space-y-fields`, `py-section` … use the six rules (see below) – prefer them for the space between elements.
 - Tailwind only finds complete class names. Never build class names from variables.
 
 ### React components
@@ -134,6 +135,23 @@ With “Increase contrast” in the system settings (`prefers-contrast: more`) s
 `--medo-layout-columns`, `--medo-layout-gutter`, `--medo-layout-margin` and `--medo-layout-section` change automatically:
 Mobile (default), Tablet (≥ 640 px), Desktop (≥ 1024 px).
 
+### Spacing rules
+
+The space between elements always comes from one of six rules, never from a free number. The values follow the layout mode:
+
+| Rule | Use for | Mobile · Tablet · Desktop |
+| --- | --- | --- |
+| `inline` | side by side in one group: buttons, tags, filters | 8 |
+| `content` | inside one block: heading, text, actions | 16 |
+| `fields` | form fields below each other | 16 · 24 · 24 |
+| `items` | cards and tiles in a grid or list (= gutter) | 16 · 24 · 24 |
+| `group` | groups inside a section: sub-sections, fieldsets | 32 · 40 · 48 |
+| `section` | sections of a page | 48 · 64 · 96 |
+
+Use them through the layout components (`<Stack gap="fields">`, `<Grid>` uses `items`), as CSS variables (`--medo-layout-gap-items`),
+as classes (`medo-gap-items`) or in Tailwind (`gap-items`, `space-y-fields`, `py-section`).
+The padding inside components uses the 4 px scale.
+
 ### Fonts
 
 DM Sans and DM Mono (SIL Open Font License). Self-host them, for example with `@fontsource/dm-sans` and `@fontsource/dm-mono` (weights 400, 500, 600, 700).
@@ -151,6 +169,7 @@ Live examples and all props: [design.med-o.de](https://design.med-o.de).
 
 | Component | Notes |
 | --- | --- |
+| `Stack`, `Grid`, `GridItem`, `Container` | layout with the spacing rules · Stack: vertical (`content`) or horizontal (`inline`), wrap, align · Grid: as many columns as fit (`minItemSize`), fixed columns or the 4 · 8 · 12 layout grid, gap `items` · Container: prose / md / lg / xl / full plus the page margin · `as` for the right element (`ul`, `section`, `main`, `form`) |
 | `Button`, `ButtonGroup` | primary, secondary, ghost, danger, text, ghost-danger · sm/md/lg · `isPending` · group: footer/header/content, stacks on mobile |
 | `IconButton` | `aria-label` required, shown as tooltip · `shortcut` · `media` / `media-ghost` on images and video (Media icon button, sm 28 with 44 hit area) |
 | `TextField` (+ `InputAction`) | label, helper, error, icons, character counter, `multiline` = Textarea |

@@ -90,7 +90,7 @@ export const Fallback: Story = {
 export const ShapesAndSizes: Story = {
   name: 'Shapes and sizes',
   render: () => (
-    <div style={{ display: 'grid', gap: 'var(--medo-space-6)' }}>
+    <div style={{ display: 'grid', gap: 'var(--medo-layout-gap-group)' }}>
       <div style={row}>
         {sizes.map((s) => (
           <Avatar key={s} name="Anna Dietrich" size={s} />
@@ -131,7 +131,7 @@ export const Status: Story = {
 export const Group: Story = {
   parameters: { docs: { description: { story: 'Max 4, then “+N”. With `onMorePress`, “+N” is a button that opens the full list.' } } },
   render: () => (
-    <div style={{ display: 'grid', gap: 'var(--medo-space-6)' }}>
+    <div style={{ display: 'grid', gap: 'var(--medo-layout-gap-group)' }}>
       {(['sm', 'md', 'lg'] as const).map((s) => (
         <AvatarGroup key={s} aria-label="Assignees" size={s} onMorePress={() => {}}>
           {people.map((p, i) => (

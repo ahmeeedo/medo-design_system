@@ -9,7 +9,7 @@ import { Button } from '../button/Button';
 import { interactionTest, Examples, semantic, slot } from '../story-helpers';
 
 const caption: React.CSSProperties = { font: 'var(--medo-typography-code-sm)', color: 'var(--medo-color-text-secondary)' };
-const stack: React.CSSProperties = { display: 'grid', gap: 'var(--medo-space-6)' };
+const stack: React.CSSProperties = { display: 'grid', gap: 'var(--medo-layout-gap-group)' };
 
 const meta = {
   title: 'Components/Navigation/Pagination',
@@ -103,7 +103,7 @@ export const Truncation: Story = {
         [10, 19, 'current in the middle (10)'],
         [17, 19, 'current near end (17)'],
       ].map(([page, total, label]) => (
-        <div key={label} style={{ display: 'grid', gap: 'var(--medo-space-2)' }}>
+        <div key={label} style={{ display: 'grid', gap: 'var(--medo-layout-gap-content)' }}>
           <span style={caption}>{label}</span>
           <Pagination variant="full" defaultPage={page as number} totalPages={total as number} aria-label={`Pagination, ${label}`} />
         </div>
@@ -161,7 +161,7 @@ function TableExample() {
     heading.current?.focus();
   };
   return (
-    <div style={{ display: 'grid', gap: 'var(--medo-space-4)' }}>
+    <div style={{ display: 'grid', gap: 'var(--medo-layout-gap-content)' }}>
       <h3 ref={heading} tabIndex={-1} className="medo-text-heading-sm" style={{ margin: 0, outline: 'none' }}>
         Invoices
       </h3>
@@ -221,7 +221,7 @@ function LoadMoreExample() {
     requestAnimationFrame(() => list.current?.querySelector<HTMLElement>(`[data-key="${firstNew}"]`)?.focus());
   };
   return (
-    <div ref={list} style={{ display: 'grid', gap: 'var(--medo-space-4)', justifyItems: 'center', maxInlineSize: '30rem' }}>
+    <div ref={list} style={{ display: 'grid', gap: 'var(--medo-layout-gap-content)', justifyItems: 'center', maxInlineSize: '30rem' }}>
       <div style={{ justifySelf: 'stretch' }}>
         <ListView aria-label="People" variant="card" items={people.slice(0, count)}>
           {(p) => <ListRow id={p.id} title={p.name} description={p.role} leading={<Avatar name={p.name} decorative />} />}

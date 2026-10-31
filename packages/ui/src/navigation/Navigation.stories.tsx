@@ -43,7 +43,7 @@ function Logo({ full = true }: { full?: boolean }) {
   );
 }
 
-const content: React.CSSProperties = { padding: 'var(--medo-space-6)', display: 'grid', gap: 'var(--medo-space-4)' };
+const content: React.CSSProperties = { padding: 'var(--medo-space-6)', display: 'grid', gap: 'var(--medo-layout-gap-content)' };
 const block: React.CSSProperties = {
   blockSize: 96,
   border: 'var(--medo-border-width-thin) solid var(--medo-color-border-default)',
@@ -244,7 +244,7 @@ export const NavItems: Story = {
   render: () => (
     <Examples>
       {(['header', 'sidebar', 'rail', 'sheet'] as const).map((variant) => (
-        <div key={variant} style={{ display: 'grid', gap: 'var(--medo-space-2)', maxInlineSize: variant === 'header' ? undefined : variant === 'rail' ? 64 : 256 }}>
+        <div key={variant} style={{ display: 'grid', gap: 'var(--medo-layout-gap-content)', maxInlineSize: variant === 'header' ? undefined : variant === 'rail' ? 64 : 256 }}>
           <span style={caption}>{variant}</span>
           <NavList variant={variant} aria-label={`Example ${variant}`}>
             <NavItem href="#a" icon={<LayoutDashboard />} isCurrent>

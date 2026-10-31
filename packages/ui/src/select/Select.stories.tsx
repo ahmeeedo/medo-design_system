@@ -278,7 +278,7 @@ export const WithoutVisibleLabel: Story = {
     },
   },
   render: () => (
-    <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--medo-space-2)' }}>
+    <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--medo-layout-gap-inline)' }}>
       <Select aria-label="Type" placeholder="Type" size="sm" selectionMode="multiple">
         <Option id="pdf">PDF</Option>
         <Option id="word">Word</Option>

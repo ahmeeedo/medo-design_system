@@ -77,7 +77,7 @@ export const Playground: Story = {};
 
 export const Tones: Story = {
   render: () => (
-    <div style={{ display: 'grid', gap: 'var(--medo-space-4)' }}>
+    <div style={{ display: 'grid', gap: 'var(--medo-layout-gap-content)' }}>
       <div style={row}>
         {tones.map((t) => (
           <Badge key={t.tone} tone={t.tone}>
@@ -128,7 +128,7 @@ export const CountAndDot: Story = {
     },
   },
   render: () => (
-    <div style={{ ...row, gap: 'var(--medo-space-8)' }}>
+    <div style={{ ...row, gap: 'var(--medo-layout-gap-group)' }}>
       <span style={{ position: 'relative', display: 'inline-flex' }}>
         <IconButton aria-label="Notifications, 3 unread" tooltip="Notifications" icon={<Bell />} variant="ghost" />
         <BadgeCount count={3} size="sm" style={{ position: 'absolute', insetBlockStart: 2, insetInlineEnd: 2 }} />
@@ -138,7 +138,7 @@ export const CountAndDot: Story = {
         <BadgeCount count={128} tone="brand" label="128 new" />
         <BadgeCount count={7} tone="neutral" label="7 drafts" />
       </div>
-      <span style={{ ...row, gap: 'var(--medo-space-2)', font: 'var(--medo-typography-body-sm)' }}>
+      <span style={{ ...row, gap: 'var(--medo-layout-gap-inline)', font: 'var(--medo-typography-body-sm)' }}>
         <BadgeDot tone="success" />
         Anna is online
       </span>

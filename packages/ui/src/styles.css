@@ -8,6 +8,7 @@
 @layer theme, base, components, utilities;
 
 @import './utils/utilities.css' layer(components);
+@import './layout/layout.css' layer(components);
 @import './button/button.css' layer(components);
 @import './field/field.css' layer(components);
 @import './text-field/input.css' layer(components);

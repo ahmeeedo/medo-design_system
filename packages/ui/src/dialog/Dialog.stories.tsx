@@ -14,7 +14,7 @@ const roles = [
   { id: 'admin', name: 'Admin' },
 ];
 
-const form: React.CSSProperties = { display: 'grid', gap: 'var(--medo-space-4)' };
+const form: React.CSSProperties = { display: 'grid', gap: 'var(--medo-layout-gap-fields)' };
 
 /** Example “Invite member”: the form submits through the main action (form id). */
 function InviteForm({ close, onChange }: { close: () => void; onChange?: (dirty: boolean) => void }) {

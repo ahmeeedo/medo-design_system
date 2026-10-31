@@ -3,7 +3,8 @@ import { Button } from '@med-o/ui';
 
 /**
  * Tailwind v4 with the med.o theme. Only system values exist:
- * colors are semantic (bg-surface-raised, text-text-secondary …), text styles are text-body-md etc.
+ * colors are semantic (bg-surface-raised, text-text-secondary …), text styles are text-body-md etc.,
+ * spacing rules are gap-inline, gap-content, space-y-fields, gap-items, py-section …
  *
  * ```css
  * @import "tailwindcss";
@@ -30,7 +31,7 @@ export const Card: Story = {
       <p className="mt-2 text-body-sm text-text-secondary">
         All classes come from the design tokens. Switch the theme in the toolbar – nothing in this markup changes.
       </p>
-      <div className="mt-6 flex gap-2">
+      <div className="mt-content flex gap-inline">
         <Button>Open</Button>
         <Button variant="ghost">Share</Button>
       </div>
@@ -48,7 +49,7 @@ const tones = {
 
 export const Feedback: Story = {
   render: () => (
-    <div className="grid w-full max-w-[26rem] gap-3">
+    <div className="grid w-full max-w-[26rem] gap-content">
       {(Object.keys(tones) as (keyof typeof tones)[]).map((tone) => (
         <div key={tone} className={`rounded-md border p-4 text-body-sm ${tones[tone]}`}>
           <strong className="text-label-md">{tone[0].toUpperCase() + tone.slice(1)}</strong> – feedback tokens via Tailwind.

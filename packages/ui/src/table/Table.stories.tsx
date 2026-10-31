@@ -398,7 +398,7 @@ function InvoiceWorkspace({ forceMobile = false }: { forceMobile?: boolean }) {
 
   if (isMobile) {
     return (
-      <div style={{ ...stage, display: 'grid', gap: 'var(--medo-space-3)', maxInlineSize: '23.4375rem' }}>
+      <div style={{ ...stage, display: 'grid', gap: 'var(--medo-layout-gap-content)', maxInlineSize: '23.4375rem' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <h3 className="medo-text-heading-sm" style={{ margin: 0 }}>
             Invoices

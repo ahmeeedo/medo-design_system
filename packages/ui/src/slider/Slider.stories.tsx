@@ -127,7 +127,7 @@ export const TicksAndLimits: Story = {
     docs: { description: { story: 'Ticks only for few fixed steps (≤ 10) – the thumb snaps to them. Min/max labels when the range is not obvious from the label.' } },
   },
   render: () => (
-    <div style={{ display: 'grid', gap: 'var(--medo-space-8)', ...box }}>
+    <div style={{ display: 'grid', gap: 'var(--medo-layout-gap-fields)', ...box }}>
       <Slider label="Rating" defaultValue={2} minValue={0} maxValue={5} showTicks formatOptions={{ style: 'decimal' }} />
       <Slider label="Price" defaultValue={[120, 480]} maxValue={1000} step={10} formatOptions={euro} showMinMax thumbLabels={['Minimum price', 'Maximum price']} />
       <Slider label="Radius" defaultValue={40} maxValue={100} step={5} formatOptions={{ style: 'unit', unit: 'kilometer' }} showMinMax />
@@ -139,7 +139,7 @@ function Fields() {
   const [volume, setVolume] = useState(40);
   const [price, setPrice] = useState([120, 480]);
   return (
-    <div style={{ display: 'grid', gap: 'var(--medo-space-8)', maxInlineSize: '25rem' }}>
+    <div style={{ display: 'grid', gap: 'var(--medo-layout-gap-fields)', maxInlineSize: '25rem' }}>
       <SliderField label="Volume" value={volume} onChange={setVolume} maxValue={100} />
       <SliderField label="Price" value={price} onChange={setPrice} maxValue={1000} step={10} formatOptions={euro} thumbLabels={['Minimum price', 'Maximum price']} />
     </div>
@@ -170,7 +170,7 @@ export const Number: Story = {
     },
   },
   render: () => (
-    <div style={{ display: 'grid', gap: 'var(--medo-space-6)', maxInlineSize: '15rem' }}>
+    <div style={{ display: 'grid', gap: 'var(--medo-layout-gap-fields)', maxInlineSize: '15rem' }}>
       <NumberField label="Quantity" defaultValue={2} minValue={1} maxValue={99} description="1 to 99" />
       <NumberField label="Budget" defaultValue={2400} minValue={0} step={100} formatOptions={euro} />
       <NumberField label="Discount" defaultValue={0.15} minValue={0} maxValue={1} step={0.05} formatOptions={percent} />

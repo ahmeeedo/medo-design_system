@@ -1,6 +1,6 @@
 {
   "source": "Figma file vOTfMtcpCwAJjuSZUkfpfj (med.o Design System)",
-  "exportedAt": "2026-10-26",
+  "exportedAt": "2026-10-31",
   "note": "Raw export of Figma variables and styles. Do not edit by hand: re-export from Figma (scripts/figma-export.js), then run `npm run tokens:from-figma`.",
   "collections": {
     "Foundation Colors": {
@@ -147,9 +147,15 @@
     "Foundation Layer": { "modes": ["Base"], "vars": { "layer/base": 0, "layer/raised": 10, "layer/dropdown": 100, "layer/sticky": 200, "layer/overlay": 300, "layer/modal": 400, "layer/popover": 500, "layer/toast": 600, "layer/tooltip": 700 } },
     "Foundation Opacity": { "modes": ["Base"], "vars": { "opacity/0": 0, "opacity/10": 10, "opacity/20": 20, "opacity/40": 40, "opacity/50": 50, "opacity/60": 60, "opacity/80": 80, "opacity/100": 100 } },
     "Foundation Breakpoints": { "modes": ["Value"], "vars": { "breakpoint/sm": 640, "breakpoint/md": 768, "breakpoint/lg": 1024, "breakpoint/xl": 1280, "breakpoint/2xl": 1536, "container/prose": 680, "container/md": 768, "container/lg": 1024, "container/xl": 1280 } },
-    "Layout": { "modes": ["Mobile", "Tablet", "Desktop"], "vars": { "layout/columns": [4, 8, 12], "layout/gutter": [16, 24, 24], "layout/margin": [16, 24, 32], "layout/section": [48, 64, 96] } }
+    "Layout": { "modes": ["Mobile", "Tablet", "Desktop"], "vars": { "layout/columns": [4, 8, 12], "layout/gutter": [16, 24, 24], "layout/margin": [16, 24, 32], "layout/section": [48, 64, 96], "layout/gap/inline": ["{space/2}", "{space/2}", "{space/2}"], "layout/gap/content": ["{space/4}", "{space/4}", "{space/4}"], "layout/gap/fields": ["{space/4}", "{space/6}", "{space/6}"], "layout/gap/items": ["{layout/gutter}", "{layout/gutter}", "{layout/gutter}"], "layout/gap/group": ["{space/8}", "{space/10}", "{space/12}"], "layout/gap/section": ["{layout/section}", "{layout/section}", "{layout/section}"] } }
   },
   "descriptions": {
+    "layout/gap/inline": "Rule: elements side by side in one group – buttons, tags, filters. 8 px.",
+    "layout/gap/content": "Rule: inside one block – heading, text, actions. 16 px.",
+    "layout/gap/fields": "Rule: form fields below each other. 16 · 24 · 24 px.",
+    "layout/gap/items": "Rule: cards and tiles in a grid or list. Equals layout/gutter (16 · 24 · 24 px).",
+    "layout/gap/group": "Rule: groups inside a section – sub-sections, fieldsets. 32 · 40 · 48 px.",
+    "layout/gap/section": "Rule: sections of a page. Equals layout/section (48 · 64 · 96 px).",
     "motion/duration/fast": "100 ms: feedback – hover, pressed, focus, color and opacity. Pressed starts at once and fades out, so a tap feels immediate.",
     "motion/duration/normal": "250 ms: small changes in place – fades, overlays in (popover, menu, tooltip), content swaps.",
     "motion/duration/slow": "350 ms: larger fades and the fallback where a spring cannot be used.",

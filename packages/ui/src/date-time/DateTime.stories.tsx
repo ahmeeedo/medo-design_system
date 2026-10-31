@@ -7,8 +7,8 @@ import { DateField, TimeField } from './DateField';
 import { DatePicker, DateRangePicker } from './DatePicker';
 import { interactionTest, Examples, semantic } from '../story-helpers';
 
-const stack: React.CSSProperties = { display: 'grid', gap: 'var(--medo-space-6)', alignContent: 'start' };
-const columns: React.CSSProperties = { display: 'flex', flexWrap: 'wrap', gap: 'var(--medo-space-8)', alignItems: 'start' };
+const stack: React.CSSProperties = { display: 'grid', gap: 'var(--medo-layout-gap-fields)', alignContent: 'start' };
+const columns: React.CSSProperties = { display: 'flex', flexWrap: 'wrap', gap: 'var(--medo-layout-gap-group)', alignItems: 'start' };
 const card: React.CSSProperties = {
   border: 'var(--medo-border-width-thin) solid var(--medo-color-border-default)',
   borderRadius: 'var(--medo-radius-md)',

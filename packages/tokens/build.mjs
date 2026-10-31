@@ -160,6 +160,8 @@ StyleDictionary.registerFormat({
 
     out.push('', '  /* Spacing: 1 step = space/1 (4px). p-4 = space/4 = 16px, p-0.5 = space/0-5. */');
     out.push(line('spacing', `var(${cssVar(['space', '1'])})`));
+    // Spacing rules by purpose: gap-items, space-y-fields, py-section … (values follow the layout mode).
+    for (const t of by((t) => t.path[0] === 'layout' && t.path[1] === 'gap')) out.push(line(`spacing-${t.path[2]}`, `var(${cssVar(t.path)})`));
 
     out.push('', '  /* Radius */', line('radius-*', 'initial'));
     for (const t of by((t) => t.path[0] === 'radius')) out.push(line(`radius-${t.path[1]}`, `var(${cssVar(t.path)})`));

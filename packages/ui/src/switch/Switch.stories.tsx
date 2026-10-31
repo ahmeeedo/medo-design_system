@@ -93,7 +93,7 @@ export const SettingsList: Story = {
   decorators: narrow,
   name: 'Settings list',
   render: () => (
-    <div style={{ display: 'grid', gap: 'var(--medo-space-4)' }}>
+    <div style={{ display: 'grid', gap: 'var(--medo-layout-gap-content)' }}>
       <Switch labelPosition="start" defaultSelected description="Get an email for new comments.">Email</Switch>
       <Switch labelPosition="start">Push notifications</Switch>
       <Switch labelPosition="start" defaultSelected>Weekly summary</Switch>

@@ -1,0 +1,148 @@
+/**
+ * Layout – med.o Design System
+ *
+ * Spacing rules: every gap between elements comes from one of six rules (tokens layout/gap/*, they grow with
+ * the layout mode mobile · tablet · desktop):
+ *   inline  side by side in one group (buttons, tags, filters)      8
+ *   content inside one block (heading, text, actions)               16
+ *   fields  form fields below each other                            16 · 24 · 24
+ *   items   cards and tiles in a grid or list (= layout gutter)      16 · 24 · 24
+ *   group   groups inside a section (sub-sections, fieldsets)       32 · 40 · 48
+ *   section sections of a page (= layout section)                   48 · 64 · 96
+ *
+ *   <div class="medo-stack">…</div>                                   vertical, gap content
+ *   <div class="medo-stack medo-stack--horizontal">…</div>            horizontal, gap inline
+ *   <div class="medo-grid">…</div>                                    as many columns as fit, gap items
+ *   <div class="medo-grid medo-grid--layout"><div class="medo-grid__item" style="--medo-grid-span: 6">…</div></div>
+ *   <div class="medo-container medo-container--lg">…</div>
+ * Another rule: add medo-gap-{rule}, e.g. medo-gap-section. It works on any flex or grid container.
+ */
+
+/* ---------- Stack ---------- */
+
+.medo-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--medo-layout-gap-content);
+  min-inline-size: 0;
+}
+
+.medo-stack--horizontal {
+  flex-direction: row;
+  gap: var(--medo-layout-gap-inline);
+}
+
+.medo-stack--wrap {
+  flex-wrap: wrap;
+}
+
+.medo-stack--align-start {
+  align-items: flex-start;
+}
+.medo-stack--align-center {
+  align-items: center;
+}
+.medo-stack--align-end {
+  align-items: flex-end;
+}
+.medo-stack--align-stretch {
+  align-items: stretch;
+}
+.medo-stack--align-baseline {
+  align-items: baseline;
+}
+
+.medo-stack--justify-start {
+  justify-content: flex-start;
+}
+.medo-stack--justify-center {
+  justify-content: center;
+}
+.medo-stack--justify-end {
+  justify-content: flex-end;
+}
+.medo-stack--justify-between {
+  justify-content: space-between;
+}
+
+/* ---------- Grid ---------- */
+
+/* Default: as many columns as fit, each at least --medo-grid-min wide. auto-fill keeps empty tracks, so one or
+   two cards keep the size they have in a full row. min(…, 100%) stops a single column from overflowing. */
+.medo-grid {
+  --medo-grid-min: 16rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(var(--medo-grid-min), 100%), 1fr));
+  gap: var(--medo-layout-gap-items);
+  min-inline-size: 0;
+}
+
+/* A fixed number of equal columns. */
+.medo-grid--columns {
+  grid-template-columns: repeat(var(--medo-grid-columns, 2), minmax(0, 1fr));
+}
+
+/* The layout grid: 4 · 8 · 12 columns with the gutter of the layout mode. */
+.medo-grid--layout {
+  grid-template-columns: repeat(var(--medo-layout-columns), minmax(0, 1fr));
+}
+
+/* A span never exceeds the columns there are: span 6 is full width on a phone with 4 columns. */
+.medo-grid__item {
+  grid-column: span var(--medo-grid-span, 1);
+  grid-column: span min(var(--medo-grid-span, 1), var(--medo-layout-columns));
+  min-inline-size: 0;
+}
+
+.medo-grid--columns > .medo-grid__item {
+  grid-column: span min(var(--medo-grid-span, 1), var(--medo-grid-columns, 2));
+}
+
+.medo-grid__item.medo-grid__item--full {
+  grid-column: 1 / -1;
+}
+
+/* ---------- Container ---------- */
+
+/* Centred content with the page margin of the layout mode. The width limit applies to the content, the margin
+   comes on top (content-box), so text lines keep their measure on every screen. */
+.medo-container {
+  box-sizing: content-box;
+  max-inline-size: var(--medo-container-xl);
+  margin-inline: auto;
+  padding-inline: var(--medo-layout-margin);
+}
+
+.medo-container--prose {
+  max-inline-size: var(--medo-container-prose);
+}
+.medo-container--md {
+  max-inline-size: var(--medo-container-md);
+}
+.medo-container--lg {
+  max-inline-size: var(--medo-container-lg);
+}
+.medo-container--full {
+  max-inline-size: none;
+}
+
+/* ---------- Spacing rules as classes (last, so they win over the defaults above) ---------- */
+
+.medo-gap-inline {
+  gap: var(--medo-layout-gap-inline);
+}
+.medo-gap-content {
+  gap: var(--medo-layout-gap-content);
+}
+.medo-gap-fields {
+  gap: var(--medo-layout-gap-fields);
+}
+.medo-gap-items {
+  gap: var(--medo-layout-gap-items);
+}
+.medo-gap-group {
+  gap: var(--medo-layout-gap-group);
+}
+.medo-gap-section {
+  gap: var(--medo-layout-gap-section);
+}

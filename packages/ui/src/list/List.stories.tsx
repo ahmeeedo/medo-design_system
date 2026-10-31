@@ -4,7 +4,7 @@ import { Card } from '../card/Card';
 import { Examples } from '../story-helpers';
 
 const caption: React.CSSProperties = { font: 'var(--medo-typography-code-sm)', color: 'var(--medo-color-text-secondary)' };
-const cols: React.CSSProperties = { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(14rem, 1fr))', gap: 'var(--medo-space-8)' };
+const cols: React.CSSProperties = { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(14rem, 1fr))', gap: 'var(--medo-layout-gap-items)' };
 
 const meta = {
   title: 'Components/Data display/List',
@@ -134,7 +134,7 @@ export const Sizes: Story = {
   render: () => (
     <div style={cols}>
       {(['sm', 'md', 'lg'] as const).map((size) => (
-        <div key={size} style={{ display: 'grid', gap: 'var(--medo-space-2)' }}>
+        <div key={size} style={{ display: 'grid', gap: 'var(--medo-layout-gap-content)' }}>
           <span style={caption}>{size}</span>
           <List size={size}>
             <ListItem>Design tokens</ListItem>

@@ -74,8 +74,8 @@ type Story = StoryObj<typeof meta>;
 
 export const Playground: Story = {};
 
-const row = { display: 'flex', gap: 'var(--medo-space-4)', alignItems: 'center', flexWrap: 'wrap' } as const;
-const col = { display: 'grid', gap: 'var(--medo-space-6)' } as const;
+const row = { display: 'flex', gap: 'var(--medo-layout-gap-inline)', alignItems: 'center', flexWrap: 'wrap' } as const;
+const col = { display: 'grid', gap: 'var(--medo-layout-gap-group)' } as const;
 
 export const Variants: Story = {
   render: (args) => (

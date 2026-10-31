@@ -277,7 +277,7 @@ export const UnsavedChanges: Story = {
           {(close) => (
             <form
               id="profile-form"
-              style={{ display: 'grid', gap: 'var(--medo-space-4)', padding: 'var(--medo-space-2)' }}
+              style={{ display: 'grid', gap: 'var(--medo-layout-gap-fields)', padding: 'var(--medo-space-2)' }}
               onSubmit={(e) => {
                 e.preventDefault();
                 close(); // after saving: closes without asking

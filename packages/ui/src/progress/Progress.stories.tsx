@@ -72,7 +72,7 @@ export const Spinners: Story = {
     docs: { description: { story: 'Uses the text colour of its parent. In a button use `isPending`: the spinner replaces the icon, the label says what happens (“Saving…”).' } },
   },
   render: () => (
-    <div style={{ display: 'grid', gap: 'var(--medo-space-6)' }}>
+    <div style={{ display: 'grid', gap: 'var(--medo-layout-gap-group)' }}>
       <div style={row}>
         <Spinner size="sm" tone="brand" />
         <Spinner size="md" tone="brand" />
@@ -93,12 +93,12 @@ export const Spinners: Story = {
 export const ProgressBars: Story = {
   name: 'Progress bars',
   render: () => (
-    <div style={{ display: 'grid', gap: 'var(--medo-space-8)' }}>
+    <div style={{ display: 'grid', gap: 'var(--medo-layout-gap-group)' }}>
       <ProgressBar label="Uploading 3 files" value={64} description="2 of 3 files · about 12 s left" />
       <ProgressBar label="Upload complete" value={100} status="success" description="3 of 3 files" />
       <ProgressBar label="Upload failed" value={64} status="error" description="Connection lost. Try again." />
       <ProgressBar label="Preparing export" isIndeterminate description="This can take a minute" />
-      <div style={{ ...row, flexWrap: 'nowrap', gap: 'var(--medo-space-3)' }}>
+      <div style={{ ...row, flexWrap: 'nowrap', gap: 'var(--medo-layout-gap-inline)' }}>
         <FileText aria-hidden="true" style={{ color: 'var(--medo-color-text-secondary)', flexShrink: 0 }} />
         <ProgressBar aria-label="Q3-Report.pdf" size="sm" value={64} showValue={false} style={{ flex: 1 }} />
         <span style={{ font: 'var(--medo-typography-body-sm)', color: 'var(--medo-color-text-secondary)' }}>64%</span>
@@ -112,9 +112,9 @@ export const Skeletons: Story = {
     docs: { description: { story: 'Same shape and spacing as the loaded content. Hidden from screen readers; the region is aria-busy.' } },
   },
   render: () => (
-    <div aria-busy="true" style={{ display: 'flex', gap: 'var(--medo-space-4)', alignItems: 'flex-start' }}>
+    <div aria-busy="true" style={{ display: 'flex', gap: 'var(--medo-layout-gap-content)', alignItems: 'flex-start' }}>
       <Skeleton shape="circle" />
-      <div style={{ display: 'grid', gap: 'var(--medo-space-4)', flex: 1 }}>
+      <div style={{ display: 'grid', gap: 'var(--medo-layout-gap-content)', flex: 1 }}>
         <Skeleton width="40%" />
         <Skeleton lines={3} />
         <Skeleton shape="rect" />

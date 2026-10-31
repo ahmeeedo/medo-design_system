@@ -92,7 +92,7 @@ export const Inline: Story = {
 export const Standalone: Story = {
   parameters: { docs: { description: { story: 'For “View all”, “Back to overview” or links in lists. Arrow for moving forward, external icon for other websites.' } } },
   render: () => (
-    <div style={{ display: 'grid', gap: 'var(--medo-space-3)', justifyItems: 'start' }}>
+    <div style={{ display: 'grid', gap: 'var(--medo-layout-gap-content)', justifyItems: 'start' }}>
       <div style={row}>
         <Link variant="standalone" href="#" arrow>
           View all projects

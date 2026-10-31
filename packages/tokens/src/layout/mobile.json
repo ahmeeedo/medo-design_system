@@ -24,6 +24,38 @@
         "value": 48,
         "unit": "px"
       }
+    },
+    "gap": {
+      "inline": {
+        "$type": "dimension",
+        "$value": "{space.2}",
+        "$description": "Rule: elements side by side in one group – buttons, tags, filters. 8 px."
+      },
+      "content": {
+        "$type": "dimension",
+        "$value": "{space.4}",
+        "$description": "Rule: inside one block – heading, text, actions. 16 px."
+      },
+      "fields": {
+        "$type": "dimension",
+        "$value": "{space.4}",
+        "$description": "Rule: form fields below each other. 16 · 24 · 24 px."
+      },
+      "items": {
+        "$type": "dimension",
+        "$value": "{layout.gutter}",
+        "$description": "Rule: cards and tiles in a grid or list. Equals layout/gutter (16 · 24 · 24 px)."
+      },
+      "group": {
+        "$type": "dimension",
+        "$value": "{space.8}",
+        "$description": "Rule: groups inside a section – sub-sections, fieldsets. 32 · 40 · 48 px."
+      },
+      "section": {
+        "$type": "dimension",
+        "$value": "{layout.section}",
+        "$description": "Rule: sections of a page. Equals layout/section (48 · 64 · 96 px)."
+      }
     }
   }
 }

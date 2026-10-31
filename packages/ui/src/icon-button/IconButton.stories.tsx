@@ -115,7 +115,7 @@ export const OnMedia: Story = {
     },
   },
   render: (args) => (
-    <div style={{ display: 'grid', gap: 'var(--medo-space-4)', justifyItems: 'start' }}>
+    <div style={{ display: 'grid', gap: 'var(--medo-layout-gap-content)', justifyItems: 'start' }}>
       <div style={media}>
         {(['sm', 'md', 'lg'] as const).map((size) => (
           <IconButton key={size} {...args} variant="media" size={size} aria-label="Remove photo" icon={<X />} />

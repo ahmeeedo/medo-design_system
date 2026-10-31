@@ -252,12 +252,12 @@ function SearchPage() {
     .sort((a, b) => (sort === 'title' ? a.title.localeCompare(b.title) : 0));
   const grid = view !== 'all' && view.has('grid');
   const noun = tab === 'all' ? 'results' : groupLabel[tab as keyof typeof groupLabel].toLowerCase();
-  const row: React.CSSProperties = { display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 'var(--medo-space-2)' };
+  const row: React.CSSProperties = { display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 'var(--medo-layout-gap-inline)' };
 
   const list = loading ? (
-    <div aria-hidden="true" style={{ display: 'grid', gap: 'var(--medo-space-6)' }}>
+    <div aria-hidden="true" style={{ display: 'grid', gap: 'var(--medo-layout-gap-items)' }}>
       {[0, 1, 2].map((i) => (
-        <div key={i} style={{ display: 'flex', gap: 'var(--medo-space-4)', padding: 'var(--medo-space-4)' }}>
+        <div key={i} style={{ display: 'flex', gap: 'var(--medo-layout-gap-content)', padding: 'var(--medo-space-4)' }}>
           <Skeleton shape="circle" width={40} height={40} />
           <div style={{ display: 'grid', gap: 'var(--medo-space-2)', flex: 1 }}>
             <Skeleton width="20%" />
@@ -268,7 +268,7 @@ function SearchPage() {
       ))}
     </div>
   ) : shown.length === 0 ? (
-    <div style={{ display: 'grid', gap: 'var(--medo-space-4)' }}>
+    <div style={{ display: 'grid', gap: 'var(--medo-layout-gap-content)' }}>
       {submitted.toLowerCase().startsWith('invoy') && (
         <p style={{ margin: 0, font: 'var(--medo-typography-body-md)', color: 'var(--medo-color-text-secondary)' }}>
           Did you mean{' '}
@@ -375,8 +375,8 @@ function SearchPage() {
 
   return (
     <Tabs selectedKey={tab} onSelectionChange={setTab}>
-      <div style={{ display: 'grid', gap: 'var(--medo-space-6)' }}>
-        <search style={{ display: 'grid', gap: 'var(--medo-space-6)', justifyItems: 'center' }}>
+      <div style={{ display: 'grid', gap: 'var(--medo-layout-gap-group)' }}>
+        <search style={{ display: 'grid', gap: 'var(--medo-layout-gap-content)', justifyItems: 'center' }}>
           <div style={{ inlineSize: '100%' }}>
             <SearchField
               aria-label="Search"
@@ -399,7 +399,7 @@ function SearchPage() {
         {/* The results are the panel of the selected type tab. */}
         {(['all', 'pages', 'files', 'people'] as const).map((k) => (
           <TabPanel key={k} id={k} keepMounted={false}>
-            <div style={{ display: 'grid', gap: 'var(--medo-space-6)' }}>{results}</div>
+            <div style={{ display: 'grid', gap: 'var(--medo-layout-gap-items)' }}>{results}</div>
           </TabPanel>
         ))}
       </div>
@@ -518,12 +518,12 @@ function SidebarPage({ forceMobile = false }: { forceMobile?: boolean }) {
       ))}
     </ul>
   );
-  const row: React.CSSProperties = { display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 'var(--medo-space-2)' };
+  const row: React.CSSProperties = { display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 'var(--medo-layout-gap-inline)' };
   const n = `${shown.length} ${shown.length === 1 ? 'result' : 'results'}`;
 
   if (forceMobile) {
     return (
-      <div style={{ display: 'grid', gap: 'var(--medo-space-4)', maxInlineSize: '23.4375rem' }}>
+      <div style={{ display: 'grid', gap: 'var(--medo-layout-gap-content)', maxInlineSize: '23.4375rem' }}>
         <search>
           <SearchField aria-label="Search" size="lg" defaultValue="invoice" />
         </search>
@@ -558,18 +558,18 @@ function SidebarPage({ forceMobile = false }: { forceMobile?: boolean }) {
   }
 
   return (
-    <div style={{ display: 'grid', gap: 'var(--medo-space-6)' }}>
+    <div style={{ display: 'grid', gap: 'var(--medo-layout-gap-group)' }}>
       <search style={{ maxInlineSize: '45rem' }}>
         <SearchField aria-label="Search" size="lg" defaultValue="invoice" />
       </search>
-      <div style={{ display: 'grid', gridTemplateColumns: '16.5rem 1fr', gap: 'var(--medo-space-8)', alignItems: 'start' }}>
-        <aside aria-labelledby="filters-heading" style={{ display: 'grid', gap: 'var(--medo-space-2)' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: '16.5rem 1fr', gap: 'var(--medo-layout-gap-items)', alignItems: 'start' }}>
+        <aside aria-labelledby="filters-heading" style={{ display: 'grid', gap: 'var(--medo-layout-gap-content)' }}>
           <h3 id="filters-heading" className="medo-text-heading-sm" style={{ margin: 0 }}>
             Filters
           </h3>
           <Filters types={types} setTypes={setTypes} date={date} setDate={setDate} counts={counts} />
         </aside>
-        <div style={{ display: 'grid', gap: 'var(--medo-space-4)', minInlineSize: 0 }}>
+        <div style={{ display: 'grid', gap: 'var(--medo-layout-gap-items)', minInlineSize: 0 }}>
           <div style={{ ...row, justifyContent: 'space-between' }}>
             <h3 style={{ margin: 0, font: 'var(--medo-typography-label-md)' }}>
               <span role="status">{`${n} for “invoice”`}</span>

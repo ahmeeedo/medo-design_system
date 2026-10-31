@@ -6,7 +6,7 @@ import { Badge } from '../badge/Badge';
 import { interactionTest, Examples, samplePhoto, sampleScreenshot, semantic, slot } from '../story-helpers';
 
 const ratios: ImageRatio[] = ['1:1', '3:4', '4:3', '3:2', '16:9', '21:9', 'original'];
-const grid: React.CSSProperties = { display: 'grid', gap: 'var(--medo-space-6)', gridTemplateColumns: 'repeat(auto-fill, minmax(12rem, 1fr))', alignItems: 'start' };
+const grid: React.CSSProperties = { display: 'grid', gap: 'var(--medo-layout-gap-items)', gridTemplateColumns: 'repeat(auto-fill, minmax(12rem, 1fr))', alignItems: 'start' };
 const label: React.CSSProperties = { margin: 'var(--medo-space-2) 0 0', font: 'var(--medo-typography-caption)', color: 'var(--medo-color-text-secondary)' };
 const photo = samplePhoto(0);
 const preview = samplePhoto(0, { tiny: true });
@@ -248,7 +248,7 @@ export const Embed: Story = {
     },
   },
   render: () => (
-    <div style={{ display: 'grid', gap: 'var(--medo-space-6)', maxInlineSize: '40rem' }}>
+    <div style={{ display: 'grid', gap: 'var(--medo-layout-gap-group)', maxInlineSize: '40rem' }}>
       <EmbedConsent type="video" provider="Example Video" company="Example Inc." src={demoEmbed} title="Video: Product tour" privacyHref="#privacy" onConsent={fn()} />
       <div style={{ maxInlineSize: '20rem' }}>
         <EmbedConsent type="video" provider="Example Video" company="Example Inc." src={demoEmbed} title="Video: Product tour" privacyHref="#privacy" onConsent={fn()} />

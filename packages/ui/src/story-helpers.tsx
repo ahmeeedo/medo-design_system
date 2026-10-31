@@ -1,12 +1,12 @@
 import type { CSSProperties, ReactNode } from 'react';
 
 /** Layout helpers for stories only. */
-export const row: CSSProperties = { display: 'flex', gap: 'var(--medo-space-4)', alignItems: 'center', flexWrap: 'wrap' };
-export const stack: CSSProperties = { display: 'grid', gap: 'var(--medo-space-6)', maxInlineSize: '24rem' };
+export const row: CSSProperties = { display: 'flex', gap: 'var(--medo-layout-gap-inline)', alignItems: 'center', flexWrap: 'wrap' };
+export const stack: CSSProperties = { display: 'grid', gap: 'var(--medo-layout-gap-fields)', maxInlineSize: '24rem' };
 
 /** Several examples under each other. The theme comes from the toolbar switch (Light / Dark). */
 export function Examples({ children }: { children: ReactNode }) {
-  return <div style={{ display: 'grid', gap: 'var(--medo-space-6)' }}>{children}</div>;
+  return <div style={{ display: 'grid', gap: 'var(--medo-layout-gap-group)' }}>{children}</div>;
 }
 
 /* ---------- Playground controls (rule: a control must change what you see) ---------- */

@@ -289,7 +289,7 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: var(--medo-space-2);
+  gap: var(--medo-layout-gap-inline); /* spacing rule: side by side in one group */
 }
 
 .medo-button-group--footer,

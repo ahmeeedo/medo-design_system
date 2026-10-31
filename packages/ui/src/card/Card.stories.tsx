@@ -11,7 +11,7 @@ import { interactionTest, samplePhoto, semantic, slot } from '../story-helpers';
 /** Sample media: the Image component (decorative – the card title names the content). In cards the image takes the card's radius. */
 const media = <Image src={samplePhoto(0)} alt="" ratio="16:9" radius="none" />;
 
-const grid: React.CSSProperties = { display: 'grid', gap: 'var(--medo-space-6)', gridTemplateColumns: 'repeat(auto-fill, minmax(16rem, 1fr))', alignItems: 'stretch' };
+const grid: React.CSSProperties = { display: 'grid', gap: 'var(--medo-layout-gap-items)', gridTemplateColumns: 'repeat(auto-fill, minmax(16rem, 1fr))', alignItems: 'stretch' };
 
 const meta = {
   title: 'Components/Data display/Card',
@@ -66,6 +66,7 @@ const meta = {
           'Give every card a title.',
           'Either link the whole card (`href`) or put actions in the footer.',
           'Use the same variant for cards side by side.',
+          'Place several cards in a Grid: they are always `items` apart (16 px on phones, 24 px from tablet).',
         ],
         dont: ['Put a link card inside a link card.', 'Mix many variants on one page.'],
       },
@@ -160,7 +161,7 @@ export const Interactive: Story = {
 export const Horizontal: Story = {
   parameters: { width: '36rem', docs: { description: { story: 'Media on the left, for lists. Compact density for dense layouts and mobile.' } } },
   render: () => (
-    <div style={{ display: 'grid', gap: 'var(--medo-space-4)' }}>
+    <div style={{ display: 'grid', gap: 'var(--medo-layout-gap-items)' }}>
       <Card layout="horizontal" href="#" media={media} title="Design tokens 2.0" subtitle="Article · 5 min read">
         What changed in colours, spacing and typography.
       </Card>

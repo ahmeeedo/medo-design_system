@@ -34,7 +34,7 @@ function RemovableDemo({ size = 'md', label = 'Selected topics', description }: 
 function FilterDemo({ size = 'md', label = 'Filter by topic', description, selectionMode = 'multiple' }: DemoProps & { selectionMode?: 'single' | 'multiple' }) {
   const [selected, setSelected] = useState<Set<string | number>>(new Set(['design']));
   return (
-    <div style={{ display: 'grid', gap: 'var(--medo-space-3)', justifyItems: 'start' }}>
+    <div style={{ display: 'grid', gap: 'var(--medo-layout-gap-content)', justifyItems: 'start' }}>
       <TagGroup
         label={label}
         description={description}
@@ -125,7 +125,7 @@ export const Removable: Story = {
   args: { children: null },
   parameters: { docs: { description: { story: 'Chosen values, e.g. in a multi-select. The x removes; a disabled tag cannot be removed.' } } },
   render: () => (
-    <div style={{ display: 'grid', gap: 'var(--medo-space-6)' }}>
+    <div style={{ display: 'grid', gap: 'var(--medo-layout-gap-group)' }}>
       <RemovableDemo size="sm" />
       <TagGroup label="Assignees" onRemove={() => {}} disabledKeys={['ben']}>
         <Tag id="anna" icon={<User />}>
@@ -149,7 +149,7 @@ export const Filters: Story = {
     },
   },
   render: () => (
-    <div style={{ display: 'grid', gap: 'var(--medo-space-6)' }}>
+    <div style={{ display: 'grid', gap: 'var(--medo-layout-gap-group)' }}>
       <FilterDemo />
       <FilterDemo size="sm" />
     </div>

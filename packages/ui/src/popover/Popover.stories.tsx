@@ -9,7 +9,7 @@ import { TextField } from '../text-field/TextField';
 import { interactionTest, row, semantic, slot } from '../story-helpers';
 
 const text: React.CSSProperties = { margin: 0, color: 'var(--medo-color-text-secondary)' };
-const form: React.CSSProperties = { display: 'grid', gap: 'var(--medo-space-3)' };
+const form: React.CSSProperties = { display: 'grid', gap: 'var(--medo-layout-gap-fields)' };
 const fieldRow: React.CSSProperties = { display: 'flex', alignItems: 'center', gap: 'var(--medo-space-1)', font: 'var(--medo-typography-label-md)' };
 
 /** Filter example: applies live, no footer. */

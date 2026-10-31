@@ -6,7 +6,7 @@ import { AlignCenter, AlignLeft, AlignRight, Bold, Heart, Italic, LayoutGrid, Li
 import { ToggleButton, ToggleButtonGroup, Toolbar, ToolbarSeparator } from './ToggleButton';
 import { interactionTest, row, slot } from '../story-helpers';
 
-const col: React.CSSProperties = { display: 'grid', gap: 'var(--medo-space-6)', justifyItems: 'start' };
+const col: React.CSSProperties = { display: 'grid', gap: 'var(--medo-layout-gap-group)', justifyItems: 'start' };
 const caption: React.CSSProperties = { font: 'var(--medo-typography-code-sm)', color: 'var(--medo-color-text-secondary)' };
 
 function ViewSwitch({ size = 'md' as 'md' | 'lg', icons = false, fullWidth = false }) {
@@ -193,7 +193,7 @@ export const Segmented: Story = {
         <ViewSwitch size="lg" />
         <ViewSwitch size="lg" icons />
       </div>
-      <div style={{ inlineSize: '100%', maxInlineSize: '22rem', display: 'grid', gap: 'var(--medo-space-2)' }}>
+      <div style={{ inlineSize: '100%', maxInlineSize: '22rem', display: 'grid', gap: 'var(--medo-layout-gap-content)' }}>
         <span style={caption}>fullWidth</span>
         <ViewSwitch fullWidth />
       </div>

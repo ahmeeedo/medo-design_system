@@ -237,11 +237,23 @@ export function SimpleTable({ path, format = (t) => String(t.value) }: { path: s
   );
 }
 
-type LayoutFile = Record<string, Record<string, { $value: number | { value: number; unit: string } }>>;
-const lv = (f: LayoutFile, k: string) => {
-  const v = f.layout[k].$value;
-  return typeof v === 'number' ? String(v) : `${v.value}${v.unit}`;
-};
+type LayoutValue = number | string | { value: number; unit: string };
+type LayoutFile = { layout: Record<string, { $value: LayoutValue } | Record<string, { $value: LayoutValue }>> };
+const tabletLayout = tablet as unknown as LayoutFile;
+const desktopLayout = desktop as unknown as LayoutFile;
+const remToPx = (v: string) => (v.endsWith('rem') ? `${parseFloat(v) * 16}px` : v === '0' ? '0px' : v);
+
+/** A layout value of one mode in px. Aliases ({space.6}, {layout.gutter}) are resolved. */
+function layoutPx(f: LayoutFile, path: string[]): string {
+  const node = path.reduce<unknown>((n, k) => (n as Record<string, unknown>)?.[k], f) as { $value: LayoutValue };
+  const v = node.$value;
+  if (typeof v === 'number') return String(v);
+  if (typeof v === 'object') return `${v.value}${v.unit}`;
+  const ref = v.slice(1, -1).split('.');
+  if (ref[0] === 'layout') return layoutPx(f, ref);
+  const t = L.find((x) => x.path.join('.') === ref.join('.'));
+  return t ? remToPx(String(t.value)) : v;
+}
 
 export function LayoutTable() {
   const keys = ['columns', 'gutter', 'margin', 'section'];
@@ -260,9 +272,63 @@ export function LayoutTable() {
         {keys.map((k) => (
           <tr key={k}>
             <td><strong>layout/{k}</strong><br /><Code>--medo-layout-{k}</Code></td>
-            <td className="doc-cell-muted">{mobile[k]}</td>
-            <td className="doc-cell-muted">{lv(tablet as LayoutFile, k)}</td>
-            <td className="doc-cell-muted">{lv(desktop as LayoutFile, k)}</td>
+            <td className="doc-cell-muted">{k === 'columns' ? mobile[k] : remToPx(mobile[k])}</td>
+            <td className="doc-cell-muted">{layoutPx(tabletLayout, ['layout', k])}</td>
+            <td className="doc-cell-muted">{layoutPx(desktopLayout, ['layout', k])}</td>
+          </tr>
+        ))}
+      </tbody>
+    </Table>
+  );
+}
+
+const rules: [string, string, string][] = [
+  ['inline', 'Side by side in one group', 'Buttons, tags, filters, icon + label groups'],
+  ['content', 'Inside one block', 'Heading → text → actions, paragraphs, a card’s content'],
+  ['fields', 'Form fields below each other', 'Text fields, selects, checkbox groups in a form'],
+  ['items', 'Cards and tiles in a grid or list', 'Card grids, tile lists – equals the layout gutter'],
+  ['group', 'Groups inside a section', 'Sub-sections, fieldsets, a block of cards under its heading'],
+  ['section', 'Sections of a page', 'Hero, features, FAQ … – equals layout/section'],
+];
+
+/** The six spacing rules with their values per layout mode and a bar at the current width. */
+export function SpacingRules() {
+  return (
+    <Table>
+      <thead>
+        <tr>
+          <th>Rule</th>
+          <th>Use for</th>
+          <th>Mobile</th>
+          <th>Tablet</th>
+          <th>Desktop</th>
+          <th>Now</th>
+        </tr>
+      </thead>
+      <tbody>
+        {rules.map(([k, title, examples]) => (
+          <tr key={k}>
+            <td>
+              <strong>{k}</strong>
+              <br />
+              <Code>{`gap="${k}"`}</Code>
+              <br />
+              <Code>{`gap-${k}`}</Code>
+            </td>
+            <td>
+              {title}
+              <br />
+              <span className="doc-cell-muted">{examples}</span>
+            </td>
+            <td className="doc-cell-muted">{remToPx(String(byGroup('layout', 'gap', k)[0]?.value))}</td>
+            <td className="doc-cell-muted">{layoutPx(tabletLayout, ['layout', 'gap', k])}</td>
+            <td className="doc-cell-muted">{layoutPx(desktopLayout, ['layout', 'gap', k])}</td>
+            <td>
+              <span
+                aria-hidden="true"
+                style={{ display: 'block', inlineSize: `var(--medo-layout-gap-${k})`, blockSize: 'var(--medo-space-3)', background: 'var(--medo-color-action-primary)', borderRadius: 'var(--medo-radius-sm)' }}
+              />
+            </td>
           </tr>
         ))}
       </tbody>

@@ -91,7 +91,7 @@ export const Layouts: Story = {
   render: () => (
     <Examples>
       {(['md', 'sm'] as const).map((size) => (
-        <div key={size} style={{ display: 'grid', gap: 'var(--medo-space-3)' }}>
+        <div key={size} style={{ display: 'grid', gap: 'var(--medo-layout-gap-content)' }}>
           <span style={caption}>full · {size}</span>
           <Breadcrumbs layout="full" size={size} items={four} aria-label={`Breadcrumb, full ${size}`} />
           <span style={caption}>collapsed · {size}</span>
@@ -120,7 +120,7 @@ export const MobileBack: Story = {
     },
   },
   render: () => (
-    <div style={{ display: 'grid', gap: 'var(--medo-space-3)' }}>
+    <div style={{ display: 'grid', gap: 'var(--medo-layout-gap-content)' }}>
       <Breadcrumbs layout="back" items={four} aria-label="Breadcrumb, back md" />
       <Breadcrumbs layout="back" size="sm" items={four} aria-label="Breadcrumb, back sm" />
     </div>
@@ -131,7 +131,7 @@ export const InPageHeader: Story = {
   name: 'In a page header',
   parameters: { docs: { description: { story: 'Below the main navigation, directly above the page title (gap 12), aligned with the content.' } } },
   render: () => (
-    <header style={{ display: 'grid', gap: 'var(--medo-space-3)' }}>
+    <header style={{ display: 'grid', gap: 'var(--medo-layout-gap-content)' }}>
       <Breadcrumbs items={four} aria-label="Breadcrumb, page header" />
       {/* The page title is an h1 in an app; inside the docs page it is one level below the section. */}
       <h3 className="medo-text-heading-xl" style={{ margin: 0 }}>

@@ -177,7 +177,7 @@ export const UrlSync: Story = {
   render: function Render() {
     const [tab, setTab] = useState<Key>('overview');
     return (
-      <div style={{ display: 'grid', gap: 'var(--medo-space-4)' }}>
+      <div style={{ display: 'grid', gap: 'var(--medo-layout-gap-content)' }}>
         <ProjectTabs selectedKey={tab} onSelectionChange={setTab} />
         <span style={caption}>/projects/website-relaunch?tab={String(tab)}</span>
       </div>
