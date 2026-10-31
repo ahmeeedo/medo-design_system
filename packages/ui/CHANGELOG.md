@@ -1,5 +1,12 @@
 # @med-o/ui
 
+## 0.4.1
+
+### Patch Changes
+
+- 3db301f: Spacing rules in components: cards in a `ListView` (`variant="cards"`) are now `items` apart (16 · 24 · 24 px, before 12 px); the buttons of `EmbedConsent` are `inline` apart (8 px, before 16 px horizontal).
+  - @med-o/design-tokens@0.4.1
+
 ## 0.4.0
 
 ### Minor Changes
