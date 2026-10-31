@@ -44,7 +44,7 @@ const preview: Preview = {
           'Guides',
           ['Theming', 'Languages', 'Tailwind'],
           'Patterns',
-          ['Form', 'Search', 'Delete'],
+          ['Account', 'Form', 'Search', 'Delete'],
           'Components',
           ['Layout', 'Actions', 'Forms', 'Overlays', 'Feedback', 'Navigation', 'Data display'],
         ],
