@@ -1,0 +1,25 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import { DocPage, DocHeader, DocFooter, Tok, SourceLink } from './docs-blocks/DocBlocks';
+import { Changelog, latestVersion, nav } from './docs-blocks/Changelog';
+
+<Meta title="What's new" />
+
+<DocPage>
+
+<DocHeader
+  kind="Overview"
+  title="What's new"
+  meta={`Latest ${latestVersion}`}
+  subtitle="Every release of @med-o/ui and @med-o/design-tokens, newest first."
+  nav={nav}
+  description={<p>Both packages are released together with the same version number. Entries marked <strong>Breaking</strong> need a change in your code – they say what to do. How versions work: Guides / Versioning & support.</p>}
+/>
+
+<Changelog />
+
+<DocFooter>
+  {'What’s new · @med-o/ui · @med-o/design-tokens'}
+  <SourceLink path="packages/ui/CHANGELOG.md" />
+</DocFooter>
+
+</DocPage>

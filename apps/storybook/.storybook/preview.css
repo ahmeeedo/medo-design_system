@@ -587,3 +587,39 @@ html[data-theme] :is(.sb-preparing-story, .sb-preparing-docs) > * {
     font-size: var(--medo-font-size-4xl);
   }
 }
+
+/* ---------- What's new (Changelog.tsx) ---------- */
+.doc-changelog-filter {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--medo-layout-gap-content);
+}
+.doc-changelog-releases {
+  display: grid;
+  gap: var(--medo-layout-gap-group);
+}
+.doc-changelog-release {
+  display: grid;
+  gap: var(--medo-layout-gap-content);
+}
+.doc-changelog-release > :is(h3, h4) {
+  margin: 0;
+}
+/* One change per line of text: tags, text and commit link flow together. */
+.doc-changelog {
+  display: grid;
+  gap: var(--medo-layout-gap-content);
+  max-inline-size: 48rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.doc-changelog > li {
+  font: var(--medo-typography-body-md);
+  color: var(--medo-color-text-primary);
+}
+.doc-changelog > li > .medo-badge {
+  margin-inline-end: var(--medo-space-1);
+  vertical-align: 0.1em;
+}
