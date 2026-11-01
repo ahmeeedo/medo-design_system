@@ -2,8 +2,9 @@
  * Storybook tests: every story runs as a test in a real browser (Vitest browser mode, Playwright Chromium).
  * A story fails when it throws, when its play function fails, or when axe finds a violation (a11y test: 'error').
  * Two projects: every story runs in Light and in Dark (contrast differs per theme) – npm test.
- * A third project runs every story in WebKit (Safari's engine), Light, without screenshots – npm run test:webkit.
- * It catches what only Safari does differently (layout, focus, events). CI runs it as its own job.
+ * Two more projects run every story in WebKit (Safari's engine) and Firefox (Gecko), Light, without screenshots –
+ * npm run test:webkit, npm run test:firefox. They catch what only these engines do differently (layout, focus,
+ * events). CI runs each as its own job.
  * In Storybook: the Testing widget. Preview annotations (decorators, a11y) apply automatically.
  *
  * Viewport: Storybook sets 1200 × 900 for every story (its default, unless a story sets parameters.viewport).
@@ -19,14 +20,14 @@ import { fileURLToPath } from 'node:url';
 
 const dirname = path.dirname(fileURLToPath(import.meta.url));
 const visual = process.env.VISUAL === '1';
-const webkit = process.argv.some((arg) => arg.includes('storybook-webkit'));
+const asked = (name: string) => process.argv.some((arg) => arg.includes(name));
 
 /** Reference and diff paths: one folder per theme (light, dark), file name = story id. */
 const screenshotPath = (folder: string) => ({ arg, ext, project }: { arg: string; ext: string; project: { name: string } }) =>
   path.join(dirname, folder, project.name.startsWith('storybook-dark') ? 'dark' : 'light', `${arg}${ext}`);
 
 /** One project per theme and browser. The theme reaches preview.ts as import.meta.env.STORYBOOK_TEST_THEME. */
-const project = (name: string, theme: 'Light' | 'Dark', browser: 'chromium' | 'webkit' = 'chromium') => ({
+const project = (name: string, theme: 'Light' | 'Dark', browser: 'chromium' | 'webkit' | 'firefox' = 'chromium') => ({
   extends: true,
   plugins: [storybookTest({ configDir: path.join(dirname, '.storybook') })],
   define: { 'import.meta.env.STORYBOOK_TEST_THEME': JSON.stringify(theme) },
@@ -58,8 +59,10 @@ export default defineConfig({
     projects: [
       project('storybook', 'Light'),
       project('storybook-dark', 'Dark'),
-      // Only when asked for (npm run test:webkit), so npm test and the Testing widget never need WebKit installed.
-      ...(webkit ? [project('storybook-webkit', 'Light', 'webkit')] : []),
+      // Only when asked for (npm run test:webkit / test:firefox), so npm test and the Testing widget never need
+      // these browsers installed.
+      ...(asked('storybook-webkit') ? [project('storybook-webkit', 'Light', 'webkit')] : []),
+      ...(asked('storybook-firefox') ? [project('storybook-firefox', 'Light', 'firefox')] : []),
     ],
   },
 });

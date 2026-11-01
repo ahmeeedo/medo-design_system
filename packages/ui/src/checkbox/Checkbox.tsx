@@ -8,7 +8,7 @@ import {
   type CheckboxGroupProps as AriaCheckboxGroupProps,
 } from 'react-aria-components';
 import { Check, Minus } from 'lucide-react';
-import { FieldFooter, FieldLabel } from '../field/Field';
+import { FieldErrorText, FieldFooter, FieldLabel } from '../field/Field';
 import { cx } from '../utils/cx';
 
 export type ChoiceSize = 'md' | 'lg';
@@ -19,13 +19,15 @@ export interface CheckboxProps extends Omit<CheckboxFieldProps, 'children' | 'cl
   children?: ReactNode;
   /** Second line below the label. */
   description?: ReactNode;
+  /** A single checkbox only (e.g. “Accept the terms”): shown when it is invalid. In a CheckboxGroup the group has the message. */
+  errorMessage?: ReactNode;
   /** md (16 px box, 14 px text) · lg (20 px box, 16 px text, mobile). Inherits from a group. */
   size?: ChoiceSize;
   className?: string;
 }
 
 /** Checkbox – on its own or inside a CheckboxGroup. */
-export function Checkbox({ children, description, size, className, ...props }: CheckboxProps) {
+export function Checkbox({ children, description, errorMessage, size, className, ...props }: CheckboxProps) {
   const groupSize = useContext(ChoiceSizeContext);
   return (
     <CheckboxField {...props} className={cx('medo-choice', 'medo-checkbox', `medo-choice--${size ?? groupSize}`, className)}>
@@ -44,6 +46,8 @@ export function Checkbox({ children, description, size, className, ...props }: C
           {description}
         </Text>
       )}
+      {/* In a CheckboxGroup React Aria gives no validation here: nothing renders, the group shows its message. */}
+      <FieldErrorText errorMessage={errorMessage} />
     </CheckboxField>
   );
 }

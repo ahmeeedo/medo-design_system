@@ -19,6 +19,13 @@
       }
     },
     "size": {
+      "2xs": {
+        "$type": "dimension",
+        "$value": {
+          "value": 11,
+          "unit": "px"
+        }
+      },
       "xs": {
         "$type": "dimension",
         "$value": {
@@ -393,10 +400,7 @@
         "$type": "typography",
         "$value": {
           "fontFamily": "{font.family.sans}",
-          "fontSize": {
-            "value": 11,
-            "unit": "px"
-          },
+          "fontSize": "{font.size.2xs}",
           "fontWeight": "{font.weight.medium}",
           "lineHeight": 1.4545,
           "letterSpacing": "{font.tracking.normal}"

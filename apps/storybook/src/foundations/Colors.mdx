@@ -1,5 +1,5 @@
 import { Meta } from '@storybook/addon-docs/blocks';
-import { SemanticColors, Palette } from './components/TokenDocs';
+import { SemanticColors, Palette, ContrastPairs } from './components/TokenDocs';
 import { DocPage, DocHeader, DocSection, DocFooter, Tok, SourceLink } from '../docs-blocks/DocBlocks';
 
 <Meta title="Foundations/Colors" />
@@ -15,38 +15,42 @@ import { DocPage, DocHeader, DocSection, DocFooter, Tok, SourceLink } from '../d
     <p>Three layers: <strong className="doc-strong">primitives</strong> (raw palette) → <strong className="doc-strong">alias</strong> (primary, neutral, success …) → <strong className="doc-strong">semantic</strong> (what a color is for).</p>
     <p>Products use only semantic tokens. Every table shows Light and Dark side by side.</p>
   </>}
-  nav={['Surfaces', 'Text', 'Borders & focus', 'Actions & states', 'Feedback', 'Avatar', 'Shadow colors', 'Palette']}
+  nav={['Surfaces', 'Text', 'Text on backgrounds', 'Borders & focus', 'Actions & states', 'Feedback', 'Avatar', 'Shadow colors', 'Palette']}
 />
 
 <DocSection n={1} title="Surfaces" meta="Light + Dark" description="Backgrounds from page to overlay. Max three levels: page → container → inset.">
   <SemanticColors groups={['surface', 'overlay']} />
 </DocSection>
 
-<DocSection n={2} title="Text" meta="Light + Dark" description="text/primary and text/secondary pass AA on every surface in both modes.">
+<DocSection n={2} title="Text" meta="Light + Dark" description="Each text token is made for certain backgrounds – see “Text on backgrounds”. text/primary and text/secondary are for content surfaces, not for brand-bold or inverse.">
   <SemanticColors groups={['text']} />
 </DocSection>
 
-<DocSection n={3} title="Borders & focus" meta="Light + Dark" description="border/default is decorative. Control boundaries use border/strong (≥ 3 : 1).">
+<DocSection n={3} title="Text on backgrounds" meta="≥ 4.5 : 1 · checked in the build" description="Use only these combinations. The token build checks every pair in Light and Dark and fails below 4.5 : 1 (WCAG 2.2 AA). Other combinations are not checked and may fail.">
+  <ContrastPairs />
+</DocSection>
+
+<DocSection n={4} title="Borders & focus" meta="Light + Dark" description="border/default is decorative. Control boundaries use border/strong (≥ 3 : 1).">
   <SemanticColors groups={['border', 'focus']} />
 </DocSection>
 
-<DocSection n={4} title="Actions & states" meta="Light + Dark" description="Filled controls have their own hover and pressed tokens. Transparent ones use the state layers.">
+<DocSection n={5} title="Actions & states" meta="Light + Dark" description="Filled controls have their own hover and pressed tokens. Transparent ones use the state layers.">
   <SemanticColors groups={['action', 'state']} />
 </DocSection>
 
-<DocSection n={5} title="Feedback" meta="Light + Dark">
+<DocSection n={6} title="Feedback" meta="Light + Dark">
   <SemanticColors groups={['feedback']} />
 </DocSection>
 
-<DocSection n={6} title="Avatar" meta="Light + Dark">
+<DocSection n={7} title="Avatar" meta="Light + Dark">
   <SemanticColors groups={['avatar']} />
 </DocSection>
 
-<DocSection n={7} title="Shadow colors" meta="Used by elevation" description="Used inside the elevation tokens, not directly.">
+<DocSection n={8} title="Shadow colors" meta="Used by elevation" description="Used inside the elevation tokens, not directly.">
   <SemanticColors groups={['shadow']} />
 </DocSection>
 
-<DocSection n={8} title="Palette" meta="Primitives" description="For reference only. Products never use these directly.">
+<DocSection n={9} title="Palette" meta="Primitives" description="For reference only. Products never use these directly.">
   <Palette />
 </DocSection>
 

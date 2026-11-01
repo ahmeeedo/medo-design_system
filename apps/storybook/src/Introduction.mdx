@@ -1,6 +1,7 @@
 import { Meta } from '@storybook/addon-docs/blocks';
 import { DocPage, DocHeader, DocSection, DocFooter, SpecTable, Notes, Tok, SourceLink } from './docs-blocks/DocBlocks';
 import ui from '@med-o/ui/package.json';
+import { Button, Stack, TextField } from '@med-o/ui';
 
 <Meta title="Introduction" />
 
@@ -15,7 +16,7 @@ import ui from '@med-o/ui/package.json';
     <p>This site documents the design tokens, the CSS, the Tailwind theme and the React components – with live examples, a playground per component and the rules for using them.</p>
     <p>Use the theme switch in the toolbar (Light / Dark). Every example follows it. Accessibility target: WCAG 2.2 AA.</p>
   </>}
-  nav={['Packages', 'Install', 'Use the tokens', 'Light and Dark', 'Fonts']}
+  nav={['Packages', 'Install', 'Your first page', 'Use the tokens', 'Light and Dark', 'Fonts']}
 />
 
 <DocSection n={1} title="Packages" meta="2 packages">
@@ -45,7 +46,69 @@ import { Button } from '@med-o/ui';
 
 </DocSection>
 
-<DocSection n={3} title="Use the tokens" meta="CSS · Tailwind" description="Import the variables once. Then use only semantic tokens.">
+<DocSection n={3} title="Your first page" meta="React · complete" description="Everything in one place: packages, styles, fonts, language and a first form. Copy it into a new React 19 app (Vite or Next.js).">
+
+```bash
+npm install @med-o/design-tokens @med-o/ui react-aria-components @fontsource/dm-sans @fontsource/dm-mono
+```
+
+```tsx
+// main.tsx – once, at the root of the app
+import { createRoot } from 'react-dom/client';
+import { I18nProvider } from 'react-aria-components';
+import '@fontsource/dm-sans/400.css';
+import '@fontsource/dm-sans/500.css';
+import '@fontsource/dm-sans/600.css';
+import '@fontsource/dm-sans/700.css';
+import '@fontsource/dm-mono/400.css';
+import '@med-o/design-tokens/css';
+import '@med-o/design-tokens/css/typography.css';
+import '@med-o/ui/styles.css';
+import { App } from './App';
+
+// The locale formats dates and numbers and picks the built-in texts. Same language as <html lang>.
+createRoot(document.getElementById('root')!).render(
+  <I18nProvider locale="en-US">
+    <App />
+  </I18nProvider>,
+);
+```
+
+```tsx
+// App.tsx
+import { Button, Container, Stack, TextField } from '@med-o/ui';
+
+export function App() {
+  return (
+    <Container as="main" size="prose">
+      <Stack as="form" gap="fields" onSubmit={(e) => e.preventDefault()}>
+        <h1 className="medo-text-heading-lg">Sign up</h1>
+        <TextField
+          label="Email"
+          type="email"
+          isRequired
+          errorMessage="Enter a valid email address, e.g. name@example.com."
+        />
+        <Button type="submit">Create account</Button>
+      </Stack>
+    </Container>
+  );
+}
+```
+
+The result – live, with the theme of the toolbar:
+
+<div className="doc-stage">
+  <Stack as="form" gap="fields" style={{ maxInlineSize: '24rem' }} onSubmit={(e) => e.preventDefault()}>
+    <span className="medo-text-heading-lg">Sign up</span>
+    <TextField label="Email" type="email" isRequired errorMessage="Enter a valid email address, e.g. name@example.com." />
+    <Button type="submit">Create account</Button>
+  </Stack>
+</div>
+
+</DocSection>
+
+<DocSection n={4} title="Use the tokens" meta="CSS · Tailwind" description="Import the variables once. Then use only semantic tokens.">
 
 ```css
 /* main.css */
@@ -63,7 +126,7 @@ import { Button } from '@med-o/ui';
 
 </DocSection>
 
-<DocSection n={4} title="Light and Dark" meta="System · forced" description="The tokens follow the operating system. Force a theme for the whole page or for one area.">
+<DocSection n={5} title="Light and Dark" meta="System · forced" description="The tokens follow the operating system. Force a theme for the whole page or for one area.">
 
 ```html
 <html data-theme="dark">   <!-- "light", "dark" or no attribute = system -->
@@ -71,7 +134,7 @@ import { Button } from '@med-o/ui';
 
 </DocSection>
 
-<DocSection n={5} title="Fonts" meta="DM Sans · DM Mono" description="Both fonts use the SIL Open Font License. Self-host them – no request to a font service.">
+<DocSection n={6} title="Fonts" meta="DM Sans · DM Mono" description="Both fonts use the SIL Open Font License. Self-host them – no request to a font service.">
 
 <Notes>
   <p>Example: <Tok>@fontsource/dm-sans</Tok> and <Tok>@fontsource/dm-mono</Tok> (weights 400, 500, 600, 700).</p>

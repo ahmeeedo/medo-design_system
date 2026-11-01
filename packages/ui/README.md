@@ -62,7 +62,7 @@ import { Card, Container, Grid, Stack } from '@med-o/ui';
 | --- | --- | --- | --- |
 | 117 | 17.5 | 129 | 24 |
 
-Older browsers still work, without a few enhancements. Requires React 19; ESM only. Accessibility target WCAG 2.2 AA – please report a violation as a GitHub issue.
+Supported: the last two major versions; the table shows the minimum versions. Tested automatically in Chromium, WebKit and Firefox. Requires React 19; ESM only. Accessibility target WCAG 2.2 AA – please report a violation as a GitHub issue.
 
 While the package is 0.x, a patch only fixes bugs and a minor may contain breaking changes – each marked **Breaking:** in the changelog, with how to update. `@med-o/ui` and `@med-o/design-tokens` are always released together with the same version.
 

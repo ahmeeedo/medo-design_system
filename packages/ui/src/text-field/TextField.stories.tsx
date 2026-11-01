@@ -108,7 +108,7 @@ export const States: Story = {
     <div style={stack}>
       <TextField {...args} label="Default" />
       <TextField {...args} label="Required" isRequired />
-      <TextField {...args} label="Invalid" defaultValue="name@" isInvalid />
+      <TextField {...args} label="Invalid" defaultValue="name@" isInvalid errorMessage="Enter a valid email address, e.g. name@example.com." />
       <TextField {...args} label="Read-only" defaultValue="anna@example.com" isReadOnly />
       <TextField {...args} label="Disabled" defaultValue="anna@example.com" isDisabled />
     </div>

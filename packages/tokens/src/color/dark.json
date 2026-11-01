@@ -85,12 +85,12 @@
       "primary": {
         "$type": "color",
         "$value": "{color.neutral.50}",
-        "$description": "Main text and headings. ≥ 13.9:1 on all surfaces."
+        "$description": "Main text and headings on content surfaces (canvas, default, raised, subtle, brand-subtle, brand-muted): ≥ 13.9:1. Not on brand-bold or inverse – use text/on-brand or text/inverse there."
       },
       "secondary": {
         "$type": "color",
         "$value": "{color.neutral.400}",
-        "$description": "Supporting text, descriptions, placeholders. ≥ 5.5:1 on all surfaces."
+        "$description": "Supporting text, descriptions, placeholders on content surfaces (canvas, default, raised, subtle, brand-subtle, brand-muted): ≥ 5.5:1. Not on brand-bold or inverse – use text/on-brand-secondary or text/inverse-secondary there."
       },
       "disabled": {
         "$type": "color",
@@ -162,7 +162,7 @@
       "strong": {
         "$type": "color",
         "$value": "{color.neutral.400}",
-        "$description": "Boundaries of interactive controls (inputs, checkboxes). ≥ 3:1 on all surfaces."
+        "$description": "Boundaries of interactive controls (inputs, checkboxes). ≥ 3:1 on content surfaces."
       },
       "strong-hover": {
         "$type": "color",

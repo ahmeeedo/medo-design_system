@@ -1,5 +1,5 @@
 import { Meta } from '@storybook/addon-docs/blocks';
-import { TypeScale, SimpleTable } from './components/TokenDocs';
+import { TypeScale, SimpleTable, fontSizeCount, fontWeightCount } from './components/TokenDocs';
 import { DocPage, DocHeader, DocSection, DocFooter, Notes, Tok, SourceLink } from '../docs-blocks/DocBlocks';
 
 <Meta title="Foundations/Typography" />
@@ -10,7 +10,7 @@ import { DocPage, DocHeader, DocSection, DocFooter, Notes, Tok, SourceLink } fro
   kind="Foundations"
   title="Typography"
   meta="DM Sans · DM Mono"
-  subtitle="DM Sans and DM Mono, 9 sizes, 4 weights."
+  subtitle={`DM Sans and DM Mono, ${fontSizeCount} sizes, ${fontWeightCount} weights.`}
   description={<p>Sizes are designed in px and shipped in rem (16 px = 1 rem), so text follows the user’s browser font size. Every size has a paired line height on the 4 px grid.</p>}
   nav={['Text styles', 'Usage', 'Font tokens']}
 />
@@ -28,6 +28,7 @@ import { DocPage, DocHeader, DocSection, DocFooter, Notes, Tok, SourceLink } fro
 
 <Notes>
   <p>CSS shorthand: <Tok>font: var(--medo-typography-body-md)</Tok>. The shorthand has no letter spacing – prefer the class.</p>
+  <p>Small styles – 11 px (<Tok>label/xs</Tok>) and 12 px (<Tok>label/sm</Tok>, <Tok>caption</Tok>, <Tok>overline</Tok>, <Tok>code/sm</Tok>) – are for short metadata only: counters, timestamps, badges, table meta. Never for running text, descriptions or anything people must read to act; use <Tok>body/sm</Tok> (14 px) or larger there.</p>
 </Notes>
 
 </DocSection>

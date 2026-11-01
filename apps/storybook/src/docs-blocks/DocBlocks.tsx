@@ -247,7 +247,7 @@ export function DocFooter({ children }: { children: ReactNode }) {
 
 
 /**
- * Usage guidance on coloured surfaces (feedback tokens, so Light and Dark keep the contrast):
+ * Usage guidance on neutral boxes; the icons carry the tone (feedback tokens, so Light and Dark keep the contrast):
  * green for “When to use” and “Do”, red for “When not to use” and “Don't”.
  * The heading and the icon carry the meaning too, never the colour alone (WCAG 1.4.1).
  */

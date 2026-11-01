@@ -103,6 +103,15 @@
   color: var(--medo-color-text-secondary);
 }
 
+/* Error of a single checkbox: below the label, like the description. */
+.medo-choice > .medo-field__error {
+  margin-inline-start: calc(var(--_box) + var(--_gap));
+  font: var(--medo-typography-body-sm);
+}
+.medo-choice[data-invalid] > .medo-choice__description:has(~ .medo-field__error:not(:empty)) {
+  display: none;
+}
+
 /* ---------- States ---------- */
 
 .medo-choice__button[data-hovered] {

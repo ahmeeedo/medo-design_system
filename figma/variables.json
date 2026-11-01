@@ -1,6 +1,6 @@
 {
   "source": "Figma file vOTfMtcpCwAJjuSZUkfpfj (med.o Design System)",
-  "exportedAt": "2026-10-31",
+  "exportedAt": "2026-11-01",
   "note": "Raw export of Figma variables and styles. Do not edit by hand: re-export from Figma (scripts/figma-export.js), then run `npm run tokens:from-figma`.",
   "collections": {
     "Foundation Colors": {
@@ -128,7 +128,7 @@
       "modes": ["Base"],
       "vars": {
         "font/family/sans": "DM Sans", "font/family/mono": "DM Mono",
-        "font/size/xs": 12, "font/size/sm": 14, "font/size/base": 16, "font/size/lg": 18, "font/size/xl": 20, "font/size/2xl": 24, "font/size/3xl": 30, "font/size/4xl": 36, "font/size/5xl": 48, "font/size/6xl": 64,
+        "font/size/2xs": 11, "font/size/xs": 12, "font/size/sm": 14, "font/size/base": 16, "font/size/lg": 18, "font/size/xl": 20, "font/size/2xl": 24, "font/size/3xl": 30, "font/size/4xl": 36, "font/size/5xl": 48, "font/size/6xl": 64,
         "font/line-height/xs": 16, "font/line-height/sm": 20, "font/line-height/base": 24, "font/line-height/lg": 28, "font/line-height/xl": 28, "font/line-height/2xl": 32, "font/line-height/3xl": 36, "font/line-height/4xl": 40, "font/line-height/5xl": 48, "font/line-height/6xl": 68,
         "font/weight/regular": 400, "font/weight/medium": 500, "font/weight/semibold": 600, "font/weight/bold": 700,
         "font/tracking/tight": -2, "font/tracking/snug": -1, "font/tracking/normal": 0, "font/tracking/wide": 4
@@ -181,8 +181,8 @@
     "surface/inverse": "Inverted surface: tooltips, snackbars. Dark in Light mode, light in Dark mode.",
     "surface/thumb": "Selected thumb inside a contained control (contained Tabs). Sits on surface/subtle.",
     "surface/on-media": "Subtle light surface on overlay/media: progress track, chips on images. Same in both themes.",
-    "text/primary": "Main text and headings. ≥ 13.9:1 on all surfaces.",
-    "text/secondary": "Supporting text, descriptions, placeholders. ≥ 5.5:1 on all surfaces.",
+    "text/primary": "Main text and headings on content surfaces (canvas, default, raised, subtle, brand-subtle, brand-muted): ≥ 13.9:1. Not on brand-bold or inverse – use text/on-brand or text/inverse there.",
+    "text/secondary": "Supporting text, descriptions, placeholders on content surfaces (canvas, default, raised, subtle, brand-subtle, brand-muted): ≥ 5.5:1. Not on brand-bold or inverse – use text/on-brand-secondary or text/inverse-secondary there.",
     "text/disabled": "Disabled text only (exempt from WCAG contrast). Never for readable content.",
     "text/on-brand": "Text on surface/brand-bold. 7.6:1 Light, 9.8:1 Dark.",
     "text/on-brand-secondary": "Supporting text on surface/brand-bold. 6.3:1 Light, 8.1:1 Dark.",
@@ -196,7 +196,7 @@
     "text/inverse-secondary": "Secondary text on surface/inverse (shortcuts, meta).",
     "text/on-media": "Text and icons on top of images, always on overlay/media. White in both themes.",
     "border/default": "Decorative borders and dividers (cards, separators). Not for input boundaries.",
-    "border/strong": "Boundaries of interactive controls (inputs, checkboxes). ≥ 3:1 on all surfaces.",
+    "border/strong": "Boundaries of interactive controls (inputs, checkboxes). ≥ 3:1 on content surfaces.",
     "border/strong-hover": "Hover boundary of controls.",
     "border/brand": "Decorative border around brand-subtle surfaces.",
     "border/danger": "Boundary of controls with an error. 4.6:1 Light, 6.2:1 Dark.",

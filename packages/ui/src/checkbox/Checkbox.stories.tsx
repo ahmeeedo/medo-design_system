@@ -85,7 +85,7 @@ export const States: Story = {
       <Checkbox {...args} description="A second line explains the option.">
         With description
       </Checkbox>
-      <Checkbox {...args} isInvalid>
+      <Checkbox {...args} isInvalid errorMessage="Accept the terms to continue.">
         Invalid
       </Checkbox>
       <Checkbox {...args} isDisabled>

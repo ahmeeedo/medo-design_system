@@ -1,0 +1,54 @@
+{
+  "$description": "Which text goes on which background. The token build checks every pair in Light and Dark and fails below the minimum (WCAG 2.2 AA: 4.5 : 1 for text). The result is dist/docs/contrast.json, which the Colors page shows. Not from Figma – edit here.",
+  "groups": [
+    {
+      "name": "Content surfaces",
+      "use": "Pages, cards, panels, inputs, selected rows.",
+      "surfaces": ["surface/canvas", "surface/default", "surface/raised", "surface/subtle", "surface/brand-subtle", "surface/brand-muted"],
+      "texts": ["text/primary", "text/secondary", "text/brand", "text/brand-hover", "text/brand-pressed", "text/danger"]
+    },
+    {
+      "name": "Brand surface",
+      "use": "Bold brand areas: hero, banner, highlighted plan.",
+      "surfaces": ["surface/brand-bold"],
+      "texts": ["text/on-brand", "text/on-brand-secondary"]
+    },
+    {
+      "name": "Inverse surface",
+      "use": "Tooltips, snackbars, dark areas in the light theme and vice versa.",
+      "surfaces": ["surface/inverse"],
+      "texts": ["text/inverse", "text/inverse-secondary"]
+    },
+    {
+      "name": "Filled actions",
+      "use": "Primary and danger buttons in every state.",
+      "surfaces": ["action/primary", "action/primary-hover", "action/primary-pressed"],
+      "texts": ["text/on-action"]
+    },
+    {
+      "name": "Filled danger actions",
+      "use": "Danger buttons in every state.",
+      "surfaces": ["action/danger", "action/danger-hover", "action/danger-pressed"],
+      "texts": ["text/on-danger"]
+    },
+    {
+      "name": "Feedback",
+      "use": "Alerts, banners and badges.",
+      "surfaces": ["feedback/success/surface", "feedback/warning/surface", "feedback/danger/surface", "feedback/info/surface"],
+      "texts": ["text/primary", "feedback/{status}/text"]
+    },
+    {
+      "name": "Solid feedback",
+      "use": "Strong badges and status dots with text.",
+      "surfaces": ["feedback/success/solid", "feedback/warning/solid", "feedback/danger/solid", "feedback/info/solid"],
+      "texts": ["feedback/{status}/on-solid"]
+    },
+    {
+      "name": "Media",
+      "use": "Text on images and video – always on the overlay/media scrim. Checked on a white image, the worst case.",
+      "surfaces": ["overlay/media"],
+      "texts": ["text/on-media"]
+    }
+  ],
+  "min": 4.5
+}

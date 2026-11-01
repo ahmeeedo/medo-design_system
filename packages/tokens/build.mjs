@@ -7,6 +7,9 @@
  *         dist/tailwind/theme.css    Tailwind v4 theme that maps to the CSS variables
  *         dist/js/tokens.js (+ .d.ts) Resolved values for JavaScript (charts, canvas …)
  *         dist/docs/*.json           Flat token lists for the Storybook documentation
+ *         dist/docs/contrast.json    Allowed text / background pairs with their contrast (from contrast-pairs.json)
+ *
+ * The build fails when an allowed pair is below the minimum contrast in Light or Dark.
  */
 import StyleDictionary from 'style-dictionary';
 import { mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
@@ -424,4 +427,54 @@ export declare const darkColors: Record<string, string>;
 );
 rmSync(tmp, { recursive: true, force: true });
 
+/* ---------- Contrast: allowed text / background pairs ---------- */
+// WCAG 2.2 relative luminance and contrast ratio. Colors with alpha (the media scrim) are laid over white – the worst case.
+const rgba = (value) => {
+  if (value.startsWith('#')) return [1, 3, 5].map((i) => parseInt(value.slice(i, i + 2), 16)).concat(1);
+  const [r, g, b, a = 1] = value.match(/[\d.]+/g).map(Number);
+  return [r, g, b, a];
+};
+const overWhite = ([r, g, b, a]) => [r, g, b].map((c) => c * a + 255 * (1 - a));
+const luminance = (rgb) => {
+  const [r, g, b] = rgb.map((c) => (c /= 255) <= 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4);
+  return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+};
+const ratio = (a, b) => {
+  const [l1, l2] = [luminance(overWhite(rgba(a))), luminance(overWhite(rgba(b)))].sort((x, y) => y - x);
+  return Math.round(((l1 + 0.05) / (l2 + 0.05)) * 100) / 100;
+};
+const pairsSource = JSON.parse(readFileSync('contrast-pairs.json', 'utf8'));
+const themes = Object.fromEntries(
+  ['light', 'dark'].map((theme) => [
+    theme,
+    Object.fromEntries(JSON.parse(readFileSync(`dist/docs/tokens.${theme}.json`, 'utf8')).map((t) => [t.name, t.value])),
+  ]),
+);
+const failures = [];
+const groups = pairsSource.groups.map(({ name, use, surfaces, texts }) => ({
+  name,
+  use,
+  pairs: surfaces.flatMap((surface) => {
+    const status = surface.match(/^feedback\/(\w+)\//)?.[1];
+    return texts.map((t) => {
+      const text = t.replace('{status}', status);
+      const contrast = Object.fromEntries(
+        Object.entries(themes).map(([theme, values]) => {
+          if (!values[surface] || !values[text]) throw new Error(`contrast-pairs.json: unknown token ${values[surface] ? text : surface}`);
+          const value = ratio(values[text], values[surface]);
+          if (value < pairsSource.min) failures.push(`${text} on ${surface} (${theme}): ${value} : 1`);
+          return [theme, value];
+        }),
+      );
+      return { surface, text, contrast };
+    });
+  }),
+}));
+writeFileSync('dist/docs/contrast.json', JSON.stringify({ min: pairsSource.min, groups }, null, 2) + '\n');
+if (failures.length) {
+  console.error(`✗ Contrast below ${pairsSource.min} : 1 for allowed pairs:\n  ${failures.join('\n  ')}`);
+  process.exit(1);
+}
+
 console.log('✓ Tokens built: dist/css, dist/tailwind, dist/js, dist/docs');
+console.log(`✓ Contrast: ${groups.reduce((n, g) => n + g.pairs.length, 0)} pairs ≥ ${pairsSource.min} : 1 in Light and Dark`);

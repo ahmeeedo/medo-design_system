@@ -215,23 +215,29 @@ Marketing components (carousel, video player, hero sections) are not part of the
 
 ## Accessibility
 
-- Target: WCAG 2.2 AA in Light and Dark. Contrast values are documented in the token descriptions.
+- Target: WCAG 2.2 AA in Light and Dark. Which text goes on which background is fixed in `packages/tokens/contrast-pairs.json`; the token build fails when a pair drops below 4.5 : 1.
 - Behaviour, keyboard and screen reader support come from React Aria Components.
 - Focus is always visible (`:focus-visible`), with a fallback for the high contrast mode of the operating system (`forced-colors`).
 - Motion uses interruptible spring transitions (`--medo-motion-spring-*`). With `prefers-reduced-motion` only cross-fades remain.
-- Every story is checked with axe, and every interactive component has an interaction test (keyboard, focus, pointer). Both run in CI.
+- Every story is checked with axe (Chromium, Light and Dark), and every interactive component has an interaction test (keyboard, focus, pointer) that runs in Chromium, WebKit and Firefox. All run in CI.
+- Not yet tested systematically: screen readers and real mobile devices. Test status: [Foundations / Accessibility](https://design.med-o.de/?path=/docs/foundations-accessibility--docs).
 
 ## Support and versioning
 
 Details and examples: [Guides / Versioning & support](https://design.med-o.de/?path=/docs/guides-versioning-support--docs).
 
-**Browsers.** The last two major versions of Chrome, Edge, Firefox, Safari (macOS and iOS) and Samsung Internet. Everything works from these versions on:
+**Browsers.** Three separate promises:
 
-| Chrome, Edge | Safari (macOS, iOS) | Firefox | Samsung Internet |
-| --- | --- | --- | --- |
-| 117 | 17.5 | 129 | 24 |
+- **Supported:** the last two major versions of Chrome, Edge, Firefox, Safari (macOS and iOS) and Samsung Internet. A bug there is fixed.
+- **Minimum:** everything works, including every enhancement, from these versions on:
 
-Older browsers still work, without a few enhancements: entry animations (`@starting-style`), text areas that grow with their text (`field-sizing`) and finding text in closed accordions (`hidden="until-found"`).
+  | Chrome, Edge | Safari (macOS, iOS) | Firefox | Samsung Internet |
+  | --- | --- | --- | --- |
+  | 117 | 17.5 | 129 | 24 |
+
+- **Tested:** every story automatically in Chromium (Light and Dark), WebKit and Firefox, in CI. Not tested: real mobile devices.
+
+Older versions are not supported, but the components still work there, without a few enhancements: entry animations (`@starting-style`), text areas that grow with their text (`field-sizing`) and finding text in closed accordions (`hidden="until-found"`).
 
 **Versions.** While the packages are 0.x, a patch only fixes bugs and a minor may contain breaking changes. Every breaking change is marked **Breaking:** in the changelog, with how to update. From 1.0 on strict [semantic versioning](https://semver.org) applies: breaking changes only in a major version. Fixes go into the latest version only.
 
@@ -255,6 +261,7 @@ npm run storybook   # http://localhost:6006
 | `npm run storybook` | Builds the tokens and starts Storybook with hot reload |
 | `npm test` | Runs every story in a headless browser, in Light and Dark: rendering, axe (WCAG 2.2 AA) and the interaction tests. Once before: `npx playwright install chromium` |
 | `npm run test:webkit` | The same tests in WebKit (Safari's engine), Light, without screenshots. Once before: `npx playwright install webkit` |
+| `npm run test:firefox` | The same tests in Firefox, Light, without screenshots. Once before: `npx playwright install firefox` |
 | `npm run build:packages` | Builds `@med-o/design-tokens` and `@med-o/ui` for npm |
 | `npm run build-storybook` | Builds Storybook as a static site (`apps/storybook/storybook-static`) |
 | `npm run changeset` | Describes a change for the next release (see [Contributing](#contributing)) |
@@ -277,7 +284,7 @@ Issues and pull requests are welcome. Please follow these rules:
 - **State contract.** CSS reads states only from data attributes (`data-hovered`, `data-pressed`, `data-focus-visible`, `data-selected`, `data-invalid`, `data-disabled` …), so other frameworks can reuse it.
 - **Accessibility.** WCAG 2.2 AA, visible `:focus-visible`, `forced-colors` fallback, `prefers-reduced-motion`.
 - **Stories.** Every component has stories for its variants, sizes and states, Light and Dark, and an interaction test for interactive behaviour. The playground renders from its args, and every control must change what you see.
-- **Tests pass.** Run `npm test` before you open a pull request. CI runs the same tests, plus the visual check and the tests in WebKit.
+- **Tests pass.** Run `npm test` before you open a pull request. CI runs the same tests, plus the visual check and the tests in WebKit and Firefox.
 - **Visual check.** CI compares a screenshot of every documented story, Light and Dark, with its reference in `apps/storybook/__screenshots__/`. On a mismatch the workflow run has the actual and diff images as artifact `screenshot-diffs`. If the change is intended, run the workflow **Update screenshots** on your branch (Actions → Update screenshots → Run workflow); it commits the new references. References are made in CI only, because fonts render differently on every OS. Stories that cannot be stable (live timers) set `tags: ['!visual']`.
 - **Changesets.** If your change affects a published package, run `npm run changeset` and commit the generated file. It sets the version bump (patch, minor, major) and the changelog entry. A breaking change starts its summary with `**Breaking:**` and says how to update.
 - **Deprecate before you remove.** Mark the old API `@deprecated` with its replacement, keep it working for the time given in [Support and versioning](#support-and-versioning), and remove it in a later release.

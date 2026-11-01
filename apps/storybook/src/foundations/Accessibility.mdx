@@ -8,10 +8,10 @@ import { DocPage, DocHeader, DocSection, DocFooter, SpecTable, Notes, Tok, Sourc
 <DocHeader
   kind="Foundations"
   title="Accessibility"
-  meta="WCAG 2.2 AA"
-  subtitle="What the system guarantees – and what stays your job."
-  description={<p>Every component meets WCAG 2.2 AA in Light and Dark. Behaviour, keyboard and screen-reader support come from React Aria Components; the look is tested with axe in every story.</p>}
-  nav={['Built in', 'Your job', 'Settings we follow', 'How it is tested']}
+  meta="Target: WCAG 2.2 AA"
+  subtitle="What the components do, how it is checked – and what stays your job."
+  description={<p>The target is WCAG 2.2 AA in Light and Dark. Behaviour, keyboard and screen-reader support come from React Aria Components; every story is checked automatically. What is checked – and what is not yet – is listed under “Test status”.</p>}
+  nav={['Built in', 'Your job', 'Settings we follow', 'Test status']}
 />
 
 <DocSection n={1} title="Built in" meta="Components">
@@ -60,17 +60,27 @@ import { DocPage, DocHeader, DocSection, DocFooter, SpecTable, Notes, Tok, Sourc
 
 </DocSection>
 
-<DocSection n={4} title="How it is tested" meta="CI">
+<DocSection n={4} title="Test status" meta="Version 0.4 · checked in CI" description="Automatic checks run for every pull request and every change on main. A failure stops the change.">
 
 <SpecTable
-  head={['Check', 'Where']}
+  head={['Check', 'Scope']}
   rows={[
-    ['axe (WCAG 2.2 A + AA and best practices)', 'Every story, Light and Dark, in every pull request.'],
-    ['Interaction tests', 'Keyboard, focus and pointer for every interactive component.'],
-    ['Visual check', 'A screenshot per story and theme catches lost focus rings or contrast.'],
-    ['Manual (recommended)', 'A new component with VoiceOver and NVDA before it ships – automatic checks cannot find every problem.'],
+    ['axe', 'WCAG 2.2 A + AA and axe best practices. Every story, Light and Dark, in Chromium.'],
+    ['Interaction tests', 'Keyboard, focus and pointer for every interactive component – in Chromium, WebKit (Safari) and Firefox.'],
+    ['Text contrast', 'Every allowed text / background pair, Light and Dark, ≥ 4.5 : 1 – the token build fails otherwise. See Foundations / Colors → Text on backgrounds.'],
+    ['Visual check', 'A screenshot per story and theme in Chromium catches lost focus rings or contrast changes.'],
+    ['Screen readers', 'Not yet tested systematically. React Aria Components, which the components build on, are tested with screen readers by Adobe; our own compositions and patterns are not.'],
   ]}
 />
+
+<Notes title="Known limits">
+  <ul>
+    <li>Automatic checks find only part of all accessibility problems. They do not judge whether texts, labels and the order of content make sense.</li>
+    <li>No manual audit by people with disabilities yet.</li>
+    <li>Mobile screen readers (VoiceOver iOS, TalkBack) are not tested.</li>
+  </ul>
+  <p>Found a problem? Please report it as a GitHub issue – it is treated as a bug.</p>
+</Notes>
 
 </DocSection>
 

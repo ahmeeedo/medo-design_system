@@ -14,19 +14,18 @@ import { DocPage, DocHeader, DocSection, DocFooter, SpecTable, Notes, Tok, Sourc
   nav={['Browsers', 'Versions', 'Breaking changes', 'Deprecations', 'Requirements']}
 />
 
-<DocSection n={1} title="Browsers" meta="Last two major versions" description="The last two major versions of Chrome, Edge, Firefox, Safari (macOS and iOS) and Samsung Internet. Everything works from these versions on.">
+<DocSection n={1} title="Browsers" meta="Supported · minimum · tested" description="Three different promises – what we support, what technically works, and what we test.">
 
 <SpecTable
-  head={['Browser', 'From version']}
+  head={['Promise', 'Chrome, Edge · Safari (macOS, iOS) · Firefox · Samsung Internet']}
   rows={[
-    ['Chrome, Edge', '117'],
-    ['Safari (macOS, iOS)', '17.5'],
-    ['Firefox', '129'],
-    ['Samsung Internet', '24'],
+    ['Supported', 'The last two major versions of each. A bug there is fixed.'],
+    ['Minimum', 'Chrome and Edge 117 · Safari 17.5 · Firefox 129 · Samsung Internet 24. From these versions on everything works, including every enhancement.'],
+    ['Tested', 'Every story automatically in Chromium (Light and Dark), WebKit and Firefox – in CI, for every change. Not tested: real mobile devices.'],
   ]}
 />
 
-Older browsers still work, without a few enhancements: entry animations (<Tok>@starting-style</Tok>), text areas that grow with their text (<Tok>field-sizing</Tok>) and finding text in closed accordions (<Tok>hidden="until-found"</Tok>). Every story is tested in CI in Chromium (Light and Dark) and in WebKit, the engine of Safari.
+Older versions are not supported, but the components still work there, without a few enhancements: entry animations (<Tok>@starting-style</Tok>), text areas that grow with their text (<Tok>field-sizing</Tok>) and finding text in closed accordions (<Tok>hidden="until-found"</Tok>).
 
 </DocSection>
 

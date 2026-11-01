@@ -6,6 +6,7 @@ import { useState, type ReactNode } from 'react';
 import { Button, StaticTable } from '@med-o/ui';
 import light from '@med-o/design-tokens/docs/tokens.light.json';
 import dark from '@med-o/design-tokens/docs/tokens.dark.json';
+import contrast from '@med-o/design-tokens/docs/contrast.json';
 import tablet from '@med-o/design-tokens/src/layout/tablet.json';
 import desktop from '@med-o/design-tokens/src/layout/desktop.json';
 
@@ -102,6 +103,84 @@ export function SemanticColors({ groups }: { groups: string[] }) {
   );
 }
 
+type ContrastPair = { surface: string; text: string; contrast: Record<'light' | 'dark', number> };
+type ContrastGroup = { name: string; use: string; pairs: ContrastPair[] };
+
+const cssVarOf = (name: string) => `--medo-color-${name.replaceAll('/', '-')}`;
+const uniq = (list: string[]) => [...new Set(list)];
+
+/** A sample of text on a background, rendered in one theme. */
+function PairSample({ surface, text, theme }: { surface: string; text: string; theme: 'light' | 'dark' }) {
+  return (
+    <span
+      data-theme={theme}
+      className="medo-text-label-md"
+      style={{
+        display: 'inline-flex',
+        alignItems: 'center',
+        paddingInline: 'var(--medo-space-2)',
+        minBlockSize: 'var(--medo-space-8)',
+        borderRadius: 'var(--medo-radius-sm)',
+        boxShadow: 'inset 0 0 0 1px rgba(127,127,127,.35)',
+        background: `var(${cssVarOf(surface)})`,
+        color: `var(${cssVarOf(text)})`,
+      }}
+    >
+      Aa {theme === 'light' ? 'Light' : 'Dark'}
+    </span>
+  );
+}
+
+/**
+ * Which text goes on which background – from contrast-pairs.json in @med-o/design-tokens. The token build checks every
+ * pair in Light and Dark and fails below the minimum, so this table can never promise more than the tokens deliver.
+ */
+export function ContrastPairs() {
+  const groups = contrast.groups as ContrastGroup[];
+  const lowest = (g: ContrastGroup, theme: 'light' | 'dark') => Math.min(...g.pairs.map((p) => p.contrast[theme]));
+  return (
+    <Table>
+      <thead>
+        <tr>
+          <th>Background</th>
+          <th>Text</th>
+          <th>Example</th>
+          <th>Lowest contrast</th>
+        </tr>
+      </thead>
+      <tbody>
+        {groups.map((g) => (
+          <tr key={g.name}>
+            <td>
+              <strong>{g.name}</strong>
+              <div className="doc-cell-muted">{g.use}</div>
+              <div className="doc-cell-muted">{uniq(g.pairs.map((p) => p.surface)).join(' · ')}</div>
+            </td>
+            <td>
+              {uniq(g.pairs.map((p) => p.text)).map((t) => (
+                <div key={t} style={{ whiteSpace: 'nowrap' }}>
+                  <Code>{t}</Code>
+                </div>
+              ))}
+            </td>
+            <td>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--medo-layout-gap-inline)' }}>
+                <PairSample surface={g.pairs[0].surface} text={g.pairs[0].text} theme="light" />
+                <PairSample surface={g.pairs[0].surface} text={g.pairs[0].text} theme="dark" />
+              </div>
+            </td>
+            <td className="doc-cell-muted" style={{ whiteSpace: 'nowrap' }}>
+              Light {lowest(g, 'light').toFixed(1)} : 1
+              <br />
+              Dark {lowest(g, 'dark').toFixed(1)} : 1
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </Table>
+  );
+}
+
 const PRIMITIVE_GROUPS = ['brand', 'slate', 'red', 'amber', 'green', 'sky', 'violet', 'pink'];
 
 export function Palette() {
@@ -129,6 +208,10 @@ export function Palette() {
 }
 
 /* ---------- Typography ---------- */
+
+/** Counts for the Typography page, from the tokens – never typed by hand. */
+export const fontSizeCount = L.filter((t) => t.path[0] === 'font' && t.path[1] === 'size').length;
+export const fontWeightCount = L.filter((t) => t.path[0] === 'font' && t.path[1] === 'weight').length;
 
 export function TypeScale() {
   const styles = L.filter((t) => t.type === 'typography' && !t.path.includes('avatar'));

@@ -45,8 +45,11 @@
   color: var(--medo-color-text-secondary);
 }
 
-/* The error message replaces the helper text. */
-.medo-field[data-invalid] > .medo-field__footer > .medo-field__description {
+/* The error message replaces the helper text – only when there is a message to show. */
+.medo-field[data-invalid] > .medo-field__footer:has(> .medo-field__error:not(:empty)) > .medo-field__description {
+  display: none;
+}
+.medo-field__error:empty {
   display: none;
 }
 
