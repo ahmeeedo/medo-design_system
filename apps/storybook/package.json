@@ -10,8 +10,8 @@
     "test:webkit": "vitest --run --project storybook-webkit"
   },
   "dependencies": {
-    "@med-o/design-tokens": "0.4.1",
-    "@med-o/ui": "0.4.1",
+    "@med-o/design-tokens": "0.4.2",
+    "@med-o/ui": "0.4.2",
     "react": "^19.3.1",
     "react-aria-components": "^1.22.1",
     "react-dom": "^19.3.1"
