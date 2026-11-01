@@ -1,5 +1,13 @@
 # @med-o/ui
 
+## 0.4.2
+
+### Patch Changes
+
+- 49f8981: Package READMEs on npm: spacing rules and layout components, supported browsers, versions and where to find the changelog.
+- Updated dependencies [49f8981]
+  - @med-o/design-tokens@0.4.2
+
 ## 0.4.1
 
 ### Patch Changes
