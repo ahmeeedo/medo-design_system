@@ -32,6 +32,7 @@ export const de: Messages = {
     search: 'Suche',
     showResults: 'Ergebnisse anzeigen',
     loading: 'Wird geladen',
+    readOnly: 'schreibgeschützt',
     clear: 'Eingabe löschen',
     clearAll: 'Alle entfernen',
     noResults: 'Keine Ergebnisse',

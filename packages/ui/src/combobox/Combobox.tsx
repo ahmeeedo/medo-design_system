@@ -571,7 +571,7 @@ function ComboboxSheet<T extends object>({
                 )}
                 <span className="medo-select__value" id={`${id}-value`} data-placeholder={keys.length === 0 || undefined}>
                   {keys.length === 0 ? placeholder : multiple ? <DisplayTags labels={text} size={size} /> : text[0]}
-                  {isReadOnly && <span className="medo-visually-hidden">, read only</span>}
+                  {isReadOnly && <span className="medo-visually-hidden">, {m.common.readOnly}</span>}
                 </span>
                 {!isReadOnly && (
                   <span className="medo-select__chevron" aria-hidden="true">
@@ -655,7 +655,7 @@ function ComboboxSheet<T extends object>({
                     )}
                   </ListBox>
                 </OptionHighlightContext.Provider>
-                {isLoading && list && [...list].length > 0 && <ListBoxMessage>Loading…</ListBoxMessage>}
+                {isLoading && list && [...list].length > 0 && <ListBoxMessage>{m.common.loading}…</ListBoxMessage>}
               </Autocomplete>
             </BottomSheet>
           </div>

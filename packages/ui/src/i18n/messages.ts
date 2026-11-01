@@ -13,6 +13,8 @@ export interface Messages {
     search: string;
     showResults: string;
     loading: string;
+    /** Screen readers only, after the value of a read-only field: “Germany, read only”. */
+    readOnly: string;
     clear: string;
     clearAll: string;
     noResults: string;

@@ -14,6 +14,8 @@ import { useMessages } from '../i18n/I18n';
 /*
  * React Aria's Toast is still marked UNSTABLE. Only this file imports it, so an API change
  * in React Aria stays here – apps use `ToastRegion` and `toast()`.
+ * Before accepting a React Aria update: read its release notes for Toast, run the Toast interaction tests.
+ * The weekly CI run (consumer test) builds with the newest React Aria and fails if these exports change.
  */
 
 export interface ToastAction {

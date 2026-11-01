@@ -13,7 +13,7 @@ npm install @med-o/design-tokens
 ## Use
 
 ```css
-@import "@med-o/design-tokens/css";               /* variables --medo-*, Light + Dark */
+@import "@med-o/design-tokens/css/tokens.css";    /* variables --medo-*, Light + Dark */
 @import "@med-o/design-tokens/css/typography.css"; /* optional: .medo-text-* classes */
 
 .card {
@@ -28,8 +28,8 @@ Tailwind CSS v4:
 
 ```css
 @import "tailwindcss";
-@import "@med-o/design-tokens/css";
-@import "@med-o/design-tokens/tailwind";
+@import "@med-o/design-tokens/css/tokens.css";
+@import "@med-o/design-tokens/tailwind/theme.css";
 ```
 
 JavaScript (resolved values):
@@ -42,9 +42,9 @@ Light and Dark follow the operating system. Force a theme with `data-theme="ligh
 
 | Export | Contents |
 | --- | --- |
-| `@med-o/design-tokens/css` | CSS variables, Light + Dark, responsive layout tokens |
+| `@med-o/design-tokens/css/tokens.css` | CSS variables, Light + Dark, responsive layout tokens (short form: `/css`) |
 | `@med-o/design-tokens/css/typography.css` | Text style classes `.medo-text-*` |
-| `@med-o/design-tokens/tailwind` | Tailwind v4 theme on top of the variables |
+| `@med-o/design-tokens/tailwind/theme.css` | Tailwind v4 theme on top of the variables (short form: `/tailwind`) |
 | `@med-o/design-tokens/js` | Resolved values and TypeScript types |
 | `@med-o/design-tokens/src/*` | Source tokens in the DTCG format |
 

@@ -17,7 +17,7 @@ Requires React 19.
 Import the styles once, for example in your app entry:
 
 ```tsx
-import '@med-o/design-tokens/css';
+import '@med-o/design-tokens/css/tokens.css';
 import '@med-o/ui/styles.css';
 ```
 

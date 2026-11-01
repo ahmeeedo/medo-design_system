@@ -8,8 +8,8 @@ import { Button } from '@med-o/ui';
  *
  * ```css
  * @import "tailwindcss";
- * @import "@med-o/design-tokens/css";
- * @import "@med-o/design-tokens/tailwind";
+ * @import "@med-o/design-tokens/css/tokens.css";
+ * @import "@med-o/design-tokens/tailwind/theme.css";
  * ```
  */
 const meta = {

@@ -1,7 +1,7 @@
 import { Meta } from '@storybook/addon-docs/blocks';
 import { DocPage, DocHeader, DocSection, DocFooter, SpecTable, Notes, Tok, SourceLink } from './docs-blocks/DocBlocks';
 import ui from '@med-o/ui/package.json';
-import { Button, Stack, TextField } from '@med-o/ui';
+import { Button, Stack, Tab, TabList, TabPanel, Tabs, TextField } from '@med-o/ui';
 
 <Meta title="Introduction" />
 
@@ -39,21 +39,28 @@ npm install @med-o/design-tokens @med-o/ui   # tokens + React components
 ```
 
 ```tsx
-import '@med-o/design-tokens/css';
+import '@med-o/design-tokens/css/tokens.css';
 import '@med-o/ui/styles.css';
 import { Button } from '@med-o/ui';
 ```
 
 </DocSection>
 
-<DocSection n={3} title="Your first page" meta="React · complete" description="Everything in one place: packages, styles, fonts, language and a first form. Copy it into a new React 19 app (Vite or Next.js).">
+<DocSection n={3} title="Your first page" meta="Vite · Next.js" description="Everything in one place: packages, styles, fonts, language and a first form. Pick your setup – both are tested in CI with the published packages.">
 
 ```bash
 npm install @med-o/design-tokens @med-o/ui react-aria-components @fontsource/dm-sans @fontsource/dm-mono
 ```
 
+<Tabs>
+  <TabList aria-label="Setup">
+    <Tab id="vite">Vite</Tab>
+    <Tab id="next">Next.js (App Router)</Tab>
+  </TabList>
+  <TabPanel id="vite">
+
 ```tsx
-// main.tsx – once, at the root of the app
+// src/main.tsx – once, at the root of the app
 import { createRoot } from 'react-dom/client';
 import { I18nProvider } from 'react-aria-components';
 import '@fontsource/dm-sans/400.css';
@@ -61,7 +68,7 @@ import '@fontsource/dm-sans/500.css';
 import '@fontsource/dm-sans/600.css';
 import '@fontsource/dm-sans/700.css';
 import '@fontsource/dm-mono/400.css';
-import '@med-o/design-tokens/css';
+import '@med-o/design-tokens/css/tokens.css';
 import '@med-o/design-tokens/css/typography.css';
 import '@med-o/ui/styles.css';
 import { App } from './App';
@@ -75,7 +82,7 @@ createRoot(document.getElementById('root')!).render(
 ```
 
 ```tsx
-// App.tsx
+// src/App.tsx
 import { Button, Container, Stack, TextField } from '@med-o/ui';
 
 export function App() {
@@ -96,6 +103,71 @@ export function App() {
 }
 ```
 
+  </TabPanel>
+  <TabPanel id="next">
+
+```tsx
+// app/providers.tsx – React context needs a client component
+'use client';
+import { I18nProvider } from 'react-aria-components';
+
+export function Providers({ children }: { children: React.ReactNode }) {
+  // The locale formats dates and numbers and picks the built-in texts. Same language as <html lang>.
+  return <I18nProvider locale="en-US">{children}</I18nProvider>;
+}
+```
+
+```tsx
+// app/layout.tsx – global styles and fonts are imported once, here
+import '@fontsource/dm-sans/400.css';
+import '@fontsource/dm-sans/500.css';
+import '@fontsource/dm-sans/600.css';
+import '@fontsource/dm-sans/700.css';
+import '@fontsource/dm-mono/400.css';
+import '@med-o/design-tokens/css/tokens.css';
+import '@med-o/design-tokens/css/typography.css';
+import '@med-o/ui/styles.css';
+import { Providers } from './providers';
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="en">
+      <body>
+        <Providers>{children}</Providers>
+      </body>
+    </html>
+  );
+}
+```
+
+```tsx
+// app/page.tsx – event handlers such as onSubmit need a client component
+'use client';
+import { Button, Container, Stack, TextField } from '@med-o/ui';
+
+export default function Page() {
+  return (
+    <Container as="main" size="prose">
+      <Stack as="form" gap="fields" onSubmit={(e) => e.preventDefault()}>
+        <h1 className="medo-text-heading-lg">Sign up</h1>
+        <TextField
+          label="Email"
+          type="email"
+          isRequired
+          errorMessage="Enter a valid email address, e.g. name@example.com."
+        />
+        <Button type="submit">Create account</Button>
+      </Stack>
+    </Container>
+  );
+}
+```
+
+Components without event handlers can be used in server components as well – the package is marked `"use client"`.
+
+  </TabPanel>
+</Tabs>
+
 The result – live, with the theme of the toolbar:
 
 <div className="doc-stage">
@@ -112,7 +184,7 @@ The result – live, with the theme of the toolbar:
 
 ```css
 /* main.css */
-@import "@med-o/design-tokens/css";               /* variables, light + dark */
+@import "@med-o/design-tokens/css/tokens.css";    /* variables, light + dark */
 @import "@med-o/design-tokens/css/typography.css"; /* optional: .medo-text-* classes */
 
 .card {

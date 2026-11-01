@@ -86,6 +86,7 @@ A renamed token keeps its old name as an alias for the same time, so no project 
   <ul>
     <li>React 19 and React DOM 19 (peer dependencies).</li>
     <li>ESM only. The components are marked <code>"use client"</code> and work in the Next.js App Router.</li>
+    <li>React Aria Components 1.22 or newer (installed with <code>@med-o/ui</code>). <code>Toast</code> builds on React Aria's toast, which React Aria still marks as unstable. Only one file uses it, every React Aria update is tested before we release it, and a weekly CI run builds a Vite and a Next.js app with the newest React Aria – so a change there is found before it reaches you.</li>
     <li>Accessibility target WCAG 2.2 AA in Light and Dark. Please report a violation as a GitHub issue – it is treated as a bug.</li>
   </ul>
 </Notes>

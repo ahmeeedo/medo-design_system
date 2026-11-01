@@ -5,10 +5,14 @@
 # Optional secret RELEASE_TOKEN (fine-grained token: this repository, Contents + Pull requests read/write):
 # GitHub does not start workflows for pull requests opened with its built-in token, so the checks of the
 # “Version Packages” pull request wait for an approval. Opened with RELEASE_TOKEN, they run on their own.
+#
+# Starts only after “Storybook tests” passed for the same commit on main – nothing is published from a red build.
 name: Release
 
 on:
-  push:
+  workflow_run:
+    workflows: [Storybook tests]
+    types: [completed]
     branches: [main]
 
 concurrency:
@@ -17,6 +21,8 @@ concurrency:
 
 jobs:
   release:
+    # Only a push to main whose tests are all green (pull requests run the same workflow and are skipped here).
+    if: github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'push'
     runs-on: ubuntu-24.04
     timeout-minutes: 15
     permissions:
@@ -26,6 +32,8 @@ jobs:
     steps:
       - uses: actions/checkout@v5
         with:
+          # Exactly the commit that was tested – not a newer one that landed in the meantime.
+          ref: ${{ github.event.workflow_run.head_sha }}
           # The action pushes through the GitHub API with its own github-token; git needs no stored credentials.
           persist-credentials: false
 

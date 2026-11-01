@@ -15,6 +15,7 @@
     "build:tokens": "npm run build -w @med-o/design-tokens",
     "build:packages": "npm run build -w @med-o/design-tokens -w @med-o/ui",
     "size": "npm run size -w @med-o/ui",
+    "test:consumers": "node scripts/test-consumers.mjs",
     "storybook": "npm run build:tokens && npm run dev -w @med-o/storybook",
     "build-storybook": "npm run build:tokens && npm run build -w @med-o/storybook",
     "build": "npm run build-storybook",

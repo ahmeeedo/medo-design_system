@@ -2,13 +2,17 @@
 # play functions test keyboard, focus and pointer. Same command as locally: npm test.
 # Then the npm packages are built once, so a release never fails on a type error.
 # Two more jobs run every story in WebKit (Safari's engine) and Firefox at the same time: layout, focus and events
-# that only these engines handle differently.
+# that only these engines handle differently. A fourth job builds a Vite and a Next.js app with the packed packages.
 name: Storybook tests
 
 on:
   pull_request:
   push:
     branches: [main]
+  # Weekly: the consumer job installs the newest allowed versions of React, React Aria and Next.js, so a change there
+  # (e.g. React Aria's still unstable toast API) shows up without waiting for our next commit.
+  schedule:
+    - cron: '17 4 * * 1'
 
 # A new push to the same branch cancels the run that is still going.
 concurrency:
@@ -81,3 +85,20 @@ jobs:
 
       # Light only, without screenshots (references come from Chromium).
       - run: npm run test:${{ matrix.browser }}
+
+  consumers:
+    # The packed packages in a fresh Vite app and a fresh Next.js app, with the code of “Your first page” – what
+    # people install from npm, not the monorepo sources.
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: npm
+
+      - run: npm ci
+
+      - run: npm run test:consumers

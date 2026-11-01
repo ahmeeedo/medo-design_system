@@ -1,5 +1,5 @@
 /*
- * All component styles of @med-o/ui. Needs the tokens: @import "@med-o/design-tokens/css";
+ * All component styles of @med-o/ui. Needs the tokens: @import "@med-o/design-tokens/css/tokens.css";
  *
  * Cascade layers: every component style sits in the layer `components`. CSS without a layer (your app) always
  * wins over it, whatever the specificity – no !important needed. With Tailwind v4 the utilities win as well.

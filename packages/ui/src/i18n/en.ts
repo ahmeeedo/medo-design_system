@@ -25,6 +25,7 @@ export const en: Messages = {
     search: 'Search',
     showResults: 'Show results',
     loading: 'Loading',
+    readOnly: 'read only',
     clear: 'Clear',
     clearAll: 'Clear all',
     noResults: 'No results',

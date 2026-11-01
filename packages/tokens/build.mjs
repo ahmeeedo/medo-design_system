@@ -209,8 +209,8 @@ StyleDictionary.registerFormat({
  *
  * Usage (in your main CSS file):
  *   @import "tailwindcss";
- *   @import "@med-o/design-tokens/css";
- *   @import "@med-o/design-tokens/tailwind";
+ *   @import "@med-o/design-tokens/css/tokens.css";
+ *   @import "@med-o/design-tokens/tailwind/theme.css";
  *
  * "inline" makes every utility point to the --${PREFIX}-* variables, so light and dark
  * switch automatically. You rarely need the dark: variant.
@@ -334,7 +334,7 @@ const themed = read('light')
 const darkBlock = `${read('dark')}\n${themed}`;
 const lightBlock = `${read('light-colors')}\n${themed}`;
 // Higher contrast (prefers-contrast: more): steps of the same palette, no new colours.
-// text/secondary ≥ 9.4 : 1 on every surface (AAA), border/default = border/strong (≥ 4.3 : 1, above 3 : 1 for UI).
+// text/secondary and border/default get stronger on content surfaces; the contrast check below covers this mode too.
 const v = (name) => `var(--${PREFIX}-color-${name})`;
 const contrast = {
   any: { 'border-default': v('border-strong') },
@@ -444,12 +444,24 @@ const ratio = (a, b) => {
   return Math.round(((l1 + 0.05) / (l2 + 0.05)) * 100) / 100;
 };
 const pairsSource = JSON.parse(readFileSync('contrast-pairs.json', 'utf8'));
-const themes = Object.fromEntries(
+const base = Object.fromEntries(
   ['light', 'dark'].map((theme) => [
     theme,
     Object.fromEntries(JSON.parse(readFileSync(`dist/docs/tokens.${theme}.json`, 'utf8')).map((t) => [t.name, t.value])),
   ]),
 );
+// Higher contrast (prefers-contrast: more): the same overrides as the CSS above, so the check covers that mode too.
+// "text-secondary" → "text/secondary"; a reference resolves to a semantic token of the theme or a palette step.
+const slash = (name) => name.replace('-', '/');
+const withMore = (theme) => {
+  const values = { ...base[theme] };
+  for (const [key, value] of Object.entries({ ...contrast.any, ...contrast[theme] })) {
+    const ref = slash(value.match(new RegExp(`--${PREFIX}-color-([\\w-]+)`))[1]);
+    values[slash(key)] = base[theme][ref] ?? base.light[ref];
+  }
+  return values;
+};
+const themes = { ...base, 'light-more': withMore('light'), 'dark-more': withMore('dark') };
 const failures = [];
 const groups = pairsSource.groups.map(({ name, use, surfaces, texts }) => ({
   name,
@@ -470,11 +482,21 @@ const groups = pairsSource.groups.map(({ name, use, surfaces, texts }) => ({
     });
   }),
 }));
-writeFileSync('dist/docs/contrast.json', JSON.stringify({ min: pairsSource.min, groups }, null, 2) + '\n');
+// The higher-contrast promise on content surfaces, for the Theming page – computed, never typed by hand.
+const contentPairs = groups[0].pairs;
+const lowestOn = (theme, text) => Math.min(...contentPairs.filter((p) => p.text === text).map((p) => p.contrast[theme]));
+const lowestBorder = (theme) => Math.min(...groups[0].pairs.map((p) => p.surface).map((surface) => ratio(themes[theme]['border/default'], themes[theme][surface])));
+const higherContrast = Object.fromEntries(
+  ['light', 'dark'].map((theme) => [
+    theme,
+    { textSecondary: lowestOn(`${theme}-more`, 'text/secondary'), borderDefault: lowestBorder(`${theme}-more`) },
+  ]),
+);
+writeFileSync('dist/docs/contrast.json', JSON.stringify({ min: pairsSource.min, higherContrast, groups }, null, 2) + '\n');
 if (failures.length) {
   console.error(`✗ Contrast below ${pairsSource.min} : 1 for allowed pairs:\n  ${failures.join('\n  ')}`);
   process.exit(1);
 }
 
 console.log('✓ Tokens built: dist/css, dist/tailwind, dist/js, dist/docs');
-console.log(`✓ Contrast: ${groups.reduce((n, g) => n + g.pairs.length, 0)} pairs ≥ ${pairsSource.min} : 1 in Light and Dark`);
+console.log(`✓ Contrast: ${groups.reduce((n, g) => n + g.pairs.length, 0)} pairs ≥ ${pairsSource.min} : 1 in Light and Dark, normal and higher contrast`);

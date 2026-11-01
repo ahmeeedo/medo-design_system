@@ -35,7 +35,7 @@ npm install @med-o/design-tokens @med-o/ui   # tokens + React components (React 
 ### Design tokens in CSS
 
 ```css
-@import "@med-o/design-tokens/css";               /* variables, Light + Dark */
+@import "@med-o/design-tokens/css/tokens.css";    /* variables, Light + Dark */
 @import "@med-o/design-tokens/css/typography.css"; /* optional: .medo-text-* classes */
 
 .card {
@@ -53,8 +53,8 @@ Use the semantic tokens (`surface`, `text`, `border`, `action`, `feedback` …).
 
 ```css
 @import "tailwindcss";
-@import "@med-o/design-tokens/css";
-@import "@med-o/design-tokens/tailwind";
+@import "@med-o/design-tokens/css/tokens.css";
+@import "@med-o/design-tokens/tailwind/theme.css";
 ```
 
 ```html
@@ -73,7 +73,7 @@ Use the semantic tokens (`surface`, `text`, `border`, `action`, `feedback` …).
 
 ```tsx
 // once, e.g. in your app entry
-import '@med-o/design-tokens/css';
+import '@med-o/design-tokens/css/tokens.css';
 import '@med-o/ui/styles.css';
 ```
 
@@ -129,7 +129,7 @@ The tokens follow the operating system. Force a theme with `data-theme` on `<htm
 <html data-theme="dark">  <!-- "light" | "dark" | no attribute = system -->
 ```
 
-With “Increase contrast” in the system settings (`prefers-contrast: more`) secondary text and borders get stronger: secondary text ≥ 9.4 : 1 on every surface, borders ≥ 4.3 : 1. Nothing to set up.
+With “Increase contrast” in the system settings (`prefers-contrast: more`) secondary text and borders get stronger on content surfaces; the token build checks the allowed text / background pairs in this mode too. Nothing to set up. Values: [Guides / Theming](https://design.med-o.de/?path=/docs/guides-theming--docs).
 
 ### Responsive layout tokens
 
@@ -262,6 +262,7 @@ npm run storybook   # http://localhost:6006
 | `npm test` | Runs every story in a headless browser, in Light and Dark: rendering, axe (WCAG 2.2 AA) and the interaction tests. Once before: `npx playwright install chromium` |
 | `npm run test:webkit` | The same tests in WebKit (Safari's engine), Light, without screenshots. Once before: `npx playwright install webkit` |
 | `npm run test:firefox` | The same tests in Firefox, Light, without screenshots. Once before: `npx playwright install firefox` |
+| `npm run test:consumers` | Packs both packages like npm and builds a fresh Vite app and a fresh Next.js app with the code of “Your first page”. Needs network access. |
 | `npm run build:packages` | Builds `@med-o/design-tokens` and `@med-o/ui` for npm |
 | `npm run build-storybook` | Builds Storybook as a static site (`apps/storybook/storybook-static`) |
 | `npm run changeset` | Describes a change for the next release (see [Contributing](#contributing)) |

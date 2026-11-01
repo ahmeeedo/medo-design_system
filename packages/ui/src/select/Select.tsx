@@ -124,7 +124,7 @@ export function Select<T extends object, M extends SelectMode = 'single'>({
               {({ defaultChildren, isPlaceholder, selectedText }) => (
                 <>
                   {isPlaceholder ? defaultChildren : multiple ? <SelectedTags size={size} /> : selectedText}
-                  {isReadOnly && <span className="medo-visually-hidden">, read only</span>}
+                  {isReadOnly && <span className="medo-visually-hidden">, {m.common.readOnly}</span>}
                 </>
               )}
             </SelectValue>

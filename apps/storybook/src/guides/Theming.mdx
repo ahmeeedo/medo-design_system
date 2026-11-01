@@ -1,5 +1,8 @@
 import { Meta } from '@storybook/addon-docs/blocks';
 import { DocPage, DocHeader, DocSection, DocFooter, SpecTable, Notes, Tok, SourceLink } from '../docs-blocks/DocBlocks';
+import contrast from '@med-o/design-tokens/docs/contrast.json';
+
+export const hc = contrast.higherContrast;
 
 <Meta title="Guides/Theming" />
 
@@ -44,8 +47,8 @@ Shadows and the colour scheme of form controls (`color-scheme`) switch with the 
 <SpecTable
   head={['Token', 'With higher contrast']}
   rows={[
-    [<Tok>color/text/secondary</Tok>, 'neutral 700 (Light) · neutral 300 (Dark): at least 9.4 : 1 on every surface'],
-    [<Tok>color/border/default</Tok>, 'same as border/strong: at least 4.3 : 1'],
+    [<Tok>color/text/secondary</Tok>, `neutral 700 (Light) · neutral 300 (Dark): at least ${hc.light.textSecondary.toFixed(1)} : 1 (Light) and ${hc.dark.textSecondary.toFixed(1)} : 1 (Dark) on content surfaces`],
+    [<Tok>color/border/default</Tok>, `same as border/strong: at least ${hc.light.borderDefault.toFixed(1)} : 1 (Light) and ${hc.dark.borderDefault.toFixed(1)} : 1 (Dark) on content surfaces`],
   ]}
 />
 
