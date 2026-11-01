@@ -1,5 +1,12 @@
 # @med-o/ui
 
+## 0.5.1
+
+### Patch Changes
+
+- 725776a: `EmbedConsent`: in Firefox the loaded iframe now takes the focus after “Load”, like in the other browsers – keyboard users land in the content instead of at the top of the page.
+- @med-o/design-tokens@0.5.1
+
 ## 0.5.0
 
 ### Minor Changes
