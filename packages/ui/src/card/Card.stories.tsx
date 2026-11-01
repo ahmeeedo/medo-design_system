@@ -152,7 +152,7 @@ export const WithActions: Story = {
 export const Interactive: Story = {
   parameters: { docs: { description: { story: 'The whole card opens the item. One link, one tab stop, read once by screen readers.' } } },
   render: () => (
-    <Card href="#" media={media} title="Design tokens 2.0" subtitle="Article · 5 min read">
+    <Card href="/articles/design-tokens-2" media={media} title="Design tokens 2.0" subtitle="Article · 5 min read">
       What changed in colours, spacing and typography.
     </Card>
   ),
@@ -162,7 +162,7 @@ export const Horizontal: Story = {
   parameters: { width: '36rem', docs: { description: { story: 'Media on the left, for lists. Compact density for dense layouts and mobile.' } } },
   render: () => (
     <div style={{ display: 'grid', gap: 'var(--medo-layout-gap-items)' }}>
-      <Card layout="horizontal" href="#" media={media} title="Design tokens 2.0" subtitle="Article · 5 min read">
+      <Card layout="horizontal" href="/articles/design-tokens-2" media={media} title="Design tokens 2.0" subtitle="Article · 5 min read">
         What changed in colours, spacing and typography.
       </Card>
       <Card

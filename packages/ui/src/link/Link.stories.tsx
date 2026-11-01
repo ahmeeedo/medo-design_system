@@ -8,7 +8,7 @@ const meta = {
   title: 'Components/Actions/Link',
   component: Link,
   tags: ['autodocs'],
-  args: { children: 'View all projects', href: '#', variant: 'standalone', size: 'md', arrow: true },
+  args: { children: 'View all projects', href: '/projects', variant: 'standalone', size: 'md', arrow: true },
   argTypes: {
     variant: { control: 'inline-radio', options: ['inline', 'standalone'] },
     /* Size and arrow only apply to standalone links; inline links take the size of the text. */
@@ -80,7 +80,7 @@ export const Inline: Story = {
   parameters: { docs: { description: { story: 'Takes the size of the surrounding text. The link text says where it goes.' } } },
   render: () => (
     <p style={text}>
-      By continuing you accept our <Link href="#">terms of use</Link> and the <Link href="#">privacy policy</Link>. Questions? Read the{' '}
+      By continuing you accept our <Link href="/terms">terms of use</Link> and the <Link href="/privacy">privacy policy</Link>. Questions? Read the{' '}
       <Link href="https://example.com" target="_blank" external>
         help centre
       </Link>
@@ -94,10 +94,10 @@ export const Standalone: Story = {
   render: () => (
     <div style={{ display: 'grid', gap: 'var(--medo-layout-gap-content)', justifyItems: 'start' }}>
       <div style={row}>
-        <Link variant="standalone" href="#" arrow>
+        <Link variant="standalone" href="/projects" arrow>
           View all projects
         </Link>
-        <Link variant="standalone" size="sm" href="#" arrow>
+        <Link variant="standalone" size="sm" href="/projects" arrow>
           View all projects
         </Link>
       </div>

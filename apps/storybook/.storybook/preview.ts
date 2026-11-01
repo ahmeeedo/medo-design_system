@@ -1,7 +1,8 @@
 /// <reference types="vite/client" />
 import type { Preview } from '@storybook/react-vite';
 import { createElement } from 'react';
-import { I18nProvider } from 'react-aria-components';
+import { I18nProvider, RouterProvider } from 'react-aria-components';
+import { action } from 'storybook/actions';
 
 // Fonts are self-hosted (no request to a font service). Weights 400–700.
 import '@fontsource/dm-sans/400.css';
@@ -52,9 +53,11 @@ const preview: Preview = {
       },
     },
   },
-  // Every example in English, whatever the browser language – the I18nProvider an app sets once at the root.
-  // Guides / Languages shows English and German side by side.
-  decorators: [(Story) => createElement(I18nProvider, { locale: 'en-US' }, createElement(Story))],
+  // The providers an app sets once at the root:
+  // – I18nProvider: every example in English, whatever the browser language. Guides / Languages shows English and German.
+  // – RouterProvider: links in examples have real paths (“/terms”) but do not leave the story – a click is logged in the
+  //   Actions panel. External links with target="_blank" open as usual.
+  decorators: [(Story) => createElement(I18nProvider, { locale: 'en-US' }, createElement(RouterProvider, { navigate: action('navigate') }, createElement(Story)))],
 };
 
 export default preview;

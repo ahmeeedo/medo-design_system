@@ -34,12 +34,15 @@
     "react-dom": "^19.0.0"
   },
   "devDependencies": {
-    "tsup": "^8.5.1",
-    "lightningcss": "^1.32.0"
+    "@size-limit/preset-small-lib": "^14.3.0",
+    "lightningcss": "^1.32.0",
+    "size-limit": "^14.3.0",
+    "tsup": "^8.5.1"
   },
   "scripts": {
     "build": "tsup && node build-css.mjs",
-    "prepack": "npm run build"
+    "prepack": "npm run build",
+    "size": "size-limit"
   },
   "repository": {
     "type": "git",
@@ -75,5 +78,35 @@
     "banner": {
       "js": "\"use client\";"
     }
-  }
+  },
+  "size-limit": [
+    {
+      "name": "Button",
+      "path": "dist/index.js",
+      "import": "{ Button }",
+      "gzip": true,
+      "limit": "21 kB"
+    },
+    {
+      "name": "QuickSearch",
+      "path": "dist/index.js",
+      "import": "{ QuickSearch }",
+      "gzip": true,
+      "limit": "61 kB"
+    },
+    {
+      "name": "All components",
+      "path": "dist/index.js",
+      "import": "*",
+      "gzip": true,
+      "limit": "267 kB"
+    },
+    {
+      "name": "Styles",
+      "path": "dist/styles.css",
+      "gzip": true,
+      "limit": "23 kB",
+      "rolldown": false
+    }
+  ]
 }

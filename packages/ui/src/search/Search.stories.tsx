@@ -273,7 +273,7 @@ function SearchPage() {
         <p style={{ margin: 0, font: 'var(--medo-typography-body-md)', color: 'var(--medo-color-text-secondary)' }}>
           Did you mean{' '}
           <Link
-            href="#"
+            href="?q=invoice"
             onPress={() => {
               setQuery('invoice');
               search('invoice');
