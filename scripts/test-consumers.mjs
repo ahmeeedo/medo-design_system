@@ -19,7 +19,8 @@ const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const work = join(tmpdir(), 'medo-consumers');
 const run = (cmd, cwd) => {
   console.log(`\n$ ${cmd}  (${cwd.replace(work, '<tmp>')})`);
-  execSync(cmd, { cwd, stdio: 'inherit', env: { ...process.env, NEXT_TELEMETRY_DISABLED: '1' } });
+  // NODE_PATH removed: globally installed packages must not hide a missing dependency, like in CI.
+  execSync(cmd, { cwd, stdio: 'inherit', env: { ...process.env, NODE_PATH: '', NEXT_TELEMETRY_DISABLED: '1' } });
 };
 const write = (dir, files) => {
   for (const [path, content] of Object.entries(files)) {
@@ -51,6 +52,7 @@ const shared = {
   '@fontsource/dm-sans': '^5.3.0',
   '@fontsource/dm-mono': '^5.3.0',
 };
+// Same type packages as a new project of each tool; Next.js also needs @types/node.
 const types = { typescript: '~5.9.3', '@types/react': '^19.0.0', '@types/react-dom': '^19.0.0' };
 
 /* ---------- Vite ---------- */
@@ -73,7 +75,7 @@ run('npx vite build', vite);
 /* ---------- Next.js (App Router) ---------- */
 const next = join(work, 'next');
 write(next, {
-  'package.json': { name: 'medo-consumer-next', private: true, dependencies: { ...shared, next: '^16.0.0' }, devDependencies: types },
+  'package.json': { name: 'medo-consumer-next', private: true, dependencies: { ...shared, next: '^16.0.0' }, devDependencies: { ...types, '@types/node': '^24.0.0' } },
   'tsconfig.json': {
     compilerOptions: {
       target: 'ES2022',
