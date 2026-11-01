@@ -96,6 +96,8 @@ uiStyle.textContent = `
 }
 :is(.sidebar-header, .search-field) button:focus-visible,
 #storybook-explorer-menu .sidebar-subheading-action:focus-visible { outline: none; box-shadow: var(--medo-ui-focus); }
+/* Expand all / Collapse all only acts on component groups. Foundations, Guides and Patterns are flat pages – no button. */
+#storybook-explorer-menu :is(#foundations, #guides, #patterns) .sidebar-subheading-action { display: none; }
 
 /* Search results: the highlighted result (mouse or arrow keys) and the hovered one look the same – no flicker. */
 #storybook-explorer-menu li { border-radius: var(--medo-ui-radius-sm); }
