@@ -1,5 +1,16 @@
 # @med-o/ui
 
+## 0.5.0
+
+### Minor Changes
+
+- 2151054: Fields never show an empty error: without an error message an invalid field keeps its helper text instead of an icon alone, and a warning in development names the missing `errorMessage`. `Checkbox` gets `errorMessage` for a single checkbox, e.g. “Accept the terms to continue.” (in a `CheckboxGroup` the group has the message).
+
+### Patch Changes
+
+- Updated dependencies [2151054]
+  - @med-o/design-tokens@0.5.0
+
 ## 0.4.2
 
 ### Patch Changes
