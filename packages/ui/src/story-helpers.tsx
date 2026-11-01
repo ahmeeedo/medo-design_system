@@ -53,3 +53,19 @@ export function sampleScreenshot() {
  * the Interactions panel; it is not part of the docs page.
  */
 export const interactionTest: { name: string; tags: string[] } = { name: 'Interaction test', tags: ['!autodocs'] };
+
+/**
+ * Changes the size of the browser window during a test (Vitest only; in Storybook nothing happens – resize the
+ * window by hand there). Resolves after the browser has laid out the new size.
+ */
+export async function resizeViewport(width: number, height = 900) {
+  const test = (globalThis as { __medoTest?: { resize: (width: number, height: number) => Promise<void> } }).__medoTest;
+  if (!test) return false;
+  await test.resize(width, height);
+  await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+  return true;
+}
+
+/** True when the page scrolls sideways – content wider than the window. */
+export const overflowsHorizontally = () => document.documentElement.scrollWidth > document.documentElement.clientWidth;
+

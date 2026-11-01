@@ -3,10 +3,12 @@
  * Three pages in the side navigation – Settings, Orders, Invoices – each with its own title, search and filters.
  * Filters and data logic live in the page (in an app: in the URL and on the server).
  */
-import { useId, useMemo, useState, type ReactNode } from 'react';
+import { useId, useMemo, useState, type CSSProperties, type ReactNode } from 'react';
 import { DialogTrigger, RouterProvider, type Key, type Selection, type SortDescriptor } from 'react-aria-components';
 import { Bell, Download, FileText, FolderClosed, LayoutDashboard, Package, Settings, SlidersHorizontal, User } from 'lucide-react';
 import {
+  MOBILE_QUERY,
+  useMediaQuery,
   Alert,
   AlertDialog,
   AppHeader,
@@ -105,8 +107,10 @@ function HeaderActions() {
 export interface AccountShellProps {
   page: AccountPage;
   onNavigate: (page: AccountPage) => void;
-  /** Phone frame: app header with logo, bottom tab bar, no side navigation. */
+  /** Phone layout: app header with logo, bottom tab bar, no side navigation. */
   mobile?: boolean;
+  /** Shows the phone layout in a phone-sized frame (docs example on a wide screen). */
+  phoneFrame?: boolean;
   level?: Level;
   /** Id of the content: target of the skip link and of the focus after a page change. */
   mainId: string;
@@ -117,7 +121,20 @@ export interface AccountShellProps {
  * The page frame. Links navigate client-side through RouterProvider – any router (Next.js, React Router) plugs in
  * the same way. In an app the content is a <main id="main"> – here a div, because the docs page has its own landmarks.
  */
-export function AccountShell({ page, onNavigate, mobile = false, level = 1, mainId, children }: AccountShellProps) {
+export function AccountShell({ page, onNavigate, mobile = false, phoneFrame = false, level = 1, mainId, children }: AccountShellProps) {
+  // The example sits inside the docs page: a fixed height (desktop) or a phone-sized frame (forced phone layout).
+  // In an app the shell fills the window instead.
+  const frame: CSSProperties = phoneFrame
+    ? {
+        flexDirection: 'column',
+        inlineSize: 375,
+        maxInlineSize: '100%',
+        blockSize: 760,
+        border: 'var(--medo-border-width-thin) solid var(--medo-color-border-default)',
+        borderRadius: 'var(--medo-radius-xl)',
+        overflow: 'hidden',
+      }
+    : { flexDirection: mobile ? 'column' : 'row', blockSize: 820, overflow: 'hidden' };
   const navigate = (href: string) => {
     const target = href.slice(1);
     if (target in TITLES) onNavigate(target as AccountPage);
@@ -138,27 +155,34 @@ export function AccountShell({ page, onNavigate, mobile = false, level = 1, main
     </div>
   );
 
-  if (mobile) {
-    return (
-      <RouterProvider navigate={navigate}>
-        <SkipLink href={`#${mainId}`} />
-        {/* transform: the fixed tab bar and bulk bar stay inside the phone frame. */}
-        <div
-          style={{
-            position: 'relative',
-            transform: 'translateZ(0)',
-            inlineSize: 375,
-            maxInlineSize: '100%',
-            blockSize: 760,
-            overflow: 'auto',
-            border: 'var(--medo-border-width-thin) solid var(--medo-color-border-default)',
-            borderRadius: 'var(--medo-radius-xl)',
-            background: 'var(--medo-color-surface-canvas)',
-            paddingBlockEnd: 'var(--medo-space-20)',
-          }}
-        >
+  // One tree for both layouts: the content keeps its place, so a page keeps its state (search, filters, selection)
+  // when the window crosses 640 px – only the navigation around it changes.
+  return (
+    <RouterProvider navigate={navigate}>
+      {/* First focusable element of the page: jumps over the navigation to the content. */}
+      <SkipLink href={`#${mainId}`} />
+      {/* transform: fixed bars (tab bar, bulk bar) stay inside the frame of the example. */}
+      <div style={{ position: 'relative', display: 'flex', transform: 'translateZ(0)', background: 'var(--medo-color-surface-canvas)', ...frame }}>
+        {!mobile && (
+          <SideNav logo={<Logo />} logoMark={<Logo full={false} />} user={{ name: 'Ahmet D.', email: 'ahmet@med-o.de' }}>
+            <NavItem href="#dashboard" icon={<LayoutDashboard />}>
+              Dashboard
+            </NavItem>
+            <NavItem href="#projects" icon={<FolderClosed />}>
+              Projects
+            </NavItem>
+            <NavGroup label="Account" icon={<User />} defaultOpen>
+              {item('settings', <Settings />)}
+              {item('orders', <Package />)}
+              {item('invoices', <FileText />, openInvoices)}
+            </NavGroup>
+          </SideNav>
+        )}
+        <div style={{ flex: 1, minInlineSize: 0, overflow: 'auto', paddingBlockEnd: mobile ? 'var(--medo-space-20)' : undefined }}>
           {header}
           {content}
+        </div>
+        {mobile && (
           <BottomTabBar display="always">
             <TabBarItem href="#dashboard" icon={<LayoutDashboard />}>
               Home
@@ -178,41 +202,7 @@ export function AccountShell({ page, onNavigate, mobile = false, level = 1, main
               </NavItem>
             </TabBarMore>
           </BottomTabBar>
-        </div>
-      </RouterProvider>
-    );
-  }
-
-  return (
-    <RouterProvider navigate={navigate}>
-      {/* First focusable element of the page: jumps over the navigation to the content. */}
-      <SkipLink href={`#${mainId}`} />
-      <div
-        style={{
-          display: 'flex',
-          blockSize: 820,
-          transform: 'translateZ(0)',
-          overflow: 'hidden',
-          background: 'var(--medo-color-surface-canvas)',
-        }}
-      >
-        <SideNav logo={<Logo />} logoMark={<Logo full={false} />} user={{ name: 'Ahmet D.', email: 'ahmet@med-o.de' }}>
-          <NavItem href="#dashboard" icon={<LayoutDashboard />}>
-            Dashboard
-          </NavItem>
-          <NavItem href="#projects" icon={<FolderClosed />}>
-            Projects
-          </NavItem>
-          <NavGroup label="Account" icon={<User />} defaultOpen>
-            {item('settings', <Settings />)}
-            {item('orders', <Package />)}
-            {item('invoices', <FileText />, openInvoices)}
-          </NavGroup>
-        </SideNav>
-        <div style={{ flex: 1, minInlineSize: 0, overflow: 'auto' }}>
-          {header}
-          {content}
-        </div>
+        )}
       </div>
     </RouterProvider>
   );
@@ -859,15 +849,18 @@ export function InvoicesPage({ level = 1, mobile = false, state }: { level?: Lev
 
 export function AccountApp({
   start = 'settings',
-  mobile = false,
+  mobile: forced,
   level = 1,
   state,
 }: {
   start?: AccountPage;
+  /** Forces the phone layout in a phone-sized frame (docs). Without it the layout follows the window: phone below 640 px. */
   mobile?: boolean;
   level?: Level;
   state?: 'loading' | 'empty' | 'error';
 }) {
+  const narrow = useMediaQuery(MOBILE_QUERY);
+  const mobile = forced ?? narrow;
   const [page, setPage] = useState<AccountPage>(start);
   const mainId = useId();
   const navigate = (p: AccountPage) => {
@@ -876,7 +869,7 @@ export function AccountApp({
     requestAnimationFrame(() => document.getElementById(mainId)?.focus());
   };
   return (
-    <AccountShell page={page} onNavigate={navigate} mobile={mobile} level={level} mainId={mainId}>
+    <AccountShell page={page} onNavigate={navigate} mobile={mobile} phoneFrame={forced === true} level={level} mainId={mainId}>
       {page === 'settings' && <SettingsPage level={level} />}
       {page === 'orders' && <OrdersPage level={level} mobile={mobile} state={state === 'error' ? undefined : (state as 'loading' | 'empty' | undefined)} />}
       {page === 'invoices' && <InvoicesPage level={level} mobile={mobile} state={state === 'error' ? 'error' : undefined} />}

@@ -23,7 +23,8 @@ const topics = ['Design', 'Code', 'Research', 'Marketing', 'Sales', 'Support'].m
 const meta = {
   title: 'Components/Forms/Select',
   component: Select,
-  tags: ['autodocs'],
+  // locale-de: also tested in German (Vitest project “storybook-de”).
+  tags: ['autodocs', 'locale-de'],
   args: {
     label: 'Country',
     description: 'Used for shipping and taxes.',

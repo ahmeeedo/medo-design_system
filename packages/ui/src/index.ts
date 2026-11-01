@@ -92,6 +92,8 @@ export type { SearchResultProps, SearchResultType } from './search/SearchResult'
 export { QuickSearch } from './search/QuickSearch';
 export type { QuickSearchProps } from './search/QuickSearch';
 export { Highlight } from './utils/highlight';
+// The breakpoint below which components switch to their phone behaviour (640 px) – for app layouts that switch with them.
+export { MOBILE_QUERY, useMediaQuery } from './utils/useMediaQuery';
 export { Breadcrumbs } from './breadcrumbs/Breadcrumbs';
 export type { BreadcrumbsProps, BreadcrumbItem } from './breadcrumbs/Breadcrumbs';
 export { Accordion, AccordionItem } from './accordion/Accordion';

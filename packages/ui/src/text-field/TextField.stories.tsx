@@ -9,7 +9,8 @@ import { interactionTest, slot, stack } from '../story-helpers';
 const meta = {
   title: 'Components/Forms/Text Field',
   component: TextField,
-  tags: ['autodocs'],
+  // locale-de: also tested in German (Vitest project “storybook-de”).
+  tags: ['autodocs', 'locale-de'],
   args: {
     label: 'Email',
     placeholder: 'name@example.com',

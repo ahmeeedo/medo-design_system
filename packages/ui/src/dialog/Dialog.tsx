@@ -277,10 +277,12 @@ function DialogFrame({ title, description, fullscreen, primaryAction, cancelLabe
 
   return (
     <AriaDialog ref={ref} className="medo-dialog__dialog" aria-describedby={description ? descriptionId : undefined} data-scrolled={scrolls || undefined}>
-      {({ close }) =>
-        fullscreen ? (
-          <>
-            {/* Mobile: Cancel left, title centered, main action right – always visible above the keyboard. */}
+      {({ close }) => (
+        // One structure for both layouts: the body (and the form in it) keeps its place, so typed input survives
+        // when the window crosses 640 px – only header and footer change.
+        <>
+          {fullscreen ? (
+            /* Mobile: Cancel left, title centered, main action right – always visible above the keyboard. */
             <div className="medo-dialog__bar">
               <Button variant="ghost" size="md" onPress={close}>
                 {primaryAction ? cancelLabel : closeLabel}
@@ -290,18 +292,7 @@ function DialogFrame({ title, description, fullscreen, primaryAction, cancelLabe
               </Heading>
               {primaryAction ? <ActionButton action={primaryAction} close={forceClose} size="md" variant="primary" /> : <span />}
             </div>
-            <DialogBody onScrollsChange={setScrolls}>
-              {description && (
-                <p id={descriptionId} className="medo-dialog__description">
-                  {description}
-                </p>
-              )}
-              {children(forceClose)}
-            </DialogBody>
-            {nested}
-          </>
-        ) : (
-          <>
+          ) : (
             <div className="medo-dialog__header">
               <div className="medo-dialog__heading">
                 <Heading slot="title" className="medo-dialog__title">
@@ -315,21 +306,28 @@ function DialogFrame({ title, description, fullscreen, primaryAction, cancelLabe
               </div>
               {showClose && <IconButton variant="ghost" size="sm" icon={<X />} aria-label={closeLabel} tooltip={false} onPress={close} />}
             </div>
-            <DialogBody onScrollsChange={setScrolls}>{children(forceClose)}</DialogBody>
-            {primaryAction && (
-              <div className="medo-dialog__footer">
-                <ButtonGroup>
-                  <Button variant="secondary" onPress={close}>
-                    {cancelLabel}
-                  </Button>
-                  <ActionButton action={primaryAction} close={forceClose} size="md" variant="primary" />
-                </ButtonGroup>
-              </div>
+          )}
+          <DialogBody onScrollsChange={setScrolls}>
+            {fullscreen && description && (
+              <p id={descriptionId} className="medo-dialog__description">
+                {description}
+              </p>
             )}
-            {nested}
-          </>
-        )
-      }
+            {children(forceClose)}
+          </DialogBody>
+          {!fullscreen && primaryAction && (
+            <div className="medo-dialog__footer">
+              <ButtonGroup>
+                <Button variant="secondary" onPress={close}>
+                  {cancelLabel}
+                </Button>
+                <ActionButton action={primaryAction} close={forceClose} size="md" variant="primary" />
+              </ButtonGroup>
+            </div>
+          )}
+          {nested}
+        </>
+      )}
     </AriaDialog>
   );
 }

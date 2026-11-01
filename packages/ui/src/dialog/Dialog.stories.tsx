@@ -309,3 +309,32 @@ export const InteractionTest: Story = {
     await expect(args.onOpenChange).toHaveBeenLastCalledWith(false);
   },
 };
+
+export const UnsavedChangesTest: Story = {
+  ...interactionTest,
+  name: 'Interaction test: unsaved changes',
+  // Same dialog as “Unsaved changes”. The whole flow: type → try to cancel → keep editing → save.
+  render: UnsavedChanges.render,
+  play: async ({ canvas, userEvent }) => {
+    const trigger = canvas.getByRole('button', { name: 'Invite member' });
+    await userEvent.click(trigger);
+    const body = within(document.body);
+    const dialog = await body.findByRole('dialog', { name: 'Invite member' });
+    const email = within(dialog).getByRole('textbox', { name: /Email/ });
+    await userEvent.type(email, 'anna@example.com');
+    // Esc does not close: it asks first.
+    await userEvent.keyboard('{Escape}');
+    const ask = await body.findByRole('alertdialog', { name: 'Discard changes?' });
+    // Keep editing: back in the form, with the input and the focus in the dialog.
+    await userEvent.click(within(ask).getByRole('button', { name: 'Keep editing' }));
+    await waitFor(() => expect(body.queryByRole('alertdialog')).toBeNull());
+    await expect(email).toHaveValue('anna@example.com');
+    await waitFor(() => expect(dialog).toContainElement(document.activeElement as HTMLElement));
+    // Save: the main action submits the form, the dialog closes without asking, the focus returns to the trigger.
+    await userEvent.click(within(dialog).getByRole('button', { name: 'Send invite' }));
+    await waitFor(() => expect(body.queryByRole('dialog')).toBeNull());
+    await expect(body.queryByRole('alertdialog')).toBeNull();
+    await waitFor(() => expect(trigger).toHaveFocus());
+  },
+};
+

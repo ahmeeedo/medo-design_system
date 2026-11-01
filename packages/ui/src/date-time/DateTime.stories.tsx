@@ -25,7 +25,8 @@ const slots = ['09:00', '09:15', '09:30', '09:45', '10:00', '10:15', '10:30', '1
 const meta = {
   title: 'Components/Forms/Date & Time',
   component: DatePicker,
-  tags: ['autodocs'],
+  // locale-de: also tested in German (Vitest project “storybook-de”).
+  tags: ['autodocs', 'locale-de'],
   args: {
     label: 'Appointment date',
     description: '',

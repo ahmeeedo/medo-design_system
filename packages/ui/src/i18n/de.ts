@@ -149,7 +149,8 @@ export const de: Messages = {
     listLabel: 'Hochgeladene Dateien',
     cancel: (name) => `Hochladen von ${name} abbrechen`,
     remove: (name) => `${name} entfernen`,
-    retry: (name) => `${name} erneut hochladen`,
+    // Contains the visible text “Wiederholen” of the tile (WCAG 2.5.3 Label in Name).
+    retry: (name) => `Hochladen von ${name} wiederholen`,
     retryShort: 'Wiederholen',
     uploading: (name) => `${name} wird hochgeladen`,
     progress: (loaded, total, percent) => `${loaded} von ${total} · ${percent} %`,

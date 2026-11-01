@@ -1,6 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { useState } from 'react';
 import { Form } from 'react-aria-components';
-import { Button, ButtonGroup, Checkbox, Radio, RadioGroup, Switch, TextField } from '@med-o/ui';
+import { expect, waitFor } from 'storybook/test';
+import { Alert, Button, ButtonGroup, Checkbox, Radio, RadioGroup, Switch, TextField } from '@med-o/ui';
+import { interactionTest } from '../../../../packages/ui/src/story-helpers';
 
 /**
  * A complete form built only from system components.
@@ -10,7 +13,8 @@ const meta = {
   title: 'Patterns/Form',
   // Keeps the URL of the former “Usage” group (…/usage-form--docs).
   id: 'usage-form',
-  tags: ['autodocs'],
+  // locale-de: also tested in German (Vitest project “storybook-de”).
+  tags: ['autodocs', 'locale-de'],
   parameters: {
     layout: 'padded',
     medo: {
@@ -53,12 +57,27 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const ContactForm: Story = {
-  name: 'Contact form',
-  render: () => (
+/** Sent: a confirmation in place of the form that says what happens next – and a way to send another one. */
+function ContactFormExample() {
+  const [sent, setSent] = useState(false);
+  if (sent) {
+    return (
+      <Alert tone="success" title="Message sent" announce actions={<Button variant="secondary" onPress={() => setSent(false)}>Send another message</Button>}>
+        Thank you. We answer within two working days.
+      </Alert>
+    );
+  }
+  return (
     // React Aria's Form validates; the classes of Stack give it the spacing rule fields.
-    <Form onSubmit={(e) => e.preventDefault()} className="medo-stack medo-gap-fields" style={{ maxInlineSize: '28rem' }}>
-      <TextField label="Name" name="name" isRequired autoComplete="name" />
+    <Form
+      onSubmit={(e) => {
+        e.preventDefault();
+        setSent(true);
+      }}
+      className="medo-stack medo-gap-fields"
+      style={{ maxInlineSize: '28rem' }}
+    >
+      <TextField label="Name" name="name" isRequired autoComplete="name" errorMessage="Enter your name." />
       <TextField
         label="Email"
         name="email"
@@ -66,18 +85,18 @@ export const ContactForm: Story = {
         isRequired
         autoComplete="email"
         description="We answer within two working days."
-        errorMessage="Enter a valid email address."
+        errorMessage="Enter a valid email address, e.g. name@example.com."
       />
       <RadioGroup label="Topic" name="topic" isRequired defaultValue="project">
         <Radio value="project">New project</Radio>
         <Radio value="support">Support</Radio>
         <Radio value="other">Something else</Radio>
       </RadioGroup>
-      <TextField label="Message" name="message" multiline isRequired characterLimit={500} />
+      <TextField label="Message" name="message" multiline isRequired characterLimit={500} errorMessage="Write a message." />
       <Switch name="newsletter" description="One email per month. Unsubscribe anytime.">
         Newsletter
       </Switch>
-      <Checkbox name="privacy" isRequired>
+      <Checkbox name="privacy" isRequired errorMessage="Agree to the privacy policy to send the message.">
         I agree to the privacy policy.
       </Checkbox>
       <ButtonGroup context="content">
@@ -87,5 +106,50 @@ export const ContactForm: Story = {
         </Button>
       </ButtonGroup>
     </Form>
-  ),
+  );
+}
+
+export const ContactForm: Story = {
+  name: 'Contact form',
+  parameters: {
+    docs: {
+      description: {
+        story: 'Send it empty: every missing field says what to do, the focus goes to the first one. Send it complete: a confirmation says what happens next.',
+      },
+    },
+  },
+  render: () => <ContactFormExample />,
+};
+
+export const InteractionTest: Story = {
+  ...interactionTest,
+  // Checks the English messages word for word – the German run covers the contact form story.
+  tags: ['!autodocs', '!locale-de'],
+  render: () => <ContactFormExample />,
+  // The whole flow: submit with errors → focus on the first → correct → submit → confirmation → start again.
+  play: async ({ canvas, userEvent }) => {
+    await userEvent.click(canvas.getByRole('button', { name: 'Send message' }));
+    const name = canvas.getByRole('textbox', { name: /Name/ });
+    await waitFor(() => expect(name).toHaveFocus());
+    await expect(name).toHaveAttribute('aria-invalid', 'true');
+    await expect(canvas.getByText('Enter your name.')).toBeInTheDocument();
+    await expect(canvas.getByText('Agree to the privacy policy to send the message.')).toBeInTheDocument();
+    // A wrong email keeps its own message; what was typed stays.
+    await userEvent.type(name, 'Anna Müller');
+    await userEvent.type(canvas.getByRole('textbox', { name: /Email/ }), 'anna@');
+    await userEvent.click(canvas.getByRole('button', { name: 'Send message' }));
+    const email = canvas.getByRole('textbox', { name: /Email/ });
+    await waitFor(() => expect(email).toHaveFocus());
+    await expect(name).toHaveValue('Anna Müller');
+    await expect(canvas.getByText('Enter a valid email address, e.g. name@example.com.')).toBeInTheDocument();
+    // Corrected and complete: sent.
+    await userEvent.type(email, 'example.com');
+    await userEvent.type(canvas.getByRole('textbox', { name: /Message/ }), 'Hello!');
+    await userEvent.click(canvas.getByRole('checkbox', { name: /privacy policy/ }));
+    await userEvent.click(canvas.getByRole('button', { name: 'Send message' }));
+    await expect(await canvas.findByText('Message sent')).toBeInTheDocument();
+    // And back to an empty form.
+    await userEvent.click(canvas.getByRole('button', { name: 'Send another message' }));
+    await expect(canvas.getByRole('textbox', { name: /Name/ })).toHaveValue('');
+  },
 };

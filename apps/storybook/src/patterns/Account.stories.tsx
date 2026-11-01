@@ -162,5 +162,13 @@ export const InteractionTest: Story = {
     // “Clear filters” in the empty state brings all orders back.
     await userEvent.click(canvas.getByRole('button', { name: 'Clear filters' }));
     await waitFor(() => expect(count()).toHaveTextContent('28 orders'));
+    // Open an order: the details open in a Drawer, the list stays. Esc closes it and the focus returns to the row.
+    const row = canvas.getByRole('row', { name: /ORD-4820/ });
+    await userEvent.click(within(row).getByText('ORD-4820'));
+    const body = within(document.body);
+    await expect(await body.findByRole('dialog', { name: 'Order ORD-4820' })).toBeInTheDocument();
+    await userEvent.keyboard('{Escape}');
+    await waitFor(() => expect(body.queryByRole('dialog')).toBeNull());
+    await waitFor(() => expect(row.contains(document.activeElement)).toBe(true));
   },
 };

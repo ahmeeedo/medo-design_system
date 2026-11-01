@@ -259,7 +259,7 @@ npm run storybook   # http://localhost:6006
 | Command | What it does |
 | --- | --- |
 | `npm run storybook` | Builds the tokens and starts Storybook with hot reload |
-| `npm test` | Runs every story in a headless browser, in Light and Dark: rendering, axe (WCAG 2.2 AA) and the interaction tests. Once before: `npx playwright install chromium` |
+| `npm test` | Runs every story in a headless browser, in Light and Dark: rendering, axe (WCAG 2.2 AA) and the interaction tests. Form stories (tag `locale-de`) once more in German. Test-only stories – responsive checks, contracts – live in `apps/storybook/src/tests` and are hidden from the sidebar (tag `!dev`). Once before: `npx playwright install chromium` |
 | `npm run test:webkit` | The same tests in WebKit (Safari's engine), Light, without screenshots. Once before: `npx playwright install webkit` |
 | `npm run test:firefox` | The same tests in Firefox, Light, without screenshots. Once before: `npx playwright install firefox` |
 | `npm run test:consumers` | Packs both packages like npm and builds a fresh Vite app and a fresh Next.js app with the code of “Your first page”. Needs network access. |

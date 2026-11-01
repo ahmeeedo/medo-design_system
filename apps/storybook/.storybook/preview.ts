@@ -19,6 +19,9 @@ import { startMode } from './theme';
 // project (“storybook-dark” sets STORYBOOK_TEST_THEME). data-theme on <html>, exactly like a real app.
 const testTheme = import.meta.env.STORYBOOK_TEST_THEME as 'Light' | 'Dark' | undefined;
 document.documentElement.setAttribute('data-theme', testTheme ? testTheme.toLowerCase() : startMode());
+// Language: English everywhere – in tests the locale of the Vitest project (“storybook-de” runs German).
+const locale = (import.meta.env.STORYBOOK_TEST_LOCALE as string | undefined) ?? 'en-US';
+document.documentElement.setAttribute('lang', locale.slice(0, 2));
 
 // In tests: waitFor / findBy wait up to 3 s instead of 1 s. Overlays stay in the DOM until their exit animation ends,
 // and WebKit on a busy CI runner can take longer than 1 s for that – a slow runner, not a broken component.
@@ -62,7 +65,7 @@ const preview: Preview = {
   // – I18nProvider: every example in English, whatever the browser language. Guides / Languages shows English and German.
   // – RouterProvider: links in examples have real paths (“/terms”) but do not leave the story – a click is logged in the
   //   Actions panel. External links with target="_blank" open as usual.
-  decorators: [(Story) => createElement(I18nProvider, { locale: 'en-US' }, createElement(RouterProvider, { navigate: action('navigate') }, createElement(Story)))],
+  decorators: [(Story) => createElement(I18nProvider, { locale }, createElement(RouterProvider, { navigate: action('navigate') }, createElement(Story)))],
 };
 
 export default preview;

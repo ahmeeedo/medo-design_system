@@ -157,6 +157,7 @@ export function Combobox<T extends object, M extends ComboMode = 'single'>({
         isInvalid={props.isInvalid}
         isRequired={props.isRequired}
         name={props.name}
+        resetValue={(defaultValue as Value) ?? (multiple ? [] : null)}
         commit={commit}
         onApply={onApply}
         resultLabel={resultLabel}
@@ -450,6 +451,8 @@ interface ComboboxSheetProps<T> {
   isInvalid?: boolean;
   isRequired?: boolean;
   name?: string;
+  /** Value after a form reset: the default value of the Combobox. */
+  resetValue: Value;
   commit: 'live' | 'onClose';
   onApply?: (value: Key[]) => void;
   resultLabel: (value: Key[]) => ReactNode;
@@ -484,6 +487,7 @@ function ComboboxSheet<T extends object>({
   isInvalid,
   isRequired,
   name,
+  resetValue,
   commit,
   onApply,
   resultLabel,
@@ -503,6 +507,24 @@ function ComboboxSheet<T extends object>({
   const keys = Array.isArray(value) ? value : value == null ? [] : [value];
   const opened = useRef<string | null>(null);
 
+  // Same contract as the popover inside a form: required is checked on submit, reset restores the default value.
+  const rootRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  const [missing, setMissing] = useState(false);
+  const invalid = isInvalid || missing;
+  const reset = useRef(() => {});
+  reset.current = () => {
+    setMissing(false);
+    onValueChange(resetValue);
+  };
+  useEffect(() => {
+    const form = rootRef.current?.closest('form');
+    if (!form) return;
+    const onReset = () => reset.current();
+    form.addEventListener('reset', onReset);
+    return () => form.removeEventListener('reset', onReset);
+  }, []);
+
   const query = search.trim();
   const content = typeof children === 'function' ? <Collection items={list}>{children}</Collection> : children;
 
@@ -519,6 +541,7 @@ function ComboboxSheet<T extends object>({
 
   const onSelectionChange = (selection: Selection) => {
     const next = selection === 'all' ? [] : [...selection];
+    setMissing(false);
     if (multiple) {
       onValueChange(next);
     } else {
@@ -529,7 +552,7 @@ function ComboboxSheet<T extends object>({
   };
 
   const descId = description ? `${id}-desc` : undefined;
-  const errId = isInvalid && errorMessage ? `${id}-err` : undefined;
+  const errId = invalid && errorMessage ? `${id}-err` : undefined;
 
   // The field shows the labels of the chosen values: React Aria builds the collection from the options
   // without rendering them, the same way the Select gets its labels.
@@ -541,8 +564,9 @@ function ComboboxSheet<T extends object>({
         const exact = nodes.some((node) => node!.textValue.toLocaleLowerCase() === query.toLocaleLowerCase());
         return (
           <div
+            ref={rootRef}
             className={cx('medo-field', 'medo-combobox', 'medo-select', multiple && keys.length > 0 && 'medo-select--tags', className)}
-            data-invalid={isInvalid || undefined}
+            data-invalid={invalid || undefined}
             data-disabled={isDisabled || undefined}
             data-readonly={isReadOnly || undefined}
             data-open={isOpen || undefined}
@@ -557,6 +581,7 @@ function ComboboxSheet<T extends object>({
             </span>
             <div className={cx('medo-input', `medo-input--${size}`, 'medo-select__field')}>
               <AriaButton
+                ref={triggerRef}
                 className="medo-select__trigger"
                 isDisabled={isDisabled}
                 aria-haspopup="dialog"
@@ -581,7 +606,7 @@ function ComboboxSheet<T extends object>({
               </AriaButton>
             </div>
             <div className="medo-field__footer">
-              {isInvalid && errorMessage ? (
+              {invalid && errorMessage ? (
                 <span className="medo-field__error" id={errId}>
                   <CircleAlert aria-hidden="true" />
                   <span>{errorMessage}</span>
@@ -595,6 +620,23 @@ function ComboboxSheet<T extends object>({
               )}
             </div>
             {name && keys.map((key) => <input key={String(key)} type="hidden" name={name} value={String(key)} />)}
+            {/* Native required check (hidden inputs are never validated): empty → the form is not sent, the message
+                shows and – as the first invalid field – the trigger takes the focus, like the popover input. */}
+            {isRequired && !isDisabled && (
+              <input
+                className="medo-visually-hidden"
+                tabIndex={-1}
+                aria-hidden="true"
+                required
+                value={keys.length > 0 ? 'filled' : ''}
+                onChange={() => {}}
+                onInvalid={(e) => {
+                  e.preventDefault();
+                  setMissing(true);
+                  if (e.currentTarget.form?.querySelector(':invalid') === e.currentTarget) triggerRef.current?.focus();
+                }}
+              />
+            )}
 
             <BottomSheet
               title={label}

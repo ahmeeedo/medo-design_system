@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useAsyncList, type Key } from 'react-aria-components';
-import { expect, fn, waitFor, within } from 'storybook/test';
+import { expect, fn, waitFor, within, type UserEventObject } from 'storybook/test';
 import { Search, User } from 'lucide-react';
 import { Combobox } from './Combobox';
 import { Option } from '../listbox/ListBox';
@@ -29,7 +29,8 @@ const initialTags = ['Design', 'Code', 'Research', 'Marketing', 'Sales', 'Suppor
 const meta = {
   title: 'Components/Forms/Combobox',
   component: Combobox,
-  tags: ['autodocs'],
+  // locale-de: also tested in German (Vitest project “storybook-de”).
+  tags: ['autodocs', 'locale-de'],
   args: {
     label: 'Assignee',
     description: 'Type a name, e.g. “mul”.',
@@ -331,3 +332,89 @@ export const InteractionTest: Story = {
     await expect(args.onChange).toHaveBeenLastCalledWith('fischer');
   },
 };
+
+/* ---------- Contract: the popover and the Bottom Sheet behave the same in a form ---------- */
+
+function ContractForm({ overlay }: { overlay: 'popover' | 'sheet' }) {
+  const [data, setData] = useState('');
+  return (
+    <form
+      style={stack}
+      onSubmit={(e) => {
+        e.preventDefault();
+        setData(new URLSearchParams(new FormData(e.currentTarget) as unknown as Record<string, string>).toString());
+      }}
+    >
+      <Combobox label="Assignee" name="assignee" isRequired errorMessage="Choose a person." defaultItems={people} defaultValue="mueller" overlay={overlay}>
+        {(item) => <Option id={item.id}>{item.name}</Option>}
+      </Combobox>
+      <Combobox label="Reviewer" name="reviewer" isReadOnly defaultItems={people} defaultValue="lorenz" overlay={overlay}>
+        {(item) => <Option id={item.id}>{item.name}</Option>}
+      </Combobox>
+      <Combobox label="Backup" name="backup" isRequired errorMessage="Choose a backup." defaultItems={people} overlay={overlay}>
+        {(item) => <Option id={item.id}>{item.name}</Option>}
+      </Combobox>
+      <div style={{ display: 'flex', gap: 'var(--medo-layout-gap-inline)' }}>
+        <button type="submit">Save</button>
+        <button type="reset">Reset</button>
+      </div>
+      <output aria-label="Form data">{data}</output>
+    </form>
+  );
+}
+
+/** Picks a person in the field with this label – the one step that differs between the two variants. */
+const pick: Record<'popover' | 'sheet', (canvas: ReturnType<typeof within>, user: UserEventObject, label: string, search: string, person: string) => Promise<void>> = {
+  popover: async (canvas, user, label, search) => {
+    const input = canvas.getByRole('combobox', { name: new RegExp(label) });
+    await user.clear(input);
+    await user.type(input, search);
+    await user.keyboard('{ArrowDown}{Enter}');
+  },
+  sheet: async (canvas, user, label, search, person) => {
+    await user.click(canvas.getByRole('button', { name: new RegExp(label) }));
+    const sheet = await within(document.body).findByRole('dialog');
+    await user.type(sheet.querySelector('input')!, search);
+    await user.click(await within(sheet).findByRole('option', { name: new RegExp(person) }));
+    await waitFor(() => expect(within(document.body).queryByRole('dialog')).toBeNull());
+  },
+};
+
+const contract = (overlay: 'popover' | 'sheet'): Story => ({
+  ...interactionTest,
+  name: `Contract test: ${overlay}`,
+  tags: ['!autodocs', '!locale-de'],
+  render: () => <ContractForm overlay={overlay} />,
+  // Same expectations for both: required, form data, change, reset and read-only.
+  play: async ({ canvas, userEvent }) => {
+    const data = () => canvas.getByRole('status', { name: 'Form data' });
+    const save = () => userEvent.click(canvas.getByRole('button', { name: 'Save' }));
+    // 1. Required and empty: not submitted, the message names what to do, the focus goes to the field.
+    await save();
+    await expect(await canvas.findByText('Choose a backup.')).toBeInTheDocument();
+    await expect(data()).toHaveTextContent('');
+    await waitFor(() => expect(document.activeElement?.closest('.medo-field')).toHaveTextContent(/Backup/));
+    // 2. Filled: the form data carries every value under its name.
+    await pick[overlay](canvas, userEvent, 'Backup', 'hans', 'Hanna Hansen');
+    await save();
+    await waitFor(() => expect(data()).toHaveTextContent('assignee=mueller&reviewer=lorenz&backup=hansen'));
+    await expect(canvas.queryByText('Choose a backup.')).toBeNull();
+    // 3. A new choice is submitted.
+    await pick[overlay](canvas, userEvent, 'Assignee', 'fisch', 'Fiona Fischer');
+    await save();
+    await waitFor(() => expect(data()).toHaveTextContent('assignee=fischer'));
+    // 4. Reset returns every field to its default value.
+    await userEvent.click(canvas.getByRole('button', { name: 'Reset' }));
+    await pick[overlay](canvas, userEvent, 'Backup', 'hans', 'Hanna Hansen');
+    await save();
+    await waitFor(() => expect(data()).toHaveTextContent('assignee=mueller&reviewer=lorenz&backup=hansen'));
+    // 5. Read-only: shown and submitted, but it does not open.
+    const reviewer = canvas.getByRole(overlay === 'popover' ? 'combobox' : 'button', { name: /Reviewer/ });
+    await userEvent.click(reviewer);
+    await expect(within(document.body).queryByRole(overlay === 'popover' ? 'listbox' : 'dialog')).toBeNull();
+  },
+});
+
+export const ContractPopover = contract('popover');
+export const ContractSheet = contract('sheet');
+

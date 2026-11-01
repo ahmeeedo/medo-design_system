@@ -81,7 +81,8 @@ function Demo(args: Partial<PlaygroundArgs> & { initial?: UploadFile[] }) {
 const meta = {
   title: 'Components/Forms/Upload',
   component: UploadField,
-  tags: ['autodocs'],
+  // locale-de: also tested in German (Vitest project “storybook-de”).
+  tags: ['autodocs', 'locale-de'],
   args: {
     label: 'Documents and photos',
     layout: 'auto',
@@ -374,6 +375,8 @@ function pick(root: HTMLElement, files: File[]) {
 
 export const InteractionTest: Story = {
   ...interactionTest,
+  // Checks the English messages word for word – the German run covers the other stories.
+  tags: ['!autodocs', '!locale-de'],
   render: () => (
     <div style={box}>
       <Demo label="Contracts" layout="list" acceptedFileTypes={['.pdf']} typesLabel="PDF" maxSize={1 * MB} maxFiles={2} />
@@ -393,3 +396,28 @@ export const InteractionTest: Story = {
     await waitFor(() => expect(canvas.getByRole('status')).toHaveTextContent('Offer.pdf uploaded'), { timeout: 4000 });
   },
 };
+
+export const RetryTest: Story = {
+  ...interactionTest,
+  name: 'Interaction test: error, retry, remove',
+  tags: ['!autodocs', '!locale-de'],
+  render: () => (
+    <div style={box}>
+      <Demo label="Contracts" layout="list" acceptedFileTypes={['.pdf']} typesLabel="PDF" maxSize={10 * MB} maxFiles={3} />
+    </div>
+  ),
+  // The whole flow: the connection drops → the error names the cause → retry uploads it → remove it again.
+  play: async ({ canvas, canvasElement, userEvent }) => {
+    pick(canvasElement, [new File([new Uint8Array(400_000)], 'Offline-contract.pdf', { type: 'application/pdf' })]);
+    await expect((await canvas.findAllByText(network, {}, { timeout: 4000 })).some((el) => el.checkVisibility())).toBe(true);
+    // Retry at the file itself: uploads again and is announced when done.
+    await userEvent.click(canvas.getByRole('button', { name: /^Retry / }));
+    await waitFor(() => expect(canvas.getByRole('status')).toHaveTextContent(/uploaded/), { timeout: 4000 });
+    await expect(canvas.queryByText(network)).toBeNull();
+    // Remove: the file is gone, the focus stays in the field (not lost at the top of the page).
+    await userEvent.click(canvas.getByRole('button', { name: /^Remove / }));
+    await waitFor(() => expect(canvas.queryByRole('button', { name: /^Remove / })).toBeNull());
+    await waitFor(() => expect(canvasElement.contains(document.activeElement)).toBe(true));
+  },
+};
+
