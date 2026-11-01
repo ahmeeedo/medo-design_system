@@ -101,7 +101,13 @@ export function EmbedConsent({
     return () => ro.disconnect();
   }, [loaded]);
 
-  // After the click the iframe takes the focus, so keyboard users land in the content.
+  // After the click the iframe takes the focus, so keyboard users land in the content. Firefox ignores focus() on an
+  // iframe that has not loaded yet, so it is tried again on load – only while the focus is still lost (the button is
+  // gone), never taken from somewhere the user moved it to.
+  const focusFrame = () => {
+    const active = document.activeElement;
+    if (!active || active === document.body) frame.current?.focus();
+  };
   useEffect(() => {
     if (clicked) frame.current?.focus();
   }, [clicked]);
@@ -118,7 +124,8 @@ export function EmbedConsent({
           allow={allow}
           allowFullScreen
           referrerPolicy="strict-origin-when-cross-origin"
-          loading="lazy"
+          loading={clicked ? undefined : 'lazy'}
+          onLoad={clicked ? focusFrame : undefined}
           className="medo-embed__frame"
         />
       </div>
