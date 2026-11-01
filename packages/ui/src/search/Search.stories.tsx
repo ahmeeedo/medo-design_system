@@ -731,8 +731,8 @@ export const QuickSearchTest: Story = {
       expect(field).toHaveValue('');
       expect(field).toHaveFocus();
     });
-    // Esc in the empty field closes the quick search. The exit animation can take longer than 1 s on a busy CI runner.
+    // Esc in the empty field closes the quick search.
     await userEvent.keyboard('{Escape}');
-    await waitFor(() => expect(body.queryByRole('dialog')).toBeNull(), { timeout: 3000 });
+    await waitFor(() => expect(body.queryByRole('dialog')).toBeNull());
   },
 };

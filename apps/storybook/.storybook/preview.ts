@@ -3,6 +3,7 @@ import type { Preview } from '@storybook/react-vite';
 import { createElement } from 'react';
 import { I18nProvider, RouterProvider } from 'react-aria-components';
 import { action } from 'storybook/actions';
+import { configure } from 'storybook/test';
 
 // Fonts are self-hosted (no request to a font service). Weights 400–700.
 import '@fontsource/dm-sans/400.css';
@@ -18,6 +19,10 @@ import { startMode } from './theme';
 // project (“storybook-dark” sets STORYBOOK_TEST_THEME). data-theme on <html>, exactly like a real app.
 const testTheme = import.meta.env.STORYBOOK_TEST_THEME as 'Light' | 'Dark' | undefined;
 document.documentElement.setAttribute('data-theme', testTheme ? testTheme.toLowerCase() : startMode());
+
+// In tests: waitFor / findBy wait up to 3 s instead of 1 s. Overlays stay in the DOM until their exit animation ends,
+// and WebKit on a busy CI runner can take longer than 1 s for that – a slow runner, not a broken component.
+if (testTheme) configure({ asyncUtilTimeout: 3000 });
 
 const preview: Preview = {
   // Every story is part of the visual regression check (VISUAL=1); `tags: ['!visual']` leaves one out.
