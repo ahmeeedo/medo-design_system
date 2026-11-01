@@ -48,6 +48,27 @@ Light and Dark follow the operating system. Force a theme with `data-theme="ligh
 | `@med-o/design-tokens/js` | Resolved values and TypeScript types |
 | `@med-o/design-tokens/src/*` | Source tokens in the DTCG format |
 
+## Spacing rules
+
+The space between elements comes from one of six rules, never from a free number. The values follow the layout mode (px):
+
+| Rule | Use for | Mobile · Tablet · Desktop |
+| --- | --- | --- |
+| `inline` | side by side in one group: buttons, tags, filters | 8 |
+| `content` | inside one block: heading, text, actions | 16 |
+| `fields` | form fields below each other | 16 · 24 · 24 |
+| `items` | cards and tiles in a grid or list (= gutter) | 16 · 24 · 24 |
+| `group` | groups inside a section: sub-sections, fieldsets | 32 · 40 · 48 |
+| `section` | sections of a page | 48 · 64 · 96 |
+
+Use them as CSS variables (`--medo-layout-gap-items`), as classes (`medo-gap-items`) or in Tailwind (`gap-items`, `space-y-fields`, `py-section`). With [`@med-o/ui`](https://www.npmjs.com/package/@med-o/ui) the layout components `Stack`, `Grid` and `Container` apply them for you.
+
+## Versions
+
+While the package is 0.x, a patch only fixes bugs and a minor may contain breaking changes – each marked **Breaking:** in the changelog, with how to update. `@med-o/design-tokens` and `@med-o/ui` are always released together with the same version.
+
+[What's new](https://design.med-o.de/?path=/docs/what-s-new--docs) · [Versioning & support](https://design.med-o.de/?path=/docs/guides-versioning-support--docs)
+
 ## License
 
 MIT
