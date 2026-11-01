@@ -1,8 +1,8 @@
 # Storybook tests: every story renders in headless Chromium, axe checks WCAG 2.2 AA (Light and Dark),
 # play functions test keyboard, focus and pointer. Same command as locally: npm test.
 # Then the npm packages are built once, so a release never fails on a type error.
-# A second job runs every story in WebKit (Safari's engine) at the same time: layout, focus and events that only
-# Safari handles differently.
+# Two more jobs run every story in WebKit (Safari's engine) and Firefox at the same time: layout, focus and events
+# that only these engines handle differently.
 name: Storybook tests
 
 on:
@@ -57,8 +57,14 @@ jobs:
       # Bundle size of @med-o/ui (minified + gzip, React excluded) against the limits in packages/ui/package.json.
       - run: npm run size
 
-  webkit:
-    # Same OS as the job above; WebKit's system libraries are installed by Playwright.
+  engines:
+    # Every story in the other two engines: WebKit (Safari) and Firefox. Same OS as the job above; the browsers'
+    # system libraries are installed by Playwright. One job per engine, so a failure names the browser.
+    name: ${{ matrix.browser }}
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [webkit, firefox]
     runs-on: ubuntu-24.04
     timeout-minutes: 20
     steps:
@@ -71,7 +77,7 @@ jobs:
 
       - run: npm ci
 
-      - run: npx playwright install --with-deps webkit
+      - run: npx playwright install --with-deps ${{ matrix.browser }}
 
       # Light only, without screenshots (references come from Chromium).
-      - run: npm run test:webkit
+      - run: npm run test:${{ matrix.browser }}
