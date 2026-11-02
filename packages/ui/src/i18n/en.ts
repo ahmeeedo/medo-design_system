@@ -47,6 +47,7 @@ export const en: Messages = {
     unknownOrganization: 'Unknown organization',
     more: (n) => `${n} more`,
   },
+  stepper: { label: 'Progress', count: (step, total) => `Step ${step} of ${total}`, completed: 'completed' },
   breadcrumbs: { label: 'Breadcrumb', more: (n) => `Show ${n} more ${s(n, 'level', 'levels')}` },
   bulkActionBar: { label: 'Bulk actions', count: (n) => `${n} selected`, clear: 'Clear selection', more: 'More actions' },
   calendar: {

@@ -26,6 +26,7 @@
 @import './pagination/pagination.css' layer(components);
 @import './search/search.css' layer(components);
 @import './breadcrumbs/breadcrumbs.css' layer(components);
+@import './stepper/stepper.css' layer(components);
 @import './accordion/accordion.css' layer(components);
 @import './slider/slider.css' layer(components);
 @import './toggle-button/toggle-button.css' layer(components);

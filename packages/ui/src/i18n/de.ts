@@ -54,6 +54,7 @@ export const de: Messages = {
     unknownOrganization: 'Unbekannte Organisation',
     more: (n) => `${n} weitere`,
   },
+  stepper: { label: 'Fortschritt', count: (step, total) => `Schritt ${step} von ${total}`, completed: 'erledigt' },
   breadcrumbs: { label: 'Pfadnavigation', more: (n) => (n === 1 ? '1 weitere Ebene anzeigen' : `${n} weitere Ebenen anzeigen`) },
   bulkActionBar: { label: 'Sammelaktionen', count: (n) => `${n} ausgewählt`, clear: 'Auswahl aufheben', more: 'Weitere Aktionen' },
   calendar: {

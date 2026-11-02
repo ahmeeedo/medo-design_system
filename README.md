@@ -210,6 +210,7 @@ Live examples and all props: [design.med-o.de](https://design.med-o.de).
 | `StaticTable`, `Table` (+ `TableHeader`, `Column`, `TableBody`, `Row`, `Cell`) | native table or interactive grid · sorting, selection, compact · numbers right · `toolbar` and `footer` in one frame · `ColumnsMenu` (show/hide, locked columns) |
 | `BulkActionBar` | appears with ≥ 1 selected · desktop: floating inverse bar with Toast buttons · mobile: full-width bar, ghost lg, safe area · max 3 actions + “…” menu · count announced · Esc / × clears, focus returns · Table and List view |
 | `Link` | inline (always underlined) or standalone · external icon · new-tab hint |
+| `Stepper`, `Step` | 3–5 steps of one task · done steps are links back, current `aria-current="step"`, no skipping ahead · optional description · below 640 px “Step 2 of 4” with one bar segment per step |
 
 Marketing components (carousel, video player, hero sections) are not part of the library.
 

@@ -95,6 +95,8 @@ export { Highlight } from './utils/highlight';
 // The breakpoint below which components switch to their phone behaviour (640 px) – for app layouts that switch with them.
 export { MOBILE_QUERY, useMediaQuery } from './utils/useMediaQuery';
 export { Breadcrumbs } from './breadcrumbs/Breadcrumbs';
+export { Stepper, Step } from './stepper/Stepper';
+export type { StepperProps, StepProps } from './stepper/Stepper';
 export type { BreadcrumbsProps, BreadcrumbItem } from './breadcrumbs/Breadcrumbs';
 export { Accordion, AccordionItem } from './accordion/Accordion';
 export type { AccordionProps, AccordionItemProps } from './accordion/Accordion';

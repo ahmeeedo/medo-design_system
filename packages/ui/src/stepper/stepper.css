@@ -1,0 +1,208 @@
+/**
+ * Stepper – med.o Design System
+ *
+ *   <nav class="medo-stepper" aria-label="Checkout">
+ *     <ol class="medo-stepper__list">
+ *       <li class="medo-stepper__item" data-state="complete">
+ *         <a class="medo-stepper__step" href="#cart"><span class="medo-stepper__marker">✓</span>
+ *           <span class="medo-stepper__text"><span class="medo-stepper__label">Cart</span>
+ *           <span class="medo-stepper__description">3 items</span></span></a>
+ *         <span class="medo-stepper__connector"></span></li>
+ *       <li class="medo-stepper__item" data-state="current"><span class="medo-stepper__step" aria-current="step">…</span></li>
+ *       <li class="medo-stepper__item" data-state="upcoming"><span class="medo-stepper__step">…</span></li>
+ *     </ol>
+ *   </nav>
+ *   Compact (below 640 px): .medo-stepper--compact with __counter, __title, __description, __segments > __segment[data-done].
+ *
+ * Marker 24 (radius/full): complete action/primary + check text/on-action · current 2 px action/primary, number
+ * text/brand · upcoming 1 px border/strong, number text/secondary. Label label/md (current label/md-strong), description
+ * caption. Step: padding space/1, radius/sm, gap space/2. Connector 1 px, centred on the markers.
+ * State contract: [data-state] on the item · [data-hovered] [data-pressed] [data-focus-visible] on the link (React Aria).
+ */
+
+.medo-stepper {
+  font: var(--medo-typography-label-md);
+  color: var(--medo-color-text-primary);
+}
+
+.medo-stepper__list {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--medo-space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.medo-stepper__item {
+  display: flex;
+  flex: 1 1 0;
+  align-items: flex-start;
+  gap: var(--medo-space-2);
+  min-inline-size: 0;
+}
+
+.medo-stepper__item:last-child {
+  flex: 0 1 auto;
+}
+
+.medo-stepper__step {
+  display: inline-flex;
+  flex: none;
+  align-items: flex-start;
+  gap: var(--medo-space-2);
+  max-inline-size: 100%;
+  padding: var(--medo-space-1);
+  border-radius: var(--medo-radius-sm);
+  color: inherit;
+  text-decoration: none;
+  outline: none;
+}
+
+.medo-stepper__marker {
+  box-sizing: border-box;
+  display: inline-grid;
+  flex: none;
+  place-items: center;
+  inline-size: var(--medo-space-6);
+  block-size: var(--medo-space-6);
+  border: var(--medo-border-width-thin) solid var(--medo-color-border-strong);
+  border-radius: var(--medo-radius-full);
+  background: var(--medo-color-surface-default);
+  color: var(--medo-color-text-secondary);
+  font: var(--medo-typography-label-sm);
+  font-variant-numeric: tabular-nums;
+}
+
+.medo-stepper__marker > svg {
+  inline-size: var(--medo-size-icon-sm);
+  block-size: var(--medo-size-icon-sm);
+  stroke-width: 2.5;
+}
+
+/* 2 px down: the first line sits centred on the 24 px marker. */
+.medo-stepper__text {
+  display: grid;
+  min-inline-size: 0;
+  padding-block-start: var(--medo-space-0-5);
+}
+
+.medo-stepper__label {
+  color: var(--medo-color-text-secondary);
+}
+
+.medo-stepper__description {
+  font: var(--medo-typography-caption);
+  color: var(--medo-color-text-secondary);
+}
+
+/* The line meets the centre of the markers: step padding (4) + half the marker (12). */
+.medo-stepper__connector {
+  flex: 1 1 var(--medo-space-6);
+  min-inline-size: var(--medo-space-6);
+  block-size: var(--medo-border-width-thin);
+  margin-block-start: calc(var(--medo-space-1) + var(--medo-space-3));
+  background: var(--medo-color-border-default);
+}
+
+/* Done: check on the brand colour, label is a link back. */
+.medo-stepper__item[data-state='complete'] .medo-stepper__marker {
+  border-color: transparent;
+  background: var(--medo-color-action-primary);
+  color: var(--medo-color-text-on-action);
+}
+
+.medo-stepper__item[data-state='complete'] .medo-stepper__label {
+  color: var(--medo-color-text-brand);
+}
+
+.medo-stepper__item[data-state='complete'] .medo-stepper__connector {
+  background: var(--medo-color-action-primary);
+}
+
+a.medo-stepper__step {
+  cursor: pointer;
+}
+
+a.medo-stepper__step[data-hovered] .medo-stepper__label {
+  color: var(--medo-color-text-brand-hover);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+a.medo-stepper__step[data-hovered] .medo-stepper__marker {
+  background: var(--medo-color-action-primary-hover);
+}
+
+a.medo-stepper__step[data-pressed] .medo-stepper__label {
+  color: var(--medo-color-text-brand-pressed);
+}
+
+a.medo-stepper__step[data-focus-visible] {
+  box-shadow: 0 0 0 var(--medo-focus-ring-width) var(--medo-color-focus-ring);
+}
+
+/* Current: ring in the brand colour, strong label. */
+.medo-stepper__item[data-state='current'] .medo-stepper__marker {
+  border: var(--medo-border-width-thick) solid var(--medo-color-action-primary);
+  color: var(--medo-color-text-brand);
+  font: var(--medo-typography-label-sm-strong);
+}
+
+.medo-stepper__item[data-state='current'] .medo-stepper__label {
+  font: var(--medo-typography-label-md-strong);
+  color: var(--medo-color-text-primary);
+}
+
+/* ---------- Compact (below 640 px) ---------- */
+
+.medo-stepper--compact {
+  display: grid;
+  gap: var(--medo-space-1);
+}
+
+.medo-stepper--compact p {
+  margin: 0;
+}
+
+.medo-stepper__counter {
+  font: var(--medo-typography-label-sm);
+  color: var(--medo-color-text-secondary);
+}
+
+.medo-stepper__title {
+  font: var(--medo-typography-label-lg-strong);
+  color: var(--medo-color-text-primary);
+}
+
+.medo-stepper__segments {
+  display: flex;
+  gap: var(--medo-space-1);
+  padding-block-start: var(--medo-space-1);
+}
+
+.medo-stepper__segment {
+  flex: 1;
+  block-size: var(--medo-space-1);
+  border-radius: var(--medo-radius-full);
+  background: var(--medo-color-surface-subtle);
+}
+
+.medo-stepper__segment[data-done] {
+  background: var(--medo-color-action-primary);
+}
+
+@media (forced-colors: active) {
+  .medo-stepper__marker,
+  .medo-stepper__segment {
+    border: 1px solid CanvasText;
+  }
+  .medo-stepper__item[data-state='complete'] .medo-stepper__marker,
+  .medo-stepper__segment[data-done] {
+    background: Highlight;
+    color: HighlightText;
+  }
+  a.medo-stepper__step[data-focus-visible] {
+    outline: 2px solid Highlight;
+  }
+}

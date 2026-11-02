@@ -43,6 +43,7 @@ export interface Messages {
     more: (count: number) => string;
   };
   breadcrumbs: { label: string; more: (count: number) => string };
+  stepper: { label: string; count: (step: number, total: number) => string; completed: string };
   bulkActionBar: { label: string; count: (count: number) => string; clear: string; more: string };
   calendar: {
     previousMonth: string;
