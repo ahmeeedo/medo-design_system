@@ -120,7 +120,7 @@ const inbox = [
   { id: 'lea', name: 'Lea M.', text: 'Approved the budget for Q4' },
   { id: 'sam', name: 'Sam K.', text: 'Shared “Roadmap 2027” with you' },
   { id: 'jonas', name: 'Jonas B.', text: 'Mentioned you in Website relaunch' },
-  { id: 'ahmet', name: 'Ahmet D.', text: 'Updated the Q3 report' },
+  { id: 'alex', name: 'Alex W.', text: 'Updated the Q3 report' },
 ];
 
 function ListExample() {

@@ -175,7 +175,7 @@ function Details() {
   return (
     <>
       <DescriptionItem term="Status">Active</DescriptionItem>
-      <DescriptionItem term="Owner">Ahmet D.</DescriptionItem>
+      <DescriptionItem term="Owner">Alex W.</DescriptionItem>
       <DescriptionItem term="Created">10 Oct 2026</DescriptionItem>
       <DescriptionItem term="Budget">€ 24,000</DescriptionItem>
     </>

@@ -18,7 +18,7 @@ const inbox = [
   { id: 'lea', name: 'Lea M.', text: 'Approved the budget for Q4', meta: '09:41', unread: true },
   { id: 'sam', name: 'Sam K.', text: 'Shared “Roadmap 2027” with you', meta: 'Yesterday' },
   { id: 'jonas', name: 'Jonas B.', text: 'Mentioned you in Website relaunch', meta: 'Mon' },
-  { id: 'ahmet', name: 'Ahmet D.', text: 'Updated the Q3 report', meta: 'Sep 28' },
+  { id: 'alex', name: 'Alex W.', text: 'Updated the Q3 report', meta: 'Sep 28' },
 ];
 
 /** “…” menu of a row – every action of the row lives here (also the swipe actions). */
@@ -231,7 +231,7 @@ export const Selection: Story = {
   },
   render: () => (
     <div style={box}>
-      <ListView aria-label="Inbox" selectionMode="multiple" defaultSelectedKeys={['lea', 'jonas']} disabledKeys={['ahmet']} items={inbox}>
+      <ListView aria-label="Inbox" selectionMode="multiple" defaultSelectedKeys={['lea', 'jonas']} disabledKeys={['alex']} items={inbox}>
         {(item) => <ListRow id={item.id} title={item.name} description={item.text} meta={item.meta} leading={<Avatar name={item.name} decorative />} />}
       </ListView>
     </div>

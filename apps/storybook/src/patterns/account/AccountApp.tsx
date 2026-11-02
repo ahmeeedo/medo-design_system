@@ -99,7 +99,7 @@ function HeaderActions() {
   return (
     <>
       <IconButton variant="ghost" icon={<Bell />} aria-label="Notifications" />
-      <Avatar name="Ahmet D." size="md" />
+      <Avatar name="Alex W." size="md" />
     </>
   );
 }
@@ -164,7 +164,7 @@ export function AccountShell({ page, onNavigate, mobile = false, phoneFrame = fa
       {/* transform: fixed bars (tab bar, bulk bar) stay inside the frame of the example. */}
       <div style={{ position: 'relative', display: 'flex', transform: 'translateZ(0)', background: 'var(--medo-color-surface-canvas)', ...frame }}>
         {!mobile && (
-          <SideNav logo={<Logo />} logoMark={<Logo full={false} />} user={{ name: 'Ahmet D.', email: 'ahmet@med-o.de' }}>
+          <SideNav logo={<Logo />} logoMark={<Logo full={false} />} user={{ name: 'Alex W.', email: 'alex.weber@example.com' }}>
             <NavItem href="#dashboard" icon={<LayoutDashboard />}>
               Dashboard
             </NavItem>
@@ -278,12 +278,12 @@ export function SettingsPage({ level = 1 }: { level?: Level }) {
             toast('Profile saved');
           }}
         >
-          <TextField label="Name" name="name" defaultValue="Ahmet Daglar" isRequired autoComplete="name" />
+          <TextField label="Name" name="name" defaultValue="Alex Weber" isRequired autoComplete="name" />
           <TextField
             label="Email"
             name="email"
             type="email"
-            defaultValue="ahmet@med-o.de"
+            defaultValue="alex.weber@example.com"
             isRequired
             autoComplete="email"
             description="Receipts and invoices go to this address."
@@ -359,7 +359,7 @@ function OrderDetails({ order, onClose }: { order: Order | null; onClose: () => 
           <DescriptionItem term="Date">{day.format(new Date(order.date))}</DescriptionItem>
           <DescriptionItem term="Product">{`${order.product} · ${order.items} ${order.items === 1 ? 'item' : 'items'}`}</DescriptionItem>
           <DescriptionItem term="Total">{money.format(order.total)}</DescriptionItem>
-          <DescriptionItem term="Delivery to">Ahmet Daglar, Hauptstraße 12, 76646 Bruchsal</DescriptionItem>
+          <DescriptionItem term="Delivery to">Alex Weber, Musterstraße 1, 12345 Musterstadt</DescriptionItem>
         </DescriptionList>
       )}
     </Drawer>

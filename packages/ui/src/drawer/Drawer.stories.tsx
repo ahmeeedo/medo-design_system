@@ -43,10 +43,10 @@ function AccountBody() {
   return (
     <>
       <div style={profile}>
-        <Avatar name="Ahmet D." size="lg" decorative />
+        <Avatar name="Alex W." size="lg" decorative />
         <span style={{ display: 'grid' }}>
-          <span style={{ font: 'var(--medo-typography-label-md)' }}>Ahmet D.</span>
-          <span style={{ font: 'var(--medo-typography-caption)', color: 'var(--medo-color-text-secondary)' }}>ahmet@med-o.de</span>
+          <span style={{ font: 'var(--medo-typography-label-md)' }}>Alex W.</span>
+          <span style={{ font: 'var(--medo-typography-caption)', color: 'var(--medo-color-text-secondary)' }}>alex.weber@example.com</span>
         </span>
       </div>
       <hr style={divider} />
@@ -283,7 +283,7 @@ export const UnsavedChanges: Story = {
                 close(); // after saving: closes without asking
               }}
             >
-              <TextField label="Name" defaultValue="Ahmet D." onChange={() => setDirty(true)} />
+              <TextField label="Name" defaultValue="Alex W." onChange={() => setDirty(true)} />
               <TextField label="Job title" onChange={() => setDirty(true)} />
             </form>
           )}

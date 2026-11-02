@@ -126,7 +126,7 @@ function HeaderActions() {
   return (
     <>
       <IconButton variant="ghost" icon={<Bell />} aria-label="Notifications" />
-      <Avatar name="Ahmet D." size="md" />
+      <Avatar name="Alex W." size="md" />
     </>
   );
 }
@@ -283,7 +283,7 @@ export const AppShell: Story = {
       // RouterProvider: links navigate client-side with any router – here it only changes the current page.
       <RouterProvider navigate={(href) => href.startsWith('#') && href !== '#home' && setCurrent(href.slice(1))}>
         <div style={{ display: 'flex', blockSize: 600, background: 'var(--medo-color-surface-subtle)' }}>
-          <SideNav logo={<Logo />} logoMark={<Logo full={false} />} user={{ name: 'Ahmet D.', email: 'ahmet@med-o.de' }}>
+          <SideNav logo={<Logo />} logoMark={<Logo full={false} />} user={{ name: 'Alex W.', email: 'alex.weber@example.com' }}>
             <AppItems current={current} />
           </SideNav>
           <div style={{ flex: 1, minInlineSize: 0, overflow: 'auto' }}>

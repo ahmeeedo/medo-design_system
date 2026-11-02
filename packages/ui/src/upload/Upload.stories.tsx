@@ -226,7 +226,7 @@ export const Layouts: Story = {
           acceptedFileTypes={['.pdf', '.jpg', '.jpeg']}
           typesLabel="PDF or JPG"
           maxSize={10 * MB}
-          initial={[{ id: 'cv', name: 'CV_Ahmet_2026.pdf', size: 1.1 * MB, type: pdf, status: 'done' }]}
+          initial={[{ id: 'cv', name: 'CV_Alex_2026.pdf', size: 1.1 * MB, type: pdf, status: 'done' }]}
         />
       </div>
     </div>
