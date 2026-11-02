@@ -174,6 +174,7 @@ Live examples and all props: [design.med-o.de](https://design.med-o.de).
 | `Button`, `ButtonGroup` | primary, secondary, ghost, danger, text, ghost-danger · sm/md/lg · `isPending` · group: footer/header/content, stacks on mobile |
 | `IconButton` | `aria-label` required, shown as tooltip · `shortcut` · `media` / `media-ghost` on images and video (Media icon button, sm 28 with 44 hit area) |
 | `TextField` (+ `InputAction`) | label, helper, error, icons, character counter, `multiline` = Textarea |
+| `Form`, `FieldErrors` | React Aria Form · `onSave` runs when valid, pending while it saves · server messages at the field (reject with `FieldErrors`) or above it (`formError`) · focus on the first error, error count announced · input always kept |
 | `Checkbox`, `CheckboxGroup` | indeterminate, description · group without visible label via `aria-label` |
 | `Radio`, `RadioGroup` | 2–4 options, horizontal or vertical · group without visible label via `aria-label` |
 | `Switch` | label start/end, loading state |
@@ -185,7 +186,7 @@ Live examples and all props: [design.med-o.de](https://design.med-o.de).
 | `Combobox` | type to filter (contains, case and accent insensitive, match bold) · single or multiple (removable tags + “+N”) · “Add …” for tags · server search (`isLoading`) |
 | `BottomSheet` | modal sheet from the bottom · swipe, scrim, Esc, close button · max 90 % · Select / Combobox use it below 640 px (commit live or on close) |
 | `MenuTrigger`, `Menu`, `MenuItem`, `MenuSection`, `Submenu`, `MenuButton` | actions from a trigger · icon required · shortcuts (`Mod`) · danger last · one submenu level · mobile: Bottom Sheet with second view |
-| `DialogTrigger`, `Dialog`, `AlertDialog` | sm/md/lg · only the body scrolls · `primaryAction` (form submit, promise = pending) · `isDirty` asks “Discard changes?” · Alert dialog: danger/warning/info, focus on Cancel · mobile: fullscreen (forms) or Bottom Sheet |
+| `DialogTrigger`, `Dialog`, `AlertDialog` | sm/md/lg · only the body scrolls · `primaryAction` (form submit, promise = pending) · `isDirty` asks “Discard changes?” · background saving with `backgroundToast` (Retry, “Open again” for `FieldErrors`) · `blocking` · Alert dialog: danger/warning/info, focus on Cancel · mobile: fullscreen (forms) or Bottom Sheet |
 | `Drawer` | modal panel from the side · right (account, filters, details) or left (navigation) · sm/md/lg · free footer (`close`, `cancel`) · `isDirty` · mobile viewport − 56, swipe to close · SideNav uses it on tablets |
 | `Badge`, `BadgeCount`, `BadgeDot` | 6 tones · dot or icon · counts “99+” |
 | `Spinner`, `ProgressBar`, `Skeleton` | reduced motion: slower / static |

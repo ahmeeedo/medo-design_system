@@ -23,6 +23,7 @@
 .medo-stepper {
   font: var(--medo-typography-label-md);
   color: var(--medo-color-text-primary);
+  overflow-wrap: anywhere;
 }
 
 .medo-stepper__list {

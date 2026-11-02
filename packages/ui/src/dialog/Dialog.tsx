@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useId, useLayoutEffect, useRef, useState, type ReactNode } from 'react';
-import { Dialog as AriaDialog, DialogContext, Heading, Modal, ModalOverlay, OverlayTriggerStateContext, Provider } from 'react-aria-components';
+import { Dialog as AriaDialog, DialogContext, FormValidationContext, Heading, Modal, ModalOverlay, OverlayTriggerStateContext, Provider } from 'react-aria-components';
 import { CircleAlert, Info, TriangleAlert, X } from 'lucide-react';
 import { BottomSheet } from '../bottom-sheet/BottomSheet';
 import { Button, ButtonGroup, type ButtonSize } from '../button/Button';
@@ -8,6 +8,8 @@ import { cx } from '../utils/cx';
 import { MOBILE_QUERY, useMediaQuery } from '../utils/useMediaQuery';
 import { useMessages } from '../i18n/I18n';
 import { toast } from '../toast/Toast';
+import { Alert } from '../alert/Alert';
+import { FieldErrors, focusField } from '../form/Form';
 
 /** Opens a Dialog or Alert dialog from a trigger (React Aria DialogTrigger). Focus returns to the trigger. */
 export { DialogTrigger } from 'react-aria-components';
@@ -23,14 +25,24 @@ export interface DialogAction {
    * The dialog can be closed while the promise runs (Esc, Cancel, ×) – it never asks “Discard changes?” then, the
    * saving goes on and `backgroundToast` reports the result. A result that arrives late never closes a dialog that
    * was opened again in the meantime.
+   * Reject with `FieldErrors` when the server finds a problem in the input: open, the messages show at the fields;
+   * closed, the error Toast offers “Open again” instead of Retry – the dialog opens with the messages at the fields.
+   * For that the app must keep the values (controlled fields), the dialog content is new on every opening.
    */
   onAction?: () => void | Promise<unknown>;
   /**
    * Shown as a Toast when the promise settles after the dialog was closed – name the object, e.g.
    * `{ success: 'Invite sent to anna@example.com', error: 'Invite to anna@example.com not sent' }`. The error toast
    * stays until closed and offers Retry, which runs `onAction` again. Needs a ToastRegion in the app.
+   * While something saves in the background, the app can warn before the page is left (a `beforeunload` listener
+   * while its requests run) – the dialog does not know the app's other requests.
    */
   backgroundToast?: { success: string; error: string };
+  /**
+   * Dialog only: the dialog cannot be closed while the action runs (Cancel and × are disabled, Esc and the scrim do
+   * nothing). For actions whose result people must see before they go on: a payment, a deletion of many records.
+   */
+  blocking?: boolean;
   /** Id of a form in the dialog: the button submits it. The form's onSubmit saves and calls `close`. */
   form?: string;
   /** Dialog only: danger for a destructive main action. */
@@ -65,11 +77,13 @@ interface ActionRun {
   setSaving: (saving: boolean) => void;
   /** Counts the openings; -1 while closed. */
   opening: { current: number };
+  /** Opens the dialog again with the server's messages at the fields (Dialog only). */
+  reopen?: (errors: FieldErrors) => void;
 }
 const ActionRunContext = createContext<ActionRun | null>(null);
 
 /** Provides the ActionRun of a dialog; returns its value and whether its action is saving. */
-function useActionRun(open: boolean) {
+function useActionRun(open: boolean, reopen?: (errors: FieldErrors) => void) {
   const [saving, setSaving] = useState(false);
   const count = useRef(0);
   const opening = useRef(open ? 0 : -1);
@@ -77,30 +91,37 @@ function useActionRun(open: boolean) {
     opening.current = open ? ++count.current : -1;
   }, [open]);
   const run = useRef<ActionRun>({ setSaving, opening }).current;
+  run.reopen = reopen;
   return { run, saving };
 }
 
-/** Runs a background action again until it settles, reporting each result as a Toast. */
-function settleInBackground(promise: Promise<unknown>, action: DialogAction, retryLabel: string) {
+interface BackgroundLabels {
+  retry: string;
+  reopen: string;
+}
+
+/**
+ * Reports a result that arrives after the dialog was closed as a Toast. A failure offers Retry (runs `onAction`
+ * again, reported the same way); a FieldErrors failure offers “Open again” – retrying the same input would only fail
+ * again.
+ */
+function settleInBackground(promise: Promise<unknown>, action: DialogAction, labels: BackgroundLabels, reopen?: (errors: FieldErrors) => void) {
   const messages = action.backgroundToast;
   promise.then(
     () => messages && toast(messages.success),
-    () => {
+    (error: unknown) => {
       if (!messages) return;
       const onAction = action.onAction;
-      toast(messages.error, {
-        persistent: true,
-        action: onAction
-          ? {
-              label: retryLabel,
-              onAction: () => {
-                const again = onAction();
-                if (again instanceof Promise) settleInBackground(again, action, retryLabel);
-                else toast(messages.success);
-              },
-            }
-          : undefined,
-      });
+      const fix = error instanceof FieldErrors && reopen ? { label: labels.reopen, onAction: () => reopen(error) } : undefined;
+      const retry = onAction && {
+        label: labels.retry,
+        onAction: () => {
+          const again = onAction();
+          if (again instanceof Promise) settleInBackground(again, action, labels, reopen);
+          else toast(messages.success);
+        },
+      };
+      toast(messages.error, { persistent: true, action: fix ?? retry });
     },
   );
 }
@@ -136,14 +157,17 @@ export function ActionButton({ action, close, size, variant }: { action: DialogA
     const stillOpen = () => (context ? context.opening.current === opening : mounted.current);
     setPending(true);
     // “Retry” is the same word as on a failed upload.
-    const retry = m.upload.retryShort;
+    const labels = { retry: m.upload.retryShort, reopen: m.dialog.reopen };
     try {
       await result;
       if (stillOpen()) close();
-      else settleInBackground(Promise.resolve(), action, retry);
-    } catch {
-      // Open: the app shows the error in the dialog. Closed: the error Toast reports it and offers Retry.
-      if (!stillOpen()) settleInBackground(Promise.reject(new Error('failed')), action, retry);
+      else settleInBackground(Promise.resolve(), action, labels);
+    } catch (error) {
+      // Open: FieldErrors go to the fields, anything else the app shows in the dialog. Closed: the error Toast
+      // reports it and offers Retry – or “Open again” for FieldErrors.
+      if (stillOpen()) {
+        if (error instanceof FieldErrors) context?.reopen?.(error);
+      } else settleInBackground(Promise.reject(error), action, labels, context?.reopen);
     } finally {
       if (mounted.current) setPending(false);
     }
@@ -285,13 +309,26 @@ export function Dialog({
   const m = useMessages();
   const cancelLabel = cancelLabelProp ?? m.common.cancel;
   const closeLabel = closeLabelProp ?? m.common.close;
-  const [openState] = useOpenState(openProps);
-  const { run, saving } = useActionRun(openState);
+  const [openState, setOpenState] = useOpenState(openProps);
+  // The server's messages for this opening (FieldErrors from the main action); gone when the dialog closes.
+  const [serverErrors, setServerErrors] = useState<FieldErrors | null>(null);
+  const { run, saving } = useActionRun(openState, (errors) => {
+    setServerErrors(errors);
+    setOpenState(true);
+  });
+  useEffect(() => {
+    if (!openState) setServerErrors(null);
+  }, [openState]);
+  const busy = saving || !!primaryAction?.isPending;
+  const blocked = busy && !!primaryAction?.blocking;
   // While the main action saves, closing does not ask: the changes are being saved, not discarded.
-  const { open, onOpenChange, confirmDiscard, forceClose } = useDirtyGuard({ isDirty: isDirty && !saving && !primaryAction?.isPending, discardText, ...openProps });
+  const guard = useDirtyGuard({ isDirty: isDirty && !busy, discardText, ...openProps });
+  const { open, confirmDiscard, forceClose } = guard;
+  // Blocking action: no way to close until it is done.
+  const onOpenChange = (next: boolean) => (blocked && !next ? undefined : guard.onOpenChange(next));
+  const content = (close: () => void) => <ServerErrorsScope errors={serverErrors}>{typeof children === 'function' ? children(close) : children}</ServerErrorsScope>;
   const isMobile = useMediaQuery(MOBILE_QUERY);
   const layout = overlay === 'auto' ? (isMobile ? mobile : 'dialog') : overlay;
-  const content = (close: () => void) => (typeof children === 'function' ? children(close) : children);
 
   if (layout === 'sheet') {
     return (
@@ -301,13 +338,14 @@ export function Dialog({
           closeLabel={closeLabel}
           isOpen={open}
           onOpenChange={onOpenChange}
-          isDismissable={!isDirty}
+          isDismissable={!isDirty && !blocked}
+          isKeyboardDismissDisabled={blocked}
           className={className}
           footer={
             primaryAction &&
             ((close) => (
               <ButtonGroup>
-                <Button variant="secondary" size="lg" onPress={close}>
+                <Button variant="secondary" size="lg" isDisabled={blocked} onPress={close}>
                   {cancelLabel}
                 </Button>
                 <ActionButton action={primaryAction} close={forceClose} size="lg" variant="primary" />
@@ -328,7 +366,8 @@ export function Dialog({
       <ModalOverlay
         isOpen={open}
         onOpenChange={onOpenChange}
-        isDismissable={!isDirty}
+        isDismissable={!isDirty && !blocked}
+        isKeyboardDismissDisabled={blocked}
         className={cx('medo-dialog-overlay', fullscreen && 'medo-dialog-overlay--fullscreen')}
       >
         <Modal className={cx('medo-dialog', fullscreen ? 'medo-dialog--fullscreen' : `medo-dialog--${size}`, className)}>
@@ -342,6 +381,7 @@ export function Dialog({
             showClose={showClose}
             nested={confirmDiscard}
             forceClose={forceClose}
+            blocked={blocked}
           >
             {content}
           </DialogFrame>
@@ -359,11 +399,13 @@ interface FrameProps extends Pick<DialogProps, 'title' | 'description' | 'primar
   nested: ReactNode;
   /** Closes without asking: the main action and the content's `close` (after saving). */
   forceClose: () => void;
+  /** A blocking main action runs: Cancel and × are disabled. */
+  blocked: boolean;
   children: (close: () => void) => ReactNode;
 }
 
 /** Header, scrolling body and footer of the centered and the fullscreen dialog. */
-function DialogFrame({ title, description, fullscreen, primaryAction, cancelLabel, closeLabel, showClose, nested, forceClose, children }: FrameProps) {
+function DialogFrame({ title, description, fullscreen, primaryAction, cancelLabel, closeLabel, showClose, nested, forceClose, blocked, children }: FrameProps) {
   const descriptionId = useId();
   const ref = useRef<HTMLElement>(null);
   const [scrolls, setScrolls] = useState(false);
@@ -378,7 +420,7 @@ function DialogFrame({ title, description, fullscreen, primaryAction, cancelLabe
           {fullscreen ? (
             /* Mobile: Cancel left, title centered, main action right – always visible above the keyboard. */
             <div className="medo-dialog__bar">
-              <Button variant="ghost" size="md" onPress={close}>
+              <Button variant="ghost" size="md" isDisabled={blocked} onPress={close}>
                 {primaryAction ? cancelLabel : closeLabel}
               </Button>
               <Heading slot="title" className="medo-dialog__bar-title">
@@ -398,7 +440,7 @@ function DialogFrame({ title, description, fullscreen, primaryAction, cancelLabe
                   </p>
                 )}
               </div>
-              {showClose && <IconButton variant="ghost" size="sm" icon={<X />} aria-label={closeLabel} tooltip={false} onPress={close} />}
+              {showClose && <IconButton variant="ghost" size="sm" icon={<X />} aria-label={closeLabel} tooltip={false} isDisabled={blocked} onPress={close} />}
             </div>
           )}
           <DialogBody onScrollsChange={setScrolls}>
@@ -412,7 +454,7 @@ function DialogFrame({ title, description, fullscreen, primaryAction, cancelLabe
           {!fullscreen && primaryAction && (
             <div className="medo-dialog__footer">
               <ButtonGroup>
-                <Button variant="secondary" onPress={close}>
+                <Button variant="secondary" isDisabled={blocked} onPress={close}>
                   {cancelLabel}
                 </Button>
                 <ActionButton action={primaryAction} close={forceClose} size="md" variant="primary" />
@@ -445,6 +487,38 @@ function DialogBody({ children, onScrollsChange }: { children: ReactNode; onScro
     <div ref={ref} className="medo-dialog__body" tabIndex={scrolls ? 0 : undefined}>
       <div className="medo-dialog__body-inner">{children}</div>
     </div>
+  );
+}
+
+const NO_ERRORS = {};
+
+/**
+ * The server's messages of the main action (FieldErrors): at the fields (React Aria FormValidationContext, also read
+ * by Form), a problem of the whole form as an Alert on top. The focus goes to the first field with a message, else
+ * to the Alert.
+ */
+function ServerErrorsScope({ errors, children }: { errors: FieldErrors | null; children: ReactNode }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const alertRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (!errors) return;
+    // After the dialog's own initial focus.
+    const frame = requestAnimationFrame(() => {
+      if (!ref.current || !focusField(ref.current, Object.keys(errors.fields))) alertRef.current?.focus();
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [errors]);
+  return (
+    <FormValidationContext.Provider value={errors?.fields ?? NO_ERRORS}>
+      <div ref={ref} className="medo-dialog__content">
+        {errors?.formError && (
+          <div ref={alertRef} tabIndex={-1} className="medo-form__error">
+            <Alert tone="danger" title={errors.formError} />
+          </div>
+        )}
+        {children}
+      </div>
+    </FormValidationContext.Provider>
   );
 }
 

@@ -5,12 +5,7 @@ import type { EmbedMessages, Messages } from './messages';
  * „Ihre“ nur, wo es nicht anders geht (IP-Adresse). Deutsche Anführungszeichen „…“.
  */
 
-const embed = (
-  title: string,
-  subject: { nominative: string; dativeArticle: string },
-  load: string,
-  remember: (p: string | undefined) => string,
-): EmbedMessages => ({
+const embed = (title: string, subject: { nominative: string; dativeArticle: string }, load: string, remember: (p: string | undefined) => string): EmbedMessages => ({
   title,
   body: (provider, to) =>
     `${subject.nominative} von ${provider ?? 'einem Drittanbieter'} bereitgestellt. Beim Laden werden Daten wie Ihre IP-Adresse an ${to ?? 'den Anbieter'} übertragen.`,
@@ -54,6 +49,10 @@ export const de: Messages = {
     unknownOrganization: 'Unbekannte Organisation',
     more: (n) => `${n} weitere`,
   },
+  form: {
+    errorCount: (n) => (n === 1 ? '1 Feld muss noch korrigiert werden' : `${n} Felder müssen noch korrigiert werden`),
+    saveFailed: 'Speichern fehlgeschlagen. Die Eingaben bleiben erhalten – bitte erneut versuchen.',
+  },
   stepper: { label: 'Fortschritt', count: (step, total) => `Schritt ${step} von ${total}`, completed: 'erledigt' },
   breadcrumbs: { label: 'Pfadnavigation', more: (n) => (n === 1 ? '1 weitere Ebene anzeigen' : `${n} weitere Ebenen anzeigen`) },
   bulkActionBar: { label: 'Sammelaktionen', count: (n) => `${n} ausgewählt`, clear: 'Auswahl aufheben', more: 'Weitere Aktionen' },
@@ -90,6 +89,7 @@ export const de: Messages = {
     discardDescription: 'Die Änderungen gehen verloren.',
     discardAction: 'Verwerfen',
     discardCancel: 'Weiter bearbeiten',
+    reopen: 'Wieder öffnen',
   },
   embed: {
     video: embed('Externes Video laden', { nominative: 'Dieses Video wird', dativeArticle: 'dieses Videos' }, 'Video laden', (p) =>

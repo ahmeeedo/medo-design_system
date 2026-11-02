@@ -14,6 +14,8 @@
  */
 
 .medo-table-container {
+  /* Positioned, so hidden texts in cells (medo-visually-hidden) scroll and clip with the table, not with the page. */
+  position: relative;
   box-sizing: border-box;
   inline-size: 100%;
   overflow: auto;

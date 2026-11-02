@@ -62,13 +62,12 @@
   min-inline-size: 0;
 }
 
-/* One line; longer text is cut (write shorter). */
+/* Wraps – a message is never cut (an error names what failed). Write one short sentence; long words break. */
 .medo-toast__message {
   display: block;
-  overflow: hidden;
+  padding-block: var(--medo-space-1);
   font: var(--medo-typography-body-sm);
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  overflow-wrap: anywhere;
 }
 
 /* ---------- _Toast button (Action · Close) – inverse state layers ---------- */

@@ -8,6 +8,7 @@ import { Select } from '../select/Select';
 import { Option } from '../listbox/ListBox';
 import { interactionTest, row, semantic, slot } from '../story-helpers';
 import { ToastRegion } from '../toast/Toast';
+import { FieldErrors } from '../form/Form';
 
 const roles = [
   { id: 'viewer', name: 'Viewer' },
@@ -102,8 +103,15 @@ const meta = {
           'Submit a form with `primaryAction.form`; return a promise from `onAction` to show the pending state.',
           'Let people close the dialog while it saves – the saving goes on. Set `backgroundToast` with texts that name the object (“Invite sent to anna@example.com”); a failure then shows a Toast with Retry.',
           'When saving fails while the dialog is open, keep it open and show the error inside it, with the input kept.',
+          'Reject with `FieldErrors` when the server finds a problem in the input: the message shows at the field – also after the dialog was closed, through “Open again” in the Toast. Keep the values in the app (controlled fields) for that.',
+          'Set `primaryAction.blocking` only for actions whose result people must see before they go on (a payment, deleting many records): the dialog cannot be closed while it runs.',
+          'Saving in the background: warn before the page is left while requests run (`beforeunload`, in the app).',
         ],
-        dont: ['Open a dialog on top of a dialog. Only an Alert Dialog may open on top.', 'Open a dialog without a user action.', 'Put navigation or tabs into a dialog.'],
+        dont: [
+          'Open a dialog on top of a dialog. Only an Alert Dialog may open on top.',
+          'Open a dialog without a user action.',
+          'Put navigation or tabs into a dialog.',
+        ],
       },
       a11y: {
         keyboard: [
@@ -263,6 +271,71 @@ export const AsyncAction: Story = {
   ),
 };
 
+/** The app keeps the value, so the dialog can open again with it. “taken@example.com” is already a member. */
+function InviteWithServerCheck() {
+  const [email, setEmail] = useState('');
+  const invite = async (address: string) => {
+    await new Promise((resolve) => setTimeout(resolve, 1500));
+    if (address === 'taken@example.com') throw new FieldErrors({ email: `${address} is already a member. Enter another address.` });
+    setEmail('');
+  };
+  return (
+    <>
+      <DialogTrigger>
+        <Button>Invite member</Button>
+        <Dialog
+          size="sm"
+          title="Invite member"
+          primaryAction={{
+            label: 'Send invite',
+            onAction: () => invite(email),
+            backgroundToast: { success: `Invite sent to ${email}`, error: `Invite to ${email} not sent` },
+          }}
+        >
+          <TextField label="Email" name="email" type="email" value={email} onChange={setEmail} />
+        </Dialog>
+      </DialogTrigger>
+      <ToastRegion />
+    </>
+  );
+}
+
+export const ServerErrors: Story = {
+  name: 'Errors from the server',
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'Enter “taken@example.com” and send. Stay: the message shows at the field. Or close the dialog while it saves: the Toast offers “Open again”, and the dialog opens with the address and the message. The app keeps the value (controlled field).',
+      },
+    },
+  },
+  render: () => <InviteWithServerCheck />,
+};
+
+export const Blocking: Story = {
+  name: 'Blocking action',
+  parameters: {
+    docs: {
+      description: {
+        story:
+          '`primaryAction.blocking`: while the action runs, Cancel and × are disabled and Esc does nothing. Only for results people must see before they go on – everything else can save in the background.',
+      },
+    },
+  },
+  render: () => (
+    <DialogTrigger>
+      <Button variant="secondary">Delete 240 records</Button>
+      <Dialog
+        size="sm"
+        title="Delete 240 records"
+        description="The records are removed for everyone. This takes a moment."
+        primaryAction={{ label: 'Delete', variant: 'danger', blocking: true, onAction: () => new Promise((resolve) => setTimeout(resolve, 2000)) }}
+      />
+    </DialogTrigger>
+  ),
+};
+
 export const Mobile: Story = {
   name: 'On mobile',
   parameters: {
@@ -387,7 +460,14 @@ export const AsyncActionTest: Story = {
     // React Aria announces the end of a pending state with a node in its live region that points to the button by
     // aria-labelledby. The dialog was closed meanwhile, so the node points nowhere for a few seconds – an artefact of
     // the announcer outside the component, not of the dialog.
-    a11y: { config: { rules: [{ id: 'landmark-unique', enabled: false }, { id: 'role-img-alt', enabled: false }] } },
+    a11y: {
+      config: {
+        rules: [
+          { id: 'landmark-unique', enabled: false },
+          { id: 'role-img-alt', enabled: false },
+        ],
+      },
+    },
   },
   play: async ({ canvas, userEvent }) => {
     server.calls = [];
@@ -440,3 +520,105 @@ export const AsyncActionTest: Story = {
   },
 };
 
+/** Like “Errors from the server”, but the test answers each send. */
+const checks = {
+  calls: [] as { resolve: () => void; reject: (error: unknown) => void }[],
+  send() {
+    return new Promise<void>((resolve, reject) => checks.calls.push({ resolve, reject }));
+  },
+};
+
+function CheckedInvite({ blocking = false }: { blocking?: boolean }) {
+  const [email, setEmail] = useState('');
+  return (
+    <>
+      <DialogTrigger>
+        <Button>Invite member</Button>
+        <Dialog
+          title="Invite member"
+          primaryAction={{
+            label: 'Send invite',
+            blocking,
+            onAction: () => checks.send(),
+            backgroundToast: { success: `Invite sent to ${email}`, error: `Invite to ${email} not sent` },
+          }}
+        >
+          <TextField label="Email" name="email" type="email" value={email} onChange={setEmail} />
+        </Dialog>
+      </DialogTrigger>
+      <ToastRegion />
+    </>
+  );
+}
+
+const taken = (address: string) => new FieldErrors({ email: `${address} is already a member. Enter another address.` });
+
+export const ServerErrorsTest: Story = {
+  ...interactionTest,
+  name: 'Interaction test: errors from the server',
+  render: () => <CheckedInvite />,
+  parameters: AsyncActionTest.parameters,
+  play: async ({ canvas, userEvent }) => {
+    checks.calls = [];
+    const body = within(document.body);
+    const field = () => body.getByRole('textbox', { name: /Email/ });
+    const send = () => userEvent.click(body.getByRole('button', { name: 'Send invite' }));
+
+    // 1. Closed while saving, the server refuses the address: the Toast offers “Open again”, not Retry.
+    await userEvent.click(canvas.getByRole('button', { name: 'Invite member' }));
+    await userEvent.type(await body.findByRole('textbox', { name: /Email/ }), 'taken@example.com');
+    await send();
+    await userEvent.keyboard('{Escape}');
+    await waitFor(() => expect(body.queryByRole('dialog')).toBeNull());
+    checks.calls[0].reject(taken('taken@example.com'));
+    await expect(await body.findByText('Invite to taken@example.com not sent')).toBeInTheDocument();
+    await expect(body.queryByRole('button', { name: 'Retry' })).toBeNull();
+
+    // 2. Open again: the dialog with the address, the message at the field, the focus there.
+    await userEvent.click(body.getByRole('button', { name: 'Open again' }));
+    await body.findByRole('dialog', { name: 'Invite member' });
+    await expect(field()).toHaveValue('taken@example.com');
+    await expect(body.getByText('taken@example.com is already a member. Enter another address.')).toBeInTheDocument();
+    await waitFor(() => expect(field()).toHaveFocus());
+
+    // 3. Refused while open: the dialog stays, the new message at the field.
+    await userEvent.clear(field());
+    await userEvent.type(field(), 'anna@example.com');
+    await userEvent.tab();
+    await expect(body.queryByText(/is already a member/)).toBeNull();
+    await send();
+    checks.calls[1].reject(taken('anna@example.com'));
+    await expect(await body.findByText('anna@example.com is already a member. Enter another address.')).toBeInTheDocument();
+    await waitFor(() => expect(field()).toHaveFocus());
+
+    // 4. Closed and opened normally: no old message.
+    await userEvent.keyboard('{Escape}');
+    await waitFor(() => expect(body.queryByRole('dialog')).toBeNull());
+    await userEvent.click(canvas.getByRole('button', { name: 'Invite member' }));
+    await body.findByRole('dialog', { name: 'Invite member' });
+    await expect(body.queryByText(/is already a member/)).toBeNull();
+  },
+};
+
+export const BlockingTest: Story = {
+  ...interactionTest,
+  name: 'Interaction test: blocking action',
+  render: () => <CheckedInvite blocking />,
+  parameters: AsyncActionTest.parameters,
+  play: async ({ canvas, userEvent }) => {
+    checks.calls = [];
+    const body = within(document.body);
+    await userEvent.click(canvas.getByRole('button', { name: 'Invite member' }));
+    const dialog = await body.findByRole('dialog', { name: 'Invite member' });
+    await userEvent.type(within(dialog).getByRole('textbox', { name: /Email/ }), 'anna@example.com');
+    await userEvent.click(within(dialog).getByRole('button', { name: 'Send invite' }));
+    // While it runs: Esc does nothing, Cancel and × are disabled.
+    await userEvent.keyboard('{Escape}');
+    await expect(body.getByRole('dialog', { name: 'Invite member' })).toBeInTheDocument();
+    await expect(within(dialog).getByRole('button', { name: 'Cancel' })).toBeDisabled();
+    await expect(within(dialog).getByRole('button', { name: 'Close' })).toBeDisabled();
+    // Done: it closes.
+    checks.calls[0].resolve();
+    await waitFor(() => expect(body.queryByRole('dialog')).toBeNull());
+  },
+};

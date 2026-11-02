@@ -43,6 +43,12 @@ export interface Messages {
     more: (count: number) => string;
   };
   breadcrumbs: { label: string; more: (count: number) => string };
+  form: {
+    /** Screen readers only, after a submit with errors: “2 fields need attention”. */
+    errorCount: (count: number) => string;
+    /** Saving failed for another reason than the input (network, server). */
+    saveFailed: string;
+  };
   stepper: { label: string; count: (step: number, total: number) => string; completed: string };
   bulkActionBar: { label: string; count: (count: number) => string; clear: string; more: string };
   calendar: {
@@ -73,7 +79,14 @@ export interface Messages {
     lastMonth: string;
     availableTimes: string;
   };
-  dialog: { discardTitle: string; discardDescription: string; discardAction: string; discardCancel: string };
+  dialog: {
+    discardTitle: string;
+    discardDescription: string;
+    discardAction: string;
+    discardCancel: string;
+    /** Toast action after a background save failed on the input: opens the dialog with the messages at the fields. */
+    reopen: string;
+  };
   embed: {
     video: EmbedMessages;
     map: EmbedMessages;

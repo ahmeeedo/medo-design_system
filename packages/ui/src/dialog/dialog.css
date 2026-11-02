@@ -216,6 +216,15 @@
   gap: var(--medo-space-4);
 }
 
+/* Wraps the content for the server's messages (no box of its own); a problem of the whole form sits on top. */
+.medo-dialog__content {
+  display: contents;
+}
+
+.medo-dialog:not(.medo-dialog--fullscreen) .medo-dialog__content > .medo-form__error {
+  margin-block-end: var(--medo-space-4);
+}
+
 /* ---------- Bottom Sheet (short content on mobile) ---------- */
 
 .medo-dialog__sheet-body {

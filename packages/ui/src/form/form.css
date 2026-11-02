@@ -1,0 +1,15 @@
+/**
+ * Form – med.o Design System
+ *
+ *   <form class="medo-form">
+ *     <div class="medo-form__error" tabindex="-1"><div class="medo-alert medo-alert--danger">…</div></div>  error of the whole form
+ *     …fields…
+ *   </form>
+ * The form sets no layout: space the fields with the rule fields (Stack gap="fields" or medo-gap-fields).
+ * State contract: [data-pending] while onSave runs.
+ */
+
+/* Takes the focus by script so screen readers read it; the Alert itself is the visible sign. */
+.medo-form__error:focus {
+  outline: none;
+}

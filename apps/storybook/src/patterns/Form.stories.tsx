@@ -1,13 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useState } from 'react';
-import { Form } from 'react-aria-components';
 import { expect, waitFor } from 'storybook/test';
-import { Alert, Button, ButtonGroup, Checkbox, Radio, RadioGroup, Switch, TextField } from '@med-o/ui';
+import { Alert, Button, ButtonGroup, Checkbox, Form, Radio, RadioGroup, Switch, TextField } from '@med-o/ui';
 import { interactionTest } from '../../../../packages/ui/src/story-helpers';
 
 /**
  * A complete form built only from system components.
- * Validation runs on submit (native + React Aria): try sending it empty.
+ * Validation runs on submit (Form, built on React Aria): try sending it empty.
  */
 const meta = {
   title: 'Patterns/Form',
@@ -35,6 +34,7 @@ const meta = {
           'Disable the submit button until the form is valid – let people submit and show what is missing.',
           'Validate while someone is still typing; check on leaving the field or on submit.',
           'Clear what the user entered after an error.',
+          'Collect the errors in a summary above a long form – show them at the fields and split long forms into steps (pattern Multi-step form).',
         ],
       },
       a11y: {
@@ -44,7 +44,8 @@ const meta = {
           ['Space', 'Toggles a checkbox or switch, picks a radio.'],
         ],
         notes: [
-          'Use React Aria `Form`: on submit the focus moves to the first invalid field and its message is read.',
+          'Use `Form`: on submit the focus moves to the first invalid field and its message is read; screen readers also hear how many fields need attention.',
+          'Errors the server finds go to their field too: reject `onSave` with `FieldErrors` (see Components/Forms/Form).',
           'Error messages say how to fix the problem (“Enter a valid email address”), not only that something is wrong.',
           'Help and error texts are linked to their field, so they are read with it.',
           'Required fields are marked visibly and set `isRequired`, so screen readers announce them.',
@@ -62,21 +63,23 @@ function ContactFormExample() {
   const [sent, setSent] = useState(false);
   if (sent) {
     return (
-      <Alert tone="success" title="Message sent" announce actions={<Button variant="secondary" onPress={() => setSent(false)}>Send another message</Button>}>
+      <Alert
+        tone="success"
+        title="Message sent"
+        announce
+        actions={
+          <Button variant="secondary" onPress={() => setSent(false)}>
+            Send another message
+          </Button>
+        }
+      >
         Thank you. We answer within two working days.
       </Alert>
     );
   }
   return (
-    // React Aria's Form validates; the classes of Stack give it the spacing rule fields.
-    <Form
-      onSubmit={(e) => {
-        e.preventDefault();
-        setSent(true);
-      }}
-      className="medo-stack medo-gap-fields"
-      style={{ maxInlineSize: '28rem' }}
-    >
+    // Form validates and saves; the classes of Stack give it the spacing rule fields.
+    <Form onSave={() => setSent(true)} className="medo-stack medo-gap-fields" style={{ maxInlineSize: '28rem' }}>
       <TextField label="Name" name="name" isRequired autoComplete="name" errorMessage="Enter your name." />
       <TextField
         label="Email"

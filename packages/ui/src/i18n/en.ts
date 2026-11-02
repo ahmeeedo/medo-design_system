@@ -4,8 +4,7 @@ const s = (n: number, one: string, other: string) => (n === 1 ? one : other);
 
 const embed = (noun: string, title: string, load: string, remember: (p: string | undefined) => string): EmbedMessages => ({
   title,
-  body: (provider, to) =>
-    `This ${noun} is provided by ${provider ?? 'a third party'}. Loading it sends data such as your IP address to ${to ?? 'the provider'}.`,
+  body: (provider, to) => `This ${noun} is provided by ${provider ?? 'a third party'}. Loading it sends data such as your IP address to ${to ?? 'the provider'}.`,
   bodyCompact: (provider, company, to) =>
     noun === 'video'
       ? `Loading this video sends data to ${provider && company && provider !== company ? `${provider} (${company})` : (to ?? 'a third party')}.`
@@ -47,6 +46,10 @@ export const en: Messages = {
     unknownOrganization: 'Unknown organization',
     more: (n) => `${n} more`,
   },
+  form: {
+    errorCount: (n) => (n === 1 ? '1 field needs attention' : `${n} fields need attention`),
+    saveFailed: 'Could not save. Your input is kept – try again.',
+  },
   stepper: { label: 'Progress', count: (step, total) => `Step ${step} of ${total}`, completed: 'completed' },
   breadcrumbs: { label: 'Breadcrumb', more: (n) => `Show ${n} more ${s(n, 'level', 'levels')}` },
   bulkActionBar: { label: 'Bulk actions', count: (n) => `${n} selected`, clear: 'Clear selection', more: 'More actions' },
@@ -83,13 +86,12 @@ export const en: Messages = {
     discardDescription: 'Your changes will be lost.',
     discardAction: 'Discard',
     discardCancel: 'Keep editing',
+    reopen: 'Open again',
   },
   embed: {
     video: embed('video', 'Load external video', 'Load video', (p) => (p ? `Always load ${p} videos` : 'Always load videos from this provider')),
     map: embed('map', 'Load map', 'Load map', (p) => (p ? `Always load ${p}` : 'Always load maps from this provider')),
-    generic: embed('content', 'Load external content', 'Load content', (p) =>
-      p ? `Always load content from ${p}` : 'Always load content from this provider',
-    ),
+    generic: embed('content', 'Load external content', 'Load content', (p) => (p ? `Always load content from ${p}` : 'Always load content from this provider')),
     privacy: 'Privacy policy',
   },
   list: { notIncluded: 'Not included:' },

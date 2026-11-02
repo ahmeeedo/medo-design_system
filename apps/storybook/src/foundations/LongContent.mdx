@@ -1,0 +1,157 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import { DocPage, DocHeader, DocSection, DocFooter, SpecTable, Notes, Tok, SourceLink } from '../docs-blocks/DocBlocks';
+
+<Meta title="Foundations/Long content" />
+
+<DocPage>
+
+<DocHeader
+  kind="Foundations"
+  title="Long content"
+  meta="Wrap · Cut · Tables · Forms"
+  subtitle="Real names are long, German words are longer – the layout makes room, and nothing important is cut."
+  description={
+    <p>
+      How the components handle long text, and what to do in your own layouts. Every rule holds down to 320 px – the width of a phone, and of a desktop window at 400 %
+      zoom.
+    </p>
+  }
+  nav={['Principles', 'Where components cut', 'Long words', 'Tables', 'Long forms', 'Testing']}
+/>
+
+<DocSection n={1} title="Principles" meta="Wrap first">
+
+<SpecTable
+  head={['Rule', 'Why']}
+  rows={[
+    ['Wrap by default', 'Text in content, forms, alerts, dialogs and tables takes another line. Lines grow, the page never scrolls sideways.'],
+    [
+      'Never cut what people must read to act',
+      'Errors and warnings, field labels and help texts, amounts and numbers, consent and legal texts, the answers on a check page.',
+    ],
+    [
+      'Cut only in one-line places',
+      'Navigation items, breadcrumbs, tags, menu items, list titles, the value of a Select, file names – where a second line would break the layout.',
+    ],
+    [
+      'The whole text stays reachable',
+      <>
+        Where text is cut, people reach the rest with the mouse, the keyboard and touch: a tooltip on hover and focus, or the next view (the list opens the record). A{' '}
+        <Tok>title</Tok> attribute alone does not count – it needs a mouse.
+      </>,
+    ],
+    ['Screen readers always get all of it', 'Cutting is visual only: the accessible name is the full text.'],
+  ]}
+/>
+
+</DocSection>
+
+<DocSection n={2} title="Where components cut" meta="And how to reach the rest">
+
+<SpecTable
+  head={['Component · part', 'Full text']}
+  rows={[
+    ['Breadcrumbs · label over 200 px', 'Tooltip on hover and focus.'],
+    ['Side navigation · collapsed (rail)', 'Tooltip on hover and focus.'],
+    ['List view · title and description', 'In the record the row opens. Keep the key value (amount, count) in its own column – it is never cut.'],
+    ['Select · chosen value', 'In the list when it opens; options wrap.'],
+    ['Upload · file name', 'Cut in the middle, the end and the extension stay visible (“Quarterly-rep…-2026-Q3.pdf”).'],
+    [
+      'Side navigation (expanded), Tag, Menu item, App header title',
+      'Screen readers only – keep these labels short (one or two words), the content of the page names the rest.',
+    ],
+    ['Toast', 'Never cut: the message wraps. Still write one short sentence.'],
+  ]}
+/>
+
+</DocSection>
+
+<DocSection n={3} title="Long words" meta="Compounds · Addresses">
+
+<Notes title="Words that do not fit">
+  <ul>
+    <li>
+      Components break a word that is wider than its place – a German compound, an email address, a URL – instead of widening the page (<Tok>overflow-wrap: anywhere</Tok>
+      ). Do the same in your own text containers.
+    </li>
+    <li>
+      Set <Tok>lang</Tok> on <Tok>html</Tok> (<Tok>de</Tok>, <Tok>en</Tok>): screen readers pronounce the words right, and browsers can hyphenate with{' '}
+      <Tok>hyphens: auto</Tok> where you opt in.
+    </li>
+    <li>
+      In fixed texts – labels, headings, buttons – put soft hyphens into long compounds, so they break at the right place:{' '}
+      <Tok>{'Versicherten­nummer'.replace('­', '&shy;')}</Tok>.
+    </li>
+    <li>Better still: a shorter word. “Versichertennummer” – not “Krankenversicherungsnummer des Hauptversicherten”.</li>
+  </ul>
+</Notes>
+
+</DocSection>
+
+<DocSection n={4} title="Tables" meta="Values · Numbers · Missing values">
+
+<SpecTable
+  head={['Content', 'Rule']}
+  rows={[
+    ['Long text', 'Wraps in its cell. A wide table scrolls in its own frame (keyboard: the frame takes the focus) – the page never.'],
+    [
+      'Numbers and amounts',
+      <>
+        Right-aligned with tabular figures, on one line, never cut: 1.234.567,89 €. Class <Tok>medo-table__cell--number</Tok> or <Tok>align="end"</Tok>.
+      </>,
+    ],
+    [
+      'Big numbers',
+      'Formatted by the locale (Intl.NumberFormat), with the unit. Shorten only where the exact value is elsewhere: “1,2 Mio. €”, full value in the record.',
+    ],
+    ['Missing values', 'An en dash for the eye, words for screen readers – never an empty cell, never “0” or “N/A” for unknown.'],
+  ]}
+/>
+
+```tsx
+<td>
+  <span aria-hidden="true">–</span>
+  <span className="medo-visually-hidden">No value</span>
+</td>
+```
+
+</DocSection>
+
+<DocSection n={5} title="Long forms" meta="Steps, not summaries">
+
+<Notes title="Split long forms into steps">
+  <ul>
+    <li>
+      More than about 8 fields, or parts that build on each other: split the form into steps (Patterns / Multi-step form) – not one long page with an error summary on
+      top.
+    </li>
+    <li>Each step checks its fields on Continue; the errors appear at the fields, the focus on the first. Errors are never collected for the end.</li>
+    <li>End with “Check your answers”: the answers per step with Change. Long answers wrap there too.</li>
+  </ul>
+</Notes>
+
+</DocSection>
+
+<DocSection n={6} title="Testing" meta="Difficult content">
+
+<SpecTable
+  head={['Case', 'Example']}
+  rows={[
+    ['Long name', 'Maximiliane Alexandra von Hohenzollern-Sigmaringen-Wartenberg'],
+    ['German compound', 'Krankenversicherungsbeitragsrückerstattungsantrag'],
+    ['Long email address', 'maximiliane.von-hohenzollern-sigmaringen@verwaltungsgemeinschaft-oberland.example.com'],
+    ['Big number', '1.234.567,89 €'],
+    ['Missing value', '– (read as “No value”)'],
+  ]}
+/>
+
+The test story in `apps/storybook/src/tests/LongContent.stories.tsx` renders this set in the components at 320 px and 1280 px and fails when the page scrolls sideways or an error is cut. Use the same set in the tests of your screens that show user data.
+
+</DocSection>
+
+<DocFooter>
+  {'Foundations: Long content · Wrap · Cut · Tables · Forms'}
+  <SourceLink path="apps/storybook/src/tests/LongContent.stories.tsx" />
+</DocFooter>
+
+</DocPage>

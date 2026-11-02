@@ -44,19 +44,7 @@ export { Tabs, TabList, Tab, TabPanel } from './tabs/Tabs';
 export type { TabsProps, TabListProps, TabProps, TabPanelProps } from './tabs/Tabs';
 export { Popover, PopoverTrigger, Toggletip } from './popover/Popover';
 export type { PopoverProps, ToggletipProps } from './popover/Popover';
-export {
-  NavItem,
-  NavGroup,
-  NavSection,
-  NavList,
-  SkipLink,
-  SiteHeader,
-  AppHeader,
-  SideNav,
-  BottomTabBar,
-  TabBarItem,
-  TabBarMore,
-} from './navigation/Navigation';
+export { NavItem, NavGroup, NavSection, NavList, SkipLink, SiteHeader, AppHeader, SideNav, BottomTabBar, TabBarItem, TabBarMore } from './navigation/Navigation';
 export type {
   NavItemProps,
   NavGroupProps,
@@ -96,6 +84,8 @@ export { Highlight } from './utils/highlight';
 export { MOBILE_QUERY, useMediaQuery } from './utils/useMediaQuery';
 export { Breadcrumbs } from './breadcrumbs/Breadcrumbs';
 export { Stepper, Step } from './stepper/Stepper';
+export { Form, FieldErrors } from './form/Form';
+export type { FormProps } from './form/Form';
 export type { StepperProps, StepProps } from './stepper/Stepper';
 export type { BreadcrumbsProps, BreadcrumbItem } from './breadcrumbs/Breadcrumbs';
 export { Accordion, AccordionItem } from './accordion/Accordion';

@@ -60,6 +60,7 @@
   gap: var(--medo-space-1);
   flex: 1;
   min-inline-size: 0;
+  overflow-wrap: anywhere; /* long words and addresses break instead of widening the page */
   /* Centre the first line with the 20 px icon (label/md has a 20 px line). */
   padding-block-start: 0;
 }

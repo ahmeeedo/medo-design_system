@@ -51,7 +51,10 @@ export function FieldErrorText({ errorMessage }: { errorMessage?: ReactNode | ((
   return (
     <FieldError className="medo-field__error">
       {(validation) => {
-        const text = (typeof errorMessage === 'function' ? errorMessage(validation) : errorMessage) || validation.validationErrors.join(' ');
+        // Messages from `validate` or the server (Form validationErrors) are specific – they win over the general
+        // errorMessage, which describes the field's own rules (required, type, min/max).
+        const specific = validation.validationDetails.customError ? validation.validationErrors.join(' ') : '';
+        const text = specific || (typeof errorMessage === 'function' ? errorMessage(validation) : errorMessage) || validation.validationErrors.join(' ');
         return text ? (
           <>
             <CircleAlert aria-hidden="true" />

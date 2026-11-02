@@ -19,6 +19,7 @@
 
 .medo-field__label {
   display: inline-flex;
+  overflow-wrap: anywhere;
   gap: var(--medo-space-1);
   padding-inline-start: var(--medo-space-0-5);
   font: var(--medo-typography-label-md);
@@ -42,7 +43,9 @@
 }
 
 .medo-field__description {
+  min-inline-size: 0;
   color: var(--medo-color-text-secondary);
+  overflow-wrap: anywhere;
 }
 
 /* The error message replaces the helper text – only when there is a message to show. */
@@ -57,7 +60,9 @@
   display: flex;
   align-items: flex-start;
   gap: var(--medo-space-1);
+  min-inline-size: 0;
   color: var(--medo-color-text-danger);
+  overflow-wrap: anywhere; /* never cut, never wider than the field */
 }
 
 .medo-field__error > svg {
