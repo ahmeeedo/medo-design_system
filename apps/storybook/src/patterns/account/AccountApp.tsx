@@ -5,7 +5,7 @@
  */
 import { useId, useMemo, useState, type CSSProperties, type ReactNode } from 'react';
 import { DialogTrigger, RouterProvider, type Key, type Selection, type SortDescriptor } from 'react-aria-components';
-import { Bell, Download, FileText, FolderClosed, LayoutDashboard, Package, Settings, SlidersHorizontal, User } from 'lucide-react';
+import { Archive, Bell, Download, FileText, FolderClosed, LayoutDashboard, Package, Settings, SlidersHorizontal, User } from 'lucide-react';
 import {
   MOBILE_QUERY,
   useMediaQuery,
@@ -612,6 +612,30 @@ export function OrdersPage({ level = 1, mobile = false, state }: { level?: Level
 
 /* ---------- Invoices ---------- */
 
+/**
+ * Archiving with a fake server: the first try fails for the 2nd and 4th invoice of a batch (timeout), a retry works.
+ * In an app this is one request that answers which items worked and which failed.
+ */
+function useArchive() {
+  const [archived, setArchived] = useState<ReadonlySet<string>>(new Set());
+  const [failed, setFailed] = useState<string[]>([]);
+  const [pending, setPending] = useState(false);
+  const failedOnce = useMemo(() => new Set<string>(), []);
+  const run = async (ids: string[]) => {
+    setPending(true);
+    await new Promise((resolve) => setTimeout(resolve, 400));
+    const bad = ids.filter((id, index) => (index === 1 || index === 3) && !failedOnce.has(id));
+    bad.forEach((id) => failedOnce.add(id));
+    const done = ids.filter((id) => !bad.includes(id));
+    setArchived((all) => new Set([...all, ...done]));
+    setFailed(bad);
+    setPending(false);
+    return { done, failed: bad };
+  };
+  const restore = (ids: string[]) => setArchived((all) => new Set([...all].filter((id) => !ids.includes(id))));
+  return { archived, failed, pending, run, restore, dismiss: () => setFailed([]) };
+}
+
 export function InvoicesPage({ level = 1, mobile = false, state }: { level?: Level; mobile?: boolean; state?: 'error' }) {
   const [query, setQuery] = useState('');
   const [status, setStatus] = useState<Key | null>(null);
@@ -622,14 +646,19 @@ export function InvoicesPage({ level = 1, mobile = false, state }: { level?: Lev
   });
   const [selected, setSelected] = useState<Selection>(new Set());
   const [selecting, setSelecting] = useState(false);
+  const archive = useArchive();
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
     const list = invoices.filter(
-      (i) => (!q || i.id.toLowerCase().includes(q) || i.order.toLowerCase().includes(q)) && (!status || i.status === status) && inPeriod(i.date, period as string | null),
+      (i) =>
+        !archive.archived.has(i.id) &&
+        (!q || i.id.toLowerCase().includes(q) || i.order.toLowerCase().includes(q)) &&
+        (!status || i.status === status) &&
+        inPeriod(i.date, period as string | null),
     );
     return sortBy(list, sort);
-  }, [query, status, period, sort]);
+  }, [query, status, period, sort, archive.archived]);
   const overdue = invoices.filter((i) => i.status === 'Overdue');
   const count = selected === 'all' ? filtered.length : selected.size;
   const reset = () => {
@@ -643,6 +672,16 @@ export function InvoicesPage({ level = 1, mobile = false, state }: { level?: Lev
   ];
   const download = (n: number) => {
     toast(n === 1 ? 'Invoice downloaded' : `${n} invoices downloaded`);
+  };
+  const selectedIds = () => (selected === 'all' ? filtered.map((i) => i.id) : filtered.filter((i) => selected.has(i.id)).map((i) => i.id));
+  // Partial failure: what worked leaves the list (Toast with Undo); what failed stays selected, with the reason and Retry.
+  const runArchive = async (ids: string[]) => {
+    if (archive.pending) return;
+    const { done, failed } = await archive.run(ids);
+    setSelected(new Set(failed));
+    if (done.length) {
+      toast(done.length === 1 ? 'Invoice archived' : `${done.length} invoices archived`, { action: { label: 'Undo', onAction: () => archive.restore(done) } });
+    }
   };
 
   if (state === 'error') {
@@ -706,6 +745,24 @@ export function InvoicesPage({ level = 1, mobile = false, state }: { level?: Lev
         Please pay them within 7 days to avoid a reminder fee.
       </Alert>
     ) : null;
+  const failedAlert =
+    archive.failed.length > 0 ? (
+      <Alert
+        tone="danger"
+        announce
+        title={archive.failed.length === 1 ? '1 invoice could not be archived' : `${archive.failed.length} invoices could not be archived`}
+        actions={
+          // No isPending here: the button disappears with the Alert when the retry works, and the end of a pending
+          // state would be announced for a button that no longer exists. A second press is ignored instead.
+          <Button variant="secondary" size="sm" onPress={() => void runArchive(archive.failed)}>
+            Try again
+          </Button>
+        }
+        onDismiss={archive.dismiss}
+      >
+        {`${archive.failed.join(', ')}: the server did not answer in time. They are still selected – try again, nothing else is lost.`}
+      </Alert>
+    ) : null;
   const bar = (
     <BulkActionBar
       variant={mobile ? 'mobile' : 'desktop'}
@@ -717,6 +774,11 @@ export function InvoicesPage({ level = 1, mobile = false, state }: { level?: Lev
           onAction: () => download(count),
           icon: <Download />,
         },
+        {
+          label: 'Archive',
+          onAction: () => void runArchive(selectedIds()),
+          icon: <Archive />,
+        },
       ]}
     />
   );
@@ -724,6 +786,7 @@ export function InvoicesPage({ level = 1, mobile = false, state }: { level?: Lev
   if (mobile) {
     return (
       <Stack>
+        {failedAlert}
         {alert}
         {search}
         <Stack direction="horizontal" align="center" justify="between">
@@ -783,6 +846,7 @@ export function InvoicesPage({ level = 1, mobile = false, state }: { level?: Lev
 
   return (
     <Stack>
+      {failedAlert}
       {alert}
       {summary}
       <ActiveFilters filters={active} onRemove={(id) => (id === 'status' ? setStatus(null) : setPeriod(null))} onClear={reset} />

@@ -1,4 +1,4 @@
-import { useContext, useEffect, useId, useLayoutEffect, useRef, useState, type ReactNode } from 'react';
+import { createContext, useContext, useEffect, useId, useLayoutEffect, useRef, useState, type ReactNode } from 'react';
 import { Dialog as AriaDialog, DialogContext, Heading, Modal, ModalOverlay, OverlayTriggerStateContext, Provider } from 'react-aria-components';
 import { CircleAlert, Info, TriangleAlert, X } from 'lucide-react';
 import { BottomSheet } from '../bottom-sheet/BottomSheet';
@@ -7,6 +7,7 @@ import { IconButton } from '../icon-button/IconButton';
 import { cx } from '../utils/cx';
 import { MOBILE_QUERY, useMediaQuery } from '../utils/useMediaQuery';
 import { useMessages } from '../i18n/I18n';
+import { toast } from '../toast/Toast';
 
 /** Opens a Dialog or Alert dialog from a trigger (React Aria DialogTrigger). Focus returns to the trigger. */
 export { DialogTrigger } from 'react-aria-components';
@@ -17,10 +18,19 @@ export interface DialogAction {
   /** Verb that says what happens (“Send invite”, “Delete”). Never “OK”, “Yes” or “Confirm”. */
   label: string;
   /**
-   * Runs on press, then the dialog closes. Return a promise to show the pending state until it
-   * resolves; when it rejects, the dialog stays open (show the error inside the dialog).
+   * Runs on press, then the dialog closes. Return a promise to show the pending state until it resolves; when it
+   * rejects, the dialog stays open (show the error inside the dialog).
+   * The dialog can be closed while the promise runs (Esc, Cancel, ×) – it never asks “Discard changes?” then, the
+   * saving goes on and `backgroundToast` reports the result. A result that arrives late never closes a dialog that
+   * was opened again in the meantime.
    */
   onAction?: () => void | Promise<unknown>;
+  /**
+   * Shown as a Toast when the promise settles after the dialog was closed – name the object, e.g.
+   * `{ success: 'Invite sent to anna@example.com', error: 'Invite to anna@example.com not sent' }`. The error toast
+   * stays until closed and offers Retry, which runs `onAction` again. Needs a ToastRegion in the app.
+   */
+  backgroundToast?: { success: string; error: string };
   /** Id of a form in the dialog: the button submits it. The form's onSubmit saves and calls `close`. */
   form?: string;
   /** Dialog only: danger for a destructive main action. */
@@ -47,18 +57,95 @@ function useOpenState({ isOpen, onOpenChange }: OpenProps) {
   return [open, setOpen] as const;
 }
 
-/** Main action button: runs the action and closes; a promise shows the pending state. Shared with Popover (internal, not exported from the package). */
+/**
+ * Between a dialog and its main action: the action reports while it saves (closing then never asks “Discard
+ * changes?”), the dialog tells which opening is current – a result of an earlier opening must not close this one.
+ */
+interface ActionRun {
+  setSaving: (saving: boolean) => void;
+  /** Counts the openings; -1 while closed. */
+  opening: { current: number };
+}
+const ActionRunContext = createContext<ActionRun | null>(null);
+
+/** Provides the ActionRun of a dialog; returns its value and whether its action is saving. */
+function useActionRun(open: boolean) {
+  const [saving, setSaving] = useState(false);
+  const count = useRef(0);
+  const opening = useRef(open ? 0 : -1);
+  useEffect(() => {
+    opening.current = open ? ++count.current : -1;
+  }, [open]);
+  const run = useRef<ActionRun>({ setSaving, opening }).current;
+  return { run, saving };
+}
+
+/** Runs a background action again until it settles, reporting each result as a Toast. */
+function settleInBackground(promise: Promise<unknown>, action: DialogAction, retryLabel: string) {
+  const messages = action.backgroundToast;
+  promise.then(
+    () => messages && toast(messages.success),
+    () => {
+      if (!messages) return;
+      const onAction = action.onAction;
+      toast(messages.error, {
+        persistent: true,
+        action: onAction
+          ? {
+              label: retryLabel,
+              onAction: () => {
+                const again = onAction();
+                if (again instanceof Promise) settleInBackground(again, action, retryLabel);
+                else toast(messages.success);
+              },
+            }
+          : undefined,
+      });
+    },
+  );
+}
+
+/**
+ * Main action button: runs the action and closes; a promise shows the pending state. Shared with Popover (internal,
+ * not exported from the package). Contract for a promise:
+ * - resolves while open → the dialog closes;
+ * - rejects while open → the dialog stays open, the app shows the error inside (no unhandled rejection);
+ * - the dialog was closed meanwhile → nothing closes (also not a dialog opened again), `backgroundToast` reports;
+ * - a second press while pending → ignored (React Aria Button with isPending).
+ */
 export function ActionButton({ action, close, size, variant }: { action: DialogAction; close: () => void; size: ButtonSize; variant: 'primary' | 'danger' }) {
+  const m = useMessages();
   const [pending, setPending] = useState(false);
+  const context = useContext(ActionRunContext);
+  const mounted = useRef(true);
+  useEffect(() => {
+    mounted.current = true;
+    return () => {
+      mounted.current = false;
+    };
+  }, []);
+  useEffect(() => {
+    context?.setSaving(pending);
+  }, [pending, context]);
+
   const run = async () => {
     const result = action.onAction?.();
     if (!(result instanceof Promise)) return close();
+    const opening = context?.opening.current;
+    // Still the same opening of the dialog (without a dialog around it: still on screen)?
+    const stillOpen = () => (context ? context.opening.current === opening : mounted.current);
     setPending(true);
+    // “Retry” is the same word as on a failed upload.
+    const retry = m.upload.retryShort;
     try {
       await result;
-      close();
+      if (stillOpen()) close();
+      else settleInBackground(Promise.resolve(), action, retry);
+    } catch {
+      // Open: the app shows the error in the dialog. Closed: the error Toast reports it and offers Retry.
+      if (!stillOpen()) settleInBackground(Promise.reject(new Error('failed')), action, retry);
     } finally {
-      setPending(false);
+      if (mounted.current) setPending(false);
     }
   };
   return (
@@ -198,62 +285,69 @@ export function Dialog({
   const m = useMessages();
   const cancelLabel = cancelLabelProp ?? m.common.cancel;
   const closeLabel = closeLabelProp ?? m.common.close;
-  const { open, onOpenChange, confirmDiscard, forceClose } = useDirtyGuard({ isDirty, discardText, ...openProps });
+  const [openState] = useOpenState(openProps);
+  const { run, saving } = useActionRun(openState);
+  // While the main action saves, closing does not ask: the changes are being saved, not discarded.
+  const { open, onOpenChange, confirmDiscard, forceClose } = useDirtyGuard({ isDirty: isDirty && !saving && !primaryAction?.isPending, discardText, ...openProps });
   const isMobile = useMediaQuery(MOBILE_QUERY);
   const layout = overlay === 'auto' ? (isMobile ? mobile : 'dialog') : overlay;
   const content = (close: () => void) => (typeof children === 'function' ? children(close) : children);
 
   if (layout === 'sheet') {
     return (
-      <BottomSheet
-        title={title}
-        closeLabel={closeLabel}
-        isOpen={open}
-        onOpenChange={onOpenChange}
-        isDismissable={!isDirty}
-        className={className}
-        footer={
-          primaryAction &&
-          ((close) => (
-            <ButtonGroup>
-              <Button variant="secondary" size="lg" onPress={close}>
-                {cancelLabel}
-              </Button>
-              <ActionButton action={primaryAction} close={forceClose} size="lg" variant="primary" />
-            </ButtonGroup>
-          ))
-        }
-      >
-        <SheetContent description={description}>{content(forceClose)}</SheetContent>
-        {confirmDiscard}
-      </BottomSheet>
+      <ActionRunContext.Provider value={run}>
+        <BottomSheet
+          title={title}
+          closeLabel={closeLabel}
+          isOpen={open}
+          onOpenChange={onOpenChange}
+          isDismissable={!isDirty}
+          className={className}
+          footer={
+            primaryAction &&
+            ((close) => (
+              <ButtonGroup>
+                <Button variant="secondary" size="lg" onPress={close}>
+                  {cancelLabel}
+                </Button>
+                <ActionButton action={primaryAction} close={forceClose} size="lg" variant="primary" />
+              </ButtonGroup>
+            ))
+          }
+        >
+          <SheetContent description={description}>{content(forceClose)}</SheetContent>
+          {confirmDiscard}
+        </BottomSheet>
+      </ActionRunContext.Provider>
     );
   }
 
   const fullscreen = layout === 'fullscreen';
   return (
-    <ModalOverlay
-      isOpen={open}
-      onOpenChange={onOpenChange}
-      isDismissable={!isDirty}
-      className={cx('medo-dialog-overlay', fullscreen && 'medo-dialog-overlay--fullscreen')}
-    >
-      <Modal className={cx('medo-dialog', fullscreen ? 'medo-dialog--fullscreen' : `medo-dialog--${size}`, className)}>
-        <DialogFrame
-          title={title}
-          description={description}
-          fullscreen={fullscreen}
-          primaryAction={primaryAction}
-          cancelLabel={cancelLabel}
-          closeLabel={closeLabel}
-          showClose={showClose}
-          nested={confirmDiscard}
-          forceClose={forceClose}
-        >
-          {content}
-        </DialogFrame>
-      </Modal>
-    </ModalOverlay>
+    <ActionRunContext.Provider value={run}>
+      <ModalOverlay
+        isOpen={open}
+        onOpenChange={onOpenChange}
+        isDismissable={!isDirty}
+        className={cx('medo-dialog-overlay', fullscreen && 'medo-dialog-overlay--fullscreen')}
+      >
+        <Modal className={cx('medo-dialog', fullscreen ? 'medo-dialog--fullscreen' : `medo-dialog--${size}`, className)}>
+          <DialogFrame
+            title={title}
+            description={description}
+            fullscreen={fullscreen}
+            primaryAction={primaryAction}
+            cancelLabel={cancelLabel}
+            closeLabel={closeLabel}
+            showClose={showClose}
+            nested={confirmDiscard}
+            forceClose={forceClose}
+          >
+            {content}
+          </DialogFrame>
+        </Modal>
+      </ModalOverlay>
+    </ActionRunContext.Provider>
   );
 }
 

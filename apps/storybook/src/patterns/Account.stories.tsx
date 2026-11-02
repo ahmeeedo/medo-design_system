@@ -172,3 +172,30 @@ export const InteractionTest: Story = {
     await waitFor(() => expect(row.contains(document.activeElement)).toBe(true));
   },
 };
+
+export const PartialFailureTest: Story = {
+  name: 'Interaction test: partial failure',
+  tags: ['!autodocs'],
+  render: () => withToasts(<AccountApp start="invoices" level={3} />),
+  // Archive 5 invoices, 2 fail: the 3 leave the list (Toast with Undo), the 2 stay selected with the reason; Retry works.
+  play: async ({ canvas, userEvent }) => {
+    const body = within(document.body);
+    const count = () => canvas.getAllByRole('status').find((el) => /invoices?$/.test(el.textContent ?? ''));
+    const before = Number.parseInt(count()?.textContent ?? '0', 10);
+    // Row checkboxes (the first one selects all).
+    const boxes = canvas.getAllByRole('checkbox').slice(1, 6);
+    for (const box of boxes) await userEvent.click(box);
+    await userEvent.click(canvas.getByRole('button', { name: 'Archive' }));
+    await expect(await body.findByText('3 invoices archived')).toBeInTheDocument();
+    const alert = await canvas.findByText('2 invoices could not be archived');
+    await expect(alert).toBeInTheDocument();
+    await waitFor(() => expect(count()).toHaveTextContent(`${before - 3} invoices`));
+    // The failed ones stay selected, so the next step needs no new selection.
+    await expect(body.getAllByText('2 selected').length).toBeGreaterThan(0);
+    await userEvent.click(canvas.getByRole('button', { name: 'Try again' }));
+    await expect(await body.findByText('2 invoices archived')).toBeInTheDocument();
+    await waitFor(() => expect(canvas.queryByText('2 invoices could not be archived')).toBeNull());
+    await waitFor(() => expect(count()).toHaveTextContent(`${before - 5} invoices`));
+  },
+};
+

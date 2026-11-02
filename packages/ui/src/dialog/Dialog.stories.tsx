@@ -7,6 +7,7 @@ import { TextField } from '../text-field/TextField';
 import { Select } from '../select/Select';
 import { Option } from '../listbox/ListBox';
 import { interactionTest, row, semantic, slot } from '../story-helpers';
+import { ToastRegion } from '../toast/Toast';
 
 const roles = [
   { id: 'viewer', name: 'Viewer' },
@@ -99,6 +100,8 @@ const meta = {
           'Put the main action at the end of the footer and name it with a verb.',
           'Set `isDirty` once the user has typed something, so closing asks “Discard changes?”.',
           'Submit a form with `primaryAction.form`; return a promise from `onAction` to show the pending state.',
+          'Let people close the dialog while it saves – the saving goes on. Set `backgroundToast` with texts that name the object (“Invite sent to anna@example.com”); a failure then shows a Toast with Retry.',
+          'When saving fails while the dialog is open, keep it open and show the error inside it, with the input kept.',
         ],
         dont: ['Open a dialog on top of a dialog. Only an Alert Dialog may open on top.', 'Open a dialog without a user action.', 'Put navigation or tabs into a dialog.'],
       },
@@ -335,6 +338,105 @@ export const UnsavedChangesTest: Story = {
     await waitFor(() => expect(body.queryByRole('dialog')).toBeNull());
     await expect(body.queryByRole('alertdialog')).toBeNull();
     await waitFor(() => expect(trigger).toHaveFocus());
+  },
+};
+
+/* ---------- Contract for a main action that saves asynchronously ---------- */
+
+/** A fake server: every send waits until the test answers it. */
+const server = {
+  calls: [] as { resolve: () => void; reject: () => void }[],
+  send() {
+    return new Promise<void>((resolve, reject) => server.calls.push({ resolve, reject }));
+  },
+  answer(index: number, ok: boolean) {
+    const call = server.calls[index];
+    if (ok) call.resolve();
+    else call.reject();
+  },
+};
+
+function SavingDialog() {
+  const [dirty, setDirty] = useState(false);
+  return (
+    <>
+      <DialogTrigger onOpenChange={(open) => !open && setDirty(false)}>
+        <Button>Invite member</Button>
+        <Dialog
+          title="Invite member"
+          isDirty={dirty}
+          primaryAction={{
+            label: 'Send invite',
+            onAction: () => server.send(),
+            backgroundToast: { success: 'Invite sent to anna@example.com', error: 'Invite to anna@example.com not sent' },
+          }}
+        >
+          <TextField label="Email" type="email" onChange={(v) => setDirty(v !== '')} />
+        </Dialog>
+      </DialogTrigger>
+      <ToastRegion />
+    </>
+  );
+}
+
+export const AsyncActionTest: Story = {
+  ...interactionTest,
+  name: 'Interaction test: saving in the background',
+  render: () => <SavingDialog />,
+  parameters: {
+    // React Aria announces the end of a pending state with a node in its live region that points to the button by
+    // aria-labelledby. The dialog was closed meanwhile, so the node points nowhere for a few seconds – an artefact of
+    // the announcer outside the component, not of the dialog.
+    a11y: { config: { rules: [{ id: 'landmark-unique', enabled: false }, { id: 'role-img-alt', enabled: false }] } },
+  },
+  play: async ({ canvas, userEvent }) => {
+    server.calls = [];
+    const body = within(document.body);
+    const open = async () => {
+      await userEvent.click(canvas.getByRole('button', { name: 'Invite member' }));
+      const dialog = await body.findByRole('dialog', { name: 'Invite member' });
+      await userEvent.type(within(dialog).getByRole('textbox', { name: /Email/ }), 'anna@example.com');
+      return dialog;
+    };
+    const send = (dialog: HTMLElement) => userEvent.click(within(dialog).getByRole('button', { name: 'Send invite' }));
+
+    // 1. Rejects while open: the dialog stays open with the input; a second press while pending is ignored.
+    let dialog = await open();
+    await send(dialog);
+    await send(dialog);
+    await expect(server.calls).toHaveLength(1);
+    server.answer(0, false);
+    await waitFor(() => expect(within(dialog).getByRole('button', { name: 'Send invite' })).not.toHaveAttribute('aria-disabled'));
+    await expect(within(dialog).getByRole('textbox', { name: /Email/ })).toHaveValue('anna@example.com');
+
+    // 2. Closed while saving: closes without “Discard changes?”, then the result arrives as a Toast.
+    await send(dialog);
+    await userEvent.keyboard('{Escape}');
+    await waitFor(() => expect(body.queryByRole('dialog')).toBeNull());
+    await expect(body.queryByRole('alertdialog')).toBeNull();
+    server.answer(1, true);
+    await expect(await body.findByText('Invite sent to anna@example.com')).toBeInTheDocument();
+
+    // 3. A late result never closes a dialog opened again in the meantime.
+    dialog = await open();
+    await send(dialog);
+    await userEvent.keyboard('{Escape}');
+    await waitFor(() => expect(body.queryByRole('dialog')).toBeNull());
+    dialog = await open();
+    server.answer(2, true);
+    await new Promise((resolve) => setTimeout(resolve, 300));
+    await expect(body.getByRole('dialog', { name: 'Invite member' })).toBeInTheDocument();
+
+    // 4. Fails after closing: an error Toast that stays, with Retry – which sends again.
+    await send(dialog);
+    await userEvent.keyboard('{Escape}');
+    await waitFor(() => expect(body.queryByRole('dialog')).toBeNull());
+    server.answer(3, false);
+    await expect(await body.findByText('Invite to anna@example.com not sent')).toBeInTheDocument();
+    await userEvent.click(body.getByRole('button', { name: 'Retry' }));
+    await waitFor(() => expect(server.calls).toHaveLength(5));
+    server.answer(4, true);
+    await expect(await body.findByText('Invite sent to anna@example.com')).toBeInTheDocument();
   },
 };
 
