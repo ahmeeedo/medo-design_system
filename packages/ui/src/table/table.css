@@ -7,6 +7,7 @@
  *   Interactive (sort, select): React Aria Table (role grid) with the same classes.
  *
  * Text left, numbers right with tabular figures (class medo-table__cell--number or align="end").
+ * IDs, dates and codes on one line: class medo-table__cell--nowrap or Cell wrap={false}.
  * Density: standard (rows 48, header 40) · compact (rows 40, header 36).
  *
  * State contract (interactive rows): [data-hovered] [data-pressed] [data-selected] [data-focus-visible] [data-disabled]
@@ -151,6 +152,11 @@
 .medo-table tbody tr:last-child > *,
 .medo-table__row:last-child > .medo-table__cell {
   border-block-end: 0;
+}
+
+/* IDs, dates, codes: one line (Cell wrap={false} or class medo-table__cell--nowrap); the table scrolls instead. */
+.medo-table :is(td, th, .medo-table__cell):is(.medo-table__cell--nowrap, [data-nowrap]) {
+  white-space: nowrap;
 }
 
 /* Numbers: right, tabular, never truncated. */

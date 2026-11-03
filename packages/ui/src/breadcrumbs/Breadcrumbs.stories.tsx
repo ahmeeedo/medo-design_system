@@ -1,9 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, waitFor, within } from 'storybook/test';
 import { Breadcrumbs } from './Breadcrumbs';
-import { interactionTest, Examples, semantic, slot } from '../story-helpers';
-
-const caption: React.CSSProperties = { font: 'var(--medo-typography-code-sm)', color: 'var(--medo-color-text-secondary)' };
+import { interactionTest, Examples, semantic, slot, Example } from '../story-helpers';
 
 const four = [{ label: 'Home', href: '#home' }, { label: 'Projects', href: '#projects' }, { label: 'Website relaunch', href: '#relaunch' }, { label: 'Design review' }];
 const six = [
@@ -40,11 +38,7 @@ const meta = {
       usage: {
         when: ['Deep hierarchies with 3 or more levels: docs, shops, file trees.', 'Users arrive from search and need to see where they are.'],
         whenNot: ['On the start page.', 'Flat sites with 1–2 levels.', 'Steps of a process: show the current step on the page, with Back and Next.'],
-        do: [
-          'Put it above the page title.',
-          'Start with Home and end with the current page.',
-          'Use the page names users see in the navigation.',
-        ],
+        do: ['Put it above the page title.', 'Start with Home and end with the current page.', 'Use the page names users see in the navigation.'],
         dont: ['Link the current page.', 'Use breadcrumbs as the only navigation.'],
       },
       a11y: {
@@ -90,14 +84,14 @@ export const Layouts: Story = {
   parameters: { docs: { description: { story: 'md for websites, sm for dense apps. From 5 levels: Home, “…”, the last two levels and the current page.' } } },
   render: () => (
     <Examples>
-      {(['md', 'sm'] as const).map((size) => (
-        <div key={size} style={{ display: 'grid', gap: 'var(--medo-layout-gap-content)' }}>
-          <span style={caption}>full · {size}</span>
+      {(['md', 'sm'] as const).flatMap((size) => [
+        <Example key={`full-${size}`} label={`full · ${size}`}>
           <Breadcrumbs layout="full" size={size} items={four} aria-label={`Breadcrumb, full ${size}`} />
-          <span style={caption}>collapsed · {size}</span>
+        </Example>,
+        <Example key={`collapsed-${size}`} label={`collapsed · ${size}`}>
           <Breadcrumbs layout="full" size={size} items={six} aria-label={`Breadcrumb, collapsed ${size}`} />
-        </div>
-      ))}
+        </Example>,
+      ])}
     </Examples>
   ),
 };
@@ -151,7 +145,11 @@ export const InteractionTest: Story = {
     await expect((await canvas.findByText('Button states')).closest('[aria-current="page"]')).not.toBeNull();
     await userEvent.click(canvas.getByRole('button', { name: 'Show 2 more levels' }));
     const menu = await within(document.body).findByRole('menu');
-    await expect(within(menu).getAllByRole('menuitem').map((i) => i.textContent)).toEqual(['Products', 'Design system']);
+    await expect(
+      within(menu)
+        .getAllByRole('menuitem')
+        .map((i) => i.textContent),
+    ).toEqual(['Products', 'Design system']);
     await userEvent.keyboard('{Escape}');
     await waitFor(() => expect(within(document.body).queryByRole('menu')).toBeNull());
   },

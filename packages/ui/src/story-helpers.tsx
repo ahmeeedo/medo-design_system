@@ -4,9 +4,25 @@ import type { CSSProperties, ReactNode } from 'react';
 export const row: CSSProperties = { display: 'flex', gap: 'var(--medo-layout-gap-inline)', alignItems: 'center', flexWrap: 'wrap' };
 export const stack: CSSProperties = { display: 'grid', gap: 'var(--medo-layout-gap-fields)', maxInlineSize: '24rem' };
 
-/** Several examples under each other. The theme comes from the toolbar switch (Light / Dark). */
+/** Small mono caption above an example (“md”, “collapsed · sm”). */
+export const caption: CSSProperties = { font: 'var(--medo-typography-code-sm)', color: 'var(--medo-color-text-secondary)' };
+
+/**
+ * Several examples under each other, rule `group` apart. Give each a caption with Example. The theme comes from the
+ * toolbar switch (Light / Dark).
+ */
 export function Examples({ children }: { children: ReactNode }) {
   return <div style={{ display: 'grid', gap: 'var(--medo-layout-gap-group)' }}>{children}</div>;
+}
+
+/** One example with its caption: the caption sits with its example (rule `content`), not between two. */
+export function Example({ label, children, style }: { label: ReactNode; children: ReactNode; style?: CSSProperties }) {
+  return (
+    <div style={{ display: 'grid', gap: 'var(--medo-layout-gap-content)', ...style }}>
+      <span style={caption}>{label}</span>
+      {children}
+    </div>
+  );
 }
 
 /* ---------- Playground controls (rule: a control must change what you see) ---------- */
@@ -68,4 +84,3 @@ export async function resizeViewport(width: number, height = 900) {
 
 /** True when the page scrolls sideways – content wider than the window. */
 export const overflowsHorizontally = () => document.documentElement.scrollWidth > document.documentElement.clientWidth;
-

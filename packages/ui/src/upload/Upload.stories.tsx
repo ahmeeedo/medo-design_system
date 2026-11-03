@@ -126,10 +126,7 @@ const meta = {
       subtitle: 'Add files by drag and drop or by choosing them – with clear limits, progress and fixable errors.',
       usage: {
         when: ['Attach documents or images to a form or a record.', 'Upload several files with progress.'],
-        whenNot: [
-          'Choose one image as a profile picture with cropping: use a dedicated flow.',
-          'Very large or many files: a dedicated upload page.',
-        ],
+        whenNot: ['Choose one image as a profile picture with cropping: use a dedicated flow.', 'Very large or many files: a dedicated upload page.'],
         do: [
           'Say which types, size and count are allowed before the user chooses.',
           'Upload right away in `onAdd` and show the progress per file.',
@@ -165,7 +162,7 @@ const meta = {
     docs: {
       description: {
         component:
-          'Use these components to add files by drag and drop or by choosing them. `UploadField` is controlled: your app holds `files`, uploads in `onAdd` and updates each file\'s status. Built on React Aria DropZone and FileTrigger.',
+          "Use these components to add files by drag and drop or by choosing them. `UploadField` is controlled: your app holds `files`, uploads in `onAdd` and updates each file's status. Built on React Aria DropZone and FileTrigger.",
       },
     },
   },
@@ -266,29 +263,27 @@ export const Files: Story = {
   },
   render: () => (
     <Examples>
-      <div style={{ display: 'grid', gap: 'var(--medo-layout-gap-group)' }}>
-        <div style={stack}>
-          <FileItem {...actions} file={{ id: '1', name: 'Invoice_2026-10_final.pdf', size: 2.4 * MB, type: pdf, status: 'uploading', loaded: 1.6 * MB }} />
-          <FileItem {...actions} file={{ id: '2', name: 'Invoice_2026-10_final.pdf', size: 2.4 * MB, type: pdf, status: 'done' }} />
-          <FileItem
-            {...actions}
-            file={{ id: '3', name: 'Invoice_2026-10_final.pdf', size: 14 * MB, type: pdf, status: 'error', error: 'File is 14 MB – max. 10 MB allowed', canRetry: false }}
-          />
-          <FileItem
-            {...actions}
-            file={{ id: '4', name: 'Team-offsite-valley.jpg', size: 2.4 * MB, type: 'image/jpeg', status: 'uploading', loaded: 0.6 * MB, previewUrl: photo }}
-          />
-          <FileItem {...actions} file={{ id: '5', name: 'Team-offsite-valley.jpg', size: 2.4 * MB, type: 'image/jpeg', status: 'done', previewUrl: photo }} />
-          <FileItem
-            {...actions}
-            file={{ id: '6', name: 'Team-offsite-valley.jpg', size: 2.4 * MB, type: 'image/jpeg', status: 'error', error: network, previewUrl: photo }}
-          />
-        </div>
-        <div style={tiles}>
-          <FileTile {...actions} file={{ id: 'a', name: 'Team-offsite.jpg', size: 3 * MB, status: 'uploading', loaded: 1.92 * MB, previewUrl: photo }} />
-          <FileTile {...actions} file={{ id: 'b', name: 'Team-offsite.jpg', size: 3 * MB, status: 'done', previewUrl: photo2 }} />
-          <FileTile {...actions} file={{ id: 'c', name: 'Team-offsite.jpg', size: 14 * MB, status: 'error', error: 'Too large · 14 MB', previewUrl: photo }} />
-        </div>
+      <div style={stack}>
+        <FileItem {...actions} file={{ id: '1', name: 'Invoice_2026-10_final.pdf', size: 2.4 * MB, type: pdf, status: 'uploading', loaded: 1.6 * MB }} />
+        <FileItem {...actions} file={{ id: '2', name: 'Invoice_2026-10_final.pdf', size: 2.4 * MB, type: pdf, status: 'done' }} />
+        <FileItem
+          {...actions}
+          file={{ id: '3', name: 'Invoice_2026-10_final.pdf', size: 14 * MB, type: pdf, status: 'error', error: 'File is 14 MB – max. 10 MB allowed', canRetry: false }}
+        />
+        <FileItem
+          {...actions}
+          file={{ id: '4', name: 'Team-offsite-valley.jpg', size: 2.4 * MB, type: 'image/jpeg', status: 'uploading', loaded: 0.6 * MB, previewUrl: photo }}
+        />
+        <FileItem {...actions} file={{ id: '5', name: 'Team-offsite-valley.jpg', size: 2.4 * MB, type: 'image/jpeg', status: 'done', previewUrl: photo }} />
+        <FileItem
+          {...actions}
+          file={{ id: '6', name: 'Team-offsite-valley.jpg', size: 2.4 * MB, type: 'image/jpeg', status: 'error', error: network, previewUrl: photo }}
+        />
+      </div>
+      <div style={tiles}>
+        <FileTile {...actions} file={{ id: 'a', name: 'Team-offsite.jpg', size: 3 * MB, status: 'uploading', loaded: 1.92 * MB, previewUrl: photo }} />
+        <FileTile {...actions} file={{ id: 'b', name: 'Team-offsite.jpg', size: 3 * MB, status: 'done', previewUrl: photo2 }} />
+        <FileTile {...actions} file={{ id: 'c', name: 'Team-offsite.jpg', size: 14 * MB, status: 'error', error: 'Too large · 14 MB', previewUrl: photo }} />
       </div>
     </Examples>
   ),
@@ -420,4 +415,3 @@ export const RetryTest: Story = {
     await waitFor(() => expect(canvasElement.contains(document.activeElement)).toBe(true));
   },
 };
-

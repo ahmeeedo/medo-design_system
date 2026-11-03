@@ -24,11 +24,7 @@ const meta = {
       subtitle: 'A square button with an icon instead of a label.',
       usage: {
         when: ['An action that is clear from its icon alone: close, more, edit, copy.', 'Toolbars, table rows and headers with little space.'],
-        whenNot: [
-          'The icon is not obvious: use a Button with a label.',
-          'The main action of an area: use a Button.',
-          'Going to another page: use a Link.',
-        ],
+        whenNot: ['The icon is not obvious: use a Button with a label.', 'The main action of an area: use a Button.', 'Going to another page: use a Link.'],
         do: [
           'Always set `aria-label` with a verb: “Close dialog”, “Copy link”. It is shown as the tooltip.',
           'Use common icons only (Lucide), the same icon for the same action everywhere.',
@@ -98,7 +94,7 @@ export const Sizes: Story = {
 const media: React.CSSProperties = {
   display: 'flex',
   alignItems: 'center',
-  gap: 'var(--medo-space-4)',
+  gap: 'var(--medo-layout-gap-content)',
   padding: 'var(--medo-space-4)',
   borderRadius: 'var(--medo-radius-md)',
   background: 'linear-gradient(135deg, #6f8f9c, #2d4550 55%, #0f1a1f)',

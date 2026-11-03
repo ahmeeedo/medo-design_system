@@ -1,9 +1,11 @@
-import { createContext, useContext, useRef, useState, type ReactNode } from 'react';
+import { createContext, useContext, useEffect, useLayoutEffect, useRef, useState, type ReactNode, type RefObject } from 'react';
 import {
   Button as AriaButton,
   Tag as AriaTag,
   TagGroup as AriaTagGroup,
   TagList,
+  TooltipTriggerStateContext,
+  type TooltipTriggerState,
   Text,
   type Key,
   type TagGroupProps as AriaTagGroupProps,
@@ -12,6 +14,7 @@ import {
 } from 'react-aria-components';
 import { Check, X } from 'lucide-react';
 import { FieldLabel } from '../field/Field';
+import { Tooltip } from '../tooltip/Tooltip';
 import { cx } from '../utils/cx';
 import { useMessages } from '../i18n/I18n';
 
@@ -64,9 +67,7 @@ export function TagGroup<T extends object>({
   const handleRemove =
     onRemove &&
     ((keys: Set<Key>) => {
-      const labels = [...keys].map(
-        (key) => ref.current?.querySelector(`[data-key="${CSS.escape(String(key))}"] .medo-tag__label`)?.textContent ?? String(key),
-      );
+      const labels = [...keys].map((key) => ref.current?.querySelector(`[data-key="${CSS.escape(String(key))}"] .medo-tag__label`)?.textContent ?? String(key));
       onRemove(keys);
       setAnnouncement(removedMessage(labels));
     });
@@ -94,7 +95,7 @@ export function TagGroup<T extends object>({
 }
 
 export interface TagProps extends Omit<AriaTagProps, 'children' | 'className'> {
-  /** Short label; long text is truncated at 200 px. */
+  /** Short label. Over 200 px it is cut; the full label shows in a tooltip on hover and focus. */
   children: ReactNode;
   /** Leading icon (decorative). A selected filter shows a check instead. */
   icon?: ReactNode;
@@ -104,15 +105,15 @@ export interface TagProps extends Omit<AriaTagProps, 'children' | 'className'> {
 /** A single tag inside a TagGroup. */
 export function Tag({ children, icon, textValue, className, ...props }: TagProps) {
   const size = useContext(TagSizeContext);
+  const ref = useRef<HTMLDivElement>(null);
   return (
     <AriaTag
       {...props}
+      ref={ref}
       textValue={textValue ?? (typeof children === 'string' ? children : undefined)}
-      className={({ selectionMode }) =>
-        cx('medo-tag', `medo-tag--${size}`, selectionMode !== 'none' && 'medo-tag--selectable', className)
-      }
+      className={({ selectionMode }) => cx('medo-tag', `medo-tag--${size}`, selectionMode !== 'none' && 'medo-tag--selectable', className)}
     >
-      {({ allowsRemoving, isSelected, selectionMode }) => (
+      {({ allowsRemoving, isSelected, selectionMode, isHovered, isFocused }) => (
         <>
           {selectionMode !== 'none' && isSelected ? (
             <span className="medo-tag__icon" aria-hidden="true">
@@ -125,7 +126,9 @@ export function Tag({ children, icon, textValue, className, ...props }: TagProps
               </span>
             )
           )}
-          <span className="medo-tag__label">{children}</span>
+          <TagLabel tag={ref} hovered={isHovered} focused={isFocused}>
+            {children}
+          </TagLabel>
           {allowsRemoving && (
             <AriaButton slot="remove" className="medo-tag__remove">
               <X aria-hidden="true" />
@@ -134,5 +137,49 @@ export function Tag({ children, icon, textValue, className, ...props }: TagProps
         </>
       )}
     </AriaTag>
+  );
+}
+
+/**
+ * The label. Cut at 200 px, it shows in full in a tooltip on hover (after 500 ms, like every Tooltip) and on focus
+ * (a tap focuses the tag); Esc hides it. Screen readers already get the full name – the tooltip is hidden from them.
+ */
+const OPEN: TooltipTriggerState = { isOpen: true, open: () => {}, close: () => {}, shouldSkipAnimation: false };
+
+function TagLabel({ tag, hovered, focused, children }: { tag: RefObject<HTMLDivElement | null>; hovered: boolean; focused: boolean; children: ReactNode }) {
+  const label = useRef<HTMLSpanElement>(null);
+  const [cut, setCut] = useState(false);
+  const [hoverOpen, setHoverOpen] = useState(false);
+  const [dismissed, setDismissed] = useState(false);
+  useLayoutEffect(() => {
+    const el = label.current;
+    if ((hovered || focused) && el) setCut(el.scrollWidth > el.clientWidth + 1);
+    if (!hovered && !focused) setDismissed(false);
+  }, [hovered, focused]);
+  useEffect(() => {
+    if (!hovered) return setHoverOpen(false);
+    const timer = setTimeout(() => setHoverOpen(true), 500);
+    return () => clearTimeout(timer);
+  }, [hovered]);
+  useEffect(() => {
+    const el = tag.current;
+    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setDismissed(true);
+    el?.addEventListener('keydown', onKey);
+    return () => el?.removeEventListener('keydown', onKey);
+  }, [tag]);
+  return (
+    <>
+      <span ref={label} className="medo-tag__label">
+        {children}
+      </span>
+      {cut && !dismissed && (hoverOpen || focused) && (
+        // Inside a TagGroup there is no TooltipTrigger: the tooltip gets its open state here.
+        <TooltipTriggerStateContext.Provider value={OPEN}>
+          <Tooltip triggerRef={tag} isOpen aria-hidden>
+            {children}
+          </Tooltip>
+        </TooltipTriggerStateContext.Provider>
+      )}
+    </>
   );
 }

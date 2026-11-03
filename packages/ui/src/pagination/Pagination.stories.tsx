@@ -6,10 +6,7 @@ import { Cell, Column, Row, Table, TableBody, TableHeader } from '../table/Table
 import { ListRow, ListView } from '../list-view/ListView';
 import { Avatar } from '../avatar/Avatar';
 import { Button } from '../button/Button';
-import { interactionTest, Examples, semantic, slot } from '../story-helpers';
-
-const caption: React.CSSProperties = { font: 'var(--medo-typography-code-sm)', color: 'var(--medo-color-text-secondary)' };
-const stack: React.CSSProperties = { display: 'grid', gap: 'var(--medo-layout-gap-group)' };
+import { interactionTest, Example, Examples, semantic, slot } from '../story-helpers';
 
 const meta = {
   title: 'Components/Navigation/Pagination',
@@ -96,19 +93,18 @@ export const Truncation: Story = {
     },
   },
   render: () => (
-    <div style={stack}>
+    <Examples>
       {[
         [4, 7, '≤ 7 pages'],
         [3, 19, 'current near start (3)'],
         [10, 19, 'current in the middle (10)'],
         [17, 19, 'current near end (17)'],
       ].map(([page, total, label]) => (
-        <div key={label} style={{ display: 'grid', gap: 'var(--medo-layout-gap-content)' }}>
-          <span style={caption}>{label}</span>
+        <Example key={label} label={label}>
           <Pagination variant="full" defaultPage={page as number} totalPages={total as number} aria-label={`Pagination, ${label}`} />
-        </div>
+        </Example>
       ))}
-    </div>
+    </Examples>
   ),
 };
 

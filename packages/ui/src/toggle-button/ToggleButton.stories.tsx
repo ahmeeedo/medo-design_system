@@ -4,10 +4,9 @@ import { useArgs } from 'storybook/preview-api';
 import { expect, fn } from 'storybook/test';
 import { AlignCenter, AlignLeft, AlignRight, Bold, Heart, Italic, LayoutGrid, List, Map as MapIcon, Underline } from 'lucide-react';
 import { ToggleButton, ToggleButtonGroup, Toolbar, ToolbarSeparator } from './ToggleButton';
-import { interactionTest, row, slot } from '../story-helpers';
+import { interactionTest, row, slot, Example } from '../story-helpers';
 
 const col: React.CSSProperties = { display: 'grid', gap: 'var(--medo-layout-gap-group)', justifyItems: 'start' };
-const caption: React.CSSProperties = { font: 'var(--medo-typography-code-sm)', color: 'var(--medo-color-text-secondary)' };
 
 function ViewSwitch({ size = 'md' as 'md' | 'lg', icons = false, fullWidth = false }) {
   const [view, setView] = useState<Set<string | number>>(new Set(['week']));
@@ -68,16 +67,8 @@ const meta = {
           'Switching between views of the same content (segmented).',
           'A toolbar with formatting options.',
         ],
-        whenNot: [
-          'A setting that is saved: use a Switch.',
-          'Navigation between panels: use Tabs.',
-          'A choice that is submitted with a form: use Radio or Checkbox.',
-        ],
-        do: [
-          'Keep the label the same in both states.',
-          'Use a segmented group for 2–5 views; exactly one is on.',
-          'Use `fullWidth` for a segmented group on mobile.',
-        ],
+        whenNot: ['A setting that is saved: use a Switch.', 'Navigation between panels: use Tabs.', 'A choice that is submitted with a form: use Radio or Checkbox.'],
+        do: ['Keep the label the same in both states.', 'Use a segmented group for 2–5 views; exactly one is on.', 'Use `fullWidth` for a segmented group on mobile.'],
         dont: ['Change the label or icon to show the state.', 'Mix single and multiple selection in one group.'],
       },
       a11y: {
@@ -193,10 +184,9 @@ export const Segmented: Story = {
         <ViewSwitch size="lg" />
         <ViewSwitch size="lg" icons />
       </div>
-      <div style={{ inlineSize: '100%', maxInlineSize: '22rem', display: 'grid', gap: 'var(--medo-layout-gap-content)' }}>
-        <span style={caption}>fullWidth</span>
+      <Example label="fullWidth" style={{ inlineSize: '100%', maxInlineSize: '22rem' }}>
         <ViewSwitch fullWidth />
-      </div>
+      </Example>
     </div>
   ),
 };

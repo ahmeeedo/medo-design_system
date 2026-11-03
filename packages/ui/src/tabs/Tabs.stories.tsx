@@ -5,10 +5,9 @@ import { expect, fn } from 'storybook/test';
 import { Activity, LayoutGrid, Settings, Users } from 'lucide-react';
 import { Tab, TabList, TabPanel, Tabs } from './Tabs';
 import { TextField } from '../text-field/TextField';
-import { interactionTest, Examples, semantic } from '../story-helpers';
+import { interactionTest, Examples, semantic, Example, caption } from '../story-helpers';
 
 const panel: React.CSSProperties = { margin: 0, font: 'var(--medo-typography-body-sm)', color: 'var(--medo-color-text-secondary)' };
-const caption: React.CSSProperties = { font: 'var(--medo-typography-code-sm)', color: 'var(--medo-color-text-secondary)' };
 
 /** Example: a project page. The Settings panel has a field – its input survives switching tabs. */
 function ProjectTabs({ icons = false, count = true, ...props }: React.ComponentProps<typeof Tabs> & { icons?: boolean; count?: boolean }) {
@@ -117,27 +116,29 @@ export const Sizes: Story = {
   parameters: { docs: { description: { story: 'md (tab 32, track 40) on desktop. lg (40 / 48) for touch – automatic below 640 px.' } } },
   render: () => (
     <Examples>
-      <span style={caption}>md</span>
-      <ProjectTabs size="md" />
-      <span style={caption}>lg · fullWidth</span>
-      <Tabs size="lg" fullWidth defaultSelectedKey="overview">
-        <TabList aria-label="Project">
-          <Tab id="overview">Overview</Tab>
-          <Tab id="activity" count={3} countLabel="3 new">
-            Activity
-          </Tab>
-          <Tab id="settings">Settings</Tab>
-        </TabList>
-        <TabPanel id="overview">
-          <p style={panel}>24 open tasks · 7 due this week.</p>
-        </TabPanel>
-        <TabPanel id="activity">
-          <p style={panel}>3 new comments.</p>
-        </TabPanel>
-        <TabPanel id="settings">
-          <p style={panel}>Name, members and access.</p>
-        </TabPanel>
-      </Tabs>
+      <Example label="md">
+        <ProjectTabs size="md" />
+      </Example>
+      <Example label="lg · fullWidth">
+        <Tabs size="lg" fullWidth defaultSelectedKey="overview">
+          <TabList aria-label="Project">
+            <Tab id="overview">Overview</Tab>
+            <Tab id="activity" count={3} countLabel="3 new">
+              Activity
+            </Tab>
+            <Tab id="settings">Settings</Tab>
+          </TabList>
+          <TabPanel id="overview">
+            <p style={panel}>24 open tasks · 7 due this week.</p>
+          </TabPanel>
+          <TabPanel id="activity">
+            <p style={panel}>3 new comments.</p>
+          </TabPanel>
+          <TabPanel id="settings">
+            <p style={panel}>Name, members and access.</p>
+          </TabPanel>
+        </Tabs>
+      </Example>
     </Examples>
   ),
 };

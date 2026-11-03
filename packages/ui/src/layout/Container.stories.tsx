@@ -59,9 +59,13 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Playground: Story = {};
+/** Space above and below, so the examples do not touch the edge of the preview (the layout is fullscreen). */
+const padded = (Story: () => React.JSX.Element) => <div style={{ paddingBlock: 'var(--medo-layout-gap-group)' }}>{Story()}</div>;
+
+export const Playground: Story = { decorators: [padded] };
 
 export const Sizes: Story = {
+  decorators: [padded],
   parameters: { docs: { description: { story: 'Content widths. The page margin is added outside the width, so text keeps its measure.' } } },
   render: () => (
     <Stack gap="content">
@@ -90,9 +94,7 @@ export const Page: Story = {
           <h3 id="page-intro" style={{ margin: 0, font: 'var(--medo-typography-heading-lg)' }}>
             Projects
           </h3>
-          <p style={{ margin: 0, font: 'var(--medo-typography-body-md)', color: 'var(--medo-color-text-secondary)' }}>
-            Everything your team is working on.
-          </p>
+          <p style={{ margin: 0, font: 'var(--medo-typography-body-md)', color: 'var(--medo-color-text-secondary)' }}>Everything your team is working on.</p>
           <Stack direction="horizontal">
             <Button variant="primary">New project</Button>
             <Button variant="secondary">Import</Button>

@@ -7,7 +7,7 @@ import { AppHeader, BottomTabBar, NavGroup, NavItem, NavList, NavSection, SideNa
 import { Avatar } from '../avatar/Avatar';
 import { IconButton } from '../icon-button/IconButton';
 import { TextField } from '../text-field/TextField';
-import { interactionTest, Examples, slot } from '../story-helpers';
+import { interactionTest, Examples, slot, Example } from '../story-helpers';
 
 /* ---------- Story placeholders ---------- */
 
@@ -30,7 +30,7 @@ function Logo({ full = true }: { full?: boolean }) {
       style={{
         display: 'inline-flex',
         alignItems: 'center',
-        gap: 'var(--medo-space-2)',
+        gap: 'var(--medo-layout-gap-inline)',
         color: 'var(--medo-color-text-primary)',
         textDecoration: 'none',
         font: 'var(--medo-typography-heading-sm)',
@@ -50,7 +50,6 @@ const block: React.CSSProperties = {
   borderRadius: 'var(--medo-radius-lg)',
   background: 'var(--medo-color-surface-raised)',
 };
-const caption: React.CSSProperties = { font: 'var(--medo-typography-code-sm)', color: 'var(--medo-color-text-secondary)' };
 
 /* ---------- Website ---------- */
 
@@ -157,16 +156,8 @@ const meta = {
           'BottomTabBar: apps below 640 px with 3–5 main sections.',
         ],
         whenNot: ['Actions like “New project”: use a Button.', 'Views of one page: use Tabs.', 'A list of links in content: use Links or a List.'],
-        do: [
-          'Put `SkipLink` first on the page.',
-          'Mark the current page (`aria-current="page"`).',
-          'Group links with `NavSection` or `NavGroup`, one level deep.',
-        ],
-        dont: [
-          'Use a Menu for navigation; groups are disclosures.',
-          'Show more than 5 links in a header or tab bar.',
-          'Hide the current location.',
-        ],
+        do: ['Put `SkipLink` first on the page.', 'Mark the current page (`aria-current="page"`).', 'Group links with `NavSection` or `NavGroup`, one level deep.'],
+        dont: ['Use a Menu for navigation; groups are disclosures.', 'Show more than 5 links in a header or tab bar.', 'Hide the current location.'],
       },
       a11y: {
         keyboard: [
@@ -244,8 +235,7 @@ export const NavItems: Story = {
   render: () => (
     <Examples>
       {(['header', 'sidebar', 'rail', 'sheet'] as const).map((variant) => (
-        <div key={variant} style={{ display: 'grid', gap: 'var(--medo-layout-gap-content)', maxInlineSize: variant === 'header' ? undefined : variant === 'rail' ? 64 : 256 }}>
-          <span style={caption}>{variant}</span>
+        <Example key={variant} label={variant} style={{ maxInlineSize: variant === 'header' ? undefined : variant === 'rail' ? 64 : 256 }}>
           <NavList variant={variant} aria-label={`Example ${variant}`}>
             <NavItem href="#a" icon={<LayoutDashboard />} isCurrent>
               Dashboard
@@ -260,7 +250,7 @@ export const NavItems: Story = {
               Inbox
             </NavItem>
           </NavList>
-        </div>
+        </Example>
       ))}
     </Examples>
   ),

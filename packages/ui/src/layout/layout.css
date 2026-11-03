@@ -107,20 +107,24 @@
 /* Centred content with the page margin of the layout mode. The width limit applies to the content, the margin
    comes on top (content-box), so text lines keep their measure on every screen. */
 .medo-container {
-  box-sizing: content-box;
-  max-inline-size: var(--medo-container-xl);
+  /* Full width up to the size plus the page margin – also as a grid or flex item, where auto margins alone would
+     shrink it to its content. */
+  --_size: var(--medo-container-xl);
+  box-sizing: border-box;
+  inline-size: 100%;
+  max-inline-size: calc(var(--_size) + 2 * var(--medo-layout-margin));
   margin-inline: auto;
   padding-inline: var(--medo-layout-margin);
 }
 
 .medo-container--prose {
-  max-inline-size: var(--medo-container-prose);
+  --_size: var(--medo-container-prose);
 }
 .medo-container--md {
-  max-inline-size: var(--medo-container-md);
+  --_size: var(--medo-container-md);
 }
 .medo-container--lg {
-  max-inline-size: var(--medo-container-lg);
+  --_size: var(--medo-container-lg);
 }
 .medo-container--full {
   max-inline-size: none;

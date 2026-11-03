@@ -6,7 +6,12 @@ import { Badge } from '../badge/Badge';
 import { interactionTest, Examples, samplePhoto, sampleScreenshot, semantic, slot } from '../story-helpers';
 
 const ratios: ImageRatio[] = ['1:1', '3:4', '4:3', '3:2', '16:9', '21:9', 'original'];
-const grid: React.CSSProperties = { display: 'grid', gap: 'var(--medo-layout-gap-items)', gridTemplateColumns: 'repeat(auto-fill, minmax(12rem, 1fr))', alignItems: 'start' };
+const grid: React.CSSProperties = {
+  display: 'grid',
+  gap: 'var(--medo-layout-gap-items)',
+  gridTemplateColumns: 'repeat(auto-fill, minmax(12rem, 1fr))',
+  alignItems: 'start',
+};
 const label: React.CSSProperties = { margin: 'var(--medo-space-2) 0 0', font: 'var(--medo-typography-caption)', color: 'var(--medo-color-text-secondary)' };
 const photo = samplePhoto(0);
 const preview = samplePhoto(0, { tiny: true });
@@ -51,17 +56,9 @@ const meta = {
     medo: {
       subtitle: 'Images, figures and third-party embeds – with reserved space, calm loading states and consent before anything loads.',
       usage: {
-        when: [
-          'Images in content and cards (`Image`).',
-          'An image with caption and credit (`Figure`).',
-          'Videos and maps from other providers (`EmbedConsent`).',
-        ],
+        when: ['Images in content and cards (`Image`).', 'An image with caption and credit (`Figure`).', 'Videos and maps from other providers (`EmbedConsent`).'],
         whenNot: ['Icons: use Lucide icons.', 'People: use an Avatar.'],
-        do: [
-          'Always set `alt`; `alt=""` only for decorative images.',
-          'Set a ratio, so nothing jumps while loading.',
-          'Use `priority` only for the hero image.',
-        ],
+        do: ['Always set `alt`; `alt=""` only for decorative images.', 'Set a ratio, so nothing jumps while loading.', 'Use `priority` only for the hero image.'],
         dont: ['Put text into images.', 'Load embeds before the user agrees.'],
       },
       a11y: {
@@ -204,7 +201,7 @@ export const Overlays: Story = {
       <div
         style={{
           display: 'flex',
-          gap: 'var(--medo-space-4)',
+          gap: 'var(--medo-layout-gap-content)',
           alignItems: 'center',
           padding: 'var(--medo-space-4)',
           background: 'var(--medo-color-surface-inverse)',

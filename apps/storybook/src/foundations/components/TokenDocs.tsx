@@ -39,14 +39,14 @@ function Swatch({ cssVar, theme, size = 40 }: { cssVar: string; theme: 'light' |
       style={{
         width: size,
         height: size,
-        borderRadius: 8,
-        padding: 4,
+        borderRadius: 'var(--medo-radius-md)',
+        padding: 'var(--medo-space-1)',
         background: theme === 'dark' ? 'var(--medo-color-surface-default)' : 'var(--medo-color-surface-default)',
         boxShadow: 'inset 0 0 0 1px rgba(127,127,127,.35)',
         boxSizing: 'border-box',
       }}
     >
-      <div style={{ width: '100%', height: '100%', borderRadius: 5, background: `var(${cssVar})` }} />
+      <div style={{ width: '100%', height: '100%', borderRadius: 'var(--medo-radius-sm)', background: `var(${cssVar})` }} />
     </div>
   );
 }
@@ -80,8 +80,12 @@ export function SemanticColors({ groups }: { groups: string[] }) {
           const d = darkByVar.get(t.cssVar)!;
           return (
             <tr key={t.cssVar}>
-              <td><Swatch cssVar={t.cssVar} theme="light" /></td>
-              <td><Swatch cssVar={t.cssVar} theme="dark" /></td>
+              <td>
+                <Swatch cssVar={t.cssVar} theme="light" />
+              </td>
+              <td>
+                <Swatch cssVar={t.cssVar} theme="dark" />
+              </td>
               <td>
                 <strong>{t.name}</strong>
                 <br />
@@ -189,14 +193,20 @@ export function Palette() {
       {PRIMITIVE_GROUPS.map((g) => {
         const tokens = L.filter((t) => t.path[0] === 'color' && t.path[1] === g);
         return (
-          <div key={g}>
-            <div style={{ fontWeight: 600, fontSize: 14, marginBottom: 6 }}>{g}</div>
-            <div style={{ display: 'grid', gridTemplateColumns: `repeat(${tokens.length}, 1fr)`, gap: 4 }}>
+          <div key={g} style={{ display: 'grid', gap: 'var(--medo-layout-gap-inline)' }}>
+            <div className="medo-text-label-md-strong">{g}</div>
+            <div style={{ display: 'grid', gridTemplateColumns: `repeat(${tokens.length}, 1fr)`, gap: 'var(--medo-space-1)' }}>
               {tokens.map((t) => (
                 <div key={t.cssVar}>
-                  <div style={{ height: 40, borderRadius: 6, background: `var(${t.cssVar})`, boxShadow: 'inset 0 0 0 1px rgba(127,127,127,.25)' }} />
-                  <div style={{ fontSize: 11, marginTop: 4 }}>{t.path[2]}</div>
-                  <div className="doc-mono" style={{ fontSize: 10 }}>{String(t.value)}</div>
+                  <div
+                    style={{ height: 40, borderRadius: 'var(--medo-radius-sm)', background: `var(${t.cssVar})`, boxShadow: 'inset 0 0 0 1px rgba(127,127,127,.25)' }}
+                  />
+                  <div className="medo-text-label-xs" style={{ marginBlockStart: 'var(--medo-space-1)' }}>
+                    {t.path[2]}
+                  </div>
+                  <div className="doc-mono" style={{ fontSize: 10 }}>
+                    {String(t.value)}
+                  </div>
                 </div>
               ))}
             </div>
@@ -263,15 +273,23 @@ export function SpacingScale() {
           <th>Token</th>
           <th>Value</th>
           <th>Tailwind</th>
-          <th><span className="medo-visually-hidden">Preview</span></th>
+          <th>
+            <span className="medo-visually-hidden">Preview</span>
+          </th>
         </tr>
       </thead>
       <tbody>
         {byGroup('space').map((t) => (
           <tr key={t.cssVar}>
-            <td><strong>{t.name}</strong><br /><Code>{t.cssVar}</Code></td>
+            <td>
+              <strong>{t.name}</strong>
+              <br />
+              <Code>{t.cssVar}</Code>
+            </td>
             <td className="doc-cell-muted">{String(t.value)}</td>
-            <td><Code>p-{t.path[1].replace('-', '.')}</Code></td>
+            <td>
+              <Code>p-{t.path[1].replace('-', '.')}</Code>
+            </td>
             <td style={{ width: '40%' }}>
               <div style={{ height: 16, width: `var(${t.cssVar})`, background: 'var(--medo-color-action-primary)', borderRadius: 2 }} />
             </td>
@@ -287,8 +305,18 @@ export function Radii() {
     <div style={{ display: 'flex', gap: 'var(--medo-layout-gap-items)', flexWrap: 'wrap' }}>
       {byGroup('radius').map((t) => (
         <div key={t.cssVar} style={{ textAlign: 'center' }}>
-          <div style={{ width: 72, height: 72, background: 'var(--medo-color-surface-brand-muted)', border: '2px solid var(--medo-color-action-primary)', borderRadius: `var(${t.cssVar})` }} />
-          <div style={{ fontSize: 13, marginTop: 6, fontWeight: 600 }}>{t.name}</div>
+          <div
+            style={{
+              width: 72,
+              height: 72,
+              background: 'var(--medo-color-surface-brand-muted)',
+              border: '2px solid var(--medo-color-action-primary)',
+              borderRadius: `var(${t.cssVar})`,
+            }}
+          />
+          <div className="medo-text-label-md-strong" style={{ marginBlockStart: 'var(--medo-space-2)' }}>
+            {t.name}
+          </div>
           <div className="doc-mono">rounded-{t.path[1]}</div>
           <div className="medo-text-caption doc-muted">{String(t.value)}</div>
         </div>
@@ -310,8 +338,17 @@ export function SimpleTable({ path, format = (t) => String(t.value) }: { path: s
       <tbody>
         {byGroup(...path).map((t) => (
           <tr key={t.cssVar}>
-            <td><strong>{t.name}</strong>{t.description ? <div className="doc-cell-muted" style={{ fontWeight: 400 }}>{t.description}</div> : null}</td>
-            <td><Code>{t.cssVar}</Code></td>
+            <td>
+              <strong>{t.name}</strong>
+              {t.description ? (
+                <div className="doc-cell-muted" style={{ fontWeight: 400 }}>
+                  {t.description}
+                </div>
+              ) : null}
+            </td>
+            <td>
+              <Code>{t.cssVar}</Code>
+            </td>
             <td className="doc-cell-muted">{format(t)}</td>
           </tr>
         ))}
@@ -354,7 +391,11 @@ export function LayoutTable() {
       <tbody>
         {keys.map((k) => (
           <tr key={k}>
-            <td><strong>layout/{k}</strong><br /><Code>--medo-layout-{k}</Code></td>
+            <td>
+              <strong>layout/{k}</strong>
+              <br />
+              <Code>--medo-layout-{k}</Code>
+            </td>
             <td className="doc-cell-muted">{k === 'columns' ? mobile[k] : remToPx(mobile[k])}</td>
             <td className="doc-cell-muted">{layoutPx(tabletLayout, ['layout', k])}</td>
             <td className="doc-cell-muted">{layoutPx(desktopLayout, ['layout', k])}</td>
@@ -409,7 +450,13 @@ export function SpacingRules() {
             <td>
               <span
                 aria-hidden="true"
-                style={{ display: 'block', inlineSize: `var(--medo-layout-gap-${k})`, blockSize: 'var(--medo-space-3)', background: 'var(--medo-color-action-primary)', borderRadius: 'var(--medo-radius-sm)' }}
+                style={{
+                  display: 'block',
+                  inlineSize: `var(--medo-layout-gap-${k})`,
+                  blockSize: 'var(--medo-space-3)',
+                  background: 'var(--medo-color-action-primary)',
+                  borderRadius: 'var(--medo-radius-sm)',
+                }}
               />
             </td>
           </tr>
@@ -434,9 +481,9 @@ export function Elevation() {
                 style={{
                   width: 120,
                   height: 88,
-                  padding: 12,
+                  padding: 'var(--medo-space-3)',
                   boxSizing: 'border-box',
-                  borderRadius: 12,
+                  borderRadius: 'var(--medo-radius-lg)',
                   background: 'var(--medo-color-surface-raised)',
                   color: 'var(--medo-color-text-primary)',
                   boxShadow: `var(${t.cssVar})`,
@@ -444,7 +491,9 @@ export function Elevation() {
                 }}
               >
                 <strong>{t.path.slice(1).join('/')}</strong>
-                <div style={{ fontFamily: 'var(--medo-font-family-mono)', fontSize: 11, color: 'var(--medo-color-text-secondary)' }}>shadow-{t.path.slice(1).join('-')}</div>
+                <div style={{ fontFamily: 'var(--medo-font-family-mono)', fontSize: 11, color: 'var(--medo-color-text-secondary)' }}>
+                  shadow-{t.path.slice(1).join('-')}
+                </div>
               </div>
             ))}
           </div>
@@ -476,7 +525,7 @@ function MotionPlayground() {
         </Button>
       </div>
       {curves.map((c) => (
-        <div key={c.name} style={{ display: 'grid', gridTemplateColumns: '9rem 1fr', alignItems: 'center', gap: 16 }}>
+        <div key={c.name} style={{ display: 'grid', gridTemplateColumns: '9rem 1fr', alignItems: 'center', gap: 'var(--medo-layout-gap-content)' }}>
           <code className="doc-mono">{c.name}</code>
           <div style={{ position: 'relative', height: 24, borderRadius: 12, background: 'var(--medo-color-surface-subtle)' }}>
             <span

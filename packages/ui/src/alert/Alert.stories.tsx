@@ -39,11 +39,19 @@ const meta = {
     variant: { control: 'inline-radio', options: ['inline', 'banner'] },
     actions: slot({
       none: undefined,
-      one: <Button variant="text" size="sm">Learn more</Button>,
+      one: (
+        <Button variant="text" size="sm">
+          Learn more
+        </Button>
+      ),
       two: (
         <>
-          <Button variant="text" size="sm">Choose a plan</Button>
-          <Button variant="text" size="sm">Remind me later</Button>
+          <Button variant="text" size="sm">
+            Choose a plan
+          </Button>
+          <Button variant="text" size="sm">
+            Remind me later
+          </Button>
         </>
       ),
     }),
@@ -59,21 +67,13 @@ const meta = {
           'A message that stays on the page until its cause is gone: missing data, a failed sync, a trial ending.',
           'A banner for the whole app: maintenance, an outage.',
         ],
-        whenNot: [
-          'Short feedback after an action: use a Toast.',
-          'An error of one field: use the field’s error text.',
-          'A decision: use an Alert Dialog.',
-        ],
+        whenNot: ['Short feedback after an action: use a Toast.', 'An error of one field: use the field’s error text.', 'A decision: use an Alert Dialog.'],
         do: [
           'Always give it a title and a tone that matches the message.',
           'Offer a way forward with an action.',
           'Set `announce` when it appears after the page has loaded.',
         ],
-        dont: [
-          'Stack several alerts; combine them.',
-          'Use danger for information.',
-          'Show an alert that cannot be acted on and never goes away.',
-        ],
+        dont: ['Stack several alerts; combine them.', 'Use danger for information.', 'Show an alert that cannot be acted on and never goes away.'],
       },
       a11y: {
         keyboard: [
@@ -157,13 +157,21 @@ export const Dismissible: Story = {
 export const Banner: Story = {
   parameters: {
     layout: 'fullscreen',
-    docs: { description: { story: 'Full width above the app header, for states that affect the whole app (maintenance, offline). One at a time.' } },
+    docs: {
+      description: { story: 'Full width above the app header, for states that affect the whole app (maintenance, offline). One at a time – the most urgent one.' },
+    },
   },
   render: () => (
-    <div style={{ display: 'grid' }}>
-      <Alert variant="banner" tone="warning" title="Scheduled maintenance on Sunday, 2–4 am." actions={<Button variant="text" size="sm">Details</Button>} />
-      <Alert variant="banner" tone="danger" title="You are offline. Changes are saved when you reconnect." />
-    </div>
+    <Alert
+      variant="banner"
+      tone="warning"
+      title="Scheduled maintenance on Sunday, 2–4 am."
+      actions={
+        <Button variant="text" size="sm">
+          Details
+        </Button>
+      }
+    />
   ),
 };
 

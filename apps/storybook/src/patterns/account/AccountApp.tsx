@@ -75,7 +75,7 @@ function Logo({ full = true }: { full?: boolean }) {
       style={{
         display: 'inline-flex',
         alignItems: 'center',
-        gap: 'var(--medo-space-2)',
+        gap: 'var(--medo-layout-gap-inline)',
         color: 'var(--medo-color-text-primary)',
         textDecoration: 'none',
         font: 'var(--medo-typography-heading-sm)',
@@ -591,8 +591,8 @@ export function OrdersPage({ level = 1, mobile = false, state }: { level?: Level
           <TableBody items={rows} renderEmptyState={() => noResults}>
             {(o) => (
               <Row id={o.id}>
-                <Cell>{o.id}</Cell>
-                <Cell>{day.format(new Date(o.date))}</Cell>
+                <Cell wrap={false}>{o.id}</Cell>
+                <Cell wrap={false}>{day.format(new Date(o.date))}</Cell>
                 <Cell>{`${o.product} · ${o.items} ${o.items === 1 ? 'item' : 'items'}`}</Cell>
                 <Cell>
                   <Badge tone={ORDER_TONE[o.status]} size="sm" dot>
@@ -887,10 +887,10 @@ export function InvoicesPage({ level = 1, mobile = false, state }: { level?: Lev
         <TableBody items={filtered} renderEmptyState={() => noResults}>
           {(i: Invoice) => (
             <Row id={i.id}>
-              <Cell>{i.id}</Cell>
-              <Cell>{i.order}</Cell>
-              <Cell>{day.format(new Date(i.date))}</Cell>
-              <Cell>{day.format(new Date(i.due))}</Cell>
+              <Cell wrap={false}>{i.id}</Cell>
+              <Cell wrap={false}>{i.order}</Cell>
+              <Cell wrap={false}>{day.format(new Date(i.date))}</Cell>
+              <Cell wrap={false}>{day.format(new Date(i.due))}</Cell>
               <Cell>
                 <Badge tone={INVOICE_TONE[i.status]} size="sm" dot>
                   {i.status}

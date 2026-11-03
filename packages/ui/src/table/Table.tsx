@@ -199,8 +199,10 @@ export function Row<T extends object>({ id, columns, children, ...props }: Omit<
 
 export interface CellProps extends Omit<AriaCellProps, 'className'> {
   align?: 'start' | 'end';
+  /** false: on one line – IDs, dates, codes that are hard to read when broken. The table scrolls instead. */
+  wrap?: boolean;
 }
 
-export function Cell({ align = 'start', ...props }: CellProps) {
-  return <AriaCell {...props} data-align={align} className="medo-table__cell" />;
+export function Cell({ align = 'start', wrap = true, ...props }: CellProps) {
+  return <AriaCell {...props} data-align={align} data-nowrap={wrap ? undefined : true} className="medo-table__cell" />;
 }

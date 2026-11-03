@@ -178,7 +178,7 @@ Live examples and all props: [design.med-o.de](https://design.med-o.de).
 | `Checkbox`, `CheckboxGroup` | indeterminate, description · group without visible label via `aria-label` |
 | `Radio`, `RadioGroup` | 2–4 options, horizontal or vertical · group without visible label via `aria-label` |
 | `Switch` | label start/end, loading state |
-| `Tag`, `TagGroup` | removable values or selectable filters · sm/md |
+| `Tag`, `TagGroup` | removable values or selectable filters · sm/md · labels over 200 px in full as a tooltip on hover and focus |
 | `Tooltip`, `TooltipTrigger` | 500 ms delay, instant on focus, shortcut |
 | `ToggleButton`, `ToggleButtonGroup`, `Toolbar` | stays pressed (`aria-pressed`) · segmented (single, `fullWidth`) or toolbar (multiple) · groups with divider |
 | `ListBox`, `Option`, `ListBoxSection` | list behind Select / Combobox · check (single) or checkbox (multi) · groups, descriptions, wrapping |
@@ -208,7 +208,7 @@ Live examples and all props: [design.med-o.de](https://design.med-o.de).
 | `Tabs`, `TabList`, `Tab`, `TabPanel` | track with sliding thumb · md/lg, `fullWidth` · icon, count · panels stay mounted (`keepMounted`) · mobile: lg, up to 3 fill, more scroll with fade · URL via `selectedKey` |
 | `PopoverTrigger`, `Popover`, `Toggletip` | click only, bottom start, 8 px · sm/md/lg/auto · `title` (header + close), `primaryAction` (footer) · mobile: Bottom Sheet · Toggletip: info button + text + link |
 | `NavItem`, `NavGroup`, `NavSection`, `NavList`, `SkipLink`, `SiteHeader`, `AppHeader`, `SideNav`, `BottomTabBar`, `TabBarItem`, `TabBarMore` | links with `aria-current`, any router via `RouterProvider` · website header with dropdown (disclosure) and fullscreen menu < 768 px · side navigation 256 / rail 64 (tooltips), overlay 640–1023 px · bottom tab bar + Nav sheet < 640 px |
-| `StaticTable`, `Table` (+ `TableHeader`, `Column`, `TableBody`, `Row`, `Cell`) | native table or interactive grid · sorting, selection, compact · numbers right · `toolbar` and `footer` in one frame · `ColumnsMenu` (show/hide, locked columns) |
+| `StaticTable`, `Table` (+ `TableHeader`, `Column`, `TableBody`, `Row`, `Cell`) | native table or interactive grid · sorting, selection, compact · numbers right · IDs and dates on one line (`Cell wrap={false}`) · `toolbar` and `footer` in one frame · `ColumnsMenu` (show/hide, locked columns) |
 | `BulkActionBar` | appears with ≥ 1 selected · desktop: floating inverse bar with Toast buttons · mobile: full-width bar, ghost lg, safe area · max 3 actions + “…” menu · count announced · Esc / × clears, focus returns · Table and List view |
 | `Link` | inline (always underlined) or standalone · external icon · new-tab hint |
 | `Stepper`, `Step` | 3–5 steps of one task · done steps are links back, current `aria-current="step"`, no skipping ahead · optional description · below 640 px “Step 2 of 4” with one bar segment per step |

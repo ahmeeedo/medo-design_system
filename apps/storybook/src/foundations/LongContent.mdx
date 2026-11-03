@@ -31,7 +31,7 @@ import { DocPage, DocHeader, DocSection, DocFooter, SpecTable, Notes, Tok, Sourc
     ],
     [
       'Cut only in one-line places',
-      'Navigation items, breadcrumbs, tags, menu items, list titles, the value of a Select, file names – where a second line would break the layout.',
+      'Breadcrumbs, tags, list titles, the value of a Select, file names, the app header title – where a second line would break the layout.',
     ],
     [
       'The whole text stays reachable',
@@ -56,11 +56,9 @@ import { DocPage, DocHeader, DocSection, DocFooter, SpecTable, Notes, Tok, Sourc
     ['List view · title and description', 'In the record the row opens. Keep the key value (amount, count) in its own column – it is never cut.'],
     ['Select · chosen value', 'In the list when it opens; options wrap.'],
     ['Upload · file name', 'Cut in the middle, the end and the extension stay visible (“Quarterly-rep…-2026-Q3.pdf”).'],
-    [
-      'Side navigation (expanded), Tag, Menu item, App header title',
-      'Screen readers only – keep these labels short (one or two words), the content of the page names the rest.',
-    ],
-    ['Toast', 'Never cut: the message wraps. Still write one short sentence.'],
+    ['Tag · label over 200 px', 'Tooltip on hover and focus; a tap focuses the tag.'],
+    ['App header title', 'Cut on narrow screens; screen readers get all of it. Keep it short (one or two words) – the page content names the rest.'],
+    ['Side navigation, Menu, Toast', 'Never cut: labels and messages wrap. Still keep them short.'],
   ]}
 />
 
@@ -98,6 +96,13 @@ import { DocPage, DocHeader, DocSection, DocFooter, SpecTable, Notes, Tok, Sourc
       'Numbers and amounts',
       <>
         Right-aligned with tabular figures, on one line, never cut: 1.234.567,89 €. Class <Tok>medo-table__cell--number</Tok> or <Tok>align="end"</Tok>.
+      </>,
+    ],
+    [
+      'IDs, dates and codes',
+      <>
+        On one line, like numbers – “INV-2026-0980” broken over three lines cannot be read. <Tok>{'<Cell wrap={false}>'}</Tok> or the class{' '}
+        <Tok>medo-table__cell--nowrap</Tok>.
       </>,
     ],
     [

@@ -127,17 +127,9 @@ const meta = {
     medo: {
       subtitle: 'Find content fast: search field, results, search page and quick search.',
       usage: {
-        when: [
-          'Find content on a site or in an app.',
-          'A search page with results, filters and sort.',
-          'Quick search (Cmd / Ctrl + K) for pages and objects.',
-        ],
+        when: ['Find content on a site or in an app.', 'A search page with results, filters and sort.', 'Quick search (Cmd / Ctrl + K) for pages and objects.'],
         whenNot: ['Filter a short visible list: use a Text Field or filters.', 'Pick a value from a long list: use a Combobox.'],
-        do: [
-          'Put the search area in a `<search>` element.',
-          'Show every match in bold and the number of results.',
-          'Keep query and filters in the URL.',
-        ],
+        do: ['Put the search area in a `<search>` element.', 'Show every match in bold and the number of results.', 'Keep query and filters in the URL.'],
         dont: ['Show “No results” without a way forward.', 'Highlight matches by colour only.'],
       },
       a11y: {
@@ -298,7 +290,7 @@ function SearchPage() {
       style={{
         display: 'grid',
         gridTemplateColumns: 'repeat(auto-fill, minmax(16rem, 1fr))',
-        gap: 'var(--medo-space-8) var(--medo-space-6)',
+        gap: 'var(--medo-layout-gap-group) var(--medo-layout-gap-items)',
         margin: 0,
         padding: 0,
         listStyle: 'none',

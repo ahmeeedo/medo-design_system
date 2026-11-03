@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { expect } from 'storybook/test';
+import { expect, waitFor, within } from 'storybook/test';
 import { User } from 'lucide-react';
 import { Tag, TagGroup } from './Tag';
 import { Button } from '../button/Button';
@@ -88,7 +88,12 @@ const meta = {
           ['Backspace / Delete', 'Removes the focused tag.'],
           ['Space', 'Toggles a filter tag.'],
         ],
-        notes: ['A React Aria TagGroup; the group needs a label.', 'Removals are announced.', 'Selected filters show a check, not colour alone.'],
+        notes: [
+          'A React Aria TagGroup; the group needs a label.',
+          'Removals are announced.',
+          'Selected filters show a check, not colour alone.',
+          'A label over 200 px is cut; the whole label shows in a tooltip on hover and keyboard focus (a tap focuses the tag). Screen readers always get all of it.',
+        ],
       },
       styling: {
         classes: [
@@ -169,5 +174,29 @@ export const InteractionTest: Story = {
     await userEvent.tab();
     await userEvent.keyboard('{Backspace}');
     await expect(canvas.getAllByRole('row')).toHaveLength(2);
+  },
+};
+
+export const LongLabelTest: Story = {
+  ...interactionTest,
+  name: 'Interaction test: long label',
+  args: { children: null },
+  render: () => (
+    <TagGroup label="Projects" onRemove={() => {}}>
+      <Tag id="long">Quarterly report for the supervisory board of the Campus Lingo platform</Tag>
+      <Tag id="short">Design</Tag>
+    </TagGroup>
+  ),
+  play: async ({ canvas, userEvent }) => {
+    const body = within(document.body);
+    // Keyboard focus on a cut label: the whole label as a tooltip.
+    await userEvent.tab();
+    await expect(canvas.getAllByRole('row')[0]).toHaveFocus();
+    // aria-hidden: screen readers already read the full label.
+    const tip = await body.findByRole('tooltip', { hidden: true });
+    await expect(tip).toHaveTextContent('Quarterly report for the supervisory board of the Campus Lingo platform');
+    // A label that fits: no tooltip.
+    await userEvent.keyboard('{ArrowRight}');
+    await waitFor(() => expect(body.queryByRole('tooltip', { hidden: true })).toBeNull());
   },
 };

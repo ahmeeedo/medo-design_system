@@ -8,10 +8,14 @@ import { ListRow, ListView } from '../list-view/ListView';
 import { Avatar } from '../avatar/Avatar';
 import { Column, Table, TableBody, TableHeader } from '../table/Table';
 import { TextField } from '../text-field/TextField';
-import { Examples, semantic, slot } from '../story-helpers';
+import { Examples, semantic, slot, Example } from '../story-helpers';
 
-const caption: React.CSSProperties = { font: 'var(--medo-typography-code-sm)', color: 'var(--medo-color-text-secondary)' };
-const grid: React.CSSProperties = { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(20rem, 1fr))', gap: 'var(--medo-layout-gap-items)', alignItems: 'start' };
+const grid: React.CSSProperties = {
+  display: 'grid',
+  gridTemplateColumns: 'repeat(auto-fit, minmax(20rem, 1fr))',
+  gap: 'var(--medo-layout-gap-items)',
+  alignItems: 'start',
+};
 const frame: React.CSSProperties = { border: 'var(--medo-border-width-thin) dashed var(--medo-color-border-default)', borderRadius: 'var(--medo-radius-lg)' };
 
 /** Copy per type – the component ships no text, the app writes it. */
@@ -91,17 +95,11 @@ const meta = {
       usage: {
         when: ['A list, table or view without content: first use, no results, error, no access, all done.'],
         whenNot: ['While content loads: use a Skeleton.', 'An error of a single field: use the field’s error text.'],
-        do: [
-          'Say what is missing and what users can do next.',
-          'Use the primary action only for first use.',
-          'Match the size to the place: page, section or inline.',
-        ],
+        do: ['Say what is missing and what users can do next.', 'Use the primary action only for first use.', 'Match the size to the place: page, section or inline.'],
         dont: ['Write “No data”.', 'Show an empty state while content is still loading.', 'Offer more than one primary action.'],
       },
       a11y: {
-        keyboard: [
-          ['Tab', 'Moves to the actions.'],
-        ],
+        keyboard: [['Tab', 'Moves to the actions.']],
         notes: [
           'Page and section are a `<section>` named by their heading (`headingLevel`).',
           '“No results” is announced politely (`role="status"`); the focus stays in the search field.',
@@ -154,20 +152,17 @@ export const Sizes: Story = {
   },
   render: () => (
     <div style={grid}>
-      <div style={{ display: 'grid', gap: 'var(--medo-layout-gap-content)' }}>
-        <span style={caption}>page</span>
+      <Example label="page">
         <div style={frame}>
           <EmptyState type="first-use" {...examples['first-use']} />
         </div>
-      </div>
-      <div style={{ display: 'grid', gap: 'var(--medo-layout-gap-content)' }}>
-        <span style={caption}>section · in a card</span>
+      </Example>
+      <Example label="section · in a card">
         <Card title="Recent activity">
           <EmptyState type="all-done" size="section" headingLevel={4} title="No activity yet" description="Changes to your projects will show up here." />
         </Card>
-      </div>
-      <div style={{ display: 'grid', gap: 'var(--medo-layout-gap-content)' }}>
-        <span style={caption}>inline · in a table</span>
+      </Example>
+      <Example label="inline · in a table">
         <Table aria-label="Invoices">
           <TableHeader>
             <Column isRowHeader>Invoice</Column>
@@ -176,7 +171,7 @@ export const Sizes: Story = {
           </TableHeader>
           <TableBody renderEmptyState={() => <EmptyState type="no-results" size="inline" {...examples['no-results']} />}>{[]}</TableBody>
         </Table>
-      </div>
+      </Example>
     </div>
   ),
 };

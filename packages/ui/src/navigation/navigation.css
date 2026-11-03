@@ -120,13 +120,15 @@
 .medo-nav-item__label {
   flex: 1;
   min-inline-size: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  /* A long label wraps instead of being cut – the whole name stays readable (keep labels short anyway). */
+  padding-block: var(--medo-space-2);
+  overflow-wrap: anywhere;
 }
 
 .medo-nav-item--header .medo-nav-item__label {
   flex: none;
+  padding-block: 0;
+  white-space: nowrap;
 }
 
 .medo-nav-item__dot {
@@ -219,6 +221,12 @@
   color: var(--medo-color-text-primary);
   text-decoration: none;
   translate: 0 calc(-100% - var(--medo-space-4));
+}
+
+/* Also clipped: inside a transformed ancestor (page transitions, docs previews) “fixed” is relative to that box,
+   and the translated link would peek out. Screen readers still find it. */
+.medo-skip-link:not(:focus-visible) {
+  clip-path: inset(50%);
 }
 
 .medo-skip-link:focus-visible {

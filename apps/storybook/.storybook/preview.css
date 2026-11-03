@@ -50,11 +50,14 @@ html[data-theme] :is(.sb-preparing-story, .sb-preparing-docs) > * {
   color: var(--medo-color-text-primary);
   font-family: var(--medo-font-family-sans);
 }
-.medo-doc :where(h1, h2, h3, h4, p, ol, ul, figure) {
-  margin: 0;
-}
-.medo-doc :where(ol, ul) {
-  padding: 0;
+/* Reset in the layer base, below the components: their own margins (e.g. paragraphs in an Alert) win. */
+@layer base {
+  .medo-doc :where(h1, h2, h3, h4, p, ol, ul, figure) {
+    margin: 0;
+  }
+  .medo-doc :where(ol, ul) {
+    padding: 0;
+  }
 }
 .doc-muted {
   color: var(--medo-color-text-secondary);
@@ -204,11 +207,12 @@ html[data-theme] :is(.sb-preparing-story, .sb-preparing-docs) > * {
 }
 
 /* ---------- section ---------- */
-/* Spacing rules: sections are one rule section apart (half above, half below the divider), the parts of a
-   section one rule group, text inside a part content, examples and guide boxes side by side items. */
+/* Spacing rules: sections are one rule section apart (half above, half below the divider). Heading, lead and
+   body of a section are one block – rule content between them, so the heading sits with its content and not
+   between two sections. Examples and guide boxes side by side: items. */
 .doc-section {
   display: grid;
-  gap: var(--medo-layout-gap-group);
+  gap: var(--medo-layout-gap-content);
   padding: calc(var(--medo-layout-gap-section) / 2) var(--doc-gutter);
   border-bottom: 1px solid var(--medo-color-border-default);
 }

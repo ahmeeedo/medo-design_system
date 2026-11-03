@@ -141,6 +141,7 @@ const meta = {
           ['medo-table', 'The table; `--compact`, `--striped`.'],
           ['medo-table__column, __row, __cell', 'Header, row, cell.'],
           ['medo-table__cell--number', 'Numbers, right aligned.'],
+          ['medo-table__cell--nowrap', 'IDs, dates, codes on one line (Cell `wrap={false}`).'],
           ['medo-table__toolbar, __footer', 'Toolbar and footer.'],
         ],
         states: ['data-hovered', 'data-pressed', 'data-selected', 'data-focus-visible', 'data-disabled', 'data-allows-sorting', 'aria-sort'],

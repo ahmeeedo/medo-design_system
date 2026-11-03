@@ -1,9 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { DescriptionItem, DescriptionList, List, ListItem } from './List';
 import { Card } from '../card/Card';
-import { Examples } from '../story-helpers';
+import { Examples, Example, caption } from '../story-helpers';
 
-const caption: React.CSSProperties = { font: 'var(--medo-typography-code-sm)', color: 'var(--medo-color-text-secondary)' };
 const cols: React.CSSProperties = { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(14rem, 1fr))', gap: 'var(--medo-layout-gap-items)' };
 
 const meta = {
@@ -194,16 +193,16 @@ export const Description: Story = {
   },
   render: () => (
     <Examples>
-      <span style={caption}>auto · wide</span>
-      <DescriptionList>
-        <Details />
-      </DescriptionList>
-      <span style={caption}>auto · narrow (240 px)</span>
-      <div style={{ maxInlineSize: '15rem' }}>
+      <Example label="auto · wide">
         <DescriptionList>
           <Details />
         </DescriptionList>
-      </div>
+      </Example>
+      <Example label="auto · narrow (240 px)" style={{ maxInlineSize: '15rem' }}>
+        <DescriptionList>
+          <Details />
+        </DescriptionList>
+      </Example>
     </Examples>
   ),
 };

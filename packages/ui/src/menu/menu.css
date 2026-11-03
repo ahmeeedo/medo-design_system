@@ -149,9 +149,8 @@
 .medo-menu-item__label {
   flex: 1;
   min-inline-size: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  /* Wraps instead of being cut: the whole action stays readable (keep labels short anyway). */
+  overflow-wrap: anywhere;
 }
 
 .medo-menu-item__shortcut {
