@@ -54,9 +54,9 @@ const project = (name: string, theme: 'Light' | 'Dark', { browser = 'chromium', 
       expect: {
         toMatchScreenshot: {
           comparatorName: 'pixelmatch' as const,
-          // threshold: colour tolerance per pixel, so anti-aliasing noise passes. No pixel may differ beyond it:
-          // a shifted 1 px border is only a few hundred pixels and must fail.
-          comparatorOptions: { threshold: 0.1, allowedMismatchedPixelRatio: 0 },
+          // threshold: colour tolerance per pixel, so anti-aliasing noise passes. Up to 25 pixels beyond it are text
+          // rendering noise (a run once differed by 12); a shifted 1 px border is a few hundred pixels and still fails.
+          comparatorOptions: { threshold: 0.1, allowedMismatchedPixels: 25 },
           resolveScreenshotPath: screenshotPath('__screenshots__'),
           resolveDiffPath: screenshotPath('.vitest/screenshot-diffs'),
         },

@@ -6,7 +6,7 @@
  * Skipped: stories hidden from the docs (tagged `!autodocs`, e.g. interaction tests) and stories tagged `!visual`.
  */
 import { afterEach, beforeEach, expect, vi } from 'vitest';
-import { page } from 'vitest/browser';
+import { page, userEvent } from 'vitest/browser';
 
 type StoryInContext = { id: string; tags: string[] };
 
@@ -27,6 +27,12 @@ afterEach(async (context) => {
   // Same frame for every story: at least one viewport high, so overlays (dialogs, sheets) are inside the shot.
   document.body.style.minBlockSize = '100vh';
   await document.fonts.ready;
+  // The mouse stays where the last test left it and could hover a button in this story: park it in the corner.
+  const corner = document.createElement('div');
+  corner.style.cssText = 'position: fixed; inset: 0 auto auto 0; inline-size: 1px; block-size: 1px;';
+  document.body.append(corner);
+  await userEvent.hover(corner);
+  corner.remove();
 
   // Component as folder, story as file: light/components-actions-button/variants.png
   await expect.element(page.elementLocator(document.body)).toMatchScreenshot(story.id.replace('--', '/'), {
