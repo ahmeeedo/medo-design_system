@@ -408,10 +408,13 @@ const contract = (overlay: 'popover' | 'sheet'): Story => ({
     await pick[overlay](canvas, userEvent, 'Backup', 'hans', 'Hanna Hansen');
     await save();
     await waitFor(() => expect(data()).toHaveTextContent('assignee=mueller&reviewer=lorenz&backup=hansen'));
-    // 5. Read-only: shown and submitted, but it does not open.
+    // 5. Read-only: shown and submitted, but it does not open. First wait until the last list has closed (it fades out).
+    const overlayRole = overlay === 'popover' ? 'listbox' : 'dialog';
+    await waitFor(() => expect(within(document.body).queryByRole(overlayRole)).toBeNull());
     const reviewer = canvas.getByRole(overlay === 'popover' ? 'combobox' : 'button', { name: /Reviewer/ });
     await userEvent.click(reviewer);
-    await expect(within(document.body).queryByRole(overlay === 'popover' ? 'listbox' : 'dialog')).toBeNull();
+    await new Promise((resolve) => setTimeout(resolve, 100));
+    await expect(within(document.body).queryByRole(overlayRole)).toBeNull();
   },
 });
 
