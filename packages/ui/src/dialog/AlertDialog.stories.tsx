@@ -57,10 +57,7 @@ const meta = {
     medo: {
       subtitle: 'A decision that needs an answer before the user can go on.',
       usage: {
-        when: [
-          'Confirm a destructive or irreversible action: delete, leave without saving.',
-          'A warning that needs a decision before the user can go on.',
-        ],
+        when: ['Confirm a destructive or irreversible action: delete, leave without saving.', 'A warning that needs a decision before the user can go on.'],
         whenNot: [
           'A task with fields: use a Dialog.',
           'Information without a decision: use an Alert or a Toast.',
@@ -154,6 +151,8 @@ export const Pending: Story = {
 
 export const InteractionTest: Story = {
   ...interactionTest,
+  // Literal, so the story index (and the tag filters of the test projects) see it too.
+  tags: ['!autodocs'],
   play: async ({ canvas, userEvent, args }) => {
     const trigger = canvas.getByRole('button', { name: 'Delete file' });
     await userEvent.click(trigger);

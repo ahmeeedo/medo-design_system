@@ -70,7 +70,12 @@ const meta = {
     a11y: {
       // label-content-name-mismatch is an experimental axe rule: options read their label as the name and the
       // second line as description (aria-describedby) – correct, but the rule counts all visible text.
-      config: { rules: [{ id: 'landmark-unique', enabled: false }, { id: 'label-content-name-mismatch', enabled: false }] },
+      config: {
+        rules: [
+          { id: 'landmark-unique', enabled: false },
+          { id: 'label-content-name-mismatch', enabled: false },
+        ],
+      },
     },
     medo: {
       subtitle: 'A Select you can type into. Typing filters the list – for long lists, people, places or tags.',
@@ -236,8 +241,19 @@ export const Creatable: Story = {
 const search = (text: string, signal: AbortSignal) =>
   new Promise<Person[]>((resolve, reject) => {
     const id = setTimeout(() => {
-      const q = text.normalize('NFD').replace(/\p{Diacritic}/gu, '').toLowerCase();
-      resolve(people.filter((p) => p.name.normalize('NFD').replace(/\p{Diacritic}/gu, '').toLowerCase().includes(q)));
+      const q = text
+        .normalize('NFD')
+        .replace(/\p{Diacritic}/gu, '')
+        .toLowerCase();
+      resolve(
+        people.filter((p) =>
+          p.name
+            .normalize('NFD')
+            .replace(/\p{Diacritic}/gu, '')
+            .toLowerCase()
+            .includes(q),
+        ),
+      );
     }, 600);
     signal.addEventListener('abort', () => {
       clearTimeout(id);
@@ -318,6 +334,8 @@ export const Mobile: Story = {
 
 export const InteractionTest: Story = {
   ...interactionTest,
+  // Literal, so the story index (and the tag filters of the test projects) see it too.
+  tags: ['!autodocs'],
   args: { defaultValue: null },
   play: async ({ canvas, userEvent, args }) => {
     const input = canvas.getByRole('combobox', { name: /Assignee/ });
@@ -420,4 +438,3 @@ const contract = (overlay: 'popover' | 'sheet'): Story => ({
 
 export const ContractPopover = contract('popover');
 export const ContractSheet = contract('sheet');
-

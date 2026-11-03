@@ -163,6 +163,8 @@ export const Filters: Story = {
 
 export const InteractionTest: Story = {
   ...interactionTest,
+  // Literal, so the story index (and the tag filters of the test projects) see it too.
+  tags: ['!autodocs'],
   args: { children: null },
   render: () => <RemovableDemo />,
   play: async ({ canvas, userEvent }) => {
@@ -179,6 +181,8 @@ export const InteractionTest: Story = {
 
 export const LongLabelTest: Story = {
   ...interactionTest,
+  // Literal, so the story index (and the tag filters of the test projects) see it too.
+  tags: ['!autodocs'],
   name: 'Interaction test: long label',
   args: { children: null },
   render: () => (

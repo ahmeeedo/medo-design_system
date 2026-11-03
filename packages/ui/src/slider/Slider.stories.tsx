@@ -47,16 +47,9 @@ const meta = {
     medo: {
       subtitle: 'Pick an approximate value or range by dragging – volume, radius, price filters.',
       usage: {
-        when: [
-          'An approximate value where the effect is visible: volume, zoom, radius.',
-          'A range filter: price, size (`SliderField` with inputs).',
-        ],
+        when: ['An approximate value where the effect is visible: volume, zoom, radius.', 'A range filter: price, size (`SliderField` with inputs).'],
         whenNot: ['An exact value: use a NumberField or a SliderField.', 'A few named options: use Radio or a Toggle Button group.'],
-        do: [
-          'Show the value with its unit (`formatOptions`).',
-          'Use `onChangeEnd` for expensive filters.',
-          'Name both thumbs of a range (`thumbLabels`).',
-        ],
+        do: ['Show the value with its unit (`formatOptions`).', 'Use `onChangeEnd` for expensive filters.', 'Name both thumbs of a range (`thumbLabels`).'],
         dont: ['Use ticks for more than 10 steps.', 'Hide the value.'],
       },
       a11y: {
@@ -180,6 +173,8 @@ export const Number: Story = {
 
 export const InteractionTest: Story = {
   ...interactionTest,
+  // Literal, so the story index (and the tag filters of the test projects) see it too.
+  tags: ['!autodocs'],
   play: async ({ canvas, userEvent, args }) => {
     const thumb = canvas.getByRole('slider', { name: 'Volume' });
     await expect(thumb).toHaveAttribute('aria-valuetext', '40%');
@@ -197,6 +192,8 @@ export const InteractionTest: Story = {
 
 export const NumberFieldTest: Story = {
   ...interactionTest,
+  // Literal, so the story index (and the tag filters of the test projects) see it too.
+  tags: ['!autodocs'],
   name: 'Interaction test: number field',
   render: () => <NumberField label="Quantity" defaultValue={2} minValue={1} maxValue={99} />,
   play: async ({ canvas, userEvent }) => {

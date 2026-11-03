@@ -36,21 +36,13 @@ const meta = {
       subtitle: 'Short, temporary feedback after an action. It floats above the page and disappears on its own.',
       usage: {
         when: ['Short feedback after an action: saved, sent, deleted.', 'An Undo for an action that was done right away.'],
-        whenNot: [
-          'Information users must read or keep: use an Alert.',
-          'Errors of a form: show them at the fields.',
-          'A decision: use an Alert Dialog.',
-        ],
+        whenNot: ['Information users must read or keep: use an Alert.', 'Errors of a form: show them at the fields.', 'A decision: use an Alert Dialog.'],
         do: [
           'Render `<ToastRegion />` once at the root and call `toast()` from anywhere.',
           'Write one short sentence; one action at most.',
           'Use `persistent` for errors that need attention.',
         ],
-        dont: [
-          'Put the only copy of important information into a toast.',
-          'Show a toast on page load.',
-          'Add icons or tones; that is what Alerts are for.',
-        ],
+        dont: ['Put the only copy of important information into a toast.', 'Show a toast on page load.', 'Add icons or tones; that is what Alerts are for.'],
       },
       a11y: {
         keyboard: [
@@ -148,6 +140,8 @@ export const Error: Story = {
 
 export const InteractionTest: Story = {
   ...interactionTest,
+  // Literal, so the story index (and the tag filters of the test projects) see it too.
+  tags: ['!autodocs'],
   play: async ({ canvas, userEvent, args }) => {
     await userEvent.click(canvas.getByRole('button', { name: 'Show toast' }));
     const body = within(document.body);

@@ -8,7 +8,8 @@
     "build": "storybook build -o storybook-static",
     "test": "vitest --run",
     "test:webkit": "vitest --run --project storybook-webkit",
-    "test:firefox": "vitest --run --project storybook-firefox"
+    "test:firefox": "vitest --run --project storybook-firefox",
+    "test:visual": "vitest --run --project visual --project visual-dark"
   },
   "dependencies": {
     "@med-o/design-tokens": "0.7.0",

@@ -97,7 +97,8 @@ export const Mobile: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Full width at the bottom on surface/raised: × and the count on the left, Button ghost lg on the right. Two actions fit; with more, the first stays and “…” holds the rest.',
+        story:
+          'Full width at the bottom on surface/raised: × and the count on the left, Button ghost lg on the right. Two actions fit; with more, the first stays and “…” holds the rest.',
       },
     },
   },
@@ -148,6 +149,8 @@ export const WithListView: Story = {
 
 export const InteractionTest: Story = {
   ...interactionTest,
+  // Literal, so the story index (and the tag filters of the test projects) see it too.
+  tags: ['!autodocs'],
   args: { variant: 'desktop' },
   play: async ({ canvas, userEvent, args }) => {
     const bar = canvas.getByRole('toolbar', { name: 'Bulk actions' });
@@ -163,6 +166,8 @@ export const InteractionTest: Story = {
 
 export const MobileOverflowTest: Story = {
   ...interactionTest,
+  // Literal, so the story index (and the tag filters of the test projects) see it too.
+  tags: ['!autodocs'],
   name: 'Interaction test: mobile keeps two',
   args: { variant: 'mobile' },
   play: async ({ canvas, userEvent }) => {
@@ -171,7 +176,11 @@ export const MobileOverflowTest: Story = {
     await expect(canvas.queryByRole('button', { name: 'Archive' })).toBeNull();
     await userEvent.click(canvas.getByRole('button', { name: 'More actions' }));
     const menu = await within(document.body).findByRole('menu');
-    await expect(within(menu).getAllByRole('menuitem').map((i) => i.textContent)).toEqual(['Archive', 'Delete']);
+    await expect(
+      within(menu)
+        .getAllByRole('menuitem')
+        .map((i) => i.textContent),
+    ).toEqual(['Archive', 'Delete']);
     await userEvent.keyboard('{Escape}');
   },
 };

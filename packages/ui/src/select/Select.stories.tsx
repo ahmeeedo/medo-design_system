@@ -70,17 +70,18 @@ const meta = {
     a11y: {
       // label-content-name-mismatch is an experimental axe rule: options read their label as the name and the
       // second line as description (aria-describedby) – correct, but the rule counts all visible text.
-      config: { rules: [{ id: 'landmark-unique', enabled: false }, { id: 'label-content-name-mismatch', enabled: false }] },
+      config: {
+        rules: [
+          { id: 'landmark-unique', enabled: false },
+          { id: 'label-content-name-mismatch', enabled: false },
+        ],
+      },
     },
     medo: {
       subtitle: 'Choose one or several values from a list.',
       usage: {
         when: ['Choose one value from about 5–10 options.', 'Choose several values in a compact field (`selectionMode="multiple"`).'],
-        whenNot: [
-          '2–4 options: use Radio, so all choices are visible at once.',
-          'More than 10 options or a search: use a Combobox.',
-          'A list of actions: use a Menu.',
-        ],
+        whenNot: ['2–4 options: use Radio, so all choices are visible at once.', 'More than 10 options or a search: use a Combobox.', 'A list of actions: use a Menu.'],
         do: [
           'Always show a label. Use `aria-label` only in filter bars where the context names the field.',
           'Order the options in a way users expect: alphabetical, by size or by frequency.',
@@ -118,8 +119,7 @@ const meta = {
     },
     docs: {
       description: {
-        component:
-          'A field that opens a list of options. Built on React Aria Select. Same anatomy and sizes as a Text Field, plus a chevron.',
+        component: 'A field that opens a list of options. Built on React Aria Select. Same anatomy and sizes as a Text Field, plus a chevron.',
       },
     },
   },
@@ -295,6 +295,8 @@ export const WithoutVisibleLabel: Story = {
 
 export const InteractionTest: Story = {
   ...interactionTest,
+  // Literal, so the story index (and the tag filters of the test projects) see it too.
+  tags: ['!autodocs'],
   play: async ({ canvas, userEvent, args }) => {
     const trigger = canvas.getByRole('button', { name: /Country/ });
     await expect(trigger).toHaveTextContent('Germany');

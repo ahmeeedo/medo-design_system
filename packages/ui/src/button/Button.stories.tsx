@@ -80,12 +80,24 @@ const col = { display: 'grid', gap: 'var(--medo-layout-gap-group)' } as const;
 export const Variants: Story = {
   render: (args) => (
     <div style={row}>
-      <Button {...args} variant="primary">Primary</Button>
-      <Button {...args} variant="secondary">Secondary</Button>
-      <Button {...args} variant="ghost">Ghost</Button>
-      <Button {...args} variant="danger">Danger</Button>
-      <Button {...args} variant="ghost-danger">Ghost danger</Button>
-      <Button {...args} variant="text">Text</Button>
+      <Button {...args} variant="primary">
+        Primary
+      </Button>
+      <Button {...args} variant="secondary">
+        Secondary
+      </Button>
+      <Button {...args} variant="ghost">
+        Ghost
+      </Button>
+      <Button {...args} variant="danger">
+        Danger
+      </Button>
+      <Button {...args} variant="ghost-danger">
+        Ghost danger
+      </Button>
+      <Button {...args} variant="text">
+        Text
+      </Button>
     </div>
   ),
 };
@@ -93,9 +105,15 @@ export const Variants: Story = {
 export const Sizes: Story = {
   render: (args) => (
     <div style={row}>
-      <Button {...args} size="sm">Small</Button>
-      <Button {...args} size="md">Medium</Button>
-      <Button {...args} size="lg">Large</Button>
+      <Button {...args} size="sm">
+        Small
+      </Button>
+      <Button {...args} size="md">
+        Medium
+      </Button>
+      <Button {...args} size="lg">
+        Large
+      </Button>
     </div>
   ),
 };
@@ -104,10 +122,18 @@ export const WithIcons: Story = {
   name: 'With icons',
   render: (args) => (
     <div style={row}>
-      <Button {...args} startIcon={<Plus />}>New project</Button>
-      <Button {...args} variant="secondary" startIcon={<Download />}>Export</Button>
-      <Button {...args} variant="text" endIcon={<ArrowRight />}>Learn more</Button>
-      <Button {...args} variant="danger" startIcon={<Trash2 />}>Delete</Button>
+      <Button {...args} startIcon={<Plus />}>
+        New project
+      </Button>
+      <Button {...args} variant="secondary" startIcon={<Download />}>
+        Export
+      </Button>
+      <Button {...args} variant="text" endIcon={<ArrowRight />}>
+        Learn more
+      </Button>
+      <Button {...args} variant="danger" startIcon={<Trash2 />}>
+        Delete
+      </Button>
     </div>
   ),
 };
@@ -172,6 +198,8 @@ export const Group: Story = {
 
 export const InteractionTest: Story = {
   ...interactionTest,
+  // Literal, so the story index (and the tag filters of the test projects) see it too.
+  tags: ['!autodocs'],
   play: async ({ canvas, userEvent, args }) => {
     const button = canvas.getByRole('button', { name: 'Button' });
     await userEvent.click(button);

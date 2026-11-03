@@ -693,6 +693,8 @@ export const Quick: Story = {
 
 export const InteractionTest: Story = {
   ...interactionTest,
+  // Literal, so the story index (and the tag filters of the test projects) see it too.
+  tags: ['!autodocs'],
   play: async ({ canvas, userEvent, args }) => {
     const field = canvas.getByRole('searchbox', { name: 'Search' });
     await userEvent.type(field, 'invoice{Enter}');
@@ -706,6 +708,8 @@ export const InteractionTest: Story = {
 
 export const QuickSearchTest: Story = {
   ...interactionTest,
+  // Literal, so the story index (and the tag filters of the test projects) see it too.
+  tags: ['!autodocs'],
   name: 'Interaction test: quick search',
   render: () => <QuickSearchExample />,
   play: async ({ userEvent }) => {

@@ -1,6 +1,6 @@
 /**
  * Visual regression: after every story test, compare a screenshot with the reference in __screenshots__/.
- * Only active with VISUAL=1 (vitest.config.ts adds this file then). References are created in CI only
+ * Only in the projects “visual” and “visual-dark” (npm run test:visual; vitest.config.ts adds this file there). References are created in CI only
  * (GitHub workflow “Update screenshots”), because fonts render slightly differently on every OS.
  *
  * Skipped: stories hidden from the docs (tagged `!autodocs`, e.g. interaction tests) and stories tagged `!visual`.

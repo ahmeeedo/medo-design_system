@@ -65,11 +65,7 @@ const meta = {
           'Extra content or a few controls next to a trigger: a filter, a share panel, details.',
           'A Toggletip: an info button with a short explanation and a link.',
         ],
-        whenNot: [
-          'Only a label on hover: use a Tooltip.',
-          'A list of actions: use a Menu.',
-          'Content that needs scrolling or many fields: use a Dialog.',
-        ],
+        whenNot: ['Only a label on hover: use a Tooltip.', 'A list of actions: use a Menu.', 'Content that needs scrolling or many fields: use a Dialog.'],
         do: [
           'One topic per popover.',
           'Apply changes live; add a footer (`primaryAction`) only when they must be confirmed.',
@@ -229,6 +225,8 @@ export const Mobile: Story = {
 
 export const InteractionTest: Story = {
   ...interactionTest,
+  // Literal, so the story index (and the tag filters of the test projects) see it too.
+  tags: ['!autodocs'],
   play: async ({ canvas, userEvent }) => {
     const trigger = canvas.getByRole('button', { name: 'Filter' });
     await userEvent.click(trigger);

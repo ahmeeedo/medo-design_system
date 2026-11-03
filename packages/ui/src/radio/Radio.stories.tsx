@@ -34,11 +34,7 @@ const meta = {
       subtitle: 'Pick exactly one of 2–4 visible options. From 5 options use Select.',
       usage: {
         when: ['Pick exactly one of 2–4 options that should all be visible.', 'The difference between the options needs a short description.'],
-        whenNot: [
-          '5 or more options: use a Select.',
-          'A single on / off option: use a Checkbox or a Switch.',
-          'Switching views: use a Toggle Button group.',
-        ],
+        whenNot: ['5 or more options: use a Select.', 'A single on / off option: use a Checkbox or a Switch.', 'Switching views: use a Toggle Button group.'],
         do: [
           'Preselect a sensible default when there is one.',
           'Order the options logically: by size, frequency or time.',
@@ -68,9 +64,7 @@ const meta = {
     },
     docs: {
       description: {
-        component:
-          'Pick exactly one of 2–4 visible options (5 or more: Select). ' +
-          'Arrow keys move and select. Built on React Aria `RadioGroup` + `RadioField`.',
+        component: 'Pick exactly one of 2–4 visible options (5 or more: Select). ' + 'Arrow keys move and select. Built on React Aria `RadioGroup` + `RadioField`.',
       },
     },
   },
@@ -101,6 +95,8 @@ export const Large: Story = { args: { size: 'lg' } };
 
 export const InteractionTest: Story = {
   ...interactionTest,
+  // Literal, so the story index (and the tag filters of the test projects) see it too.
+  tags: ['!autodocs'],
   play: async ({ canvas, userEvent, args }) => {
     const standard = canvas.getByRole('radio', { name: /Standard/ });
     await expect(standard).toBeChecked();

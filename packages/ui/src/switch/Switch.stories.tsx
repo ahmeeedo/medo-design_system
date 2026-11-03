@@ -22,11 +22,7 @@ const meta = {
       subtitle: 'Turns a single setting on or off. The change takes effect immediately.',
       usage: {
         when: ['A single setting that takes effect immediately: notifications, dark mode, auto-save.', 'Settings lists.'],
-        whenNot: [
-          'A choice that is saved with a form: use a Checkbox.',
-          'Several related options: use a CheckboxGroup.',
-          'An action like “Delete”: use a Button.',
-        ],
+        whenNot: ['A choice that is saved with a form: use a Checkbox.', 'Several related options: use a CheckboxGroup.', 'An action like “Delete”: use a Button.'],
         do: [
           'Name the setting in the label: “Notifications”, not “On”.',
           'Use `isLoading` while the change is saved.',
@@ -70,7 +66,13 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 /** Fields fill their container: keep the demos at a realistic form width. */
-const narrow = [(Story: () => React.ReactElement) => <div style={{ maxInlineSize: '24rem' }}><Story /></div>];
+const narrow = [
+  (Story: () => React.ReactElement) => (
+    <div style={{ maxInlineSize: '24rem' }}>
+      <Story />
+    </div>
+  ),
+];
 
 export const Playground: Story = { decorators: narrow };
 
@@ -79,12 +81,24 @@ export const States: Story = {
   render: (args) => (
     <div style={stack}>
       <Switch {...args}>Off</Switch>
-      <Switch {...args} defaultSelected>On</Switch>
-      <Switch {...args} description="Weekly summary every Monday.">With description</Switch>
-      <Switch {...args} isDisabled>Disabled</Switch>
-      <Switch {...args} isDisabled defaultSelected>Disabled and on</Switch>
-      <Switch {...args} isLoading defaultSelected>Saving …</Switch>
-      <Switch {...args} size="lg" defaultSelected>Large (mobile)</Switch>
+      <Switch {...args} defaultSelected>
+        On
+      </Switch>
+      <Switch {...args} description="Weekly summary every Monday.">
+        With description
+      </Switch>
+      <Switch {...args} isDisabled>
+        Disabled
+      </Switch>
+      <Switch {...args} isDisabled defaultSelected>
+        Disabled and on
+      </Switch>
+      <Switch {...args} isLoading defaultSelected>
+        Saving …
+      </Switch>
+      <Switch {...args} size="lg" defaultSelected>
+        Large (mobile)
+      </Switch>
     </div>
   ),
 };
@@ -94,9 +108,13 @@ export const SettingsList: Story = {
   name: 'Settings list',
   render: () => (
     <div style={{ display: 'grid', gap: 'var(--medo-layout-gap-content)' }}>
-      <Switch labelPosition="start" defaultSelected description="Get an email for new comments.">Email</Switch>
+      <Switch labelPosition="start" defaultSelected description="Get an email for new comments.">
+        Email
+      </Switch>
       <Switch labelPosition="start">Push notifications</Switch>
-      <Switch labelPosition="start" defaultSelected>Weekly summary</Switch>
+      <Switch labelPosition="start" defaultSelected>
+        Weekly summary
+      </Switch>
     </div>
   ),
 };
@@ -126,6 +144,8 @@ export const WhileSaving: Story = { decorators: narrow, name: 'While saving', re
 
 export const InteractionTest: Story = {
   ...interactionTest,
+  // Literal, so the story index (and the tag filters of the test projects) see it too.
+  tags: ['!autodocs'],
   decorators: narrow,
   play: async ({ canvas, userEvent, args }) => {
     const sw = canvas.getByRole('switch', { name: 'Email notifications' });

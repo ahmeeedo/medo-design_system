@@ -128,6 +128,8 @@ export const OnMedia: Story = {
 
 export const InteractionTest: Story = {
   ...interactionTest,
+  // Literal, so the story index (and the tag filters of the test projects) see it too.
+  tags: ['!autodocs'],
   play: async ({ canvas, userEvent, args }) => {
     // Keyboard focus shows the name as a tooltip at once; Enter presses.
     await userEvent.tab();

@@ -11,7 +11,12 @@ import { interactionTest, samplePhoto, semantic, slot } from '../story-helpers';
 /** Sample media: the Image component (decorative – the card title names the content). In cards the image takes the card's radius. */
 const media = <Image src={samplePhoto(0)} alt="" ratio="16:9" radius="none" />;
 
-const grid: React.CSSProperties = { display: 'grid', gap: 'var(--medo-layout-gap-items)', gridTemplateColumns: 'repeat(auto-fill, minmax(16rem, 1fr))', alignItems: 'stretch' };
+const grid: React.CSSProperties = {
+  display: 'grid',
+  gap: 'var(--medo-layout-gap-items)',
+  gridTemplateColumns: 'repeat(auto-fill, minmax(16rem, 1fr))',
+  alignItems: 'stretch',
+};
 
 const meta = {
   title: 'Components/Data display/Card',
@@ -75,11 +80,7 @@ const meta = {
           ['Tab', 'Moves to the card link and then to the buttons.'],
           ['Enter', 'Follows the card link.'],
         ],
-        notes: [
-          'An `<article>` with a real heading.',
-          'An interactive card has one link: the title, stretched over the card.',
-          'Buttons stay clickable above the link.',
-        ],
+        notes: ['An `<article>` with a real heading.', 'An interactive card has one link: the title, stretched over the card.', 'Buttons stay clickable above the link.'],
       },
       styling: {
         classes: [
@@ -184,6 +185,8 @@ export const Horizontal: Story = {
 
 export const InteractionTest: Story = {
   ...interactionTest,
+  // Literal, so the story index (and the tag filters of the test projects) see it too.
+  tags: ['!autodocs'],
   render: () => (
     <div style={{ maxInlineSize: '20rem' }}>
       <Card href="#tokens" media={media} title="Design tokens 2.0" subtitle="Article · 5 min read">

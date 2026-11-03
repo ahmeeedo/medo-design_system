@@ -11,41 +11,48 @@
  * Viewport: Storybook sets 1200 × 900 for every story (its default, unless a story sets globals.viewport). Play
  * functions can change it while they run: resizeViewport() from story-helpers (via .storybook/test.setup.ts).
  *
- * VISUAL=1 adds the visual regression check (.storybook/visual.setup.ts): one screenshot per story and theme in
- * __screenshots__/{light|dark}/<component>/<story>.png. Created and updated in CI only.
+ * Visual regression check: the projects “visual” and “visual-dark” (npm run test:visual, its own CI job). One
+ * screenshot per docs story and theme in __screenshots__/{light|dark}/<component>/<story>.png (.storybook/visual.setup.ts),
+ * created and updated in CI only (workflow “Update screenshots”). They skip axe – the projects above check it – so a red
+ * “visual” only ever means: the look changed.
+ *
+ * In CI, WebKit and Firefox retry a failed story once; a story that passes only on the retry is listed as flaky in the
+ * job summary (flaky-reporter.ts) – to be fixed, not ignored.
  */
 import { defineConfig } from 'vitest/config';
 import { storybookTest } from '@storybook/addon-vitest/vitest-plugin';
 import { playwright } from '@vitest/browser-playwright';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { FlakyReporter } from './flaky-reporter';
 
 const dirname = path.dirname(fileURLToPath(import.meta.url));
-const visual = process.env.VISUAL === '1';
 const asked = (name: string) => process.argv.some((arg) => arg.includes(name));
+const ci = !!process.env.CI;
 
 /** Reference and diff paths: one folder per theme (light, dark), file name = story id. */
-const screenshotPath = (folder: string) => ({ arg, ext, project }: { arg: string; ext: string; project: { name: string } }) =>
-  path.join(dirname, folder, project.name.startsWith('storybook-dark') ? 'dark' : 'light', `${arg}${ext}`);
+const screenshotPath =
+  (folder: string) =>
+  ({ arg, ext, project }: { arg: string; ext: string; project: { name: string } }) =>
+    path.join(dirname, folder, project.name.endsWith('dark') ? 'dark' : 'light', `${arg}${ext}`);
 
 /** One project per theme and browser. The theme reaches preview.ts as import.meta.env.STORYBOOK_TEST_THEME. */
-type ProjectOptions = { browser?: 'chromium' | 'webkit' | 'firefox'; locale?: string; tags?: string[] };
-const project = (name: string, theme: 'Light' | 'Dark', { browser = 'chromium', locale = 'en-US', tags }: ProjectOptions = {}) => ({
+type ProjectOptions = { browser?: 'chromium' | 'webkit' | 'firefox'; locale?: string; tags?: string[]; visual?: boolean };
+const project = (name: string, theme: 'Light' | 'Dark', { browser = 'chromium', locale = 'en-US', tags, visual = false }: ProjectOptions = {}) => ({
   extends: true,
   // tags: only stories with one of these tags (e.g. the German project runs the stories tagged “locale-de”).
   plugins: [storybookTest({ configDir: path.join(dirname, '.storybook'), ...(tags ? { tags: { include: tags } } : {}) })],
   define: {
     'import.meta.env.STORYBOOK_TEST_THEME': JSON.stringify(theme),
     'import.meta.env.STORYBOOK_TEST_LOCALE': JSON.stringify(locale),
+    'import.meta.env.STORYBOOK_TEST_VISUAL': JSON.stringify(visual),
   },
   test: {
     name,
-    // test.setup.ts for every project (window size in play functions). Screenshots only in Chromium and English:
-    // references come from one engine, fonts render differently in each.
-    setupFiles: [
-      path.join(dirname, '.storybook/test.setup.ts'),
-      ...(visual && browser === 'chromium' && locale === 'en-US' ? [path.join(dirname, '.storybook/visual.setup.ts')] : []),
-    ],
+    // A second chance only for the other engines in CI (their timing on a busy runner); Chromium must pass at once.
+    retry: ci && browser !== 'chromium' ? 1 : 0,
+    // test.setup.ts for every project (window size in play functions); visual.setup.ts takes the screenshots.
+    setupFiles: [path.join(dirname, '.storybook/test.setup.ts'), ...(visual ? [path.join(dirname, '.storybook/visual.setup.ts')] : [])],
     browser: {
       enabled: true,
       headless: true,
@@ -67,6 +74,7 @@ const project = (name: string, theme: 'Light' | 'Dark', { browser = 'chromium', 
 
 export default defineConfig({
   test: {
+    reporters: ci ? ['default', new FlakyReporter()] : ['default'],
     projects: [
       project('storybook', 'Light'),
       project('storybook-dark', 'Dark'),
@@ -77,6 +85,11 @@ export default defineConfig({
       // these browsers installed.
       ...(asked('storybook-webkit') ? [project('storybook-webkit', 'Light', { browser: 'webkit' })] : []),
       ...(asked('storybook-firefox') ? [project('storybook-firefox', 'Light', { browser: 'firefox' })] : []),
+      // Screenshots: Chromium and English only (references come from one engine; fonts render differently in each),
+      // docs stories only (test-only stories are tagged !autodocs).
+      ...(asked('visual')
+        ? [project('visual', 'Light', { tags: ['autodocs'], visual: true }), project('visual-dark', 'Dark', { tags: ['autodocs'], visual: true })]
+        : []),
     ],
   },
 });

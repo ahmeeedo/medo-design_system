@@ -258,6 +258,8 @@ export const Embed: Story = {
 
 export const InteractionTest: Story = {
   ...interactionTest,
+  // Literal, so the story index (and the tag filters of the test projects) see it too.
+  tags: ['!autodocs'],
   render: () => (
     <div style={{ maxInlineSize: '40rem' }}>
       <EmbedConsent type="video" provider="Example Video" company="Example Inc." src={demoEmbed} title="Video: Product tour" privacyHref="#privacy" onConsent={fn()} />

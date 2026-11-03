@@ -188,6 +188,8 @@ export const UrlSync: Story = {
 
 export const InteractionTest: Story = {
   ...interactionTest,
+  // Literal, so the story index (and the tag filters of the test projects) see it too.
+  tags: ['!autodocs'],
   play: async ({ canvas, userEvent, args }) => {
     // findBy: wait until React Aria has rendered the collection.
     const overview = await canvas.findByRole('tab', { name: 'Overview' });

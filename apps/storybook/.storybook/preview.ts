@@ -26,9 +26,11 @@ document.documentElement.setAttribute('lang', locale.slice(0, 2));
 // In tests: waitFor / findBy wait up to 3 s instead of 1 s. Overlays stay in the DOM until their exit animation ends,
 // and WebKit on a busy CI runner can take longer than 1 s for that – a slow runner, not a broken component.
 if (testTheme) configure({ asyncUtilTimeout: 3000 });
+// The screenshot projects (“visual”) skip axe: the other projects check it, so a red “visual” only means a changed look.
+const visualRun = import.meta.env.STORYBOOK_TEST_VISUAL === true;
 
 const preview: Preview = {
-  // Every story is part of the visual regression check (VISUAL=1); `tags: ['!visual']` leaves one out.
+  // Every docs story is part of the visual regression check (npm run test:visual); `tags: ['!visual']` leaves one out.
   tags: ['visual'],
   parameters: {
     layout: 'padded',
@@ -40,7 +42,7 @@ const preview: Preview = {
     // Standard: WCAG 2.2 A + AA plus axe best practices. landmark-unique is off because stories show several
     // instances side by side (Light and Dark, sizes) – in an app every landmark has its own name.
     a11y: {
-      test: 'error',
+      test: visualRun ? 'off' : 'error',
       options: { runOnly: { type: 'tag', values: ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa', 'best-practice'] } },
       config: { rules: [{ id: 'landmark-unique', enabled: false }] },
     },

@@ -6,7 +6,12 @@ import { Button } from '../button/Button';
 import { Checkbox, CheckboxGroup } from '../checkbox/Checkbox';
 import { interactionTest, semantic } from '../story-helpers';
 
-const text: React.CSSProperties = { margin: 0, padding: '0 var(--medo-space-4) var(--medo-space-4)', font: 'var(--medo-typography-body-md)', color: 'var(--medo-color-text-secondary)' };
+const text: React.CSSProperties = {
+  margin: 0,
+  padding: '0 var(--medo-space-4) var(--medo-space-4)',
+  font: 'var(--medo-typography-body-md)',
+  color: 'var(--medo-color-text-secondary)',
+};
 
 const meta = {
   title: 'Components/Overlays/Bottom Sheet',
@@ -29,15 +34,8 @@ const meta = {
     medo: {
       subtitle: 'A modal layer that slides up from the bottom on small screens.',
       usage: {
-        when: [
-          'Short choices or actions on phones: options of a Select, a Menu, filters.',
-          'A mobile replacement for a Popover or a small Dialog.',
-        ],
-        whenNot: [
-          'On desktop: use a Popover, Menu or Dialog.',
-          'Long forms: use a fullscreen Dialog.',
-          'Navigation: use the Nav sheet of the Bottom tab bar.',
-        ],
+        when: ['Short choices or actions on phones: options of a Select, a Menu, filters.', 'A mobile replacement for a Popover or a small Dialog.'],
+        whenNot: ['On desktop: use a Popover, Menu or Dialog.', 'Long forms: use a fullscreen Dialog.', 'Navigation: use the Nav sheet of the Bottom tab bar.'],
         do: [
           'One task per sheet with a clear title.',
           'Put a confirm button in the footer only when changes must be applied.',
@@ -128,6 +126,8 @@ export const WithContent: Story = {
 
 export const InteractionTest: Story = {
   ...interactionTest,
+  // Literal, so the story index (and the tag filters of the test projects) see it too.
+  tags: ['!autodocs'],
   play: async ({ canvas, userEvent }) => {
     const trigger = canvas.getByRole('button', { name: 'Open sheet' });
     await userEvent.click(trigger);

@@ -370,6 +370,8 @@ export const Mobile: Story = {
 
 export const InteractionTest: Story = {
   ...interactionTest,
+  // Literal, so the story index (and the tag filters of the test projects) see it too.
+  tags: ['!autodocs'],
   play: async ({ canvas, userEvent, args }) => {
     const trigger = canvas.getByRole('button', { name: 'Invite member' });
     await userEvent.click(trigger);
@@ -390,6 +392,8 @@ export const InteractionTest: Story = {
 
 export const UnsavedChangesTest: Story = {
   ...interactionTest,
+  // Literal, so the story index (and the tag filters of the test projects) see it too.
+  tags: ['!autodocs'],
   name: 'Interaction test: unsaved changes',
   // Same dialog as “Unsaved changes”. The whole flow: type → try to cancel → keep editing → save.
   render: UnsavedChanges.render,
@@ -456,6 +460,8 @@ function SavingDialog() {
 
 export const AsyncActionTest: Story = {
   ...interactionTest,
+  // Literal, so the story index (and the tag filters of the test projects) see it too.
+  tags: ['!autodocs'],
   name: 'Interaction test: saving in the background',
   render: () => <SavingDialog />,
   parameters: {
@@ -557,6 +563,8 @@ const taken = (address: string) => new FieldErrors({ email: `${address} is alrea
 
 export const ServerErrorsTest: Story = {
   ...interactionTest,
+  // Literal, so the story index (and the tag filters of the test projects) see it too.
+  tags: ['!autodocs'],
   name: 'Interaction test: errors from the server',
   render: () => <CheckedInvite />,
   parameters: AsyncActionTest.parameters,
@@ -604,6 +612,8 @@ export const ServerErrorsTest: Story = {
 
 export const BlockingTest: Story = {
   ...interactionTest,
+  // Literal, so the story index (and the tag filters of the test projects) see it too.
+  tags: ['!autodocs'],
   name: 'Interaction test: blocking action',
   render: () => <CheckedInvite blocking />,
   parameters: AsyncActionTest.parameters,

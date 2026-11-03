@@ -37,11 +37,7 @@ const meta = {
       subtitle: 'Label, input and helper or error text as one unit.',
       usage: {
         when: ['Short free text: names, emails, search terms.', 'Longer text with `multiline` (Textarea).'],
-        whenNot: [
-          'Choosing from known values: use Select or Combobox.',
-          'Numbers with steps: use a NumberField.',
-          'Dates and times: use Date & Time.',
-        ],
+        whenNot: ['Choosing from known values: use Select or Combobox.', 'Numbers with steps: use a NumberField.', 'Dates and times: use Date & Time.'],
         do: [
           'Always show a label; use the placeholder only for an example.',
           'Set the right `type` and `autoComplete`, so keyboards and autofill help.',
@@ -88,7 +84,13 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 /** Fields fill their container: keep the demos at a realistic form width. */
-const narrow = [(Story: () => React.ReactElement) => <div style={{ maxInlineSize: '24rem' }}><Story /></div>];
+const narrow = [
+  (Story: () => React.ReactElement) => (
+    <div style={{ maxInlineSize: '24rem' }}>
+      <Story />
+    </div>
+  ),
+];
 
 export const Playground: Story = { decorators: narrow };
 
@@ -123,13 +125,7 @@ function PasswordField() {
       label="Password"
       type={visible ? 'text' : 'password'}
       description="At least 12 characters."
-      trailing={
-        <InputAction
-          aria-label={visible ? 'Hide password' : 'Show password'}
-          icon={visible ? <EyeOff /> : <Eye />}
-          onPress={() => setVisible((v) => !v)}
-        />
-      }
+      trailing={<InputAction aria-label={visible ? 'Hide password' : 'Show password'} icon={visible ? <EyeOff /> : <Eye />} onPress={() => setVisible((v) => !v)} />}
     />
   );
 }
@@ -150,19 +146,15 @@ export const Textarea: Story = {
   decorators: narrow,
   render: () => (
     <div style={stack}>
-      <TextField
-        label="Message"
-        multiline
-        placeholder="e.g. goals, timeline, budget"
-        description="Grows with the text up to 8 lines."
-        characterLimit={200}
-      />
+      <TextField label="Message" multiline placeholder="e.g. goals, timeline, budget" description="Grows with the text up to 8 lines." characterLimit={200} />
     </div>
   ),
 };
 
 export const InteractionTest: Story = {
   ...interactionTest,
+  // Literal, so the story index (and the tag filters of the test projects) see it too.
+  tags: ['!autodocs'],
   decorators: narrow,
   play: async ({ canvas, userEvent }) => {
     const input = canvas.getByRole('textbox', { name: 'Email' });

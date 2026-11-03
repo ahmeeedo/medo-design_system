@@ -22,6 +22,7 @@
     "test": "npm run build:tokens && npm run test -w @med-o/storybook",
     "test:webkit": "npm run build:tokens && npm run test:webkit -w @med-o/storybook",
     "test:firefox": "npm run build:tokens && npm run test:firefox -w @med-o/storybook",
+    "test:visual": "npm run build:tokens && npm run test:visual -w @med-o/storybook",
     "changeset": "changeset",
     "release": "changeset publish"
   },

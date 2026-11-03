@@ -20,16 +20,8 @@ const meta = {
     medo: {
       subtitle: 'A short text label on hover or keyboard focus. Mainly names icon-only buttons.',
       usage: {
-        when: [
-          'Name an icon-only button (automatic for Icon Buttons).',
-          'Show a keyboard shortcut.',
-          'Show the full text of a truncated label.',
-        ],
-        whenNot: [
-          'Information users need: put it on the page.',
-          'Interactive content: use a Popover or a Toggletip.',
-          'On touch devices: there is no hover.',
-        ],
+        when: ['Name an icon-only button (automatic for Icon Buttons).', 'Show a keyboard shortcut.', 'Show the full text of a truncated label.'],
+        whenNot: ['Information users need: put it on the page.', 'Interactive content: use a Popover or a Toggletip.', 'On touch devices: there is no hover.'],
         do: ['Keep it to a few words.', 'Use it on focusable elements only.'],
         dont: ['Put links or buttons inside.', 'Repeat the visible label in a tooltip.'],
       },
@@ -113,6 +105,8 @@ export const OnIconButtons: Story = {
 
 export const InteractionTest: Story = {
   ...interactionTest,
+  // Literal, so the story index (and the tag filters of the test projects) see it too.
+  tags: ['!autodocs'],
   render: () => <IconButton aria-label="Copy link" icon={<Link2 />} variant="secondary" />,
   play: async ({ userEvent }) => {
     const body = within(document.body);

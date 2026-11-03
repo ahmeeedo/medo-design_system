@@ -138,6 +138,8 @@ export const InPageHeader: Story = {
 
 export const InteractionTest: Story = {
   ...interactionTest,
+  // Literal, so the story index (and the tag filters of the test projects) see it too.
+  tags: ['!autodocs'],
   args: { items: six },
   play: async ({ canvas, userEvent }) => {
     // Current page is not a link; hidden levels sit in the “…” menu.

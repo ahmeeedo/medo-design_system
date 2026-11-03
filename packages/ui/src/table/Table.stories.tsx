@@ -574,6 +574,8 @@ export const MobileCards: Story = {
 
 export const InteractionTest: Story = {
   ...interactionTest,
+  // Literal, so the story index (and the tag filters of the test projects) see it too.
+  tags: ['!autodocs'],
   render: () => <InvoiceTable selectable />,
   play: async ({ canvas, userEvent }) => {
     // findBy: wait until React Aria has rendered the collection.
@@ -595,6 +597,8 @@ export const InteractionTest: Story = {
 
 export const StaticScrollTest: Story = {
   ...interactionTest,
+  // Literal, so the story index (and the tag filters of the test projects) see it too.
+  tags: ['!autodocs'],
   name: 'Interaction test: static table scrolls',
   render: () => (
     <div style={{ inlineSize: '12rem' }}>

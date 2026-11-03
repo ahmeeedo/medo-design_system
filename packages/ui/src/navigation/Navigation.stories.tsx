@@ -358,6 +358,8 @@ export const TabBar: Story = {
 
 export const InteractionTest: Story = {
   ...interactionTest,
+  // Literal, so the story index (and the tag filters of the test projects) see it too.
+  tags: ['!autodocs'],
   args: { layout: 'mobile' },
   play: async ({ canvas, userEvent }) => {
     const menu = canvas.getByRole('button', { name: 'Menu' });

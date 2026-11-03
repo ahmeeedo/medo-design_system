@@ -93,11 +93,7 @@ const meta = {
           'Group related items; put destructive items last in their own group.',
           'Confirm destructive items or offer Undo.',
         ],
-        dont: [
-          'Use checkmarks for a selected state.',
-          'Nest more than one submenu level.',
-          'Hide the only way to do an important task in a menu.',
-        ],
+        dont: ['Use checkmarks for a selected state.', 'Nest more than one submenu level.', 'Hide the only way to do an important task in a menu.'],
       },
       a11y: {
         keyboard: [
@@ -200,6 +196,8 @@ export const Mobile: Story = {
 
 export const InteractionTest: Story = {
   ...interactionTest,
+  // Literal, so the story index (and the tag filters of the test projects) see it too.
+  tags: ['!autodocs'],
   play: async ({ canvas, userEvent, args }) => {
     const trigger = canvas.getByRole('button', { name: 'More actions for Q3-Report.pdf' });
     trigger.focus();

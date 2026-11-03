@@ -29,18 +29,19 @@ const meta = {
     a11y: {
       // label-content-name-mismatch is an experimental axe rule: options read their label as the name and the
       // second line as description (aria-describedby) – correct, but the rule counts all visible text.
-      config: { rules: [{ id: 'landmark-unique', enabled: false }, { id: 'label-content-name-mismatch', enabled: false }] },
+      config: {
+        rules: [
+          { id: 'landmark-unique', enabled: false },
+          { id: 'label-content-name-mismatch', enabled: false },
+        ],
+      },
     },
     medo: {
       subtitle: 'The list behind Select, Combobox and the Bottom Sheet. Option is one row, Listbox the container.',
       usage: {
         when: ['A list of options inside Select, Combobox or a Bottom Sheet.', 'A visible list to pick from, e.g. in a side panel.'],
         whenNot: ['Actions: use a Menu.', 'Objects with controls in each row: use a List view.'],
-        do: [
-          'Use groups with a header for more than about 8 options.',
-          'Add a short description when options are similar.',
-          'Let labels wrap.',
-        ],
+        do: ['Use groups with a header for more than about 8 options.', 'Add a short description when options are similar.', 'Let labels wrap.'],
         dont: ['Truncate labels.', 'Put buttons or links inside an option.'],
       },
       a11y: {
@@ -178,6 +179,8 @@ export const Empty: Story = {
 
 export const InteractionTest: Story = {
   ...interactionTest,
+  // Literal, so the story index (and the tag filters of the test projects) see it too.
+  tags: ['!autodocs'],
   play: async ({ canvas, userEvent }) => {
     // findBy: React Aria builds the collection before the options appear.
     const ben = await canvas.findByRole('option', { name: 'Ben Lorenz' });

@@ -201,6 +201,8 @@ export const DeepLink: Story = {
 
 export const InteractionTest: Story = {
   ...interactionTest,
+  // Literal, so the story index (and the tag filters of the test projects) see it too.
+  tags: ['!autodocs'],
   play: async ({ canvas, userEvent, args }) => {
     const profile = canvas.getByRole('button', { name: /Profile/ });
     await expect(profile).toHaveAttribute('aria-expanded', 'false');

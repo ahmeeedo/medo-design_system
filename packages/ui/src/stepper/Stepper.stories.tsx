@@ -43,11 +43,7 @@ const meta = {
       subtitle: 'Shows where someone is in a task of several steps and leads back to the steps already done.',
       usage: {
         when: ['A task in 3–5 steps that build on each other: checkout, sign-up, an application.', 'People should see how much is left.'],
-        whenNot: [
-          'Independent pages or views: use Tabs.',
-          'More than about 5 steps: shorten or split the task.',
-          'Two steps: a heading “Step 1 of 2” is enough.',
-        ],
+        whenNot: ['Independent pages or views: use Tabs.', 'More than about 5 steps: shorten or split the task.', 'Two steps: a heading “Step 1 of 2” is enough.'],
         do: [
           'Name each step like the heading of that step, in one or two words.',
           'Check a step when Next is pressed; show errors at the fields and keep the person in that step.',
@@ -154,6 +150,8 @@ function Flow() {
 
 export const InteractionTest: Story = {
   ...interactionTest,
+  // Literal, so the story index (and the tag filters of the test projects) see it too.
+  tags: ['!autodocs'],
   render: () => <Flow />,
   play: async ({ canvasElement, userEvent }) => {
     const canvas = within(canvasElement);

@@ -7,6 +7,9 @@
 # “Version Packages” pull request wait for an approval. Opened with RELEASE_TOKEN, they run on their own.
 #
 # Starts only after “Storybook tests” passed for the same commit on main – nothing is published from a red build.
+# Then the docs (design.med-o.de) are deployed – after a release, so they show what is on npm, or after a push without
+# pending changesets (docs and CI changes). While changesets wait in the “Version Packages” pull request, the docs stay
+# on the released version.
 name: Release
 
 on:
@@ -29,6 +32,9 @@ jobs:
       contents: write # version commit and tags
       pull-requests: write # "Version Packages" pull request
       id-token: write # npm trusted publishing
+    outputs:
+      published: ${{ steps.changesets.outputs.published }}
+      pending: ${{ steps.changesets.outputs.hasChangesets }}
     steps:
       - uses: actions/checkout@v5
         with:
@@ -52,8 +58,20 @@ jobs:
       # v2 needs @changesets/cli 3. Version commit and tags are pushed through the GitHub API (signed, attributed to
       # the owner of the token). The token must be passed as github-token – the GITHUB_TOKEN variable is ignored.
       - uses: changesets/action@v2
+        id: changesets
         with:
           github-token: ${{ secrets.RELEASE_TOKEN || github.token }}
           publish-script: npm run release
           pr-title: Version Packages
           commit-message: 'chore: version packages'
+
+  docs:
+    needs: release
+    if: needs.release.outputs.published == 'true' || needs.release.outputs.pending == 'false'
+    permissions:
+      contents: read
+      packages: write
+    uses: ./.github/workflows/deploy-docs.yml
+    with:
+      ref: ${{ github.event.workflow_run.head_sha }}
+    secrets: inherit

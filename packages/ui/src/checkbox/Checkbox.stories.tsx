@@ -45,16 +45,7 @@ const meta = {
           ['medo-choice__description', 'Helper text below the label.'],
           ['medo-field medo-field--group', 'Group with label and options.'],
         ],
-        states: [
-          'data-selected',
-          'data-indeterminate',
-          'data-hovered',
-          'data-pressed',
-          'data-focus-visible',
-          'data-invalid',
-          'data-disabled',
-          'data-readonly',
-        ],
+        states: ['data-selected', 'data-indeterminate', 'data-hovered', 'data-pressed', 'data-focus-visible', 'data-invalid', 'data-disabled', 'data-readonly'],
       },
     },
     docs: {
@@ -125,6 +116,8 @@ export const GroupInvalid: Story = {
 
 export const InteractionTest: Story = {
   ...interactionTest,
+  // Literal, so the story index (and the tag filters of the test projects) see it too.
+  tags: ['!autodocs'],
   play: async ({ canvas, userEvent, args }) => {
     const box = canvas.getByRole('checkbox', { name: 'Accept the terms' });
     await userEvent.click(canvas.getByText('Accept the terms'));

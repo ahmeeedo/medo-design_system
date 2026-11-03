@@ -264,6 +264,7 @@ npm run storybook   # http://localhost:6006
 | `npm test` | Runs every story in a headless browser, in Light and Dark: rendering, axe (WCAG 2.2 AA) and the interaction tests. Form stories (tag `locale-de`) once more in German. Test-only stories – responsive checks, contracts – live in `apps/storybook/src/tests` and are hidden from the sidebar (tag `!dev`). Once before: `npx playwright install chromium` |
 | `npm run test:webkit` | The same tests in WebKit (Safari's engine), Light, without screenshots. Once before: `npx playwright install webkit` |
 | `npm run test:firefox` | The same tests in Firefox, Light, without screenshots. Once before: `npx playwright install firefox` |
+| `npm run test:visual` | Screenshot of every documented story, Light and Dark, against the references. Meaningful in CI only (fonts render differently on every OS) |
 | `npm run test:consumers` | Packs both packages like npm and builds a fresh Vite app and a fresh Next.js app with the code of “Your first page”. Needs network access. |
 | `npm run build:packages` | Builds `@med-o/design-tokens` and `@med-o/ui` for npm |
 | `npm run build-storybook` | Builds Storybook as a static site (`apps/storybook/storybook-static`) |
@@ -287,7 +288,7 @@ Issues and pull requests are welcome. Please follow these rules:
 - **State contract.** CSS reads states only from data attributes (`data-hovered`, `data-pressed`, `data-focus-visible`, `data-selected`, `data-invalid`, `data-disabled` …), so other frameworks can reuse it.
 - **Accessibility.** WCAG 2.2 AA, visible `:focus-visible`, `forced-colors` fallback, `prefers-reduced-motion`.
 - **Stories.** Every component has stories for its variants, sizes and states, Light and Dark, and an interaction test for interactive behaviour. The playground renders from its args, and every control must change what you see.
-- **Tests pass.** Run `npm test` before you open a pull request. CI runs the same tests, plus the visual check and the tests in WebKit and Firefox.
+- **Tests pass.** Run `npm test` before you open a pull request. CI runs one job per question: `test` (the same tests – red means a bug), `visual` (screenshots – red means the look changed), `webkit` and `firefox` (the other engines; one retry, flaky stories are listed in the summary) and `build` (packages, size limits, a fresh Vite and Next.js app). `main` changes only through pull requests with all checks green.
 - **Visual check.** CI compares a screenshot of every documented story, Light and Dark, with its reference in `apps/storybook/__screenshots__/`. On a mismatch the workflow run has the actual and diff images as artifact `screenshot-diffs`. If the change is intended, run the workflow **Update screenshots** on your branch (Actions → Update screenshots → Run workflow); it commits the new references. References are made in CI only, because fonts render differently on every OS. Stories that cannot be stable (live timers) set `tags: ['!visual']`.
 - **Changesets.** If your change affects a published package, run `npm run changeset` and commit the generated file. It sets the version bump (patch, minor, major) and the changelog entry. A breaking change starts its summary with `**Breaking:**` and says how to update.
 - **Deprecate before you remove.** Mark the old API `@deprecated` with its replacement, keep it working for the time given in [Support and versioning](#support-and-versioning), and remove it in a later release.
@@ -318,12 +319,14 @@ Never edit generated files by hand: `figma/variables.json`, `packages/tokens/src
 Versions and changelogs are managed with [Changesets](https://github.com/changesets/changesets). Both packages always share one version.
 
 1. Pull requests add changesets (`npm run changeset`).
-2. On `main`, the Release workflow opens a “Version Packages” pull request with the new versions and changelogs.
-3. Merging it publishes both packages to npm with provenance (npm trusted publishing, no token stored in GitHub).
+2. When all checks are green on `main`, the Release workflow opens a “Version Packages” pull request with the new versions and changelogs.
+3. Merging it publishes both packages to npm with provenance (npm trusted publishing, no token stored in GitHub), then deploys the documentation.
 
 ### Deploy the documentation
 
-The `Dockerfile` builds Storybook and serves it with nginx on port 80:
+design.med-o.de shows the released version. The workflow **Deploy docs** builds the `Dockerfile` into the image `ghcr.io/ahmeeedo/medo-design-system-docs` (tags: version, `sha-<commit>`, `latest`) and starts the deploy on the server through a webhook – after every release, and after pushes without pending changesets (docs and CI changes). While changesets wait for a release, the documentation stays on the released version. Rollback: run an earlier version tag on the server.
+
+Locally, the `Dockerfile` builds Storybook and serves it with nginx on port 80:
 
 ```bash
 docker build -t medo-storybook .

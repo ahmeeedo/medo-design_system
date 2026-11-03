@@ -1,15 +1,20 @@
-# Storybook tests: every story renders in headless Chromium, axe checks WCAG 2.2 AA (Light and Dark),
-# play functions test keyboard, focus and pointer. Same command as locally: npm test.
-# Then the npm packages are built once, so a release never fails on a type error.
-# Two more jobs run every story in WebKit (Safari's engine) and Firefox at the same time: layout, focus and events
-# that only these engines handle differently. A fourth job builds a Vite and a Next.js app with the packed packages.
+# Storybook tests – one job per question, so a red check says what is wrong:
+#   test     every story in Chromium, Light, Dark and German: renders, play functions (keyboard, focus, pointer), axe
+#            (WCAG 2.2 AA). Red = a real bug.
+#   visual   one screenshot per docs story and theme against the references. Red = the look changed: check the diff
+#            images (Summary → Artifacts); if the change is intended, run “Update screenshots” on the branch.
+#   webkit, firefox   every story in Safari's and Firefox's engine. One retry; a story that passes only then is listed
+#            as flaky in the summary.
+#   build    the npm packages build (types included), stay within their size limits and work in a fresh Vite and
+#            Next.js app.
+# “Release” starts only when all of them passed for a push to main.
 name: Storybook tests
 
 on:
   pull_request:
   push:
     branches: [main]
-  # Weekly: the consumer job installs the newest allowed versions of React, React Aria and Next.js, so a change there
+  # Weekly: the build job installs the newest allowed versions of React, React Aria and Next.js, so a change there
   # (e.g. React Aria's still unstable toast API) shows up without waiting for our next commit.
   schedule:
     - cron: '17 4 * * 1'
@@ -30,23 +35,29 @@ jobs:
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@v5
-
       - uses: actions/setup-node@v5
         with:
           node-version: 24
           cache: npm
-
       - run: npm ci
-
       # Chromium plus the system libraries it needs (download takes seconds, no cache needed).
       - run: npx playwright install --with-deps chromium
-
-      # VISUAL=1 adds the screenshot comparison – once references exist (workflow “Update screenshots” creates them).
       - run: npm test
-        env:
-          VISUAL: ${{ hashFiles('apps/storybook/__screenshots__/**/*.png') != '' && '1' || '' }}
 
-      # On a visual mismatch: actual and diff images to download (Summary → Artifacts).
+  visual:
+    # Same OS and browser as “Update screenshots”, or the references would not match.
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: npm run test:visual
+      # Actual and diff images to download (Summary → Artifacts), plus what to do next.
       - uses: actions/upload-artifact@v7
         if: failure()
         with:
@@ -54,16 +65,16 @@ jobs:
           path: apps/storybook/.vitest/
           if-no-files-found: ignore
           retention-days: 14
-
-      # The npm packages must build (types included) before they can be released.
-      - run: npm run build:packages
-
-      # Bundle size of @med-o/ui (minified + gzip, React excluded) against the limits in packages/ui/package.json.
-      - run: npm run size
+      - if: failure()
+        run: |
+          {
+            echo '### The look changed'
+            echo 'Open the artifact **screenshot-diffs** above: `*-actual.png` is new, `*-diff.png` marks the changed pixels.'
+            echo 'Intended? Actions → **Update screenshots** → Run workflow on this branch. The new references are committed and the checks run again.'
+          } >> "$GITHUB_STEP_SUMMARY"
 
   engines:
-    # Every story in the other two engines: WebKit (Safari) and Firefox. Same OS as the job above; the browsers'
-    # system libraries are installed by Playwright. One job per engine, so a failure names the browser.
+    # One job per engine, so a failure names the browser. Light only, no screenshots (references come from Chromium).
     name: ${{ matrix.browser }}
     strategy:
       fail-fast: false
@@ -73,32 +84,27 @@ jobs:
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@v5
-
       - uses: actions/setup-node@v5
         with:
           node-version: 24
           cache: npm
-
       - run: npm ci
-
       - run: npx playwright install --with-deps ${{ matrix.browser }}
-
-      # Light only, without screenshots (references come from Chromium).
       - run: npm run test:${{ matrix.browser }}
 
-  consumers:
-    # The packed packages in a fresh Vite app and a fresh Next.js app, with the code of “Your first page” – what
-    # people install from npm, not the monorepo sources.
+  build:
+    # What people install from npm: the packages build (types included), stay within their size limits and work in a
+    # fresh Vite and a fresh Next.js app with the code of “Your first page”.
     runs-on: ubuntu-24.04
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v5
-
       - uses: actions/setup-node@v5
         with:
           node-version: 24
           cache: npm
-
       - run: npm ci
-
+      - run: npm run build:packages
+      # Bundle size of @med-o/ui (minified + gzip, React excluded) against the limits in packages/ui/package.json.
+      - run: npm run size
       - run: npm run test:consumers

@@ -68,10 +68,7 @@ const meta = {
           'A period for reports or filters: DateRangePicker.',
           'A time or date + time.',
         ],
-        whenNot: [
-          'A relative period (“last 7 days”) only: use a Select.',
-          'Very far dates without context: a DateField is faster than a calendar.',
-        ],
+        whenNot: ['A relative period (“last 7 days”) only: use a Select.', 'Very far dates without context: a DateField is faster than a calendar.'],
         do: [
           'Use `@internationalized/date` values; send `toString()` to the API.',
           'Set `minValue`, `maxValue` and unavailable days; the message names the rule.',
@@ -127,7 +124,12 @@ const meta = {
   },
   render: (args) => (
     <I18nProvider locale="en-GB">
-      <DatePicker key={args.granularity} {...args} defaultValue={args.granularity === 'minute' ? parseDateTime('2026-10-12T09:30') : day} description={args.description || undefined} />
+      <DatePicker
+        key={args.granularity}
+        {...args}
+        defaultValue={args.granularity === 'minute' ? parseDateTime('2026-10-12T09:30') : day}
+        description={args.description || undefined}
+      />
     </I18nProvider>
   ),
 } satisfies Meta<typeof DatePicker>;
@@ -305,6 +307,8 @@ export const Locales: Story = {
 
 export const InteractionTest: Story = {
   ...interactionTest,
+  // Literal, so the story index (and the tag filters of the test projects) see it too.
+  tags: ['!autodocs'],
   play: async ({ canvas, userEvent, args }) => {
     // Typing first: digits fill the segments, each segment jumps to the next.
     const day = canvas.getAllByRole('spinbutton')[0];

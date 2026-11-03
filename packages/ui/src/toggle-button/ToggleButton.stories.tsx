@@ -212,6 +212,8 @@ export const ToolbarGroups: Story = {
 
 export const InteractionTest: Story = {
   ...interactionTest,
+  // Literal, so the story index (and the tag filters of the test projects) see it too.
+  tags: ['!autodocs'],
   render: () => (
     <ToggleButtonGroup aria-label="View" defaultSelectedKeys={['week']}>
       <ToggleButton id="day">Day</ToggleButton>
