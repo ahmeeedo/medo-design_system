@@ -1,5 +1,52 @@
 # @med-o/ui
 
+## 0.7.0
+
+### Minor Changes
+
+- 9d5c08f: `Dialog`, `AlertDialog` and `Popover`: a clear contract for a main action that returns a promise.
+
+  - The dialog can be closed while it saves – without “Discard changes?”, the saving goes on.
+  - New `primaryAction.backgroundToast: { success, error }`: when the result arrives after the dialog was closed, a Toast reports it. The error Toast stays and offers Retry, which runs `onAction` again.
+  - Fixed: a result that arrives late no longer closes a dialog that was opened again in the meantime.
+  - Fixed: a rejected promise while the dialog is open no longer leaves an unhandled error in the console; the dialog stays open as before.
+
+- 89039dd: Dialog: `primaryAction.onAction` can reject with `FieldErrors`. While the dialog is open, the messages show at the fields and the focus goes to the first. If it was closed while saving, the error Toast offers “Open again” instead of Retry: the dialog opens with the messages at the fields (keep the values in your app – controlled fields). New `primaryAction.blocking`: the dialog cannot be closed while the action runs (Cancel and × disabled, Esc and the scrim do nothing) – for results people must see before they go on.
+
+  **Breaking:** new built-in text `dialog.reopen`. If you pass your own language to `MessagesProvider`, add it.
+
+- 89039dd: New `Form` and `FieldErrors`: React Aria Form with the error rules of the system. `onSave` runs only when every field is valid and keeps the form pending while it saves. Reject it with `FieldErrors` and the server's messages show at their fields (`new FieldErrors({ email: 'Already registered. Sign in instead.' })`); a problem of the whole form (`formError`, or the second argument of `FieldErrors`) shows as an Alert above the fields and takes the focus. Any other failure shows “Could not save” – the input always stays. On submit with errors the focus goes to the first invalid field and screen readers hear how many fields need attention. Messages passed as `validationErrors` (e.g. from a server action) are treated the same way.
+
+  Fields: a message from `validate` or the server now wins over the general `errorMessage` of the field – before, “Enter a valid email address” hid “This email address is already registered”.
+
+  **Breaking:** new built-in texts `form.errorCount` and `form.saveFailed`. If you pass your own language to `MessagesProvider`, add them – TypeScript names the missing texts.
+
+- c2d7774: Full labels and fixed spacing:
+
+  - Side navigation and Menu: long labels wrap instead of being cut – the whole name stays readable.
+  - `Tag`: a label cut at 200 px shows in full in a tooltip on hover and keyboard focus (a tap focuses the tag); Esc hides it.
+  - `Cell`: new `wrap={false}` (class `medo-table__cell--nowrap` for StaticTable) keeps IDs, dates and codes on one line; the table scrolls instead.
+  - `Alert`: several paragraphs or a list in the description are always 8 px apart – before it was the browser's 1 em, or nothing under a CSS reset.
+  - `Container`: fills the width up to its size also as a grid or flex item (inside a Stack it shrank to its content).
+  - `SkipLink`: stays hidden until focused also inside a transformed parent (page transitions), where it peeked out before.
+
+- 1cef34e: New `Stepper` and `Step`: where someone is in a task of several steps (checkout, sign-up). Done steps are links back (`href` or `onPress`), the current step has `aria-current="step"`, upcoming steps cannot be reached yet. Optional `description` per step. Below 640 px (`layout="auto"`): “Step 2 of 4”, the current step and one bar segment per step.
+
+  **Breaking:** new built-in texts `stepper.label`, `stepper.count` and `stepper.completed`. If you pass your own language to `MessagesProvider`, add them – TypeScript names the missing texts.
+
+- 1b1c95b: New exports `useMediaQuery` and `MOBILE_QUERY` (below 640 px): the same switch the components use, for app layouts that change with them – e.g. a side navigation that becomes a bottom tab bar.
+
+### Patch Changes
+
+- 89039dd: Long content: a Toast message wraps instead of being cut. Alert, field labels, help texts, error messages and the Stepper break long words and addresses (German compounds, email addresses) instead of widening the page at 320 px. Hidden texts in a table cell (`medo-visually-hidden`) no longer make the page scroll sideways.
+- 1b1c95b: Forms keep their state when the window crosses 640 px (rotating a phone, resizing a window):
+
+  - `Dialog`: typed input survives the switch between the centered and the fullscreen dialog. Before, the form inside was rebuilt and lost what was typed.
+  - `Combobox` below 640 px (Bottom Sheet) behaves like the popover in a form: `isRequired` is checked on submit (message, focus on the field) and a form reset restores the default value.
+  - German built-in text: the retry button of an upload tile is named “Hochladen von … wiederholen”, so its name contains the visible “Wiederholen” (WCAG 2.5.3).
+
+- @med-o/design-tokens@0.7.0
+
 ## 0.6.0
 
 ### Minor Changes
