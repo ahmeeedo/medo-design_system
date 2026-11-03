@@ -377,6 +377,8 @@ export const InteractionTest: Story = {
     const dialog = await body.findByRole('dialog', { name: 'Invite member' });
     // Focus moves into the dialog and stays there.
     await waitFor(() => expect(dialog).toContainElement(document.activeElement as HTMLElement));
+    // The opening animation has ended – WebKit on a cold start dropped an Esc pressed during it.
+    await waitFor(() => expect(document.querySelector('.medo-dialog-overlay')).not.toHaveAttribute('data-entering'));
     // Esc closes it and focus returns to the trigger.
     await userEvent.keyboard('{Escape}');
     await waitFor(() => expect(body.queryByRole('dialog')).toBeNull());
