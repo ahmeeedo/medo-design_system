@@ -8,9 +8,10 @@
 - [ ] Changeset added (`npm run changeset`) – or not needed: docs, CI or tests only
 - [ ] Screenshots: changed on purpose → workflow **Update screenshots** run on this branch
 
-## Checklist for Stable
+<details>
+<summary><strong>Checklist for Stable</strong> – only when this pull request makes a component Stable</summary>
 
-Only when this pull request makes a component Stable (Guides / Component status). Every point must hold.
+Every point must hold (Guides / Component status).
 
 **Design**
 - [ ] Component in the design library, built on the tokens – variants and states as in code
@@ -38,3 +39,5 @@ Only when this pull request makes a component Stable (Guides / Component status)
 - [ ] Tested with NVDA (Windows), VoiceOver (iPhone) and TalkBack (Android) following the test script
 - [ ] Result in the Accessibility section: “Tested with … on …”
 - [ ] Tag changed to `status:stable`, README table updated
+
+</details>

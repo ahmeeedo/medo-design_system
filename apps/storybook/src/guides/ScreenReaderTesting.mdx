@@ -1,0 +1,124 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import { Link, List, ListItem } from '@med-o/ui';
+import { DocPage, DocHeader, DocSection, DocFooter, SpecTable, Tok, SourceLink } from '../docs-blocks/DocBlocks';
+
+<Meta title="Guides/Screen reader testing" />
+
+<DocPage>
+
+<DocHeader
+  kind="Guides"
+  title="Screen reader testing"
+  meta="NVDA · VoiceOver · TalkBack"
+  subtitle="Automatic tests find missing names and wrong roles. Whether a component makes sense when you only hear it, only people find out."
+  description={
+    <p>
+      Every component page has a screen reader test in its Accessibility section: the steps, what you must hear and the results so far. A component is Stable only when it
+      passed with all three screen readers (Guides / Component status).
+    </p>
+  }
+  nav={['Set up', 'Keys and gestures', 'Run a test', 'Report the result']}
+/>
+
+<DocSection n={1} title="Set up" meta="Three screen readers" description="The three most used combinations – together they cover how most people hear the web.">
+
+<SpecTable
+  head={['Screen reader', 'Set up']}
+  rows={[
+    [
+      'NVDA · Windows',
+      <>
+        Free from <Link href="https://www.nvaccess.org" target="_blank" external>nvaccess.org</Link>. Test with Firefox or Chrome, both up to date. Start with{' '}
+        <Tok>Ctrl + Alt + N</Tok>, quit with <Tok>NVDA + Q</Tok> (NVDA key: Insert).
+      </>,
+    ],
+    [
+      'VoiceOver · iPhone',
+      <>
+        Settings → Accessibility → VoiceOver, or ask Siri “Turn on VoiceOver”. Faster: Settings → Accessibility → Accessibility Shortcut → VoiceOver, then triple-click the side
+        button to turn it on and off. Test in Safari.
+      </>,
+    ],
+    [
+      'TalkBack · Android',
+      <>
+        Settings → Accessibility → TalkBack. Faster: hold both volume buttons for a few seconds (TalkBack shortcut). Test in Chrome.
+      </>,
+    ],
+  ]}
+/>
+
+Open the component page on design.med-o.de, not a local Storybook – the test is about what people get.
+
+</DocSection>
+
+<DocSection n={2} title="Keys and gestures" meta="The steps use these words">
+
+<SpecTable
+  head={['In the steps', 'NVDA', 'VoiceOver', 'TalkBack']}
+  rows={[
+    ['Go to the heading “…”', <><Tok>H</Tok> until you hear it</>, 'Rotor to Headings (turn two fingers like a dial), then swipe down', 'Reading controls to Headings, then swipe down'],
+    ['Next / previous element', <><Tok>↓</Tok> / <Tok>↑</Tok></>, 'Swipe right / left', 'Swipe right / left'],
+    ['Tab', <><Tok>Tab</Tok> – moves the focus like a keyboard user</>, 'Swipe right to the element', 'Swipe right to the element'],
+    ['Activate', <><Tok>Enter</Tok> or <Tok>Space</Tok></>, 'Double-tap', 'Double-tap'],
+    ['Type', <>In a field typing switches to focus mode on its own (else <Tok>NVDA + Space</Tok>)</>, 'Double-tap the field, then type', 'Double-tap the field, then type'],
+    ['Arrow keys', <><Tok>↑</Tok> <Tok>↓</Tok> <Tok>←</Tok> <Tok>→</Tok> in focus mode</>, 'Swipe right / left', 'Swipe right / left'],
+    ['Close / Esc', <Tok>Esc</Tok>, 'Two-finger scrub (a quick Z)', 'Back gesture or Back button'],
+    ['Stop speech', <Tok>Ctrl</Tok>, 'Two-finger tap', 'Two-finger tap (pause)'],
+  ]}
+/>],
+    ['Next / previous element', <>NVDA: <Tok>↓</Tok> / <Tok>↑</Tok> · VoiceOver and TalkBack: swipe right / left</>],
+    ['Tab', <>NVDA: <Tok>Tab</Tok> (moves the focus like a keyboard user) · VoiceOver and TalkBack: swipe right to the element</>],
+    ['Activate', <>NVDA: <Tok>Enter</Tok> or <Tok>Space</Tok> · VoiceOver and TalkBack: double-tap</>],
+    ['Type', <>NVDA: in a field, typing switches to focus mode on its own (else <Tok>NVDA + Space</Tok>) · VoiceOver and TalkBack: double-tap the field, then type</>],
+    ['Arrow keys', <>NVDA: <Tok>↑</Tok> <Tok>↓</Tok> <Tok>←</Tok> <Tok>→</Tok> in focus mode · VoiceOver and TalkBack: swipe up / down where the step says so, else swipe right / left</>],
+    ['Close / Esc', <>NVDA: <Tok>Esc</Tok> · VoiceOver: two-finger scrub (a quick Z) · TalkBack: Back gesture or Back button</>],
+    ['Stop speech', <>NVDA: <Tok>Ctrl</Tok> · VoiceOver: two-finger tap · TalkBack: two-finger tap (pause)</>],
+  ]}
+/>
+
+<List size="md">
+  <ListItem>
+    All gestures: <Link href="https://www.nvaccess.org/files/nvda/documentation/userGuide.html" target="_blank" external>NVDA user guide</Link> ·{' '}
+    <Link href="https://support.apple.com/guide/iphone/iph3e2e415f/ios" target="_blank" external>Practice VoiceOver</Link> ·{' '}
+    <Link href="https://support.google.com/accessibility/android/answer/6151827" target="_blank" external>TalkBack gestures</Link>.
+  </ListItem>
+  <ListItem>TalkBack reading controls: swipe up then down (or three fingers up or down) until you hear “Headings”.</ListItem>
+</List>
+
+</DocSection>
+
+<DocSection n={3} title="Run a test" meta="About 10 minutes per component">
+
+<List type="number" size="md">
+  <ListItem>Open the component page and go to its Accessibility section – the steps are there.</ListItem>
+  <ListItem>Turn on the screen reader. Do not look at the screen while you test: listen only.</ListItem>
+  <ListItem>
+    Follow each step and compare what you hear with “You hear”. The words may differ between screen readers and languages; what counts is the meaning: name, role, state
+    and value.
+  </ListItem>
+  <ListItem>Note every step that does not match – and also what was confusing, too much or missing.</ListItem>
+</List>
+
+</DocSection>
+
+<DocSection n={4} title="Report the result" meta="One issue per test">
+
+<List type="number" size="md">
+  <ListItem>
+    In the table under the steps, choose <strong>Report a result</strong> for the screen reader. A GitHub issue opens with component, screen reader and steps filled in.
+  </ListItem>
+  <ListItem>Fill in the versions, check the steps that worked and choose the result.</ListItem>
+  <ListItem>
+    The result goes on the component page as “Tested with … on …”. Issues are fixed first, then the step is tested again.
+  </ListItem>
+</List>
+
+</DocSection>
+
+<DocFooter>
+  {'Guides: Screen reader testing · NVDA · VoiceOver · TalkBack'}
+  <SourceLink path=".github/ISSUE_TEMPLATE/screen-reader-test.yml" />
+</DocFooter>
+
+</DocPage>

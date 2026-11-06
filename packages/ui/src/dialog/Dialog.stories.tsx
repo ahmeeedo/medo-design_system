@@ -126,6 +126,16 @@ const meta = {
           'Only the body scrolls; header and footer stay visible.',
           'Below 640 px forms open fullscreen, short content as a Bottom Sheet (`mobile="sheet"`).',
         ],
+        // Manual test with NVDA, VoiceOver and TalkBack (Guides / Screen reader testing).
+        screenReader: {
+          steps: [
+            ['Go to the heading “Playground”, then to the button “Invite member” and activate it.', '“Invite member, dialog”, then “New members get access to all projects in this workspace.”'],
+            ['Where is the focus?', 'In the field: “Email, edit text, required”, then “We send an invite link to this address.”'],
+            ['Move to the previous and next element until you leave the dialog.', 'You never leave it: only the title, the fields, Send invite, Cancel and Close. The page behind is not read.'],
+            ['Activate “Send invite” with the email empty.', 'That the email is required or invalid; the focus is on the field.'],
+            ['Close the dialog (Cancel, or Esc / scrub / Back).', 'The focus is back on “Invite member, button”.'],
+          ],
+        },
       },
       styling: {
         classes: [

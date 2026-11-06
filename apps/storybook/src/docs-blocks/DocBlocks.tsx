@@ -205,20 +205,29 @@ export function DocSection({ n, title, meta, description, children }: SectionPro
 
 /* ---------- spec table ---------- */
 
-export function SpecTable({ head = ['Part', 'Value'], rows }: { head?: [string, string]; rows: [ReactNode, ReactNode][] }) {
+/** Spec table: the first column names the row (th), the others describe it. Two columns by default, more when needed. */
+export function SpecTable({ head = ['Part', 'Value'], rows }: { head?: string[]; rows: ReactNode[][] }) {
   return (
     <StaticTable className="doc-spec">
       <thead>
         <tr>
-          <th scope="col">{head[0]}</th>
-          <th scope="col">{head[1]}</th>
+          {head.map((h) => (
+            <th key={h} scope="col">
+              {h}
+            </th>
+          ))}
         </tr>
       </thead>
       <tbody>
-        {rows.map(([k, v], i) => (
+        {rows.map(([k, ...values], i) => (
           <tr key={i}>
             <th scope="row">{k}</th>
-            <td>{v}</td>
+            {values.map((v, j) => (
+              // More than two columns: on phones the head is hidden, so each value names its column.
+              <td key={j} data-label={head.length > 2 ? head[j + 1] : undefined}>
+                {v}
+              </td>
+            ))}
           </tr>
         ))}
       </tbody>
@@ -320,7 +329,15 @@ export function UsageGuide({ usage }: { usage: MedoUsage }) {
 }
 
 type MedoUsage = { when?: string[]; whenNot?: string[]; do?: string[]; dont?: string[] };
-type MedoA11y = { keyboard?: [string, string][]; notes?: string[] };
+/** A manual screen reader test (Guides / Screen reader testing): steps and the results per screen reader. */
+type ScreenReaderId = 'nvda' | 'voiceover' | 'talkback';
+type ScreenReaderTest = {
+  /** [what to do, what must be heard] – the same steps for every screen reader; keys and gestures are on the guide page. */
+  steps: [string, string][];
+  /** Results, newest first per screen reader. */
+  tested?: { reader: ScreenReaderId; versions: string; date: string; result: 'passed' | 'issues'; issue?: number }[];
+};
+type MedoA11y = { keyboard?: [string, string][]; notes?: string[]; screenReader?: ScreenReaderTest };
 type MedoStyling = { classes?: [string, string][]; states?: string[] };
 
 /**
@@ -334,6 +351,77 @@ type MedoStyling = { classes?: [string, string][]; states?: string[] };
  *   styling   { classes: [class, use][], states: data attributes the CSS reads }
  */
 type MedoDocsParams = { subtitle?: string; usage?: MedoUsage; a11y?: MedoA11y; styling?: MedoStyling };
+
+/* ---------- screen reader test ---------- */
+
+export const SCREEN_READERS: { id: ScreenReaderId; name: string; setup: string }[] = [
+  { id: 'nvda', name: 'NVDA', setup: 'Windows · Firefox or Chrome' },
+  { id: 'voiceover', name: 'VoiceOver', setup: 'iPhone · Safari' },
+  { id: 'talkback', name: 'TalkBack', setup: 'Android · Chrome' },
+];
+export const SCREEN_READER_GUIDE_ID = 'guides-screen-reader-testing--docs';
+
+/** A new issue from the template “Screen reader test”, with component, screen reader and the steps filled in. */
+const reportUrl = (component: string, reader: (typeof SCREEN_READERS)[number], steps: [string, string][]) => {
+  const query = new URLSearchParams({
+    template: 'screen-reader-test.yml',
+    title: `Screen reader test: ${component} · ${reader.name}`,
+    component,
+    reader: `${reader.name} (${reader.setup})`,
+    steps: steps.map(([action, hear], i) => `- [ ] ${i + 1}. ${action} → ${hear}`).join('\n'),
+  });
+  return `${repoUrl}/issues/new?${query}`;
+};
+
+const dateText = (iso: string) => new Date(`${iso}T12:00:00Z`).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+
+/** Steps to follow with each screen reader, the results so far (“Tested with … on …”) and a link to report one. */
+function ScreenReaderTestBlock({ component, test }: { component: string; test: ScreenReaderTest }) {
+  return (
+    <div className="doc-sr-test">
+      <h3 className="medo-text-heading-md">Screen reader test</h3>
+      <p className="doc-muted">
+        The same steps with NVDA, VoiceOver and TalkBack: what to do and what you must hear – the words may differ, the meaning not. Keys and gestures:{' '}
+        <Link href={docsHref(SCREEN_READER_GUIDE_ID)}>Screen reader testing</Link>.
+      </p>
+      <SpecTable head={['Do', 'You hear']} rows={test.steps.map(([action, hear]) => [<Rich>{action}</Rich>, <Rich>{hear}</Rich>])} />
+      <SpecTable
+        head={['Screen reader', 'Result']}
+        rows={SCREEN_READERS.map((reader) => {
+          const last = test.tested?.find((t) => t.reader === reader.id);
+          return [
+            <span className="doc-sr-reader">
+              <strong>{reader.name}</strong>
+              <span className="medo-text-body-sm doc-muted">{reader.setup}</span>
+            </span>,
+            <span className="doc-sr-result">
+              {last ? (
+                <span>
+                  <Badge tone={last.result === 'passed' ? 'success' : 'warning'} size="sm">
+                    {last.result === 'passed' ? 'Passed' : 'Issues'}
+                  </Badge>{' '}
+                  {`Tested with ${last.versions} on ${dateText(last.date)}`}
+                  {last.issue ? (
+                    <>
+                      {' · '}
+                      <Link href={`${repoUrl}/issues/${last.issue}`} target="_blank">{`#${last.issue}`}</Link>
+                    </>
+                  ) : null}
+                </span>
+              ) : (
+                <span className="doc-muted">Not tested yet</span>
+              )}
+              <Link href={reportUrl(component, reader, test.steps)} target="_blank">
+                Report a result
+                <span className="medo-visually-hidden">{` for ${reader.name}`}</span>
+              </Link>
+            </span>,
+          ];
+        })}
+      />
+    </div>
+  );
+}
 
 /** Status of a component (tag status:…): the badge; what it means behind an info button (Toggletip). */
 function StatusNote({ tags }: { tags?: string[] }) {
@@ -470,6 +558,7 @@ export function ComponentDocsPage() {
               ))}
             </List>
           ) : null}
+          {medo.a11y.screenReader ? <ScreenReaderTestBlock component={name} test={medo.a11y.screenReader} /> : null}
         </DocSection>
       ) : null}
 
