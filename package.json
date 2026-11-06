@@ -24,6 +24,7 @@
     "test:firefox": "npm run build:tokens && npm run test:firefox -w @med-o/storybook",
     "test:visual": "npm run build:tokens && npm run test:visual -w @med-o/storybook",
     "changeset": "changeset",
+    "version-packages": "changeset version && node scripts/changelog-dates.mjs",
     "release": "changeset publish"
   },
   "devDependencies": {
