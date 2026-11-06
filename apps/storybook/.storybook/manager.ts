@@ -3,6 +3,7 @@
  */
 import { createElement, useState } from 'react';
 import { addons, types, type API } from 'storybook/manager-api';
+import { STORIES_COLLAPSE_ALL } from 'storybook/internal/core-events';
 import { Button } from 'storybook/internal/components';
 import { PaintBrushIcon } from '@storybook/icons';
 import { startMode, storeMode, themes, token, type Mode } from './theme';
@@ -13,7 +14,11 @@ addons.setConfig({
   theme: themes[mode],
   // A documentation site: one entry per page. The examples live on the docs pages; the stories stay
   // reachable by URL and run as tests, but do not fill the sidebar.
-  sidebar: { filters: { docsOnly: (item) => item.type !== 'story' } },
+  sidebar: {
+    filters: { docsOnly: (item) => item.type !== 'story' },
+    // Everything starts closed – Storybook still opens the path to the page you are on, so you see where you are.
+    collapsedRoots: ['foundations', 'guides', 'patterns', 'components'],
+  },
 });
 
 /*
@@ -96,7 +101,7 @@ uiStyle.textContent = `
 }
 :is(.sidebar-header, .search-field) button:focus-visible,
 #storybook-explorer-menu .sidebar-subheading-action:focus-visible { outline: none; box-shadow: var(--medo-ui-focus); }
-/* Expand all / Collapse all only acts on component groups. Foundations, Guides and Patterns are flat pages – no button. */
+/* Expand all / Collapse all per section only acts on component groups. Foundations, Guides and Patterns are flat pages – no button. */
 #storybook-explorer-menu :is(#foundations, #guides, #patterns) .sidebar-subheading-action { display: none; }
 
 /* Search results: the highlighted result (mouse or arrow keys) and the hovered one look the same – no flicker. */
@@ -198,7 +203,18 @@ function ThemeSwitch() {
   );
 }
 
+/*
+ * “Collapse all” (settings menu, Ctrl/⌘ + Shift + ↑): Storybook closes only the groups inside the sections, never
+ * the sections themselves (Foundations, Guides, Patterns, Components) – so here, where the groups start closed, nothing
+ * seemed to happen. After Storybook's own collapse, the open sections are closed through their own buttons.
+ */
+const collapseSections = () =>
+  requestAnimationFrame(() =>
+    document.querySelectorAll<HTMLButtonElement>('#storybook-explorer-menu .sidebar-subheading > button[aria-expanded="true"]').forEach((b) => b.click()),
+  );
+
 addons.register('medo/theme', (api) => {
   managerApi = api;
+  api.on(STORIES_COLLAPSE_ALL, collapseSections);
   addons.add('medo/theme-switch', { type: types.TOOL, title: 'Theme', match: () => true, render: ThemeSwitch });
 });
