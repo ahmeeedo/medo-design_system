@@ -12,7 +12,7 @@ const euro = { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 } as
 const meta = {
   title: 'Components/Forms/Slider',
   component: Slider,
-  tags: ['autodocs'],
+  tags: ['autodocs', 'status:beta'],
   args: {
     label: 'Volume',
     showValue: true,

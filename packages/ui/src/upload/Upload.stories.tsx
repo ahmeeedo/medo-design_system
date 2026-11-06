@@ -82,7 +82,7 @@ const meta = {
   title: 'Components/Forms/Upload',
   component: UploadField,
   // locale-de: also tested in German (Vitest project “storybook-de”).
-  tags: ['autodocs', 'locale-de'],
+  tags: ['autodocs', 'locale-de', 'status:beta'],
   args: {
     label: 'Documents and photos',
     layout: 'auto',

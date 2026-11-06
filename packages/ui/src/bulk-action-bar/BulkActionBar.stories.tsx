@@ -27,7 +27,7 @@ const five = [
 const meta = {
   title: 'Components/Data display/Bulk Action Bar',
   component: BulkActionBar,
-  tags: ['autodocs'],
+  tags: ['autodocs', 'status:beta'],
   args: { count: 3, variant: 'auto', actions: three, onClear: fn() },
   argTypes: {
     count: { control: { type: 'number', min: 0 }, description: 'Selected items. 0 hides the bar.' },

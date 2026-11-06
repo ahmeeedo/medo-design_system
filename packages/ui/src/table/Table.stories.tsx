@@ -108,7 +108,7 @@ function InvoiceTable({ density = 'standard' as 'standard' | 'compact', selectab
 const meta = {
   title: 'Components/Data display/Table',
   component: Table,
-  tags: ['autodocs'],
+  tags: ['autodocs', 'status:beta'],
   parameters: {
     medo: {
       subtitle: 'Shows records in rows and columns to compare, sort and act on them.',

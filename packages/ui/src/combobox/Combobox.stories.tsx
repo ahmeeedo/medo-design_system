@@ -30,7 +30,7 @@ const meta = {
   title: 'Components/Forms/Combobox',
   component: Combobox,
   // locale-de: also tested in German (Vitest project “storybook-de”).
-  tags: ['autodocs', 'locale-de'],
+  tags: ['autodocs', 'locale-de', 'status:beta'],
   args: {
     label: 'Assignee',
     description: 'Type a name, e.g. “mul”.',

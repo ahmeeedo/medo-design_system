@@ -16,7 +16,7 @@ const text: React.CSSProperties = {
 const meta = {
   title: 'Components/Overlays/Bottom Sheet',
   component: BottomSheet,
-  tags: ['autodocs'],
+  tags: ['autodocs', 'status:beta'],
   args: { title: 'Share project', height: 'content', children: null, onOpenChange: fn() },
   argTypes: {
     title: { control: 'text' },

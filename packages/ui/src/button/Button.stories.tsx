@@ -7,7 +7,7 @@ import { interactionTest, slot } from '../story-helpers';
 const meta = {
   title: 'Components/Actions/Button',
   component: Button,
-  tags: ['autodocs'],
+  tags: ['autodocs', 'status:beta'],
   args: { children: 'Button', variant: 'primary', size: 'md', isDisabled: false, isPending: false, startIcon: 'none', endIcon: 'none', onPress: fn() },
   argTypes: {
     variant: { control: 'inline-radio', options: ['primary', 'secondary', 'ghost', 'danger', 'text', 'ghost-danger'] },

@@ -20,7 +20,7 @@ const band = (label: string) => (
 const meta = {
   title: 'Components/Layout/Container',
   component: Container,
-  tags: ['autodocs'],
+  tags: ['autodocs', 'status:beta'],
   args: { size: 'xl' },
   argTypes: {
     size: { control: 'inline-radio', options: ['prose', 'md', 'lg', 'xl', 'full'] },

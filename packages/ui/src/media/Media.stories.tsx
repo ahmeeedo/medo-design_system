@@ -21,7 +21,7 @@ const demoEmbed = `data:text/html,${encodeURIComponent('<body style="margin:0;di
 const meta = {
   title: 'Components/Data display/Image & Media',
   component: Image,
-  tags: ['autodocs'],
+  tags: ['autodocs', 'status:beta'],
   args: {
     src: samplePhoto(0, { width: 1200, height: 900 }),
     alt: 'Evening light over the foothills',

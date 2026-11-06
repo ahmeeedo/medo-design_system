@@ -7,7 +7,7 @@ import { interactionTest, row, semantic, slot } from '../story-helpers';
 const meta = {
   title: 'Components/Actions/Icon Button',
   component: IconButton,
-  tags: ['autodocs'],
+  tags: ['autodocs', 'status:beta'],
   args: { 'aria-label': 'Add item', icon: 'plus', variant: 'ghost', size: 'md', isDisabled: false, onPress: fn() },
   argTypes: {
     variant: { control: 'inline-radio', options: ['ghost', 'secondary', 'primary', 'danger'], description: 'media · media-ghost: on images and video – see “On media”.' },

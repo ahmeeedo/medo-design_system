@@ -56,7 +56,7 @@ const meta = {
   // The props table documents Form; the fields are written in the story.
   component: Form as React.ComponentType<Partial<FormProps>>,
   // locale-de: also tested in German (Vitest project “storybook-de”).
-  tags: ['autodocs', 'locale-de'],
+  tags: ['autodocs', 'locale-de', 'status:experimental'],
   parameters: {
     medo: {
       subtitle: 'React Aria Form with the error rules: errors at the field, the whole form’s errors above it, the input always kept.',

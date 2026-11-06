@@ -8,9 +8,13 @@ import type { PropsWithChildren, ReactNode } from 'react';
 import { Children, createContext, useContext, useEffect, useRef, useState } from 'react';
 import { Ban, Check, CircleCheck, X } from 'lucide-react';
 import type { DocsContextProps } from 'storybook/internal/types';
+import { RouterProvider } from 'react-aria-components';
+import { addons } from 'storybook/preview-api';
+import { SELECT_STORY } from 'storybook/internal/core-events';
 import { Canvas, Description, DocsContainer, DocsContext, useOf } from '@storybook/addon-docs/blocks';
-import { Alert, Link, List, ListItem, StaticTable } from '@med-o/ui';
+import { Alert, Badge, Link, List, ListItem, StaticTable, Toggletip } from '@med-o/ui';
 import { themes, type Mode } from '../../.storybook/theme';
+import { STATUS, STATUS_GUIDE_ID, STATUSES, statusOf, type Status } from '../../.storybook/status';
 import { Rich, Tok } from './text';
 import { PropsTable } from './PropsTable';
 
@@ -18,6 +22,15 @@ export { Rich, Tok };
 
 /** Public source repository. */
 export const repoUrl = 'https://github.com/ahmeeedo/medo-design_system';
+
+/** Link to another docs page, e.g. <Link href={docsHref('guides-component-status--docs')}>. */
+export const docsHref = (id: string) => `./?path=/docs/${id}`;
+
+/** Links to docs pages open the page in Storybook without a reload (RouterProvider below); Cmd/Ctrl-click opens a new tab. */
+const openDocs = (href: string) => {
+  const id = new URLSearchParams(href.split('?')[1]).get('path')?.replace('/docs/', '');
+  if (id) addons.getChannel().emit(SELECT_STORY, { storyId: id, viewMode: 'docs' });
+};
 
 const pad = (n: number) => String(n).padStart(2, '0');
 export const sectionId = (n: number | string) => `section-${typeof n === 'number' ? pad(n) : n}`;
@@ -127,13 +140,15 @@ type HeaderProps = {
   title: string;
   /** Right meta line, e.g. "Button" */
   meta?: string;
+  /** Right of the top line instead of meta, e.g. the component status. */
+  status?: ReactNode;
   subtitle?: ReactNode;
   description?: ReactNode;
   /** Section titles, numbered automatically (01, 02 …) */
   nav?: string[];
 };
 
-export function DocHeader({ kind, title, meta, subtitle, description, nav }: HeaderProps) {
+export function DocHeader({ kind, title, meta, status, subtitle, description, nav }: HeaderProps) {
   const setNav = useContext(SetNavContext);
   const navKey = nav?.join('\u0000') ?? '';
   const navRef = useRef(nav);
@@ -146,7 +161,7 @@ export function DocHeader({ kind, title, meta, subtitle, description, nav }: Hea
     <header className="doc-header">
       <div className="doc-topline">
         <span className="medo-text-overline">Design system / {kind}</span>
-        {meta ? <span className="medo-text-code-sm doc-muted">{meta}</span> : null}
+        {status ?? (meta ? <span className="medo-text-code-sm doc-muted">{meta}</span> : null)}
       </div>
       <div className="doc-intro">
         <h1 className="medo-text-display-lg">{title}</h1>
@@ -320,6 +335,71 @@ type MedoStyling = { classes?: [string, string][]; states?: string[] };
  */
 type MedoDocsParams = { subtitle?: string; usage?: MedoUsage; a11y?: MedoA11y; styling?: MedoStyling };
 
+/** Status of a component (tag status:…): the badge; what it means behind an info button (Toggletip). */
+function StatusNote({ tags }: { tags?: string[] }) {
+  const status = statusOf(tags);
+  if (!status) return null;
+  const { label, tone, meaning } = STATUS[status];
+  return (
+    <span className="doc-status">
+      <Badge tone={tone} size="sm">
+        {label}
+      </Badge>
+      <Toggletip aria-label={`About the status ${label}`} link={{ label: 'About the levels', href: docsHref(STATUS_GUIDE_ID) }}>
+        {meaning}
+      </Toggletip>
+    </span>
+  );
+}
+
+/**
+ * Every component with its status, from Storybook's index (the tags of the docs pages) – grouped by level, A–Z.
+ * Guides / Component status.
+ */
+export function StatusOverview() {
+  const [pages, setPages] = useState<{ id: string; title: string; status: Status }[]>([]);
+  useEffect(() => {
+    let live = true;
+    fetch('./index.json')
+      .then((r) => r.json())
+      .then((index: { entries: Record<string, { id: string; title: string; type: string; tags?: string[] }> }) => {
+        const list = Object.values(index.entries).flatMap((e) => {
+          const status = e.type === 'docs' && e.title.startsWith('Components/') ? statusOf(e.tags) : undefined;
+          return status ? [{ id: e.id, title: e.title.split('/').at(-1)!, status }] : [];
+        });
+        if (live) setPages(list.sort((a, b) => a.title.localeCompare(b.title)));
+      })
+      .catch(() => {});
+    return () => {
+      live = false;
+    };
+  }, []);
+  return (
+    <SpecTable
+      head={['Status', 'Components']}
+      rows={STATUSES.map((status) => {
+        const list = pages.filter((p) => p.status === status);
+        return [
+          <Badge tone={STATUS[status].tone} size="sm">
+            {STATUS[status].label}
+          </Badge>,
+          list.length ? (
+            <span className="doc-inline-list">
+              {list.map((p) => (
+                <Link key={p.id} href={docsHref(p.id)}>
+                  {p.title}
+                </Link>
+              ))}
+            </span>
+          ) : (
+            <span className="doc-muted">None yet</span>
+          ),
+        ];
+      })}
+    />
+  );
+}
+
 export function ComponentDocsPage() {
   const { csfFile, preparedMeta } = useOf('meta', ['meta']);
   const context = useContext(DocsContext);
@@ -346,6 +426,7 @@ export function ComponentDocsPage() {
         kind={kind}
         title={name}
         meta={name}
+        status={<StatusNote tags={preparedMeta.tags} />}
         subtitle={medo.subtitle}
         description={<Description of="meta" />}
         nav={nav}
@@ -439,7 +520,7 @@ export function MedoDocsContainer({ context, children }: PropsWithChildren<{ con
 
   return (
     <DocsContainer context={context} theme={themes[mode]}>
-      {children}
+      <RouterProvider navigate={openDocs}>{children}</RouterProvider>
     </DocsContainer>
   );
 }

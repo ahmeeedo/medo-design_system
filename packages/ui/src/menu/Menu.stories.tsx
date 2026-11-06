@@ -68,7 +68,7 @@ function FileActions({ overlay, onAction }: { overlay?: 'auto' | 'popover' | 'sh
 const meta = {
   title: 'Components/Actions/Menu',
   component: Menu,
-  tags: ['autodocs'],
+  tags: ['autodocs', 'status:beta'],
   args: { overlay: 'popover', onAction: fn() },
   argTypes: {
     overlay: { control: 'inline-radio', options: ['auto', 'popover', 'sheet'], description: 'auto: popover on desktop, Bottom Sheet below 640 px.' },

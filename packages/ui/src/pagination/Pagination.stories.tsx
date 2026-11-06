@@ -11,7 +11,7 @@ import { interactionTest, Example, Examples, semantic, slot } from '../story-hel
 const meta = {
   title: 'Components/Navigation/Pagination',
   component: Pagination,
-  tags: ['autodocs'],
+  tags: ['autodocs', 'status:beta'],
   args: { totalItems: 380, pageSize: 20, defaultPage: 5, variant: 'auto', size: 'md', onChange: fn() },
   argTypes: {
     totalItems: { control: { type: 'number', min: 0 }, description: 'Total count: the summary and the number of pages.' },

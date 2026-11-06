@@ -54,7 +54,7 @@ const preview: Preview = {
           'Foundations',
           ['Colors', 'Typography', 'Spacing & sizes', 'Elevation & motion', 'Icons', 'Accessibility', 'Content', 'Long content'],
           'Guides',
-          ['Theming', 'Languages', 'Tailwind', 'Versioning & support'],
+          ['Theming', 'Languages', 'Tailwind', 'Versioning & support', 'Component status'],
           'Patterns',
           ['Account', 'Form', 'Multi-step form', 'Search', 'Delete'],
           'Components',

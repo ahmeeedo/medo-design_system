@@ -21,7 +21,7 @@ const grid: React.CSSProperties = {
 const meta = {
   title: 'Components/Data display/Card',
   component: Card,
-  tags: ['autodocs'],
+  tags: ['autodocs', 'status:beta'],
   args: {
     title: 'Quarterly report',
     subtitle: 'Updated 2 hours ago',

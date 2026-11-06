@@ -18,7 +18,7 @@ const onAction = fn();
 
 const meta = {
   title: 'Components/Feedback/Toast',
-  tags: ['autodocs'],
+  tags: ['autodocs', 'status:beta'],
   args: { message: 'Q3-Report.pdf deleted', action: 'Undo' as never, persistent: false, onClose: fn() },
   argTypes: {
     message: { control: 'text' },
