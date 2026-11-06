@@ -25,7 +25,7 @@ import { Tab, TabList, TabPanel, Tabs } from '../tabs/Tabs';
 import { Tag, TagGroup } from '../tag/Tag';
 import { ToggleButton, ToggleButtonGroup } from '../toggle-button/ToggleButton';
 import { Image } from '../media/Image';
-import { interactionTest, Examples, samplePhoto, semantic, slot } from '../story-helpers';
+import { interactionTest, Examples, overlaysSettled, samplePhoto, semantic, slot } from '../story-helpers';
 
 /** Placeholder thumbnail (stories only). */
 const thumb = <Image src={samplePhoto(1)} alt="" ratio="4:3" radius="none" />;
@@ -719,6 +719,7 @@ export const QuickSearchTest: Story = {
     const dialog = await body.findByRole('dialog');
     const field = within(dialog).getByRole('searchbox');
     await waitFor(() => expect(field).toHaveFocus());
+    await overlaysSettled();
     await userEvent.type(field, 'inv');
     await waitFor(() => expect(within(dialog).getAllByRole('option').length).toBeGreaterThan(0));
     // Esc with text clears the field first; wait for it, so a slower engine (WebKit) does not see the second Esc too early.

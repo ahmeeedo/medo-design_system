@@ -6,7 +6,7 @@ import { Button } from '../button/Button';
 import { TextField } from '../text-field/TextField';
 import { Select } from '../select/Select';
 import { Option } from '../listbox/ListBox';
-import { interactionTest, row, semantic, slot } from '../story-helpers';
+import { interactionTest, overlaysSettled, row, semantic, slot } from '../story-helpers';
 import { ToastRegion } from '../toast/Toast';
 import { FieldErrors } from '../form/Form';
 
@@ -379,8 +379,7 @@ export const InteractionTest: Story = {
     const dialog = await body.findByRole('dialog', { name: 'Invite member' });
     // Focus moves into the dialog and stays there.
     await waitFor(() => expect(dialog).toContainElement(document.activeElement as HTMLElement));
-    // The opening animation has ended – WebKit on a cold start dropped an Esc pressed during it.
-    await waitFor(() => expect(document.querySelector('.medo-dialog-overlay')).not.toHaveAttribute('data-entering'));
+    await overlaysSettled();
     // Esc closes it and focus returns to the trigger.
     await userEvent.keyboard('{Escape}');
     await waitFor(() => expect(body.queryByRole('dialog')).toBeNull());
@@ -403,10 +402,12 @@ export const UnsavedChangesTest: Story = {
     const body = within(document.body);
     const dialog = await body.findByRole('dialog', { name: 'Invite member' });
     const email = within(dialog).getByRole('textbox', { name: /Email/ });
+    await overlaysSettled();
     await userEvent.type(email, 'anna@example.com');
     // Esc does not close: it asks first.
     await userEvent.keyboard('{Escape}');
     const ask = await body.findByRole('alertdialog', { name: 'Discard changes?' });
+    await overlaysSettled();
     // Keep editing: back in the form, with the input and the focus in the dialog.
     await userEvent.click(within(ask).getByRole('button', { name: 'Keep editing' }));
     await waitFor(() => expect(body.queryByRole('alertdialog')).toBeNull());
