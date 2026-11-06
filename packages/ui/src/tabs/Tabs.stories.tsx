@@ -86,6 +86,15 @@ const meta = {
           'Counts are read with the tab name.',
           'Panels stay mounted, so input is never lost.',
         ],
+        // Manual test with NVDA, VoiceOver and TalkBack (Guides / Screen reader testing).
+        screenReader: {
+          steps: [
+            ['Go to the heading “Playground”, then to the first tab.', '“Overview, tab, selected, 1 of 4” (position where the screen reader says it).'],
+            ['Move to the next tab (arrow right; on the phone swipe right) and activate it if it is not selected yet.', '“Activity, 3 new, tab” – and selected.'],
+            ['Move into the panel (Tab, or next element after the tabs).', '“3 new comments since your last visit.”'],
+            ['Go to the heading “Disabled” and through the tabs.', 'The disabled tab as dimmed or disabled.'],
+          ],
+        },
       },
       styling: {
         classes: [

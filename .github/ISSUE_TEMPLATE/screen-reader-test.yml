@@ -1,0 +1,50 @@
+# Result of a manual screen reader test (Guides / Screen reader testing on design.med-o.de).
+# Opened from “Report a result” in the Accessibility section of a component page: component, screen reader and
+# steps come filled in.
+name: Screen reader test
+description: Result of a manual screen reader test of one component.
+title: 'Screen reader test: '
+body:
+  - type: input
+    id: component
+    attributes:
+      label: Component
+      placeholder: Button
+    validations:
+      required: true
+  - type: input
+    id: reader
+    attributes:
+      label: Screen reader
+      placeholder: NVDA (Windows · Firefox or Chrome)
+    validations:
+      required: true
+  - type: input
+    id: versions
+    attributes:
+      label: Versions
+      description: Screen reader, browser and system – the docs page shows them as “Tested with …”.
+      placeholder: NVDA 2025.3 · Firefox 145 · Windows 11
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps
+      description: Check every step that worked. Where it did not, write below the step what you heard instead.
+    validations:
+      required: true
+  - type: dropdown
+    id: result
+    attributes:
+      label: Result
+      options:
+        - Passed – every step worked
+        - Issues – see the steps
+    validations:
+      required: true
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes
+      description: Anything else – confusing words, too much or too little announced.

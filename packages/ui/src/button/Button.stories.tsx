@@ -47,6 +47,16 @@ const meta = {
           'Disabled buttons are skipped by the keyboard.',
           'Heights: sm 32 px, md 40 px, lg 48 px for touch.',
         ],
+        // Manual test with NVDA, VoiceOver and TalkBack (Guides / Screen reader testing).
+        screenReader: {
+          steps: [
+            ['Go to the heading “Playground”, then to the next element.', '“Button, button”.'],
+            ['Activate it.', 'Nothing new – the focus stays on the button.'],
+            ['Go to the heading “With icons” and through the buttons.', 'Only the labels; the icons are not read.'],
+            ['Go to the heading “Disabled” and through the buttons.', 'Each one as dimmed, unavailable or disabled. Tab skips them.'],
+            ['Go to the heading “Pending”, then to the first button.', '“Saving…, button” – and, where the screen reader says it, that it is busy.'],
+          ],
+        },
       },
       styling: {
         classes: [

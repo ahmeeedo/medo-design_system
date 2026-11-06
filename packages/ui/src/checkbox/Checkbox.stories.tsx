@@ -36,6 +36,17 @@ const meta = {
           'A real checkbox input: forms and validation keep working.',
           'Description and error texts are linked to the checkbox.',
         ],
+        // Manual test with NVDA, VoiceOver and TalkBack (Guides / Screen reader testing).
+        screenReader: {
+          steps: [
+            ['Go to the heading “Playground”, then to the checkbox.', '“Accept the terms, checkbox, not checked”.'],
+            ['Activate it.', '“Checked”.'],
+            ['Go to the heading “States” and through the checkboxes.', 'Not checked, checked, and the third one as mixed or partly checked.'],
+            ['Go to the heading “Group”, then to the first checkbox.', 'The group “Notifications”, then “Email, checkbox, checked”.'],
+            ['Next checkbox: “SMS”.', '“SMS, checkbox, not checked”, then “Costs may apply.”'],
+            ['Go to the heading “Group invalid”, then to the first checkbox.', 'The group “Topics” and “Select at least one topic.”'],
+          ],
+        },
       },
       styling: {
         classes: [
