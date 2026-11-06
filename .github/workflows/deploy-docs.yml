@@ -78,5 +78,14 @@ jobs:
             echo "::notice title=Docs not deployed::Image ${IMAGE}:${{ steps.version.outputs.version }} is pushed. Add the secrets COOLIFY_WEBHOOK and COOLIFY_TOKEN to deploy it."
             exit 0
           fi
-          curl --fail --silent --show-error --max-time 60 -H "Authorization: Bearer $TOKEN" "$WEBHOOK"
+          # Coolify's answer is printed, so a refusal says why (API off, IP not allowed, token without “deploy”).
+          # Older Coolify versions take GET, newer ones POST: try GET, then POST when the method is refused (405).
+          call() { curl --silent --show-error --max-time 60 --request "$1" --output response.txt --write-out '%{http_code}' -H "Authorization: Bearer $TOKEN" "$WEBHOOK"; }
+          status=$(call GET)
+          if [ "$status" = "405" ]; then status=$(call POST); fi
+          echo "Coolify answered $status: $(cat response.txt)"
+          if [ "$status" -ge 400 ]; then
+            echo "::error title=Coolify refused the deploy::HTTP $status – $(cat response.txt)"
+            exit 1
+          fi
           echo "Deployed ${IMAGE}:${{ steps.version.outputs.version }} – https://design.med-o.de" >> "$GITHUB_STEP_SUMMARY"
