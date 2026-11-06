@@ -1,4 +1,5 @@
 import type { CSSProperties, ReactNode } from 'react';
+import { expect, waitFor } from 'storybook/test';
 
 /** Layout helpers for stories only. */
 export const row: CSSProperties = { display: 'flex', gap: 'var(--medo-layout-gap-inline)', alignItems: 'center', flexWrap: 'wrap' };
@@ -84,3 +85,9 @@ export async function resizeViewport(width: number, height = 900) {
 
 /** True when the page scrolls sideways – content wider than the window. */
 export const overflowsHorizontally = () => document.documentElement.scrollWidth > document.documentElement.clientWidth;
+
+/**
+ * Waits until no overlay is still animating in (React Aria sets data-entering). Press keys or click in a dialog, sheet or
+ * popover only after that: WebKit on a busy runner dropped an Esc or a click sent during the opening animation.
+ */
+export const overlaysSettled = () => waitFor(() => expect(document.querySelector('[data-entering]')).toBeNull());
