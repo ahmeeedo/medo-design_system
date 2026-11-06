@@ -20,7 +20,7 @@ const meta = {
   // The props table documents Stepper; the steps themselves are written in the story.
   component: Stepper as unknown as React.ComponentType<Args>,
   subcomponents: { Step: Step as React.ComponentType<unknown> },
-  tags: ['autodocs'],
+  tags: ['autodocs', 'status:experimental'],
   args: { current: 1, layout: 'horizontal', descriptions: false, onStepPress: fn() },
   argTypes: {
     current: { control: { type: 'range', min: 0, max: 3, step: 1 }, description: 'Index of the current step, from 0. Steps before it are done.' },

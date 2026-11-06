@@ -44,7 +44,7 @@ function LinkForm({ close }: { close: () => void }) {
 const meta = {
   title: 'Components/Overlays/Popover',
   component: Popover,
-  tags: ['autodocs'],
+  tags: ['autodocs', 'status:beta'],
   args: { title: 'Filter', size: 'md', overlay: 'popover', primaryAction: 'none' as never, children: null, 'aria-label': 'Filter' },
   argTypes: {
     title: { control: 'text' },

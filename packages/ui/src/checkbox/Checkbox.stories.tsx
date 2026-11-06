@@ -6,7 +6,7 @@ import { interactionTest, stack } from '../story-helpers';
 const meta = {
   title: 'Components/Forms/Checkbox',
   component: Checkbox,
-  tags: ['autodocs'],
+  tags: ['autodocs', 'status:beta'],
   args: { children: 'Accept the terms', size: 'md', isDisabled: false, isInvalid: false, isIndeterminate: false, onChange: fn() },
   argTypes: { size: { control: 'inline-radio', options: ['md', 'lg'] }, onChange: { control: false }, children: { control: 'text' }, description: { control: 'text' } },
   parameters: {

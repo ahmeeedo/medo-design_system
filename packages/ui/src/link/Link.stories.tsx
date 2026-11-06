@@ -7,7 +7,7 @@ const text: React.CSSProperties = { font: 'var(--medo-typography-body-md)', colo
 const meta = {
   title: 'Components/Actions/Link',
   component: Link,
-  tags: ['autodocs'],
+  tags: ['autodocs', 'status:beta'],
   args: { children: 'View all projects', href: '/projects', variant: 'standalone', size: 'md', arrow: true },
   argTypes: {
     variant: { control: 'inline-radio', options: ['inline', 'standalone'] },

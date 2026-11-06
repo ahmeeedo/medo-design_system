@@ -61,7 +61,7 @@ const illustration = (
 const meta = {
   title: 'Components/Feedback/Empty State',
   component: EmptyState,
-  tags: ['autodocs'],
+  tags: ['autodocs', 'status:beta'],
   args: { type: 'first-use', size: 'page', ...examples['first-use'] },
   argTypes: {
     type: {

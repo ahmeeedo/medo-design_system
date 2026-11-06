@@ -41,7 +41,7 @@ function RowMenu({ name, onAction }: { name: string; onAction?: (key: 'archive' 
 const meta = {
   title: 'Components/Data display/List View',
   component: ListView,
-  tags: ['autodocs'],
+  tags: ['autodocs', 'status:beta'],
   args: { 'aria-label': 'Inbox', variant: 'plain', selectionMode: 'none', isLoading: false, onAction: fn(), onSelectionChange: fn(), children: null },
   argTypes: {
     variant: { control: 'inline-radio', options: ['plain', 'card'], description: 'plain: full-page lists · card: inside settings or dashboards.' },

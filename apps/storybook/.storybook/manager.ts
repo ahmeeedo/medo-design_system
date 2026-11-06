@@ -7,6 +7,7 @@ import { STORIES_COLLAPSE_ALL } from 'storybook/internal/core-events';
 import { Button } from 'storybook/internal/components';
 import { PaintBrushIcon } from '@storybook/icons';
 import { startMode, storeMode, themes, token, type Mode } from './theme';
+import { STATUS, statusOf } from './status';
 
 let mode: Mode = startMode();
 
@@ -18,6 +19,17 @@ addons.setConfig({
     filters: { docsOnly: (item) => item.type !== 'story' },
     // Everything starts closed – Storybook still opens the path to the page you are on, so you see where you are.
     collapsedRoots: ['foundations', 'guides', 'patterns', 'components'],
+    // Component status after the name – except Stable: no marker means ready to use (Guides / Component status).
+    renderLabel: (item) => {
+      const status = item.type === 'component' || item.type === 'docs' ? statusOf(item.tags) : undefined;
+      if (!status || status === 'stable') return item.name;
+      return createElement(
+        'span',
+        { className: 'medo-ui-label' },
+        item.name,
+        createElement('span', { className: `medo-ui-status medo-ui-status--${status}` }, STATUS[status].label),
+      );
+    },
   },
 });
 
@@ -104,6 +116,21 @@ uiStyle.textContent = `
 /* Expand all / Collapse all per section only acts on component groups. Foundations, Guides and Patterns are flat pages – no button. */
 #storybook-explorer-menu :is(#foundations, #guides, #patterns) .sidebar-subheading-action { display: none; }
 
+/* Component status after the name (renderLabel): small and quiet – the name stays the main thing. */
+.medo-ui-label {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--medo-ui-space-1-5);
+  min-inline-size: 0;
+}
+.medo-ui-status {
+  flex: none;
+  padding: 0 var(--medo-ui-space-1-5);
+  border: 1px solid var(--medo-ui-border-default);
+  border-radius: var(--medo-ui-radius-sm);
+  font: var(--medo-ui-label-xs);
+  color: var(--medo-ui-text-secondary);
+}
 /* Search results: the highlighted result (mouse or arrow keys) and the hovered one look the same – no flicker. */
 #storybook-explorer-menu li { border-radius: var(--medo-ui-radius-sm); }
 #storybook-explorer-menu li > :is(a, button, div) { background: transparent; }
@@ -156,6 +183,9 @@ const paintUi = (mode: Mode) => {
     'radius-md': t('radius/md'),
     label: t('typography/label/md'),
     'label-strong': t('typography/label/md-strong'),
+    'label-xs': t('typography/label/xs'),
+    'border-default': t('border/default'),
+    'space-1-5': t('space/1-5'),
     focus: `0 0 0 2px ${halo}, 0 0 0 4px ${ring}`,
     'focus-inset': `inset 0 0 0 2px ${ring}, inset 0 0 0 3px ${halo}`,
   };

@@ -105,7 +105,7 @@ const filterFooter = (close: () => void) => (
 const meta = {
   title: 'Components/Overlays/Drawer',
   component: Drawer,
-  tags: ['autodocs'],
+  tags: ['autodocs', 'status:beta'],
   args: { title: 'Account', side: 'right', size: 'sm', footer: 'none' as never, isDirty: false, children: null, onOpenChange: fn() },
   argTypes: {
     title: { control: 'text' },

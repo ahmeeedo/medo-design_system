@@ -48,7 +48,7 @@ function ProjectTabs({ icons = false, count = true, ...props }: React.ComponentP
 const meta = {
   title: 'Components/Navigation/Tabs',
   component: Tabs,
-  tags: ['autodocs'],
+  tags: ['autodocs', 'status:beta'],
   args: { size: 'md', fullWidth: false, defaultSelectedKey: 'overview', onSelectionChange: fn() },
   argTypes: {
     size: { control: 'inline-radio', options: ['md', 'lg'], description: 'Below 640 px tabs are always lg.' },

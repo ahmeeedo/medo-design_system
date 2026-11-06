@@ -109,7 +109,7 @@ const leadingFor = (h: Hit) => (h.type === 'person' ? <Avatar name={h.title} dec
 const meta = {
   title: 'Components/Forms/Search',
   component: SearchField,
-  tags: ['autodocs'],
+  tags: ['autodocs', 'status:beta'],
   args: { label: 'Search', placeholder: 'Search invoices', size: 'md', onSubmit: fn(), onChange: fn(), onClear: fn() },
   argTypes: {
     label: { ...slot({ visible: 'Search', 'aria-label only': undefined }), description: 'Visible label. Without it set `aria-label` (toolbars, header).' },

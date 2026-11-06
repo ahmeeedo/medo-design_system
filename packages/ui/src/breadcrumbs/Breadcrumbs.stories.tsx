@@ -22,7 +22,7 @@ const long = [
 const meta = {
   title: 'Components/Navigation/Breadcrumbs',
   component: Breadcrumbs,
-  tags: ['autodocs'],
+  tags: ['autodocs', 'status:beta'],
   args: { items: four, size: 'md', homeIcon: true, layout: 'full' },
   argTypes: {
     items: { ...slot({ '4 levels': four, '6 levels - collapsed': six, 'long label': long }), description: 'The path from the top; the last item is the current page.' },

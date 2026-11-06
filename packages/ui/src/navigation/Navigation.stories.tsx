@@ -133,7 +133,7 @@ function HeaderActions() {
 const meta = {
   title: 'Components/Navigation/Navigation',
   component: SiteHeader,
-  tags: ['autodocs'],
+  tags: ['autodocs', 'status:beta'],
   args: { layout: 'auto', actions: 'Log in + Get started' as never, logo: null, children: null },
   argTypes: {
     layout: { control: 'inline-radio', options: ['auto', 'desktop', 'mobile'], description: 'auto: menu button below 768 px.' },

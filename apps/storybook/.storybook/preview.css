@@ -94,6 +94,18 @@ html[data-theme] :is(.sb-preparing-story, .sb-preparing-docs) > * {
   padding-bottom: var(--medo-space-6);
   border-bottom: 1px solid var(--medo-color-border-default);
 }
+/* Links in a row that wraps (Guides / Component status). */
+.doc-inline-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--medo-space-1) var(--medo-layout-gap-inline);
+}
+/* Component status in the top line: badge and info button (what it means). */
+.doc-status {
+  display: flex;
+  align-items: center;
+  gap: var(--medo-space-1);
+}
 /* Title, subtitle and description stacked in one column (no aside on the right). */
 .doc-intro {
   display: grid;

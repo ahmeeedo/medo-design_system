@@ -8,7 +8,7 @@ import { interactionTest, stack } from '../story-helpers';
 const meta = {
   title: 'Components/Forms/Switch',
   component: Switch,
-  tags: ['autodocs'],
+  tags: ['autodocs', 'status:beta'],
   args: { children: 'Email notifications', size: 'md', labelPosition: 'end', isDisabled: false, isLoading: false, onChange: fn() },
   argTypes: {
     onChange: { control: false },

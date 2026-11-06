@@ -8,7 +8,7 @@ const cols: React.CSSProperties = { display: 'grid', gridTemplateColumns: 'repea
 const meta = {
   title: 'Components/Data display/List',
   component: List,
-  tags: ['autodocs'],
+  tags: ['autodocs', 'status:beta'],
   args: { type: 'bullet', size: 'md', children: null },
   argTypes: {
     type: { control: 'inline-radio', options: ['bullet', 'number', 'check'], description: 'bullet: ul · number: ol (order matters) · check: feature list.' },

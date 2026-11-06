@@ -11,14 +11,11 @@
  * Per release: breaking changes first (“Before you update”), then New · Improved · Fixed.
  */
 import { useEffect, useState, type ReactNode } from 'react';
-import { RouterProvider } from 'react-aria-components';
-import { addons } from 'storybook/preview-api';
-import { SELECT_STORY } from 'storybook/internal/core-events';
 import { Accordion, AccordionItem, Alert, Badge, Link, List, ListItem, Option, Select, Switch, ToggleButton, ToggleButtonGroup } from '@med-o/ui';
 import uiLog from '../../../../packages/ui/CHANGELOG.md?raw';
 import tokensLog from '../../../../packages/tokens/CHANGELOG.md?raw';
 import uiIndex from '../../../../packages/ui/src/index.ts?raw';
-import { DocSection, repoUrl } from './DocBlocks';
+import { DocSection, docsHref, repoUrl } from './DocBlocks';
 import { Rich } from './text';
 
 type Kind = 'Major' | 'Minor' | 'Patch';
@@ -159,12 +156,6 @@ function useDocPages() {
 /** The docs pages of an entry, without doubles (Dialog and AlertDialog stay two, Step and Stepper are one). */
 const pagesOf = (e: Entry, pages: Map<string, DocPage>) => [...new Map(componentNames(e).flatMap((n) => (pages.has(n) ? [[pages.get(n)!.id, pages.get(n)!]] : []))).values()];
 
-/** Links inside the docs open the page in Storybook without a reload; Cmd/Ctrl-click opens a new tab. */
-const openDocs = (href: string) => {
-  const id = new URLSearchParams(href.split('?')[1]).get('path')?.replace('/docs/', '');
-  if (id) addons.getChannel().emit(SELECT_STORY, { storyId: id, viewMode: 'docs' });
-};
-
 /* ---------- Filter ---------- */
 
 type Filter = { pkg: 'all' | 'UI' | 'Tokens'; breaking: boolean; component: string | null };
@@ -236,7 +227,7 @@ function Change({ e, pages }: { e: Entry; pages: Map<string, DocPage> }) {
       )}
       <p className="doc-change__meta medo-text-body-sm doc-muted">
         {docs.map((p) => (
-          <Link key={p.id} href={`./?path=/docs/${p.id}`}>
+          <Link key={p.id} href={docsHref(p.id)}>
             {p.title}
           </Link>
         ))}
@@ -373,7 +364,7 @@ export function Changelog() {
   );
 
   return (
-    <RouterProvider navigate={openDocs}>
+    <>
       <DocSection n={1} title={nav[0]} meta={releaseMeta(latest, [...latest.entries.values()])}>
         {filters}
         {latestEntries.length ? (
@@ -437,6 +428,6 @@ export function Changelog() {
           )}
         </DocSection>
       )}
-    </RouterProvider>
+    </>
   );
 }

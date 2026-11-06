@@ -25,7 +25,7 @@ const rules = ['inline', 'content', 'fields', 'items', 'group', 'section'] as co
 const meta = {
   title: 'Components/Layout/Stack',
   component: Stack,
-  tags: ['autodocs'],
+  tags: ['autodocs', 'status:beta'],
   args: { direction: 'vertical', children: 'three' },
   argTypes: {
     direction: { control: 'inline-radio', options: ['vertical', 'horizontal'] },

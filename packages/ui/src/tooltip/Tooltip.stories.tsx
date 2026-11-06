@@ -9,7 +9,7 @@ import { interactionTest, row } from '../story-helpers';
 const meta = {
   title: 'Components/Overlays/Tooltip',
   component: Tooltip,
-  tags: ['autodocs'],
+  tags: ['autodocs', 'status:beta'],
   args: { children: 'Copy link', placement: 'top', offset: 8 },
   argTypes: {
     children: { control: 'text' },

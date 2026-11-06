@@ -1,0 +1,127 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import { List, ListItem } from '@med-o/ui';
+import { DocPage, DocHeader, DocSection, DocFooter, SpecTable, StatusOverview, Tok, SourceLink } from '../docs-blocks/DocBlocks';
+
+<Meta title="Guides/Component status" />
+
+<DocPage>
+
+<DocHeader
+  kind="Guides"
+  title="Component status"
+  meta="Experimental · Beta · Stable · Deprecated"
+  subtitle="How ready a component is – and the checklist it has to pass to be called Stable."
+  description={
+    <p>
+      Every component page shows its status at the top; the sidebar marks every component that is not Stable yet. The status is a tag in the component's stories (
+      <Tok>status:beta</Tok>), so page, sidebar and README always say the same.
+    </p>
+  }
+  nav={['Levels', 'Checklist for Stable', 'Moving up', 'All components']}
+/>
+
+<DocSection n={1} title="Levels" meta="What you can rely on">
+
+<SpecTable
+  head={['Status', 'What it means for you']}
+  rows={[
+    ['Experimental', 'New. Try it, give feedback – the API may still change in a minor release, marked Breaking in the changelog.'],
+    ['Beta', 'Complete and tested automatically: every state, axe in Light and Dark, WebKit and Firefox, screenshots. The manual checks for Stable are still open. Use it in products.'],
+    ['Stable', 'Passes the whole checklist below, including a test with real screen readers. Changes only with the rules for breaking changes (Versioning & support).'],
+    ['Deprecated', 'Will be removed. The page names the replacement; it keeps working for the time given in Versioning & support.'],
+  ]}
+/>
+
+</DocSection>
+
+<DocSection n={2} title="Checklist for Stable" meta="Definition of done" description="A component is Stable when every point holds. The same list is in the pull request template.">
+
+<SpecTable
+  head={['Area', 'Checks']}
+  rows={[
+    [
+      'Design',
+      <List type="check" size="md">
+        <ListItem>A component in the design library, built on the tokens – variants and states as in code.</ListItem>
+        <ListItem>
+          No hard-coded values in the CSS: colors, spacing, radii and font sizes come from tokens (<Tok>--medo-*</Tok>).
+        </ListItem>
+      </List>,
+    ],
+    [
+      'Behaviour',
+      <List type="check" size="md">
+        <ListItem>Behaviour and semantics from React Aria Components.</ListItem>
+        <ListItem>Every state has a story: default, hover, pressed, focus, disabled – and invalid, read-only, pending, empty where they apply.</ListItem>
+        <ListItem>Everything works with the keyboard; the keys are in the Accessibility section.</ListItem>
+      </List>,
+    ],
+    [
+      'Tests',
+      <List type="check" size="md">
+        <ListItem>axe finds nothing in Light and Dark.</ListItem>
+        <ListItem>An interaction test for every interactive behaviour; green in Chromium, WebKit and Firefox.</ListItem>
+        <ListItem>Screenshot references for every documented story, Light and Dark.</ListItem>
+      </List>,
+    ],
+    [
+      'Content',
+      <List type="check" size="md">
+        <ListItem>Built-in texts in English and German; components with texts also run in German (tag <Tok>locale-de</Tok>).</ListItem>
+        <ListItem>Works at 320 px and with long content: wraps, nothing important cut (Foundations / Long content).</ListItem>
+      </List>,
+    ],
+    [
+      'Docs',
+      <List type="check" size="md">
+        <ListItem>The page has Usage (when, when not, do, don't), Playground, examples, Accessibility and Styling.</ListItem>
+        <ListItem>Every prop has a description.</ListItem>
+      </List>,
+    ],
+    [
+      'Screen readers',
+      <List type="check" size="md">
+        <ListItem>Tested by hand with NVDA (Windows, Firefox or Chrome), VoiceOver (iPhone) and TalkBack (Android), following the component's test script.</ListItem>
+        <ListItem>The result is in the Accessibility section: “Tested with … on …”.</ListItem>
+      </List>,
+    ],
+  ]}
+/>
+
+</DocSection>
+
+<DocSection n={3} title="Moving up" meta="One pull request each">
+
+<SpecTable
+  head={['Step', 'How']}
+  rows={[
+    ['Experimental → Beta', 'The API has settled and every automatic check passes. Change the tag in the meta of the stories.'],
+    [
+      'Beta → Stable',
+      <>
+        Every point of the checklist holds, the screen reader result is on the page. Change the tag; the changeset says <Tok>{'Improved: `Button` is Stable.'}</Tok>
+      </>,
+    ],
+    [
+      'Any → Deprecated',
+      <>
+        Mark the API <Tok>@deprecated</Tok> with its replacement and set <Tok>status:deprecated</Tok>. Removed in a later release, marked Breaking.
+      </>,
+    ],
+  ]}
+/>
+
+</DocSection>
+
+<DocSection n={4} title="All components" meta="Current status">
+
+<StatusOverview />
+
+</DocSection>
+
+<DocFooter>
+  {'Guides: Component status · Experimental · Beta · Stable · Deprecated'}
+  <SourceLink path="apps/storybook/.storybook/status.ts" />
+</DocFooter>
+
+</DocPage>

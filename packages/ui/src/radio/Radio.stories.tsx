@@ -6,7 +6,7 @@ import { interactionTest } from '../story-helpers';
 const meta = {
   title: 'Components/Forms/Radio',
   component: RadioGroup,
-  tags: ['autodocs'],
+  tags: ['autodocs', 'status:beta'],
   args: {
     label: 'Delivery',
     description: 'Choose one option.',

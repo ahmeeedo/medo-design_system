@@ -16,7 +16,7 @@ const tones: { tone: BadgeTone; label: string; icon: React.ReactNode }[] = [
 const meta = {
   title: 'Components/Feedback/Badge',
   component: Badge,
-  tags: ['autodocs'],
+  tags: ['autodocs', 'status:beta'],
   args: { children: 'Active', tone: 'success', size: 'md', dot: true, icon: 'none' },
   argTypes: {
     tone: { control: 'inline-radio', options: ['neutral', 'brand', 'success', 'warning', 'danger', 'info'] },

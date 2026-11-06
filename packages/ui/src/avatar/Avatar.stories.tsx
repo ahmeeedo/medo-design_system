@@ -15,7 +15,7 @@ const people = ['Anna Dietrich', 'Lea Meyer', 'Sven Kraus', 'Jonas Bauer', 'Mia 
 const meta = {
   title: 'Components/Data display/Avatar',
   component: Avatar,
-  tags: ['autodocs'],
+  tags: ['autodocs', 'status:beta'],
   args: { name: 'Lea Meyer', size: 'lg', shape: 'circle', src: 'photo' },
   argTypes: {
     size: { control: 'inline-radio', options: sizes },

@@ -7,7 +7,7 @@ import { row } from '../story-helpers';
 const meta = {
   title: 'Components/Feedback/Progress',
   component: ProgressBar,
-  tags: ['autodocs'],
+  tags: ['autodocs', 'status:beta'],
   args: { label: 'Uploading 3 files', value: 64, description: '2 of 3 files · about 12 s left', size: 'md', status: 'default', showValue: true },
   argTypes: {
     label: { control: 'text' },

@@ -49,7 +49,7 @@ const paragraph: React.CSSProperties = { margin: '0 0 var(--medo-space-3)', colo
 const meta = {
   title: 'Components/Overlays/Dialog',
   component: Dialog,
-  tags: ['autodocs'],
+  tags: ['autodocs', 'status:beta'],
   args: {
     title: 'Invite member',
     description: 'New members get access to all projects in this workspace.',

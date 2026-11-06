@@ -24,7 +24,7 @@ const meta = {
   title: 'Components/Forms/Select',
   component: Select,
   // locale-de: also tested in German (Vitest project “storybook-de”).
-  tags: ['autodocs', 'locale-de'],
+  tags: ['autodocs', 'locale-de', 'status:beta'],
   args: {
     label: 'Country',
     description: 'Used for shipping and taxes.',

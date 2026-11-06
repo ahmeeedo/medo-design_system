@@ -16,7 +16,7 @@ const frame: React.CSSProperties = {
 const meta = {
   title: 'Components/Forms/Listbox',
   component: ListBox,
-  tags: ['autodocs'],
+  tags: ['autodocs', 'status:beta'],
   args: { size: 'md', selectionMode: 'single' },
   argTypes: {
     size: { control: 'inline-radio', options: ['md', 'lg'] },

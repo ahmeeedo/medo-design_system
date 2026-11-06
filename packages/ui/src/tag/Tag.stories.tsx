@@ -58,7 +58,7 @@ function FilterDemo({ size = 'md', label = 'Filter by topic', description, selec
 const meta = {
   title: 'Components/Data display/Tag',
   component: TagGroup,
-  tags: ['autodocs'],
+  tags: ['autodocs', 'status:beta'],
   argTypes: {
     size: { control: 'inline-radio', options: ['sm', 'md'] },
     selectionMode: {

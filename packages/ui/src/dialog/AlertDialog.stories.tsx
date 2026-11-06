@@ -32,7 +32,7 @@ const examples: Record<AlertDialogTone, { trigger: string; title: string; text: 
 const meta = {
   title: 'Components/Overlays/Alert Dialog',
   component: AlertDialog,
-  tags: ['autodocs'],
+  tags: ['autodocs', 'status:beta'],
   args: {
     tone: 'danger',
     title: examples.danger.title,

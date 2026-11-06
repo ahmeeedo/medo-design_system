@@ -46,7 +46,7 @@ function Formatting({ size = 'md' as 'md' | 'lg' }) {
 const meta = {
   title: 'Components/Actions/Toggle Button',
   component: ToggleButton,
-  tags: ['autodocs'],
+  tags: ['autodocs', 'status:beta'],
   args: { children: 'Favourite', icon: 'heart', size: 'md', isSelected: false, isDisabled: false, onChange: fn() },
   argTypes: {
     children: { control: 'text', description: 'Visible label. Empty = icon only (then aria-label and tooltip).' },

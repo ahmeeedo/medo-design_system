@@ -23,7 +23,7 @@ const area = (label: string, height = '6rem') => (
 const meta = {
   title: 'Components/Layout/Grid',
   component: Grid,
-  tags: ['autodocs'],
+  tags: ['autodocs', 'status:beta'],
   args: { minItemSize: '16rem' },
   argTypes: {
     columns: { control: 'select', options: [undefined, 2, 3, 4, 'layout'], description: 'Without: as many as fit. A number: equal columns. `layout`: 4 · 8 · 12.' },

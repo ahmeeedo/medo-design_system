@@ -70,7 +70,7 @@ function Faq({ size = 'lg' as 'md' | 'lg', count = 4 }) {
 const meta = {
   title: 'Components/Data display/Accordion',
   component: Accordion,
-  tags: ['autodocs'],
+  tags: ['autodocs', 'status:beta'],
   args: { size: 'md', allowsMultipleExpanded: true, children: null },
   argTypes: {
     size: { control: 'inline-radio', options: ['md', 'lg'], description: 'md: apps and settings · lg: websites and FAQs.' },

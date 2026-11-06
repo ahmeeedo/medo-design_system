@@ -30,7 +30,7 @@ function DismissDemo() {
 const meta = {
   title: 'Components/Feedback/Alert',
   component: Alert,
-  tags: ['autodocs'],
+  tags: ['autodocs', 'status:beta'],
   args: { tone: 'info', variant: 'inline', actions: 'none', title: 'New export format', children: 'You can now export reports as CSV.' },
   argTypes: {
     title: { control: 'text' },
