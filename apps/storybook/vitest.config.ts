@@ -30,11 +30,12 @@ const dirname = path.dirname(fileURLToPath(import.meta.url));
 const asked = (name: string) => process.argv.some((arg) => arg.includes(name));
 const ci = !!process.env.CI;
 
-/** Reference and diff paths: one folder per theme (light, dark), file name = story id. */
+/** Reference and diff paths: one folder per theme (light, dark), file name = story id. The project name carries the browser
+ * (“visual-dark (chromium)”), so it is matched, not compared to its end. */
 const screenshotPath =
   (folder: string) =>
   ({ arg, ext, project }: { arg: string; ext: string; project: { name: string } }) =>
-    path.join(dirname, folder, project.name.endsWith('dark') ? 'dark' : 'light', `${arg}${ext}`);
+    path.join(dirname, folder, /-dark\b/.test(project.name) ? 'dark' : 'light', `${arg}${ext}`);
 
 /** One project per theme and browser. The theme reaches preview.ts as import.meta.env.STORYBOOK_TEST_THEME. */
 type ProjectOptions = { browser?: 'chromium' | 'webkit' | 'firefox'; locale?: string; tags?: string[]; visual?: boolean };
