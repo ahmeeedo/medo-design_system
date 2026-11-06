@@ -597,31 +597,68 @@ html[data-theme] :is(.sb-preparing-story, .sb-preparing-docs) > * {
   align-items: center;
   gap: var(--medo-layout-gap-content);
 }
+.doc-changelog-filter > .medo-field {
+  inline-size: 14rem;
+}
 .doc-changelog-releases {
   display: grid;
   gap: var(--medo-layout-gap-group);
 }
-.doc-changelog-release {
-  display: grid;
-  gap: var(--medo-layout-gap-content);
+.doc-release-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--medo-layout-gap-inline);
 }
-.doc-changelog-release > :is(h3, h4) {
+.doc-release-head > h4,
+.doc-release-group > :is(h3, h5) {
   margin: 0;
 }
-/* One change per line of text: tags, text and commit link flow together. */
-.doc-changelog {
+.doc-release,
+.doc-release-body {
+  display: grid;
+  gap: var(--medo-layout-gap-group);
+}
+.doc-release-group {
   display: grid;
   gap: var(--medo-layout-gap-content);
+}
+/* Changes: one per row, divided by a line – short line, details, then components, packages and commit. */
+.doc-changes {
+  display: grid;
   max-inline-size: 48rem;
   margin: 0;
   padding: 0;
   list-style: none;
 }
-.doc-changelog > li {
-  font: var(--medo-typography-body-md);
+.doc-change {
+  display: grid;
+  gap: var(--medo-space-2);
+  padding-block: var(--medo-layout-gap-content);
+  border-block-start: 1px solid var(--medo-color-border-default);
   color: var(--medo-color-text-primary);
 }
-.doc-changelog > li > .medo-badge {
-  margin-inline-end: var(--medo-space-1);
+.doc-change p {
+  margin: 0;
+}
+.doc-change__summary {
+  font: var(--medo-typography-label-lg-strong);
+}
+.doc-change__summary > .medo-badge {
   vertical-align: 0.1em;
+}
+.doc-change__details {
+  display: grid;
+  gap: var(--medo-space-2);
+  font: var(--medo-typography-body-md);
+}
+/* “Before you update”: what changed, then what to do – each on its own line. */
+.doc-breaking {
+  display: grid;
+}
+.doc-change__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--medo-space-1) var(--medo-layout-gap-inline);
 }

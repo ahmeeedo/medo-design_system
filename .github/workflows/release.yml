@@ -62,6 +62,8 @@ jobs:
         id: changesets
         with:
           github-token: ${{ secrets.RELEASE_TOKEN || github.token }}
+          # changeset version plus the release date under each new version in the changelogs.
+          version-script: npm run version-packages
           publish-script: npm run release
           pr-title: Version Packages
           commit-message: 'chore: version packages'

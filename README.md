@@ -290,7 +290,25 @@ Issues and pull requests are welcome. Please follow these rules:
 - **Stories.** Every component has stories for its variants, sizes and states, Light and Dark, and an interaction test for interactive behaviour. The playground renders from its args, and every control must change what you see.
 - **Tests pass.** Run `npm test` before you open a pull request. CI runs one job per question: `test` (the same tests – red means a bug), `visual` (screenshots – red means the look changed), `webkit` and `firefox` (the other engines; one retry, flaky stories are listed in the summary) and `build` (packages, size limits, a fresh Vite and Next.js app). `main` changes only through pull requests with all checks green.
 - **Visual check.** CI compares a screenshot of every documented story, Light and Dark, with its reference in `apps/storybook/__screenshots__/`. On a mismatch the workflow run has the actual and diff images as artifact `screenshot-diffs`. If the change is intended, run the workflow **Update screenshots** on your branch (Actions → Update screenshots → Run workflow); it commits the new references. References are made in CI only, because fonts render differently on every OS. Stories that cannot be stable (live timers) set `tags: ['!visual']`.
-- **Changesets.** If your change affects a published package, run `npm run changeset` and commit the generated file. It sets the version bump (patch, minor, major) and the changelog entry. A breaking change starts its summary with `**Breaking:**` and says how to update.
+- **Changesets.** If your change affects a published package, run `npm run changeset` and commit the generated file. It sets the version bump (patch, minor, major) and the changelog entry. One changeset per change, written like this:
+
+  ```md
+  ---
+  '@med-o/ui': minor
+  ---
+
+  New: `Stepper` and `Step` show where someone is in a task of several steps.
+
+  - Done steps are links back (`href` or `onPress`).
+  - Below 640 px: “Step 2 of 4” and one bar segment per step.
+
+  **Breaking:** new built-in texts `stepper.label` and `stepper.count`.
+  Update: if you pass your own language to `MessagesProvider`, add them.
+  ```
+
+  - The first line starts with `New:`, `Improved:` or `Fixed:` and names the component in backticks (`` `Stepper` ``) – What's new groups the entry and links the component's page from it. Keep it to one short sentence.
+  - Then the details: short paragraphs or a list.
+  - A breaking change ends with `**Breaking:**` (what changed) and `Update:` (what to do). What's new lists it first, under “Before you update”.
 - **Deprecate before you remove.** Mark the old API `@deprecated` with its replacement, keep it working for the time given in [Support and versioning](#support-and-versioning), and remove it in a later release.
 
 Token values come from the design library and are generated (see [Maintaining](#maintaining)). To propose a token change, please open an issue.
@@ -319,7 +337,7 @@ Never edit generated files by hand: `figma/variables.json`, `packages/tokens/src
 Versions and changelogs are managed with [Changesets](https://github.com/changesets/changesets). Both packages always share one version.
 
 1. Pull requests add changesets (`npm run changeset`).
-2. When all checks are green on `main`, the Release workflow opens a “Version Packages” pull request with the new versions and changelogs.
+2. When all checks are green on `main`, the Release workflow opens a “Version Packages” pull request with the new versions and changelogs, each version with its release date (`npm run version-packages`). It collects every changeset until you merge it – one release for several changes.
 3. Merging it publishes both packages to npm with provenance (npm trusted publishing, no token stored in GitHub), then deploys the documentation.
 
 ### Deploy the documentation
