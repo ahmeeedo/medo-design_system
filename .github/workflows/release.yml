@@ -34,7 +34,8 @@ jobs:
       id-token: write # npm trusted publishing
     outputs:
       published: ${{ steps.changesets.outputs.published }}
-      pending: ${{ steps.changesets.outputs.hasChangesets }}
+      # changesets/action v2 names its outputs in kebab case.
+      pending: ${{ steps.changesets.outputs['has-changesets'] }}
     steps:
       - uses: actions/checkout@v5
         with:
