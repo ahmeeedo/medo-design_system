@@ -157,9 +157,9 @@
   gap: var(--medo-space-2);
 }
 
-/* Single: input 88 on the right, level with the track. */
+/* Single: input on the right, level with the track. */
 .medo-slider-field--single {
-  grid-template-columns: 1fr 5.5rem;
+  grid-template-columns: 1fr var(--medo-size-width-3xs);
   align-items: end;
   gap: var(--medo-space-4);
 }

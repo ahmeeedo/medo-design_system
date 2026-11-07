@@ -12,7 +12,7 @@
   display: flex;
   align-items: baseline;
   gap: var(--medo-space-2);
-  max-inline-size: 15rem; /* 240 px, then wraps */
+  max-inline-size: var(--medo-size-width-md); /* then wraps */
   padding: var(--medo-space-1) var(--medo-space-2);
   border-radius: var(--medo-radius-sm);
   background-color: var(--medo-color-surface-inverse);

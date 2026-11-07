@@ -12,7 +12,7 @@ import { EmptyState } from '../empty-state/EmptyState';
 import { ToastRegion, toast } from '../toast/Toast';
 import { interactionTest, row, semantic } from '../story-helpers';
 
-const box: React.CSSProperties = { maxInlineSize: '35rem' };
+const box: React.CSSProperties = { maxInlineSize: 'var(--medo-size-width-4xl)' };
 
 const inbox = [
   { id: 'lea', name: 'Lea M.', text: 'Approved the budget for Q4', meta: '09:41', unread: true },
@@ -243,12 +243,12 @@ export const LoadingAndEmpty: Story = {
   parameters: { docs: { description: { story: '3 skeleton rows while loading (aria-busy). An empty list shows an inline Empty state with a next step.' } } },
   render: () => (
     <div style={{ ...row, alignItems: 'start' }}>
-      <div style={{ flex: '1 1 18rem' }}>
+      <div style={{ flex: '1 1 var(--medo-size-width-lg)' }}>
         <ListView aria-label="Inbox" variant="card" isLoading>
           {[]}
         </ListView>
       </div>
-      <div style={{ flex: '1 1 18rem' }}>
+      <div style={{ flex: '1 1 var(--medo-size-width-lg)' }}>
         <ListView
           aria-label="Inbox"
           variant="card"
@@ -289,7 +289,7 @@ export const Cards: Story = {
   render: () => (
     <div style={{ ...row, alignItems: 'start' }}>
       {(['none', 'multiple'] as const).map((mode) => (
-        <div key={mode} style={{ flex: '1 1 18rem', maxInlineSize: '21.4375rem' }}>
+        <div key={mode} style={{ flex: '1 1 var(--medo-size-width-lg)', maxInlineSize: 'var(--medo-size-width-xl)' }}>
           <ListView
             aria-label={mode === 'none' ? 'Invoices' : 'Invoices, selecting'}
             variant="cards"
@@ -320,7 +320,7 @@ export const Cards: Story = {
           </ListView>
         </div>
       ))}
-      <div style={{ flex: '1 1 18rem', maxInlineSize: '21.4375rem' }}>
+      <div style={{ flex: '1 1 var(--medo-size-width-lg)', maxInlineSize: 'var(--medo-size-width-xl)' }}>
         <ListView aria-label="Invoices loading" variant="cards" isLoading>
           {[]}
         </ListView>

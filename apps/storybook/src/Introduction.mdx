@@ -171,7 +171,7 @@ Components without event handlers can be used in server components as well – t
 The result – live, with the theme of the toolbar:
 
 <div className="doc-stage">
-  <Stack as="form" gap="fields" style={{ maxInlineSize: '24rem' }} onSubmit={(e) => e.preventDefault()}>
+  <Stack as="form" gap="fields" style={{ maxInlineSize: 'var(--medo-size-width-2xl)' }} onSubmit={(e) => e.preventDefault()}>
     <span className="medo-text-heading-lg">Sign up</span>
     <TextField label="Email" type="email" isRequired errorMessage="Enter a valid email address, e.g. name@example.com." />
     <Button type="submit">Create account</Button>

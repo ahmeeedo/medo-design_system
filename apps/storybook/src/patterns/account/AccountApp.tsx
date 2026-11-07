@@ -84,8 +84,8 @@ function Logo({ full = true }: { full?: boolean }) {
       <span
         aria-hidden="true"
         style={{
-          inlineSize: 32,
-          blockSize: 32,
+          inlineSize: 'var(--medo-size-control-sm)',
+          blockSize: 'var(--medo-size-control-sm)',
           borderRadius: 'var(--medo-radius-md)',
           background: 'var(--medo-color-action-primary)',
         }}
@@ -127,14 +127,14 @@ export function AccountShell({ page, onNavigate, mobile = false, phoneFrame = fa
   const frame: CSSProperties = phoneFrame
     ? {
         flexDirection: 'column',
-        inlineSize: 375,
+        inlineSize: 'var(--medo-size-width-xl)',
         maxInlineSize: '100%',
-        blockSize: 760,
+        blockSize: 'var(--medo-container-md)',
         border: 'var(--medo-border-width-thin) solid var(--medo-color-border-default)',
         borderRadius: 'var(--medo-radius-xl)',
         overflow: 'hidden',
       }
-    : { flexDirection: mobile ? 'column' : 'row', blockSize: 820, overflow: 'hidden' };
+    : { flexDirection: mobile ? 'column' : 'row', blockSize: 'var(--medo-container-md)', overflow: 'hidden' };
   const navigate = (href: string) => {
     const target = href.slice(1);
     if (target in TITLES) onNavigate(target as AccountPage);
@@ -272,7 +272,7 @@ export function SettingsPage({ level = 1 }: { level?: Level }) {
         <Stack
           as="form"
           gap="fields"
-          style={{ maxInlineSize: '30rem' }}
+          style={{ maxInlineSize: 'var(--medo-size-width-2xl)' }}
           onSubmit={(e) => {
             e.preventDefault();
             toast('Profile saved');
@@ -299,7 +299,7 @@ export function SettingsPage({ level = 1 }: { level?: Level }) {
       </Section>
 
       <Section id="notifications" title="Notifications" description="Changes apply at once." level={level}>
-        <Stack gap="fields" style={{ maxInlineSize: '30rem' }}>
+        <Stack gap="fields" style={{ maxInlineSize: 'var(--medo-size-width-2xl)' }}>
           <Switch labelPosition="start" defaultSelected description="Shipping and delivery of your orders.">
             Order updates
           </Switch>
@@ -540,7 +540,7 @@ export function OrdersPage({ level = 1, mobile = false, state }: { level?: Level
         onRowAction={(key) => setOpen(orders.find((o) => o.id === key) ?? null)}
         toolbar={
           <>
-            <div style={{ inlineSize: '16rem' }}>{search}</div>
+            <div style={{ inlineSize: 'var(--medo-size-width-lg)' }}>{search}</div>
             {statusSelect('sm')}
             {periodSelect('sm')}
           </>
@@ -570,19 +570,19 @@ export function OrdersPage({ level = 1, mobile = false, state }: { level?: Level
               <Row id={r.id}>
                 <Cell textValue="Loading">
                   <span className="medo-visually-hidden">Loading</span>
-                  <Skeleton width="5rem" />
+                  <Skeleton width="var(--medo-space-20)" />
                 </Cell>
                 <Cell textValue="Loading">
-                  <Skeleton width="6rem" />
+                  <Skeleton width="var(--medo-space-24)" />
                 </Cell>
                 <Cell textValue="Loading">
                   <Skeleton width="60%" />
                 </Cell>
                 <Cell textValue="Loading">
-                  <Skeleton width="5rem" />
+                  <Skeleton width="var(--medo-space-20)" />
                 </Cell>
                 <Cell align="end" textValue="Loading">
-                  <Skeleton width="4rem" />
+                  <Skeleton width="var(--medo-space-16)" />
                 </Cell>
               </Row>
             )}
@@ -859,7 +859,7 @@ export function InvoicesPage({ level = 1, mobile = false, state }: { level?: Lev
         onSelectionChange={setSelected}
         toolbar={
           <>
-            <div style={{ inlineSize: '16rem' }}>{search}</div>
+            <div style={{ inlineSize: 'var(--medo-size-width-lg)' }}>{search}</div>
             {statusSelect('sm')}
             {periodSelect('sm')}
           </>

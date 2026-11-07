@@ -44,7 +44,7 @@ html[data-theme] :is(.sb-preparing-story, .sb-preparing-docs) > * {
 /* ---------- page ---------- */
 .medo-doc {
   --doc-gutter: clamp(var(--medo-space-6), 5vw, var(--medo-space-16));
-  max-width: 90rem;
+  max-width: var(--medo-container-xl);
   margin-inline: auto;
   background: var(--medo-color-surface-default);
   color: var(--medo-color-text-primary);
@@ -73,9 +73,9 @@ html[data-theme] :is(.sb-preparing-story, .sb-preparing-docs) > * {
 }
 .medo-doc a:not([class*='medo-']):focus-visible,
 .doc-anchor:focus-visible {
-  outline: 2px solid var(--medo-color-focus-ring);
-  outline-offset: 2px;
-  border-radius: 2px;
+  outline: var(--medo-focus-ring-width) solid var(--medo-color-focus-ring);
+  outline-offset: var(--medo-space-0-5);
+  border-radius: var(--medo-radius-sm);
 }
 
 /* ---------- header ---------- */
@@ -84,7 +84,7 @@ html[data-theme] :is(.sb-preparing-story, .sb-preparing-docs) > * {
   gap: var(--medo-layout-gap-group);
   /* Bottom: half the section rule – with the top of the first section it adds up to one rule section. */
   padding: var(--medo-space-8) var(--doc-gutter) calc(var(--medo-layout-gap-section) / 2);
-  border-bottom: 1px solid var(--medo-color-border-default);
+  border-bottom: var(--medo-border-width-thin) solid var(--medo-color-border-default);
 }
 .doc-topline {
   display: flex;
@@ -93,7 +93,7 @@ html[data-theme] :is(.sb-preparing-story, .sb-preparing-docs) > * {
   gap: var(--medo-layout-gap-content);
   flex-wrap: wrap;
   padding-bottom: var(--medo-space-6);
-  border-bottom: 1px solid var(--medo-color-border-default);
+  border-bottom: var(--medo-border-width-thin) solid var(--medo-color-border-default);
 }
 /* Screen reader test in the Accessibility section: steps, then the result per screen reader. */
 .doc-sr-test {
@@ -125,7 +125,7 @@ html[data-theme] :is(.sb-preparing-story, .sb-preparing-docs) > * {
 .doc-intro {
   display: grid;
   gap: var(--medo-layout-gap-content);
-  max-inline-size: 48rem;
+  max-inline-size: var(--medo-container-md);
 }
 .doc-intro-text {
   display: grid;
@@ -153,8 +153,8 @@ html[data-theme] :is(.sb-preparing-story, .sb-preparing-docs) > * {
   text-underline-offset: 0.2em;
 }
 .medo-doc .doc-toc a.doc-toc-link:focus-visible {
-  outline: 2px solid var(--medo-color-focus-ring);
-  outline-offset: 2px;
+  outline: var(--medo-focus-ring-width) solid var(--medo-color-focus-ring);
+  outline-offset: var(--medo-space-0-5);
 }
 .doc-toc-num {
   flex: none;
@@ -172,7 +172,7 @@ html[data-theme] :is(.sb-preparing-story, .sb-preparing-docs) > * {
   background: var(--medo-color-surface-subtle);
 }
 .doc-toc--box ol {
-  columns: 13rem;
+  columns: var(--medo-size-width-sm);
   column-gap: var(--medo-space-8);
 }
 .doc-toc--box li {
@@ -189,9 +189,9 @@ html[data-theme] :is(.sb-preparing-story, .sb-preparing-docs) > * {
   border-inline-start: var(--medo-border-width-thin) solid var(--medo-color-border-default);
 }
 .medo-doc .doc-toc--rail a.doc-toc-link {
-  margin-inline-start: -1px;
+  margin-inline-start: calc(-1 * var(--medo-border-width-thin));
   padding: var(--medo-space-1-5) var(--medo-space-3);
-  border-inline-start: 2px solid transparent;
+  border-inline-start: var(--medo-border-width-thick) solid transparent;
   border-radius: 0;
   color: var(--medo-color-text-secondary);
 }
@@ -207,7 +207,7 @@ html[data-theme] :is(.sb-preparing-story, .sb-preparing-docs) > * {
 @media (min-width: 68rem) {
   .medo-doc--toc {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) 15rem;
+    grid-template-columns: minmax(0, 1fr) var(--medo-size-width-md);
   }
   .medo-doc--toc > .doc-main {
     grid-column: 1;
@@ -241,7 +241,7 @@ html[data-theme] :is(.sb-preparing-story, .sb-preparing-docs) > * {
   display: grid;
   gap: var(--medo-layout-gap-content);
   padding: calc(var(--medo-layout-gap-section) / 2) var(--doc-gutter);
-  border-bottom: 1px solid var(--medo-color-border-default);
+  border-bottom: var(--medo-border-width-thin) solid var(--medo-color-border-default);
 }
 .doc-section-head {
   display: flex;
@@ -260,7 +260,7 @@ html[data-theme] :is(.sb-preparing-story, .sb-preparing-docs) > * {
 .doc-body > p,
 .doc-body > ul,
 .doc-body > ol {
-  max-width: 48rem;
+  max-width: var(--medo-container-md);
 }
 .doc-lead {
   display: grid;
@@ -320,7 +320,7 @@ html[data-theme] :is(.sb-preparing-story, .sb-preparing-docs) > * {
   display: grid;
   gap: var(--medo-layout-gap-content);
   padding: var(--medo-space-8);
-  border: 1px solid var(--medo-color-border-default);
+  border: var(--medo-border-width-thin) solid var(--medo-color-border-default);
   border-radius: var(--medo-radius-md);
   background: var(--medo-color-surface-default);
   color: var(--medo-color-text-primary);
@@ -329,7 +329,7 @@ html[data-theme] :is(.sb-preparing-story, .sb-preparing-docs) > * {
 .medo-doc .sbdocs-preview,
 .medo-doc .docblock-source {
   margin: 0;
-  border: 1px solid var(--medo-color-border-default);
+  border: var(--medo-border-width-thin) solid var(--medo-color-border-default);
   border-radius: var(--medo-radius-md);
   box-shadow: none;
 }
@@ -347,7 +347,7 @@ html[data-theme] :is(.sb-preparing-story, .sb-preparing-docs) > * {
   container: props / inline-size;
 }
 .medo-doc .doc-props tbody th[scope='row'] {
-  inline-size: 12rem;
+  inline-size: var(--medo-size-width-sm);
 }
 .doc-props-name {
   display: flex;
@@ -366,11 +366,11 @@ html[data-theme] :is(.sb-preparing-story, .sb-preparing-docs) > * {
   font-size: var(--medo-font-size-xs);
 }
 .medo-doc .doc-props .doc-props-default {
-  min-inline-size: 7rem;
+  min-inline-size: var(--medo-size-width-2xs);
   overflow-wrap: anywhere;
 }
 .medo-doc .doc-props .doc-props-control {
-  inline-size: 16rem;
+  inline-size: var(--medo-size-width-md);
   padding-block: var(--medo-space-2);
 }
 /* Fields fill the cell; switches, radios and checkboxes keep their size. */
@@ -486,9 +486,9 @@ html[data-theme] :is(.sb-preparing-story, .sb-preparing-docs) > * {
 }
 .doc-columns {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--medo-size-width-xl)), 1fr));
   gap: var(--medo-layout-gap-items);
-  max-inline-size: 60rem;
+  max-inline-size: var(--medo-container-lg);
   min-inline-size: 0;
 }
 /* Usage boxes: neutral surface, so the examples stay in front. The tone shows only in the icons; the heading names
@@ -516,8 +516,8 @@ html[data-theme] :is(.sb-preparing-story, .sb-preparing-docs) > * {
   color: var(--_icon);
 }
 .doc-guide-icon svg {
-  inline-size: 20px;
-  block-size: 20px;
+  inline-size: var(--medo-size-icon-md);
+  block-size: var(--medo-size-icon-md);
 }
 /* Do / Don't rules: marker column like the List (24), icon in the tone colour, text at full contrast. */
 .doc-rules {
@@ -547,7 +547,7 @@ html[data-theme] :is(.sb-preparing-story, .sb-preparing-docs) > * {
 
 /* ---------- tables (StaticTable) and token cells ---------- */
 .doc-spec tbody th {
-  inline-size: 12.5rem;
+  inline-size: var(--medo-size-width-sm);
 }
 .doc-spec tbody th .doc-code {
   white-space: nowrap;
@@ -604,7 +604,7 @@ html[data-theme] :is(.sb-preparing-story, .sb-preparing-docs) > * {
 
 /* ---------- implementation notes (Alert info) ---------- */
 .doc-notes {
-  max-inline-size: 60rem;
+  max-inline-size: var(--medo-container-lg);
 }
 .doc-notes ul {
   padding-inline-start: var(--medo-space-5);
@@ -632,7 +632,7 @@ html[data-theme] :is(.sb-preparing-story, .sb-preparing-docs) > * {
   gap: var(--medo-layout-gap-content);
 }
 .doc-changelog-filter > .medo-field {
-  inline-size: 14rem;
+  inline-size: var(--medo-size-width-md);
 }
 .doc-changelog-releases {
   display: grid;
@@ -660,7 +660,7 @@ html[data-theme] :is(.sb-preparing-story, .sb-preparing-docs) > * {
 /* Changes: one per row, divided by a line – short line, details, then components, packages and commit. */
 .doc-changes {
   display: grid;
-  max-inline-size: 48rem;
+  max-inline-size: var(--medo-container-md);
   margin: 0;
   padding: 0;
   list-style: none;
@@ -669,7 +669,7 @@ html[data-theme] :is(.sb-preparing-story, .sb-preparing-docs) > * {
   display: grid;
   gap: var(--medo-space-2);
   padding-block: var(--medo-layout-gap-content);
-  border-block-start: 1px solid var(--medo-color-border-default);
+  border-block-start: var(--medo-border-width-thin) solid var(--medo-color-border-default);
   color: var(--medo-color-text-primary);
 }
 .doc-change p {

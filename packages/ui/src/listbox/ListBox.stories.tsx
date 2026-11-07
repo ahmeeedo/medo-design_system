@@ -6,7 +6,7 @@ import { interactionTest, row } from '../story-helpers';
 
 /* Stories show the list inline. In Select and Combobox it sits in a popover. */
 const frame: React.CSSProperties = {
-  inlineSize: '17.5rem',
+  inlineSize: 'var(--medo-size-width-lg)',
   border: 'var(--medo-border-width-thin) solid var(--medo-color-border-default)',
   borderRadius: 'var(--medo-radius-md)',
   background: 'var(--medo-color-surface-raised)',

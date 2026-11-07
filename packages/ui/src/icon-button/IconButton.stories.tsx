@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Maximize2, Pause, Pencil, Plus, Trash2, Volume2, X } from 'lucide-react';
 import { IconButton } from './IconButton';
 import { expect, fn, waitFor, within } from 'storybook/test';
-import { interactionTest, row, semantic, slot } from '../story-helpers';
+import { interactionTest, row, samplePhoto, semantic, slot } from '../story-helpers';
 
 const meta = {
   title: 'Components/Actions/Icon Button',
@@ -97,7 +97,7 @@ const media: React.CSSProperties = {
   gap: 'var(--medo-layout-gap-content)',
   padding: 'var(--medo-space-4)',
   borderRadius: 'var(--medo-radius-md)',
-  background: 'linear-gradient(135deg, #6f8f9c, #2d4550 55%, #0f1a1f)',
+  background: `center / cover url("${samplePhoto(2, { width: 800, height: 200 })}")`,
 };
 
 export const OnMedia: Story = {
@@ -117,7 +117,7 @@ export const OnMedia: Story = {
           <IconButton key={size} {...args} variant="media" size={size} aria-label="Remove photo" icon={<X />} />
         ))}
       </div>
-      <div style={{ ...media, background: 'linear-gradient(transparent, rgb(0 0 0 / 0.7)), #2d4550' }}>
+      <div style={{ ...media, background: `linear-gradient(transparent, var(--medo-color-overlay-media)), center / cover url("${samplePhoto(1, { width: 800, height: 200 })}")` }}>
         <IconButton {...args} variant="media-ghost" size="sm" aria-label="Pause" icon={<Pause />} />
         <IconButton {...args} variant="media-ghost" size="md" aria-label="Mute" icon={<Volume2 />} />
         <IconButton {...args} variant="media-ghost" size="lg" aria-label="Full screen" icon={<Maximize2 />} />

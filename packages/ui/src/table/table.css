@@ -250,7 +250,7 @@
     outline-color: Highlight;
   }
   .medo-table-container:focus-visible {
-    outline: 2px solid Highlight;
+    outline: var(--medo-focus-ring-width) solid Highlight;
     outline-offset: var(--medo-space-0-5);
   }
 }

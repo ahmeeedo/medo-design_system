@@ -196,6 +196,104 @@
           "unit": "px"
         }
       }
+    },
+    "width": {
+      "3xs": {
+        "$type": "dimension",
+        "$value": {
+          "value": 80,
+          "unit": "px"
+        },
+        "$description": "Smallest fixed width."
+      },
+      "2xs": {
+        "$type": "dimension",
+        "$value": {
+          "value": 120,
+          "unit": "px"
+        },
+        "$description": "Small illustration (Empty State sm)."
+      },
+      "xs": {
+        "$type": "dimension",
+        "$value": {
+          "value": 160,
+          "unit": "px"
+        },
+        "$description": "Medium illustration, narrow layout column."
+      },
+      "sm": {
+        "$type": "dimension",
+        "$value": {
+          "value": 200,
+          "unit": "px"
+        },
+        "$description": "Where labels are cut (Tag, Breadcrumbs)."
+      },
+      "md": {
+        "$type": "dimension",
+        "$value": {
+          "value": 240,
+          "unit": "px"
+        },
+        "$description": "Tooltip, small Popover, Menu; min width of a column in a responsive grid."
+      },
+      "lg": {
+        "$type": "dimension",
+        "$value": {
+          "value": 280,
+          "unit": "px"
+        },
+        "$description": "Side navigation, navigation drawer, Toast min."
+      },
+      "xl": {
+        "$type": "dimension",
+        "$value": {
+          "value": 320,
+          "unit": "px"
+        },
+        "$description": "Popover, small Drawer, Menu max, Listbox max height; a single field in examples."
+      },
+      "2xl": {
+        "$type": "dimension",
+        "$value": {
+          "value": 400,
+          "unit": "px"
+        },
+        "$description": "Small Dialog, Drawer, large Popover, Toast; a form in examples."
+      },
+      "3xl": {
+        "$type": "dimension",
+        "$value": {
+          "value": 480,
+          "unit": "px"
+        },
+        "$description": "Media in examples."
+      },
+      "4xl": {
+        "$type": "dimension",
+        "$value": {
+          "value": 560,
+          "unit": "px"
+        },
+        "$description": "Dialog, large Drawer, Toast max."
+      },
+      "5xl": {
+        "$type": "dimension",
+        "$value": {
+          "value": 640,
+          "unit": "px"
+        },
+        "$description": "Quick search."
+      },
+      "6xl": {
+        "$type": "dimension",
+        "$value": {
+          "value": 720,
+          "unit": "px"
+        },
+        "$description": "Large Dialog."
+      }
     }
   },
   "border-width": {

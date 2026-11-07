@@ -233,8 +233,8 @@
 
 @media (forced-colors: active) {
   .medo-list-row[data-selected] {
-    outline: 2px solid Highlight;
-    outline-offset: -2px;
+    outline: var(--medo-focus-ring-width) solid Highlight;
+    outline-offset: calc(-1 * var(--medo-focus-ring-width));
   }
   .medo-list-row__dot {
     background-color: CanvasText;
@@ -348,8 +348,8 @@
 
 @media (forced-colors: active) {
   .medo-list-card[data-selected] {
-    outline: 2px solid Highlight;
-    outline-offset: -2px;
+    outline: var(--medo-focus-ring-width) solid Highlight;
+    outline-offset: calc(-1 * var(--medo-focus-ring-width));
   }
 }
 

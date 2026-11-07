@@ -14,7 +14,7 @@ const media = <Image src={samplePhoto(0)} alt="" ratio="16:9" radius="none" />;
 const grid: React.CSSProperties = {
   display: 'grid',
   gap: 'var(--medo-layout-gap-items)',
-  gridTemplateColumns: 'repeat(auto-fill, minmax(16rem, 1fr))',
+  gridTemplateColumns: 'repeat(auto-fill, minmax(var(--medo-size-width-md), 1fr))',
   alignItems: 'stretch',
 };
 
@@ -60,7 +60,7 @@ const meta = {
     linkProps: semantic,
   },
   /* Single cards get a realistic width; stories with parameters.width set their own. */
-  decorators: [(Story, { parameters }) => <div style={{ maxInlineSize: parameters.width ?? '22rem' }}>{Story()}</div>],
+  decorators: [(Story, { parameters }) => <div style={{ maxInlineSize: parameters.width ?? 'var(--medo-size-width-xl)' }}>{Story()}</div>],
   parameters: {
     medo: {
       subtitle: 'A container for one topic: title, optional media, content and actions.',
@@ -160,7 +160,7 @@ export const Interactive: Story = {
 };
 
 export const Horizontal: Story = {
-  parameters: { width: '36rem', docs: { description: { story: 'Media on the left, for lists. Compact density for dense layouts and mobile.' } } },
+  parameters: { width: 'var(--medo-size-width-4xl)', docs: { description: { story: 'Media on the left, for lists. Compact density for dense layouts and mobile.' } } },
   render: () => (
     <div style={{ display: 'grid', gap: 'var(--medo-layout-gap-items)' }}>
       <Card layout="horizontal" href="/articles/design-tokens-2" media={media} title="Design tokens 2.0" subtitle="Article · 5 min read">
@@ -188,7 +188,7 @@ export const InteractionTest: Story = {
   // Literal, so the story index (and the tag filters of the test projects) see it too.
   tags: ['!autodocs'],
   render: () => (
-    <div style={{ maxInlineSize: '20rem' }}>
+    <div style={{ maxInlineSize: 'var(--medo-size-width-xl)' }}>
       <Card href="#tokens" media={media} title="Design tokens 2.0" subtitle="Article · 5 min read">
         What changed in colours, spacing and typography.
       </Card>

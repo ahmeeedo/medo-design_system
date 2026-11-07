@@ -61,7 +61,7 @@
 }
 
 .medo-tag__label {
-  max-inline-size: 12.5rem; /* 200 px, then ellipsis */
+  max-inline-size: var(--medo-size-width-sm); /* then ellipsis */
   overflow: hidden;
   text-overflow: ellipsis;
 }

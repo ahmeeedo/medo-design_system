@@ -257,13 +257,13 @@ export const Loading: Story = {
           <Row id={item.id}>
             <Cell textValue="Loading">
               <span className="medo-visually-hidden">Loading</span>
-              <Skeleton width="5rem" />
+              <Skeleton width="var(--medo-space-20)" />
             </Cell>
             <Cell textValue="Loading">
               <Skeleton width="60%" />
             </Cell>
             <Cell align="end" textValue="Loading">
-              <Skeleton width="4rem" />
+              <Skeleton width="var(--medo-space-16)" />
             </Cell>
           </Row>
         )}
@@ -383,7 +383,7 @@ function InvoiceWorkspace({ forceMobile = false }: { forceMobile?: boolean }) {
     />
   );
   const search = (
-    <div style={{ inlineSize: isMobile ? '100%' : '15rem' }}>
+    <div style={{ inlineSize: isMobile ? '100%' : 'var(--medo-size-width-md)' }}>
       <SearchField
         aria-label="Search invoices"
         placeholder="Search invoices"
@@ -399,7 +399,7 @@ function InvoiceWorkspace({ forceMobile = false }: { forceMobile?: boolean }) {
 
   if (isMobile) {
     return (
-      <div style={{ ...stage, display: 'grid', gap: 'var(--medo-layout-gap-content)', maxInlineSize: '23.4375rem' }}>
+      <div style={{ ...stage, display: 'grid', gap: 'var(--medo-layout-gap-content)', maxInlineSize: 'var(--medo-size-width-xl)' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <h3 className="medo-text-heading-sm" style={{ margin: 0 }}>
             Invoices
@@ -601,7 +601,7 @@ export const StaticScrollTest: Story = {
   tags: ['!autodocs'],
   name: 'Interaction test: static table scrolls',
   render: () => (
-    <div style={{ inlineSize: '12rem' }}>
+    <div style={{ inlineSize: 'var(--medo-size-width-sm)' }}>
       <PlansTable />
     </div>
   ),

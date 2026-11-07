@@ -29,7 +29,7 @@
 }
 
 .medo-drawer {
-  --_width: 20rem; /* sm 320 */
+  --_width: var(--medo-size-width-xl); /* sm */
   --_from: 100%;
 
   box-sizing: border-box;
@@ -59,10 +59,10 @@
 }
 
 .medo-drawer--md {
-  --_width: 25rem; /* 400 */
+  --_width: var(--medo-size-width-2xl);
 }
 .medo-drawer--lg {
-  --_width: 35rem; /* 560 */
+  --_width: var(--medo-size-width-4xl);
 }
 
 .medo-drawer[data-dragging] {
@@ -138,7 +138,7 @@
 
 @media (forced-colors: active) {
   .medo-drawer {
-    border: 1px solid CanvasText;
+    border: var(--medo-border-width-thin) solid CanvasText;
   }
 }
 

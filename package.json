@@ -23,11 +23,13 @@
     "test:webkit": "npm run build:tokens && npm run test:webkit -w @med-o/storybook",
     "test:firefox": "npm run build:tokens && npm run test:firefox -w @med-o/storybook",
     "test:visual": "npm run build:tokens && npm run test:visual -w @med-o/storybook",
+    "lint": "npm run build:tokens && stylelint \"packages/ui/src/**/*.css\" \"apps/storybook/.storybook/*.css\" && node scripts/lint-tokens.mjs",
     "changeset": "changeset",
     "version-packages": "changeset version && node scripts/changelog-dates.mjs",
     "release": "changeset publish"
   },
   "devDependencies": {
-    "@changesets/cli": "^3.0.3"
+    "@changesets/cli": "^3.0.3",
+    "stylelint": "^17.16.0"
   }
 }

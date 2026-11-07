@@ -130,10 +130,10 @@ export const Compact: Story = {
   },
   render: () => (
     <Examples>
-      <div style={{ maxInlineSize: '21.4375rem' }}>
+      <div style={{ maxInlineSize: 'var(--medo-size-width-xl)' }}>
         <Pagination variant="compact" defaultPage={5} totalPages={19} aria-label="Pagination, page 5" />
       </div>
-      <div style={{ maxInlineSize: '21.4375rem' }}>
+      <div style={{ maxInlineSize: 'var(--medo-size-width-xl)' }}>
         <Pagination variant="compact" defaultPage={1} totalPages={19} aria-label="Pagination, first page" />
       </div>
     </Examples>
@@ -217,7 +217,7 @@ function LoadMoreExample() {
     requestAnimationFrame(() => list.current?.querySelector<HTMLElement>(`[data-key="${firstNew}"]`)?.focus());
   };
   return (
-    <div ref={list} style={{ display: 'grid', gap: 'var(--medo-layout-gap-content)', justifyItems: 'center', maxInlineSize: '30rem' }}>
+    <div ref={list} style={{ display: 'grid', gap: 'var(--medo-layout-gap-content)', justifyItems: 'center' }}>
       <div style={{ justifySelf: 'stretch' }}>
         <ListView aria-label="People" variant="card" items={people.slice(0, count)}>
           {(p) => <ListRow id={p.id} title={p.name} description={p.role} leading={<Avatar name={p.name} decorative />} />}

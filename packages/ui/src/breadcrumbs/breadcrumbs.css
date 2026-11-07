@@ -92,7 +92,7 @@
 
 .medo-breadcrumbs__label {
   overflow: hidden;
-  max-inline-size: 12.5rem; /* 200 */
+  max-inline-size: var(--medo-size-width-sm);
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -141,7 +141,7 @@
 @media (forced-colors: active) {
   .medo-breadcrumbs__link[data-focus-visible],
   .medo-breadcrumbs__icon-part[data-focus-visible] {
-    outline: 2px solid Highlight;
-    outline-offset: -2px;
+    outline: var(--medo-focus-ring-width) solid Highlight;
+    outline-offset: calc(-1 * var(--medo-focus-ring-width));
   }
 }

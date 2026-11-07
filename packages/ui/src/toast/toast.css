@@ -16,7 +16,7 @@
  */
 
 .medo-toast-region {
-  --medo-toast-offset: 0px;
+  --medo-toast-offset: 0;
 
   position: fixed;
   inset-block-end: calc(var(--medo-space-6) + var(--medo-toast-offset));
@@ -39,9 +39,9 @@
   display: flex;
   align-items: center;
   gap: var(--medo-space-2);
-  inline-size: 25rem; /* 400 */
-  min-inline-size: 18rem; /* 288 */
-  max-inline-size: min(35rem, 100vw - 2 * var(--medo-space-6)); /* 560 */
+  inline-size: var(--medo-size-width-2xl);
+  min-inline-size: var(--medo-size-width-lg);
+  max-inline-size: min(var(--medo-size-width-4xl), 100vw - 2 * var(--medo-space-6));
   min-block-size: var(--medo-size-control-lg); /* 48 */
   padding: var(--medo-space-2);
   padding-inline-start: var(--medo-space-4);
@@ -175,9 +175,9 @@
 
 @media (forced-colors: active) {
   .medo-toast {
-    border: 1px solid CanvasText;
+    border: var(--medo-border-width-thin) solid CanvasText;
   }
   .medo-toast__button[data-focus-visible] {
-    outline: 2px solid Highlight;
+    outline: var(--medo-focus-ring-width) solid Highlight;
   }
 }

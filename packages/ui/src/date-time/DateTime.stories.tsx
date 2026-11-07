@@ -276,7 +276,7 @@ export const Mobile: Story = {
   },
   render: () => (
     <I18nProvider locale="en-GB">
-      <div style={{ maxInlineSize: '22rem' }}>
+      <div style={{ maxInlineSize: 'var(--medo-size-width-xl)' }}>
         <DatePicker label="Date of birth" size="lg" overlay="sheet" defaultValue={parseDate('1990-05-17')} onChange={fn()} />
       </div>
     </I18nProvider>

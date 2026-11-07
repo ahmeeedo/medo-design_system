@@ -5,7 +5,7 @@ import { Slider, SliderField } from './Slider';
 import { NumberField } from '../number-field/NumberField';
 import { interactionTest, Examples, semantic } from '../story-helpers';
 
-const box: React.CSSProperties = { maxInlineSize: '20rem' };
+const box: React.CSSProperties = {};
 const percent = { style: 'percent', maximumFractionDigits: 0 } as const;
 const euro = { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 } as const;
 
@@ -132,7 +132,7 @@ function Fields() {
   const [volume, setVolume] = useState(40);
   const [price, setPrice] = useState([120, 480]);
   return (
-    <div style={{ display: 'grid', gap: 'var(--medo-layout-gap-fields)', maxInlineSize: '25rem' }}>
+    <div style={{ display: 'grid', gap: 'var(--medo-layout-gap-fields)' }}>
       <SliderField label="Volume" value={volume} onChange={setVolume} maxValue={100} />
       <SliderField label="Price" value={price} onChange={setPrice} maxValue={1000} step={10} formatOptions={euro} thumbLabels={['Minimum price', 'Maximum price']} />
     </div>
@@ -163,7 +163,7 @@ export const Number: Story = {
     },
   },
   render: () => (
-    <div style={{ display: 'grid', gap: 'var(--medo-layout-gap-fields)', maxInlineSize: '15rem' }}>
+    <div style={{ display: 'grid', gap: 'var(--medo-layout-gap-fields)' }}>
       <NumberField label="Quantity" defaultValue={2} minValue={1} maxValue={99} description="1 to 99" />
       <NumberField label="Budget" defaultValue={2400} minValue={0} step={100} formatOptions={euro} />
       <NumberField label="Discount" defaultValue={0.15} minValue={0} maxValue={1} step={0.05} formatOptions={percent} />

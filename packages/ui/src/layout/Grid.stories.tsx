@@ -4,7 +4,7 @@ import { Card } from '../card/Card';
 
 const cards = ['Roadmap 2027', 'Design review', 'Q4 budget', 'Website relaunch', 'Hiring plan', 'Customer survey'];
 
-const area = (label: string, height = '6rem') => (
+const area = (label: string, height = 'var(--medo-space-24)') => (
   <div
     style={{
       display: 'grid',
@@ -24,7 +24,7 @@ const meta = {
   title: 'Components/Layout/Grid',
   component: Grid,
   tags: ['autodocs', 'status:beta'],
-  args: { minItemSize: '16rem' },
+  args: { minItemSize: 'var(--medo-size-width-md)' },
   argTypes: {
     columns: { control: 'select', options: [undefined, 2, 3, 4, 'layout'], description: 'Without: as many as fit. A number: equal columns. `layout`: 4 · 8 · 12.' },
     minItemSize: { control: 'text' },
@@ -63,7 +63,7 @@ const meta = {
       },
       styling: {
         classes: [
-          ['medo-grid', 'As many columns as fit (`--medo-grid-min`, default 16rem), rule `items`.'],
+          ['medo-grid', 'As many columns as fit (`--medo-grid-min`, default `width/md`), rule `items`.'],
           ['medo-grid--columns', 'Equal columns: `--medo-grid-columns`.'],
           ['medo-grid--layout', 'Layout grid: 4 · 8 · 12 columns.'],
           ['medo-grid__item', 'Spans `--medo-grid-span` columns; `--full` the whole row.'],
@@ -105,13 +105,13 @@ export const LayoutGrid: Story = {
   render: () => (
     <Stack gap="items">
       <Grid columns="layout">
-        <GridItem span="full">{area('Header · full', '4rem')}</GridItem>
-        <GridItem span={8}>{area('Content · 8', '12rem')}</GridItem>
-        <GridItem span={4}>{area('Sidebar · 4', '12rem')}</GridItem>
+        <GridItem span="full">{area('Header · full', 'var(--medo-space-16)')}</GridItem>
+        <GridItem span={8}>{area('Content · 8', 'calc(2 * var(--medo-space-24))')}</GridItem>
+        <GridItem span={4}>{area('Sidebar · 4', 'calc(2 * var(--medo-space-24))')}</GridItem>
       </Grid>
       <Grid columns="layout">
         {Array.from({ length: 12 }, (_, i) => (
-          <GridItem key={i}>{area(String(i + 1), '3rem')}</GridItem>
+          <GridItem key={i}>{area(String(i + 1), 'var(--medo-space-12)')}</GridItem>
         ))}
       </Grid>
     </Stack>

@@ -62,6 +62,7 @@
 }
 
 /* Fade at an edge that still has tabs – they never wrap. */
+/* stylelint-disable color-no-hex -- a mask only reads the alpha: #000 means “fully visible”, not a color. */
 .medo-tabs__list[data-scroll-end] {
   mask-image: linear-gradient(to right, #000 calc(100% - var(--medo-space-8)), transparent);
 }
@@ -71,6 +72,7 @@
 .medo-tabs__list[data-scroll-start][data-scroll-end] {
   mask-image: linear-gradient(to right, transparent, #000 var(--medo-space-8), #000 calc(100% - var(--medo-space-8)), transparent);
 }
+/* stylelint-enable color-no-hex */
 
 /* ---------- Tab ---------- */
 
@@ -192,14 +194,14 @@
 
 @media (forced-colors: active) {
   .medo-tabs__list {
-    border: 1px solid CanvasText;
+    border: var(--medo-border-width-thin) solid CanvasText;
   }
   .medo-tab[data-selected] .medo-tab__thumb {
-    border: 2px solid Highlight;
+    border: var(--medo-border-width-thick) solid Highlight;
   }
   .medo-tab[data-focus-visible]::after {
-    outline: 2px solid Highlight;
-    outline-offset: -2px;
+    outline: var(--medo-focus-ring-width) solid Highlight;
+    outline-offset: calc(-1 * var(--medo-focus-ring-width));
   }
 }
 

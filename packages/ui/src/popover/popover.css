@@ -15,7 +15,7 @@
  */
 
 .medo-popover {
-  --_width: 20rem; /* md 320 */
+  --_width: var(--medo-size-width-xl); /* md */
   --_pad: var(--medo-space-4);
 
   box-sizing: border-box;
@@ -32,13 +32,13 @@
 }
 
 .medo-popover--sm {
-  --_width: 15rem; /* 240 */
+  --_width: var(--medo-size-width-md);
 }
 .medo-popover--lg {
-  --_width: 25rem; /* 400 */
+  --_width: var(--medo-size-width-2xl);
 }
 .medo-popover--auto {
-  --_pad: 0px;
+  --_pad: 0;
   inline-size: auto;
 }
 
@@ -116,7 +116,7 @@
 /* ---------- Toggletip ---------- */
 
 .medo-toggletip {
-  --_width: 15rem; /* 240 */
+  --_width: var(--medo-size-width-md);
   --_pad: var(--medo-space-3);
 }
 

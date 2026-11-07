@@ -9,10 +9,10 @@ import { DocPage, DocHeader, DocSection, DocFooter, Tok, SourceLink, UsageGuide 
 <DocHeader
   kind="Foundations"
   title="Spacing & sizes"
-  meta="4 px grid · Rules · Radius · Layout"
+  meta="4 px grid · Rules · Radius · Widths · Layout"
   subtitle="Six spacing rules for the space between elements, one 4 px scale, six radius steps, responsive layout values."
   description={<p>The step number times 4 px is the value. In Tailwind one step is exactly <Tok>space/1</Tok>, so <Tok>p-4</Tok> = <Tok>space/4</Tok> = 16 px.</p>}
-  nav={['Spacing rules', 'Spacing', 'Radius', 'Control & icon sizes', 'Layout', 'Breakpoints & containers', 'Layers']}
+  nav={['Spacing rules', 'Spacing', 'Radius', 'Control & icon sizes', 'Widths', 'Layout', 'Breakpoints & containers', 'Layers']}
 />
 
 <DocSection n={1} title="Spacing rules" meta="inline · content · fields · items · group · section" description={<p>The space <em>between</em> elements always comes from one of six rules – never from a free number. The closer things belong together, the smaller the gap: the page shows its structure without lines. The values grow with the layout mode, so spacing needs no breakpoints. <Tok>Stack</Tok> and <Tok>Grid</Tok> use the rules as defaults: a stack gets <Tok>content</Tok> (horizontal: <Tok>inline</Tok>), a grid of cards <Tok>items</Tok>.</p>}>
@@ -43,19 +43,24 @@ import { DocPage, DocHeader, DocSection, DocFooter, Tok, SourceLink, UsageGuide 
 </DocSection>
 
 <DocSection n={4} title="Control & icon sizes" meta="sm · md · lg">
-  <SimpleTable path={['size']} />
+  <SimpleTable path={['size', 'control']} />
+  <SimpleTable path={['size', 'icon']} />
 </DocSection>
 
-<DocSection n={5} title="Layout" meta="Mobile · Tablet · Desktop" description="These tokens change with the screen width – one variable, three values.">
+<DocSection n={5} title="Widths" meta="80 to 720 px" description={<p>Components in the page take the width of their container – the layout decides, not the component. Only these have a width of their own: floating layers (Dialog, Drawer, Popover, Menu, Tooltip, Toast, Quick search, Listbox), limits that cut long text (Tag, Breadcrumbs) and app regions (Side navigation). They use this scale, never a free number.</p>}>
+  <SimpleTable path={['size', 'width']} format={(t) => `${parseFloat(String(t.value)) * 16}\u00a0px`} />
+</DocSection>
+
+<DocSection n={6} title="Layout" meta="Mobile · Tablet · Desktop" description="These tokens change with the screen width – one variable, three values.">
   <LayoutTable />
 </DocSection>
 
-<DocSection n={6} title="Breakpoints & containers">
+<DocSection n={7} title="Breakpoints & containers">
   <SimpleTable path={['breakpoint']} />
   <SimpleTable path={['container']} />
 </DocSection>
 
-<DocSection n={7} title="Layers" meta="z-index" description="Never invent z-index values. Use the layer scale.">
+<DocSection n={8} title="Layers" meta="z-index" description="Never invent z-index values. Use the layer scale.">
   <SimpleTable path={['layer']} />
 </DocSection>
 

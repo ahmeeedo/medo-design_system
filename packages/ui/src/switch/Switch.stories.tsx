@@ -68,7 +68,7 @@ type Story = StoryObj<typeof meta>;
 /** Fields fill their container: keep the demos at a realistic form width. */
 const narrow = [
   (Story: () => React.ReactElement) => (
-    <div style={{ maxInlineSize: '24rem' }}>
+    <div>
       <Story />
     </div>
   ),

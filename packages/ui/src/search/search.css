@@ -76,17 +76,17 @@
   flex: none;
 }
 
-/* Media: image 4:3, 128 wide (aesthetic 160), radius/md. */
+/* Media: image 4:3, width 2xs (aesthetic xs), radius/md. */
 .medo-search-result--media .medo-search-result__leading {
   overflow: hidden;
-  inline-size: 8rem;
+  inline-size: var(--medo-size-width-2xs);
   aspect-ratio: 4 / 3;
   border-radius: var(--medo-radius-md);
   background-color: var(--medo-color-surface-subtle);
 }
 
 .medo-search-result--media.medo-search-result--aesthetic .medo-search-result__leading {
-  inline-size: 10rem;
+  inline-size: var(--medo-size-width-xs);
 }
 
 .medo-search-result--media .medo-search-result__leading > :is(img, picture, video, .medo-image) {
@@ -181,8 +181,8 @@
 }
 
 .medo-dialog.medo-quick-search {
-  --_width: 40rem; /* 640 */
-  max-block-size: min(36rem, 100%);
+  --_width: var(--medo-size-width-5xl);
+  max-block-size: min(var(--medo-size-width-4xl), 100%);
 }
 
 .medo-quick-search__dialog {

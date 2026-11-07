@@ -47,13 +47,13 @@ const uiStyle = document.createElement('style');
 uiStyle.id = 'medo-ui';
 uiStyle.textContent = `
 #storybook-explorer-menu .sidebar-item {
-  min-block-size: 2.25rem;
+  min-block-size: var(--medo-ui-row);
   border-radius: var(--medo-ui-radius-sm);
   color: var(--medo-ui-text-secondary);
   background: transparent;
 }
 #storybook-explorer-menu .sidebar-item > :is(a, button):first-child {
-  min-block-size: 2.25rem;
+  min-block-size: var(--medo-ui-row);
   align-items: center;
   font: var(--medo-ui-label);
   color: inherit;
@@ -75,9 +75,9 @@ uiStyle.textContent = `
 #storybook-explorer-menu .sidebar-item[data-highlighted='true'] { box-shadow: var(--medo-ui-focus-inset); }
 #storybook-explorer-menu :is(a, button):focus-visible { outline: none; }
 
-#storybook-explorer-menu .sidebar-subheading { min-block-size: 2.25rem; }
+#storybook-explorer-menu .sidebar-subheading { min-block-size: var(--medo-ui-row); }
 #storybook-explorer-menu .sidebar-subheading > button:first-child {
-  min-block-size: 2.25rem;
+  min-block-size: var(--medo-ui-row);
   border-radius: var(--medo-ui-radius-sm);
   font: var(--medo-ui-label-strong);
   text-transform: none;
@@ -87,7 +87,7 @@ uiStyle.textContent = `
 #storybook-explorer-menu .sidebar-subheading > button:focus-visible { outline: none; box-shadow: var(--medo-ui-focus-inset); }
 
 .search-field {
-  border: 1px solid var(--medo-ui-border-strong);
+  border: var(--medo-ui-border-thin) solid var(--medo-ui-border-strong);
   border-radius: var(--medo-ui-radius-md);
   background: var(--medo-ui-surface);
 }
@@ -126,7 +126,7 @@ uiStyle.textContent = `
 .medo-ui-status {
   flex: none;
   padding: 0 var(--medo-ui-space-1-5);
-  border: 1px solid var(--medo-ui-border-default);
+  border: var(--medo-ui-border-thin) solid var(--medo-ui-border-default);
   border-radius: var(--medo-ui-radius-sm);
   font: var(--medo-ui-label-xs);
   color: var(--medo-ui-text-secondary);
@@ -169,6 +169,8 @@ const paintUi = (mode: Mode) => {
   const t = (name: string) => token(mode, name);
   const ring = t('focus/ring');
   const halo = t('focus/halo');
+  const ringWidth = t('focus-ring/width');
+  const haloWidth = t('focus-ring/halo');
   const vars: Record<string, string> = {
     'text-primary': t('text/primary'),
     'text-secondary': t('text/secondary'),
@@ -186,8 +188,11 @@ const paintUi = (mode: Mode) => {
     'label-xs': t('typography/label/xs'),
     'border-default': t('border/default'),
     'space-1-5': t('space/1-5'),
-    focus: `0 0 0 2px ${halo}, 0 0 0 4px ${ring}`,
-    'focus-inset': `inset 0 0 0 2px ${ring}, inset 0 0 0 3px ${halo}`,
+    // Sidebar rows: 36 px, between the control sizes sm and md.
+    row: `calc(${t('space/8')} + ${t('space/1')})`,
+    'border-thin': t('border-width/thin'),
+    focus: `0 0 0 ${ringWidth} ${halo}, 0 0 0 calc(2 * ${ringWidth}) ${ring}`,
+    'focus-inset': `inset 0 0 0 ${ringWidth} ${ring}, inset 0 0 0 calc(${ringWidth} + ${haloWidth}) ${halo}`,
   };
   for (const [k, v] of Object.entries(vars)) document.documentElement.style.setProperty(`--medo-ui-${k}`, v);
 };

@@ -25,7 +25,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Card: Story = {
   render: () => (
-    <article className="w-full max-w-[22rem] rounded-lg bg-surface-raised p-6 shadow-elevation-2 text-text-primary">
+    <article className="w-full max-w-(--medo-size-width-xl) rounded-lg bg-surface-raised p-6 shadow-elevation-2 text-text-primary">
       <p className="text-overline text-text-secondary">Project</p>
       <h3 className="mt-1 text-heading-md">Website relaunch</h3>
       <p className="mt-2 text-body-sm text-text-secondary">
@@ -49,7 +49,7 @@ const tones = {
 
 export const Feedback: Story = {
   render: () => (
-    <div className="grid w-full max-w-[26rem] gap-content">
+    <div className="grid w-full max-w-(--medo-size-width-2xl) gap-content">
       {(Object.keys(tones) as (keyof typeof tones)[]).map((tone) => (
         <div key={tone} className={`rounded-md border p-4 text-body-sm ${tones[tone]}`}>
           <strong className="text-label-md">{tone[0].toUpperCase() + tone.slice(1)}</strong> – feedback tokens via Tailwind.

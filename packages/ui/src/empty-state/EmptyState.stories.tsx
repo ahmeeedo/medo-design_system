@@ -12,7 +12,7 @@ import { Examples, semantic, slot, Example } from '../story-helpers';
 
 const grid: React.CSSProperties = {
   display: 'grid',
-  gridTemplateColumns: 'repeat(auto-fit, minmax(20rem, 1fr))',
+  gridTemplateColumns: 'repeat(auto-fit, minmax(var(--medo-size-width-xl), 1fr))',
   gap: 'var(--medo-layout-gap-items)',
   alignItems: 'start',
 };
@@ -206,7 +206,7 @@ function SearchExample() {
   const field = useRef<HTMLDivElement>(null);
   const items = people.filter((p) => p.name.toLowerCase().includes(query.trim().toLowerCase()));
   return (
-    <div ref={field} style={{ display: 'grid', gap: 'var(--medo-layout-gap-content)', maxInlineSize: '30rem' }}>
+    <div ref={field} style={{ display: 'grid', gap: 'var(--medo-layout-gap-content)' }}>
       <TextField label="Search people" type="search" value={query} onChange={setQuery} />
       <ListView
         aria-label="People"

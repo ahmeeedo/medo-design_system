@@ -9,7 +9,7 @@ const ratios: ImageRatio[] = ['1:1', '3:4', '4:3', '3:2', '16:9', '21:9', 'origi
 const grid: React.CSSProperties = {
   display: 'grid',
   gap: 'var(--medo-layout-gap-items)',
-  gridTemplateColumns: 'repeat(auto-fill, minmax(12rem, 1fr))',
+  gridTemplateColumns: 'repeat(auto-fill, minmax(var(--medo-size-width-sm), 1fr))',
   alignItems: 'start',
 };
 const label: React.CSSProperties = { margin: 'var(--medo-space-2) 0 0', font: 'var(--medo-typography-caption)', color: 'var(--medo-color-text-secondary)' };
@@ -92,7 +92,7 @@ const meta = {
     },
   },
   render: (args) => (
-    <div style={{ maxInlineSize: '30rem' }}>
+    <div style={{ maxInlineSize: 'var(--medo-size-width-3xl)' }}>
       <Image {...args} />
     </div>
   ),
@@ -226,7 +226,7 @@ export const FigureStory: Story = {
     },
   },
   render: () => (
-    <div style={{ maxInlineSize: '30rem' }}>
+    <div style={{ maxInlineSize: 'var(--medo-size-width-3xl)' }}>
       <Figure caption="Evening light over the foothills, seen from the eastern ridge." credit="© Sample image · med.o Design System">
         <Image src={photo} alt="Sun low above a mountain ridge, valley in shadow" ratio="3:2" />
       </Figure>
@@ -245,9 +245,9 @@ export const Embed: Story = {
     },
   },
   render: () => (
-    <div style={{ display: 'grid', gap: 'var(--medo-layout-gap-group)', maxInlineSize: '40rem' }}>
+    <div style={{ display: 'grid', gap: 'var(--medo-layout-gap-group)', maxInlineSize: 'var(--medo-size-width-5xl)' }}>
       <EmbedConsent type="video" provider="Example Video" company="Example Inc." src={demoEmbed} title="Video: Product tour" privacyHref="#privacy" onConsent={fn()} />
-      <div style={{ maxInlineSize: '20rem' }}>
+      <div style={{ maxInlineSize: 'var(--medo-size-width-xl)' }}>
         <EmbedConsent type="video" provider="Example Video" company="Example Inc." src={demoEmbed} title="Video: Product tour" privacyHref="#privacy" onConsent={fn()} />
       </div>
       <EmbedConsent type="map" provider="Example Maps" company="Example Inc." src={demoEmbed} title="Map: Our office" privacyHref="#privacy" onConsent={fn()} />
@@ -261,7 +261,7 @@ export const InteractionTest: Story = {
   // Literal, so the story index (and the tag filters of the test projects) see it too.
   tags: ['!autodocs'],
   render: () => (
-    <div style={{ maxInlineSize: '40rem' }}>
+    <div style={{ maxInlineSize: 'var(--medo-size-width-5xl)' }}>
       <EmbedConsent type="video" provider="Example Video" company="Example Inc." src={demoEmbed} title="Video: Product tour" privacyHref="#privacy" onConsent={fn()} />
     </div>
   ),

@@ -182,7 +182,7 @@
 
 @media (forced-colors: active) {
   .medo-sheet {
-    border: 1px solid CanvasText;
+    border: var(--medo-border-width-thin) solid CanvasText;
   }
 }
 

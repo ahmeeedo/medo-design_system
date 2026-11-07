@@ -76,7 +76,7 @@ export interface GridProps extends LayoutProps {
    * A number: that many equal columns. `layout`: the layout grid (4 · 8 · 12 columns), place children with `GridItem`.
    */
   columns?: number | 'layout';
-  /** Without `columns`: the narrowest a column may get (CSS length). Default `16rem`. */
+  /** Without `columns`: the narrowest a column may get (CSS length). Default `var(--medo-size-width-md)` (240 px). */
   minItemSize?: string;
   /** Spacing rule. Default: `items` (the layout gutter). */
   gap?: SpacingRule;

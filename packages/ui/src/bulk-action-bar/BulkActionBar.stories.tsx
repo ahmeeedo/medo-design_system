@@ -81,7 +81,7 @@ const meta = {
     },
   },
   render: (args) => (
-    <div style={stage(args.variant === 'mobile' ? '7rem' : '6rem')}>
+    <div style={stage(args.variant === 'mobile' ? 'calc(var(--medo-space-24) + var(--medo-space-4))' : 'var(--medo-space-24)')}>
       <BulkActionBar {...args} />
     </div>
   ),
@@ -103,7 +103,7 @@ export const Mobile: Story = {
     },
   },
   render: () => (
-    <div style={{ ...stage('7rem'), maxInlineSize: '23.4375rem' }}>
+    <div style={{ ...stage('calc(var(--medo-space-24) + var(--medo-space-4))'), maxInlineSize: 'var(--medo-size-width-xl)' }}>
       <BulkActionBar
         variant="mobile"
         count={3}
@@ -128,7 +128,7 @@ function ListExample() {
   const [selected, setSelected] = useState<Selection>(new Set(['sam']));
   const count = selected === 'all' ? inbox.length : selected.size;
   return (
-    <div style={{ ...stage('22rem'), maxInlineSize: '35rem' }}>
+    <div style={{ ...stage('var(--medo-size-width-xl)'), maxInlineSize: 'var(--medo-size-width-4xl)' }}>
       <ListView aria-label="Inbox" variant="card" selectionMode="multiple" selectedKeys={selected} onSelectionChange={setSelected} items={inbox}>
         {(m) => <ListRow id={m.id} title={m.name} description={m.text} leading={<Avatar name={m.name} decorative />} />}
       </ListView>

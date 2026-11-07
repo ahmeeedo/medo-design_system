@@ -42,7 +42,7 @@
 }
 
 .medo-combobox__input {
-  min-inline-size: 4rem;
+  min-inline-size: var(--medo-size-width-3xs);
 }
 
 /* ---------- Tags (multi) ---------- */

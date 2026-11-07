@@ -4,7 +4,7 @@ import { virtual } from '@guidepup/virtual-screen-reader';
 
 /** Layout helpers for stories only. */
 export const row: CSSProperties = { display: 'flex', gap: 'var(--medo-layout-gap-inline)', alignItems: 'center', flexWrap: 'wrap' };
-export const stack: CSSProperties = { display: 'grid', gap: 'var(--medo-layout-gap-fields)', maxInlineSize: '24rem' };
+export const stack: CSSProperties = { display: 'grid', gap: 'var(--medo-layout-gap-fields)', maxInlineSize: 'var(--medo-size-width-xl)' };
 
 /** Small mono caption above an example (“md”, “collapsed · sm”). */
 export const caption: CSSProperties = { font: 'var(--medo-typography-code-sm)', color: 'var(--medo-color-text-secondary)' };
@@ -70,11 +70,13 @@ export const slot = (mapping: Record<string, unknown>) => ({ control: 'select', 
 
 /* ---------- Sample media (inline SVG, no network) ---------- */
 
+// lint-tokens-disable: colors of the sample image itself, not of the UI.
 const scenes = [
   { sky: '#4d7387', hill: '#2c4450', sun: '#f3e3b0' },
   { sky: '#3b4f5c', hill: '#24343c', sun: '#d9c38e' },
   { sky: '#6f8f9c', hill: '#3d5560', sun: '#fbe7c0' },
 ];
+// lint-tokens-enable
 
 /** A landscape “photo” as data URI (sample image). `tiny` gives a ≈ 20 px blur-up preview. */
 export function samplePhoto(variant = 0, { width = 1600, height = 900, tiny = false } = {}) {
