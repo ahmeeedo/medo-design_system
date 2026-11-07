@@ -180,7 +180,7 @@
   }
   .medo-choice__button[data-focus-visible] .medo-choice__control {
     outline: var(--medo-focus-ring-width) solid Highlight;
-    outline-offset: 2px;
+    outline-offset: var(--medo-space-0-5);
   }
 }
 

@@ -197,7 +197,7 @@
   }
   .medo-card--interactive:has(.medo-card__link[data-focus-visible]) {
     outline: var(--medo-focus-ring-width) solid Highlight;
-    outline-offset: 2px;
+    outline-offset: var(--medo-space-0-5);
   }
 }
 

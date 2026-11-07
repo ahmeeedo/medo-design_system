@@ -23,6 +23,7 @@ export interface CheckboxProps extends Omit<CheckboxFieldProps, 'children' | 'cl
   errorMessage?: ReactNode;
   /** md (16 px box, 14 px text) · lg (20 px box, 16 px text, mobile). Inherits from a group. */
   size?: ChoiceSize;
+  /** Extra class on the root element – for layout (margin, width), not to restyle the component. */
   className?: string;
 }
 
@@ -55,12 +56,17 @@ export function Checkbox({ children, description, errorMessage, size, className,
 export interface CheckboxGroupProps extends Omit<AriaCheckboxGroupProps, 'children' | 'className' | 'style'> {
   /** Group label (rendered like a legend). Without it set `aria-label` – only where the context names the group (e.g. an Accordion title). */
   label?: ReactNode;
+  /** Help text below the label, e.g. “Select all that apply.” */
   description?: ReactNode;
+  /** Shown when the group is invalid, e.g. “Select at least one topic.” */
   errorMessage?: ReactNode;
+  /** md or lg for all checkboxes in the group (lg on mobile). */
   size?: ChoiceSize;
   /** vertical (default) or horizontal for 2–3 short options. */
   orientation?: 'vertical' | 'horizontal';
+  /** The Checkboxes. */
   children: ReactNode;
+  /** Extra class on the root element – for layout (margin, width), not to restyle the component. */
   className?: string;
 }
 

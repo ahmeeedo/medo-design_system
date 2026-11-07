@@ -23,6 +23,7 @@ export interface TextFieldProps extends Omit<AriaTextFieldProps, 'children' | 'c
   description?: ReactNode;
   /** Error text shown when the field is invalid (isInvalid or failed validation). */
   errorMessage?: ReactNode;
+  /** Example of the expected input (“name@example.com”). Disappears when typing – never put needed information here. */
   placeholder?: string;
   /** sm 32 · md 40 · lg 48 px. Use lg on mobile and touch. Textareas: md or lg. */
   size?: InputSize;
@@ -34,6 +35,7 @@ export interface TextFieldProps extends Omit<AriaTextFieldProps, 'children' | 'c
   multiline?: boolean;
   /** Soft limit: typing beyond is allowed, the counter turns red. Validate on submit. */
   characterLimit?: number;
+  /** Extra class on the root element – for layout (margin, width), not to restyle the component. */
   className?: string;
 }
 
@@ -129,6 +131,7 @@ function CharacterCount({ count, limit }: { count: number; limit: number }) {
 export interface InputActionProps extends Omit<AriaButtonProps, 'className' | 'children'> {
   /** Required: icon-only buttons need an accessible name. */
   'aria-label': string;
+  /** The icon (decorative; the name comes from aria-label). */
   icon: ReactNode;
 }
 

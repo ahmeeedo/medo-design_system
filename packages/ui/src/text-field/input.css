@@ -10,6 +10,10 @@
  *
  * Sizes sm / md / lg = 32 / 40 / 48 px. Mobile and touch: always lg (16 px text prevents the automatic zoom of mobile browsers).
  * Focus: the border turns focus/ring plus 1 px inside (flush, no outer band).
+ *
+ * State contract: hover and focus follow the pointer and the focus (:hover, :focus) – other frameworks and static
+ * previews can set [data-hovered] and [data-focused] on .medo-input / .medo-textarea instead. Invalid, read-only and
+ * disabled come from the control: [data-invalid] (or aria-invalid), [readonly], :disabled.
  */
 
 .medo-input,
@@ -85,19 +89,19 @@
 /* ---------- States ---------- */
 
 @media (hover: hover) {
-  .medo-input:hover:not(:has(> .medo-input__control:is(:disabled, [readonly]))),
-  .medo-textarea:hover:not(:disabled, [readonly]) {
+  .medo-input:is(:hover, [data-hovered]):not(:has(> .medo-input__control:is(:disabled, [readonly]))),
+  .medo-textarea:is(:hover, [data-hovered]):not(:disabled, [readonly]) {
     --_border: var(--medo-color-border-strong-hover);
   }
 }
 
-.medo-input:has(> .medo-input__control[data-invalid]),
-.medo-textarea[data-invalid] {
+.medo-input:has(> .medo-input__control:is([data-invalid], [aria-invalid='true'])),
+.medo-textarea:is([data-invalid], [aria-invalid='true']) {
   --_border: var(--medo-color-border-danger);
 }
 
-.medo-input:has(> .medo-input__control:focus),
-.medo-textarea:focus {
+.medo-input:is(:has(> .medo-input__control:focus), [data-focused]),
+.medo-textarea:is(:focus, [data-focused]) {
   --_border: var(--medo-color-focus-ring);
   box-shadow: inset 0 0 0 var(--medo-border-width-thin) var(--medo-color-focus-ring);
 }
@@ -121,8 +125,8 @@
 }
 
 @media (forced-colors: active) {
-  .medo-input:has(> .medo-input__control:focus),
-  .medo-textarea:focus {
+  .medo-input:is(:has(> .medo-input__control:focus), [data-focused]),
+  .medo-textarea:is(:focus, [data-focused]) {
     outline: var(--medo-focus-ring-width) solid Highlight;
   }
 }

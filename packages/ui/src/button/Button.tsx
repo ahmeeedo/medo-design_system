@@ -15,8 +15,11 @@ export interface ButtonProps extends Omit<AriaButtonProps, 'children' | 'classNa
   startIcon?: ReactNode;
   /** Icon after the label (decorative, hidden from screen readers). */
   endIcon?: ReactNode;
+  /** The label: a verb that says what happens (“Save changes”). While pending, what is happening (“Saving…”). */
   children?: ReactNode;
+  /** Extra class on the root element – for layout (margin, width), not to restyle the component. */
   className?: string;
+  /** Inline style on the button – for layout only (e.g. width), like className. */
   style?: CSSProperties;
 }
 
@@ -55,6 +58,7 @@ export interface ButtonGroupProps {
   destructive?: ReactNode;
   /** Name of the group for screen readers, when it is not obvious from the context. */
   'aria-label'?: string;
+  /** Extra class on the root element – for layout (margin, width), not to restyle the component. */
   className?: string;
 }
 
