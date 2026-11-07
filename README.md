@@ -173,7 +173,7 @@ Status: **Experimental** – the API may still change · **Beta** – complete a
 | Component | Status | Notes |
 | --- | --- | --- |
 | `Stack`, `Grid`, `GridItem`, `Container` | Beta | layout with the spacing rules · Stack: vertical (`content`) or horizontal (`inline`), wrap, align · Grid: as many columns as fit (`minItemSize`), fixed columns or the 4 · 8 · 12 layout grid, gap `items` · Container: prose / md / lg / xl / full plus the page margin · `as` for the right element (`ul`, `section`, `main`, `form`) |
-| `Button`, `ButtonGroup` | Beta | primary, secondary, ghost, danger, text, ghost-danger · sm/md/lg · `isPending` · group: footer/header/content, stacks on mobile |
+| `Button`, `ButtonGroup` | Stable | primary, secondary, ghost, danger, text, ghost-danger · sm/md/lg · `isPending` · group: footer/header/content, stacks on mobile |
 | `IconButton` | Beta | `aria-label` required, shown as tooltip · `shortcut` · `media` / `media-ghost` on images and video (Media icon button, sm 28 with 44 hit area) |
 | `TextField` (+ `InputAction`) | Beta | label, helper, error, icons, character counter, `multiline` = Textarea |
 | `Form`, `FieldErrors` | Experimental | React Aria Form · `onSave` runs when valid, pending while it saves · server messages at the field (reject with `FieldErrors`) or above it (`formError`) · focus on the first error, error count announced · input always kept |

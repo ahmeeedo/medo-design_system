@@ -355,13 +355,13 @@ type MedoDocsParams = { subtitle?: string; usage?: MedoUsage; a11y?: MedoA11y; s
 /* ---------- screen reader test ---------- */
 
 export const SCREEN_READERS: { id: ScreenReaderId; name: string; setup: string }[] = [
-  { id: 'nvda', name: 'NVDA', setup: 'Windows · Firefox or Chrome' },
-  { id: 'voiceover', name: 'VoiceOver', setup: 'iPhone · Safari' },
-  { id: 'talkback', name: 'TalkBack', setup: 'Android · Chrome' },
+  { id: 'nvda', name: 'NVDA', setup: 'Windows' },
+  { id: 'voiceover', name: 'VoiceOver', setup: 'iPhone' },
+  { id: 'talkback', name: 'TalkBack', setup: 'Android' },
 ];
 export const SCREEN_READER_GUIDE_ID = 'guides-screen-reader-testing--docs';
 
-/** A new issue from the template “Screen reader test”, with component, screen reader and the steps filled in. */
+/** A new issue from the template “Screen reader test”, with component, screen reader and steps filled in. */
 const reportUrl = (component: string, reader: (typeof SCREEN_READERS)[number], steps: [string, string][]) => {
   const query = new URLSearchParams({
     template: 'screen-reader-test.yml',
