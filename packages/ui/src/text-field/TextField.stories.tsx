@@ -4,7 +4,24 @@ import { expect } from 'storybook/test';
 import { useState } from 'react';
 import { Eye, EyeOff, Mail, Search } from 'lucide-react';
 import { InputAction, TextField } from './TextField';
-import { interactionTest, slot, stack, StateGrid } from '../story-helpers';
+import { interactionTest, slot, spokenPhrases, stack, StateGrid } from '../story-helpers';
+
+/**
+ * What a screen reader says for the fields in the screen reader test (Virtual Screen Reader). The password field has
+ * no role here – there is no ARIA role for it; real screen readers say “password” or “secure text field”. So its label
+ * and its help text (after the button) are read on their own as well.
+ */
+const TEXT_FIELD_PHRASES = [
+  'textbox, Email, We only use it for the login.',
+  'textbox, Name, required',
+  'textbox, Postcode, 1234, Enter a postcode with 5 digits, e.g. 12345., invalid',
+  'textbox, Customer number, K-1042, read only',
+  'textbox, Company, med.o, disabled',
+  'Password',
+  'Password, At least 12 characters.',
+  'button, Show password',
+  'At least 12 characters.',
+];
 
 const meta = {
   title: 'Components/Forms/Text Field',
@@ -57,7 +74,7 @@ const meta = {
           '`characterLimit` shows a counter and announces the remaining characters after a pause.',
           'Size lg uses 16 px text, which prevents the automatic zoom of mobile browsers when the field gets the focus.',
         ],
-        // Manual test with NVDA, VoiceOver and TalkBack (Guides / Screen reader testing).
+        // Steps for the manual test; simple components are also tested automatically (Guides / Screen reader testing).
         screenReader: {
           steps: [
             ['Go to the heading “Playground”, then to the field.', '“Email, edit text” (or text field), then “We only use it for the login.”'],
@@ -70,6 +87,8 @@ const meta = {
               '“Password, secure text field” (or password), then “Show password, button”. Activate it: the button is now “Hide password”.',
             ],
           ],
+          // Checked on every change by the test ScreenReaderTest (Virtual Screen Reader).
+          automated: TEXT_FIELD_PHRASES,
         },
       },
       styling: {
@@ -210,5 +229,24 @@ export const InteractionTest: Story = {
     await expect(input).toHaveAccessibleDescription('We only use it for the login.');
     await userEvent.type(input, 'name@example.com');
     await expect(input).toHaveValue('name@example.com');
+  },
+};
+
+
+export const ScreenReaderTest: Story = {
+  ...interactionTest,
+  tags: ['!autodocs', '!locale-de'],
+  render: () => (
+    <div style={stack}>
+      <TextField label="Email" description="We only use it for the login." />
+      <TextField label="Name" isRequired />
+      <TextField label="Postcode" defaultValue="1234" isInvalid errorMessage="Enter a postcode with 5 digits, e.g. 12345." />
+      <TextField label="Customer number" defaultValue="K-1042" isReadOnly />
+      <TextField label="Company" defaultValue="med.o" isDisabled />
+      <PasswordField />
+    </div>
+  ),
+  play: async ({ canvasElement }) => {
+    await expect(await spokenPhrases(canvasElement)).toEqual(TEXT_FIELD_PHRASES);
   },
 };
