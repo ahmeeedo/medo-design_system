@@ -11,8 +11,8 @@
  */
 
 .medo-list {
-  --_col: 1.5rem; /* 24 */
-  --_icon: max(1rem, 1em); /* 16 · lg 20 */
+  --_col: var(--medo-space-6);
+  --_icon: max(var(--medo-size-icon-sm), 1em);
 
   display: grid;
   gap: var(--medo-space-2);
@@ -34,7 +34,7 @@
 }
 
 .medo-list--number {
-  --_col: 1.75rem; /* 28 */
+  --_col: calc(var(--medo-space-6) + var(--medo-space-1));
   counter-reset: medo-list;
 }
 
@@ -75,7 +75,7 @@
 /* Level 2: ring. */
 .medo-list__item .medo-list--bullet > .medo-list__item::before {
   box-sizing: border-box;
-  border: 1.25px solid currentColor;
+  border: var(--medo-border-width-thin) solid currentColor;
   background-color: transparent;
 }
 
@@ -123,7 +123,7 @@
 
 .medo-dl__row {
   display: grid;
-  grid-template-columns: 11.25rem minmax(0, 1fr); /* term column 180 */
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); /* term ⅓, value ⅔ of the container */
   gap: var(--medo-space-1) var(--medo-space-4);
   align-items: baseline;
   padding-block: var(--medo-space-3);

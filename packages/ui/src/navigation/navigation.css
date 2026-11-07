@@ -36,7 +36,7 @@
 /* ---------- Nav item ---------- */
 
 .medo-nav-item {
-  --_h: 2.25rem; /* 36 */
+  --_h: calc(var(--medo-space-8) + var(--medo-space-1));
   --_label: var(--medo-typography-label-md);
   --_label-current: var(--medo-typography-label-md-strong);
   --_icon: var(--medo-size-icon-sm);
@@ -178,7 +178,7 @@
   inset-inline-start: 0;
   z-index: var(--medo-layer-dropdown);
   box-sizing: border-box;
-  inline-size: 17.5rem; /* 280 */
+  inline-size: var(--medo-size-width-lg);
   padding: var(--medo-space-2);
   border: var(--medo-border-width-thin) solid var(--medo-color-border-default);
   border-radius: var(--medo-radius-md);
@@ -299,7 +299,7 @@
 }
 
 .medo-app-header__search {
-  flex: 0 1 17.5rem; /* 280 */
+  flex: 0 1 var(--medo-size-width-lg);
   min-inline-size: 0;
 }
 
@@ -386,7 +386,7 @@
   position: relative;
   flex: none;
   box-sizing: border-box;
-  inline-size: 16rem; /* 256 */
+  inline-size: var(--medo-size-width-lg);
   block-size: 100%;
   transition: inline-size var(--medo-motion-spring-smooth-duration) var(--medo-motion-spring-smooth);
 }
@@ -510,7 +510,7 @@
   flex-direction: column;
   align-items: center;
   gap: var(--medo-space-1);
-  min-block-size: 3.5rem; /* 56 */
+  min-block-size: calc(var(--medo-size-control-lg) + var(--medo-space-2));
   padding: var(--medo-space-1) 0;
   border: 0;
   border-radius: var(--medo-radius-sm);
@@ -527,8 +527,8 @@
   position: relative;
   display: grid;
   place-items: center;
-  inline-size: 3.5rem; /* 56 */
-  block-size: 1.75rem; /* 28 */
+  inline-size: calc(var(--medo-size-control-lg) + var(--medo-space-2));
+  block-size: calc(var(--medo-space-6) + var(--medo-space-1));
   border-radius: var(--medo-radius-full);
 }
 
@@ -611,8 +611,8 @@
 @media (forced-colors: active) {
   .medo-nav-item:is([aria-current='page'], [data-current]),
   .medo-tab-bar-item:is([aria-current='page'], [data-current]) .medo-tab-bar-item__indicator {
-    outline: 2px solid Highlight;
-    outline-offset: -2px;
+    outline: var(--medo-focus-ring-width) solid Highlight;
+    outline-offset: calc(-1 * var(--medo-focus-ring-width));
   }
   .medo-nav-group__panel {
     border-color: CanvasText;

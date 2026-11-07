@@ -249,7 +249,6 @@
 .medo-embed__content {
   display: grid;
   gap: var(--medo-space-1);
-  max-inline-size: 27.5rem; /* 440 – readable line length */
 }
 
 .medo-embed__title,

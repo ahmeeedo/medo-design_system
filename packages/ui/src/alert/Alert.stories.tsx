@@ -12,7 +12,7 @@ const examples: { tone: AlertTone; title: string; text: string }[] = [
   { tone: 'danger', title: 'Payment failed', text: 'Check your card details and try again.' },
 ];
 
-const stack: React.CSSProperties = { display: 'grid', gap: 'var(--medo-layout-gap-content)', maxInlineSize: '36rem' };
+const stack: React.CSSProperties = { display: 'grid', gap: 'var(--medo-layout-gap-content)' };
 
 function DismissDemo() {
   const [open, setOpen] = useState(true);

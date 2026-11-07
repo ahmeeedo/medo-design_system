@@ -1,6 +1,8 @@
 /* Shared helpers of @med-o/ui. */
 
-/* Hidden on screen, still read by screen readers. */
+/* Hidden on screen, still read by screen readers. The 1 px box is the standard pattern screen readers rely on – not a
+   layout value, so no token. */
+/* stylelint-disable unit-disallowed-list */
 .medo-visually-hidden {
   position: absolute;
   inline-size: 1px;
@@ -12,3 +14,4 @@
   white-space: nowrap;
   border: 0;
 }
+/* stylelint-enable unit-disallowed-list */

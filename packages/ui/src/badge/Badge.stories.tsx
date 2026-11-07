@@ -131,7 +131,7 @@ export const CountAndDot: Story = {
     <div style={{ ...row, gap: 'var(--medo-layout-gap-group)' }}>
       <span style={{ position: 'relative', display: 'inline-flex' }}>
         <IconButton aria-label="Notifications, 3 unread" tooltip="Notifications" icon={<Bell />} variant="ghost" />
-        <BadgeCount count={3} size="sm" style={{ position: 'absolute', insetBlockStart: 2, insetInlineEnd: 2 }} />
+        <BadgeCount count={3} size="sm" style={{ position: 'absolute', insetBlockStart: 'var(--medo-space-0-5)', insetInlineEnd: 'var(--medo-space-0-5)' }} />
       </span>
       <div style={row}>
         <BadgeCount count={3} label="3 unread" />

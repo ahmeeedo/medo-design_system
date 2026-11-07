@@ -119,7 +119,7 @@ type Story = StoryObj<typeof meta>;
 /** Fields fill their container: keep the demos at a realistic form width. */
 const narrow = [
   (Story: () => React.ReactElement) => (
-    <div style={{ maxInlineSize: '24rem' }}>
+    <div style={{ maxInlineSize: 'var(--medo-size-width-xl)' }}>
       <Story />
     </div>
   ),
@@ -153,7 +153,7 @@ export const States: Story = {
 
 /** A plain HTML field with the classes and state attributes – the same CSS as the component. */
 const plainField = (state: string, input: object = {}, attrs: object = {}) => (
-  <div className="medo-field" style={{ inlineSize: '16rem' }}>
+  <div className="medo-field" style={{ inlineSize: 'var(--medo-size-width-xl)' }}>
     <label className="medo-field__label">Email</label>
     <div className="medo-input medo-input--md" {...attrs}>
       <input className="medo-input__control" defaultValue="anna@example.com" aria-label={state} {...input} />

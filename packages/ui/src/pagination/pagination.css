@@ -49,7 +49,7 @@
 }
 
 .medo-pagination__size .medo-select__field {
-  inline-size: 5rem;
+  inline-size: var(--medo-size-width-3xs);
 }
 
 .medo-pagination__size .medo-field__footer {
@@ -126,7 +126,7 @@
 
 @media (forced-colors: active) {
   .medo-page-item[aria-current='page'] {
-    outline: 2px solid Highlight;
-    outline-offset: -2px;
+    outline: var(--medo-focus-ring-width) solid Highlight;
+    outline-offset: calc(-1 * var(--medo-focus-ring-width));
   }
 }

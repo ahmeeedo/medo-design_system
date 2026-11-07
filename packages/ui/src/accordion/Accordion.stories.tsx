@@ -121,7 +121,7 @@ const meta = {
     },
   },
   render: (args) => (
-    <div style={{ maxInlineSize: '35rem' }}>
+    <div>
       <Settings size={args.size} single={!args.allowsMultipleExpanded} />
     </div>
   ),
@@ -154,7 +154,7 @@ export const Single: Story = {
     },
   },
   render: () => (
-    <div style={{ maxInlineSize: '35rem' }}>
+    <div>
       <Settings single />
     </div>
   ),
@@ -163,7 +163,7 @@ export const Single: Story = {
 export const Disabled: Story = {
   parameters: { docs: { description: { story: 'A disabled section shows at 50 % and can’t be opened. Hover and pressed only colour the header.' } } },
   render: () => (
-    <div style={{ maxInlineSize: '35rem' }}>
+    <div>
       <Accordion>
         <AccordionItem id="team" icon={<User />} title="Team" description="Members and roles">
           <p style={text}>Invite people and set their roles.</p>
@@ -180,7 +180,7 @@ export const ExpandAll: Story = {
   name: 'More than 6 sections',
   parameters: { docs: { description: { story: 'Groups with more than 6 sections get “Expand all” / “Collapse all” above them (only when several may be open).' } } },
   render: () => (
-    <div style={{ maxInlineSize: '45rem' }}>
+    <div>
       <Faq count={8} />
     </div>
   ),
@@ -190,7 +190,7 @@ export const DeepLink: Story = {
   name: 'Deep link',
   parameters: { docs: { description: { story: 'A link to an item’s id opens it and scrolls to it – on load and on every hash change. Try the link below.' } } },
   render: () => (
-    <div style={{ display: 'grid', gap: 'var(--medo-layout-gap-content)', maxInlineSize: '35rem' }}>
+    <div style={{ display: 'grid', gap: 'var(--medo-layout-gap-content)' }}>
       <p style={{ margin: 0 }}>
         Something wrong with a payment? <Link href="#billing">Open billing</Link>
       </p>

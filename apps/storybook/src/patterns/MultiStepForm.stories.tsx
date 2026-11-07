@@ -106,7 +106,7 @@ function SignUp() {
 
   if (done) {
     return (
-      <Stack gap="group" style={{ maxInlineSize: '32rem' }}>
+      <Stack gap="group" style={{ maxInlineSize: 'var(--medo-size-width-2xl)' }}>
         <h2 ref={heading} tabIndex={-1} className="medo-text-heading-md" style={{ margin: 0 }}>
           Account created
         </h2>
@@ -131,7 +131,7 @@ function SignUp() {
   );
 
   return (
-    <Stack gap="group" style={{ maxInlineSize: '32rem' }}>
+    <Stack gap="group" style={{ maxInlineSize: 'var(--medo-size-width-2xl)' }}>
       <Stepper aria-label="Sign-up" current={step}>
         {STEPS.map((label, i) => (
           <Step key={label} onPress={() => go(i)}>

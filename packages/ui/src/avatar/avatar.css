@@ -137,7 +137,7 @@
   inline-size: 100%;
   block-size: 100%;
   border-radius: inherit;
-  box-shadow: inset 0 0 0 1px var(--medo-color-avatar-image-border);
+  box-shadow: inset 0 0 0 var(--medo-border-width-thin) var(--medo-color-avatar-image-border);
   pointer-events: none;
 }
 
@@ -151,7 +151,7 @@
   inline-size: var(--_status);
   block-size: var(--_status);
   border-radius: var(--medo-radius-full);
-  box-shadow: 0 0 0 2px var(--medo-color-surface-default);
+  box-shadow: 0 0 0 var(--medo-border-width-thick) var(--medo-color-surface-default);
 }
 
 .medo-avatar__status--online {
@@ -176,7 +176,7 @@
 }
 
 .medo-avatar-group > .medo-avatar {
-  box-shadow: 0 0 0 2px var(--medo-color-surface-default);
+  box-shadow: 0 0 0 var(--medo-border-width-thick) var(--medo-color-surface-default);
 }
 
 .medo-avatar-group > .medo-avatar + .medo-avatar {
@@ -206,7 +206,7 @@ button.medo-avatar--more[data-pressed] {
 }
 .medo-avatar-group > button.medo-avatar--more[data-focus-visible] {
   box-shadow:
-    0 0 0 2px var(--medo-color-surface-default),
+    0 0 0 var(--medo-border-width-thick) var(--medo-color-surface-default),
     var(--medo-shadow-focus-ring);
 }
 

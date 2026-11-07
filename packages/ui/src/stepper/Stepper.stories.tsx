@@ -117,7 +117,7 @@ export const Compact: Story = {
   name: 'Compact (mobile)',
   args: { layout: 'compact', descriptions: true },
   parameters: {
-    width: '23.4375rem',
+    width: 'var(--medo-size-width-xl)',
     docs: { description: { story: 'Below 640 px (`layout="auto"`): the step count, the current step and one bar segment per step.' } },
   },
 };

@@ -27,7 +27,7 @@
 }
 
 .medo-dialog {
-  --_width: 35rem; /* md 560 */
+  --_width: var(--medo-size-width-4xl); /* md */
 
   box-sizing: border-box;
   display: flex;
@@ -45,10 +45,10 @@
 
 .medo-dialog--sm,
 .medo-alert-dialog {
-  --_width: 25rem; /* 400 */
+  --_width: var(--medo-size-width-2xl);
 }
 .medo-dialog--lg {
-  --_width: 45rem; /* 720 */
+  --_width: var(--medo-size-width-6xl);
 }
 
 /* ---------- Motion: scrim fades, dialog scales 0.96 → 1 and fades ---------- */
@@ -309,10 +309,10 @@
 
 @media (forced-colors: active) {
   .medo-dialog {
-    border: 1px solid CanvasText;
+    border: var(--medo-border-width-thin) solid CanvasText;
   }
   .medo-alert-dialog__icon {
-    border: 1px solid CanvasText;
+    border: var(--medo-border-width-thin) solid CanvasText;
   }
 }
 

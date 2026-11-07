@@ -15,7 +15,7 @@ Every point must hold (Guides / Component status).
 
 **Design**
 - [ ] Component in the design library, built on the tokens – variants and states as in code
-- [ ] No hard-coded values in the CSS: colors, spacing, radii and font sizes from tokens
+- [ ] Only tokens: no hard-coded colors or sizes (`npm run lint`, also in CI)
 
 **Behaviour**
 - [ ] Behaviour and semantics from React Aria Components

@@ -127,14 +127,14 @@
   margin-block-start: auto;
 }
 
-/* ---------- Horizontal (lists): media 180 px wide on the left ---------- */
+/* ---------- Horizontal (lists): media width/sm on the left ---------- */
 
 .medo-card--horizontal {
   flex-direction: row;
 }
 
 .medo-card--horizontal .medo-card__media {
-  flex: 0 0 11.25rem; /* 180 px */
+  flex: 0 0 var(--medo-size-width-sm);
   aspect-ratio: auto;
 }
 

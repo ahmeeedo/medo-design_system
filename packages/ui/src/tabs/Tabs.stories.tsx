@@ -37,7 +37,7 @@ function ProjectTabs({ icons = false, count = true, ...props }: React.ComponentP
         <p style={panel}>12 members, 2 pending invites.</p>
       </TabPanel>
       <TabPanel id="settings">
-        <div style={{ maxInlineSize: '20rem' }}>
+        <div style={{ maxInlineSize: 'var(--medo-size-width-xl)' }}>
           <TextField label="Project name" defaultValue="Website relaunch" description="Type something, switch tabs and come back – the input is kept." />
         </div>
       </TabPanel>
@@ -167,7 +167,7 @@ export const Overflow: Story = {
   name: 'Not enough space',
   parameters: { docs: { description: { story: 'When the track does not fit it scrolls horizontally, with a fade at the edge that still has tabs. Tabs never wrap.' } } },
   render: () => (
-    <div style={{ maxInlineSize: '20rem' }}>
+    <div style={{ maxInlineSize: 'var(--medo-size-width-xl)' }}>
       <ProjectTabs defaultSelectedKey="overview" icons />
     </div>
   ),

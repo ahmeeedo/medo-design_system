@@ -97,7 +97,7 @@ export function IconMeanings() {
         {meanings.map(([Glyph, name, meaning]) => (
           <tr key={name}>
             <td>
-              <Glyph aria-hidden="true" style={{ inlineSize: 20, blockSize: 20, display: 'block' }} />
+              <Glyph aria-hidden="true" style={{ inlineSize: 'var(--medo-size-icon-md)', blockSize: 'var(--medo-size-icon-md)', display: 'block' }} />
             </td>
             <th scope="row">
               <Tok>{name}</Tok>

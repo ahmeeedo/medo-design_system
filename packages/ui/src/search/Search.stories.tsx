@@ -167,7 +167,7 @@ const meta = {
     },
   },
   render: (args) => (
-    <search style={{ display: 'block', maxInlineSize: '30rem' }}>
+    <search style={{ display: 'block' }}>
       <SearchField {...args} aria-label={args.label ? undefined : 'Search invoices'} />
     </search>
   ),
@@ -289,7 +289,7 @@ function SearchPage() {
       role="list"
       style={{
         display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fill, minmax(16rem, 1fr))',
+        gridTemplateColumns: 'repeat(auto-fill, minmax(var(--medo-size-width-md), 1fr))',
         gap: 'var(--medo-layout-gap-group) var(--medo-layout-gap-items)',
         margin: 0,
         padding: 0,
@@ -515,7 +515,7 @@ function SidebarPage({ forceMobile = false }: { forceMobile?: boolean }) {
 
   if (forceMobile) {
     return (
-      <div style={{ display: 'grid', gap: 'var(--medo-layout-gap-content)', maxInlineSize: '23.4375rem' }}>
+      <div style={{ display: 'grid', gap: 'var(--medo-layout-gap-content)', maxInlineSize: 'var(--medo-size-width-xl)' }}>
         <search>
           <SearchField aria-label="Search" size="lg" defaultValue="invoice" />
         </search>
@@ -551,10 +551,10 @@ function SidebarPage({ forceMobile = false }: { forceMobile?: boolean }) {
 
   return (
     <div style={{ display: 'grid', gap: 'var(--medo-layout-gap-group)' }}>
-      <search style={{ maxInlineSize: '45rem' }}>
+      <search>
         <SearchField aria-label="Search" size="lg" defaultValue="invoice" />
       </search>
-      <div style={{ display: 'grid', gridTemplateColumns: '16.5rem 1fr', gap: 'var(--medo-layout-gap-items)', alignItems: 'start' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'var(--medo-size-width-lg) 1fr', gap: 'var(--medo-layout-gap-items)', alignItems: 'start' }}>
         <aside aria-labelledby="filters-heading" style={{ display: 'grid', gap: 'var(--medo-layout-gap-content)' }}>
           <h3 id="filters-heading" className="medo-text-heading-sm" style={{ margin: 0 }}>
             Filters

@@ -184,7 +184,7 @@ export const Segmented: Story = {
         <ViewSwitch size="lg" />
         <ViewSwitch size="lg" icons />
       </div>
-      <Example label="fullWidth" style={{ inlineSize: '100%', maxInlineSize: '22rem' }}>
+      <Example label="fullWidth" style={{ inlineSize: '100%', maxInlineSize: 'var(--medo-size-width-xl)' }}>
         <ViewSwitch fullWidth />
       </Example>
     </div>

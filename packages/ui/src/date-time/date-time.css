@@ -1,15 +1,14 @@
 /**
  * Date & Time – med.o Design System
  *
- *   Field   <div class="medo-input medo-input--md medo-date-box">                    Input look, hugs its content
+ *   Field   <div class="medo-input medo-input--md medo-date-box">                    Input look, fills its container
  *             <div class="medo-date-input"> segments (spinbuttons) </div> [– end] [calendar / clock action]
- *           Min widths: date 200 · range 300 · time 120 · date + time 240
  *           Segments 24 × 24 targets · focus action/primary + text/on-action, radius/sm · literals and placeholders text/secondary
  *   Calendar padding space/4 · gap space/2 (lg space/3) · header Button ghost + Icon buttons
  *           Day cell md 40 (circle 36) · lg 48 (circle 44, label/lg) · today 1 px ring action/primary + text/brand
  *           selected action/primary · range band surface/brand-subtle · disabled/outside text/disabled · focus 2 px focus/ring
  *           Months/Years 3 × 4 pills md 40 · lg 48, same states · week numbers 32 wide
- *   Panel   Popover Size Auto · presets 168 with divider · time row with a divider
+ *   Panel   Popover Size Auto · presets as wide as their labels, with divider · time row with a divider
  */
 
 /* ---------- Field ---------- */
@@ -24,22 +23,7 @@
 }
 
 .medo-date-box {
-  --_min: 12.5rem; /* 200 */
-  inline-size: auto;
-  min-inline-size: var(--_min);
-  max-inline-size: 100%;
-}
-
-.medo-time-field .medo-date-box {
-  --_min: 7.5rem; /* 120 */
-}
-
-.medo-date-picker--time .medo-date-box {
-  --_min: 15rem; /* 240 */
-}
-
-.medo-date-picker--range .medo-date-box {
-  --_min: 18.75rem; /* 300 */
+  inline-size: 100%;
 }
 
 .medo-date-input {
@@ -427,7 +411,7 @@
 
 .medo-date-panel__range--presets {
   display: grid;
-  grid-template-columns: 10.5rem auto; /* presets 168 */
+  grid-template-columns: auto auto; /* presets as wide as their longest label */
 }
 
 .medo-date-panel__presets {
@@ -468,7 +452,7 @@
   border-block-end: var(--medo-border-width-thin) solid var(--medo-color-border-default);
 }
 
-/* Time slots: Popover width 202. */
+/* Time slots in a Popover. */
 .medo-time-slots .medo-listbox {
-  min-inline-size: 12.5rem;
+  min-inline-size: var(--medo-size-width-sm);
 }

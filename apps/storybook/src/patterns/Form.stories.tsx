@@ -79,7 +79,7 @@ function ContactFormExample() {
   }
   return (
     // Form validates and saves; the classes of Stack give it the spacing rule fields.
-    <Form onSave={() => setSent(true)} className="medo-stack medo-gap-fields" style={{ maxInlineSize: '28rem' }}>
+    <Form onSave={() => setSent(true)} className="medo-stack medo-gap-fields" style={{ maxInlineSize: 'var(--medo-size-width-2xl)' }}>
       <TextField label="Name" name="name" isRequired autoComplete="name" errorMessage="Enter your name." />
       <TextField
         label="Email"

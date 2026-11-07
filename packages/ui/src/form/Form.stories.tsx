@@ -29,7 +29,7 @@ function SignUp() {
   return (
     <Form
       className="medo-stack medo-gap-fields"
-      style={{ maxInlineSize: '28rem' }}
+      style={{ maxInlineSize: 'var(--medo-size-width-2xl)' }}
       onSave={async (data) => {
         await signUp(data);
         setDone(true);

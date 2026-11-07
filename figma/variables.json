@@ -1,6 +1,6 @@
 {
   "source": "Figma file vOTfMtcpCwAJjuSZUkfpfj (med.o Design System)",
-  "exportedAt": "2026-11-01",
+  "exportedAt": "2026-11-07",
   "note": "Raw export of Figma variables and styles. Do not edit by hand: re-export from Figma (scripts/figma-export.js), then run `npm run tokens:from-figma`.",
   "collections": {
     "Foundation Colors": {
@@ -135,7 +135,7 @@
       }
     },
     "Foundation Border": { "modes": ["Base"], "vars": { "border/width/thin": 1, "border/width/thick": 2, "focus-ring/width": 2, "focus-ring/halo": 1 } },
-    "Foundation Size": { "modes": ["Base"], "vars": { "size/control/sm": 32, "size/control/md": 40, "size/control/lg": 48, "size/icon/sm": 16, "size/icon/md": 20, "size/icon/lg": 24 } },
+    "Foundation Size": { "modes": ["Base"], "vars": { "size/control/sm": 32, "size/control/md": 40, "size/control/lg": 48, "size/icon/sm": 16, "size/icon/md": 20, "size/icon/lg": 24, "size/width/3xs": 80, "size/width/2xs": 120, "size/width/xs": 160, "size/width/sm": 200, "size/width/md": 240, "size/width/lg": 280, "size/width/xl": 320, "size/width/2xl": 400, "size/width/3xl": 480, "size/width/4xl": 560, "size/width/5xl": 640, "size/width/6xl": 720 } },
     "Foundation Motion": {
       "modes": ["Base"],
       "vars": {
@@ -150,6 +150,18 @@
     "Layout": { "modes": ["Mobile", "Tablet", "Desktop"], "vars": { "layout/columns": [4, 8, 12], "layout/gutter": [16, 24, 24], "layout/margin": [16, 24, 32], "layout/section": [48, 64, 96], "layout/gap/inline": ["{space/2}", "{space/2}", "{space/2}"], "layout/gap/content": ["{space/4}", "{space/4}", "{space/4}"], "layout/gap/fields": ["{space/4}", "{space/6}", "{space/6}"], "layout/gap/items": ["{layout/gutter}", "{layout/gutter}", "{layout/gutter}"], "layout/gap/group": ["{space/8}", "{space/10}", "{space/12}"], "layout/gap/section": ["{layout/section}", "{layout/section}", "{layout/section}"] } }
   },
   "descriptions": {
+    "size/width/3xs": "Smallest fixed width.",
+    "size/width/2xs": "Small illustration (Empty State sm).",
+    "size/width/xs": "Medium illustration, narrow layout column.",
+    "size/width/sm": "Where labels are cut (Tag, Breadcrumbs).",
+    "size/width/md": "Tooltip, small Popover, Menu; min width of a column in a responsive grid.",
+    "size/width/lg": "Side navigation, navigation drawer, Toast min.",
+    "size/width/xl": "Popover, small Drawer, Menu max, Listbox max height; a single field in examples.",
+    "size/width/2xl": "Small Dialog, Drawer, large Popover, Toast; a form in examples.",
+    "size/width/3xl": "Media in examples.",
+    "size/width/4xl": "Dialog, large Drawer, Toast max.",
+    "size/width/5xl": "Quick search.",
+    "size/width/6xl": "Large Dialog.",
     "layout/gap/inline": "Rule: elements side by side in one group – buttons, tags, filters. 8 px.",
     "layout/gap/content": "Rule: inside one block – heading, text, actions. 16 px.",
     "layout/gap/fields": "Rule: form fields below each other. 16 · 24 · 24 px.",

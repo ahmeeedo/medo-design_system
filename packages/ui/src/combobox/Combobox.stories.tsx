@@ -153,7 +153,7 @@ const meta = {
     </Combobox>
   ),
   /* Fields fill their container: realistic form width; stories with parameters.width set their own. */
-  decorators: [(Story, { parameters }) => <div style={{ maxInlineSize: parameters.width ?? '22rem' }}>{Story()}</div>],
+  decorators: [(Story, { parameters }) => <div style={{ maxInlineSize: parameters.width ?? 'var(--medo-size-width-xl)' }}>{Story()}</div>],
 } satisfies Meta<typeof Combobox>;
 
 export default meta;

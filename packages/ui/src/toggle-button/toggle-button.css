@@ -135,7 +135,7 @@
     color: HighlightText;
   }
   .medo-toggle-group--segmented {
-    border: 1px solid CanvasText;
+    border: var(--medo-border-width-thin) solid CanvasText;
   }
   .medo-toolbar__separator {
     background-color: CanvasText;

@@ -18,7 +18,7 @@ function Column({ locale, children }: { locale: string; children: ReactNode }) {
 
 function Side({ render }: { render: (locale: string) => ReactNode }) {
   return (
-    <div className="doc-stage" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 16rem), 1fr))' }}>
+    <div className="doc-stage" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, var(--medo-size-width-md)), 1fr))' }}>
       {['en-US', 'de-DE'].map((locale) => (
         <Column key={locale} locale={locale}>
           {render(locale)}

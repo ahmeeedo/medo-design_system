@@ -40,6 +40,8 @@ jobs:
           node-version: 24
           cache: npm
       - run: npm ci
+      # Token rules first: fails in seconds, before the browser download.
+      - run: npm run lint
       # Chromium plus the system libraries it needs (download takes seconds, no cache needed).
       - run: npx playwright install --with-deps chromium
       - run: npm test

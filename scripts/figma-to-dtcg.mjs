@@ -71,7 +71,7 @@ const addDims = (collection, prefixMap) => {
   for (const [name, value] of Object.entries(C[collection].vars)) {
     let path = figmaPath(name);
     for (const [from, to] of Object.entries(prefixMap)) if (path.startsWith(from)) path = to + path.slice(from.length);
-    set(dimensions, path, { $type: 'dimension', $value: dim(value) });
+    set(dimensions, path, { $type: 'dimension', $value: dim(value), ...(desc[name] ? { $description: desc[name] } : {}) });
   }
 };
 addDims('Foundation Spacing', {});

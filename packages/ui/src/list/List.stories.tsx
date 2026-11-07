@@ -3,7 +3,7 @@ import { DescriptionItem, DescriptionList, List, ListItem } from './List';
 import { Card } from '../card/Card';
 import { Examples, Example, caption } from '../story-helpers';
 
-const cols: React.CSSProperties = { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(14rem, 1fr))', gap: 'var(--medo-layout-gap-items)' };
+const cols: React.CSSProperties = { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(var(--medo-size-width-md), 1fr))', gap: 'var(--medo-layout-gap-items)' };
 
 const meta = {
   title: 'Components/Data display/List',
@@ -98,7 +98,7 @@ export const Nesting: Story = {
     },
   },
   render: () => (
-    <div style={{ ...cols, maxInlineSize: '48rem' }}>
+    <div style={cols}>
       <List size="md">
         <ListItem>
           Design tokens
@@ -156,7 +156,7 @@ export const FeatureList: Story = {
     docs: { description: { story: 'Check for included, cross for not included – muted, with “Not included:” as hidden text. All items in one list, included first.' } },
   },
   render: () => (
-    <div style={{ maxInlineSize: '22.5rem' }}>
+    <div style={{ maxInlineSize: 'var(--medo-size-width-xl)' }}>
       <Card title="Team" subtitle="€ 12 per user / month">
         <List type="check">
           <ListItem>Unlimited projects</ListItem>
@@ -198,7 +198,7 @@ export const Description: Story = {
           <Details />
         </DescriptionList>
       </Example>
-      <Example label="auto · narrow (240 px)" style={{ maxInlineSize: '15rem' }}>
+      <Example label="auto · narrow (width/md)" style={{ maxInlineSize: 'var(--medo-size-width-md)' }}>
         <DescriptionList>
           <Details />
         </DescriptionList>

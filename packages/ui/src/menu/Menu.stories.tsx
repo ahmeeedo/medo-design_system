@@ -12,7 +12,6 @@ const file: React.CSSProperties = {
   display: 'flex',
   alignItems: 'center',
   gap: 'var(--medo-space-3)',
-  maxInlineSize: '28rem',
   padding: 'var(--medo-space-3) var(--medo-space-4)',
   border: 'var(--medo-border-width-thin) solid var(--medo-color-border-default)',
   borderRadius: 'var(--medo-radius-md)',
@@ -131,7 +130,7 @@ const meta = {
     const [confirm, setConfirm] = useState(false);
     return (
       <div style={file}>
-        <FileText aria-hidden="true" style={{ inlineSize: 20, blockSize: 20, color: 'var(--medo-color-text-secondary)' }} />
+        <FileText aria-hidden="true" style={{ inlineSize: 'var(--medo-size-icon-md)', blockSize: 'var(--medo-size-icon-md)', color: 'var(--medo-color-text-secondary)' }} />
         <div style={{ flex: 1, display: 'grid' }}>
           <span style={{ font: 'var(--medo-typography-label-md)' }}>Q3-Report.pdf</span>
           <span style={{ font: 'var(--medo-typography-caption)', color: 'var(--medo-color-text-secondary)' }}>PDF · 2.4 MB · edited 2 h ago</span>

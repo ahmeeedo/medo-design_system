@@ -83,7 +83,7 @@ export const Content: Story = {
   name: 'Content of a block',
   parameters: { docs: { description: { story: 'The default: heading, text and actions of one block with the rule `content` (16 px).' } } },
   render: () => (
-    <Stack style={{ maxInlineSize: '28rem' }}>
+    <Stack style={{ maxInlineSize: 'var(--medo-size-width-2xl)' }}>
       <h3 style={{ margin: 0, font: 'var(--medo-typography-heading-sm)' }}>Invite your team</h3>
       <p style={{ margin: 0, font: 'var(--medo-typography-body-md)', color: 'var(--medo-color-text-secondary)' }}>
         Everyone you invite can view and edit the projects of this workspace.
@@ -114,7 +114,7 @@ export const Fields: Story = {
   name: 'Form fields',
   parameters: { docs: { description: { story: 'Fields below each other use the rule `fields` (16 px on phones, 24 px from tablet).' } } },
   render: () => (
-    <Stack as="form" gap="fields" style={{ maxInlineSize: '24rem' }} onSubmit={(e) => e.preventDefault()}>
+    <Stack as="form" gap="fields" style={{ maxInlineSize: 'var(--medo-size-width-2xl)' }} onSubmit={(e) => e.preventDefault()}>
       <TextField label="Name" />
       <TextField label="Email" type="email" />
       <TextField label="Company" />

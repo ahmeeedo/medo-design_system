@@ -12,8 +12,7 @@ const MB = 1_000_000;
 const pdf = 'application/pdf';
 const network = 'Upload interrupted. Check your connection and retry.';
 
-const box: React.CSSProperties = { maxInlineSize: '35rem' };
-const stack: React.CSSProperties = { display: 'grid', gap: 'var(--medo-space-2)', maxInlineSize: '30rem' };
+const stack: React.CSSProperties = { display: 'grid', gap: 'var(--medo-space-2)' };
 const tiles: React.CSSProperties = { display: 'flex', gap: 'var(--medo-layout-gap-items)', flexWrap: 'wrap' };
 const actions = { onRemove: fn(), onCancel: fn(), onRetry: fn() };
 
@@ -167,7 +166,7 @@ const meta = {
     },
   },
   render: (args) => (
-    <div style={args.layout === 'compact' ? { maxInlineSize: '22.5rem' } : box}>
+    <div style={args.layout === 'compact' ? { maxInlineSize: 'var(--medo-size-width-xl)' } : undefined}>
       <Demo
         key={`${args.layout}-${args.maxFiles}`}
         {...args}
@@ -197,7 +196,7 @@ export const Layouts: Story = {
     },
   },
   render: () => (
-    <div style={{ display: 'grid', gap: 'var(--medo-layout-gap-group)', ...box }}>
+    <div style={{ display: 'grid', gap: 'var(--medo-layout-gap-group)' }}>
       <Demo
         label="Documents and photos"
         layout="list"
@@ -215,7 +214,7 @@ export const Layouts: Story = {
         texts={{ title: 'Drag and drop photos here' }}
         initial={sampleGrid}
       />
-      <div style={{ maxInlineSize: '22.5rem' }}>
+      <div style={{ maxInlineSize: 'var(--medo-size-width-xl)' }}>
         <Demo
           label="Attachments"
           layout="compact"
@@ -355,7 +354,7 @@ export const Validation: Story = {
     },
   },
   render: () => (
-    <div style={box}>
+    <div>
       <Demo label="Contracts" layout="list" acceptedFileTypes={['.pdf']} typesLabel="PDF" maxSize={1 * MB} maxFiles={2} />
     </div>
   ),
@@ -373,7 +372,7 @@ export const InteractionTest: Story = {
   // Checks the English messages word for word – the German run covers the other stories.
   tags: ['!autodocs', '!locale-de'],
   render: () => (
-    <div style={box}>
+    <div>
       <Demo label="Contracts" layout="list" acceptedFileTypes={['.pdf']} typesLabel="PDF" maxSize={1 * MB} maxFiles={2} />
     </div>
   ),
@@ -397,7 +396,7 @@ export const RetryTest: Story = {
   name: 'Interaction test: error, retry, remove',
   tags: ['!autodocs', '!locale-de'],
   render: () => (
-    <div style={box}>
+    <div>
       <Demo label="Contracts" layout="list" acceptedFileTypes={['.pdf']} typesLabel="PDF" maxSize={10 * MB} maxFiles={3} />
     </div>
   ),

@@ -124,7 +124,7 @@
   margin: 0;
   border: 0;
   opacity: 0;
-  font-size: 1rem;
+  font-size: var(--medo-font-size-base);
   cursor: pointer;
   appearance: none;
 }

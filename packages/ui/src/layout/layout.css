@@ -70,7 +70,7 @@
 /* Default: as many columns as fit, each at least --medo-grid-min wide. auto-fill keeps empty tracks, so one or
    two cards keep the size they have in a full row. min(…, 100%) stops a single column from overflowing. */
 .medo-grid {
-  --medo-grid-min: 16rem;
+  --medo-grid-min: var(--medo-size-width-md);
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(min(var(--medo-grid-min), 100%), 1fr));
   gap: var(--medo-layout-gap-items);

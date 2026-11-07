@@ -196,7 +196,7 @@ a.medo-stepper__step[data-focus-visible] {
 @media (forced-colors: active) {
   .medo-stepper__marker,
   .medo-stepper__segment {
-    border: 1px solid CanvasText;
+    border: var(--medo-border-width-thin) solid CanvasText;
   }
   .medo-stepper__item[data-state='complete'] .medo-stepper__marker,
   .medo-stepper__segment[data-done] {
@@ -204,6 +204,6 @@ a.medo-stepper__step[data-focus-visible] {
     color: HighlightText;
   }
   a.medo-stepper__step[data-focus-visible] {
-    outline: 2px solid Highlight;
+    outline: var(--medo-focus-ring-width) solid Highlight;
   }
 }

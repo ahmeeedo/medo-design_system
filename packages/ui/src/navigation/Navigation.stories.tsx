@@ -14,8 +14,8 @@ import { interactionTest, Examples, slot, Example } from '../story-helpers';
 const mark: React.CSSProperties = {
   display: 'inline-grid',
   placeItems: 'center',
-  inlineSize: 32,
-  blockSize: 32,
+  inlineSize: 'var(--medo-size-control-sm)',
+  blockSize: 'var(--medo-size-control-sm)',
   borderRadius: 'var(--medo-radius-md)',
   background: 'var(--medo-color-action-primary)',
   color: 'var(--medo-color-text-on-brand)',
@@ -45,7 +45,7 @@ function Logo({ full = true }: { full?: boolean }) {
 
 const content: React.CSSProperties = { padding: 'var(--medo-space-6)', display: 'grid', gap: 'var(--medo-layout-gap-content)' };
 const block: React.CSSProperties = {
-  blockSize: 96,
+  blockSize: 'var(--medo-space-24)',
   border: 'var(--medo-border-width-thin) solid var(--medo-color-border-default)',
   borderRadius: 'var(--medo-radius-lg)',
   background: 'var(--medo-color-surface-raised)',
@@ -193,7 +193,7 @@ const meta = {
     },
   },
   render: (args) => (
-    <div style={{ minBlockSize: 320 }}>
+    <div style={{ minBlockSize: 'var(--medo-size-width-xl)' }}>
       <SkipLink href="#main" />
       <SiteHeader {...args} logo={<Logo />}>
         <SiteLinks />
@@ -272,7 +272,7 @@ export const AppShell: Story = {
     return (
       // RouterProvider: links navigate client-side with any router – here it only changes the current page.
       <RouterProvider navigate={(href) => href.startsWith('#') && href !== '#home' && setCurrent(href.slice(1))}>
-        <div style={{ display: 'flex', blockSize: 600, background: 'var(--medo-color-surface-subtle)' }}>
+        <div style={{ display: 'flex', blockSize: 'var(--medo-size-width-4xl)', background: 'var(--medo-color-surface-subtle)' }}>
           <SideNav logo={<Logo />} logoMark={<Logo full={false} />} user={{ name: 'Alex W.', email: 'alex.weber@example.com' }}>
             <AppItems current={current} />
           </SideNav>
@@ -286,7 +286,7 @@ export const AppShell: Story = {
             />
             <div style={content}>
               <div style={block} />
-              <div style={{ ...block, blockSize: 240 }} />
+              <div style={{ ...block, blockSize: 'var(--medo-size-width-md)' }} />
             </div>
           </div>
         </div>
@@ -312,9 +312,9 @@ export const TabBar: Story = {
         style={{
           position: 'relative',
           transform: 'translateZ(0)',
-          inlineSize: 375,
+          inlineSize: 'var(--medo-size-width-xl)',
           maxInlineSize: '100%',
-          blockSize: 640,
+          blockSize: 'var(--medo-size-width-5xl)',
           overflow: 'hidden',
           border: 'var(--medo-border-width-thin) solid var(--medo-color-border-default)',
           borderRadius: 'var(--medo-radius-xl)',

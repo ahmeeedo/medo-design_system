@@ -244,7 +244,7 @@ export const Group: Story = {
     },
   },
   render: () => (
-    <div style={{ ...col, maxInlineSize: '36rem' }}>
+    <div style={col}>
       <ButtonGroup destructive={<Button variant="ghost-danger">Delete</Button>}>
         <Button variant="secondary">Cancel</Button>
         <Button>Save</Button>

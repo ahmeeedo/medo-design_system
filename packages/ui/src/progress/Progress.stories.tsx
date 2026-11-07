@@ -59,7 +59,6 @@ const meta = {
       },
     },
   },
-  decorators: [(Story) => <div style={{ maxInlineSize: '28rem' }}>{Story()}</div>],
 } satisfies Meta<typeof ProgressBar>;
 
 export default meta;

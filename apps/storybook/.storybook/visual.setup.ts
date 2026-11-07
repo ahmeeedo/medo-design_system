@@ -30,6 +30,7 @@ afterEach(async (context) => {
   // The mouse stays where the last test left it and could hover a button in this story: park it in the corner.
   const corner = document.createElement('div');
   // On top of everything: a sticky header or table head must not take the pointer (Playwright checks that).
+  // lint-tokens-ignore: test setup, a 1 px target for the pointer – not part of the UI.
   corner.style.cssText = 'position: fixed; inset: 0 auto auto 0; z-index: 2147483647; inline-size: 1px; block-size: 1px;';
   document.body.append(corner);
   await userEvent.hover(corner);

@@ -20,9 +20,9 @@
 
 .medo-menu-popover {
   box-sizing: border-box;
-  min-inline-size: 11.25rem; /* 180 */
-  inline-size: 15rem; /* 240 */
-  max-inline-size: min(20rem, calc(100vw - 2 * var(--medo-space-4))); /* 320 */
+  min-inline-size: var(--medo-size-width-sm);
+  inline-size: var(--medo-size-width-md);
+  max-inline-size: min(var(--medo-size-width-xl), calc(100vw - 2 * var(--medo-space-4)));
   border: var(--medo-border-width-thin) solid var(--medo-color-border-default);
   border-radius: var(--medo-radius-md);
   background-color: var(--medo-color-surface-raised);

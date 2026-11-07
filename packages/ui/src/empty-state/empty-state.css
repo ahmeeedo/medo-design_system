@@ -6,13 +6,12 @@
  *     <div class="medo-empty-state__content"><h2 class="medo-empty-state__title">…</h2><p class="medo-empty-state__description">…</p></div>
  *     <div class="medo-empty-state__actions">…</div>
  *   </section>
- * Page 480 · padding 48 · gap 16 · heading/md · body/md · Button md
+ * Fills its container · padding 48 · gap 16 · heading/md · body/md · Button md
  * Section 400 · padding 32 · gap 12 · heading/sm · body/sm · Button sm
  * Inline 320 · padding 24 · gap 8 · label/md · body/sm · Button sm
  */
 
 .medo-empty-state {
-  --_max: 30rem; /* 480 */
   --_gap: var(--medo-space-4);
 
   box-sizing: border-box;
@@ -21,20 +20,16 @@
   align-items: center;
   gap: var(--_gap);
   inline-size: 100%;
-  max-inline-size: var(--_max);
-  margin-inline: auto;
   padding-block: var(--medo-space-12);
   text-align: center;
 }
 
 .medo-empty-state--section {
-  --_max: 25rem; /* 400 */
   --_gap: var(--medo-space-3);
   padding-block: var(--medo-space-8);
 }
 
 .medo-empty-state--inline {
-  --_max: 20rem; /* 320 */
   --_gap: var(--medo-space-2);
   padding-block: var(--medo-space-6);
 }
@@ -83,23 +78,23 @@
   padding-block-start: 0;
 }
 
-/* Illustration slot: 240 × 160 · 160 × 120 · 120 × 88, radius/lg. */
+/* Illustration slot: width md · xs · 2xs, radius/lg. */
 .medo-empty-state__illustration {
   display: block;
   overflow: hidden;
-  inline-size: 15rem;
-  block-size: 10rem;
+  inline-size: var(--medo-size-width-md);
+  aspect-ratio: 3 / 2;
   border-radius: var(--medo-radius-lg);
 }
 
 .medo-empty-state--section .medo-empty-state__illustration {
-  inline-size: 10rem;
-  block-size: 7.5rem;
+  inline-size: var(--medo-size-width-xs);
+  aspect-ratio: 4 / 3;
 }
 
 .medo-empty-state--inline .medo-empty-state__illustration {
-  inline-size: 7.5rem;
-  block-size: 5.5rem;
+  inline-size: var(--medo-size-width-2xs);
+  aspect-ratio: 3 / 2;
 }
 
 .medo-empty-state__illustration > :is(img, svg) {
@@ -156,6 +151,6 @@
 
 @media (forced-colors: active) {
   .medo-icon-tile {
-    outline: 1px solid CanvasText;
+    outline: var(--medo-border-width-thin) solid CanvasText;
   }
 }

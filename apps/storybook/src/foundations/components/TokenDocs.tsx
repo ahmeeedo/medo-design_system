@@ -30,7 +30,7 @@ const Code = ({ children }: { children: ReactNode }) => <code className="doc-mon
 /** Token lists use the library table (StaticTable). */
 const Table = ({ children }: { children: ReactNode }) => <StaticTable>{children}</StaticTable>;
 
-function Swatch({ cssVar, theme, size = 40 }: { cssVar: string; theme: 'light' | 'dark'; size?: number }) {
+function Swatch({ cssVar, theme, size = 'var(--medo-size-control-md)' }: { cssVar: string; theme: 'light' | 'dark'; size?: string }) {
   // A data-theme island: shows the token exactly as it renders in that theme.
   return (
     <div
@@ -42,7 +42,7 @@ function Swatch({ cssVar, theme, size = 40 }: { cssVar: string; theme: 'light' |
         borderRadius: 'var(--medo-radius-md)',
         padding: 'var(--medo-space-1)',
         background: theme === 'dark' ? 'var(--medo-color-surface-default)' : 'var(--medo-color-surface-default)',
-        boxShadow: 'inset 0 0 0 1px rgba(127,127,127,.35)',
+        boxShadow: 'inset 0 0 0 var(--medo-border-width-thin) var(--medo-color-border-default)',
         boxSizing: 'border-box',
       }}
     >
@@ -125,7 +125,7 @@ function PairSample({ surface, text, theme }: { surface: string; text: string; t
         paddingInline: 'var(--medo-space-2)',
         minBlockSize: 'var(--medo-space-8)',
         borderRadius: 'var(--medo-radius-sm)',
-        boxShadow: 'inset 0 0 0 1px rgba(127,127,127,.35)',
+        boxShadow: 'inset 0 0 0 var(--medo-border-width-thin) var(--medo-color-border-default)',
         background: `var(${cssVarOf(surface)})`,
         color: `var(${cssVarOf(text)})`,
       }}
@@ -199,12 +199,12 @@ export function Palette() {
               {tokens.map((t) => (
                 <div key={t.cssVar}>
                   <div
-                    style={{ height: 40, borderRadius: 'var(--medo-radius-sm)', background: `var(${t.cssVar})`, boxShadow: 'inset 0 0 0 1px rgba(127,127,127,.25)' }}
+                    style={{ height: 'var(--medo-size-control-md)', borderRadius: 'var(--medo-radius-sm)', background: `var(${t.cssVar})`, boxShadow: 'inset 0 0 0 var(--medo-border-width-thin) var(--medo-color-border-default)' }}
                   />
                   <div className="medo-text-label-xs" style={{ marginBlockStart: 'var(--medo-space-1)' }}>
                     {t.path[2]}
                   </div>
-                  <div className="doc-mono" style={{ fontSize: 10 }}>
+                  <div className="doc-mono" style={{ fontSize: 'var(--medo-font-size-2xs)' }}>
                     {String(t.value)}
                   </div>
                 </div>
@@ -291,7 +291,7 @@ export function SpacingScale() {
               <Code>p-{t.path[1].replace('-', '.')}</Code>
             </td>
             <td style={{ width: '40%' }}>
-              <div style={{ height: 16, width: `var(${t.cssVar})`, background: 'var(--medo-color-action-primary)', borderRadius: 2 }} />
+              <div style={{ height: 'var(--medo-space-4)', width: `var(${t.cssVar})`, background: 'var(--medo-color-action-primary)', borderRadius: 'var(--medo-radius-sm)' }} />
             </td>
           </tr>
         ))}
@@ -307,10 +307,10 @@ export function Radii() {
         <div key={t.cssVar} style={{ textAlign: 'center' }}>
           <div
             style={{
-              width: 72,
-              height: 72,
+              width: 'var(--medo-size-width-3xs)',
+              height: 'var(--medo-size-width-3xs)',
               background: 'var(--medo-color-surface-brand-muted)',
-              border: '2px solid var(--medo-color-action-primary)',
+              border: 'var(--medo-border-width-thick) solid var(--medo-color-action-primary)',
               borderRadius: `var(${t.cssVar})`,
             }}
           />
@@ -470,7 +470,7 @@ export function SpacingRules() {
 
 export function Elevation() {
   return (
-    <div className="doc-stages" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(20rem, 1fr))' }}>
+    <div className="doc-stages" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(var(--medo-size-width-xl), 1fr))' }}>
       {(['light', 'dark'] as const).map((theme) => (
         <div key={theme} data-theme={theme} className="doc-stage" style={{ background: 'var(--medo-color-surface-canvas)' }}>
           <span className="doc-stage-label medo-text-code-sm">{theme}</span>
@@ -479,19 +479,19 @@ export function Elevation() {
               <div
                 key={t.cssVar}
                 style={{
-                  width: 120,
-                  height: 88,
+                  width: 'var(--medo-size-width-2xs)',
+                  aspectRatio: '3 / 2',
                   padding: 'var(--medo-space-3)',
                   boxSizing: 'border-box',
                   borderRadius: 'var(--medo-radius-lg)',
                   background: 'var(--medo-color-surface-raised)',
                   color: 'var(--medo-color-text-primary)',
                   boxShadow: `var(${t.cssVar})`,
-                  fontSize: 13,
+                  fontSize: 'var(--medo-font-size-sm)',
                 }}
               >
                 <strong>{t.path.slice(1).join('/')}</strong>
-                <div style={{ fontFamily: 'var(--medo-font-family-mono)', fontSize: 11, color: 'var(--medo-color-text-secondary)' }}>
+                <div style={{ fontFamily: 'var(--medo-font-family-mono)', fontSize: 'var(--medo-font-size-2xs)', color: 'var(--medo-color-text-secondary)' }}>
                   shadow-{t.path.slice(1).join('-')}
                 </div>
               </div>
@@ -525,17 +525,17 @@ function MotionPlayground() {
         </Button>
       </div>
       {curves.map((c) => (
-        <div key={c.name} style={{ display: 'grid', gridTemplateColumns: '9rem 1fr', alignItems: 'center', gap: 'var(--medo-layout-gap-content)' }}>
+        <div key={c.name} style={{ display: 'grid', gridTemplateColumns: 'var(--medo-size-width-xs) 1fr', alignItems: 'center', gap: 'var(--medo-layout-gap-content)' }}>
           <code className="doc-mono">{c.name}</code>
-          <div style={{ position: 'relative', height: 24, borderRadius: 12, background: 'var(--medo-color-surface-subtle)' }}>
+          <div style={{ position: 'relative', height: 'var(--medo-space-6)', borderRadius: 'var(--medo-radius-full)', background: 'var(--medo-color-surface-subtle)' }}>
             <span
               aria-hidden="true"
               style={{
                 position: 'absolute',
-                insetBlock: 2,
-                insetInlineStart: on ? 'calc(100% - 22px)' : 2,
-                width: 20,
-                borderRadius: 10,
+                insetBlock: 'var(--medo-space-0-5)',
+                insetInlineStart: on ? 'calc(100% - var(--medo-space-5) - var(--medo-space-0-5))' : 'var(--medo-space-0-5)',
+                width: 'var(--medo-space-5)',
+                borderRadius: 'var(--medo-radius-full)',
                 background: 'var(--medo-color-action-primary)',
                 transition: `inset-inline-start ${c.timing}`,
               }}
@@ -551,11 +551,11 @@ export function Motion() {
   return (
     <>
       <MotionPlayground />
-      <div style={{ height: 16 }} />
+      <div style={{ height: 'var(--medo-space-4)' }} />
       <SimpleTable path={['motion', 'duration']} />
-      <div style={{ height: 16 }} />
+      <div style={{ height: 'var(--medo-space-4)' }} />
       <SimpleTable path={['motion', 'easing']} />
-      <div style={{ height: 16 }} />
+      <div style={{ height: 'var(--medo-space-4)' }} />
       <SimpleTable path={['motion', 'spring']} format={springValue} />
     </>
   );

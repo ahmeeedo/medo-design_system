@@ -13,7 +13,7 @@
 
 .medo-link {
   --_fg: var(--medo-color-text-brand);
-  --_underline: 1px;
+  --_underline: var(--medo-border-width-thin);
 
   color: var(--_fg);
   font: inherit;
@@ -29,12 +29,12 @@
 
 .medo-link:is([data-hovered], :not([data-rac]):hover) {
   --_fg: var(--medo-color-text-brand-hover);
-  --_underline: 2px;
+  --_underline: var(--medo-border-width-thick);
 }
 
 .medo-link:is([data-pressed], :not([data-rac]):active) {
   --_fg: var(--medo-color-text-brand-pressed);
-  --_underline: 2px;
+  --_underline: var(--medo-border-width-thick);
 }
 
 .medo-link:is([data-focus-visible], :not([data-rac]):focus-visible) {
@@ -59,7 +59,7 @@
 
 .medo-link--standalone:is([data-hovered], [data-pressed], :not([data-rac]):hover, :not([data-rac]):active) {
   text-decoration-line: underline;
-  --_underline: 1px;
+  --_underline: var(--medo-border-width-thin);
 }
 
 /* ---------- Icons (external, arrow) ---------- */
