@@ -1,5 +1,17 @@
 # @med-o/ui
 
+## 0.7.2
+
+_Released 2026-11-07_
+
+### Patch Changes
+
+- d62706f: Improved: `Button` is Stable.
+
+  It passes the whole checklist, including the manual test with NVDA, VoiceOver and TalkBack – the results are in the Accessibility section of its page.
+
+- @med-o/design-tokens@0.7.2
+
 ## 0.7.1
 
 _Released 2026-11-07_
