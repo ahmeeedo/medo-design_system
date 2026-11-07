@@ -1,6 +1,6 @@
 # Result of a manual screen reader test (Guides / Screen reader testing on design.med-o.de).
 # Opened from “Report a result” in the Accessibility section of a component page: component, screen reader and
-# steps come filled in.
+# steps come filled in. Fields a link filled in cannot be edited here – tick the steps in the issue after submitting.
 name: Screen reader test
 description: Result of a manual screen reader test of one component.
 title: 'Screen reader test: '
@@ -16,7 +16,7 @@ body:
     id: reader
     attributes:
       label: Screen reader
-      placeholder: NVDA (Windows · Firefox or Chrome)
+      placeholder: NVDA (Windows)
     validations:
       required: true
   - type: input
@@ -24,14 +24,14 @@ body:
     attributes:
       label: Versions
       description: Screen reader, browser and system – the docs page shows them as “Tested with …”.
-      placeholder: NVDA 2025.3 · Firefox 145 · Windows 11
+      placeholder: NVDA 2026.3 · Chrome 156 · Windows 11
     validations:
       required: true
   - type: textarea
     id: steps
     attributes:
       label: Steps
-      description: Check every step that worked. Where it did not, write below the step what you heard instead.
+      description: Submit as it is, then tick the steps that worked in the issue. Where a step did not work, say in a comment what you heard instead.
     validations:
       required: true
   - type: dropdown

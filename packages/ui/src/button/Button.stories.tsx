@@ -9,7 +9,7 @@ import { Spinner } from '../progress/Progress';
 const meta = {
   title: 'Components/Actions/Button',
   component: Button,
-  tags: ['autodocs', 'status:beta'],
+  tags: ['autodocs', 'status:stable'],
   args: { children: 'Button', variant: 'primary', size: 'md', isDisabled: false, isPending: false, startIcon: 'none', endIcon: 'none', onPress: fn() },
   argTypes: {
     variant: { control: 'inline-radio', options: ['primary', 'secondary', 'ghost', 'danger', 'text', 'ghost-danger'] },
@@ -52,11 +52,16 @@ const meta = {
         // Manual test with NVDA, VoiceOver and TalkBack (Guides / Screen reader testing).
         screenReader: {
           steps: [
-            ['Go to the heading “Playground”, then to the next element.', '“Button, button”.'],
+            ['Go to the heading “Playground”, then to the next element.', '“Button, button”. (With the mouse over it, NVDA reads only the text – that is fine.)'],
             ['Activate it.', 'Nothing new – the focus stays on the button.'],
             ['Go to the heading “With icons” and through the buttons.', 'Only the labels; the icons are not read.'],
-            ['Go to the heading “Disabled” and through the buttons.', 'Each one as dimmed, unavailable or disabled. Tab skips them.'],
-            ['Go to the heading “Pending”, then to the first button.', '“Saving…, button” – and, where the screen reader says it, that it is busy.'],
+            ['Go to the heading “Disabled”, then through the buttons with the next element (not Tab).', 'Each one with “unavailable”, “dimmed” or “disabled”. Tab skips them – that is right.'],
+            ['Go to the heading “Pending”, then to the first button.', '“Saving…, button” with “unavailable” or “dimmed” – it cannot be pressed while it saves; the focus stays.'],
+          ],
+          tested: [
+            { reader: 'nvda', versions: 'NVDA 2026.3 · Chrome 156 · Windows 11', date: '2026-11-07', result: 'passed', issue: 17 },
+            { reader: 'voiceover', versions: 'iOS 27.0.1 · Safari', date: '2026-11-07', result: 'passed', issue: 18 },
+            { reader: 'talkback', versions: 'Android 13 · Chrome 156', date: '2026-11-07', result: 'passed', issue: 19 },
           ],
         },
       },
