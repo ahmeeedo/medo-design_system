@@ -57,6 +57,17 @@ const meta = {
           '`characterLimit` shows a counter and announces the remaining characters after a pause.',
           'Size lg uses 16 px text, which prevents the automatic zoom of mobile browsers when the field gets the focus.',
         ],
+        // Manual test with NVDA, VoiceOver and TalkBack (Guides / Screen reader testing).
+        screenReader: {
+          steps: [
+            ['Go to the heading “Playground”, then to the field.', '“Email, edit text” (or text field), then “We only use it for the login.”'],
+            ['Type “anna@example.com”, then move to the previous and next element.', 'The typed text is read back; nothing is announced twice.'],
+            ['Go to the heading “States”, then to the field “Required”.', 'Its name and that it is required.'],
+            ['Next field: “Invalid”.', 'That it is invalid, then “Enter a valid email address, e.g. name@example.com.”'],
+            ['Next fields: “Read-only” and “Disabled”.', 'The value “anna@example.com”; read only for the first, dimmed or disabled for the second.'],
+            ['Go to the heading “Icons and actions”, then to the password field and the button after it.', '“Password, secure text field” (or password), then “Show password, button”. Activate it: the button is now “Hide password”.'],
+          ],
+        },
       },
       styling: {
         classes: [

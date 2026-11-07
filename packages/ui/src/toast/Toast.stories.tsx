@@ -56,6 +56,16 @@ const meta = {
           '5 s, with an action 8 s; `persistent` stays until closed.',
           'Max 3 at a time; the same message is not shown twice.',
         ],
+        // Manual test with NVDA, VoiceOver and TalkBack (Guides / Screen reader testing).
+        screenReader: {
+          steps: [
+            ['Go to the heading “Playground”, then to “Show toast” and activate it.', '“Q3-Report.pdf deleted” – without moving the focus. The focus stays on the button.'],
+            ['Activate it again within 8 seconds, then press F6 (NVDA) or move to the next element until you reach the toast (VoiceOver, TalkBack).', 'The notifications region, then the message, then “Undo, button”.'],
+            ['Activate “Undo”.', 'The toast closes; the focus goes back to the button.'],
+            ['Go to the heading “Errors”, then to “Save (fails)” and activate it.', '“Could not save changes” – read without moving the focus.'],
+            ['Wait 10 seconds, then move to the toast.', 'It is still there (errors stay until closed), with “Retry” and a close button.'],
+          ],
+        },
       },
       styling: {
         classes: [

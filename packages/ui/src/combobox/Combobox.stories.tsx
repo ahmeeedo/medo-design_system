@@ -104,6 +104,17 @@ const meta = {
           'Matches are bold for sighted users only; the option name is read as usual.',
           'Below 640 px the list opens in a Bottom Sheet with its own search field.',
         ],
+        // Manual test with NVDA, VoiceOver and TalkBack (Guides / Screen reader testing).
+        screenReader: {
+          steps: [
+            ['Go to the heading “Playground”, then to the field.', '“Assignee”, combo box (or edit text), then “Type a name, e.g. ‘mul’.”'],
+            ['Type “mul”. On the phone the field opens a sheet with its own search field – type there.', 'How many options are available, e.g. “2 options available”.'],
+            ['Move down to the first option (arrow key; on the phone swipe right into the list).', 'The person’s name – the bold match is not read separately.'],
+            ['Activate it.', 'The list closes; the field has the name as its value.'],
+            ['Delete the text, type “xyz”.', '“No results for ‘xyz’” or that no options are available.'],
+            ['Leave the field.', 'The last chosen name is back in the field.'],
+          ],
+        },
       },
       styling: {
         classes: [

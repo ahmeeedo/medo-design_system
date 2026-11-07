@@ -104,6 +104,17 @@ const meta = {
           'Help and error texts are linked to the field and read with it.',
           'Multiple: the values show as tags in one line (“+N” when they do not fit). Tags are display only; uncheck an option to remove it.',
         ],
+        // Manual test with NVDA, VoiceOver and TalkBack (Guides / Screen reader testing).
+        screenReader: {
+          steps: [
+            ['Go to the heading “Playground”, then to the field.', '“Country”, that it is a pop-up button or combo box, its value “Select…” and “Used for shipping and taxes.”'],
+            ['Activate it.', 'That a list opened, and the first option. On the phone the system picker opens – then pick “Austria” there and skip to the last but one step.'],
+            ['Move down through the options (arrow keys; on the phone swipe right).', 'Each country, and its position (e.g. “2 of 8”) where the screen reader says it.'],
+            ['Activate “Austria”.', 'The list closes; the focus is back on the field with the value “Austria”.'],
+            ['Go to the heading “Multiple”, open the field and activate two options.', 'Each option as selected or checked; the list stays open.'],
+            ['Close the list (Esc; on the phone: Done).', 'The field with both values.'],
+          ],
+        },
       },
       styling: {
         classes: [

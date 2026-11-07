@@ -95,6 +95,20 @@ html[data-theme] :is(.sb-preparing-story, .sb-preparing-docs) > * {
   padding-bottom: var(--medo-space-6);
   border-bottom: 1px solid var(--medo-color-border-default);
 }
+/* Screen reader test in the Accessibility section: steps, then the result per screen reader. */
+.doc-sr-test {
+  display: grid;
+  gap: var(--medo-layout-gap-content);
+}
+.doc-sr-test > :is(h3, p) {
+  margin: 0;
+}
+.doc-sr-reader,
+.doc-sr-result {
+  display: grid;
+  gap: var(--medo-space-1);
+  justify-items: start;
+}
 /* Links in a row that wraps (Guides / Component status). */
 .doc-inline-list {
   display: flex;
@@ -567,6 +581,13 @@ html[data-theme] :is(.sb-preparing-story, .sb-preparing-docs) > * {
   }
   .medo-doc .doc-spec tbody th .doc-code {
     white-space: normal;
+  }
+  .medo-doc .doc-spec tbody td[data-label]::before {
+    content: attr(data-label) ': ';
+    font: var(--medo-typography-label-md-strong);
+  }
+  .medo-doc .doc-spec tbody td[data-label] + td {
+    margin-block-start: var(--medo-space-1);
   }
 }
 .medo-doc .doc-cell-muted {
