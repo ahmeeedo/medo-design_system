@@ -1,7 +1,9 @@
+import type React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Checkbox, CheckboxGroup } from './Checkbox';
 import { expect, fn } from 'storybook/test';
-import { interactionTest, stack } from '../story-helpers';
+import { interactionTest, stack, StateGrid, STATE_ATTRIBUTES } from '../story-helpers';
+import { Check, Minus } from 'lucide-react';
 
 const meta = {
   title: 'Components/Forms/Checkbox',
@@ -100,6 +102,46 @@ export const States: Story = {
         Large (mobile)
       </Checkbox>
     </div>
+  ),
+};
+
+/** A plain HTML checkbox with the classes and state attributes – the same CSS as the component. */
+function PlainCheckbox({ checked, root = {}, button = {} }: { checked: 'false' | 'true' | 'mixed'; root?: object; button?: object }) {
+  const state = checked === 'true' ? { 'data-selected': '' } : checked === 'mixed' ? { 'data-indeterminate': '' } : {};
+  return (
+    <div className="medo-choice medo-checkbox medo-choice--md" {...state} {...root}>
+      <label className="medo-choice__button" {...button}>
+        <span className="medo-choice__control" aria-hidden="true">
+          {checked === 'true' ? <Check /> : checked === 'mixed' ? <Minus /> : null}
+        </span>
+        <span className="medo-choice__label">{checked === 'true' ? 'Checked' : checked === 'mixed' ? 'Mixed' : 'Unchecked'}</span>
+      </label>
+    </div>
+  );
+}
+const CHECKED = ['false', 'true', 'mixed'] as const;
+
+export const InteractiveStates: Story = {
+  name: 'Interactive states',
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'Every state at a glance – a picture, rendered as plain HTML with the state attributes (`data-hovered`, `data-focus-visible`, `data-invalid`, `data-disabled`). To try the checkbox, use the Playground.',
+      },
+    },
+  },
+  render: () => (
+    <StateGrid
+      states={[
+        // No pressed look: the box changes on release (checked), like a native checkbox.
+        ...Object.entries(STATE_ATTRIBUTES)
+          .filter(([state]) => state !== 'Pressed')
+          .map(([state, attrs]) => [state, CHECKED.map((c) => <PlainCheckbox key={c} checked={c} button={attrs} />)] as [string, React.ReactNode]),
+        ['Invalid', CHECKED.map((c) => <PlainCheckbox key={c} checked={c} root={{ 'data-invalid': '' }} button={{ 'data-invalid': '' }} />)],
+        ['Disabled', CHECKED.map((c) => <PlainCheckbox key={c} checked={c} root={{ 'data-disabled': '' }} button={{ 'data-disabled': '' }} />)],
+      ]}
+    />
   ),
 };
 

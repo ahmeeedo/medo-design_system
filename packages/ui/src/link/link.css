@@ -39,7 +39,7 @@
 
 .medo-link:is([data-focus-visible], :not([data-rac]):focus-visible) {
   outline: var(--medo-focus-ring-width) solid var(--medo-color-focus-ring);
-  outline-offset: 2px;
+  outline-offset: var(--medo-space-0-5);
 }
 
 /* ---------- Standalone ---------- */

@@ -1,8 +1,10 @@
+import type React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { ArrowRight, Download, Plus, Trash2 } from 'lucide-react';
 import { expect, fn } from 'storybook/test';
 import { Button, ButtonGroup } from './Button';
-import { interactionTest, slot } from '../story-helpers';
+import { interactionTest, slot, StateGrid, STATE_ATTRIBUTES } from '../story-helpers';
+import { Spinner } from '../progress/Progress';
 
 const meta = {
   title: 'Components/Actions/Button',
@@ -178,6 +180,50 @@ export const Pending: Story = {
         Exporting…
       </Button>
     </div>
+  ),
+};
+
+const VARIANTS = ['primary', 'secondary', 'ghost', 'danger', 'text', 'ghost-danger'] as const;
+const label = (v: string) => v[0].toUpperCase() + v.slice(1).replace('-', ' ');
+/** A plain HTML button with the classes and state attributes – the same CSS as the component. */
+const plain = (v: string, attrs: object, content: React.ReactNode = label(v)) => (
+  <button key={v} type="button" className={`medo-button medo-button--${v} medo-button--md`} {...attrs}>
+    {content}
+  </button>
+);
+
+export const InteractiveStates: Story = {
+  name: 'Interactive states',
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'Every state of every variant at a glance – a picture, rendered as plain HTML with the state attributes (`data-hovered`, `data-pressed`, `data-focus-visible`, `data-pending`). To try the button, use the Playground.',
+      },
+    },
+  },
+  render: () => (
+    <StateGrid
+      states={[
+        ...Object.entries(STATE_ATTRIBUTES).map(([state, attrs]) => [state, VARIANTS.map((v) => plain(v, attrs))] as [string, React.ReactNode]),
+        ['Disabled', VARIANTS.map((v) => plain(v, { disabled: true }))],
+        [
+          'Pending',
+          VARIANTS.map((v) =>
+            plain(
+              v,
+              { 'data-pending': '', 'aria-disabled': 'true' },
+              <>
+                <span className="medo-button__icon" aria-hidden="true">
+                  <Spinner decorative />
+                </span>
+                <span className="medo-button__label">Saving…</span>
+              </>,
+            ),
+          ),
+        ],
+      ]}
+    />
   ),
 };
 

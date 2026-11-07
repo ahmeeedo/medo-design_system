@@ -26,6 +26,33 @@ export function Example({ label, children, style }: { label: ReactNode; children
   );
 }
 
+/** The state attributes of the CSS contract (React Aria sets them; other frameworks set the same). */
+export const STATE_ATTRIBUTES = {
+  Default: {},
+  Hover: { 'data-hovered': '' },
+  Pressed: { 'data-pressed': '' },
+  Focus: { 'data-focus-visible': '' },
+} as const;
+
+/**
+ * Every state of a component as a picture: one row per state, the variants next to each other. Rendered as plain
+ * HTML with the state attributes – the CSS works without React. Inert: keyboard and screen readers skip it, the
+ * Playground is the one to try.
+ */
+export function StateGrid({ states }: { states: [label: string, content: ReactNode][] }) {
+  return (
+    <div inert>
+      <Examples>
+        {states.map(([label, content]) => (
+          <Example key={label} label={label}>
+            <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'flex-start', gap: 'var(--medo-layout-gap-items)' }}>{content}</div>
+          </Example>
+        ))}
+      </Examples>
+    </div>
+  );
+}
+
 /* ---------- Playground controls (rule: a control must change what you see) ---------- */
 
 /**

@@ -4,7 +4,7 @@ import { expect } from 'storybook/test';
 import { useState } from 'react';
 import { Eye, EyeOff, Mail, Search } from 'lucide-react';
 import { InputAction, TextField } from './TextField';
-import { interactionTest, slot, stack } from '../story-helpers';
+import { interactionTest, slot, stack, StateGrid } from '../story-helpers';
 
 const meta = {
   title: 'Components/Forms/Text Field',
@@ -65,7 +65,10 @@ const meta = {
             ['Go to the heading “States”, then to the field “Required”.', 'Its name and that it is required.'],
             ['Next field: “Invalid”.', 'That it is invalid, then “Enter a valid email address, e.g. name@example.com.”'],
             ['Next fields: “Read-only” and “Disabled”.', 'The value “anna@example.com”; read only for the first, dimmed or disabled for the second.'],
-            ['Go to the heading “Icons and actions”, then to the password field and the button after it.', '“Password, secure text field” (or password), then “Show password, button”. Activate it: the button is now “Hide password”.'],
+            [
+              'Go to the heading “Icons and actions”, then to the password field and the button after it.',
+              '“Password, secure text field” (or password), then “Show password, button”. Activate it: the button is now “Hide password”.',
+            ],
           ],
         },
       },
@@ -126,6 +129,40 @@ export const States: Story = {
       <TextField {...args} label="Read-only" defaultValue="anna@example.com" isReadOnly />
       <TextField {...args} label="Disabled" defaultValue="anna@example.com" isDisabled />
     </div>
+  ),
+};
+
+/** A plain HTML field with the classes and state attributes – the same CSS as the component. */
+const plainField = (state: string, input: object = {}, attrs: object = {}) => (
+  <div className="medo-field" style={{ inlineSize: '16rem' }}>
+    <label className="medo-field__label">Email</label>
+    <div className="medo-input medo-input--md" {...attrs}>
+      <input className="medo-input__control" defaultValue="anna@example.com" aria-label={state} {...input} />
+    </div>
+  </div>
+);
+
+export const InteractiveStates: Story = {
+  name: 'Interactive states',
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'Every state at a glance – a picture, rendered as plain HTML. Hover and focus follow the pointer and the focus; a preview or another framework sets `data-hovered` and `data-focused` on `medo-input`. To try the field, use the Playground.',
+      },
+    },
+  },
+  render: () => (
+    <StateGrid
+      states={[
+        ['Default', plainField('Default')],
+        ['Hover', plainField('Hover', {}, { 'data-hovered': '' })],
+        ['Focus', plainField('Focus', {}, { 'data-focused': '' })],
+        ['Invalid', plainField('Invalid', { 'aria-invalid': 'true' })],
+        ['Read-only', plainField('Read-only', { readOnly: true })],
+        ['Disabled', plainField('Disabled', { disabled: true })],
+      ]}
+    />
   ),
 };
 
