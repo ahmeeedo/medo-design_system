@@ -332,8 +332,13 @@ type MedoUsage = { when?: string[]; whenNot?: string[]; do?: string[]; dont?: st
 /** A manual screen reader test (Guides / Screen reader testing): steps and the results per screen reader. */
 type ScreenReaderId = 'nvda' | 'voiceover' | 'talkback';
 type ScreenReaderTest = {
-  /** [what to do, what must be heard] – the same steps for every screen reader; keys and gestures are on the guide page. */
-  steps: [string, string][];
+  /**
+   * The phrases the test ScreenReaderTest expects from the Virtual Screen Reader – a safety net on every change, so a
+   * component tested by hand does not change what it says unnoticed. Not shown on the page.
+   */
+  automated?: string[];
+  /** Manual: [what to do, what must be heard] – the same steps for every screen reader; keys and gestures are on the guide page. */
+  steps?: [string, string][];
   /** Results, newest first per screen reader. */
   tested?: { reader: ScreenReaderId; versions: string; date: string; result: 'passed' | 'issues'; issue?: number }[];
 };
@@ -377,6 +382,7 @@ const dateText = (iso: string) => new Date(`${iso}T12:00:00Z`).toLocaleDateStrin
 
 /** Steps to follow with each screen reader, the results so far (“Tested with … on …”) and a link to report one. */
 function ScreenReaderTestBlock({ component, test }: { component: string; test: ScreenReaderTest }) {
+  const steps = test.steps ?? [];
   return (
     <div className="doc-sr-test">
       <h3 className="medo-text-heading-md">Screen reader test</h3>
@@ -384,10 +390,11 @@ function ScreenReaderTestBlock({ component, test }: { component: string; test: S
         The same steps with NVDA, VoiceOver and TalkBack: what to do and what you must hear – the words may differ, the meaning not. Keys and gestures:{' '}
         <Link href={docsHref(SCREEN_READER_GUIDE_ID)}>Screen reader testing</Link>.
       </p>
-      <SpecTable head={['Do', 'You hear']} rows={test.steps.map(([action, hear]) => [<Rich>{action}</Rich>, <Rich>{hear}</Rich>])} />
+      <SpecTable head={['Do', 'You hear']} rows={steps.map(([action, hear]) => [<Rich>{action}</Rich>, <Rich>{hear}</Rich>])} />
       <SpecTable
         head={['Screen reader', 'Result']}
-        rows={SCREEN_READERS.map((reader) => {
+        rows={[
+          ...SCREEN_READERS.map((reader) => {
           const last = test.tested?.find((t) => t.reader === reader.id);
           return [
             <span className="doc-sr-reader">
@@ -411,13 +418,14 @@ function ScreenReaderTestBlock({ component, test }: { component: string; test: S
               ) : (
                 <span className="doc-muted">Not tested yet</span>
               )}
-              <Link href={reportUrl(component, reader, test.steps)} target="_blank">
+              <Link href={reportUrl(component, reader, steps)} target="_blank">
                 Report a result
                 <span className="medo-visually-hidden">{` for ${reader.name}`}</span>
               </Link>
             </span>,
           ];
-        })}
+          }),
+        ]}
       />
     </div>
   );

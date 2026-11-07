@@ -14,7 +14,8 @@ import { DocPage, DocHeader, DocSection, DocFooter, SpecTable, Tok, SourceLink }
   description={
     <p>
       Every component page has a screen reader test in its Accessibility section: the steps, what you must hear and the results so far. A component is Stable only when it
-      passed with all three screen readers (Guides / Component status).
+      passed with all three screen readers (Guides / Component status). After that, an automated test with a virtual screen reader
+      checks on every change that the component still says the same – so a tested component stays tested.
     </p>
   }
   nav={['Set up', 'Keys and gestures', 'Run a test', 'Report the result']}

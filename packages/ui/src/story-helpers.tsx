@@ -1,5 +1,6 @@
 import type { CSSProperties, ReactNode } from 'react';
 import { expect, waitFor } from 'storybook/test';
+import { virtual } from '@guidepup/virtual-screen-reader';
 
 /** Layout helpers for stories only. */
 export const row: CSSProperties = { display: 'flex', gap: 'var(--medo-layout-gap-inline)', alignItems: 'center', flexWrap: 'wrap' };
@@ -118,3 +119,32 @@ export const overflowsHorizontally = () => document.documentElement.scrollWidth 
  * popover only after that: WebKit on a busy runner dropped an Esc or a click sent during the opening animation.
  */
 export const overlaysSettled = () => waitFor(() => expect(document.querySelector('[data-entering]')).toBeNull());
+
+/* ---------- Screen reader (automated) ---------- */
+
+/**
+ * What a screen reader says when it reads `root` from top to bottom: one phrase per element with role, name, state
+ * and description – computed by the Virtual Screen Reader from the W3C mappings (accname, html-aam, core-aam).
+ * The automated screen reader test of simple components (Guides / Screen reader testing) compares it with the
+ * expected phrases. Real screen readers word it their own way; the meaning is the same.
+ */
+export async function spokenPhrases(root: HTMLElement) {
+  await virtual.start({ container: root });
+  try {
+    // Inside a container the reader wraps around at the end: stop when it is back at the first phrase.
+    const first = await virtual.lastSpokenPhrase();
+    for (let i = 0; i < 300; i++) {
+      await virtual.next();
+      const log = await virtual.spokenPhraseLog();
+      if (log.length > 1 && log.at(-1) === first) break;
+    }
+    const log = (await virtual.spokenPhraseLog()).slice(0, -1);
+    // The text of a label or an element is read with it (“checkbox, SMS, not checked”), not again on its own (“SMS”).
+    // An element phrase starts with its role in lower case (“textbox, …”, “end of group, …”).
+    const element = (p: string) => /^[a-z][a-z ]*, /.test(p);
+    const near = (i: number) => [...log.slice(Math.max(0, i - 3), i), log[i + 1] ?? ''];
+    return log.filter((phrase, i) => element(phrase) || !near(i).some((p) => element(p) && p.includes(phrase)));
+  } finally {
+    await virtual.stop();
+  }
+}

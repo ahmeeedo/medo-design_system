@@ -2,8 +2,20 @@ import type React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Checkbox, CheckboxGroup } from './Checkbox';
 import { expect, fn } from 'storybook/test';
-import { interactionTest, stack, StateGrid, STATE_ATTRIBUTES } from '../story-helpers';
+import { interactionTest, spokenPhrases, stack, StateGrid, STATE_ATTRIBUTES } from '../story-helpers';
 import { Check, Minus } from 'lucide-react';
+
+/** What a screen reader says for the checkboxes in the screen reader test (Virtual Screen Reader). */
+const CHECKBOX_PHRASES = [
+  'checkbox, Unchecked, not checked',
+  'checkbox, Checked, checked',
+  'checkbox, Mixed, not checked',
+  'checkbox, Disabled, not checked, disabled',
+  'checkbox, Accept the terms, Accept the terms to continue., not checked, invalid, required',
+  'group, Notifications, Select all that apply.',
+  'checkbox, SMS, Costs may apply. Select all that apply., not checked',
+  'end of group, Notifications, Select all that apply.',
+];
 
 const meta = {
   title: 'Components/Forms/Checkbox',
@@ -38,7 +50,7 @@ const meta = {
           'A real checkbox input: forms and validation keep working.',
           'Description and error texts are linked to the checkbox.',
         ],
-        // Manual test with NVDA, VoiceOver and TalkBack (Guides / Screen reader testing).
+        // Steps for the manual test; simple components are also tested automatically (Guides / Screen reader testing).
         screenReader: {
           steps: [
             ['Go to the heading “Playground”, then to the checkbox.', '“Accept the terms, checkbox, not checked”.'],
@@ -48,6 +60,8 @@ const meta = {
             ['Next checkbox: “SMS”.', '“SMS, checkbox, not checked”, then “Costs may apply.”'],
             ['Go to the heading “Group invalid”, then to the first checkbox.', 'The group “Topics” and “Select at least one topic.”'],
           ],
+          // Checked on every change by the test ScreenReaderTest (Virtual Screen Reader).
+          automated: CHECKBOX_PHRASES,
         },
       },
       styling: {
@@ -178,5 +192,33 @@ export const InteractionTest: Story = {
     await userEvent.keyboard(' ');
     await expect(box).not.toBeChecked();
     await expect(args.onChange).toHaveBeenLastCalledWith(false);
+  },
+};
+
+
+export const ScreenReaderTest: Story = {
+  ...interactionTest,
+  tags: ['!autodocs', '!locale-de'],
+  render: () => (
+    <div style={stack}>
+      <Checkbox>Unchecked</Checkbox>
+      <Checkbox defaultSelected>Checked</Checkbox>
+      <Checkbox isIndeterminate>Mixed</Checkbox>
+      <Checkbox isDisabled>Disabled</Checkbox>
+      <Checkbox isRequired isInvalid errorMessage="Accept the terms to continue.">
+        Accept the terms
+      </Checkbox>
+      <CheckboxGroup label="Notifications" description="Select all that apply.">
+        <Checkbox value="email" description="Costs may apply.">
+          SMS
+        </Checkbox>
+      </CheckboxGroup>
+    </div>
+  ),
+  play: async ({ canvasElement }) => {
+    await expect(await spokenPhrases(canvasElement)).toEqual(CHECKBOX_PHRASES);
+    // Mixed comes from the native indeterminate state, which browsers announce (“mixed”, “half checked”) – the Virtual
+    // Screen Reader reads attributes only and says “not checked”.
+    await expect(canvasElement.querySelectorAll('input[type="checkbox"]')[2]).toHaveProperty('indeterminate', true);
   },
 };
