@@ -1,10 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect } from 'storybook/test';
+import { unparsedBreaking } from '../docs-blocks/Changelog';
 
 /**
  * Docs rules (Guides / Component status, “Docs”): every component page has Usage, a Playground, Accessibility and
  * Styling, and every interactive component has an interaction test. That every prop in the Playground has a
  * description is checked on the built pages (scripts/check-docs.mjs) – Vitest runs without Storybook's docgen.
+ * Every breaking change in the CHANGELOGs follows the format, so What's new lists it under “Before you update”.
  * Tests only – hidden from the sidebar (`!dev`).
  */
 const meta = {
@@ -63,6 +65,15 @@ export const Sections: Story = {
       const reason = noPlayground[title];
       await expect(stories.includes('Playground'), `${title}: ${reason ? 'has a Playground now – remove it from noPlayground' : 'story “Playground”'}`).toBe(!reason);
     }
+  },
+};
+
+/** Every breaking change in the CHANGELOGs is recognised – else “Before you update” and “Only breaking” miss it. */
+export const BreakingChanges: Story = {
+  name: 'Breaking changes in the changelog',
+  render: () => <div />,
+  play: async () => {
+    await expect(unparsedBreaking, 'Write “**Breaking:**” or “**Breaking (note):**” (README, Contributing)').toEqual([]);
   },
 };
 

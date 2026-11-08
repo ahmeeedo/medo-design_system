@@ -6,7 +6,7 @@
  * An entry follows the writing rule for changesets (README, Contributing):
  *   - <commit>: New|Improved|Fixed: one short line with the `Component`.
  *     Details: paragraphs and lists.
- *     **Breaking:** what changed.
+ *     **Breaking:** what changed.   (optionally with a note: **Breaking (types only):**)
  *     Update: what to do.
  * Per release: breaking changes first (“Before you update”), then New · Improved · Fixed.
  */
@@ -20,7 +20,7 @@ import { Rich } from './text';
 
 type Kind = 'Major' | 'Minor' | 'Patch';
 type Category = 'New' | 'Improved' | 'Fixed';
-type Breaking = { what: string; update?: string };
+type Breaking = { what: string; update?: string; note?: string };
 type Entry = { key: string; id: string; category: Category; summary: string; body: string[]; breaking?: Breaking; packages: Set<string> };
 type Release = { version: string; date?: string; kind: Kind; entries: Map<string, Entry> };
 
@@ -29,18 +29,25 @@ const rank: Record<Kind, number> = { Major: 0, Minor: 1, Patch: 2 };
 
 /* ---------- Parsing ---------- */
 
-/** Splits an entry's details from its “**Breaking:** … Update: …” paragraph. */
+/**
+ * Paragraphs that look like a breaking change but do not match the format – checked in Tests/Docs rules, so a typo
+ * cannot hide a breaking change from “Before you update” and the filter.
+ */
+export const unparsedBreaking: string[] = [];
+
+/** Splits an entry's details from its “**Breaking:** … Update: …” paragraph (“**Breaking (types only):**” too). */
 function finish(entry: Entry) {
   const blocks = entry.body.join('\n').split(/\n\s*\n/);
   const rest: string[] = [];
   for (const block of blocks) {
-    const breaking = block.match(/^\*\*(?:Breaking|Behaviour change):\*\*\s*([\s\S]*)/);
+    const breaking = block.match(/^\*\*(?:Breaking|Behaviour change)(?: \(([^)]+)\))?:\*\*\s*([\s\S]*)/);
     if (!breaking) {
+      if (/^\*\*[^*]*\b(?:breaking|behaviou?r change)/i.test(block.trim())) unparsedBreaking.push(`${entry.id}: ${block.trim().split('\n')[0]}`);
       if (block.trim()) rest.push(block.trim());
       continue;
     }
-    const [what, update] = breaking[1].split(/\n?Update:\s*/);
-    entry.breaking = { what: what.replace(/\s*\n\s*/g, ' ').trim(), update: update?.replace(/\s*\n\s*/g, ' ').trim() };
+    const [what, update] = breaking[2].split(/\n?Update:\s*/);
+    entry.breaking = { what: what.replace(/\s*\n\s*/g, ' ').trim(), update: update?.replace(/\s*\n\s*/g, ' ').trim(), note: breaking[1] };
   }
   entry.body = rest;
 }
@@ -215,7 +222,7 @@ function Change({ e, pages }: { e: Entry; pages: Map<string, DocPage> }) {
           <>
             {' '}
             <Badge tone="danger" size="sm">
-              Breaking
+              {e.breaking.note ? `Breaking · ${e.breaking.note}` : 'Breaking'}
             </Badge>
           </>
         )}
@@ -258,7 +265,9 @@ function ReleaseBody({ r, entries, level, pages }: { r: Release; entries: Entry[
               <ListItem key={e.key}>
                 <span className="doc-breaking">
                   <span>
-                    {componentNames(e)[0] && <strong>{`${componentNames(e)[0]}: `}</strong>}
+                    {(componentNames(e)[0] || e.breaking!.note) && (
+                      <strong>{`${[componentNames(e)[0], e.breaking!.note && `(${e.breaking!.note})`].filter(Boolean).join(' ')}: `}</strong>
+                    )}
                     <Rich>{capital(e.breaking!.what)}</Rich>
                   </span>
                   {e.breaking!.update && (
