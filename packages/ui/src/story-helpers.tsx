@@ -6,8 +6,8 @@ import { virtual } from '@guidepup/virtual-screen-reader';
 export const row: CSSProperties = { display: 'flex', gap: 'var(--medo-layout-gap-inline)', alignItems: 'center', flexWrap: 'wrap' };
 export const stack: CSSProperties = { display: 'grid', gap: 'var(--medo-layout-gap-fields)', maxInlineSize: 'var(--medo-size-width-xl)' };
 
-/** Small mono caption above an example (“md”, “collapsed · sm”). */
-export const caption: CSSProperties = { font: 'var(--medo-typography-code-sm)', color: 'var(--medo-color-text-secondary)' };
+/** Small caption above an example (“md”, “collapsed · sm”). DM Sans – DM Mono is only for code. */
+export const caption: CSSProperties = { font: 'var(--medo-typography-caption)', color: 'var(--medo-color-text-secondary)' };
 
 /**
  * Several examples under each other, rule `group` apart. Give each a caption with Example. The theme comes from the

@@ -15,23 +15,23 @@ import * as SearchStories from '../../../../packages/ui/src/search/Search.storie
   nav={['Search page', 'Filters on desktop', 'Filters on mobile', 'Quick search', 'Rules']}
 />
 
-<DocSection n={1} title="Search page" meta="Up to 4 filters" description="Result count, type tabs, filters above the list, sort. Query and filters live in the URL.">
+<DocSection n={1} title="Search page" description="Up to 4 filters. Result count, type tabs, filters above the list, sort. Query and filters live in the URL.">
   <Canvas of={SearchStories.Page} />
 </DocSection>
 
-<DocSection n={2} title="Filters on desktop" meta="5 or more filters" description="More filters move into a sidebar (264 px) with Accordion groups. Active filters show as removable tags with “Clear all”.">
+<DocSection n={2} title="Filters on desktop" description="From 5 filters on, they move into a sidebar (264 px) with Accordion groups. Active filters show as removable tags with “Clear all”.">
   <Canvas of={SearchStories.Sidebar} />
 </DocSection>
 
-<DocSection n={3} title="Filters on mobile" meta="Below 640 px" description="One “Filters” button with the count opens a Bottom Sheet. The result button applies the filters and shows how many results remain.">
+<DocSection n={3} title="Filters on mobile" description="Below 640 px, one “Filters” button with the count opens a Bottom Sheet. The result button applies the filters and shows how many results remain.">
   <Canvas of={SearchStories.MobileFilters} />
 </DocSection>
 
-<DocSection n={4} title="Quick search" meta="Cmd / Ctrl + K" description="A modal for pages and objects: recent and suggested while empty, hits grouped by type while typing, “All results” at the end.">
+<DocSection n={4} title="Quick search" description="Cmd / Ctrl + K opens a modal for pages and objects: recent and suggested while empty, hits grouped by type while typing, “All results” at the end.">
   <Canvas of={SearchStories.Quick} />
 </DocSection>
 
-<DocSection n={5} title="Rules" meta="Do">
+<DocSection n={5} title="Rules">
 
 <SpecTable
   head={['Topic', 'Rule']}

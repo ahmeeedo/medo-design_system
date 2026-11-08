@@ -15,7 +15,7 @@ import { FormatDemo, LanguageDemo } from './LanguageDemo';
   nav={['Set the language', 'Example', 'Order of texts', 'Other languages', 'Writing rules']}
 />
 
-<DocSection n={1} title="Set the language" meta="I18nProvider" description="The language comes from React Aria. Without a provider it follows the browser.">
+<DocSection n={1} title="Set the language" description="The language comes from React Aria. Without a provider it follows the browser.">
 
 ```tsx
 import { I18nProvider } from 'react-aria-components';
@@ -29,7 +29,7 @@ Pin the language once at the root – also for an app in one language only (<Tok
 
 </DocSection>
 
-<DocSection n={2} title="Example" meta="Live" description="The same components, once per language. All other examples in this documentation use English.">
+<DocSection n={2} title="Example" description="The same components, once per language. All other examples in this documentation use English.">
 
 <LanguageDemo />
 
@@ -39,7 +39,7 @@ Dates keep their order (12/31/2026 · 31.12.2026), numbers their separators (€
 
 </DocSection>
 
-<DocSection n={3} title="Order of texts" meta="Who wins">
+<DocSection n={3} title="Order of texts">
 
 <SpecTable
   head={['Source', 'Use']}
@@ -52,7 +52,7 @@ Dates keep their order (12/31/2026 · 31.12.2026), numbers their separators (€
 
 </DocSection>
 
-<DocSection n={4} title="Other languages" meta="MessagesProvider" description="Start from the English texts and replace them. TypeScript reports every missing text and wrong parameter.">
+<DocSection n={4} title="Other languages" description="Start from the English texts and replace them. TypeScript reports every missing text and wrong parameter.">
 
 ```tsx
 import { MessagesProvider, enMessages, type Messages } from '@med-o/ui';
@@ -74,7 +74,7 @@ Texts with numbers are functions, so every language can use its own plural forms
 
 </DocSection>
 
-<DocSection n={5} title="Writing rules" meta="German">
+<DocSection n={5} title="Writing rules">
 
 <Notes title="How the German texts are written">
   <ul>

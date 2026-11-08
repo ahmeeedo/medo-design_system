@@ -15,15 +15,15 @@ import { DocPage, DocHeader, DocSection, DocFooter, Notes, Tok, SourceLink } fro
   nav={['Elevation', 'Blur', 'Motion', 'Opacity']}
 />
 
-<DocSection n={1} title="Elevation" meta="4 levels · Light + Dark" description="Only for elements that float above the page. Dropdowns elevation/2, dialogs elevation/3.">
+<DocSection n={1} title="Elevation" description="Only for elements that float above the page. Dropdowns elevation/2, dialogs elevation/3.">
   <Elevation />
 </DocSection>
 
-<DocSection n={2} title="Blur" meta="Media · image">
+<DocSection n={2} title="Blur">
   <SimpleTable path={['blur']} />
 </DocSection>
 
-<DocSection n={3} title="Motion" meta="Durations · easings · springs" description="Short, purposeful and physical. Feedback within 100 ms, things that move use springs, exits are shorter than entries.">
+<DocSection n={3} title="Motion" description="Short, purposeful and physical. Feedback within 100 ms, things that move use springs, exits are shorter than entries.">
   <Motion />
   <Notes>
     <p><strong>Feedback</strong> (hover, pressed, focus): color and opacity with <Tok>motion/duration/fast</Tok> + <Tok>motion/easing/standard</Tok>. Pressed shows at once and fades out on release, so a tap feels immediate.</p>
@@ -33,7 +33,7 @@ import { DocPage, DocHeader, DocSection, DocFooter, Notes, Tok, SourceLink } fro
   </Notes>
 </DocSection>
 
-<DocSection n={4} title="Opacity" meta="Scrims · overlays" description="Opacity is not a disabled state. Disabled uses dedicated colors with known contrast.">
+<DocSection n={4} title="Opacity" description="Opacity is not a disabled state. Disabled uses dedicated colors with known contrast.">
   <SimpleTable path={['opacity']} />
 </DocSection>
 

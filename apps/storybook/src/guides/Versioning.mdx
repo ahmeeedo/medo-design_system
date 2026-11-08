@@ -14,7 +14,7 @@ import { DocPage, DocHeader, DocSection, DocFooter, SpecTable, Notes, Tok, Sourc
   nav={['Browsers', 'Versions', 'Breaking changes', 'Deprecations', 'Requirements']}
 />
 
-<DocSection n={1} title="Browsers" meta="Supported · minimum · tested" description="Three different promises – what we support, what technically works, and what we test.">
+<DocSection n={1} title="Browsers" description="Three different promises – what we support, what technically works, and what we test.">
 
 <SpecTable
   head={['Promise', 'Chrome, Edge · Safari (macOS, iOS) · Firefox · Samsung Internet']}
@@ -29,7 +29,7 @@ Older versions are not supported, but the components still work there, without a
 
 </DocSection>
 
-<DocSection n={2} title="Versions" meta="0.x · from 1.0" description="What the version number tells you.">
+<DocSection n={2} title="Versions" description="What the version number tells you.">
 
 <SpecTable
   head={['Release', 'May contain']}
@@ -45,7 +45,7 @@ Fixes go into the latest version only. Pin a version range that matches how you 
 
 </DocSection>
 
-<DocSection n={3} title="Breaking changes" meta="Changelog" description="A breaking change says what changed and what to do – in the changelog of the release. What's new lists it first, under “Before you update”.">
+<DocSection n={3} title="Breaking changes" description="A breaking change says what changed and what to do – in the changelog of the release. What's new lists it first, under “Before you update”.">
 
 ```md
 ## 0.5.0
@@ -62,7 +62,7 @@ _Released 2026-11-01_
 
 </DocSection>
 
-<DocSection n={4} title="Deprecations" meta="@deprecated" description="Nothing disappears without warning. Old APIs are marked first and keep working for a while.">
+<DocSection n={4} title="Deprecations" description="Nothing disappears without warning. Old APIs are marked first and keep working for a while.">
 
 ```tsx
 export interface ButtonProps {
@@ -84,7 +84,7 @@ A renamed token keeps its old name as an alias for the same time, so no project 
 
 </DocSection>
 
-<DocSection n={5} title="Requirements" meta="React 19 · ESM">
+<DocSection n={5} title="Requirements">
 
 <Notes title="What the packages need">
   <ul>

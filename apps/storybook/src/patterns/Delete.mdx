@@ -18,7 +18,7 @@ import * as ListViewStories from '../../../../packages/ui/src/list-view/ListView
   nav={['Decide', 'Undo with a Toast', 'Confirm with an Alert dialog', 'Several items', 'Swipe on touch', 'Texts']}
 />
 
-<DocSection n={1} title="Decide" meta="Undo or confirm">
+<DocSection n={1} title="Decide">
 
 <SpecTable
   head={['Situation', 'Pattern']}
@@ -32,23 +32,23 @@ import * as ListViewStories from '../../../../packages/ui/src/list-view/ListView
 
 </DocSection>
 
-<DocSection n={2} title="Undo with a Toast" meta="Reversible" description="Write the result, not the question. The item disappears at once; Undo puts it back.">
+<DocSection n={2} title="Undo with a Toast" description="Write the result, not the question. The item disappears at once; Undo puts it back.">
   <Canvas of={ToastStories.Playground} />
 </DocSection>
 
-<DocSection n={3} title="Confirm with an Alert dialog" meta="Irreversible" description="Focus starts on Cancel, so an accidental Enter never deletes. The button names the verb.">
+<DocSection n={3} title="Confirm with an Alert dialog" description="Focus starts on Cancel, so an accidental Enter never deletes. The button names the verb.">
   <Canvas of={AlertDialogStories.Playground} />
 </DocSection>
 
-<DocSection n={4} title="Several items" meta="Bulk action bar" description="Select rows, then act on all of them. The count is announced; destructive actions come last.">
+<DocSection n={4} title="Several items" description="Select rows, then act on all of them. The count is announced; destructive actions come last.">
   <Canvas of={BulkStories.WithListView} />
 </DocSection>
 
-<DocSection n={5} title="Swipe on touch" meta="List view" description="A shortcut on touch only – mouse and keyboard use the “…” menu with the same actions.">
+<DocSection n={5} title="Swipe on touch" description="A shortcut on touch only – mouse and keyboard use the “…” menu with the same actions.">
   <Canvas of={ListViewStories.Swipe} />
 </DocSection>
 
-<DocSection n={6} title="Texts" meta="Wording">
+<DocSection n={6} title="Texts">
 
 <Notes title="Name the object, say the consequence once">
   <ul>
