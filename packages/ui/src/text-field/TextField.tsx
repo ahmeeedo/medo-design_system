@@ -13,7 +13,7 @@ import { useMessages } from '../i18n/I18n';
 
 export type InputSize = 'sm' | 'md' | 'lg';
 
-export interface TextFieldProps extends Omit<AriaTextFieldProps, 'children' | 'className' | 'style'> {
+interface TextFieldBaseProps extends Omit<AriaTextFieldProps, 'children' | 'className' | 'style'> {
   /**
    * Visible label. Always set one – a placeholder is no label. Without it set `aria-label` – only where the
    * context names the field (a table row, a filter bar), like Select and NumberField.
@@ -25,19 +25,24 @@ export interface TextFieldProps extends Omit<AriaTextFieldProps, 'children' | 'c
   errorMessage?: ReactNode;
   /** Example of the expected input (“name@example.com”). Disappears when typing – never put needed information here. */
   placeholder?: string;
-  /** sm 32 · md 40 · lg 48 px. Use lg on mobile and touch. Textareas: md or lg. */
-  size?: InputSize;
   /** Decorative icon before the text (hidden from screen readers). */
   leadingIcon?: ReactNode;
   /** Trailing action, e.g. `<InputAction aria-label="Show password" />`. */
   trailing?: ReactNode;
-  /** Multi-line text (Textarea): min 3 rows, grows up to 8 rows. */
-  multiline?: boolean;
   /** Soft limit: typing beyond is allowed, the counter turns red. Validate on submit. */
   characterLimit?: number;
+  /** sm 32 · md 40 · lg 48 px. Use lg on mobile and touch. Multi-line: md or lg only. */
+  size?: InputSize;
+  /** Multi-line text (Textarea): min 3 rows, grows up to 8 rows. */
+  multiline?: boolean;
   /** Extra class on the root element – for layout (margin, width), not to restyle the component. */
   className?: string;
 }
+
+/** Multi-line text has no sm: a small box is too tight to write in. */
+type SizeRule = { multiline?: false } | { multiline: true; size?: Exclude<InputSize, 'sm'> };
+
+export type TextFieldProps = TextFieldBaseProps & SizeRule;
 
 /** Text input with label, helper and error text (Field + Input / Textarea). */
 export function TextField({

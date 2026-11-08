@@ -131,7 +131,7 @@ export const Sizes: Story = {
   decorators: narrow,
   render: (args) => (
     <div style={stack}>
-      <TextField {...args} size="sm" label="Small (32)" />
+      <TextField {...args} multiline={false} size="sm" label="Small (32)" />
       <TextField {...args} size="md" label="Medium (40)" />
       <TextField {...args} size="lg" label="Large (48, mobile)" />
     </div>
