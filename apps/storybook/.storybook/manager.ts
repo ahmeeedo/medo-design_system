@@ -41,7 +41,7 @@ addons.setConfig({
  * - The search field has the frame and focus of SearchField.
  * - Toolbar buttons behave like ToggleButton: hover state/hover + text/primary, on or open action/selected + text/brand.
  * The values are CSS variables on :root, so one rule set serves both modes. The selectors are Storybook's own
- * (ids, sidebar-item, role, aria) – the test “Storybook UI” checks them after a Storybook update.
+ * (ids, sidebar-item, role, aria) – npm run check:docs (CI job docs) checks that they still match after a Storybook update.
  */
 const uiStyle = document.createElement('style');
 uiStyle.id = 'medo-ui';

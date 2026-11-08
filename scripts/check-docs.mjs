@@ -1,4 +1,7 @@
-// Docs rule on the built pages: every prop in a Playground table has a description – what readers actually see.
+// Checks on the built docs site:
+//  1. Every prop in a Playground table has a description – what readers actually see.
+//  2. The Storybook UI still has the elements our styles in .storybook/manager.ts hang on. Storybook's class names
+//     are not a public API; after a Storybook update a missing one fails here instead of the sidebar losing its look.
 // Vitest runs without Storybook's docgen, so this check needs the static build (npm run check:docs builds it first).
 // A missing description: JSDoc on the prop in the component, or – for a React Aria prop used in many components –
 // apps/storybook/.storybook/prop-docs.ts. The other docs rules run with npm test (Tests/Docs rules).
@@ -13,8 +16,9 @@ const types = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/cs
 const server = createServer(async (req, res) => {
   const path = normalize(decodeURIComponent(new URL(req.url, 'http://x').pathname)).replace(/^(\.\.[/\\])+/, '');
   try {
-    const body = await readFile(join(root, path.endsWith('/') ? `${path}index.html` : path));
-    res.writeHead(200, { 'content-type': types[extname(path)] ?? 'application/octet-stream' }).end(body);
+    const file = path.endsWith('/') ? `${path}index.html` : path;
+    const body = await readFile(join(root, file));
+    res.writeHead(200, { 'content-type': types[extname(file)] ?? 'application/octet-stream' }).end(body);
   } catch {
     res.writeHead(404).end();
   }
@@ -45,11 +49,32 @@ await Promise.all(
     await page.close();
   }),
 );
+
+// The anchors of the rules in manager.ts (states such as :hover and search results are not on screen at load).
+const uiAnchors = [
+  '#medo-ui',
+  '#storybook-explorer-menu .sidebar-item',
+  "#storybook-explorer-menu .sidebar-item[data-selected='true']",
+  '#storybook-explorer-menu .sidebar-subheading',
+  '#storybook-explorer-menu .sidebar-subheading-action',
+  '#storybook-explorer-menu :is(#foundations, #guides, #patterns)',
+  '.search-field input',
+  '.sidebar-header button',
+  "[role='toolbar'] button",
+  '.medo-ui-status',
+  '.medo-ui-label',
+];
+const ui = await browser.newPage();
+await ui.goto(`${base}/?path=/docs/${pages[0].id}`);
+await ui.locator('#storybook-explorer-menu .sidebar-item').first().waitFor({ timeout: 30_000 }).catch(() => {});
+for (const selector of uiAnchors) if (!(await ui.locator(selector).count())) problems.push(`Storybook UI: nothing matches ${selector} (manager.ts)`);
+await ui.close();
+
 await browser.close();
 server.close();
 
 if (problems.length) {
-  console.error(`${problems.sort().join('\n')}\n\n× ${problems.length} prop${problems.length > 1 ? 's' : ''} without a description`);
+  console.error(`${problems.sort().join('\n')}\n\n× ${problems.length} problem${problems.length > 1 ? 's' : ''}`);
   process.exit(1);
 }
-console.log(`✓ Docs: every prop described on ${pages.length} component pages`);
+console.log(`✓ Docs: every prop described on ${pages.length} component pages; Storybook UI: ${uiAnchors.length} style anchors found`);

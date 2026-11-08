@@ -24,7 +24,7 @@ import { storybookTest } from '@storybook/addon-vitest/vitest-plugin';
 import { playwright } from '@vitest/browser-playwright';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { FlakyReporter } from './flaky-reporter';
+import { FlakyReporter } from './flaky-reporter.ts';
 
 const dirname = path.dirname(fileURLToPath(import.meta.url));
 const asked = (name: string) => process.argv.some((arg) => arg.includes(name));
