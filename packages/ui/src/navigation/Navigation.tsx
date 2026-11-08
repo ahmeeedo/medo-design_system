@@ -307,6 +307,7 @@ export interface SiteHeaderProps {
   'aria-label'?: string;
   /** Mobile: label of the menu button and title of the fullscreen menu. */
   menuLabel?: string;
+  /** Close button of the fullscreen menu. Default: built-in text. */
   closeLabel?: string;
   /** auto: menu button below 768 px · desktop · mobile (forced, e.g. for previews). */
   layout?: 'auto' | 'desktop' | 'mobile';
@@ -459,7 +460,7 @@ export interface SideNavProps {
 }
 
 /**
- * Side navigation for apps: 256 px with icons, counts, sections and groups;
+ * Side navigation for apps: 280 px with icons, counts, sections and groups;
  * collapses to a 64 px rail with tooltips. 640–1023 px: always a rail; expanding opens the full navigation
  * as a Drawer on the left. Below 640 px it is hidden – use the BottomTabBar there.
  */

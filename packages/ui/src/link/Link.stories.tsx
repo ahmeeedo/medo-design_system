@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Link } from './Link';
-import { row, semantic } from '../story-helpers';
+import { expect, fn } from 'storybook/test';
+import { interactionTest, row, semantic } from '../story-helpers';
 
 const text: React.CSSProperties = { font: 'var(--medo-typography-body-md)', color: 'var(--medo-color-text-primary)', margin: 0 };
 
@@ -111,4 +112,35 @@ export const Standalone: Story = {
       </div>
     </div>
   ),
+};
+
+export const InteractionTest: Story = {
+  ...interactionTest,
+  // Literal, so the story index (and the tag filters of the test projects) see it too.
+  tags: ['!autodocs'],
+  args: { onPress: fn() },
+  render: (args) => (
+    <div style={row}>
+      <Link {...args} />
+      <Link variant="standalone" href="https://example.com" target="_blank" external>
+        Documentation
+      </Link>
+    </div>
+  ),
+  play: async ({ canvas, userEvent, args }) => {
+    // A real link: click and Enter follow it (the app router takes internal paths).
+    const link = canvas.getByRole('link', { name: 'View all projects' });
+    await expect(link).toHaveAttribute('href', '/projects');
+    await userEvent.click(link);
+    await expect(args.onPress).toHaveBeenCalledTimes(1);
+    link.focus();
+    await userEvent.keyboard('{Enter}');
+    await expect(args.onPress).toHaveBeenCalledTimes(2);
+    // Space scrolls the page on a link – it does not follow it.
+    await userEvent.keyboard(' ');
+    await expect(args.onPress).toHaveBeenCalledTimes(2);
+    // New tab: screen readers hear it, and the new page gets no access to this one.
+    const external = canvas.getByRole('link', { name: 'Documentation (opens in a new tab)' });
+    await expect(external).toHaveAttribute('rel', 'noopener noreferrer');
+  },
 };

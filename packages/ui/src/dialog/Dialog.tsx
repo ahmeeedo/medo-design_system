@@ -204,7 +204,9 @@ function Nested({ children }: { children: ReactNode }) {
 /* ---------- Dialog ---------- */
 
 export interface DirtyGuardProps extends OpenProps {
+  /** Unsaved input: closing asks “Discard changes?” first. */
   isDirty?: boolean;
+  /** Texts of the “Discard changes?” question. Default: built-in texts. */
   discardText?: Partial<DialogDiscardText>;
 }
 
@@ -266,6 +268,7 @@ export interface DialogProps extends OpenProps {
   size?: 'sm' | 'md' | 'lg';
   /** Main action at the end of the footer, next to Cancel. On mobile fullscreen it moves to the header. Without it, no footer. */
   primaryAction?: DialogAction;
+  /** Text of the Cancel button. Default: built-in text. */
   cancelLabel?: string;
   /** Accessible name of the X (and the label of the mobile close button without a main action). */
   closeLabel?: string;
@@ -566,6 +569,7 @@ export interface AlertDialogProps extends OpenProps {
   actionLabel: string;
   /** Runs, then the dialog closes. A promise shows the pending state until it resolves. */
   onAction?: () => void | Promise<unknown>;
+  /** Text of the Cancel button. Default: built-in text. */
   cancelLabel?: string;
   className?: string;
 }

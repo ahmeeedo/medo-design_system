@@ -21,6 +21,8 @@ const ListBoxSizeContext = createContext<ListBoxSize>('md');
 export interface ListBoxProps<T> extends Omit<AriaListBoxProps<T>, 'className' | 'style'> {
   /** md on desktop · lg on mobile and in the Bottom Sheet. */
   size?: ListBoxSize;
+  /** Options and sections – or a function that renders one item of `items`. */
+  children?: AriaListBoxProps<T>['children'];
   className?: string;
 }
 

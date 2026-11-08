@@ -5,6 +5,7 @@ import { cx } from '../utils/cx';
 export interface CardProps {
   /** Required: every card has a heading, so it can be scanned and announced. */
   title: ReactNode;
+  /** One line under the title, e.g. a date or a category. */
   subtitle?: ReactNode;
   /** Heading level of the title. Match the page outline (default h3). */
   headingLevel?: 2 | 3 | 4 | 5 | 6;
@@ -12,7 +13,7 @@ export interface CardProps {
   variant?: 'outlined' | 'elevated' | 'filled' | 'brand' | 'plain';
   /** standard 24 px · compact 16 px (dense layouts and mobile). */
   density?: 'standard' | 'compact';
-  /** vertical (media on top, 16:9) · horizontal (media 180 px left, for lists). */
+  /** vertical (media on top, 16:9) · horizontal (media 200 px left, for lists). */
   layout?: 'vertical' | 'horizontal';
   /** Image or video. Decorative images use alt="". */
   media?: ReactNode;
@@ -24,6 +25,7 @@ export interface CardProps {
   href?: AriaLinkProps['href'];
   /** Link props such as target or routerOptions. */
   linkProps?: Omit<AriaLinkProps, 'href' | 'children' | 'className'>;
+  /** The body: text, lists, fields. */
   children?: ReactNode;
   className?: string;
   style?: CSSProperties;

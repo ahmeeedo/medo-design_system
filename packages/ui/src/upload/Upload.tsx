@@ -128,9 +128,13 @@ export interface UploadTexts {
 export const defaultUploadTexts: UploadTexts = en.upload;
 
 interface ItemActions {
+  /** Called with the id when a file is removed. */
   onRemove: (id: string) => void;
+  /** Called with the id when an upload in progress is cancelled. */
   onCancel?: (id: string) => void;
+  /** Called with the id when a failed upload is tried again. */
   onRetry?: (id: string) => void;
+  /** Built-in texts to replace. Default: built-in texts. */
   texts?: Partial<UploadTexts>;
 }
 
@@ -464,7 +468,7 @@ export function FileTrigger({
 
 /* ---------- Upload field (composition) ---------- */
 
-export interface UploadFieldProps extends Omit<ItemActions, 'texts'> {
+export interface UploadFieldProps extends ItemActions {
   /** Visible label. Without it set `aria-label`. */
   label?: ReactNode;
   'aria-label'?: string;
@@ -484,6 +488,7 @@ export interface UploadFieldProps extends Omit<ItemActions, 'texts'> {
   maxSize?: number;
   /** Max number of files. 1 = single file picker. */
   maxFiles?: number;
+  /** Mobile: open the camera first (“environment” = back camera). */
   defaultCamera?: 'user' | 'environment';
   /** Default: “{typesLabel} · max. {maxSize} each”. */
   hint?: ReactNode;
@@ -491,7 +496,6 @@ export interface UploadFieldProps extends Omit<ItemActions, 'texts'> {
   errorMessage?: ReactNode;
   isRequired?: boolean;
   isDisabled?: boolean;
-  texts?: Partial<UploadTexts>;
   className?: string;
 }
 

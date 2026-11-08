@@ -18,7 +18,9 @@ export interface AccordionProps extends Omit<DisclosureGroupProps, 'className' |
   allowsMultipleExpanded?: boolean;
   /** “Expand all” / “Collapse all” above groups with more than 6 sections (multiple only). */
   expandAll?: boolean;
+  /** Text of the “Expand all” button. Default: built-in text. */
   expandAllLabel?: string;
+  /** Text of the “Collapse all” button. Default: built-in text. */
   collapseAllLabel?: string;
   /** AccordionItems. */
   children: ReactNode;

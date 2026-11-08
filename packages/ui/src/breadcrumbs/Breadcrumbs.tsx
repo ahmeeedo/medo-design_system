@@ -25,6 +25,7 @@ export interface BreadcrumbsProps {
   layout?: 'auto' | 'full' | 'back';
   /** Texts (localize). */
   'aria-label'?: string;
+  /** Accessible name of the “…” item; gets the number of hidden levels. */
   moreLabel?: (count: number) => string;
   className?: string;
 }

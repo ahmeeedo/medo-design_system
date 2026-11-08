@@ -8,6 +8,7 @@ import { useMessages } from '../i18n/I18n';
 export interface IconButtonProps extends Omit<AriaButtonProps, 'children' | 'className' | 'style'> {
   /** Required: describes the action (“Delete file”), because there is no visible label. */
   'aria-label': string;
+  /** The icon (lucide-react). Decorative – the name comes from `aria-label`. */
   icon: ReactNode;
   /**
    * ghost (default for toolbars) · secondary · primary · danger.

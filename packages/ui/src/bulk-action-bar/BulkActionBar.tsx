@@ -29,7 +29,9 @@ export interface BulkActionBarProps {
   variant?: 'auto' | 'desktop' | 'mobile';
   /** Texts (localize). */
   countLabel?: (count: number) => string;
+  /** Accessible name of the × that clears the selection. Default: built-in text. */
   clearLabel?: string;
+  /** Accessible name of the “…” menu with the other actions. Default: built-in text. */
   moreLabel?: string;
   'aria-label'?: string;
   className?: string;

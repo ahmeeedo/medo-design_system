@@ -18,6 +18,8 @@ export interface TabsProps extends Omit<AriaTabsProps, 'className' | 'style' | '
   size?: 'md' | 'lg';
   /** The tabs share the full width. Below 640 px automatic: up to 3 tabs fill, more scroll. */
   fullWidth?: boolean;
+  /** One TabList and one TabPanel per tab. */
+  children?: AriaTabsProps['children'];
   className?: string;
 }
 

@@ -24,6 +24,7 @@ export interface PaginationProps {
   pageSize?: number;
   /** Shows “Rows per page” (Select sm). */
   onPageSizeChange?: (pageSize: number) => void;
+  /** Choices in “Rows per page”, e.g. [10, 20, 50]. */
   pageSizeOptions?: number[];
   /** auto: compact below 640 px · full: summary, rows per page and pages · compact: ‹ Page 5 of 19 › (narrow panels). */
   variant?: 'auto' | 'full' | 'compact';
@@ -33,11 +34,15 @@ export interface PaginationProps {
   'aria-label'?: string;
   /** Texts (localize). */
   summary?: (from: number, to: number, total: number) => string;
+  /** Label of the “Rows per page” select. */
   pageSizeLabel?: string;
+  /** Accessible name of the previous page button. */
   previousLabel?: string;
+  /** Accessible name of the next page button. */
   nextLabel?: string;
   /** Accessible name of a page item and the compact text. */
   pageLabel?: (page: number) => string;
+  /** Text of the compact variant (“Page 5 of 19”). */
   compactLabel?: (page: number, totalPages: number) => string;
   className?: string;
 }

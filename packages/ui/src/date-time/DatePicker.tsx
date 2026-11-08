@@ -59,7 +59,9 @@ function pickerTexts(m: Messages): Omit<DatePickerTexts, keyof CalendarTexts> {
 export const defaultDatePickerTexts: Omit<DatePickerTexts, keyof CalendarTexts> = pickerTexts(en);
 
 interface PickerBase {
+  /** Visible label. Without it set `aria-label`. */
   label?: ReactNode;
+  /** Help text under the field, e.g. the expected format or range. */
   description?: ReactNode;
   /** Own message or a function of the validation details. Default: the built-in messages (min, max, unavailable, reversed). */
   errorMessage?: ReactNode | ((validation: ValidationResult) => ReactNode);
@@ -69,6 +71,7 @@ interface PickerBase {
   overlay?: 'auto' | 'popover' | 'sheet';
   /** ISO week numbers in the calendar. */
   showWeekNumbers?: boolean;
+  /** Built-in texts to replace, e.g. `unavailable` with the reason. Default: built-in texts. */
   texts?: Partial<DatePickerTexts>;
   className?: string;
 }
