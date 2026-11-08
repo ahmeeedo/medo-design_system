@@ -53,6 +53,8 @@ export interface MenuProps<T> extends Omit<AriaMenuProps<T>, 'className' | 'styl
   title?: ReactNode;
   /** auto: popover on desktop, Bottom Sheet below 640 px · popover · sheet. */
   overlay?: 'auto' | 'popover' | 'sheet';
+  /** MenuItems, MenuSections and Submenus – or a function that renders one item of `items`. */
+  children?: AriaMenuProps<T>['children'];
   className?: string;
 }
 

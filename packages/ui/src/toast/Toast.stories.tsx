@@ -4,12 +4,10 @@ import { ToastRegion, toast, type ToastAction } from './Toast';
 import { Button } from '../button/Button';
 import { interactionTest, row, slot } from '../story-helpers';
 
+// The page has no component of its own (toast() is a function): the descriptions are in the argTypes below.
 interface ToastArgs {
-  /** The result in one line, max about 50 characters (“Q3-Report.pdf deleted”). */
   message: string;
-  /** Max one action: “Undo”, “View” or “Retry”. With an action the toast stays 8 s instead of 5 s. */
   action?: ToastAction;
-  /** Errors: stays until closed. */
   persistent: boolean;
   onClose: () => void;
 }
@@ -21,15 +19,18 @@ const meta = {
   tags: ['autodocs', 'status:beta'],
   args: { message: 'Q3-Report.pdf deleted', action: 'Undo' as never, persistent: false, onClose: fn() },
   argTypes: {
-    message: { control: 'text' },
-    action: slot({
-      none: undefined,
-      Undo: { label: 'Undo', onAction },
-      View: { label: 'View', onAction },
-      Retry: { label: 'Retry', onAction },
-    }),
-    persistent: { control: 'boolean' },
-    onClose: { control: false },
+    message: { control: 'text', description: 'The result in one line, max about 50 characters (“Q3-Report.pdf deleted”).' },
+    action: {
+      ...slot({
+        none: undefined,
+        Undo: { label: 'Undo', onAction },
+        View: { label: 'View', onAction },
+        Retry: { label: 'Retry', onAction },
+      }),
+      description: 'Max one action: “Undo”, “View” or “Retry”. With an action the toast stays 8 s instead of 5 s.',
+    },
+    persistent: { control: 'boolean', description: 'Errors (“Could not save”): stays until closed. Otherwise 5 s, with an action 8 s.' },
+    onClose: { control: false, description: 'Called when the toast closes (timeout, close button, Esc or action).' },
   },
   parameters: {
     medo: {

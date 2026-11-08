@@ -16,6 +16,8 @@ export interface ListViewProps<T> extends Omit<GridListProps<T>, 'className' | '
   isLoading?: boolean;
   /** Shown when there are no rows: an EmptyState with `size="inline"`. */
   emptyState?: ReactNode;
+  /** ListRows – or a function that renders one item of `items`. */
+  children?: GridListProps<T>['children'];
   className?: string;
 }
 

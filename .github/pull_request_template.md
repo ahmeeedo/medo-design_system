@@ -33,7 +33,7 @@ Every point must hold (Guides / Component status).
 
 **Docs**
 - [ ] Usage, Playground, examples, Accessibility and Styling on the page
-- [ ] Every prop has a description
+- [ ] Every prop has a description (CI job `docs`)
 
 **Screen readers**
 - [ ] Tested with NVDA (Windows), VoiceOver (iPhone) and TalkBack (Android) following the test script

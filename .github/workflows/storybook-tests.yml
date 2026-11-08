@@ -7,6 +7,7 @@
 #            as flaky in the summary.
 #   build    the npm packages build (types included), stay within their size limits and work in a fresh Vite and
 #            Next.js app.
+#   docs     the documentation builds as for the deploy, and every prop on the component pages has a description.
 # “Release” starts only when all of them passed for a push to main.
 name: Storybook tests
 
@@ -110,3 +111,18 @@ jobs:
       # Bundle size of @med-o/ui (minified + gzip, React excluded) against the limits in packages/ui/package.json.
       - run: npm run size
       - run: npm run test:consumers
+
+  docs:
+    # The docs site as people get it: builds like the deploy (a broken page shows here, not after the release) and every
+    # prop in a Playground table has a description – checked on the built pages, where Storybook's docgen ran.
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: npm run check:docs

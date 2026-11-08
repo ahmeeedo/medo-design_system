@@ -32,9 +32,13 @@ export function Radio({ children, description, size, className, ...props }: Radi
 export interface RadioGroupProps extends Omit<AriaRadioGroupProps, 'children' | 'className' | 'style'> {
   /** Group label (rendered like a legend). Without it set `aria-label` – only where the context names the group (e.g. an Accordion title). */
   label?: ReactNode;
+  /** Help text under the group label. */
   description?: ReactNode;
+  /** Message when the group is invalid. Says how to fix it. */
   errorMessage?: ReactNode;
+  /** md (desktop) · lg (touch). */
   size?: ChoiceSize;
+  /** The Radio items, 2–4. */
   children: ReactNode;
   className?: string;
 }

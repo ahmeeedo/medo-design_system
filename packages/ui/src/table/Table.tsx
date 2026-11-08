@@ -30,7 +30,9 @@ export interface StaticTableProps {
   /** Visible caption or, with captionHidden, a name for screen readers. */
   caption?: ReactNode;
   captionHidden?: boolean;
+  /** Row height: standard · compact (dense data, more rows on screen). */
   density?: Density;
+  /** Every second row tinted – helps reading wide rows across. */
   striped?: boolean;
   /** Without the border and radius, e.g. inside a card or documentation. */
   plain?: boolean;
@@ -90,11 +92,13 @@ export function StaticTable({ children, caption, captionHidden, density = 'stand
 /* ---------- Interactive table: React Aria Table (grid) ---------- */
 
 export interface TableProps extends Omit<AriaTableProps, 'className' | 'style'> {
+  /** Row height: standard · compact (dense data, more rows on screen). */
   density?: Density;
   /** Bar above the header: search (Input sm 240), filter, ColumnsMenu, primary action on the right (Buttons sm). */
   toolbar?: ReactNode;
   /** Bar below the rows, usually Pagination. */
   footer?: ReactNode;
+  /** Every second row tinted – helps reading wide rows across. */
   striped?: boolean;
   plain?: boolean;
   className?: string;

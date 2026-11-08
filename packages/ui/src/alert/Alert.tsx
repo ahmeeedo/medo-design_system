@@ -26,6 +26,7 @@ export interface AlertProps extends Omit<HTMLAttributes<HTMLDivElement>, 'title'
   actions?: ReactNode;
   /** Shows the close button. Only when it is safe to hide the message. */
   onDismiss?: () => void;
+  /** Accessible name of the close button. Default: built-in text. */
   dismissLabel?: string;
   /**
    * Set when the alert appears after the page has loaded: danger and warning are announced

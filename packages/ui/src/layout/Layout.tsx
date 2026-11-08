@@ -1,4 +1,4 @@
-import type { CSSProperties, ElementType, HTMLAttributes, Ref } from 'react';
+import type { CSSProperties, ElementType, HTMLAttributes, ReactNode, Ref } from 'react';
 import { cx } from '../utils/cx';
 
 /**
@@ -28,6 +28,8 @@ export type LayoutElement =
 interface LayoutProps extends HTMLAttributes<HTMLElement> {
   /** HTML element, e.g. `ul` for a list of cards or `section` for a page section. Default: `div`. */
   as?: LayoutElement;
+  /** The content; the component sets the space between its children. */
+  children?: ReactNode;
   ref?: Ref<HTMLElement>;
 }
 

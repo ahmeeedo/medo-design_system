@@ -14,6 +14,7 @@ import '@fontsource/dm-mono/400.css';
 import './preview.css';
 import { ComponentDocsPage, MedoDocsContainer } from '../src/docs-blocks/DocBlocks';
 import { startMode } from './theme';
+import { describeSharedProps } from './prop-docs';
 
 // Theme before the first render: the stored mode (toolbar switch in manager.ts) – in tests the mode of the Vitest
 // project (“storybook-dark” sets STORYBOOK_TEST_THEME). data-theme on <html>, exactly like a real app.
@@ -32,6 +33,8 @@ const visualRun = import.meta.env.STORYBOOK_TEST_VISUAL === true;
 const preview: Preview = {
   // Every docs story is part of the visual regression check (npm run test:visual); `tags: ['!visual']` leaves one out.
   tags: ['visual'],
+  // Descriptions of React Aria and DOM props (isDisabled, onPress …) where the component has none of its own.
+  argTypesEnhancers: [describeSharedProps],
   parameters: {
     layout: 'padded',
     // className and style are plain React props: not part of the Playground.
