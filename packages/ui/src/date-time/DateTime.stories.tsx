@@ -77,6 +77,17 @@ const meta = {
         dont: ['Format dates yourself; the locale decides order and separators.', 'Use a clock face for times.'],
       },
       a11y: {
+        screenReader: {
+          steps: [
+            ['Go to the heading “Playground”, then to the date field.', '“Appointment date” and “12 October 2026”, then “day, 12” – day, month and year are separate fields.'],
+            ['Next element, twice.', '“month, 10 – October”, then “year, 2026”.'],
+            ['Next element, then activate “Open calendar”.', 'A dialog “Appointment date” with the heading “October 2026”; the focus is on Monday 12 October.'],
+            ['Close / Esc.', 'The focus is back on “Open calendar”.'],
+            ['Go to the heading “Fields”, then through the first field.', 'The same field in German: “Tag”, “Monat”, “Jahr” and “Kalender öffnen”, read with a German voice.'],
+            ['Go to the heading “Validation”, then to the field.', '“Delivery date”, “invalid” and “Choose a date from 12/10/2026 on.”'],
+            ['Go to the heading “Locales”.', 'The same fields in German, British and American English, each read in its own language.'],
+          ],
+        },
         keyboard: [
           ['Digits', 'Fill the segment; a complete segment jumps to the next.'],
           ['↑ / ↓', 'Change the segment.'],
@@ -151,7 +162,8 @@ export const Fields: Story = {
   render: () => (
     <Examples>
       <I18nProvider locale="de-DE">
-        <div style={stack}>
+        {/* lang: screen readers read the German texts with a German voice (WCAG 3.1.2). */}
+        <div style={stack} lang="de">
           <DatePicker label="Date" defaultValue={day} />
           <DateRangePicker label="Period" defaultValue={{ start: day, end: parseDate('2026-10-21') }} />
           <TimeField label="Time" defaultValue={parseTime('09:30')} />
@@ -225,7 +237,7 @@ export const DateAndTime: Story = {
   },
   render: () => (
     <I18nProvider locale="de-DE">
-      <div style={columns}>
+      <div style={columns} lang="de">
         <DatePicker label="Start" granularity="minute" defaultValue={parseDateTime('2026-10-16T09:30')} onChange={fn()} />
         <TimeField label="Time" slots={slots} defaultValue={new Time(9, 30)} onChange={fn()} />
         <TimeField label="Time (typing only)" onChange={fn()} />
@@ -295,7 +307,7 @@ export const Locales: Story = {
     <div style={columns}>
       {(['de-DE', 'en-GB', 'en-US'] as const).map((locale) => (
         <I18nProvider key={locale} locale={locale}>
-          <div style={stack}>
+          <div style={stack} lang={locale}>
             <DateField label={`Date (${locale})`} />
             <DatePicker label={`Start (${locale})`} granularity="minute" defaultValue={parseDateTime('2026-10-12T15:30')} />
           </div>

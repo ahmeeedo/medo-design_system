@@ -53,6 +53,17 @@ const meta = {
         dont: ['Use ticks for more than 10 steps.', 'Hide the value.'],
       },
       a11y: {
+        screenReader: {
+          steps: [
+            ['Go to the heading “Playground”, then to the slider.', '“Volume, slider, 40 %”.'],
+            ['Increase it (NVDA: arrow right · VoiceOver: swipe up · TalkBack: volume up).', '“41 %” – one step per press.'],
+            ['Go to the heading “Single and range”, then to the price slider.', 'The group “Price”, then “Minimum price, slider, €120” and “Maximum price, slider, €480”.'],
+            ['Go to the heading “Ticks and limits”.', '“Rating, 2”, the price range and “Radius, 40 km” – the unit is read with the value.'],
+            ['Go to the heading “Slider field”, then past the first slider.', 'After “Volume, slider, 40” a number field “Volume, 40” to type the exact value.'],
+            ['Go to the heading “Number field”, then to the first field.', '“Quantity, spin button, 2” and “1 to 99”, then “Budget, €2,400” and “Discount, 15 %”.'],
+            ['Increase “Quantity” (NVDA: arrow up · VoiceOver and TalkBack: swipe up).', '“3”.'],
+          ],
+        },
         keyboard: [
           ['← / → or ↑ / ↓', 'One step.'],
           ['Page Up / Page Down', '10 % of the range.'],

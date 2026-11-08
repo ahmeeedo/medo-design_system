@@ -77,6 +77,14 @@ const meta = {
         ],
       },
       a11y: {
+        screenReader: {
+          steps: [
+            ['Go to the heading “Errors from the server”, then through the form.', '“Name, required”, “Email, required”, “Invite code” with “From your invitation email.”, then “Create account, button”.'],
+            ['Activate “Create account” with empty fields.', 'The focus goes to “Name” with “Enter your name.”, and “2 fields need attention” is read.'],
+            ['Fill in a name and “taken@example.com”, then activate “Create account”.', 'After saving: the focus goes to “Email” with “This email address is already registered. Sign in instead.”'],
+            ['Use a valid email and the invite code “OLD”, then activate “Create account”.', 'A message above the fields takes the focus: “This invite has expired. Ask the person who invited you for a new one.”'],
+          ],
+        },
         keyboard: [['Enter', 'In a single-line field: submits the form.']],
         notes: [
           'On submit with errors the focus goes to the first invalid field; its message is read with it.',

@@ -43,6 +43,14 @@ const meta = {
         dont: ['Use radios for actions.', 'Leave a group without a label.'],
       },
       a11y: {
+        screenReader: {
+          steps: [
+            ['Go to the heading “Playground”, then to the radio group.', '“Delivery, radio group” and “Choose one option.”, then “Standard, radio button, checked, 1 of 3” with “3–5 working days”.'],
+            ['Go to “Express” and activate it.', '“Express, radio button, checked” and “Next working day”. Standard is no longer checked.'],
+            ['Go to the heading “Horizontal”, then to the radio group.', 'The same group in one row – the order stays Standard, Express, Pick-up.'],
+            ['Go to the heading “Invalid”, then to the radio group.', '“Delivery”, “invalid” and “Choose a delivery option.” No option is checked.'],
+          ],
+        },
         keyboard: [
           ['Tab', 'Moves into the group, to the selected option.'],
           ['↑ ↓ / ← →', 'Moves to the next option and selects it.'],

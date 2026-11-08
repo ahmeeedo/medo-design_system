@@ -45,6 +45,17 @@ const meta = {
         dont: ['Truncate labels.', 'Put buttons or links inside an option.'],
       },
       a11y: {
+        screenReader: {
+          steps: [
+            ['Go to the heading “Playground”, then to the list.', '“Assignee, list” (or “listbox”), then “Anna Weber, selected, 1 of 4”.'],
+            ['Arrow down to “Design team”.', '“Ben Lorenz”, then “Design team” with “Everyone in the design team”.'],
+            ['Activate it.', '“Design team, selected”. Anna Weber is no longer selected – one choice only.'],
+            ['Arrow down once more.', '“External agency” is skipped or read as “unavailable” – it cannot be selected.'],
+            ['Go to the heading “Single and multi”, then to the second list.', '“Topics, multiple” with “multi-select” (or “multiselectable”), “Design, selected” and “Code, selected”.'],
+            ['Go to the heading “Content”, then through the list.', 'The groups “Europe” and “Other”; “Austria” with “Prices incl. 20 % VAT”.'],
+            ['Go to the heading “Empty”, then to the list.', '“Results, list” and “No results”.'],
+          ],
+        },
         keyboard: [
           ['↑ / ↓', 'Moves through the options.'],
           ['Home / End', 'First or last option.'],
@@ -106,7 +117,7 @@ export const Types: Story = {
     <div style={{ ...row, alignItems: 'flex-start' }}>
       {(['single', 'multiple'] as const).map((mode) => (
         <div key={mode} style={frame}>
-          <ListBox aria-label={`Topics, ${mode}`} selectionMode={mode} defaultSelectedKeys={['design', 'code']}>
+          <ListBox aria-label={`Topics, ${mode}`} selectionMode={mode} defaultSelectedKeys={mode === 'single' ? ['design'] : ['design', 'code']}>
             <Option id="design">Design</Option>
             <Option id="code">Code</Option>
             <Option id="research">Research</Option>
