@@ -1,5 +1,18 @@
 # @med-o/ui
 
+## 0.8.1
+
+_Released 2026-11-08_
+
+### Patch Changes
+
+- 85616ce: Improved: every prop has a description – on the docs pages and in your editor.
+
+  - Texts such as `cancelLabel`, `moreLabel`, `pageSizeOptions`, `density` or the `Upload` callbacks are described in the types.
+  - Card and Side navigation describe their current widths (200 px media, 280 px).
+
+- @med-o/design-tokens@0.8.1
+
 ## 0.8.0
 
 _Released 2026-11-07_
