@@ -1,7 +1,7 @@
 import { Meta } from '@storybook/addon-docs/blocks';
-import { DocPage, DocHeader, DocSection, DocFooter, SpecTable, Notes, Tok, SourceLink } from './docs-blocks/DocBlocks';
+import { DocPage, DocHeader, DocSection, DocFooter, SpecTable, Notes, Tok, SourceLink, docsHref } from './docs-blocks/DocBlocks';
 import ui from '@med-o/ui/package.json';
-import { Button, Stack, Tab, TabList, TabPanel, Tabs, TextField } from '@med-o/ui';
+import { Button, Link, Stack, Tab, TabList, TabPanel, Tabs, TextField } from '@med-o/ui';
 
 <Meta title="Introduction" />
 
@@ -11,9 +11,10 @@ import { Button, Stack, Tab, TabList, TabPanel, Tabs, TextField } from '@med-o/u
   kind="Overview"
   title="med.o Design System"
   meta={`Version ${ui.version}`}
-  subtitle="Rules for look, function and behaviour of med.o products – framework-neutral."
+  subtitle="Tokens, styles and components for accessible digital products – software and websites."
   description={<>
-    <p>This site documents the design tokens, the CSS, the Tailwind theme and the React components – with live examples, a playground per component and the rules for using them.</p>
+    <p>Tokens and CSS work with every framework. The interactive components are React 19 on React Aria – Vue, Angular or plain HTML can reuse the CSS classes and bring their own behaviour.</p>
+    <p>This site documents the design tokens, the CSS, the Tailwind theme and the React components – with live examples, a playground per component and the rules for using them. For your own brand, override the colours: <Link href={docsHref('guides-theming--docs')}>Guides / Theming</Link>.</p>
     <p>Use the theme switch in the toolbar (Light / Dark). Every example follows it. Accessibility target: WCAG 2.2 AA.</p>
   </>}
   nav={['Packages', 'Install', 'Your first page', 'Use the tokens', 'Light and Dark', 'Fonts']}

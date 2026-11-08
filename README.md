@@ -313,7 +313,7 @@ Issues and pull requests are welcome. Please follow these rules:
 
   - The first line starts with `New:`, `Improved:` or `Fixed:` and names the component in backticks (`` `Stepper` ``) – What's new groups the entry and links the component's page from it. Keep it to one short sentence.
   - Then the details: short paragraphs or a list.
-  - A breaking change ends with `**Breaking:**` (what changed) and `Update:` (what to do). What's new lists it first, under “Before you update”.
+  - A breaking change ends with `**Breaking:**` (what changed) and `Update:` (what to do). A note in brackets is fine: `**Breaking (types only):**`. What's new lists it first, under “Before you update”; `npm test` fails on any other spelling.
 - **Status.** A new component starts as `status:experimental` (tag in the meta of its stories). It becomes Stable only when it passes the checklist in Guides / Component status – the pull request template lists the same points. Change the status in the tag and in the table above; the test “Status” compares them.
 - **Deprecate before you remove.** Mark the old API `@deprecated` with its replacement, keep it working for the time given in [Support and versioning](#support-and-versioning), and remove it in a later release.
 

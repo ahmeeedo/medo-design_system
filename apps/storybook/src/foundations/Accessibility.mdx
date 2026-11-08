@@ -1,5 +1,6 @@
 import { Meta } from '@storybook/addon-docs/blocks';
-import { DocPage, DocHeader, DocSection, DocFooter, SpecTable, Notes, Tok, SourceLink } from '../docs-blocks/DocBlocks';
+import { DocPage, DocHeader, DocSection, DocFooter, SpecTable, Notes, Tok, SourceLink, docsHref } from '../docs-blocks/DocBlocks';
+import { Link } from '@med-o/ui';
 
 <Meta title="Foundations/Accessibility" />
 
@@ -60,7 +61,7 @@ import { DocPage, DocHeader, DocSection, DocFooter, SpecTable, Notes, Tok, Sourc
 
 </DocSection>
 
-<DocSection n={4} title="Test status" meta="Version 0.4 · checked in CI" description="Automatic checks run for every pull request and every change on main. A failure stops the change.">
+<DocSection n={4} title="Test status" meta="Checked in CI · manual per component" description="Automatic checks run for every pull request and every change on main. A failure stops the change.">
 
 <SpecTable
   head={['Check', 'Scope']}
@@ -69,7 +70,7 @@ import { DocPage, DocHeader, DocSection, DocFooter, SpecTable, Notes, Tok, Sourc
     ['Interaction tests', 'Keyboard, focus and pointer for every interactive component – in Chromium, WebKit (Safari) and Firefox.'],
     ['Text contrast', 'Every allowed text / background pair, Light and Dark, ≥ 4.5 : 1 – the token build fails otherwise. See Foundations / Colors → Text on backgrounds.'],
     ['Visual check', 'A screenshot per story and theme in Chromium catches lost focus rings or contrast changes.'],
-    ['Screen readers', 'Not yet tested systematically. React Aria Components, which the components build on, are tested with screen readers by Adobe; our own compositions and patterns are not.'],
+    ['Screen readers', <>Manual test per component with NVDA, VoiceOver (macOS, iOS) and TalkBack – steps and results in the Accessibility section of each component page (<Link href={docsHref('guides-screen-reader-testing--docs')}>Guides / Screen reader testing</Link>). Stable components have passed it; the status of every component: <Link href={docsHref('guides-component-status--docs')}>Guides / Component status</Link>.</>],
   ]}
 />
 
@@ -77,7 +78,7 @@ import { DocPage, DocHeader, DocSection, DocFooter, SpecTable, Notes, Tok, Sourc
   <ul>
     <li>Automatic checks find only part of all accessibility problems. They do not judge whether texts, labels and the order of content make sense.</li>
     <li>No manual audit by people with disabilities yet.</li>
-    <li>Mobile screen readers (VoiceOver iOS, TalkBack) are not tested.</li>
+    <li>Only Stable components have passed the full manual screen reader test so far.</li>
   </ul>
   <p>Found a problem? Please report it as a GitHub issue – it is treated as a bug.</p>
 </Notes>
