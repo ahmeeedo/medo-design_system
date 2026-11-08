@@ -20,7 +20,7 @@ import { Button, Link, Stack, Tab, TabList, TabPanel, Tabs, TextField } from '@m
   nav={['Packages', 'Install', 'Your first page', 'Use the tokens', 'Light and Dark', 'Fonts']}
 />
 
-<DocSection n={1} title="Packages" meta="2 packages">
+<DocSection n={1} title="Packages">
 
 <SpecTable
   head={['Package', 'Contents']}
@@ -32,7 +32,7 @@ import { Button, Link, Stack, Tab, TabList, TabPanel, Tabs, TextField } from '@m
 
 </DocSection>
 
-<DocSection n={2} title="Install" meta="npm" description="Tokens alone work with any framework. The components need React 19.">
+<DocSection n={2} title="Install" description="Tokens alone work with any framework. The components need React 19.">
 
 ```bash
 npm install @med-o/design-tokens            # tokens only
@@ -47,7 +47,7 @@ import { Button } from '@med-o/ui';
 
 </DocSection>
 
-<DocSection n={3} title="Your first page" meta="Vite · Next.js" description="Everything in one place: packages, styles, fonts, language and a first form. Pick your setup – both are tested in CI with the published packages.">
+<DocSection n={3} title="Your first page" description="Everything in one place: packages, styles, fonts, language and a first form. Pick your setup – both are tested in CI with the published packages.">
 
 ```bash
 npm install @med-o/design-tokens @med-o/ui react-aria-components @fontsource/dm-sans @fontsource/dm-mono
@@ -181,7 +181,7 @@ The result – live, with the theme of the toolbar:
 
 </DocSection>
 
-<DocSection n={4} title="Use the tokens" meta="CSS · Tailwind" description="Import the variables once. Then use only semantic tokens.">
+<DocSection n={4} title="Use the tokens" description="Import the variables once. Then use only semantic tokens.">
 
 ```css
 /* main.css */
@@ -199,7 +199,7 @@ The result – live, with the theme of the toolbar:
 
 </DocSection>
 
-<DocSection n={5} title="Light and Dark" meta="System · forced" description="The tokens follow the operating system. Force a theme for the whole page or for one area.">
+<DocSection n={5} title="Light and Dark" description="The tokens follow the operating system. Force a theme for the whole page or for one area.">
 
 ```html
 <html data-theme="dark">   <!-- "light", "dark" or no attribute = system -->
@@ -207,7 +207,7 @@ The result – live, with the theme of the toolbar:
 
 </DocSection>
 
-<DocSection n={6} title="Fonts" meta="DM Sans · DM Mono" description="Both fonts use the SIL Open Font License. Self-host them – no request to a font service.">
+<DocSection n={6} title="Fonts" description="Both fonts use the SIL Open Font License. Self-host them – no request to a font service.">
 
 <Notes>
   <p>Example: <Tok>@fontsource/dm-sans</Tok> and <Tok>@fontsource/dm-mono</Tok> (weights 400, 500, 600, 700).</p>

@@ -12,7 +12,7 @@ import { RouterProvider } from 'react-aria-components';
 import { addons } from 'storybook/preview-api';
 import { SELECT_STORY } from 'storybook/internal/core-events';
 import { Canvas, Description, DocsContainer, DocsContext, useOf } from '@storybook/addon-docs/blocks';
-import { Alert, Badge, Link, List, ListItem, StaticTable, Toggletip } from '@med-o/ui';
+import { Alert, Badge, DescriptionItem, DescriptionList, Link, List, ListItem, StaticTable, Toggletip } from '@med-o/ui';
 import { themes, type Mode } from '../../.storybook/theme';
 import { STATUS, STATUS_GUIDE_ID, STATUSES, statusOf, type Status } from '../../.storybook/status';
 import { Rich, Tok } from './text';
@@ -121,8 +121,7 @@ export function DocToc({ items, variant }: { items: string[]; variant: 'box' | '
                   jump(e, id);
                 }}
               >
-                <span className="doc-toc-num" aria-hidden="true">{pad(i + 1)}</span>
-                <span>{label}</span>
+                {label}
               </a>
             </li>
           );
@@ -161,7 +160,7 @@ export function DocHeader({ kind, title, meta, status, subtitle, description, na
     <header className="doc-header">
       <div className="doc-topline">
         <span className="medo-text-overline">Design system / {kind}</span>
-        {status ?? (meta ? <span className="medo-text-code-sm doc-muted">{meta}</span> : null)}
+        {status ?? (meta ? <span className="medo-text-body-sm doc-muted">{meta}</span> : null)}
       </div>
       <div className="doc-intro">
         <h1 className="medo-text-display-lg">{title}</h1>
@@ -178,25 +177,19 @@ export function DocHeader({ kind, title, meta, status, subtitle, description, na
 type SectionProps = {
   n: number;
   title: string;
-  /** Short meta on the right, e.g. "Light + Dark" */
-  meta?: string;
   description?: ReactNode;
   children?: ReactNode;
 };
 
-export function DocSection({ n, title, meta, description, children }: SectionProps) {
+export function DocSection({ n, title, description, children }: SectionProps) {
   const id = sectionId(n);
   return (
     <section className="doc-section" aria-labelledby={`${id}-title`}>
-      <div className="doc-section-head">
-        <span className="medo-text-code-md doc-muted" aria-hidden="true">{pad(n)}</span>
-        <h2 id={`${id}-title`} className="medo-text-heading-xl">
-          {/* Anchor target for the header navigation */}
-          <span id={id} tabIndex={-1} className="doc-anchor" />
-          {title}
-        </h2>
-        {meta ? <span className="medo-text-code-sm doc-muted doc-section-meta">{meta}</span> : null}
-      </div>
+      <h2 id={`${id}-title`} className="medo-text-heading-xl">
+        {/* Anchor target for the header navigation */}
+        <span id={id} tabIndex={-1} className="doc-anchor" />
+        {title}
+      </h2>
       {description ? <div className="doc-lead medo-text-body-md doc-muted">{description}</div> : null}
       {children ? <div className="doc-body">{children}</div> : null}
     </section>
@@ -205,10 +198,47 @@ export function DocSection({ n, title, meta, description, children }: SectionPro
 
 /* ---------- spec table ---------- */
 
-/** Spec table: the first column names the row (th), the others describe it. Two columns by default, more when needed. */
-export function SpecTable({ head = ['Part', 'Value'], rows }: { head?: string[]; rows: ReactNode[][] }) {
+/**
+ * A data table that stacks on phones: below 480 px of its own width every row becomes a block and each cell names its
+ * column (taken from the head). Cells with `doc-cell-swatch` stay side by side. For token, icon and spec tables.
+ */
+export function StackTable({ children }: { children: ReactNode }) {
+  const ref = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const table = ref.current?.querySelector('table');
+    if (!table) return;
+    const heads = [...table.querySelectorAll('thead th')].map((th) => th.textContent?.trim() ?? '');
+    for (const row of table.querySelectorAll('tbody tr')) {
+      [...row.children].forEach((cell, i) => {
+        if (cell.tagName === 'TD' && heads[i]) cell.setAttribute('data-label', heads[i]);
+      });
+    }
+  });
   return (
-    <StaticTable className="doc-spec">
+    <div ref={ref} className="doc-stack">
+      <StaticTable>{children}</StaticTable>
+    </div>
+  );
+}
+
+/**
+ * Spec: the first column names the row, the others describe it. Two columns are a description list (`DescriptionList`,
+ * term above value on phones); more columns, or `table` where the column names carry meaning, a StackTable.
+ */
+export function SpecTable({ head = ['Part', 'Value'], rows, table }: { head?: string[]; rows: ReactNode[][]; table?: boolean }) {
+  if (head.length === 2 && !table) {
+    return (
+      <DescriptionList>
+        {rows.map(([k, v], i) => (
+          <DescriptionItem key={i} term={k}>
+            {v}
+          </DescriptionItem>
+        ))}
+      </DescriptionList>
+    );
+  }
+  return (
+    <StackTable>
       <thead>
         <tr>
           {head.map((h) => (
@@ -223,15 +253,12 @@ export function SpecTable({ head = ['Part', 'Value'], rows }: { head?: string[];
           <tr key={i}>
             <th scope="row">{k}</th>
             {values.map((v, j) => (
-              // More than two columns: on phones the head is hidden, so each value names its column.
-              <td key={j} data-label={head.length > 2 ? head[j + 1] : undefined}>
-                {v}
-              </td>
+              <td key={j}>{v}</td>
             ))}
           </tr>
         ))}
       </tbody>
-    </StaticTable>
+    </StackTable>
   );
 }
 
@@ -258,7 +285,7 @@ export function SourceLink({ path = '', children = 'View the source on GitHub' }
 
 export function DocFooter({ children }: { children: ReactNode }) {
   return (
-    <footer className="doc-footer medo-text-code-sm doc-muted">
+    <footer className="doc-footer medo-text-body-sm doc-muted">
       {Children.toArray(children).map((c, i) => (
         <p key={i}>{c}</p>
       ))}
@@ -390,7 +417,7 @@ function ScreenReaderTestBlock({ component, test }: { component: string; test: S
         The same steps with NVDA, VoiceOver and TalkBack: what to do and what you must hear – the words may differ, the meaning not. Keys and gestures:{' '}
         <Link href={docsHref(SCREEN_READER_GUIDE_ID)}>Screen reader testing</Link>.
       </p>
-      <SpecTable head={['Do', 'You hear']} rows={steps.map(([action, hear]) => [<Rich>{action}</Rich>, <Rich>{hear}</Rich>])} />
+      <SpecTable table head={['Do', 'You hear']} rows={steps.map(([action, hear]) => [<Rich>{action}</Rich>, <Rich>{hear}</Rich>])} />
       <SpecTable
         head={['Screen reader', 'Result']}
         rows={[
@@ -529,13 +556,13 @@ export function ComponentDocsPage() {
       />
 
       {medo.usage ? (
-        <DocSection n={++n} title="Usage" meta="Guidelines">
+        <DocSection n={++n} title="Usage">
           <UsageGuide usage={medo.usage} />
         </DocSection>
       ) : null}
 
       {primary ? (
-        <DocSection n={++n} title="Playground" meta="Controls" description="Change the properties below.">
+        <DocSection n={++n} title="Playground" description="Change the properties below.">
           <Canvas of={primary.moduleExport} />
           <PropsTable of={primary.moduleExport} />
         </DocSection>
@@ -553,7 +580,7 @@ export function ComponentDocsPage() {
       ))}
 
       {medo.a11y ? (
-        <DocSection n={++n} title="Accessibility" meta="WCAG 2.2 AA">
+        <DocSection n={++n} title="Accessibility">
           {medo.a11y.keyboard?.length ? (
             <SpecTable head={['Key', 'Action']} rows={medo.a11y.keyboard.map(([key, action]) => [<Tok>{key}</Tok>, <Rich>{action}</Rich>])} />
           ) : null}
@@ -574,7 +601,6 @@ export function ComponentDocsPage() {
         <DocSection
           n={++n}
           title="Styling"
-          meta="Plain CSS"
           description="The look is plain CSS on the design tokens. Other frameworks can use the same classes and set the same data attributes."
         >
           {medo.styling.classes?.length ? (

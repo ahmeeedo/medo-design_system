@@ -21,7 +21,7 @@ import {
   Upload,
   X,
 } from 'lucide-react';
-import { StaticTable } from '@med-o/ui';
+import { StackTable } from '../../docs-blocks/DocBlocks';
 import { Tok } from '../../docs-blocks/DocBlocks';
 
 type Icon = ComponentType<SVGProps<SVGSVGElement>>;
@@ -34,7 +34,7 @@ const sizes: [string, string, string][] = [
 
 export function IconSizes() {
   return (
-    <StaticTable>
+    <StackTable>
       <thead>
         <tr>
           <th scope="col">Token</th>
@@ -58,7 +58,7 @@ export function IconSizes() {
           </tr>
         ))}
       </tbody>
-    </StaticTable>
+    </StackTable>
   );
 }
 
@@ -85,7 +85,7 @@ const meanings: [Icon, string, string][] = [
 
 export function IconMeanings() {
   return (
-    <StaticTable>
+    <StackTable>
       <thead>
         <tr>
           <th scope="col">Icon</th>
@@ -106,6 +106,6 @@ export function IconMeanings() {
           </tr>
         ))}
       </tbody>
-    </StaticTable>
+    </StackTable>
   );
 }

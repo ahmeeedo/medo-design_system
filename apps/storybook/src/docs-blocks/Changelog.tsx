@@ -374,7 +374,7 @@ export function Changelog() {
 
   return (
     <>
-      <DocSection n={1} title={nav[0]} meta={releaseMeta(latest, [...latest.entries.values()])}>
+      <DocSection n={1} title={nav[0]} description={releaseMeta(latest, [...latest.entries.values()])}>
         {filters}
         {latestEntries.length ? (
           <ReleaseBody r={latest} entries={latestEntries} level={3} pages={pages} />
@@ -384,7 +384,7 @@ export function Changelog() {
       </DocSection>
 
       {series.length > 0 && (
-        <DocSection n={2} title="Earlier releases" meta={plural(older.length, 'release')}>
+        <DocSection n={2} title="Earlier releases">
           {visibleSeries.length ? (
             <Accordion headingLevel={3}>
               {visibleSeries.map((s) => {

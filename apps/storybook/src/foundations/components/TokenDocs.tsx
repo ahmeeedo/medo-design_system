@@ -3,7 +3,8 @@
  * Everything updates automatically when the tokens are rebuilt.
  */
 import { useState, type ReactNode } from 'react';
-import { Button, StaticTable } from '@med-o/ui';
+import { Button } from '@med-o/ui';
+import { StackTable } from '../../docs-blocks/DocBlocks';
 import light from '@med-o/design-tokens/docs/tokens.light.json';
 import dark from '@med-o/design-tokens/docs/tokens.dark.json';
 import contrast from '@med-o/design-tokens/docs/contrast.json';
@@ -27,8 +28,8 @@ const darkByVar = new Map(D.map((t) => [t.cssVar, t]));
 /* ---------- small building blocks ---------- */
 
 const Code = ({ children }: { children: ReactNode }) => <code className="doc-mono">{children}</code>;
-/** Token lists use the library table (StaticTable). */
-const Table = ({ children }: { children: ReactNode }) => <StaticTable>{children}</StaticTable>;
+/** Token lists: the library table, stacked on phones. */
+const Table = StackTable;
 
 function Swatch({ cssVar, theme, size = 'var(--medo-size-control-md)' }: { cssVar: string; theme: 'light' | 'dark'; size?: string }) {
   // A data-theme island: shows the token exactly as it renders in that theme.
@@ -80,10 +81,10 @@ export function SemanticColors({ groups }: { groups: string[] }) {
           const d = darkByVar.get(t.cssVar)!;
           return (
             <tr key={t.cssVar}>
-              <td>
+              <td className="doc-cell-swatch">
                 <Swatch cssVar={t.cssVar} theme="light" />
               </td>
-              <td>
+              <td className="doc-cell-swatch">
                 <Swatch cssVar={t.cssVar} theme="dark" />
               </td>
               <td>
@@ -195,7 +196,7 @@ export function Palette() {
         return (
           <div key={g} style={{ display: 'grid', gap: 'var(--medo-layout-gap-inline)' }}>
             <div className="medo-text-label-md-strong">{g}</div>
-            <div style={{ display: 'grid', gridTemplateColumns: `repeat(${tokens.length}, 1fr)`, gap: 'var(--medo-space-1)' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(var(--medo-size-control-lg), 1fr))', gap: 'var(--medo-space-1)' }}>
               {tokens.map((t) => (
                 <div key={t.cssVar}>
                   <div
@@ -473,7 +474,7 @@ export function Elevation() {
     <div className="doc-stages" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(var(--medo-size-width-xl), 1fr))' }}>
       {(['light', 'dark'] as const).map((theme) => (
         <div key={theme} data-theme={theme} className="doc-stage" style={{ background: 'var(--medo-color-surface-canvas)' }}>
-          <span className="doc-stage-label medo-text-code-sm">{theme}</span>
+          <span className="doc-stage-label medo-text-label-sm">{theme}</span>
           <div style={{ display: 'flex', gap: 'var(--medo-layout-gap-items)', flexWrap: 'wrap' }}>
             {byGroup('shadow').map((t) => (
               <div

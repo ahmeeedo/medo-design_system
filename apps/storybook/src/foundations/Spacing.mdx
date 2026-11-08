@@ -15,7 +15,7 @@ import { DocPage, DocHeader, DocSection, DocFooter, Tok, SourceLink, UsageGuide 
   nav={['Spacing rules', 'Spacing', 'Radius', 'Control & icon sizes', 'Widths', 'Layout', 'Breakpoints & containers', 'Layers']}
 />
 
-<DocSection n={1} title="Spacing rules" meta="inline · content · fields · items · group · section" description={<p>The space <em>between</em> elements always comes from one of six rules – never from a free number. The closer things belong together, the smaller the gap: the page shows its structure without lines. The values grow with the layout mode, so spacing needs no breakpoints. <Tok>Stack</Tok> and <Tok>Grid</Tok> use the rules as defaults: a stack gets <Tok>content</Tok> (horizontal: <Tok>inline</Tok>), a grid of cards <Tok>items</Tok>.</p>}>
+<DocSection n={1} title="Spacing rules" description={<p>The space <em>between</em> elements always comes from one of six rules – never from a free number. The closer things belong together, the smaller the gap: the page shows its structure without lines. The values grow with the layout mode, so spacing needs no breakpoints. <Tok>Stack</Tok> and <Tok>Grid</Tok> use the rules as defaults: a stack gets <Tok>content</Tok> (horizontal: <Tok>inline</Tok>), a grid of cards <Tok>items</Tok>.</p>}>
   <SpacingRules />
   <UsageGuide
     usage={{
@@ -34,24 +34,24 @@ import { DocPage, DocHeader, DocSection, DocFooter, Tok, SourceLink, UsageGuide 
   <p>The padding <em>inside</em> components (buttons, cards, fields) is part of the component and uses the scale below.</p>
 </DocSection>
 
-<DocSection n={2} title="Spacing" meta="4 px grid" description="The scale behind the rules and the padding inside components.">
+<DocSection n={2} title="Spacing" description="A 4 px grid: the scale behind the rules and the padding inside components.">
   <SpacingScale />
 </DocSection>
 
-<DocSection n={3} title="Radius" meta="Square to pill" description="Bigger element, bigger radius. Inner radius = outer radius − padding.">
+<DocSection n={3} title="Radius" description="Bigger element, bigger radius. Inner radius = outer radius − padding.">
   <Radii />
 </DocSection>
 
-<DocSection n={4} title="Control & icon sizes" meta="sm · md · lg">
+<DocSection n={4} title="Control & icon sizes">
   <SimpleTable path={['size', 'control']} />
   <SimpleTable path={['size', 'icon']} />
 </DocSection>
 
-<DocSection n={5} title="Widths" meta="80 to 720 px" description={<p>Components in the page take the width of their container – the layout decides, not the component. Only these have a width of their own: floating layers (Dialog, Drawer, Popover, Menu, Tooltip, Toast, Quick search, Listbox), limits that cut long text (Tag, Breadcrumbs) and app regions (Side navigation). They use this scale, never a free number.</p>}>
+<DocSection n={5} title="Widths" description={<p>Components in the page take the width of their container – the layout decides, not the component. Only these have a width of their own: floating layers (Dialog, Drawer, Popover, Menu, Tooltip, Toast, Quick search, Listbox), limits that cut long text (Tag, Breadcrumbs) and app regions (Side navigation). They use this scale, never a free number.</p>}>
   <SimpleTable path={['size', 'width']} format={(t) => `${parseFloat(String(t.value)) * 16}\u00a0px`} />
 </DocSection>
 
-<DocSection n={6} title="Layout" meta="Mobile · Tablet · Desktop" description="These tokens change with the screen width – one variable, three values.">
+<DocSection n={6} title="Layout" description="These tokens change with the screen width – one variable, three values.">
   <LayoutTable />
 </DocSection>
 
@@ -60,7 +60,7 @@ import { DocPage, DocHeader, DocSection, DocFooter, Tok, SourceLink, UsageGuide 
   <SimpleTable path={['container']} />
 </DocSection>
 
-<DocSection n={8} title="Layers" meta="z-index" description="Never invent z-index values. Use the layer scale.">
+<DocSection n={8} title="Layers" description="Never invent z-index values. Use the layer scale.">
   <SimpleTable path={['layer']} />
 </DocSection>
 

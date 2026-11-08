@@ -17,7 +17,7 @@ export const hc = contrast.higherContrast;
   nav={['Light and Dark', 'Theme islands', 'Higher contrast', 'Override styles', 'Change tokens']}
 />
 
-<DocSection n={1} title="Light and Dark" meta="data-theme" description="The tokens follow the operating system. Nothing to set up.">
+<DocSection n={1} title="Light and Dark" description="The tokens follow the operating system. Nothing to set up.">
 
 ```html
 <html>                     <!-- follows the system setting -->
@@ -29,7 +29,7 @@ A theme switch in your app only sets the attribute. Store the choice (e.g. in `l
 
 </DocSection>
 
-<DocSection n={2} title="Theme islands" meta="Any element" description="data-theme works on any element. Everything inside uses that theme.">
+<DocSection n={2} title="Theme islands" description="data-theme works on any element. Everything inside uses that theme.">
 
 ```html
 <main data-theme="light">
@@ -42,7 +42,7 @@ Shadows and the colour scheme of form controls (`color-scheme`) switch with the 
 
 </DocSection>
 
-<DocSection n={3} title="Higher contrast" meta="prefers-contrast" description="“Increase contrast” in the system settings strengthens secondary text and borders – automatically.">
+<DocSection n={3} title="Higher contrast" description="“Increase contrast” in the system settings strengthens secondary text and borders – automatically.">
 
 <SpecTable
   head={['Token', 'With higher contrast']}
@@ -56,7 +56,7 @@ The high contrast mode of the operating system (`forced-colors`) is handled in t
 
 </DocSection>
 
-<DocSection n={4} title="Override styles" meta="Cascade layers" description="Component styles sit in the cascade layer components. Your CSS without a layer always wins – whatever its specificity.">
+<DocSection n={4} title="Override styles" description="Component styles sit in the cascade layer components. Your CSS without a layer always wins – whatever its specificity.">
 
 ```css
 /* Your app – no !important, no long selectors */
@@ -76,7 +76,7 @@ With Tailwind v4 the utilities win too: `<Button className="mt-4 w-full">`. The 
 
 </DocSection>
 
-<DocSection n={5} title="Change tokens" meta="CSS variables" description="Set a semantic token on :root or on any element. Components inside follow.">
+<DocSection n={5} title="Change tokens" description="Set a semantic token on :root or on any element. Components inside follow.">
 
 ```css
 :root {

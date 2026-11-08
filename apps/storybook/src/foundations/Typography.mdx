@@ -11,15 +11,18 @@ import { DocPage, DocHeader, DocSection, DocFooter, Notes, Tok, SourceLink } fro
   title="Typography"
   meta="DM Sans · DM Mono"
   subtitle={`DM Sans and DM Mono, ${fontSizeCount} sizes, ${fontWeightCount} weights.`}
-  description={<p>Sizes are designed in px and shipped in rem (16 px = 1 rem), so text follows the user’s browser font size. Every size has a paired line height on the 4 px grid.</p>}
+  description={<>
+    <p>DM Sans for all text – headings, body, labels, metadata. DM Mono only for code: code samples, token and class names, prop types (<Tok>code/*</Tok> styles).</p>
+    <p>Sizes are designed in px and shipped in rem (16 px = 1 rem), so text follows the user’s browser font size. Every size has a paired line height on the 4 px grid.</p>
+  </>}
   nav={['Text styles', 'Usage', 'Font tokens']}
 />
 
-<DocSection n={1} title="Text styles" meta="Use as a whole" description="A text style bundles family, size, weight, line height and letter spacing.">
+<DocSection n={1} title="Text styles" description="A text style bundles family, size, weight, line height and letter spacing.">
   <TypeScale />
 </DocSection>
 
-<DocSection n={2} title="Usage" meta="CSS · Tailwind" description="Three ways, same result.">
+<DocSection n={2} title="Usage" description="Three ways, same result.">
 
 ```html
 <p class="medo-text-body-md">…</p>   <!-- plain CSS class -->
@@ -33,7 +36,7 @@ import { DocPage, DocHeader, DocSection, DocFooter, Notes, Tok, SourceLink } fro
 
 </DocSection>
 
-<DocSection n={3} title="Font tokens" meta="Family · size · weight · tracking">
+<DocSection n={3} title="Font tokens">
   <SimpleTable path={['font', 'family']} />
   <SimpleTable path={['font', 'size']} />
   <SimpleTable path={['font', 'weight']} />
