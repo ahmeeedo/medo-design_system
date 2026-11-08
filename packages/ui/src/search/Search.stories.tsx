@@ -10,7 +10,7 @@ import { QuickSearch } from './QuickSearch';
 import { Accordion, AccordionItem } from '../accordion/Accordion';
 import { Avatar } from '../avatar/Avatar';
 import { BottomSheet } from '../bottom-sheet/BottomSheet';
-import { Checkbox, CheckboxGroup } from '../checkbox/Checkbox';
+import { Checkbox } from '../checkbox/Checkbox';
 import { Radio, RadioGroup } from '../radio/Radio';
 import { Button } from '../button/Button';
 import { Card } from '../card/Card';
@@ -133,6 +133,18 @@ const meta = {
         dont: ['Show “No results” without a way forward.', 'Highlight matches by colour only.'],
       },
       a11y: {
+        screenReader: {
+          steps: [
+            ['Go to the heading “Playground”, then to the field.', '“Search, search field” (or “edit”) and “Search invoices”.'],
+            ['Type “abc”, then Close / Esc.', 'The text is cleared; the field is empty again.'],
+            ['Go to the heading “Search result”, then through the first result.', 'A list “Results”; “Help center › Billing”, the heading and link “Download an invoice”, the text, “Page” and “Updated 3 days ago”.'],
+            ['Go to the heading “Search page”, then past the search field.', '“Clear search, button”, then the tabs “Result types”: “All 7, tab, selected, 1 of 4”.'],
+            ['Go on to the results.', 'The heading “7 results for “invoice”” and the results as a list.'],
+            ['Go to the heading “Search page with filters”, then to the filters.', 'The region “Filters”; “Type, button, expanded”, the group “Type” and “PDF (1), checkbox, checked” and the others; then “Date” with its radio group.'],
+            ['Go to the heading “Quick search”, then activate “Search”.', 'A dialog “Search”; the focus is in the search field.'],
+            ['Type “inv”, then arrow down.', 'The hits, grouped by type; the focus stays in the field. Close / Esc closes the dialog and the focus is back on “Search”.'],
+          ],
+        },
         keyboard: [
           ['Enter', 'Submits the search.'],
           ['Esc', 'Clears the field.'],
@@ -441,14 +453,20 @@ function Filters({
 }) {
   return (
     <Accordion defaultExpandedKeys={['type', 'date']}>
+      {/* The open panel is already a group named by its title – the checkboxes need no second group around them. */}
       <AccordionItem id="type" title="Type">
-        <CheckboxGroup aria-label="Type" size={choiceSize} value={types} onChange={setTypes}>
+        <div className="medo-field__options">
           {typeOptions.map((o) => (
-            <Checkbox key={o.id} value={o.id}>
+            <Checkbox
+              key={o.id}
+              size={choiceSize}
+              isSelected={types.includes(o.id)}
+              onChange={(on) => setTypes(on ? [...types, o.id] : types.filter((t) => t !== o.id))}
+            >
               {`${o.label} (${counts[o.id] ?? 0})`}
             </Checkbox>
           ))}
-        </CheckboxGroup>
+        </div>
       </AccordionItem>
       <AccordionItem id="date" title="Date">
         <RadioGroup aria-label="Date" size={choiceSize} value={date} onChange={setDate}>
@@ -460,10 +478,10 @@ function Filters({
         </RadioGroup>
       </AccordionItem>
       <AccordionItem id="author" title="Author">
-        <CheckboxGroup aria-label="Author" size={choiceSize}>
-          <Checkbox value="lea">Lea Müller</Checkbox>
-          <Checkbox value="sam">Sam Kowalski</Checkbox>
-        </CheckboxGroup>
+        <div className="medo-field__options">
+          <Checkbox size={choiceSize}>Lea Müller</Checkbox>
+          <Checkbox size={choiceSize}>Sam Kowalski</Checkbox>
+        </div>
       </AccordionItem>
       <AccordionItem id="size" title="File size">
         <RadioGroup aria-label="File size" size={choiceSize} defaultValue="any">
@@ -600,7 +618,7 @@ export const Sidebar: Story = {
     docs: {
       description: {
         story:
-          'More than 4 filter groups: a sidebar (264) with an Accordion – Type and Date open. Every group is named by its Accordion title (CheckboxGroup / RadioGroup with `aria-label`). Active filters are removable tags plus “Clear all”; the count is announced.',
+          'More than 4 filter groups: a sidebar (264) with an Accordion – Type and Date open. Every open panel is a group named by its Accordion title: checkboxes go straight into it; radios keep a RadioGroup for the arrow keys. Active filters are removable tags plus “Clear all”; the count is announced.',
       },
     },
   },

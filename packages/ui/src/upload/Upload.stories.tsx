@@ -134,6 +134,17 @@ const meta = {
         dont: ['Make drag and drop the only way.', 'Remove a file without a way back when it was uploaded already.'],
       },
       a11y: {
+        screenReader: {
+          steps: [
+            ['Go to the heading “Playground”, then to the drop area.', '“DropZone, Drag and drop files here, Documents and photos, button”.'],
+            ['Next element.', '“Choose files, button” and “PDF, JPG or PNG · max. 10 MB each”.'],
+            ['Go on to the list.', '“Uploaded files, list, 4 items”; each file with its name and size, then “Remove …, button”.'],
+            ['In the list, go to the third file.', '“Offer_Campus-Docs_v3.pdf”, “2 of 2.4 MB · 83 %”, “Uploading Offer_Campus-Docs_v3.pdf, progress bar, 83 %” and “Cancel upload of Offer_Campus-Docs_v3.pdf, button”.'],
+            ['Go to the heading “File states”, then through the files.', 'Uploading with its progress, done with “Remove”, and errors with the reason, e.g. “File is 14 MB – max. 10 MB allowed”. A file that can be tried again has “Retry …, button”.'],
+            ['Go to the heading “File trigger”, then to the button.', '“Attachments, Choose file, button” and “PDF or JPG · max. 10 MB”.'],
+            ['Go to the heading “Validation”, then choose a file that is too large or not a PDF.', 'At once, without moving: “… is not allowed. Use PDF.” or “File is … – max. 1 MB allowed”.'],
+          ],
+        },
         keyboard: [
           ['Tab', 'Moves to the button and the file actions.'],
           ['Enter / Space', 'Opens the system file picker.'],

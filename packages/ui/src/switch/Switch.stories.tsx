@@ -31,6 +31,15 @@ const meta = {
         dont: ['Change the label with the state.', 'Ask for confirmation after switching. If it needs confirmation, it is not a switch.'],
       },
       a11y: {
+        screenReader: {
+          steps: [
+            ['Go to the heading “Playground”, then to the switch.', '“Email notifications, switch, off” (or “not checked”).'],
+            ['Activate it.', '“On” (or “checked”).'],
+            ['Go to the heading “States” and through the switches.', 'Off, on, “With description” with “Weekly summary every Monday.”, two disabled ones with “unavailable” or “dimmed”, “Saving …” as read only, and “Large (mobile)”.'],
+            ['Go to the heading “Settings list”, then to the first switch.', '“Email, switch, on” and “Get an email for new comments.”, then “Push notifications, off”.'],
+            ['Go to the heading “While saving”, then activate “Auto-save”.', 'For about a second nothing changes – it cannot be switched while it saves. Then “on”.'],
+          ],
+        },
         keyboard: [
           ['Tab', 'Moves the focus to the switch.'],
           ['Space', 'Turns it on or off.'],
