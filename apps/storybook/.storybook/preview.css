@@ -337,6 +337,14 @@ html[data-theme] :is(.sb-preparing-story, .sb-preparing-docs) > * {
   background: var(--medo-color-surface-default);
   color: var(--medo-color-text-primary);
 }
+/* Tab panels in a section: same spacing as the section (code blocks have no margin of their own) */
+.medo-doc .doc-section .medo-tabs__panel:not([data-inert]) {
+  display: grid;
+  gap: var(--medo-layout-gap-content);
+}
+.medo-doc .doc-section .medo-tabs__panel > * {
+  min-inline-size: 0;
+}
 /* "Show code" bar sits directly below its canvas */
 .medo-doc .sbdocs-preview-actions {
   margin: calc(var(--medo-space-2) - var(--medo-space-5)) 0 0;
