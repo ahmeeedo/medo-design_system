@@ -1,5 +1,16 @@
 # @med-o/design-tokens
 
+## 0.10.0
+
+_Released 2026-11-09_
+
+### Minor Changes
+
+- b2bbbb4: New: code/* tokens color the syntax in `CodeBlock`.
+
+  - `code/keyword`, `code/string`, `code/function`, `code/constant`, `code/comment` and `code/punctuation`, each for Light and Dark.
+  - Every color reaches at least 4.5 : 1 on surface/subtle, surface/default and surface/brand-muted. The token build checks these pairs.
+
 ## 0.9.0
 
 _Released 2026-11-08_
