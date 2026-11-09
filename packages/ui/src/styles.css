@@ -39,6 +39,7 @@
 @import './dialog/dialog.css' layer(components);
 @import './drawer/drawer.css' layer(components);
 @import './link/link.css' layer(components);
+@import './code-block/code-block.css' layer(components);
 @import './alert/alert.css' layer(components);
 @import './toast/toast.css' layer(components);
 @import './tabs/tabs.css' layer(components);

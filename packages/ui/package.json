@@ -12,6 +12,11 @@
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
     },
+    "./highlight": {
+      "@med-o/source": "./src/code-block/highlight.ts",
+      "types": "./dist/highlight.d.ts",
+      "default": "./dist/highlight.js"
+    },
     "./styles.css": "./src/styles.css",
     "./styles.min.css": "./dist/styles.css",
     "./package.json": "./package.json"
@@ -31,11 +36,18 @@
   },
   "peerDependencies": {
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "shiki": "^4.0.0"
+  },
+  "peerDependenciesMeta": {
+    "shiki": {
+      "optional": true
+    }
   },
   "devDependencies": {
     "@size-limit/preset-small-lib": "^14.3.0",
     "lightningcss": "^1.32.0",
+    "shiki": "^4.6.0",
     "size-limit": "^14.3.0",
     "tsup": "^8.5.1"
   },
@@ -64,21 +76,40 @@
   "publishConfig": {
     "access": "public"
   },
-  "tsup": {
-    "entry": [
-      "src/index.ts"
-    ],
-    "format": [
-      "esm"
-    ],
-    "target": "es2022",
-    "dts": true,
-    "sourcemap": true,
-    "clean": true,
-    "banner": {
-      "js": "\"use client\";"
+  "tsup": [
+    {
+      "entry": [
+        "src/index.ts"
+      ],
+      "format": [
+        "esm"
+      ],
+      "target": "es2022",
+      "dts": true,
+      "sourcemap": true,
+      "banner": {
+        "js": "\"use client\";"
+      },
+      "clean": [
+        "!highlight.*"
+      ]
+    },
+    {
+      "entry": {
+        "highlight": "src/code-block/highlight.ts"
+      },
+      "format": [
+        "esm"
+      ],
+      "target": "es2022",
+      "dts": true,
+      "sourcemap": true,
+      "clean": false,
+      "external": [
+        "shiki"
+      ]
     }
-  },
+  ],
   "size-limit": [
     {
       "name": "Button",

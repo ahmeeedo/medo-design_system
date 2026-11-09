@@ -15,7 +15,7 @@ import { DocPage, DocHeader, DocSection, DocFooter, Tok, SourceLink } from '../d
     <p>Three layers: <strong className="doc-strong">primitives</strong> (raw palette) → <strong className="doc-strong">alias</strong> (primary, neutral, success …) → <strong className="doc-strong">semantic</strong> (what a color is for).</p>
     <p>Products use only semantic tokens. Every table shows Light and Dark side by side.</p>
   </>}
-  nav={['Surfaces', 'Text', 'Text on backgrounds', 'Borders & focus', 'Actions & states', 'Feedback', 'Avatar', 'Shadow colors', 'Palette']}
+  nav={['Surfaces', 'Text', 'Text on backgrounds', 'Borders & focus', 'Actions & states', 'Feedback', 'Avatar', 'Code', 'Shadow colors', 'Palette']}
 />
 
 <DocSection n={1} title="Surfaces" description="Backgrounds from page to overlay. Max three levels: page → container → inset.">
@@ -46,11 +46,15 @@ import { DocPage, DocHeader, DocSection, DocFooter, Tok, SourceLink } from '../d
   <SemanticColors groups={['avatar']} />
 </DocSection>
 
-<DocSection n={8} title="Shadow colors" description="Used inside the elevation tokens, not directly.">
+<DocSection n={8} title="Code" description="Syntax colors in Code block. Each role has one token; plain code uses text/primary.">
+  <SemanticColors groups={['code']} />
+</DocSection>
+
+<DocSection n={9} title="Shadow colors" description="Used inside the elevation tokens, not directly.">
   <SemanticColors groups={['shadow']} />
 </DocSection>
 
-<DocSection n={9} title="Palette" description="For reference only. Products never use these directly.">
+<DocSection n={10} title="Palette" description="For reference only. Products never use these directly.">
   <Palette />
 </DocSection>
 

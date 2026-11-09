@@ -153,6 +153,38 @@
         "$description": "Text and icons on top of images, always on overlay/media. White in both themes."
       }
     },
+    "code": {
+      "keyword": {
+        "$type": "color",
+        "$value": "{color.violet.700}",
+        "$description": "Syntax highlighting in Code block on surface/subtle and surface/default: Keywords and tags (import, const, return, <div>). ≥ 4.5:1 in both modes. Plain code uses text/primary."
+      },
+      "string": {
+        "$type": "color",
+        "$value": "{color.green.800}",
+        "$description": "Syntax highlighting in Code block on surface/subtle and surface/default: Strings and template text. ≥ 4.5:1 in both modes. Plain code uses text/primary."
+      },
+      "function": {
+        "$type": "color",
+        "$value": "{color.sky.700}",
+        "$description": "Syntax highlighting in Code block on surface/subtle and surface/default: Function and component names. ≥ 4.5:1 in both modes. Plain code uses text/primary."
+      },
+      "constant": {
+        "$type": "color",
+        "$value": "{color.pink.700}",
+        "$description": "Syntax highlighting in Code block on surface/subtle and surface/default: Numbers, booleans, attributes and properties. ≥ 4.5:1 in both modes. Plain code uses text/primary."
+      },
+      "comment": {
+        "$type": "color",
+        "$value": "{color.neutral.600}",
+        "$description": "Syntax highlighting in Code block on surface/subtle and surface/default: Comments. ≥ 4.5:1 in both modes. Plain code uses text/primary."
+      },
+      "punctuation": {
+        "$type": "color",
+        "$value": "{color.neutral.700}",
+        "$description": "Syntax highlighting in Code block on surface/subtle and surface/default: Brackets, operators and separators. ≥ 4.5:1 in both modes. Plain code uses text/primary."
+      }
+    },
     "border": {
       "default": {
         "$type": "color",

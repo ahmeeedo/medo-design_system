@@ -43,6 +43,8 @@ export interface Messages {
     more: (count: number) => string;
   };
   breadcrumbs: { label: string; more: (count: number) => string };
+  /** Copy button and, for code wider than the block, the name of its scroll area. */
+  codeBlock: { copy: string; copied: string; copyFailed: string; label: string };
   form: {
     /** Screen readers only, after a submit with errors: “2 fields need attention”. */
     errorCount: (count: number) => string;

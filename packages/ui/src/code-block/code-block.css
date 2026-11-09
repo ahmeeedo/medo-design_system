@@ -1,0 +1,181 @@
+/**
+ * Code block – med.o Design System
+ *
+ * Code to read and copy. Long lines scroll, they never wrap.
+ *   <figure class="medo-code-block">                                surface/subtle, border/default, radius/lg
+ *     <div class="medo-code-block__header">                         only with a title or tabs
+ *       <figcaption class="medo-code-block__title">app/save.tsx</figcaption>   label/sm, text/secondary
+ *       <button class="medo-button medo-button--ghost medo-button--sm medo-code-block__copy">Copy</button>
+ *     </div>
+ *     <div class="medo-code-block__body">
+ *       <pre class="medo-code-block__code [medo-code-block__code--numbers]"><code>
+ *         <span class="medo-code-block__line" [data-highlighted]>
+ *           <span class="medo-code-block__token--keyword">import</span> …
+ *         </span>
+ *       </code></pre>
+ *       (without a header the copy button sits here, in the corner)
+ *     </div>
+ *   </figure>
+ * Without a title: add medo-code-block--bare. Tabs: medo-code-block--tabs with a Tabs list in the header.
+ * Token roles: keyword, string, function, constant, comment, punctuation (colors code/*); plain code text/primary.
+ */
+
+.medo-code-block {
+  --_pad: var(--medo-space-4);
+
+  display: grid;
+  min-inline-size: 0;
+  margin: 0;
+  color: var(--medo-color-text-primary);
+  background-color: var(--medo-color-surface-subtle);
+  border: var(--medo-border-width-thin) solid var(--medo-color-border-default);
+  border-radius: var(--medo-radius-lg);
+  overflow: hidden;
+}
+
+.medo-code-block .medo-tabs {
+  gap: 0;
+}
+
+.medo-code-block__header {
+  display: flex;
+  align-items: center;
+  gap: var(--medo-space-2);
+  min-inline-size: 0;
+  padding-block: var(--medo-space-1);
+  padding-inline: var(--_pad) var(--medo-space-1);
+  border-block-end: var(--medo-border-width-thin) solid var(--medo-color-border-default);
+}
+
+.medo-code-block--tabs .medo-code-block__header {
+  padding-inline-start: var(--medo-space-2);
+}
+
+.medo-code-block__title {
+  flex: 1;
+  min-inline-size: 0;
+  overflow: hidden;
+  font: var(--medo-typography-label-sm);
+  color: var(--medo-color-text-secondary);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.medo-code-block__header .medo-tabs__list {
+  flex-shrink: 1;
+  min-inline-size: 0;
+}
+
+.medo-code-block__copy {
+  flex-shrink: 0;
+  margin-inline-start: auto;
+}
+
+.medo-code-block__body {
+  display: flex;
+  align-items: flex-start;
+  min-inline-size: 0;
+  outline: none;
+}
+
+.medo-code-block--bare .medo-code-block__body {
+  padding-block-start: var(--medo-space-1);
+  padding-inline-end: var(--medo-space-1);
+}
+
+/* The tab panel is focusable when the code does not scroll: same ring as other panels, inside the block. */
+.medo-code-block__body[data-focus-visible] {
+  box-shadow: var(--medo-shadow-focus-ring-inset);
+}
+
+.medo-code-block__code {
+  flex: 1;
+  min-inline-size: 0;
+  margin: 0;
+  padding-block: var(--_pad);
+  overflow-x: auto;
+  font: var(--medo-typography-code-sm);
+  tab-size: 2;
+  outline: none;
+}
+
+.medo-code-block--bare .medo-code-block__code {
+  padding-block: var(--medo-space-3);
+}
+
+.medo-code-block__code:focus-visible {
+  box-shadow: var(--medo-shadow-focus-ring-inset);
+}
+
+.medo-code-block__code > code {
+  display: block;
+  inline-size: max-content;
+  min-inline-size: 100%;
+  font: inherit;
+  counter-reset: medo-code-line;
+}
+
+/* One block per line: a highlighted line spans the full width, empty lines keep their height. */
+.medo-code-block__line {
+  display: block;
+  min-block-size: 1lh;
+  padding-inline: var(--_pad);
+}
+
+.medo-code-block__line[data-highlighted] {
+  background-color: var(--medo-color-surface-brand-muted);
+}
+
+/* Line numbers: generated content – not copied, not read. */
+.medo-code-block__code--numbers .medo-code-block__line::before {
+  counter-increment: medo-code-line;
+  content: counter(medo-code-line);
+  display: inline-block;
+  min-inline-size: calc(var(--_digits, 1) * 1ch);
+  margin-inline-end: var(--medo-space-4);
+  color: var(--medo-color-text-secondary);
+  text-align: end;
+  user-select: none;
+}
+
+.medo-code-block__token--keyword {
+  color: var(--medo-color-code-keyword);
+}
+
+.medo-code-block__token--string {
+  color: var(--medo-color-code-string);
+}
+
+.medo-code-block__token--function {
+  color: var(--medo-color-code-function);
+}
+
+.medo-code-block__token--constant {
+  color: var(--medo-color-code-constant);
+}
+
+.medo-code-block__token--comment {
+  color: var(--medo-color-code-comment);
+}
+
+.medo-code-block__token--punctuation {
+  color: var(--medo-color-code-punctuation);
+}
+
+@media (forced-colors: active) {
+  .medo-code-block {
+    border-color: CanvasText;
+  }
+
+  .medo-code-block__body[data-focus-visible],
+  .medo-code-block__code:focus-visible {
+    outline: var(--medo-focus-ring-width) solid Highlight;
+    outline-offset: calc(-1 * var(--medo-focus-ring-width));
+  }
+
+  .medo-code-block__line[data-highlighted] {
+    background-color: Highlight;
+    color: HighlightText;
+    forced-color-adjust: none;
+  }
+}

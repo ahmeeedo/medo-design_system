@@ -48,6 +48,12 @@
       "use": "Text on images and video – always on the overlay/media scrim. Checked on a white image, the worst case.",
       "surfaces": ["overlay/media"],
       "texts": ["text/on-media"]
+    },
+    {
+      "name": "Code",
+      "use": "Syntax colors in Code block – on its surface, on the page and on a highlighted line.",
+      "surfaces": ["surface/subtle", "surface/default", "surface/brand-muted"],
+      "texts": ["text/primary", "code/keyword", "code/string", "code/function", "code/constant", "code/comment", "code/punctuation"]
     }
   ],
   "min": 4.5
