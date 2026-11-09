@@ -64,10 +64,7 @@ Use the semantic tokens (`surface`, `text`, `border`, `action`, `feedback` …).
 </div>
 ```
 
-- Only system values exist: the default Tailwind colors, shadows, radii and text sizes are removed.
-- Spacing: one Tailwind step is 4 px (`p-4` = `--medo-space-4`, `p-0.5` = `--medo-space-0-5`).
-- Spacing rules: `gap-items`, `space-y-fields`, `py-section` … use the six rules (see below) – prefer them for the space between elements.
-- Tailwind only finds complete class names. Never build class names from variables.
+Only system values exist: Tailwind's own colors, text sizes, shadows, radii and widths are removed, and a removed class creates no CSS. All classes, what replaces the defaults and the rules: [Guides / Tailwind](https://design.med-o.de/?path=/docs/usage-tailwind--docs).
 
 ### React components
 
@@ -193,7 +190,7 @@ Status: **Experimental** – the API may still change · **Beta** – complete a
 | `Badge`, `BadgeCount`, `BadgeDot` | Beta | 6 tones · dot or icon · counts “99+” |
 | `Spinner`, `ProgressBar`, `Skeleton` | Beta | reduced motion: slower / static |
 | `List`, `ListItem`, `DescriptionList`, `DescriptionItem` | Beta | real ul/ol/dl · bullet, number (tabular, `start`), check with `excluded` · level 2 · follows the text size · DL stacks below 360 px (container query) |
-| `Avatar`, `AvatarGroup` | Beta | image → initials → icon · colour from id · status · max 4 + “+N” |
+| `Avatar`, `AvatarGroup` | Beta | image → initials → icon · color from id · status · max 4 + “+N” |
 | `ListView`, `ListRow`, `ListRowIcon`, `ListCard` | Beta | React Aria GridList: ↑ ↓ rows, Tab into row controls · 1–3 lines · leading (avatar auto-sized) · meta, menu, chevron, switch or buttons · `unread` · selection with checkboxes · plain / card · `isLoading` skeleton rows · `variant="cards"` with ListCard (Table cards on mobile, checkbox lg) · `swipeActions` on touch: left Delete, right Archive, snaps open from 88 px, full swipe ≥ 50 % or flick, Toast “Undo” – same actions in the “…” menu |
 | `EmptyState` | Beta | 5 types (first use, no results, error, no access, all done) with icon and tone · page / section / inline · structured `action` (primary only for first use) and `secondaryAction` (text button or Link) · illustration slot · `section` named by its heading · “no results” in `role="status"` · used by List view and Table |
 | `Pagination` | Beta | navigation region · full: summary (live region), rows per page (Select sm), ‹ 1 … 4 5 6 … 19 › (max 7, first and last always) · compact below 640 px: ‹ Page 5 of 19 › 48 px · buttons (`onChange`) or real links (`getPageHref`) · current page `aria-current`, action/selected · one page: hidden · “Load more” is a Button pattern |
