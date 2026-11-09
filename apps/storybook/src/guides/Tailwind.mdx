@@ -101,6 +101,7 @@ Use it for layout around the component: margin, width, position in a grid. Do no
       ],
       dont: [
         'Build class names from variables: `bg-feedback-${tone}-surface` – Tailwind does not find them, nothing is generated.',
+        // lint-tokens-ignore: the raw values are the wrong example of this rule
         'Use raw values: `p-[13px]`, `bg-[#0b5cad]`. A token variable is fine: `max-w-(--medo-size-width-xl)`.',
         'Add `dark:` for colors – the tokens switch already.',
         'Restyle the inner parts of a component with utilities.',
