@@ -1,0 +1,123 @@
+import { Meta, Canvas } from '@storybook/addon-docs/blocks';
+import { DocPage, DocHeader, DocSection, DocFooter, SpecTable, Tok, SourceLink, UsageGuide } from '../docs-blocks/DocBlocks';
+import * as TailwindStories from './Tailwind.stories';
+
+<Meta of={TailwindStories} />
+
+<DocPage>
+
+<DocHeader
+  kind="Guides"
+  title="Tailwind"
+  meta="Tailwind CSS v4"
+  subtitle="Utility classes on top of the design tokens. Only system values exist."
+  description={<p>The theme replaces Tailwind's defaults with the tokens: <Tok>bg-surface-raised</Tok>, <Tok>text-body-md</Tok>, <Tok>gap-items</Tok>. Every class points to a <Tok>--medo-*</Tok> variable, so Light, Dark and your own token overrides apply without extra classes.</p>}
+  nav={['Set up', 'What exists', 'What is gone', 'Light and Dark', 'With components', 'Rules', 'Examples']}
+/>
+
+<DocSection n={1} title="Set up" description="Tailwind CSS v4 only – the theme uses @theme, which v3 does not know.">
+
+```css
+/* main.css */
+@import "tailwindcss";
+@import "@med-o/design-tokens/css/tokens.css";      /* the variables, Light and Dark */
+@import "@med-o/design-tokens/tailwind/theme.css";  /* maps them to Tailwind */
+@import "@med-o/ui/styles.css";                     /* only with the React components */
+```
+
+The text style classes (<Tok>medo-text-*</Tok>) from <Tok>typography.css</Tok> are not needed: Tailwind has its own (<Tok>text-body-md</Tok>).
+
+</DocSection>
+
+<DocSection n={2} title="What exists" description="Each area with its class pattern. The names are the token names.">
+
+<SpecTable
+  head={['Area', 'Classes']}
+  rows={[
+    ['Colors', <><Tok>bg-surface-*</Tok>, <Tok>text-text-*</Tok>, <Tok>border-border-*</Tok>, <Tok>bg-action-*</Tok>, <Tok>bg-feedback-*</Tok>, <Tok>bg-state-hover</Tok> – the semantic tokens of Foundations / Colors. No palette.</>],
+    ['Text styles', <><Tok>text-display-xl</Tok> … <Tok>text-body-md</Tok>, <Tok>text-label-sm</Tok>, <Tok>text-caption</Tok>, <Tok>text-overline</Tok>, <Tok>text-code-sm</Tok>. One class sets size, line height, weight and letter spacing.</>],
+    ['Spacing scale', <>One step is 4 px: <Tok>p-4</Tok> = <Tok>space/4</Tok> = 16 px, <Tok>p-0.5</Tok> = 2 px. For padding inside an element.</>],
+    ['Spacing rules', <><Tok>gap-inline</Tok>, <Tok>gap-content</Tok>, <Tok>space-y-fields</Tok>, <Tok>gap-items</Tok>, <Tok>gap-group</Tok>, <Tok>py-section</Tok> – for the space between elements (Foundations / Spacing).</>],
+    ['Radius', <><Tok>rounded-sm</Tok>, <Tok>rounded-md</Tok>, <Tok>rounded-lg</Tok>, <Tok>rounded-xl</Tok>, <Tok>rounded-full</Tok>, <Tok>rounded-none</Tok>.</>],
+    ['Shadows', <><Tok>shadow-elevation-1</Tok> … <Tok>shadow-elevation-4</Tok>, <Tok>shadow-focus-ring</Tok>.</>],
+    ['Fonts', <><Tok>font-sans</Tok> (DM Sans), <Tok>font-mono</Tok> (DM Mono, code only), <Tok>font-regular</Tok> … <Tok>font-bold</Tok>, <Tok>tracking-tight</Tok> … <Tok>tracking-wide</Tok>.</>],
+    ['Widths', <><Tok>max-w-prose</Tok>, <Tok>max-w-md</Tok>, <Tok>max-w-lg</Tok>, <Tok>max-w-xl</Tok> for page containers. The width tokens have no classes: <Tok>max-w-(--medo-size-width-xl)</Tok>.</>],
+    ['Breakpoints', <><Tok>sm</Tok> 640, <Tok>md</Tok> 768, <Tok>lg</Tok> 1024, <Tok>xl</Tok> 1280, <Tok>2xl</Tok> 1536 px.</>],
+    ['Motion and blur', <><Tok>ease-standard</Tok>, <Tok>ease-enter</Tok>, <Tok>ease-exit</Tok>, <Tok>ease-spring-smooth</Tok>, <Tok>ease-spring-snappy</Tok>; <Tok>blur-media</Tok>, <Tok>blur-image</Tok>.</>],
+  ]}
+/>
+
+</DocSection>
+
+<DocSection n={3} title="What is gone" description="Tailwind's own colors, text sizes, shadows, radii and widths are removed. A removed class creates no CSS – without a warning.">
+
+<SpecTable
+  head={['Instead of', 'Use']}
+  rows={[
+    [<Tok>bg-white</Tok>, <><Tok>bg-surface-default</Tok> – white in Light, dark in Dark.</>],
+    [<Tok>text-gray-600</Tok>, <Tok>text-text-secondary</Tok>],
+    [<Tok>bg-blue-600</Tok>, <><Tok>bg-action-primary</Tok>, with <Tok>text-text-on-action</Tok>.</>],
+    [<Tok>text-sm font-medium</Tok>, <><Tok>text-label-md</Tok> – one text style instead of size and weight.</>],
+    [<Tok>shadow-lg</Tok>, <Tok>shadow-elevation-2</Tok>],
+    [<Tok>max-w-3xl</Tok>, <><Tok>max-w-prose</Tok> or <Tok>max-w-(--medo-size-width-2xl)</Tok>.</>],
+  ]}
+/>
+
+</DocSection>
+
+<DocSection n={4} title="Light and Dark" description="Automatic: every class points to a variable that switches with the theme.">
+
+```html
+<!-- Right: one class, both themes -->
+<div class="bg-surface-raised text-text-primary">…</div>
+
+<!-- Not needed -->
+<div class="bg-white dark:bg-slate-900">…</div>
+```
+
+<Tok>dark:</Tok> still exists for the rare case that something must differ beyond the tokens, e.g. another image. It follows the same rule as the tokens: <Tok>data-theme</Tok> first, then the system setting (Guides / Theming).
+
+</DocSection>
+
+<DocSection n={5} title="With components" description="Utilities on a component win over its own styles – cascade layers, not specificity.">
+
+```tsx
+<Button className="mt-4 w-full">Save</Button>
+<Card className="max-w-(--medo-size-width-xl)">…</Card>
+```
+
+Use it for layout around the component: margin, width, position in a grid. Do not restyle colors or inner parts with utilities – change a token instead (Guides / Theming).
+
+</DocSection>
+
+<DocSection n={6} title="Rules">
+  <UsageGuide
+    usage={{
+      do: [
+        'Use the semantic classes: `bg-surface-raised`, `text-text-secondary`, `border-border-strong`.',
+        'Use the spacing rules between elements: `gap-items`, `space-y-fields`, `py-section`.',
+        'Write complete class names. For variants use a map: `{ success: "bg-feedback-success-surface …" }`.',
+        'Use a text style class instead of size and weight.',
+      ],
+      dont: [
+        'Build class names from variables: `bg-feedback-${tone}-surface` – Tailwind does not find them, nothing is generated.',
+        // lint-tokens-ignore: the raw values are the wrong example of this rule
+        'Use raw values: `p-[13px]`, `bg-[#0b5cad]`. A token variable is fine: `max-w-(--medo-size-width-xl)`.',
+        'Add `dark:` for colors – the tokens switch already.',
+        'Restyle the inner parts of a component with utilities.',
+      ],
+    }}
+  />
+</DocSection>
+
+<DocSection n={7} title="Examples" description="Only theme classes. Switch the theme in the toolbar – nothing in the markup changes.">
+  <Canvas of={TailwindStories.Card} />
+  <Canvas of={TailwindStories.Feedback} />
+</DocSection>
+
+<DocFooter>
+  {'Guide: Tailwind · @med-o/design-tokens'}
+  <SourceLink path="packages/tokens/build.mjs" />
+</DocFooter>
+
+</DocPage>

@@ -1,23 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Button } from '@med-o/ui';
 
-/**
- * Tailwind v4 with the med.o theme. Only system values exist:
- * colors are semantic (bg-surface-raised, text-text-secondary …), text styles are text-body-md etc.,
- * spacing rules are gap-inline, gap-content, space-y-fields, gap-items, py-section …
- *
- * ```css
- * @import "tailwindcss";
- * @import "@med-o/design-tokens/css/tokens.css";
- * @import "@med-o/design-tokens/tailwind/theme.css";
- * ```
- */
+/** The examples of Guides / Tailwind (Tailwind.mdx). Also in the visual check. */
 const meta = {
   title: 'Guides/Tailwind',
   // Keeps the URL of the former “Usage” group (…/usage-tailwind--docs).
   id: 'usage-tailwind',
-  tags: ['autodocs'],
-  parameters: { layout: 'centered', medo: { subtitle: 'Utility classes on top of the tokens. Only system values exist.' } },
+  parameters: { layout: 'centered' },
 } satisfies Meta;
 
 export default meta;
