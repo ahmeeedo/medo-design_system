@@ -96,6 +96,8 @@ export { NumberField } from './number-field/NumberField';
 export type { NumberFieldProps } from './number-field/NumberField';
 export { Link } from './link/Link';
 export type { LinkProps } from './link/Link';
+export { CodeBlock, CodeBlockTabs } from './code-block/CodeBlock';
+export type { CodeBlockProps, CodeBlockTabsProps, CodeBlockTab, CodeToken, CodeTokenRole, CodeTokens } from './code-block/CodeBlock';
 export { Alert } from './alert/Alert';
 export type { AlertProps, AlertTone } from './alert/Alert';
 export { Card } from './card/Card';

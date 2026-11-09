@@ -54,6 +54,7 @@ export const de: Messages = {
     saveFailed: 'Speichern fehlgeschlagen. Die Eingaben bleiben erhalten – bitte erneut versuchen.',
   },
   stepper: { label: 'Fortschritt', count: (step, total) => `Schritt ${step} von ${total}`, completed: 'erledigt' },
+  codeBlock: { copy: 'Kopieren', copied: 'Kopiert', copyFailed: 'Kopieren nicht möglich. Code markieren und kopieren.', label: 'Code' },
   breadcrumbs: { label: 'Pfadnavigation', more: (n) => (n === 1 ? '1 weitere Ebene anzeigen' : `${n} weitere Ebenen anzeigen`) },
   bulkActionBar: { label: 'Sammelaktionen', count: (n) => `${n} ausgewählt`, clear: 'Auswahl aufheben', more: 'Weitere Aktionen' },
   calendar: {

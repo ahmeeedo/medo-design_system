@@ -210,6 +210,7 @@ Status: **Experimental** – the API may still change · **Beta** – complete a
 | `StaticTable`, `Table` (+ `TableHeader`, `Column`, `TableBody`, `Row`, `Cell`) | Beta | native table or interactive grid · sorting, selection, compact · numbers right · IDs and dates on one line (`Cell wrap={false}`) · `toolbar` and `footer` in one frame · `ColumnsMenu` (show/hide, locked columns) |
 | `BulkActionBar` | Beta | appears with ≥ 1 selected · desktop: floating inverse bar with Toast buttons · mobile: full-width bar, ghost lg, safe area · max 3 actions + “…” menu · count announced · Esc / × clears, focus returns · Table and List view |
 | `Link` | Beta | inline (always underlined) or standalone · external icon · new-tab hint |
+| `CodeBlock`, `CodeBlockTabs` | Experimental | code to read and copy · title (`figcaption`) or tabs for variants · copy button with label, “Copied” announced · line numbers and highlighted lines (CSS, not copied) · long lines scroll as a focusable region · syntax colors from `highlight()` in `@med-o/ui/highlight` (Shiki, at build time) with the code/* tokens |
 | `Stepper`, `Step` | Experimental | 3–5 steps of one task · done steps are links back, current `aria-current="step"`, no skipping ahead · optional description · below 640 px “Step 2 of 4” with one bar segment per step |
 
 Marketing components (carousel, video player, hero sections) are not part of the library.

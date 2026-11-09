@@ -51,6 +51,7 @@ export const en: Messages = {
     saveFailed: 'Could not save. Your input is kept – try again.',
   },
   stepper: { label: 'Progress', count: (step, total) => `Step ${step} of ${total}`, completed: 'completed' },
+  codeBlock: { copy: 'Copy', copied: 'Copied', copyFailed: 'Could not copy. Select the code and copy it.', label: 'Code' },
   breadcrumbs: { label: 'Breadcrumb', more: (n) => `Show ${n} more ${s(n, 'level', 'levels')}` },
   bulkActionBar: { label: 'Bulk actions', count: (n) => `${n} selected`, clear: 'Clear selection', more: 'More actions' },
   calendar: {

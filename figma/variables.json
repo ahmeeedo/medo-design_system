@@ -1,6 +1,6 @@
 {
   "source": "Figma file vOTfMtcpCwAJjuSZUkfpfj (med.o Design System)",
-  "exportedAt": "2026-11-07",
+  "exportedAt": "2026-11-09",
   "note": "Raw export of Figma variables and styles. Do not edit by hand: re-export from Figma (scripts/figma-export.js), then run `npm run tokens:from-figma`.",
   "collections": {
     "Foundation Colors": {
@@ -58,6 +58,12 @@
         "text/inverse": ["{white/0}", "{neutral/900}"],
         "text/inverse-secondary": ["{neutral/400}", "{neutral/600}"],
         "text/on-media": ["{white/0}", "{white/0}"],
+        "code/keyword": ["{violet/700}", "{violet/300}"],
+        "code/string": ["{green/800}", "{green/300}"],
+        "code/function": ["{sky/700}", "{sky/300}"],
+        "code/constant": ["{pink/700}", "{pink/300}"],
+        "code/comment": ["{neutral/600}", "{neutral/400}"],
+        "code/punctuation": ["{neutral/700}", "{neutral/300}"],
         "border/default": ["{neutral/200}", "{neutral/700}"],
         "border/strong": ["{neutral/500}", "{neutral/400}"],
         "border/strong-hover": ["{neutral/600}", "{neutral/300}"],
@@ -207,6 +213,12 @@
     "text/inverse": "Text on surface/inverse.",
     "text/inverse-secondary": "Secondary text on surface/inverse (shortcuts, meta).",
     "text/on-media": "Text and icons on top of images, always on overlay/media. White in both themes.",
+    "code/keyword": "Syntax highlighting in Code block on surface/subtle and surface/default: Keywords and tags (import, const, return, <div>). ≥ 4.5:1 in both modes. Plain code uses text/primary.",
+    "code/string": "Syntax highlighting in Code block on surface/subtle and surface/default: Strings and template text. ≥ 4.5:1 in both modes. Plain code uses text/primary.",
+    "code/function": "Syntax highlighting in Code block on surface/subtle and surface/default: Function and component names. ≥ 4.5:1 in both modes. Plain code uses text/primary.",
+    "code/constant": "Syntax highlighting in Code block on surface/subtle and surface/default: Numbers, booleans, attributes and properties. ≥ 4.5:1 in both modes. Plain code uses text/primary.",
+    "code/comment": "Syntax highlighting in Code block on surface/subtle and surface/default: Comments. ≥ 4.5:1 in both modes. Plain code uses text/primary.",
+    "code/punctuation": "Syntax highlighting in Code block on surface/subtle and surface/default: Brackets, operators and separators. ≥ 4.5:1 in both modes. Plain code uses text/primary.",
     "border/default": "Decorative borders and dividers (cards, separators). Not for input boundaries.",
     "border/strong": "Boundaries of interactive controls (inputs, checkboxes). ≥ 3:1 on content surfaces.",
     "border/strong-hover": "Hover boundary of controls.",
