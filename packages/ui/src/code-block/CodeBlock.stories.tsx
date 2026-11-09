@@ -188,7 +188,8 @@ export const InteractionTest: Story = {
     // Copies the code as it is – line numbers are CSS, not text.
     await userEvent.click(cardCopy);
     await expect(write).toHaveBeenLastCalledWith(css);
-    await expect(cardCopy).toHaveTextContent('Copied');
+    // The label changes after the clipboard answers – later in WebKit than in Chromium.
+    await waitFor(() => expect(cardCopy).toHaveTextContent('Copied'));
     await waitFor(() => expect(canvas.getAllByRole('status')[0]).toHaveTextContent('Copied'));
     await expect(canvasElement.querySelector('figure code')?.textContent).toBe(css.replace(/\n/g, ''));
 
