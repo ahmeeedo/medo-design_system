@@ -6,7 +6,8 @@
   "license": "MIT",
   "files": [
     "dist",
-    "src"
+    "src",
+    "CHANGELOG.md"
   ],
   "exports": {
     "./css": "./dist/css/tokens.css",

@@ -10,6 +10,13 @@
 # Then the docs (design.med-o.de) are deployed – after a release, so they show what is on npm, or after a push without
 # pending changesets (docs and CI changes). While changesets wait in the “Version Packages” pull request, the docs stay
 # on the released version.
+#
+# After a release, the job notify-docs tells the docs site repository (ahmeeedo/design.med-o.de) which versions are on
+# npm, so it can open a pull request that updates @med-o/ui and @med-o/design-tokens there. It sends a
+# repository_dispatch event “med-o-release” whose client_payload lists the published packages as Changesets reports
+# them (any order): {"packages": [{"name": "@med-o/design-tokens", "version": "0.10.1"}, {"name": "@med-o/ui", …}]}
+# Secret DOCS_DISPATCH_TOKEN (fine-grained token: only the repository ahmeeedo/design.med-o.de, Contents read and
+# write, 1 year expiry). Without it the job prints a notice and succeeds; the release itself is not affected.
 name: Release
 
 on:
@@ -36,6 +43,8 @@ jobs:
       published: ${{ steps.changesets.outputs.published }}
       # changesets/action v2 names its outputs in kebab case.
       pending: ${{ steps.changesets.outputs['has-changesets'] }}
+      # JSON array of {name, version}, only set after a publish.
+      packages: ${{ steps.changesets.outputs['published-packages'] }}
     steps:
       - uses: actions/checkout@v5
         with:
@@ -78,3 +87,35 @@ jobs:
     with:
       ref: ${{ github.event.workflow_run.head_sha }}
     secrets: inherit
+
+  notify-docs:
+    needs: release
+    if: needs.release.outputs.published == 'true'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    permissions: {} # the call uses DOCS_DISPATCH_TOKEN, not the built-in token
+    steps:
+      - name: Send the release to the docs site
+        env:
+          TOKEN: ${{ secrets.DOCS_DISPATCH_TOKEN }}
+          PACKAGES: ${{ needs.release.outputs.packages }}
+        run: |
+          if [ -z "$TOKEN" ]; then
+            echo "::notice title=Docs site not notified::Add the secret DOCS_DISPATCH_TOKEN to send each release to ahmeeedo/design.med-o.de."
+            exit 0
+          fi
+          # jq builds the body, so the package list is passed on as JSON and never pasted into the script.
+          body=$(jq --compact-output --null-input --argjson packages "$PACKAGES" \
+            '{event_type: "med-o-release", client_payload: {packages: $packages}}')
+          status=$(curl --silent --show-error --max-time 30 --request POST --output response.txt --write-out '%{http_code}' \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer $TOKEN" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            --data "$body" \
+            https://api.github.com/repos/ahmeeedo/design.med-o.de/dispatches)
+          # GitHub answers 204 without a body; anything else says why (token expired, wrong repository, no access).
+          if [ "$status" != "204" ]; then
+            echo "::error title=Docs site not notified::HTTP $status – $(cat response.txt)"
+            exit 1
+          fi
+          echo "Sent med-o-release to ahmeeedo/design.med-o.de: $body" >> "$GITHUB_STEP_SUMMARY"
