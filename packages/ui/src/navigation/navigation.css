@@ -160,7 +160,7 @@
   color: var(--medo-color-text-primary);
 }
 
-/* Sidebar and sheet: children indented, one level. */
+/* Sidebar and sheet: children indented; up to two levels. */
 .medo-nav-group__list {
   margin-block-start: var(--medo-space-0-5);
   padding-inline-start: var(--medo-space-4);
@@ -169,6 +169,11 @@
 .medo-nav-item--sidebar + .medo-nav-group__list {
   /* Child labels line up with the parent label (icon + gap). */
   padding-inline-start: calc(var(--medo-size-icon-sm) + var(--medo-space-3));
+}
+
+/* Second level (sidebar and sheet only): one more step in. */
+.medo-nav-group__list .medo-nav-group__list {
+  padding-inline-start: var(--medo-space-4);
 }
 
 /* Header: dropdown panel on the popover surface, 280 wide, 8 below the item. */

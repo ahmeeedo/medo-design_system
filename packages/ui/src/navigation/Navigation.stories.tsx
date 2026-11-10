@@ -156,7 +156,7 @@ const meta = {
           'BottomTabBar: apps below 640 px with 3–5 main sections.',
         ],
         whenNot: ['Actions like “New project”: use a Button.', 'Views of one page: use Tabs.', 'A list of links in content: use Links or a List.'],
-        do: ['Put `SkipLink` first on the page.', 'Mark the current page (`aria-current="page"`).', 'Group links with `NavSection` or `NavGroup`, one level deep.'],
+        do: ['Put `SkipLink` first on the page.', 'Mark the current page (`aria-current="page"`).', 'Group links with `NavSection` or `NavGroup`: two levels in the sidebar and the sheet, one in the header.'],
         dont: ['Use a Menu for navigation; groups are disclosures.', 'Show more than 5 links in a header or tab bar.', 'Hide the current location.'],
       },
       a11y: {
@@ -254,6 +254,56 @@ export const NavItems: Story = {
       ))}
     </Examples>
   ),
+};
+
+export const NestedGroups: Story = {
+  name: 'Nested groups',
+  parameters: {
+    layout: 'padded',
+    docs: {
+      description: {
+        story:
+          'Sidebar and sheet take a second level: a `NavGroup` inside a `NavGroup` (Components › Actions › Button). It indents one more step and opens when it holds the current page. Never deeper; header and rail stay one level.',
+      },
+    },
+  },
+  render: () => (
+    <div style={{ maxInlineSize: 'var(--medo-size-width-sm)' }}>
+      <NavList aria-label="Docs">
+        <NavItem href="#introduction">Introduction</NavItem>
+        <NavGroup label="Components">
+          <NavGroup label="Actions">
+            <NavItem href="#button" isCurrent>
+              Button
+            </NavItem>
+            <NavItem href="#icon-button">Icon Button</NavItem>
+            <NavItem href="#link">Link</NavItem>
+          </NavGroup>
+          <NavGroup label="Forms">
+            <NavItem href="#checkbox">Checkbox</NavItem>
+            <NavItem href="#select">Select</NavItem>
+          </NavGroup>
+        </NavGroup>
+      </NavList>
+    </div>
+  ),
+  play: async ({ canvas, userEvent }) => {
+    const components = canvas.getByRole('button', { name: 'Components' });
+    const actions = canvas.getByRole('button', { name: 'Actions' });
+    // Both levels open by themselves: they hold the current page.
+    await expect(components).toHaveAttribute('aria-expanded', 'true');
+    await expect(actions).toHaveAttribute('aria-expanded', 'true');
+    await expect(canvas.getByRole('button', { name: 'Forms' })).toHaveAttribute('aria-expanded', 'false');
+    await expect(canvas.getByRole('link', { name: 'Button' })).toHaveAttribute('aria-current', 'page');
+    // Closed, the nested group carries the current mark – and so does its parent.
+    await userEvent.click(actions);
+    await expect(actions).toHaveAttribute('data-current', 'true');
+    await userEvent.click(components);
+    await expect(components).toHaveAttribute('data-current', 'true');
+    await userEvent.click(components);
+    await userEvent.click(actions);
+    await expect(canvas.getByRole('link', { name: 'Button' })).toBeVisible();
+  },
 };
 
 export const AppShell: Story = {

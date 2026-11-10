@@ -33,6 +33,12 @@ const NavVariantContext = createContext<NavVariant>('sidebar');
 /** Side navigation: groups in the rail expand it (with the group open); links in the tablet drawer close it. */
 const SideNavContext = createContext<{ expand: (group?: string) => void; openGroup?: string; onNavigate?: () => void } | null>(null);
 
+/** How deep a NavGroup sits (0 at the top) and whether it is inside a header dropdown. Sidebar and sheet allow two levels. */
+const NavGroupDepthContext = createContext<{ depth: number; inHeader: boolean }>({ depth: 0, inHeader: false });
+
+// Bundlers replace process.env.NODE_ENV at build time; without one, process may not exist.
+declare const process: { env: { NODE_ENV?: string } } | undefined;
+
 const TABLET_QUERY = '(min-width: 640px) and (max-width: 1023.98px)';
 const SITE_MENU_QUERY = '(max-width: 767.98px)';
 
@@ -108,25 +114,36 @@ export interface NavGroupProps {
   label: string;
   /** Sidebar, rail and sheet: icon before the label. */
   icon?: ReactNode;
-  /** NavItems – one level only. */
+  /** NavItems. In the sidebar and the sheet also NavGroups, for a second level (Components › Actions › Button) – never deeper. */
   children: ReactNode;
   /** Open at start. Default: open when it contains the current page (sidebar, sheet). */
   defaultOpen?: boolean;
 }
 
-/** True when a NavItem child is the current page. */
-function containsCurrent(children: ReactNode) {
-  return Children.toArray(children).some((c) => isValidElement(c) && (c as ReactElement<NavItemProps>).props.isCurrent);
+/** True when a NavItem child – or a NavItem in a nested NavGroup – is the current page. */
+function containsCurrent(children: ReactNode): boolean {
+  return Children.toArray(children).some((c) => {
+    if (!isValidElement(c)) return false;
+    const props = (c as ReactElement<NavItemProps & NavGroupProps>).props;
+    return c.type === NavGroup ? containsCurrent(props.children) : Boolean(props.isCurrent);
+  });
 }
 
 /**
  * A group of links behind a disclosure button (aria-expanded) – never a menu.
  * Header: a dropdown panel on the popover surface; Tab moves through the links, Esc or a click outside closes.
- * Sidebar and sheet: opens in place, one level. The parent shows “current” only while it is closed.
+ * Sidebar and sheet: opens in place, up to two levels; a nested group indents one more step.
+ * A group shows “current” only while it is closed. Header and rail: one level.
  */
 export function NavGroup({ label, icon, children, defaultOpen }: NavGroupProps) {
   const variant = useContext(NavVariantContext);
   const sideNav = useContext(SideNavContext);
+  const { depth, inHeader } = useContext(NavGroupDepthContext);
+  const tooDeep = depth > 1 || (depth > 0 && inHeader);
+  useEffect(() => {
+    if (!tooDeep || (typeof process !== 'undefined' && process.env.NODE_ENV === 'production')) return;
+    console.warn(`@med-o/ui: NavGroup “${label}” is nested too deep. Sidebar and sheet take two levels, header and rail one.`);
+  }, [tooDeep, label]);
   const hasCurrent = containsCurrent(children);
   const [open, setOpen] = useState(defaultOpen ?? (variant !== 'header' && (hasCurrent || sideNav?.openGroup === label)));
   const panelId = useId();
@@ -198,9 +215,11 @@ export function NavGroup({ label, icon, children, defaultOpen }: NavGroupProps) 
         <ChevronDown className="medo-nav-group__chevron" aria-hidden="true" />
       </AriaButton>
       <NavVariantContext.Provider value={floating ? 'sidebar' : variant}>
-        <ul id={panelId} hidden={!open} className={cx('medo-nav__list', floating ? 'medo-nav-group__panel' : 'medo-nav-group__list')}>
-          {children}
-        </ul>
+        <NavGroupDepthContext.Provider value={{ depth: depth + 1, inHeader: inHeader || floating }}>
+          <ul id={panelId} hidden={!open} className={cx('medo-nav__list', floating ? 'medo-nav-group__panel' : 'medo-nav-group__list')}>
+            {children}
+          </ul>
+        </NavGroupDepthContext.Provider>
       </NavVariantContext.Provider>
     </li>
   );
