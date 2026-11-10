@@ -8,8 +8,9 @@
 // Run after `npm run build:tokens` – the token CSS comes from packages/tokens/dist.
 import { readFileSync, readdirSync, statSync } from 'node:fs';
 import { join, relative } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-const root = new URL('..', import.meta.url).pathname;
+const root = fileURLToPath(new URL('..', import.meta.url));
 const dirs = ['packages/ui/src', 'apps/storybook/src', 'apps/storybook/.storybook', 'packages/tokens/dist/css'];
 const skip = /node_modules|storybook-static|__screenshots__|\.test\.|\.spec\./;
 
