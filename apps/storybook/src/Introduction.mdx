@@ -71,6 +71,7 @@ import '@fontsource/dm-sans/700.css';
 import '@fontsource/dm-mono/400.css';
 import '@med-o/design-tokens/css/tokens.css';
 import '@med-o/design-tokens/css/typography.css';
+import '@med-o/design-tokens/css/base.css';
 import '@med-o/ui/styles.css';
 import { App } from './App';
 
@@ -127,6 +128,7 @@ import '@fontsource/dm-sans/700.css';
 import '@fontsource/dm-mono/400.css';
 import '@med-o/design-tokens/css/tokens.css';
 import '@med-o/design-tokens/css/typography.css';
+import '@med-o/design-tokens/css/base.css';
 import '@med-o/ui/styles.css';
 import { Providers } from './providers';
 
@@ -168,6 +170,8 @@ Components without event handlers can be used in server components as well – t
 
   </TabPanel>
 </Tabs>
+
+`base.css` removes the browser margins and gives the page its background, text color and font. With Tailwind it is optional – the preflight resets the page already.
 
 The result – live, with the theme of the toolbar:
 

@@ -37,6 +37,7 @@ npm install @med-o/design-tokens @med-o/ui   # tokens + React components (React 
 ```css
 @import "@med-o/design-tokens/css/tokens.css";    /* variables, Light + Dark */
 @import "@med-o/design-tokens/css/typography.css"; /* optional: .medo-text-* classes */
+@import "@med-o/design-tokens/css/base.css";       /* optional: page reset and body styles, without Tailwind */
 
 .card {
   background: var(--medo-color-surface-raised);

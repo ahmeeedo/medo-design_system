@@ -24,7 +24,7 @@
     "test:firefox": "npm run build:tokens && npm run test:firefox -w @med-o/storybook",
     "test:visual": "npm run build:tokens && npm run test:visual -w @med-o/storybook",
     "check:docs": "npm run build-storybook && node scripts/check-docs.mjs",
-    "lint": "npm run build:tokens && stylelint \"packages/ui/src/**/*.css\" \"apps/storybook/.storybook/*.css\" && node scripts/lint-tokens.mjs",
+    "lint": "npm run build:tokens && stylelint \"packages/ui/src/**/*.css\" \"packages/tokens/src/**/*.css\" \"apps/storybook/.storybook/*.css\" && node scripts/lint-tokens.mjs",
     "changeset": "changeset",
     "version-packages": "changeset version && node scripts/changelog-dates.mjs",
     "release": "changeset publish"
