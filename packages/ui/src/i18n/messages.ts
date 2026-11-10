@@ -105,6 +105,7 @@ export interface Messages {
     collapse: string;
     expand: string;
   };
+  onThisPage: { label: string };
   pagination: {
     label: string;
     summary: (from: number, to: number, total: number) => string;

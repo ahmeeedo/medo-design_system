@@ -105,6 +105,7 @@ export const en: Messages = {
     collapse: 'Collapse navigation',
     expand: 'Expand navigation',
   },
+  onThisPage: { label: 'On this page' },
   pagination: {
     label: 'Pagination',
     summary: (from, to, total) => `${from}–${to} of ${total}`,

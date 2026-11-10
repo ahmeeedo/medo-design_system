@@ -61,6 +61,8 @@ export type {
   TabBarItemProps,
   TabBarMoreProps,
 } from './navigation/Navigation';
+export { OnThisPage } from './on-this-page/OnThisPage';
+export type { OnThisPageProps, OnThisPageItem } from './on-this-page/OnThisPage';
 export { Drawer } from './drawer/Drawer';
 export type { DrawerProps } from './drawer/Drawer';
 export { List, ListItem, DescriptionList, DescriptionItem } from './list/List';
