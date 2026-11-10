@@ -220,16 +220,21 @@ html[data-theme] :is(.sb-preparing-story, .sb-preparing-docs) > * {
   font-weight: var(--medo-font-weight-semibold);
   margin-top: var(--medo-space-4);
 }
-.medo-doc :not(pre) > code,
-.doc-code {
-  font-family: var(--medo-font-family-mono);
-  font-size: 0.875em;
-  padding: 0.1em 0.35em;
+/* Inline code: Tok uses Code from @med-o/ui (medo-code). Raw backticks in MDX and story descriptions have no
+   class, so they get the same look here. */
+.medo-doc :not(pre) > code:not(.medo-code) {
+  padding: var(--medo-space-0-5) var(--medo-space-1);
   border-radius: var(--medo-radius-sm);
   background: var(--medo-color-surface-subtle);
   color: var(--medo-color-text-primary);
+  font-family: var(--medo-font-family-mono);
+  font-size: 0.875em;
   overflow-wrap: anywhere;
-  /* Storybook sets nowrap on code in descriptions: long class lists would widen the page on phones. */
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+/* Storybook sets nowrap on code in descriptions: long class lists would widen the page on phones. */
+.medo-doc :not(pre) > code {
   white-space: normal;
 }
 
@@ -482,7 +487,7 @@ html[data-theme] :is(.sb-preparing-story, .sb-preparing-docs) > * {
 .doc-stack tbody th {
   inline-size: var(--medo-size-width-sm);
 }
-.doc-stack tbody th .doc-code {
+.doc-stack tbody th .medo-code {
   white-space: nowrap;
 }
 /* StackTable on phones: every row a block, each cell with its column name; swatches side by side. */
@@ -518,7 +523,7 @@ html[data-theme] :is(.sb-preparing-story, .sb-preparing-docs) > * {
   .medo-doc .doc-stack tbody td.doc-cell-swatch {
     flex: none;
   }
-  .medo-doc .doc-stack tbody th .doc-code {
+  .medo-doc .doc-stack tbody th .medo-code {
     white-space: normal;
   }
   .medo-doc .doc-stack tbody td[data-label]::before {

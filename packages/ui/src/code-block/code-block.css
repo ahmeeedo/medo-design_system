@@ -179,3 +179,28 @@
     forced-color-adjust: none;
   }
 }
+
+/**
+ * Inline code – a short piece of code inside running text.
+ *   <code class="medo-code" translate="no">variant="primary"</code>     surface/subtle, radius/sm, padding 2/4
+ * The size follows the text around it (0.875em: code/md next to body/md, code/sm next to body/sm).
+ * Long values break anywhere, so they never widen the page.
+ */
+.medo-code {
+  padding: var(--medo-space-0-5) var(--medo-space-1);
+  border-radius: var(--medo-radius-sm);
+  background-color: var(--medo-color-surface-subtle);
+  color: var(--medo-color-text-primary);
+  font-family: var(--medo-font-family-mono);
+  font-size: 0.875em;
+  overflow-wrap: anywhere;
+  /* A value that breaks keeps its background and padding on both lines. */
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+@media (forced-colors: active) {
+  .medo-code {
+    outline: var(--medo-border-width-thin) solid CanvasText;
+  }
+}

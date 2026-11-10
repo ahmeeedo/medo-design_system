@@ -151,6 +151,8 @@ function CodeContent({ code, language, tokens, lineNumbers, highlightLines, labe
       tabIndex={scrolls ? 0 : undefined}
       role={scrolls ? 'region' : undefined}
       aria-label={scrolls ? (label ?? m.codeBlock.label) : undefined}
+      // Browser translation would change the code.
+      translate="no"
     >
       <code data-language={language}>
         {lines.map((line, index) => (
