@@ -1,5 +1,22 @@
 # @med-o/ui
 
+## 0.13.0
+
+_Released 2026-11-10_
+
+### Minor Changes
+
+- e6c5e77: New: `Code` and the class `medo-code` mark a short piece of code inside running text.
+
+  - The size follows the text around it (0.875em), so one class fits every text size.
+  - `translate="no"` keeps browser translation away from the code. `CodeBlock` sets it as well now.
+  - Long values break anywhere, so they never widen the page.
+  - Status: experimental.
+
+### Patch Changes
+
+- @med-o/design-tokens@0.13.0
+
 ## 0.12.0
 
 _Released 2026-11-10_
