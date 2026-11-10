@@ -1,5 +1,19 @@
 # @med-o/ui
 
+## 0.11.0
+
+_Released 2026-11-10_
+
+### Patch Changes
+
+- 171a142: Fixed: both packages include their `CHANGELOG.md`.
+
+  What changed in each version now ships with the code you install, in `node_modules/@med-o/ui/CHANGELOG.md` and `node_modules/@med-o/design-tokens/CHANGELOG.md`.
+
+- Updated dependencies [68e203d]
+- Updated dependencies [171a142]
+  - @med-o/design-tokens@0.11.0
+
 ## 0.10.0
 
 _Released 2026-11-09_

@@ -1,5 +1,24 @@
 # @med-o/design-tokens
 
+## 0.11.0
+
+_Released 2026-11-10_
+
+### Minor Changes
+
+- 68e203d: New: `css/base.css` sets up the page for apps without Tailwind.
+
+  - Removes the browser margins and sizes every box with its padding and border (`border-box`).
+  - Gives `body` the canvas color, the primary text color and the text style body/md, in Light and Dark.
+  - Sits in the cascade layer `base`, so component styles, Tailwind utilities and your own CSS always win.
+  - Import it after `tokens.css`: `@import "@med-o/design-tokens/css/base.css";`
+
+### Patch Changes
+
+- 171a142: Fixed: both packages include their `CHANGELOG.md`.
+
+  What changed in each version now ships with the code you install, in `node_modules/@med-o/ui/CHANGELOG.md` and `node_modules/@med-o/design-tokens/CHANGELOG.md`.
+
 ## 0.10.0
 
 _Released 2026-11-09_
