@@ -114,6 +114,7 @@ export const de: Messages = {
     collapse: 'Navigation einklappen',
     expand: 'Navigation ausklappen',
   },
+  onThisPage: { label: 'Auf dieser Seite' },
   pagination: {
     label: 'Seitennavigation',
     summary: (from, to, total) => `${from}–${to} von ${total}`,

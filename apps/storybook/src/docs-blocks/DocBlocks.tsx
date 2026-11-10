@@ -12,7 +12,7 @@ import { RouterProvider } from 'react-aria-components';
 import { addons } from 'storybook/preview-api';
 import { SELECT_STORY } from 'storybook/internal/core-events';
 import { Canvas, Description, DocsContainer, DocsContext, useOf } from '@storybook/addon-docs/blocks';
-import { Alert, Badge, DescriptionItem, DescriptionList, Link, List, ListItem, StaticTable, Toggletip } from '@med-o/ui';
+import { Alert, Badge, DescriptionItem, DescriptionList, Link, List, ListItem, OnThisPage, StaticTable, Toggletip } from '@med-o/ui';
 import { themes, type Mode } from '../../.storybook/theme';
 import { STATUS, STATUS_GUIDE_ID, STATUSES, statusOf, type Status } from '../../.storybook/status';
 import { Rich, Tok } from './text';
@@ -35,14 +35,6 @@ const openDocs = (href: string) => {
 const pad = (n: number) => String(n).padStart(2, '0');
 export const sectionId = (n: number | string) => `section-${typeof n === 'number' ? pad(n) : n}`;
 
-function jump(e: React.MouseEvent<Element>, id: string) {
-  const target = document.getElementById(id);
-  if (!target) return;
-  e.preventDefault();
-  target.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
-  target.focus({ preventScroll: true });
-}
-
 /* ---------- page ---------- */
 
 /** DocHeader hands its section list to DocPage, which shows it as a sticky side navigation. */
@@ -64,70 +56,19 @@ export function DocPage({ children }: { children: ReactNode }) {
 
 /* ---------- table of contents ---------- */
 
-/** Number of the section that is currently at the top of the viewport (1-based). */
-function useActiveSection(count: number) {
-  const [active, setActive] = useState(1);
-  useEffect(() => {
-    let frame = 0;
-    const update = () => {
-      frame = 0;
-      // A section counts as current once its top passes the upper third of the viewport.
-      const line = Math.max(96, window.innerHeight * 0.3);
-      let current = 1;
-      for (let i = 1; i <= count; i++) {
-        const section = document.getElementById(sectionId(i))?.closest('section');
-        if (section && section.getBoundingClientRect().top <= line) current = i;
-      }
-      setActive(current);
-    };
-    const schedule = () => {
-      if (!frame) frame = requestAnimationFrame(update);
-    };
-    update();
-    window.addEventListener('scroll', schedule, { passive: true });
-    window.addEventListener('resize', schedule);
-    return () => {
-      cancelAnimationFrame(frame);
-      window.removeEventListener('scroll', schedule);
-      window.removeEventListener('resize', schedule);
-    };
-  }, [count]);
-  return [active, setActive] as const;
-}
-
 /**
- * “On this page”. Two looks with the same links:
- *   box   in the header, below 68rem
- *   rail  sticky on the right from 68rem, marks the current section (aria-current)
- * Only one is displayed at a time; the other is display: none and so hidden from screen readers too.
+ * “On this page” from @med-o/ui, with the same links in two looks:
+ *   box   disclosure in the header, below 68rem
+ *   rail  sticky on the right from 68rem, marks the current section
+ * Only one is displayed at a time (preview.css); the other is display: none and so hidden from screen readers too.
  */
 export function DocToc({ items, variant }: { items: string[]; variant: 'box' | 'rail' }) {
-  const [active, setActive] = useActiveSection(variant === 'rail' ? items.length : 0);
   return (
-    <nav aria-label="On this page" className={`doc-toc doc-toc--${variant}`}>
-      <p className="medo-text-overline doc-muted">On this page</p>
-      <ol>
-        {items.map((label, i) => {
-          const id = sectionId(i + 1);
-          const current = variant === 'rail' && active === i + 1;
-          return (
-            <li key={label}>
-              <a
-                className="doc-toc-link"
-                href={`#${id}`}
-                aria-current={current ? 'location' : undefined}
-                onClick={(e) => {
-                  setActive(i + 1);
-                  jump(e, id);
-                }}
-              >
-                {label}
-              </a>
-            </li>
-          );
-        })}
-      </ol>
-    </nav>
+    <OnThisPage
+      items={items.map((label, i) => ({ id: sectionId(i + 1), label }))}
+      variant={variant === 'rail' ? 'rail' : 'disclosure'}
+      className={`doc-toc doc-toc--${variant}`}
+    />
   );
 }
 

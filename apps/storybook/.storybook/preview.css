@@ -134,66 +134,10 @@ html[data-theme] :is(.sb-preparing-story, .sb-preparing-docs) > * {
   color: var(--medo-color-text-secondary);
 }
 
-/* ---------- table of contents (DocToc) ---------- */
-.doc-toc ol {
-  list-style: none;
-}
-.medo-doc .doc-toc a.doc-toc-link {
-  display: flex;
-  align-items: baseline;
-  gap: var(--medo-space-3);
-  border-radius: var(--medo-radius-sm);
-  font: var(--medo-typography-body-sm);
-  color: var(--medo-color-text-primary);
-  text-decoration: none;
-}
-.medo-doc .doc-toc a.doc-toc-link:hover {
-  color: var(--medo-color-text-brand);
-  text-decoration: underline;
-  text-underline-offset: 0.2em;
-}
-.medo-doc .doc-toc a.doc-toc-link:focus-visible {
-  outline: var(--medo-focus-ring-width) solid var(--medo-color-focus-ring);
-  outline-offset: var(--medo-space-0-5);
-}
-
-/* Box: in the header, links in columns (read top to bottom). */
-.doc-toc--box {
-  display: grid;
-  gap: var(--medo-space-4);
-  padding: var(--medo-space-5) var(--medo-space-6);
-  border: var(--medo-border-width-thin) solid var(--medo-color-border-default);
-  border-radius: var(--medo-radius-lg);
-  background: var(--medo-color-surface-subtle);
-}
-.doc-toc--box ol {
-  columns: var(--medo-size-width-sm);
-  column-gap: var(--medo-space-8);
-}
-.doc-toc--box li {
-  break-inside: avoid;
-  padding-block: var(--medo-space-1);
-}
-
-/* Rail: sticky on the right, current section marked with a brand bar. */
+/* ---------- table of contents (DocToc → OnThisPage from @med-o/ui) ---------- */
+/* Only the placement lives here; the look comes from the component. */
 .doc-toc--rail {
   display: none;
-}
-.doc-toc--rail ol {
-  display: grid;
-  border-inline-start: var(--medo-border-width-thin) solid var(--medo-color-border-default);
-}
-.medo-doc .doc-toc--rail a.doc-toc-link {
-  margin-inline-start: calc(-1 * var(--medo-border-width-thin));
-  padding: var(--medo-space-1-5) var(--medo-space-3);
-  border-inline-start: var(--medo-border-width-thick) solid transparent;
-  border-radius: 0;
-  color: var(--medo-color-text-secondary);
-}
-.medo-doc .doc-toc--rail a.doc-toc-link[aria-current] {
-  border-inline-start-color: var(--medo-color-text-brand);
-  color: var(--medo-color-text-brand);
-  font-weight: var(--medo-font-weight-semibold);
 }
 
 @media (min-width: 68rem) {
@@ -208,8 +152,6 @@ html[data-theme] :is(.sb-preparing-story, .sb-preparing-docs) > * {
   }
   .medo-doc--toc > .doc-toc--rail {
     display: grid;
-    gap: var(--medo-space-4);
-    align-content: start;
     grid-column: 2;
     grid-row: 1;
     align-self: start;

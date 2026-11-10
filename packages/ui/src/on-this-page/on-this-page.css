@@ -1,0 +1,161 @@
+/**
+ * On this page – med.o Design System
+ *
+ *   <nav class="medo-on-this-page medo-on-this-page--rail">           title label/sm text/secondary · gap 16
+ *     <p class="medo-on-this-page__title">On this page</p>
+ *     <ol class="medo-on-this-page__list">                            1 px line border/default on the start side
+ *       <li><a class="medo-on-this-page__link" [aria-current="location"]>…</a></li>
+ *   </nav>
+ *   <nav class="medo-on-this-page medo-on-this-page--disclosure">     surface/subtle · border/default · radius/lg
+ *     <button class="medo-on-this-page__trigger">title · chevron</button>        label/md-strong · padding 12/16
+ *     <div class="medo-on-this-page__panel"><ol class="medo-on-this-page__list">…</ol></div>   divider above
+ *   </nav>
+ * Link: body/sm · padding 6/12. Rail: text/secondary, current with a 2 px bar and body/sm-strong in text/brand.
+ * Hover: text/brand and underline. Focus: 2 px ring inside, radius/sm.
+ */
+
+.medo-on-this-page__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.medo-on-this-page__link {
+  display: block;
+  padding: var(--medo-space-1-5) var(--medo-space-3);
+  border-radius: var(--medo-radius-sm);
+  font: var(--medo-typography-body-sm);
+  color: var(--medo-color-text-primary);
+  text-decoration: none;
+  outline: none;
+}
+
+.medo-on-this-page__link:hover {
+  color: var(--medo-color-text-brand);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.medo-on-this-page__link:focus-visible {
+  box-shadow: inset 0 0 0 var(--medo-focus-ring-width) var(--medo-color-focus-ring);
+}
+
+/* ---------- rail ---------- */
+
+.medo-on-this-page--rail {
+  display: grid;
+  gap: var(--medo-space-4);
+  align-content: start;
+}
+
+.medo-on-this-page__title {
+  margin: 0;
+  font: var(--medo-typography-label-sm);
+  color: var(--medo-color-text-secondary);
+}
+
+.medo-on-this-page--rail .medo-on-this-page__list {
+  display: grid;
+  border-inline-start: var(--medo-border-width-thin) solid var(--medo-color-border-default);
+}
+
+/* The bar sits on the line, so the current item replaces it instead of adding a second line. */
+.medo-on-this-page--rail .medo-on-this-page__link {
+  margin-inline-start: calc(-1 * var(--medo-border-width-thin));
+  border-inline-start: var(--medo-border-width-thick) solid transparent;
+  border-radius: 0;
+  color: var(--medo-color-text-secondary);
+}
+
+.medo-on-this-page--rail .medo-on-this-page__link:hover {
+  color: var(--medo-color-text-brand);
+}
+
+.medo-on-this-page--rail .medo-on-this-page__link[data-current] {
+  border-inline-start-color: var(--medo-color-text-brand);
+  font: var(--medo-typography-body-sm-strong);
+  color: var(--medo-color-text-brand);
+}
+
+/* ---------- disclosure ---------- */
+
+.medo-on-this-page__disclosure {
+  overflow: hidden;
+  border: var(--medo-border-width-thin) solid var(--medo-color-border-default);
+  border-radius: var(--medo-radius-lg);
+  background-color: var(--medo-color-surface-subtle);
+  color: var(--medo-color-text-primary);
+}
+
+.medo-on-this-page__trigger {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--medo-space-3);
+  inline-size: 100%;
+  padding: var(--medo-space-3) var(--medo-space-4);
+  border: 0;
+  background: none;
+  color: inherit;
+  font: var(--medo-typography-label-md-strong);
+  text-align: start;
+  cursor: pointer;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.medo-on-this-page__trigger[data-hovered] {
+  background-color: var(--medo-color-state-hover);
+}
+
+.medo-on-this-page__trigger[data-pressed] {
+  background-color: var(--medo-color-state-pressed);
+}
+
+.medo-on-this-page__trigger[data-focus-visible] {
+  box-shadow: inset 0 0 0 var(--medo-focus-ring-width) var(--medo-color-focus-ring);
+}
+
+.medo-on-this-page__chevron {
+  flex: none;
+  inline-size: var(--medo-size-icon-md);
+  block-size: var(--medo-size-icon-md);
+  color: var(--medo-color-text-secondary);
+  transition: rotate var(--medo-motion-duration-fast) var(--medo-motion-easing-standard);
+}
+
+.medo-on-this-page__disclosure[data-expanded] .medo-on-this-page__chevron {
+  rotate: 180deg;
+}
+
+/* No height animation: the panel closes at once after a jump, so the scroll target does not move. */
+.medo-on-this-page__panel[hidden] {
+  display: none;
+}
+
+.medo-on-this-page--disclosure .medo-on-this-page__list {
+  padding: var(--medo-space-3) var(--medo-space-4);
+  border-block-start: var(--medo-border-width-thin) solid var(--medo-color-border-default);
+}
+
+.medo-on-this-page--disclosure .medo-on-this-page__link {
+  margin-inline: calc(-1 * var(--medo-space-3));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .medo-on-this-page__chevron {
+    transition: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .medo-on-this-page__link:focus-visible,
+  .medo-on-this-page__trigger[data-focus-visible] {
+    outline: var(--medo-focus-ring-width) solid Highlight;
+    outline-offset: calc(-1 * var(--medo-focus-ring-width));
+  }
+  .medo-on-this-page--rail .medo-on-this-page__link[data-current] {
+    border-inline-start-color: Highlight;
+  }
+}
