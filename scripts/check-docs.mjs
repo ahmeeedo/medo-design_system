@@ -8,9 +8,10 @@
 import { createServer } from 'node:http';
 import { readFile } from 'node:fs/promises';
 import { extname, join, normalize } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { chromium } from 'playwright';
 
-const root = new URL('../apps/storybook/storybook-static/', import.meta.url).pathname;
+const root = fileURLToPath(new URL('../apps/storybook/storybook-static/', import.meta.url));
 const types = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.json': 'application/json', '.svg': 'image/svg+xml', '.woff2': 'font/woff2', '.woff': 'font/woff', '.png': 'image/png' };
 
 const server = createServer(async (req, res) => {
