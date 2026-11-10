@@ -15,6 +15,7 @@ npm install @med-o/design-tokens
 ```css
 @import "@med-o/design-tokens/css/tokens.css";    /* variables --medo-*, Light + Dark */
 @import "@med-o/design-tokens/css/typography.css"; /* optional: .medo-text-* classes */
+@import "@med-o/design-tokens/css/base.css";       /* optional: page reset and body styles, without Tailwind */
 
 .card {
   background: var(--medo-color-surface-raised);
@@ -44,6 +45,7 @@ Light and Dark follow the operating system. Force a theme with `data-theme="ligh
 | --- | --- |
 | `@med-o/design-tokens/css/tokens.css` | CSS variables, Light + Dark, responsive layout tokens (short form: `/css`) |
 | `@med-o/design-tokens/css/typography.css` | Text style classes `.medo-text-*` |
+| `@med-o/design-tokens/css/base.css` | Page base for apps without Tailwind: no browser margins, `border-box`, page colors and text style on `body` |
 | `@med-o/design-tokens/tailwind/theme.css` | Tailwind v4 theme on top of the variables (short form: `/tailwind`) |
 | `@med-o/design-tokens/js` | Resolved values and TypeScript types |
 | `@med-o/design-tokens/src/*` | Source tokens in the DTCG format |

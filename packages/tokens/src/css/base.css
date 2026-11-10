@@ -1,0 +1,29 @@
+/*
+ * Page base of the med.o Design System: a minimal reset and the page colors and text style from the tokens.
+ * For apps without Tailwind – its preflight resets the page already; with Tailwind this file is optional.
+ *
+ *   @import "@med-o/design-tokens/css/tokens.css";
+ *   @import "@med-o/design-tokens/css/base.css";
+ *   @import "@med-o/ui/styles.css";
+ *
+ * Cascade layer `base`, in the same order as @med-o/ui and Tailwind v4: component styles, utilities and CSS without
+ * a layer (your app) always win over these rules, whatever the specificity.
+ */
+@layer theme, base, components, utilities;
+
+@layer base {
+  /* Widths include padding and border, as in every component. No browser margins: the spacing rules set the gaps. */
+  *,
+  ::before,
+  ::after {
+    box-sizing: border-box;
+    margin: 0;
+  }
+
+  /* The page follows Light and Dark through the tokens. */
+  body {
+    background: var(--medo-color-surface-canvas);
+    color: var(--medo-color-text-primary);
+    font: var(--medo-typography-body-md);
+  }
+}

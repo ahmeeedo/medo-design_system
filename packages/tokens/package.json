@@ -13,6 +13,7 @@
     "./css": "./dist/css/tokens.css",
     "./css/tokens.css": "./dist/css/tokens.css",
     "./css/typography.css": "./dist/css/typography.css",
+    "./css/base.css": "./dist/css/base.css",
     "./tailwind": "./dist/tailwind/theme.css",
     "./tailwind/theme.css": "./dist/tailwind/theme.css",
     "./js": {
