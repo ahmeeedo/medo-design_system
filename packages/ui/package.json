@@ -23,7 +23,8 @@
   },
   "files": [
     "dist",
-    "src/**/*.css"
+    "src/**/*.css",
+    "CHANGELOG.md"
   ],
   "sideEffects": [
     "*.css"
