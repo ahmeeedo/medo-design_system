@@ -1,7 +1,7 @@
-import type { ReactNode } from 'react';
+import { Code } from '@med-o/ui';
 
 /** Inline code token, e.g. <Tok>space/4</Tok> */
-export const Tok = ({ children }: { children: ReactNode }) => <code className="doc-code">{children}</code>;
+export const Tok = ({ children }: { children: string }) => <Code>{children}</Code>;
 
 /** Text with `code` in backticks and **bold**, as in the story descriptions and the changelog. */
 export function Rich({ children }: { children: string }) {
