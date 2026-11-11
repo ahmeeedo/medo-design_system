@@ -407,7 +407,7 @@ function ComboList<T extends object>({
     <>
       <ListBox<T>
         size={size === 'lg' ? 'lg' : 'md'}
-        renderEmptyState={() => <ListBoxMessage>{isLoading ? `${m.common.loading}…` : noResultsMessage(text)}</ListBoxMessage>}
+        renderEmptyState={() => <ListBoxMessage loading={isLoading}>{isLoading ? `${m.common.loading}…` : noResultsMessage(text)}</ListBoxMessage>}
       >
         {typeof children === 'function' ? <Collection items={items}>{children}</Collection> : children}
         {creatable && text && !exact && (
@@ -419,7 +419,11 @@ function ComboList<T extends object>({
         )}
       </ListBox>
       {/* Server search: previous results stay, the loading row sits below them. */}
-      {isLoading && hasItems && <ListBoxMessage>{m.common.loading}…</ListBoxMessage>}
+      {isLoading && hasItems && (
+        <ListBoxMessage loading size={size === 'lg' ? 'lg' : 'md'}>
+          {m.common.loading}…
+        </ListBoxMessage>
+      )}
     </>
   );
 }

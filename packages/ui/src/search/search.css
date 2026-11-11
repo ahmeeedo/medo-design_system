@@ -221,7 +221,7 @@
 }
 
 /* Nothing to show (empty field without recent searches): no empty box. */
-.medo-quick-search__scroll:not(:has([role='option'], .medo-quick-search__message)) {
+.medo-quick-search__scroll:not(:has([role='option'], .medo-quick-search__message, .medo-listbox__message)) {
   display: none;
 }
 
@@ -306,4 +306,33 @@
   max-block-size: none;
   overflow: visible;
   padding: 0;
+}
+
+/*
+ * Quick search trigger: the Input look (medo-input medo-input--md) on a button.
+ *   <button class="medo-input medo-input--md medo-quick-search-trigger" aria-keyshortcuts="Meta+K">
+ *     <span class="medo-input__icon">…</span> <span class="medo-quick-search-trigger__label">Search …</span>
+ *     <span class="medo-quick-search-trigger__shortcut"><span class="medo-badge">⌘ K</span></span>
+ *   </button>
+ * Hover and focus come from the Input states ([data-hovered], [data-focused]).
+ */
+.medo-quick-search-trigger {
+  text-align: start;
+  cursor: pointer;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.medo-quick-search-trigger__label {
+  flex: 1;
+  min-inline-size: 0;
+  overflow: hidden;
+  color: var(--medo-color-text-secondary);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.medo-quick-search-trigger__shortcut {
+  display: inline-flex;
+  flex: none;
 }

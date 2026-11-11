@@ -12,6 +12,7 @@ import {
 } from 'react-aria-components';
 import { Check } from 'lucide-react';
 import { cx } from '../utils/cx';
+import { Spinner } from '../progress/Progress';
 import { Highlight as SharedHighlight } from '../utils/highlight';
 
 export type ListBoxSize = 'md' | 'lg';
@@ -118,10 +119,23 @@ export function ListBoxSection<T extends object>({ title, children, items, id, .
   );
 }
 
+export interface ListBoxMessageProps {
+  /** The text: “No results …” or “Loading…”. */
+  children: ReactNode;
+  /** Loading row: a Spinner before the text. */
+  loading?: boolean;
+  /** Outside a ListBox (a row below the list): the size of that list. Inside, the list sets it. */
+  size?: ListBoxSize;
+}
+
 /** Message row for empty and loading states – never an empty popup. Announced as status. */
-export function ListBoxMessage({ children }: { children: ReactNode }) {
+export function ListBoxMessage({ children, loading, size: sizeProp }: ListBoxMessageProps) {
+  const listSize = useContext(ListBoxSizeContext);
+  const size = sizeProp ?? listSize;
   return (
-    <div className="medo-listbox__message" role="status">
+    <div className={cx('medo-listbox__message', loading && 'medo-listbox__message--loading')} role="status">
+      {/* Decorative: the status text already says that it loads. */}
+      {loading && <Spinner size={size === 'lg' ? 'md' : 'sm'} tone="neutral" decorative />}
       {children}
     </div>
   );

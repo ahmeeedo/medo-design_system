@@ -106,6 +106,12 @@
   color: var(--medo-color-text-secondary);
 }
 
+.medo-listbox__message--loading {
+  display: flex;
+  align-items: center;
+  gap: var(--medo-space-2);
+}
+
 /* ---------- Option ---------- */
 
 .medo-option {

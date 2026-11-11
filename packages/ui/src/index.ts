@@ -27,7 +27,7 @@ export type { SpinnerProps, ProgressBarProps, SkeletonProps } from './progress/P
 export { ToggleButton, ToggleButtonGroup, Toolbar, ToolbarSeparator } from './toggle-button/ToggleButton';
 export type { ToggleButtonProps, ToggleButtonGroupProps, ToolbarProps } from './toggle-button/ToggleButton';
 export { ListBox, Option, ListBoxSection, ListBoxMessage } from './listbox/ListBox';
-export type { ListBoxProps, OptionProps, ListBoxSectionProps, ListBoxSize } from './listbox/ListBox';
+export type { ListBoxProps, OptionProps, ListBoxSectionProps, ListBoxMessageProps, ListBoxSize } from './listbox/ListBox';
 export { Select } from './select/Select';
 export type { SelectProps, SelectOverlay } from './select/Select';
 export { BottomSheet } from './bottom-sheet/BottomSheet';
@@ -79,6 +79,8 @@ export { SearchField } from './search/SearchField';
 export type { SearchFieldProps } from './search/SearchField';
 export { SearchResult } from './search/SearchResult';
 export type { SearchResultProps, SearchResultType } from './search/SearchResult';
+export { QuickSearchTrigger } from './search/QuickSearchTrigger';
+export type { QuickSearchTriggerProps } from './search/QuickSearchTrigger';
 export { QuickSearch } from './search/QuickSearch';
 export type { QuickSearchProps } from './search/QuickSearch';
 export { Highlight } from './utils/highlight';

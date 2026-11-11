@@ -118,6 +118,8 @@ export interface Messages {
     pageOf: (page: number, total: number) => string;
   };
   quickSearch: {
+    trigger: string;
+    loading: string;
     placeholder: string;
     suggestions: string;
     allResults: (query: string) => string;
