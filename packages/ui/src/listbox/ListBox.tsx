@@ -68,16 +68,23 @@ export function Option({ children, description, icon, textValue, ...props }: Opt
               {icon}
             </span>
           )}
-          <span className="medo-option__content">
-            <Text slot="label" className="medo-option__label">
+          {/* Label and description form the name together, so the name holds all visible text (WCAG 2.5.3, axe
+              label-content-name-mismatch). Typeahead and the Select field still use the label alone (textValue). */}
+          <Text slot="label" className="medo-option__content">
+            <span className="medo-option__label">
               <Highlight>{children}</Highlight>
-            </Text>
+            </span>
             {description && (
-              <Text slot="description" className="medo-option__description">
-                {description}
-              </Text>
+              <>
+                <span className="medo-visually-hidden">, </span>
+                {/* The leading space keeps label and description apart as words for tools that read the visible text. */}
+                <span className="medo-option__description">
+                  {' '}
+                  {description}
+                </span>
+              </>
             )}
-          </span>
+          </Text>
           {selectionMode !== 'multiple' && isSelected && (
             <span className="medo-option__check" aria-hidden="true">
               <Check />

@@ -149,7 +149,8 @@ export function QuickSearch<T extends object>({
                     close();
                   }}
                   className="medo-quick-search__list"
-                  renderEmptyState={() => (term ? <EmptyReporter onChange={setEmpty} message={noResultsLabel(term)} /> : null)}
+                  // Only with a query: React Aria wraps the empty state in a nameless role="option" even when it renders nothing.
+                  renderEmptyState={term ? () => <EmptyReporter onChange={setEmpty} message={noResultsLabel(term)} /> : undefined}
                 >
                   {children}
                 </ListBox>

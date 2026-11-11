@@ -8,7 +8,7 @@
  *         <header class="medo-listbox__header">Group</header>
  *         <div class="medo-option" role="option">
  *           <span class="medo-option__icon">…</span>
- *           <span class="medo-option__content"><span class="medo-option__label">…</span><span class="medo-option__description">…</span></span>
+ *           <span class="medo-option__content"> (the name) <span class="medo-option__label">…</span><span class="medo-visually-hidden">, </span><span class="medo-option__description">…</span></span>
  *           <span class="medo-option__check">✓</span>
  *         </div>
  *       </section>

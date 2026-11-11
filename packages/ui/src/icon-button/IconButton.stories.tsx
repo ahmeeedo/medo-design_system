@@ -140,3 +140,14 @@ export const InteractionTest: Story = {
     await expect(canvas.getByRole('button', { name: 'Add item' })).toBeInTheDocument();
   },
 };
+
+export const ShortcutTest: Story = {
+  ...interactionTest,
+  name: 'Shortcut test',
+  tags: ['!autodocs'],
+  args: { shortcut: 'Control+K' },
+  play: async ({ canvas }) => {
+    // React Aria drops aria-keyshortcuts from its props; the button must still carry it for screen readers.
+    await expect(canvas.getByRole('button', { name: 'Add item' })).toHaveAttribute('aria-keyshortcuts', 'Control+K');
+  },
+};

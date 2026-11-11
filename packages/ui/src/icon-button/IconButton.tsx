@@ -1,8 +1,9 @@
-import type { CSSProperties, ReactNode } from 'react';
+import type { CSSProperties, ReactNode, Ref } from 'react';
 import { Button as AriaButton, type ButtonProps as AriaButtonProps } from 'react-aria-components';
 import { Spinner } from '../progress/Progress';
 import { Tooltip, TooltipTrigger, formatShortcut, resolveShortcut } from '../tooltip/Tooltip';
 import { cx } from '../utils/cx';
+import { useKeyShortcuts } from '../utils/useKeyShortcuts';
 import { useMessages } from '../i18n/I18n';
 
 export interface IconButtonProps extends Omit<AriaButtonProps, 'children' | 'className' | 'style'> {
@@ -34,10 +35,12 @@ export interface IconButtonProps extends Omit<AriaButtonProps, 'children' | 'cla
 /** Square icon-only action. Shares the Button styles. Shows its label as a tooltip. */
 export function IconButton({ icon, variant = 'ghost', size = 'md', tooltip, shortcut, shortcutLabel, className, ...props }: IconButtonProps) {
   const m = useMessages();
+  // React Aria drops aria-keyshortcuts; the ref sets it on the button.
+  const keyRef = useKeyShortcuts<HTMLButtonElement>(shortcut && resolveShortcut(shortcut), (props as { ref?: Ref<HTMLButtonElement> }).ref);
   const button = (
     <AriaButton
       {...props}
-      aria-keyshortcuts={shortcut && resolveShortcut(shortcut)}
+      ref={keyRef}
       className={cx('medo-button', 'medo-button--icon-only', `medo-button--${variant}`, `medo-button--${size}`, className)}
     >
       <span className="medo-button__icon" aria-hidden="true">
