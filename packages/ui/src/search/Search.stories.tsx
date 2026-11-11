@@ -702,7 +702,7 @@ export const Quick: Story = {
     docs: {
       description: {
         story:
-          'Press Cmd / Ctrl + K or the button. Empty: recent searches and suggestions. Type “inv”: hits grouped by type (max 5 each), the match in bold. ↑ ↓ move while focus stays in the field, Enter opens, Esc closes. “All results” opens the search page with the same term. Below 640 px it opens full screen with “Cancel”.',
+          'Press Cmd / Ctrl + K or the button. Empty: recent searches and suggestions. Type “inv”: hits grouped by type (max 5 each), the match in bold. ↑ ↓ move while focus stays in the field, Enter opens, Esc closes. “All results” opens the search page with the same term. Below 640 px it opens full screen with “Cancel”. Suggestions and results replace each other: give their sections different ids and a `key` equal to the `id`.',
       },
     },
   },
@@ -749,5 +749,21 @@ export const QuickSearchTest: Story = {
     // Esc in the empty field closes the quick search.
     await userEvent.keyboard('{Escape}');
     await waitFor(() => expect(body.queryByRole('dialog')).toBeNull());
+  },
+};
+
+export const QuickSearchEmptyTest: Story = {
+  ...interactionTest,
+  tags: ['!autodocs'],
+  name: 'Interaction test: quick search without suggestions',
+  render: () => (
+    <QuickSearch defaultOpen shortcut={false}>
+      {[]}
+    </QuickSearch>
+  ),
+  play: async () => {
+    // No query and no suggestions: the list holds no option at all (an empty role="option" has no name – axe, WCAG 4.1.2).
+    const dialog = await within(document.body).findByRole('dialog');
+    await expect(within(dialog).queryAllByRole('option')).toHaveLength(0);
   },
 };

@@ -26,22 +26,17 @@ const meta = {
     renderEmptyState: { control: false },
   },
   parameters: {
-    a11y: {
-      // label-content-name-mismatch is an experimental axe rule: options read their label as the name and the
-      // second line as description (aria-describedby) – correct, but the rule counts all visible text.
-      config: {
-        rules: [
-          { id: 'landmark-unique', enabled: false },
-          { id: 'label-content-name-mismatch', enabled: false },
-        ],
-      },
-    },
     medo: {
       subtitle: 'The list behind Select, Combobox and the Bottom Sheet. Option is one row, Listbox the container.',
       usage: {
         when: ['A list of options inside Select, Combobox or a Bottom Sheet.', 'A visible list to pick from, e.g. in a side panel.'],
         whenNot: ['Actions: use a Menu.', 'Objects with controls in each row: use a List view.'],
-        do: ['Use groups with a header for more than about 8 options.', 'Add a short description when options are similar.', 'Let labels wrap.'],
+        do: [
+          'Use groups with a header for more than about 8 options.',
+          'Add a short description when options are similar.',
+          'Let labels wrap.',
+          'Give each `ListBoxSection` and `Option` a `key` equal to its `id`. Sections that replace each other (suggestions and results) need different ids – React Aria cannot change the id of an item it already knows.',
+        ],
         dont: ['Truncate labels.', 'Put buttons or links inside an option.'],
       },
       a11y: {
@@ -65,6 +60,7 @@ const meta = {
         notes: [
           'Highlight and selection look different: grey highlight, check or checkbox for the selection.',
           'Group headers are read before their first option.',
+          'Label and description are read together as the name (“Team, Everyone in the design team”), so the name holds all visible text (WCAG 2.5.3). Typeahead uses the label alone.',
           'Empty and loading messages are shown inside the list.',
         ],
       },

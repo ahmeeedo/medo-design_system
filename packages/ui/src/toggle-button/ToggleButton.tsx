@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useRef, type CSSProperties, type ReactNode } from 'react';
+import { createContext, useContext, useEffect, useRef, type CSSProperties, type ReactNode, type Ref } from 'react';
 import {
   SelectionIndicator,
   Separator,
@@ -11,6 +11,7 @@ import {
 } from 'react-aria-components';
 import { Tooltip, TooltipTrigger, formatShortcut, resolveShortcut } from '../tooltip/Tooltip';
 import { cx } from '../utils/cx';
+import { useKeyShortcuts } from '../utils/useKeyShortcuts';
 import { useMessages } from '../i18n/I18n';
 
 type ToggleSize = 'sm' | 'md' | 'lg';
@@ -42,6 +43,8 @@ export interface ToggleButtonProps extends Omit<AriaToggleButtonProps, 'children
  */
 export function ToggleButton({ children, icon, size, tooltip, shortcut, className, ...props }: ToggleButtonProps) {
   const m = useMessages();
+  // React Aria drops aria-keyshortcuts; the ref sets it on the button.
+  const keyRef = useKeyShortcuts<HTMLButtonElement>(shortcut && resolveShortcut(shortcut), (props as { ref?: Ref<HTMLButtonElement> }).ref);
   const groupSize = useContext(ToggleSizeContext);
   const segmented = useContext(SegmentedContext);
   const s = groupSize ?? size ?? 'md';
@@ -49,7 +52,7 @@ export function ToggleButton({ children, icon, size, tooltip, shortcut, classNam
   const button = (
     <AriaToggleButton
       {...props}
-      aria-keyshortcuts={shortcut && resolveShortcut(shortcut)}
+      ref={keyRef}
       className={cx('medo-button', `medo-button--${s}`, iconOnly && 'medo-button--icon-only', 'medo-toggle', className)}
     >
       {/* Segmented: the selected fill is an indicator that slides from the previous item (React Aria SelectionIndicator). */}

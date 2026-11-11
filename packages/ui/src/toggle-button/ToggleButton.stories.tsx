@@ -232,3 +232,14 @@ export const InteractionTest: Story = {
     await expect(canvas.getByRole('radio', { name: 'Week' })).not.toBeChecked();
   },
 };
+
+export const ShortcutTest: Story = {
+  ...interactionTest,
+  name: 'Shortcut test',
+  tags: ['!autodocs'],
+  render: () => <ToggleButton aria-label="Bold" shortcut="Control+B" icon={<Bold />} />,
+  play: async ({ canvas }) => {
+    // React Aria drops aria-keyshortcuts from its props; the button must still carry it for screen readers.
+    await expect(canvas.getByRole('button', { name: 'Bold' })).toHaveAttribute('aria-keyshortcuts', 'Control+B');
+  },
+};

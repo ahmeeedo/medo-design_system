@@ -150,3 +150,17 @@ export async function spokenPhrases(root: HTMLElement) {
     await virtual.stop();
   }
 }
+
+/**
+ * a11y parameters for fields that show their values as tags with a “+N” overflow (multiple Select and Combobox).
+ * The name lists every value (“Design, Code, Research, Marketing”); axe label-content-name-mismatch wants the visible
+ * “+1” in it too. The tags are the value, not the label (WCAG 2.5.3), so the rule is off for these stories only.
+ */
+export const overflowTagsA11y = {
+  config: {
+    rules: [
+      { id: 'landmark-unique', enabled: false },
+      { id: 'label-content-name-mismatch', enabled: false },
+    ],
+  },
+} as const;

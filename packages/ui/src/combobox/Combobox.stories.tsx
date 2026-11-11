@@ -5,7 +5,7 @@ import { expect, fn, waitFor, within, type UserEventObject } from 'storybook/tes
 import { Search, User } from 'lucide-react';
 import { Combobox } from './Combobox';
 import { Option } from '../listbox/ListBox';
-import { interactionTest, slot, stack } from '../story-helpers';
+import { interactionTest, slot, stack, overflowTagsA11y } from '../story-helpers';
 
 type Person = { id: string; name: string; role: string };
 
@@ -67,16 +67,6 @@ const meta = {
     resultLabel: { control: false },
   },
   parameters: {
-    a11y: {
-      // label-content-name-mismatch is an experimental axe rule: options read their label as the name and the
-      // second line as description (aria-describedby) – correct, but the rule counts all visible text.
-      config: {
-        rules: [
-          { id: 'landmark-unique', enabled: false },
-          { id: 'label-content-name-mismatch', enabled: false },
-        ],
-      },
-    },
     medo: {
       subtitle: 'A Select you can type into. Typing filters the list – for long lists, people, places or tags.',
       usage: {
@@ -319,6 +309,7 @@ export const Server: Story = {
 export const Mobile: Story = {
   name: 'On mobile',
   parameters: {
+    a11y: overflowTagsA11y,
     docs: {
       description: {
         story:
