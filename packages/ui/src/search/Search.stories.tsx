@@ -7,6 +7,7 @@ import { ArrowUpDown, Funnel, FileText, Globe, LayoutGrid, List, RotateCcw, Sear
 import { SearchField } from './SearchField';
 import { SearchResult, type SearchResultType } from './SearchResult';
 import { QuickSearch } from './QuickSearch';
+import { QuickSearchTrigger } from './QuickSearchTrigger';
 import { Accordion, AccordionItem } from '../accordion/Accordion';
 import { Avatar } from '../avatar/Avatar';
 import { BottomSheet } from '../bottom-sheet/BottomSheet';
@@ -147,7 +148,7 @@ const meta = {
         },
         keyboard: [
           ['Enter', 'Submits the search.'],
-          ['Esc', 'Clears the field.'],
+          ['Esc', 'Search field: clears it. Quick search: closes it, also with text in the field.'],
           ['Cmd / Ctrl + K', 'Opens the quick search.'],
           ['↑ / ↓', 'Quick search: moves through the hits while the focus stays in the field.'],
           ['Enter', 'Quick search: opens the highlighted hit.'],
@@ -156,6 +157,8 @@ const meta = {
           'The result count is announced politely.',
           'One link per result: the title covers the whole hit.',
           'The quick search is a modal; Esc closes it and the focus returns.',
+          'Quick search trigger: a button named by its text (“Search …”), with the shortcut as `aria-keyshortcuts`.',
+          'While results load, a status row says so and the result region is `aria-busy`.',
           'Mobile: filters open in a Bottom Sheet.',
         ],
       },
@@ -167,6 +170,7 @@ const meta = {
           ['medo-search-result__title, __path, __snippet, __meta', 'Parts of a hit.'],
           ['medo-search-result__match', 'A match (bold).'],
           ['medo-quick-search', 'Quick search dialog.'],
+          ['medo-quick-search-trigger', 'Button in the Input look that opens it (with `medo-input medo-input--md`).'],
         ],
         states: ['data-empty', 'data-hovered', 'data-focus-visible'],
       },
@@ -643,7 +647,7 @@ export const MobileFilters: Story = {
 const recent = ['invoice 2025', 'Lea Müller', 'travel policy'];
 const groupIcon = { pages: <Globe />, files: <FileText />, people: <User /> };
 
-function QuickSearchExample() {
+function QuickSearchExample({ loading = false, trigger = 'icon' }: { loading?: boolean; trigger?: 'icon' | 'field' }) {
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState('');
   const term = query.trim().toLowerCase();
@@ -652,8 +656,15 @@ function QuickSearchExample() {
 
   return (
     <>
-      <IconButton aria-label="Search" icon={<Search />} shortcut="Mod+K" variant="secondary" onPress={() => setOpen(true)} />
+      {trigger === 'field' ? (
+        <div style={{ maxInlineSize: 'var(--medo-size-width-xl)' }}>
+          <QuickSearchTrigger onPress={() => setOpen(true)} />
+        </div>
+      ) : (
+        <IconButton aria-label="Search" icon={<Search />} shortcut="Mod+K" variant="secondary" onPress={() => setOpen(true)} />
+      )}
       <QuickSearch
+        isLoading={loading && Boolean(term)}
         isOpen={open}
         onOpenChange={setOpen}
         inputValue={query}
@@ -702,11 +713,37 @@ export const Quick: Story = {
     docs: {
       description: {
         story:
-          'Press Cmd / Ctrl + K or the button. Empty: recent searches and suggestions. Type “inv”: hits grouped by type (max 5 each), the match in bold. ↑ ↓ move while focus stays in the field, Enter opens, Esc closes. “All results” opens the search page with the same term. Below 640 px it opens full screen with “Cancel”. Suggestions and results replace each other: give their sections different ids and a `key` equal to the `id`.',
+          'Press Cmd / Ctrl + K or the button. Empty: recent searches and suggestions. Type “inv”: hits grouped by type (max 5 each), the match in bold. ↑ ↓ move while focus stays in the field, Enter opens, Esc closes (also with text; × clears). “All results” opens the search page with the same term. Below 640 px it opens full screen with “Cancel”. Suggestions and results replace each other: give their sections different ids and a `key` equal to the `id`.',
       },
     },
   },
   render: () => <QuickSearchExample />,
+};
+
+export const QuickTrigger: Story = {
+  name: 'Quick search trigger',
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'From 1280 px a field-like button opens Quick search: the Input look, a search icon, the placeholder and the shortcut hint (⌘ K on Apple, Ctrl K elsewhere). It is a button – it only opens the dialog. Narrower: the IconButton with the same shortcut.',
+      },
+    },
+  },
+  render: () => <QuickSearchExample trigger="field" />,
+};
+
+export const QuickLoading: Story = {
+  name: 'Quick search loading',
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'Results from a server or a lazy index: `isLoading` shows a loading row below the list and marks the results busy. Earlier results stay; “No results” never shows while it loads. Open it and type “inv”.',
+      },
+    },
+  },
+  render: () => <QuickSearchExample trigger="field" loading />,
 };
 
 export const InteractionTest: Story = {
@@ -740,13 +777,7 @@ export const QuickSearchTest: Story = {
     await overlaysSettled();
     await userEvent.type(field, 'inv');
     await waitFor(() => expect(within(dialog).getAllByRole('option').length).toBeGreaterThan(0));
-    // Esc with text clears the field first; wait for it, so a slower engine (WebKit) does not see the second Esc too early.
-    await userEvent.keyboard('{Escape}');
-    await waitFor(() => {
-      expect(field).toHaveValue('');
-      expect(field).toHaveFocus();
-    });
-    // Esc in the empty field closes the quick search.
+    // Esc closes at once, also with text in the field – as the footer hint says.
     await userEvent.keyboard('{Escape}');
     await waitFor(() => expect(body.queryByRole('dialog')).toBeNull());
   },
@@ -765,5 +796,27 @@ export const QuickSearchEmptyTest: Story = {
     // No query and no suggestions: the list holds no option at all (an empty role="option" has no name – axe, WCAG 4.1.2).
     const dialog = await within(document.body).findByRole('dialog');
     await expect(within(dialog).queryAllByRole('option')).toHaveLength(0);
+  },
+};
+
+export const QuickSearchTriggerTest: Story = {
+  ...interactionTest,
+  tags: ['!autodocs'],
+  name: 'Interaction test: quick search trigger and loading',
+  render: () => <QuickSearchExample trigger="field" loading />,
+  play: async ({ canvas, userEvent }) => {
+    // The trigger is a button named by its text, with the shortcut for screen readers.
+    const trigger = canvas.getByRole('button', { name: 'Search …' });
+    await expect(trigger).toHaveAttribute('aria-keyshortcuts', expect.stringMatching(/^(Meta|Control)\+K$/));
+    await userEvent.click(trigger);
+    const dialog = await within(document.body).findByRole('dialog');
+    await overlaysSettled();
+    await userEvent.type(within(dialog).getByRole('searchbox'), 'zzz');
+    // Loading: a status row, the region is busy, and no “No results”.
+    await waitFor(() => expect(within(dialog).getByRole('status')).toHaveTextContent('Loading results…'));
+    await expect(within(dialog).getByRole('region')).toHaveAttribute('aria-busy', 'true');
+    await expect(within(dialog).queryByText(/No results/)).toBeNull();
+    await userEvent.keyboard('{Escape}');
+    await waitFor(() => expect(within(document.body).queryByRole('dialog')).toBeNull());
   },
 };

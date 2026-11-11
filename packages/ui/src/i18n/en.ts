@@ -117,6 +117,8 @@ export const en: Messages = {
     pageOf: (p, total) => `Page ${p} of ${total}`,
   },
   quickSearch: {
+    trigger: 'Search …',
+    loading: 'Loading results…',
     placeholder: 'Search pages, files, people …',
     suggestions: 'Suggestions',
     allResults: (q) => `All results for “${q}”`,

@@ -4,7 +4,7 @@ import { Search } from 'lucide-react';
 import { Badge } from '../badge/Badge';
 import { Button } from '../button/Button';
 import { Link } from '../link/Link';
-import { ListBox, OptionHighlightContext } from '../listbox/ListBox';
+import { ListBox, ListBoxMessage, OptionHighlightContext } from '../listbox/ListBox';
 import { cx } from '../utils/cx';
 import { MOBILE_QUERY, useMediaQuery } from '../utils/useMediaQuery';
 import { SearchField } from './SearchField';
@@ -30,6 +30,10 @@ export interface QuickSearchProps<T extends object> {
   allResultsHref?: (query: string) => string;
   /** Enter without a highlighted hit, and “Search all content” when nothing matches. */
   onSearch?: (query: string) => void;
+  /** Results are on their way (server, lazy index): a loading row below the list, earlier results stay, never “No results”. */
+  isLoading?: boolean;
+  /** Text of the loading row. Default: built-in text (“Loading results…”). */
+  loadingLabel?: string;
   /** Texts (localize). */
   'aria-label'?: string;
   placeholder?: string;
@@ -44,7 +48,7 @@ export interface QuickSearchProps<T extends object> {
 /**
  * Quick search – find and open pages, files and people from anywhere. A modal with
  * React Aria Autocomplete: focus stays in the field while ↑ ↓ move through the suggestions, Enter opens the
- * highlighted hit, Esc closes and focus returns to the trigger. Desktop: overlay 640 wide · mobile: full screen with Cancel.
+ * highlighted hit, Esc closes (also with text in the field) and focus returns to the trigger. Desktop: overlay 640 wide · mobile: full screen with Cancel.
  */
 export function QuickSearch<T extends object>({
   isOpen,
@@ -59,6 +63,8 @@ export function QuickSearch<T extends object>({
   onAction,
   allResultsHref,
   onSearch,
+  isLoading,
+  loadingLabel: loadingLabelProp,
   'aria-label': ariaLabelProp,
   placeholder: placeholderProp,
   cancelLabel: cancelLabelProp,
@@ -76,6 +82,7 @@ export function QuickSearch<T extends object>({
   const allResultsLabel = allResultsLabelProp ?? m.quickSearch.allResults;
   const noResultsLabel = noResultsLabelProp ?? m.quickSearch.noResults;
   const searchAllLabel = searchAllLabelProp ?? m.quickSearch.searchAll;
+  const loadingLabel = loadingLabelProp ?? m.quickSearch.loading;
   const hints = hintsProp ?? { navigate: m.quickSearch.navigate, open: m.quickSearch.open, close: m.common.close };
   const mobile = useMediaQuery(MOBILE_QUERY);
   const [innerOpen, setInnerOpen] = useState(defaultOpen ?? false);
@@ -128,7 +135,11 @@ export function QuickSearch<T extends object>({
                 size="lg"
                 autoFocus
                 onSubmit={(value) => value.trim() && onSearch?.(value.trim())}
-                // Esc in an empty field closes the dialog; with text it clears first.
+                // Esc always closes, as the footer hint says. The field would only clear itself with text in it; × clears.
+                // In an empty field the dialog closes by itself.
+                onKeyDown={(e) => {
+                  if (e.key === 'Escape' && query) close();
+                }}
                 className="medo-quick-search__field"
               />
               {mobile && (
@@ -138,7 +149,7 @@ export function QuickSearch<T extends object>({
               )}
             </div>
             {/* Scroll region: focusable, so keyboard users can scroll it too (the options use virtual focus). */}
-            <div className="medo-quick-search__scroll" tabIndex={0} aria-label={suggestionsLabel} role="region">
+            <div className="medo-quick-search__scroll" tabIndex={0} aria-label={suggestionsLabel} role="region" aria-busy={isLoading || undefined}>
               <OptionHighlightContext.Provider value={term}>
                 <ListBox<T>
                   aria-label={ariaLabel}
@@ -150,12 +161,19 @@ export function QuickSearch<T extends object>({
                   }}
                   className="medo-quick-search__list"
                   // Only with a query: React Aria wraps the empty state in a nameless role="option" even when it renders nothing.
-                  renderEmptyState={term ? () => <EmptyReporter onChange={setEmpty} message={noResultsLabel(term)} /> : undefined}
+                  // While loading, the loading row below replaces “No results”.
+                  renderEmptyState={term && !isLoading ? () => <EmptyReporter onChange={setEmpty} message={noResultsLabel(term)} /> : undefined}
                 >
                   {children}
                 </ListBox>
               </OptionHighlightContext.Provider>
-              {empty && term && onSearch && (
+              {/* Below the list: earlier results stay while new ones load. */}
+              {isLoading && (
+                <ListBoxMessage loading size={mobile ? 'lg' : 'md'}>
+                  {loadingLabel}
+                </ListBoxMessage>
+              )}
+              {empty && term && onSearch && !isLoading && (
                 <AriaButton className="medo-quick-search__all" onPress={() => onSearch(term)}>
                   <Search aria-hidden="true" />
                   {searchAllLabel(term)}

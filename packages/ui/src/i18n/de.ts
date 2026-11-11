@@ -126,6 +126,8 @@ export const de: Messages = {
     pageOf: (p, total) => `Seite ${p} von ${total}`,
   },
   quickSearch: {
+    trigger: 'Suchen …',
+    loading: 'Ergebnisse werden geladen …',
     placeholder: 'Seiten, Dateien, Personen suchen …',
     suggestions: 'Vorschläge',
     allResults: (q) => `Alle Ergebnisse für „${q}“`,
