@@ -1,7 +1,8 @@
 import type { CSSProperties, ReactNode } from 'react';
-import { Button as AriaButton, type ButtonProps as AriaButtonProps } from 'react-aria-components';
+import { Button as AriaButton, Link as AriaLink, type ButtonProps as AriaButtonProps, type LinkProps as AriaLinkProps } from 'react-aria-components';
 import { Spinner } from '../progress/Progress';
 import { cx } from '../utils/cx';
+import { useMessages } from '../i18n/I18n';
 
 export type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'danger' | 'text' | 'ghost-danger';
 export type ButtonSize = 'sm' | 'md' | 'lg';
@@ -21,6 +22,17 @@ export interface ButtonProps extends Omit<AriaButtonProps, 'children' | 'classNa
   className?: string;
   /** Inline style on the button – for layout only (e.g. width), like className. */
   style?: CSSProperties;
+  /**
+   * Navigates instead of acting: renders a link (`<a href>`) with the button look – “Get started”, “Give feedback”.
+   * Works with client-side routers through RouterProvider. isPending has no effect on a link.
+   */
+  href?: string;
+  /** With href: “_blank” opens a new tab, adds rel="noopener noreferrer" and the hidden new-tab text. */
+  target?: AriaLinkProps['target'];
+  /** With href: the link relation. Default with target="_blank": “noopener noreferrer”. */
+  rel?: string;
+  /** With target="_blank": hidden text for screen readers. Default: built-in text (“(opens in a new tab)”). */
+  newTabLabel?: string;
 }
 
 /**
@@ -29,11 +41,14 @@ export interface ButtonProps extends Omit<AriaButtonProps, 'children' | 'classNa
  * Use onPress instead of onClick and isDisabled instead of disabled.
  * While saving, set isPending and change the label (“Saving…”): the button keeps its look and size.
  */
-export function Button({ variant = 'primary', size = 'md', startIcon, endIcon, className, children, ...props }: ButtonProps) {
+export function Button({ variant = 'primary', size = 'md', startIcon, endIcon, className, children, href, target, rel, newTabLabel, ...props }: ButtonProps) {
+  const m = useMessages();
   // isPending: React Aria keeps focus and announces the pending state; a spinner replaces the start icon.
-  const icon = props.isPending ? <Spinner decorative /> : startIcon;
-  return (
-    <AriaButton {...props} className={cx('medo-button', `medo-button--${variant}`, `medo-button--${size}`, className)}>
+  const icon = props.isPending && !href ? <Spinner decorative /> : startIcon;
+  const classes = cx('medo-button', `medo-button--${variant}`, `medo-button--${size}`, className);
+  const newTab = target === '_blank';
+  const content = (
+    <>
       {icon && (
         <span className="medo-button__icon" aria-hidden="true">
           {icon}
@@ -45,6 +60,21 @@ export function Button({ variant = 'primary', size = 'md', startIcon, endIcon, c
           {endIcon}
         </span>
       )}
+      {newTab && <span className="medo-visually-hidden"> {newTabLabel ?? m.common.newTab}</span>}
+    </>
+  );
+  if (href !== undefined) {
+    // A link in the button look: navigation keeps link semantics (WCAG 4.1.2), the look stays the same.
+    const { isPending: _pending, type: _type, form: _form, ...linkProps } = props as typeof props & { form?: string };
+    return (
+      <AriaLink {...(linkProps as Omit<AriaLinkProps, 'children'>)} href={href} target={target} rel={newTab ? (rel ?? 'noopener noreferrer') : rel} className={classes}>
+        {content}
+      </AriaLink>
+    );
+  }
+  return (
+    <AriaButton {...props} className={classes}>
+      {content}
     </AriaButton>
   );
 }

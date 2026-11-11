@@ -5,6 +5,8 @@
  */
 export interface Messages {
   common: {
+    /** Screen readers only, after a link that opens a new tab. */
+    newTab: string;
     close: string;
     cancel: string;
     back: string;

@@ -2,6 +2,7 @@ import type { ReactNode } from 'react';
 import { Link as AriaLink, type LinkProps as AriaLinkProps } from 'react-aria-components';
 import { ArrowRight, ExternalLink } from 'lucide-react';
 import { cx } from '../utils/cx';
+import { useMessages } from '../i18n/I18n';
 
 export interface LinkProps extends Omit<AriaLinkProps, 'children' | 'className'> {
   /** The text says where it goes (“Privacy policy”, not “click here”). */
@@ -14,7 +15,7 @@ export interface LinkProps extends Omit<AriaLinkProps, 'children' | 'className'>
   external?: boolean;
   /** Standalone only: arrow after the text (“View all →”). */
   arrow?: boolean;
-  /** Hidden text for links that open a new tab. */
+  /** Hidden text for links that open a new tab. Default: built-in text (“(opens in a new tab)”). */
   newTabLabel?: string;
   className?: string;
 }
@@ -29,10 +30,11 @@ export function Link({
   size = 'md',
   external,
   arrow,
-  newTabLabel = '(opens in a new tab)',
+  newTabLabel,
   className,
   ...props
 }: LinkProps) {
+  const m = useMessages();
   const newTab = props.target === '_blank';
   return (
     <AriaLink
@@ -43,7 +45,7 @@ export function Link({
       {children}
       {external && <ExternalLink className="medo-link__icon" aria-hidden="true" />}
       {!external && arrow && variant === 'standalone' && <ArrowRight className="medo-link__icon" aria-hidden="true" />}
-      {newTab && <span className="medo-visually-hidden"> {newTabLabel}</span>}
+      {newTab && <span className="medo-visually-hidden"> {newTabLabel ?? m.common.newTab}</span>}
     </AriaLink>
   );
 }

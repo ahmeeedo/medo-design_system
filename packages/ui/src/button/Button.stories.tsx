@@ -1,6 +1,6 @@
 import type React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { ArrowRight, Download, Plus, Trash2 } from 'lucide-react';
+import { ArrowRight, Download, ExternalLink, Plus, Trash2 } from 'lucide-react';
 import { expect, fn } from 'storybook/test';
 import { Button, ButtonGroup } from './Button';
 import { interactionTest, slot, StateGrid, STATE_ATTRIBUTES } from '../story-helpers';
@@ -47,6 +47,7 @@ const meta = {
           'The label names the button. Icons are decorative and hidden from screen readers.',
           'While pending, the button keeps its size and focus; the label says what happens (“Saving…”).',
           'Disabled buttons are skipped by the keyboard.',
+          'With `href` it is a link in the button look: announced as a link, because it navigates. With `target="_blank"` screen readers also hear “opens in a new tab”.',
           'Heights: sm 32 px, md 40 px, lg 48 px for touch.',
         ],
         // Manual test with NVDA, VoiceOver and TalkBack (Guides / Screen reader testing).
@@ -152,6 +153,28 @@ export const WithIcons: Story = {
         Delete
       </Button>
     </div>
+  ),
+};
+
+export const AsLink: Story = {
+  name: 'As a link',
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'For navigation in button form (“Get started”, “Give feedback”) pass `href`: it renders an `<a>` with the same look. With `target="_blank"` it adds `rel="noopener noreferrer"` and a hidden “(opens in a new tab)”; show the external icon so sighted users know it too.',
+      },
+    },
+  },
+  render: () => (
+    <ButtonGroup context="content">
+      <Button href="#start" endIcon={<ArrowRight />}>
+        Get started
+      </Button>
+      <Button href="#feedback" target="_blank" variant="secondary" endIcon={<ExternalLink />}>
+        Give feedback
+      </Button>
+    </ButtonGroup>
   ),
 };
 

@@ -16,6 +16,7 @@ const embed = (noun: string, title: string, load: string, remember: (p: string |
 /** English (default and fallback). */
 export const en: Messages = {
   common: {
+    newTab: '(opens in a new tab)',
     close: 'Close',
     cancel: 'Cancel',
     back: 'Back',
