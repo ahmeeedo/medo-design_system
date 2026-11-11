@@ -29,6 +29,7 @@ export interface ButtonProps extends Omit<AriaButtonProps, 'children' | 'classNa
   href?: string;
   /** With href: “_blank” opens a new tab, adds rel="noopener noreferrer" and the hidden new-tab text. */
   target?: AriaLinkProps['target'];
+  /** With href: the link relation. Default with target="_blank": “noopener noreferrer”. */
   rel?: string;
   /** With target="_blank": hidden text for screen readers. Default: built-in text (“(opens in a new tab)”). */
   newTabLabel?: string;
