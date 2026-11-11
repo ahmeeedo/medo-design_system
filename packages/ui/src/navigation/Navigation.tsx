@@ -40,7 +40,6 @@ const NavGroupDepthContext = createContext<{ depth: number; inHeader: boolean }>
 declare const process: { env: { NODE_ENV?: string } } | undefined;
 
 const TABLET_QUERY = '(min-width: 640px) and (max-width: 1023.98px)';
-const SITE_MENU_QUERY = '(max-width: 767.98px)';
 
 /* ---------- Nav item ---------- */
 
@@ -49,6 +48,10 @@ export interface NavItemProps extends Omit<AriaLinkProps, 'children' | 'classNam
   children: string;
   /** Sidebar, rail and sheet: icon before the label (decorative). Header items have no icon. */
   icon?: ReactNode;
+  /** Icon after the label (decorative), e.g. ExternalLink for a page on another site. Hidden in the rail. */
+  endIcon?: ReactNode;
+  /** target="_blank" adds rel="noopener noreferrer" and this hidden text. Default: built-in text (“(opens in a new tab)”). */
+  newTabLabel?: string;
   /** The current page (exactly one). Marked with aria-current="page" and action/selected. */
   isCurrent?: boolean;
   /** Number in the item (Badge count, neutral). */
@@ -63,8 +66,10 @@ export interface NavItemProps extends Omit<AriaLinkProps, 'children' | 'classNam
  * One navigation link. Built on React Aria Link, so client-side routing works
  * with any router through RouterProvider. The container decides the form (header, sidebar, rail, sheet).
  */
-export function NavItem({ children, icon, isCurrent, count, countLabel, unread, ...props }: NavItemProps) {
+export function NavItem({ children, icon, endIcon, newTabLabel, isCurrent, count, countLabel, unread, ...props }: NavItemProps) {
+  const m = useMessages();
   const variant = useContext(NavVariantContext);
+  const newTab = props.target === '_blank';
   const sideNav = useContext(SideNavContext);
   const rail = variant === 'rail';
   const content = (
@@ -74,7 +79,15 @@ export function NavItem({ children, icon, isCurrent, count, countLabel, unread, 
           {icon}
         </span>
       )}
-      <span className={rail ? 'medo-visually-hidden' : 'medo-nav-item__label'}>{children}</span>
+      <span className={rail ? 'medo-visually-hidden' : 'medo-nav-item__label'}>
+        {children}
+        {newTab && <span className="medo-visually-hidden"> {newTabLabel ?? m.common.newTab}</span>}
+      </span>
+      {endIcon && !rail && (
+        <span className="medo-nav-item__icon medo-nav-item__end-icon" aria-hidden="true">
+          {endIcon}
+        </span>
+      )}
       {count !== undefined &&
         (rail ? (
           unread && count > 0 && <BadgeDot tone="danger" label={countLabel ?? String(count)} className="medo-nav-item__dot" />
@@ -85,6 +98,7 @@ export function NavItem({ children, icon, isCurrent, count, countLabel, unread, 
   );
   const linkProps = {
     ...props,
+    rel: newTab ? (props.rel ?? 'noopener noreferrer') : props.rel,
     onPress: (e: PressEvent) => {
       props.onPress?.(e);
       sideNav?.onNavigate?.();
@@ -320,70 +334,97 @@ export interface SiteHeaderProps {
   logo: ReactNode;
   /** NavItems and NavGroups – max 5 links; more go into a group. */
   children: ReactNode;
-  /** Max 2 actions, at most one primary (last). In the mobile menu they are pinned at the bottom (lg). */
-  actions?: NavAction[];
+  /** start: links after the logo (default) · center: links in the middle of the header. */
+  align?: 'start' | 'center';
+  /**
+   * Right side of the header. A list: max 2 actions, at most one primary (last); on mobile the primary stays in the
+   * bar and all are pinned at the bottom of the menu (lg). Free content (search, links, a menu): shown from 768 px.
+   */
+  actions?: NavAction[] | ReactNode;
+  /** Below 768 px: content next to the menu button, e.g. a search button. Default: the primary action of a list. */
+  compactActions?: ReactNode;
+  /** Extra sections in the fullscreen menu, between the links and the pinned actions: resources, a theme select, a docs tree. */
+  menuContent?: ReactNode;
   /** Name of the navigation region. */
   'aria-label'?: string;
   /** Mobile: label of the menu button and title of the fullscreen menu. */
   menuLabel?: string;
   /** Close button of the fullscreen menu. Default: built-in text. */
   closeLabel?: string;
-  /** auto: menu button below 768 px · desktop · mobile (forced, e.g. for previews). */
+  /** auto: menu button below 768 px (CSS, so static pages do not jump) · desktop · mobile (forced, e.g. for previews). */
   layout?: 'auto' | 'desktop' | 'mobile';
 }
 
 /**
  * Website header: logo, links, actions. Sticky, with a divider once the page scrolls.
- * Below 768 px only the logo, the primary action and a menu button remain; the menu opens fullscreen.
+ * Below 768 px only the logo, the compact actions and a menu button remain; the menu opens fullscreen.
+ * Both layouts are rendered and CSS shows one (layout="auto"), so prerendered pages are right before hydration.
  */
-export function SiteHeader({ logo, children, actions = [], 'aria-label': labelProp, menuLabel: menuLabelProp, closeLabel: closeLabelProp, layout = 'auto' }: SiteHeaderProps) {
+export function SiteHeader({
+  logo,
+  children,
+  align = 'start',
+  actions = [],
+  compactActions,
+  menuContent,
+  'aria-label': labelProp,
+  menuLabel: menuLabelProp,
+  closeLabel: closeLabelProp,
+  layout = 'auto',
+}: SiteHeaderProps) {
   const m = useMessages();
   const label = labelProp ?? m.navigation.main;
   const menuLabel = menuLabelProp ?? m.navigation.menu;
   const closeLabel = closeLabelProp ?? m.common.close;
-  const narrow = useMediaQuery(SITE_MENU_QUERY);
-  const compact = layout === 'mobile' || (layout === 'auto' && narrow);
   const scrolled = useScrolled();
-  const primary = actions.find((a) => a.variant === 'primary');
+  const list = Array.isArray(actions) ? (actions as NavAction[]) : null;
+  const primary = list?.find((a) => a.variant === 'primary');
+  const wideActions = list ? (
+    list.length > 0 ? (
+      list.map((a) => <ActionLink key={a.label} action={a} size="md" />)
+    ) : null
+  ) : (
+    (actions as ReactNode)
+  );
+  const narrowActions = compactActions ?? (primary ? <ActionLink action={primary} size="sm" /> : null);
   return (
-    <header className={cx('medo-site-header', compact && 'medo-site-header--compact')} data-scrolled={scrolled || undefined}>
+    <header
+      className={cx('medo-site-header', `medo-site-header--${align}`, layout !== 'auto' && `medo-site-header--${layout === 'mobile' ? 'compact' : 'wide'}`)}
+      data-scrolled={scrolled || undefined}
+    >
       <div className="medo-site-header__logo">{logo}</div>
-      {compact ? (
-        <div className="medo-site-header__actions">
-          {primary && <ActionLink action={primary} size="sm" />}
-          <NavFullscreen logo={logo} actions={actions} aria-label={label} menuLabel={menuLabel} closeLabel={closeLabel}>
-            {children}
-          </NavFullscreen>
-        </div>
-      ) : (
+      {layout !== 'mobile' && (
         <>
-          <nav aria-label={label} className="medo-site-header__nav">
+          <nav aria-label={label} className="medo-site-header__nav medo-site-header__wide">
             <NavVariantContext.Provider value="header">
               <ul className="medo-nav__list medo-nav__list--row">{children}</ul>
             </NavVariantContext.Provider>
           </nav>
-          {actions.length > 0 && (
-            <div className="medo-site-header__actions">
-              {actions.map((a) => (
-                <ActionLink key={a.label} action={a} size="md" />
-              ))}
-            </div>
-          )}
+          {wideActions && <div className="medo-site-header__actions medo-site-header__wide">{wideActions}</div>}
         </>
+      )}
+      {layout !== 'desktop' && (
+        <div className="medo-site-header__actions medo-site-header__narrow">
+          {narrowActions}
+          <NavFullscreen logo={logo} actions={list ?? []} menuContent={menuContent} aria-label={label} menuLabel={menuLabel} closeLabel={closeLabel}>
+            {children}
+          </NavFullscreen>
+        </div>
       )}
     </header>
   );
 }
 
-/** Fullscreen menu of the website on mobile: large links, groups inline, actions at the bottom. */
+/** Fullscreen menu of the website on mobile: large links, groups inline, extra sections, actions at the bottom. */
 function NavFullscreen({
   logo,
   actions,
+  menuContent,
   children,
   'aria-label': label,
   menuLabel,
   closeLabel,
-}: Required<Pick<SiteHeaderProps, 'logo' | 'actions' | 'children' | 'aria-label' | 'menuLabel' | 'closeLabel'>>) {
+}: Required<Pick<SiteHeaderProps, 'logo' | 'children' | 'aria-label' | 'menuLabel' | 'closeLabel'>> & { actions: NavAction[]; menuContent?: ReactNode }) {
   // Primary first when stacked – in thumb reach.
   const ordered = [...actions].sort((a, b) => Number(b.variant === 'primary') - Number(a.variant === 'primary'));
   return (
@@ -398,11 +439,15 @@ function NavFullscreen({
                   <div className="medo-site-header__logo">{logo}</div>
                   <IconButton variant="ghost" size="md" icon={<X />} aria-label={closeLabel} tooltip={false} onPress={close} />
                 </div>
-                <nav aria-label={label} className="medo-nav-fullscreen__nav">
-                  <NavVariantContext.Provider value="sheet">
-                    <ul className="medo-nav__list">{children}</ul>
-                  </NavVariantContext.Provider>
-                </nav>
+                {/* Links and extra sections scroll together; the actions stay pinned at the bottom. */}
+                <div className="medo-nav-fullscreen__body">
+                  <nav aria-label={label} className="medo-nav-fullscreen__nav">
+                    <NavVariantContext.Provider value="sheet">
+                      <ul className="medo-nav__list">{children}</ul>
+                    </NavVariantContext.Provider>
+                  </nav>
+                  {menuContent && <div className="medo-nav-fullscreen__content">{menuContent}</div>}
+                </div>
                 {ordered.length > 0 && (
                   <div className="medo-nav-fullscreen__actions">
                     {ordered.map((a) => (
@@ -669,7 +714,8 @@ export function TabBarMore({ label: labelProp, children, closeLabel }: TabBarMor
 /* ---------- Helpers ---------- */
 
 /** True once the page is scrolled: headers show their divider. */
-function useScrolled() {
+/** True once the page has scrolled – for a divider under a sticky header (SiteHeader and AppHeader use it). */
+export function useScrolled() {
   const [scrolled, setScrolled] = useState(false);
   useEffect(() => {
     const update = () => setScrolled(window.scrollY > 0);

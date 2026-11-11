@@ -279,6 +279,21 @@
   min-inline-size: 0;
 }
 
+/* Center: logo and actions take equal space on both sides, so the links sit in the exact middle. */
+.medo-site-header--center .medo-site-header__logo,
+.medo-site-header--center .medo-site-header__actions {
+  flex: 1 1 0;
+  min-inline-size: 0;
+}
+
+.medo-site-header--center .medo-site-header__actions {
+  justify-content: flex-end;
+}
+
+.medo-site-header--center .medo-site-header__nav {
+  flex: none;
+}
+
 .medo-site-header__actions,
 .medo-app-header__actions {
   display: flex;
@@ -361,11 +376,21 @@
   padding-inline: var(--medo-space-4) var(--medo-space-2);
 }
 
-.medo-nav-fullscreen__nav {
+.medo-nav-fullscreen__body {
   flex: 1;
   min-block-size: 0;
   overflow: auto;
+}
+
+.medo-nav-fullscreen__nav {
   padding: var(--medo-space-4);
+}
+
+/* Extra sections (menuContent): same side padding as the links, one group gap below them. */
+.medo-nav-fullscreen__content {
+  display: grid;
+  gap: var(--medo-layout-gap-group);
+  padding: 0 var(--medo-space-4) var(--medo-space-4);
 }
 
 .medo-nav-fullscreen__nav .medo-nav__list {
@@ -578,11 +603,36 @@
   }
 }
 
-/* Compact website header (menu button) and phones: 56 high. */
+/*
+ * Website header: both layouts are in the HTML, CSS shows one. Static pages are right before JavaScript runs.
+ * Below 768 px (or --compact): logo, compact actions and the menu button, 56 high. From 768 px (or --wide): links and actions.
+ */
 .medo-site-header--compact {
   gap: var(--medo-space-2);
   block-size: calc(var(--medo-size-control-md) + 2 * var(--medo-space-2)); /* 56 */
   padding-inline: var(--medo-space-4) var(--medo-space-2);
+}
+
+.medo-site-header--compact .medo-site-header__wide,
+.medo-site-header--wide .medo-site-header__narrow {
+  display: none;
+}
+
+@media (max-width: 767.98px) {
+  .medo-site-header:not(.medo-site-header--wide) {
+    gap: var(--medo-space-2);
+    block-size: calc(var(--medo-size-control-md) + 2 * var(--medo-space-2)); /* 56 */
+    padding-inline: var(--medo-space-4) var(--medo-space-2);
+  }
+  .medo-site-header:not(.medo-site-header--wide) .medo-site-header__wide {
+    display: none;
+  }
+}
+
+@media (min-width: 768px) {
+  .medo-site-header:not(.medo-site-header--compact) .medo-site-header__narrow {
+    display: none;
+  }
 }
 
 @media (max-width: 639.98px) {

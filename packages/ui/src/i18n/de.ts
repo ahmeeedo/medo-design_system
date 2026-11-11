@@ -19,6 +19,7 @@ const embed = (title: string, subject: { nominative: string; dativeArticle: stri
 
 export const de: Messages = {
   common: {
+    newTab: '(öffnet in neuem Tab)',
     close: 'Schließen',
     cancel: 'Abbrechen',
     back: 'Zurück',

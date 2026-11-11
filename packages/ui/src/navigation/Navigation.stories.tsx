@@ -2,9 +2,10 @@ import { useState } from 'react';
 import { RouterProvider } from 'react-aria-components';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, waitFor, within } from 'storybook/test';
-import { Bell, Calendar, FolderClosed, House, LayoutDashboard, ListChecks, MessageSquare, Settings, Users } from 'lucide-react';
+import { Bell, BookOpen, Calendar, ExternalLink, FolderClosed, House, LayoutDashboard, ListChecks, MessageSquare, Search, Settings, Users } from 'lucide-react';
 import { AppHeader, BottomTabBar, NavGroup, NavItem, NavList, NavSection, SideNav, SiteHeader, SkipLink, TabBarItem, TabBarMore, type NavAction } from './Navigation';
 import { Avatar } from '../avatar/Avatar';
+import { Button } from '../button/Button';
 import { IconButton } from '../icon-button/IconButton';
 import { TextField } from '../text-field/TextField';
 import { interactionTest, Examples, slot, Example } from '../story-helpers';
@@ -136,7 +137,10 @@ const meta = {
   tags: ['autodocs', 'status:beta'],
   args: { layout: 'auto', actions: 'Log in + Get started' as never, logo: null, children: null },
   argTypes: {
-    layout: { control: 'inline-radio', options: ['auto', 'desktop', 'mobile'], description: 'auto: menu button below 768 px.' },
+    layout: { control: 'inline-radio', options: ['auto', 'desktop', 'mobile'], description: 'auto: menu button below 768 px (CSS).' },
+    align: { control: 'inline-radio', options: ['start', 'center'], description: 'start: links after the logo · center: links in the middle.' },
+    compactActions: { control: false },
+    menuContent: { control: false },
     actions: slot({ none: [], 'Log in + Get started': siteActions }),
     logo: { control: false },
     children: { control: false },
@@ -176,7 +180,10 @@ const meta = {
         classes: [
           ['medo-nav-item--{form}', 'One item: `header`, `sidebar`, `rail`, `sheet`.'],
           ['medo-nav-group, medo-nav-section', 'Disclosure group and titled section.'],
-          ['medo-site-header', 'Website header.'],
+          ['medo-site-header, --start, --center', 'Website header and the position of its links.'],
+          ['medo-site-header__wide, __narrow', 'Parts for 768 px and up, and below (switched in CSS).'],
+          ['medo-nav-fullscreen__content', 'Extra sections in the fullscreen menu (`menuContent`).'],
+          ['medo-nav-item__end-icon', 'Icon after the label (`endIcon`).'],
           ['medo-sidenav, --collapsed', 'Side navigation and rail.'],
           ['medo-app-header', 'App header.'],
           ['medo-tab-bar, medo-tab-bar-item', 'Bottom tab bar.'],
@@ -218,6 +225,100 @@ export const Playground: Story = {
           'Press Tab first: “Skip to content” appears. “Products” opens a dropdown of links (Tab moves through, Esc closes). With layout mobile the menu button opens the links fullscreen.',
       },
     },
+  },
+};
+
+/** A docs site header: links in the middle, free actions, extra sections in the mobile menu. */
+function DocsHeader({ layout }: { layout: 'auto' | 'desktop' | 'mobile' }) {
+  const search = <IconButton variant="ghost" icon={<Search />} aria-label="Search" shortcut="Mod+K" />;
+  return (
+    <SiteHeader
+      logo={<Logo />}
+      align="center"
+      layout={layout}
+      actions={
+        <>
+          {search}
+          <Button href="#feedback" target="_blank" variant="secondary" endIcon={<ExternalLink />}>
+            Give feedback
+          </Button>
+        </>
+      }
+      compactActions={search}
+      menuContent={
+        <NavList variant="sheet" aria-label="Resources">
+          <NavItem href="#storybook" target="_blank" icon={<BookOpen />} endIcon={<ExternalLink />}>
+            Storybook
+          </NavItem>
+          <NavItem href="#github" target="_blank" icon={<ExternalLink />}>
+            GitHub
+          </NavItem>
+        </NavList>
+      }
+    >
+      <NavItem href="#showcase">Showcase</NavItem>
+      <NavItem href="#docs" isCurrent>
+        Docs
+      </NavItem>
+      <NavItem href="#updates">Updates</NavItem>
+    </SiteHeader>
+  );
+}
+
+export const Centered: Story = {
+  name: 'Centered with free actions',
+  parameters: {
+    docs: {
+      description: {
+        story:
+          '`align="center"` puts the links in the exact middle. `actions` takes any content: a search button and a `Button` with `href`. Below 768 px `compactActions` stay in the bar, and `menuContent` adds sections to the fullscreen menu – here external links with an icon before or after the label.',
+      },
+    },
+  },
+  render: () => (
+    // Two headers side by side: each sits in its own region, so neither is the page's banner.
+    <div style={{ display: 'grid', gap: 'var(--medo-layout-gap-group)' }}>
+      <section aria-label="Desktop">
+        <DocsHeader layout="desktop" />
+      </section>
+      <section aria-label="Mobile" style={{ maxInlineSize: 'var(--medo-size-width-2xl)' }}>
+        <DocsHeader layout="mobile" />
+      </section>
+    </div>
+  ),
+};
+
+export const CenteredTest: Story = {
+  ...interactionTest,
+  name: 'Interaction test: centered header',
+  tags: ['!autodocs'],
+  render: () => <DocsHeader layout="mobile" />,
+  play: async ({ canvas, userEvent }) => {
+    // Compact layout: the search stays in the bar, the menu holds the links and the extra sections.
+    await expect(canvas.getByRole('button', { name: 'Search' })).toHaveAttribute('aria-keyshortcuts');
+    await userEvent.click(canvas.getByRole('button', { name: 'Menu' }));
+    const dialog = await within(document.body).findByRole('dialog');
+    const resources = within(dialog).getByRole('navigation', { name: 'Resources' });
+    // A link that opens a new tab says so and gets rel="noopener noreferrer".
+    const storybook = within(resources).getByRole('link', { name: 'Storybook (opens in a new tab)' });
+    await expect(storybook).toHaveAttribute('rel', 'noopener noreferrer');
+    await userEvent.keyboard('{Escape}');
+    await waitFor(() => expect(within(document.body).queryByRole('dialog')).toBeNull());
+  },
+};
+
+export const CenteredDesktopTest: Story = {
+  ...interactionTest,
+  name: 'Interaction test: centered header, desktop',
+  tags: ['!autodocs'],
+  render: () => <DocsHeader layout="desktop" />,
+  play: async ({ canvas }) => {
+    // Button with href is a link in the button look, with the hidden new-tab text.
+    const feedback = canvas.getByRole('link', { name: 'Give feedback (opens in a new tab)' });
+    await expect(feedback).toHaveClass('medo-button', 'medo-button--secondary');
+    await expect(feedback).toHaveAttribute('rel', 'noopener noreferrer');
+    // Forced desktop: no menu button in the DOM.
+    await expect(canvas.queryByRole('button', { name: 'Menu' })).toBeNull();
   },
 };
 
