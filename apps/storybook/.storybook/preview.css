@@ -201,28 +201,29 @@ html[data-theme] :is(.sb-preparing-story, .sb-preparing-docs) > * {
   line-height: 1.6;
   color: var(--medo-color-text-secondary);
 }
-/* Plain lists in docs text (also inside notes): Tailwind's reset removes the markers, so they are set again. */
-.doc-body :where(ul, ol):not([class]) {
+/* Plain lists in docs text (also inside notes): Tailwind's reset removes the markers, so they are set again.
+   Examples of medo-prose keep its own lists, headings and code (:not(.medo-prose *)). */
+.doc-body :where(ul, ol):not([class], .medo-prose *) {
   list-style: disc;
   padding-left: var(--medo-space-5);
   display: grid;
   gap: var(--medo-space-1);
 }
-.doc-body :where(ol):not([class]) {
+.doc-body :where(ol):not([class], .medo-prose *) {
   list-style: decimal;
 }
 .doc-body > :where(p, ul, ol) strong {
   color: var(--medo-color-text-primary);
   font-weight: var(--medo-font-weight-semibold);
 }
-.doc-body h3:not([class]) {
+.doc-body h3:not([class], .medo-prose *) {
   font-size: var(--medo-font-size-lg);
   font-weight: var(--medo-font-weight-semibold);
   margin-top: var(--medo-space-4);
 }
 /* Inline code: Tok uses Code from @med-o/ui (medo-code). Raw backticks in MDX and story descriptions have no
    class, so they get the same look here. */
-.medo-doc :not(pre) > code:not(.medo-code) {
+.medo-doc :not(pre) > code:not(.medo-code, .medo-prose *) {
   padding: var(--medo-space-0-5) var(--medo-space-1);
   border-radius: var(--medo-radius-sm);
   background: var(--medo-color-surface-subtle);

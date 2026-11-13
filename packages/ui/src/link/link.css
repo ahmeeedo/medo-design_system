@@ -11,7 +11,9 @@
  * (set by React Aria – plain HTML falls back to :hover, :active, :focus-visible).
  */
 
-.medo-link {
+/* Plain links in .medo-prose (no class) are inline links. */
+.medo-link,
+.medo-prose a:not([class]) {
   --_fg: var(--medo-color-text-brand);
   --_underline: var(--medo-border-width-thin);
 
@@ -27,17 +29,20 @@
   transition: color var(--medo-motion-duration-fast) var(--medo-motion-easing-standard);
 }
 
-.medo-link:is([data-hovered], :not([data-rac]):hover) {
+.medo-link:is([data-hovered], :not([data-rac]):hover),
+.medo-prose a:not([class]):hover {
   --_fg: var(--medo-color-text-brand-hover);
   --_underline: var(--medo-border-width-thick);
 }
 
-.medo-link:is([data-pressed], :not([data-rac]):active) {
+.medo-link:is([data-pressed], :not([data-rac]):active),
+.medo-prose a:not([class]):active {
   --_fg: var(--medo-color-text-brand-pressed);
   --_underline: var(--medo-border-width-thick);
 }
 
-.medo-link:is([data-focus-visible], :not([data-rac]):focus-visible) {
+.medo-link:is([data-focus-visible], :not([data-rac]):focus-visible),
+.medo-prose a:not([class]):focus-visible {
   outline: var(--medo-focus-ring-width) solid var(--medo-color-focus-ring);
   outline-offset: var(--medo-space-0-5);
 }
@@ -92,10 +97,12 @@
 }
 
 @media (forced-colors: active) {
-  .medo-link {
+  .medo-link,
+  .medo-prose a:not([class]) {
     color: LinkText;
   }
-  .medo-link:is([data-focus-visible], :not([data-rac]):focus-visible) {
+  .medo-link:is([data-focus-visible], :not([data-rac]):focus-visible),
+  .medo-prose a:not([class]):focus-visible {
     outline-color: Highlight;
   }
 }

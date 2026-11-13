@@ -1,0 +1,51 @@
+/**
+ * Prose – med.o Design System
+ *
+ * Long text from plain HTML or MDX: docs pages, legal texts, help articles.
+ *   <div class="medo-prose">  h2 · h3 · h4 · p · ul / ol · a · code · pre and components  </div>
+ * Text styles: h2 heading/lg, h3 heading/sm, h4 label/lg-strong, text and lists body/md, all text/primary.
+ * Spacing: the rule content between elements; a new section (h2) starts one group further down.
+ * Plain lists, links and inline code (without a class) look like List, Link and Code – their rules name
+ * .medo-prose next to their own class. Elements with a class (components) keep their look.
+ */
+
+.medo-prose {
+  display: flex;
+  flex-direction: column;
+  gap: var(--medo-layout-gap-content);
+  color: var(--medo-color-text-primary);
+  font: var(--medo-typography-body-md);
+  /* Long words and URLs break instead of widening the page. */
+  overflow-wrap: anywhere;
+}
+
+/* Wide children (code, tables) scroll inside their own frame instead of widening the column. */
+.medo-prose > * {
+  min-inline-size: 0;
+  margin-block: 0;
+}
+
+/* A new section: group instead of content above its heading. */
+.medo-prose > h2:not(:first-child) {
+  margin-block-start: calc(var(--medo-layout-gap-group) - var(--medo-layout-gap-content));
+}
+
+.medo-prose h2 {
+  font: var(--medo-typography-heading-lg);
+  letter-spacing: var(--medo-font-tracking-snug);
+}
+
+.medo-prose h3 {
+  font: var(--medo-typography-heading-sm);
+}
+
+.medo-prose h4 {
+  font: var(--medo-typography-label-lg-strong);
+}
+
+.medo-prose :is(h2, h3, h4) {
+  color: var(--medo-color-text-primary);
+  overflow-wrap: normal;
+  /* Jumps to a heading (On this page) leave room for a sticky header. */
+  scroll-margin-block-start: var(--medo-space-20);
+}

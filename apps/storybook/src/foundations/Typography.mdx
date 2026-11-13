@@ -15,7 +15,7 @@ import { DocPage, DocHeader, DocSection, DocFooter, Notes, Tok, SourceLink } fro
     <p>DM Sans for all text – headings, body, labels, metadata. DM Mono only for code: code samples, token and class names, prop types (<Tok>code/*</Tok> styles).</p>
     <p>Sizes are designed in px and shipped in rem (16 px = 1 rem), so text follows the user’s browser font size. Every size has a paired line height on the 4 px grid.</p>
   </>}
-  nav={['Text styles', 'Usage', 'Font tokens']}
+  nav={['Text styles', 'Usage', 'Text colors', 'Font tokens']}
 />
 
 <DocSection n={1} title="Text styles" description="A text style bundles family, size, weight, line height and letter spacing.">
@@ -36,7 +36,22 @@ import { DocPage, DocHeader, DocSection, DocFooter, Notes, Tok, SourceLink } fro
 
 </DocSection>
 
-<DocSection n={3} title="Font tokens">
+<DocSection n={3} title="Text colors" description="Text outside components – a caption, a category line, secondary text – takes its color from a class.">
+
+```html
+<p class="medo-text-body-sm medo-text-secondary">Updated Nov 9, 2026</p>
+<p class="text-body-sm text-text-secondary">Updated Nov 9, 2026</p>   <!-- Tailwind -->
+```
+
+<Notes>
+  <p>One class per <Tok>text/*</Tok> token: <Tok>medo-text-primary</Tok>, <Tok>-secondary</Tok>, <Tok>-brand</Tok>, <Tok>-danger</Tok>, <Tok>-disabled</Tok>, <Tok>-inverse</Tok>, <Tok>-inverse-secondary</Tok>, <Tok>-on-brand</Tok>, <Tok>-on-brand-secondary</Tok>, <Tok>-on-action</Tok>, <Tok>-on-danger</Tok>, <Tok>-on-media</Tok>. They follow Light and Dark.</p>
+  <p>Combine a text style and a color. Hover and pressed tones have no class: they belong to the components that react.</p>
+  <p>Secondary text is for supporting information. What people must read to act stays <Tok>text/primary</Tok>.</p>
+</Notes>
+
+</DocSection>
+
+<DocSection n={4} title="Font tokens">
   <SimpleTable path={['font', 'family']} />
   <SimpleTable path={['font', 'size']} />
   <SimpleTable path={['font', 'weight']} />

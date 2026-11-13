@@ -186,7 +186,9 @@
  * The size follows the text around it (0.875em: code/md next to body/md, code/sm next to body/sm).
  * Long values break anywhere, so they never widen the page.
  */
-.medo-code {
+/* Plain inline code in .medo-prose (no class) looks the same. */
+.medo-code,
+.medo-prose :not(pre) > code:not([class]) {
   padding: var(--medo-space-0-5) var(--medo-space-1);
   border-radius: var(--medo-radius-sm);
   background-color: var(--medo-color-surface-subtle);
@@ -200,7 +202,8 @@
 }
 
 @media (forced-colors: active) {
-  .medo-code {
+  .medo-code,
+  .medo-prose :not(pre) > code:not([class]) {
     outline: var(--medo-border-width-thin) solid CanvasText;
   }
 }
