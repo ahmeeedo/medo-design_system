@@ -118,6 +118,12 @@
   color: var(--medo-color-text-primary);
 }
 
+/* Without a header (hideHeader) the content starts at the top with the full padding. */
+.medo-drawer__dialog > .medo-drawer__body:first-child,
+.medo-drawer__dialog > .medo-visually-hidden + .medo-drawer__body {
+  padding-block-start: var(--medo-space-4);
+}
+
 .medo-drawer__body {
   flex: 1;
   min-block-size: 0;

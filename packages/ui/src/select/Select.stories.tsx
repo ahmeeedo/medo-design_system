@@ -2,7 +2,7 @@ import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import type { Key } from 'react-aria-components';
 import { expect, fn, waitFor, within } from 'storybook/test';
-import { ArrowUpDown, Globe, MapPin } from 'lucide-react';
+import { ArrowUpDown, Globe, MapPin, Moon, Sun, SunMoon } from 'lucide-react';
 import { Select } from './Select';
 import { ListBoxSection, Option } from '../listbox/ListBox';
 import { interactionTest, slot, stack, overflowTagsA11y } from '../story-helpers';
@@ -43,6 +43,7 @@ const meta = {
   },
   argTypes: {
     label: { control: 'text' },
+    labelPosition: { control: 'inline-radio', options: ['top', 'start'], description: 'start: the label in a 64 px column next to the field (sizes sm and md).' },
     description: { control: 'text' },
     placeholder: { control: 'text', description: 'Hint while empty. Clear the value to see it.' },
     errorMessage: { control: 'text', if: { arg: 'isInvalid', truthy: true } },
@@ -269,6 +270,43 @@ export const Mobile: Story = {
       <TeamFilter />
     </div>
   ),
+};
+
+export const LabelStart: Story = {
+  name: 'Label at the start',
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'For compact settings, such as a theme select at the bottom of a sidebar: `labelPosition="start"` puts the label in a 64 px column next to the field, centred on it. Helper and error text stay below the field. Use it in sizes sm and md; forms keep the label above.',
+      },
+    },
+  },
+  render: () => (
+    <div style={{ display: 'grid', gap: 'var(--medo-layout-gap-fields)', maxInlineSize: 'var(--medo-size-width-xl)' }}>
+      <Select label="Theme" labelPosition="start" size="sm" defaultValue="system" leadingIcon={<SunMoon />}>
+        <Option id="system" icon={<SunMoon />}>
+          System
+        </Option>
+        <Option id="light" icon={<Sun />}>
+          Light
+        </Option>
+        <Option id="dark" icon={<Moon />}>
+          Dark
+        </Option>
+      </Select>
+      <Select label="Language" labelPosition="start" size="sm" defaultValue="en" leadingIcon={<Globe />}>
+        <Option id="en">English</Option>
+        <Option id="de">German</Option>
+      </Select>
+    </div>
+  ),
+  play: async ({ canvas }) => {
+    // The label still names the field.
+    await expect(canvas.getByRole('button', { name: /Theme/ })).toBeInTheDocument();
+    const field = canvas.getByText('Theme').closest('.medo-field')!;
+    await expect(getComputedStyle(field).display).toBe('grid');
+  },
 };
 
 export const WithoutVisibleLabel: Story = {

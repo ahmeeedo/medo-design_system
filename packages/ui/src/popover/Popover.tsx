@@ -27,8 +27,8 @@ export interface PopoverProps {
   'aria-label'?: string;
   /** Interactive content. A function gets `close`. */
   children: ReactNode | ((close: () => void) => ReactNode);
-  /** sm 240 · md 320 · lg 400 · auto: hugs content without padding (e.g. a calendar). */
-  size?: 'sm' | 'md' | 'lg' | 'auto';
+  /** sm 240 · md 320 · lg 400 · fit: width from the content with padding, up to 400 (a short link list) · auto: hugs content without padding (e.g. a calendar). */
+  size?: 'sm' | 'md' | 'lg' | 'fit' | 'auto';
   /** Footer, only when changes must be confirmed – otherwise apply them live. Cancel + main action (Button sm). */
   primaryAction?: DialogAction;
   cancelLabel?: string;
