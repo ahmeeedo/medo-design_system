@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { RouterProvider } from 'react-aria-components';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, waitFor, within } from 'storybook/test';
-import { Bell, BookOpen, Calendar, ExternalLink, FolderClosed, House, LayoutDashboard, ListChecks, MessageSquare, Search, Settings, Users } from 'lucide-react';
+import { Bell, BookOpen, Calendar, ExternalLink, FolderClosed, Grip, House, LayoutDashboard, ListChecks, MessageSquare, Search, Settings, Users } from 'lucide-react';
 import { AppHeader, BottomTabBar, NavGroup, NavItem, NavList, NavSection, SideNav, SiteHeader, SkipLink, TabBarItem, TabBarMore, type NavAction } from './Navigation';
 import { Avatar } from '../avatar/Avatar';
 import { Button } from '../button/Button';
@@ -245,6 +245,12 @@ function DocsHeader({ layout }: { layout: 'auto' | 'desktop' | 'mobile' }) {
         </>
       }
       compactActions={search}
+      menuIcon={<Grip />}
+      menuActions={
+        <Button href="#feedback" target="_blank" variant="secondary" size="lg" endIcon={<ExternalLink />}>
+          Give feedback
+        </Button>
+      }
       menuContent={
         <NavList variant="sheet" aria-label="Resources">
           <NavItem href="#storybook" target="_blank" icon={<BookOpen />} endIcon={<ExternalLink />}>
@@ -271,7 +277,7 @@ export const Centered: Story = {
     docs: {
       description: {
         story:
-          '`align="center"` puts the links in the exact middle. `actions` takes any content: a search button and a `Button` with `href`. Below 768 px `compactActions` stay in the bar, and `menuContent` adds sections to the fullscreen menu – here external links with an icon before or after the label.',
+          '`align="center"` puts the links in the exact middle. `actions` takes any content: a search button and a `Button` with `href`. Below 768 px `compactActions` stay in the bar, `menuIcon` sets the icon of the menu button, `menuContent` adds sections to the fullscreen menu – here external links with an icon before or after the label – and `menuActions` are pinned at its bottom. Choosing a link closes the menu.',
       },
     },
   },
@@ -302,7 +308,10 @@ export const CenteredTest: Story = {
     // A link that opens a new tab says so and gets rel="noopener noreferrer".
     const storybook = within(resources).getByRole('link', { name: 'Storybook (opens in a new tab)' });
     await expect(storybook).toHaveAttribute('rel', 'noopener noreferrer');
-    await userEvent.keyboard('{Escape}');
+    // Pinned at the bottom: the free menu actions.
+    await expect(within(dialog).getByRole('link', { name: 'Give feedback (opens in a new tab)' })).toBeInTheDocument();
+    // Choosing a page closes the menu (with a client-side router the page itself stays).
+    await userEvent.click(within(dialog).getByRole('link', { name: 'Updates' }));
     await waitFor(() => expect(within(document.body).queryByRole('dialog')).toBeNull());
   },
 };

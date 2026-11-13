@@ -33,6 +33,9 @@ const NavVariantContext = createContext<NavVariant>('sidebar');
 /** Side navigation: groups in the rail expand it (with the group open); links in the tablet drawer close it. */
 const SideNavContext = createContext<{ expand: (group?: string) => void; openGroup?: string; onNavigate?: () => void } | null>(null);
 
+/** An overlay that holds nav links (the fullscreen menu): closes when one of them is chosen, also with client-side routing. */
+const NavCloseContext = createContext<(() => void) | null>(null);
+
 /** How deep a NavGroup sits (0 at the top) and whether it is inside a header dropdown. Sidebar and sheet allow two levels. */
 const NavGroupDepthContext = createContext<{ depth: number; inHeader: boolean }>({ depth: 0, inHeader: false });
 
@@ -71,6 +74,7 @@ export function NavItem({ children, icon, endIcon, newTabLabel, isCurrent, count
   const variant = useContext(NavVariantContext);
   const newTab = props.target === '_blank';
   const sideNav = useContext(SideNavContext);
+  const closeOverlay = useContext(NavCloseContext);
   const rail = variant === 'rail';
   const content = (
     <>
@@ -102,6 +106,7 @@ export function NavItem({ children, icon, endIcon, newTabLabel, isCurrent, count
     onPress: (e: PressEvent) => {
       props.onPress?.(e);
       sideNav?.onNavigate?.();
+      closeOverlay?.();
     },
     'aria-current': isCurrent ? ('page' as const) : undefined,
     className: cx('medo-nav-item', `medo-nav-item--${variant}`),
@@ -320,8 +325,15 @@ export interface NavAction {
 
 /** Link (or press action) with the Button look – the actions of the website header. */
 function ActionLink({ action, size }: { action: NavAction; size: 'sm' | 'md' | 'lg' }) {
+  const closeOverlay = useContext(NavCloseContext);
   return (
-    <AriaLink href={action.href} onPress={action.onPress} className={cx('medo-button', `medo-button--${action.variant ?? 'ghost'}`, `medo-button--${size}`)}>
+    <AriaLink
+      href={action.href}
+      onPress={(e) => {
+        action.onPress?.(e);
+        closeOverlay?.();
+      }}
+      className={cx('medo-button', `medo-button--${action.variant ?? 'ghost'}`, `medo-button--${size}`)}>
       <span className="medo-button__label">{action.label}</span>
     </AriaLink>
   );
@@ -345,6 +357,10 @@ export interface SiteHeaderProps {
   compactActions?: ReactNode;
   /** Extra sections in the fullscreen menu, between the links and the pinned actions: resources, a theme select, a docs tree. */
   menuContent?: ReactNode;
+  /** Pinned at the bottom of the fullscreen menu, after the actions of a list: free content such as a theme select or a feedback button (size lg). */
+  menuActions?: ReactNode;
+  /** Icon of the menu button below 768 px. Default: the menu (hamburger) icon. */
+  menuIcon?: ReactNode;
   /** Name of the navigation region. */
   'aria-label'?: string;
   /** Mobile: label of the menu button and title of the fullscreen menu. */
@@ -367,6 +383,8 @@ export function SiteHeader({
   actions = [],
   compactActions,
   menuContent,
+  menuActions,
+  menuIcon,
   'aria-label': labelProp,
   menuLabel: menuLabelProp,
   closeLabel: closeLabelProp,
@@ -406,7 +424,7 @@ export function SiteHeader({
       {layout !== 'desktop' && (
         <div className="medo-site-header__actions medo-site-header__narrow">
           {narrowActions}
-          <NavFullscreen logo={logo} actions={list ?? []} menuContent={menuContent} aria-label={label} menuLabel={menuLabel} closeLabel={closeLabel}>
+          <NavFullscreen logo={logo} actions={list ?? []} menuContent={menuContent} menuActions={menuActions} menuIcon={menuIcon} aria-label={label} menuLabel={menuLabel} closeLabel={closeLabel}>
             {children}
           </NavFullscreen>
         </div>
@@ -420,21 +438,29 @@ function NavFullscreen({
   logo,
   actions,
   menuContent,
+  menuActions,
+  menuIcon,
   children,
   'aria-label': label,
   menuLabel,
   closeLabel,
-}: Required<Pick<SiteHeaderProps, 'logo' | 'children' | 'aria-label' | 'menuLabel' | 'closeLabel'>> & { actions: NavAction[]; menuContent?: ReactNode }) {
+}: Required<Pick<SiteHeaderProps, 'logo' | 'children' | 'aria-label' | 'menuLabel' | 'closeLabel'>> & {
+  actions: NavAction[];
+  menuContent?: ReactNode;
+  menuActions?: ReactNode;
+  menuIcon?: ReactNode;
+}) {
   // Primary first when stacked – in thumb reach.
   const ordered = [...actions].sort((a, b) => Number(b.variant === 'primary') - Number(a.variant === 'primary'));
   return (
     <DialogTrigger>
-      <IconButton variant="ghost" size="md" icon={<MenuIcon />} aria-label={menuLabel} tooltip={false} />
+      <IconButton variant="ghost" size="md" icon={menuIcon ?? <MenuIcon />} aria-label={menuLabel} tooltip={false} />
       <ModalOverlay className="medo-nav-fullscreen-overlay">
         <Modal className="medo-nav-fullscreen">
           <AriaDialog aria-label={menuLabel} className="medo-nav-fullscreen__dialog">
             {({ close }) => (
-              <>
+              // Choosing a link (page, extra section or action) closes the menu – a client-side router keeps the page.
+              <NavCloseContext.Provider value={close}>
                 <div className="medo-nav-fullscreen__header">
                   <div className="medo-site-header__logo">{logo}</div>
                   <IconButton variant="ghost" size="md" icon={<X />} aria-label={closeLabel} tooltip={false} onPress={close} />
@@ -448,14 +474,15 @@ function NavFullscreen({
                   </nav>
                   {menuContent && <div className="medo-nav-fullscreen__content">{menuContent}</div>}
                 </div>
-                {ordered.length > 0 && (
+                {(ordered.length > 0 || menuActions) && (
                   <div className="medo-nav-fullscreen__actions">
                     {ordered.map((a) => (
                       <ActionLink key={a.label} action={a.variant === 'ghost' || !a.variant ? { ...a, variant: 'secondary' } : a} size="lg" />
                     ))}
+                    {menuActions}
                   </div>
                 )}
-              </>
+              </NavCloseContext.Provider>
             )}
           </AriaDialog>
         </Modal>
