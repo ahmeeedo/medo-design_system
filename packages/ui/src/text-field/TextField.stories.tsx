@@ -51,6 +51,7 @@ const meta = {
   },
   parameters: {
     medo: {
+      figma: '79:2',
       subtitle: 'Label, input and helper or error text as one unit.',
       usage: {
         when: ['Short free text: names, emails, search terms.', 'Longer text with `multiline` (Textarea).'],

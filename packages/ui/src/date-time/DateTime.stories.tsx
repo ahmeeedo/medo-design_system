@@ -60,6 +60,7 @@ const meta = {
   },
   parameters: {
     medo: {
+      figma: '324:26',
       subtitle: 'Type a date or pick it – date, range, time and date + time, formatted by locale.',
       usage: {
         when: [

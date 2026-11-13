@@ -55,6 +55,7 @@ const meta = {
   },
   parameters: {
     medo: {
+      figma: '202:340',
       subtitle: 'A decision that needs an answer before the user can go on.',
       usage: {
         when: ['Confirm a destructive or irreversible action: delete, leave without saving.', 'A warning that needs a decision before the user can go on.'],

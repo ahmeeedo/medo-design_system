@@ -75,6 +75,7 @@ const meta = {
   },
   parameters: {
     medo: {
+      figma: '107:26',
       subtitle: 'Compact pill for a value. Removable in multi-select, selectable as a filter.',
       usage: {
         when: ['Removable values in a multiple Select or Combobox.', 'Filters that users turn on and off.'],

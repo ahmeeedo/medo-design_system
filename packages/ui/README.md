@@ -56,6 +56,16 @@ import { Card, Container, Grid, Stack } from '@med-o/ui';
 
 `Container` sets the content width and the page margin, `Stack` the space between blocks (`content`, or any rule with `gap`), `Grid` as many columns as fit with the gap `items`.
 
+## Component manifest
+
+`@med-o/ui/manifest.json` describes every component with a docs page, for documentation sites and tools: status, Storybook id, Figma link, props with type, default and description, the Playground controls, and the usage, accessibility and styling notes.
+
+```ts
+import manifest from '@med-o/ui/manifest.json' with { type: 'json' };
+
+const button = manifest.components.find((c) => c.name === 'Button');
+```
+
 ## Support and versions
 
 | Chrome, Edge | Safari (macOS, iOS) | Firefox | Samsung Internet |

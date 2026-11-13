@@ -18,6 +18,7 @@ const meta = {
   },
   parameters: {
     medo: {
+      figma: '249:54',
       subtitle: 'Content lists in running text: bullets, numbers, feature lists and term–value pairs.',
       usage: {
         when: ['Bullets and steps in running text.', 'Feature lists with included and excluded items.', 'Term–value pairs (`DescriptionList`).'],

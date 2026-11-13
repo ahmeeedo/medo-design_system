@@ -22,6 +22,8 @@ export { Rich, Tok };
 
 /** Public source repository. */
 export const repoUrl = 'https://github.com/ahmeeedo/medo-design_system';
+/** The Figma library; parameters.medo.figma holds a node id in it. */
+export const figmaUrl = 'https://www.figma.com/design/vOTfMtcpCwAJjuSZUkfpfj/med.o-Design-System';
 
 /** Link to another docs page, e.g. <Link href={docsHref('guides-component-status--docs')}>. */
 export const docsHref = (id: string) => `./?path=/docs/${id}`;
@@ -222,6 +224,15 @@ export function SourceLink({ path = '', children = 'View the source on GitHub' }
   );
 }
 
+/** Link to a node of the Figma library (new tab): the component's page or component set. */
+export function FigmaLink({ node, children = 'Open in Figma' }: { node: string; children?: ReactNode }) {
+  return (
+    <Link href={`${figmaUrl}?node-id=${node.replace(':', '-')}`} target="_blank" external>
+      {children}
+    </Link>
+  );
+}
+
 /* ---------- footer ---------- */
 
 export function DocFooter({ children }: { children: ReactNode }) {
@@ -322,8 +333,10 @@ type MedoStyling = { classes?: [string, string][]; states?: string[] };
  *   usage     { when, whenNot, do, dont }: lists
  *   a11y      { keyboard: [key, action][], notes: string[] }
  *   styling   { classes: [class, use][], states: data attributes the CSS reads }
+ *   figma     node id of the component's page or component set in the Figma library ("66:177")
+ * The same data goes into @med-o/ui/manifest.json for the docs site (packages/ui/build-manifest.mjs).
  */
-type MedoDocsParams = { subtitle?: string; usage?: MedoUsage; a11y?: MedoA11y; styling?: MedoStyling };
+type MedoDocsParams = { subtitle?: string; usage?: MedoUsage; a11y?: MedoA11y; styling?: MedoStyling; figma?: string };
 
 /* ---------- screen reader test ---------- */
 
@@ -564,6 +577,7 @@ export function ComponentDocsPage() {
       <DocFooter>
         {`${kind === 'Components' ? 'Component' : kind}: ${name} · @med-o/ui`}
         <SourceLink path="packages/ui/src" />
+        {medo.figma ? <FigmaLink node={medo.figma} /> : null}
       </DocFooter>
     </DocPage>
   );

@@ -38,6 +38,7 @@ const meta = {
   },
   parameters: {
     medo: {
+      figma: '169:40',
       subtitle: 'Elements below or next to each other – always with one of the six spacing rules.',
       usage: {
         when: [

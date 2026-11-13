@@ -62,6 +62,7 @@ const meta = {
   },
   parameters: {
     medo: {
+      figma: '223:26',
       subtitle: 'A small floating panel with interactive content, anchored to its trigger. The page stays usable.',
       usage: {
         when: [

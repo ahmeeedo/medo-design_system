@@ -79,6 +79,7 @@ const meta = {
   play: colored,
   parameters: {
     medo: {
+      figma: '644:432',
       subtitle: 'Code to read and copy – plain, with a file name or with tabs for variants.',
       usage: {
         when: ['Examples and commands people copy: install, setup, usage of a component.', 'Short code that the text around it explains.'],

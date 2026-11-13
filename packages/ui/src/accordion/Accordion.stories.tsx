@@ -83,6 +83,7 @@ const meta = {
   },
   parameters: {
     medo: {
+      figma: '288:26',
       subtitle: 'Sections that open and close in place – settings groups in apps, FAQs on websites.',
       usage: {
         when: ['Settings groups and long forms in apps.', 'FAQs and details on websites that not everyone needs.'],

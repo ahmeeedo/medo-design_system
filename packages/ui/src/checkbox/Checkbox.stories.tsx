@@ -25,6 +25,7 @@ const meta = {
   argTypes: { size: { control: 'inline-radio', options: ['md', 'lg'] }, onChange: { control: false }, children: { control: 'text' }, description: { control: 'text' } },
   parameters: {
     medo: {
+      figma: '101:26',
       subtitle: 'Select one or several independent options.',
       usage: {
         when: ['Agree to something, e.g. terms.', 'Pick several independent options from a short list (`CheckboxGroup`).'],

@@ -18,6 +18,7 @@ const meta = {
   },
   parameters: {
     medo: {
+      figma: '244:26',
       subtitle: 'Show that something is happening – and, when possible, how long it will take.',
       usage: {
         when: [

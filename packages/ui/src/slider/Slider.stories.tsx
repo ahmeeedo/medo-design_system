@@ -45,6 +45,7 @@ const meta = {
   },
   parameters: {
     medo: {
+      figma: '296:26',
       subtitle: 'Pick an approximate value or range by dragging – volume, radius, price filters.',
       usage: {
         when: ['An approximate value where the effect is visible: volume, zoom, radius.', 'A range filter: price, size (`SliderField` with inputs).'],

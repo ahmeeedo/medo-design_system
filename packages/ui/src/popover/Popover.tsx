@@ -31,6 +31,7 @@ export interface PopoverProps {
   size?: 'sm' | 'md' | 'lg' | 'fit' | 'auto';
   /** Footer, only when changes must be confirmed – otherwise apply them live. Cancel + main action (Button sm). */
   primaryAction?: DialogAction;
+  /** Text of the cancel button in the footer. Default: built-in text (“Cancel”). */
   cancelLabel?: string;
   /** Accessible name of the close button. */
   closeLabel?: string;

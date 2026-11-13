@@ -122,6 +122,7 @@ const meta = {
   },
   parameters: {
     medo: {
+      figma: '239:26',
       subtitle: 'A modal panel that slides in from the side – for account settings, filters, details or navigation.',
       usage: {
         when: ['Account settings, filters or details next to a list.', 'Navigation on tablets (left).'],

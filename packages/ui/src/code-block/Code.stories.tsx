@@ -15,6 +15,7 @@ const meta = {
   },
   parameters: {
     medo: {
+      figma: '673:596',
       subtitle: 'Marks a short piece of code inside running text.',
       usage: {
         when: ['Props, values, tokens, file names and commands inside a sentence.'],

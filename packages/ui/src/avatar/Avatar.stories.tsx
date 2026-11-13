@@ -29,6 +29,7 @@ const meta = {
   },
   parameters: {
     medo: {
+      figma: '258:26',
       subtitle: 'A picture of a person or an organization – with a reliable fallback.',
       usage: {
         when: ['Show who did something: comments, assignees, accounts.', 'Show an organization (square).'],

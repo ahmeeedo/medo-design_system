@@ -68,6 +68,7 @@ const meta = {
   },
   parameters: {
     medo: {
+      figma: '125:2936',
       subtitle: 'A Select you can type into. Typing filters the list – for long lists, people, places or tags.',
       usage: {
         when: ['More than about 10 options: countries, people, places.', 'Users know what to type.', 'Tags with “Add …” for new values.'],

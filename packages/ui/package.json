@@ -19,6 +19,7 @@
     },
     "./styles.css": "./src/styles.css",
     "./styles.min.css": "./dist/styles.css",
+    "./manifest.json": "./dist/manifest.json",
     "./package.json": "./package.json"
   },
   "files": [
@@ -48,12 +49,15 @@
   "devDependencies": {
     "@size-limit/preset-small-lib": "^14.3.0",
     "lightningcss": "^1.32.0",
+    "react-docgen": "^8.0.4",
     "shiki": "^4.6.0",
     "size-limit": "^14.3.0",
-    "tsup": "^8.5.1"
+    "storybook": "^10.6.2",
+    "tsup": "^8.5.1",
+    "vite": "^8.3.4"
   },
   "scripts": {
-    "build": "tsup && node build-css.mjs",
+    "build": "tsup && node build-css.mjs && node build-manifest.mjs",
     "prepack": "npm run build",
     "size": "size-limit"
   },

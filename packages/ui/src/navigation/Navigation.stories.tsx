@@ -152,6 +152,7 @@ const meta = {
   parameters: {
     layout: 'fullscreen',
     medo: {
+      figma: '229:26',
       subtitle: 'How people move between pages: header for websites and apps, side navigation for apps, tab bar and menus on mobile.',
       usage: {
         when: [

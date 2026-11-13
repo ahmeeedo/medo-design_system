@@ -34,6 +34,7 @@ const meta = {
   },
   parameters: {
     medo: {
+      figma: '209:8367',
       subtitle: 'Short, temporary feedback after an action. It floats above the page and disappears on its own.',
       usage: {
         when: ['Short feedback after an action: saved, sent, deleted.', 'An Undo for an action that was done right away.'],

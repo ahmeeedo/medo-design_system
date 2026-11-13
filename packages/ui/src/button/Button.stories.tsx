@@ -3,25 +3,32 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { ArrowRight, Download, ExternalLink, Plus, Trash2 } from 'lucide-react';
 import { expect, fn } from 'storybook/test';
 import { Button, ButtonGroup } from './Button';
-import { interactionTest, slot, StateGrid, STATE_ATTRIBUTES } from '../story-helpers';
+import { interactionTest, StateGrid, STATE_ATTRIBUTES } from '../story-helpers';
 import { Spinner } from '../progress/Progress';
 
 const meta = {
   title: 'Components/Actions/Button',
   component: Button,
   tags: ['autodocs', 'status:stable'],
-  args: { children: 'Button', variant: 'primary', size: 'md', isDisabled: false, isPending: false, startIcon: 'none', endIcon: 'none', onPress: fn() },
+  args: { children: 'Button', variant: 'primary', size: 'md', isDisabled: false, isPending: false, onPress: fn() },
+  // The Playground has the controls of the docs site: Variant, Size, Pending, Disabled and Icon (story Playground).
   argTypes: {
     variant: { control: 'inline-radio', options: ['primary', 'secondary', 'ghost', 'danger', 'text', 'ghost-danger'] },
     size: { control: 'inline-radio', options: ['sm', 'md', 'lg'] },
-    startIcon: slot({ none: undefined, plus: <Plus />, download: <Download />, trash: <Trash2 /> }),
-    endIcon: slot({ none: undefined, arrow: <ArrowRight />, download: <Download /> }),
-    children: { control: 'text' },
+    startIcon: { control: false },
+    endIcon: { control: false },
+    children: { control: false },
+    href: { control: false },
+    target: { control: false },
+    rel: { control: false },
+    newTabLabel: { control: false },
     isPending: { control: 'boolean', description: 'Shows a spinner and blocks presses while an action runs.' },
+    isDisabled: { control: 'boolean' },
     onPress: { control: false },
   },
   parameters: {
     medo: {
+      figma: '66:177',
       subtitle: 'Triggers an action.',
       usage: {
         when: ['Start an action on the current page: save, send, delete, open a dialog.', 'Submit a form (`type="submit"`).'],
@@ -52,12 +59,13 @@ const meta = {
         ],
         // Manual test with NVDA, VoiceOver and TalkBack (Guides / Screen reader testing).
         screenReader: {
+          // Through the Playground only, so the same steps work in Storybook and on the docs site.
           steps: [
-            ['Go to the heading “Playground”, then to the next element.', '“Button, button”. (With the mouse over it, NVDA reads only the text – that is fine.)'],
+            ['Go to the heading “Playground”, then to the button with the next element.', '“Button, button”. (With the mouse over it, NVDA reads only the text – that is fine.)'],
             ['Activate it.', 'Nothing new – the focus stays on the button.'],
-            ['Go to the heading “With icons” and through the buttons.', 'Only the labels; the icons are not read.'],
-            ['Go to the heading “Disabled”, then through the buttons with the next element (not Tab).', 'Each one with “unavailable”, “dimmed” or “disabled”. Tab skips them – that is right.'],
-            ['Go to the heading “Pending”, then to the first button.', '“Saving…, button” with “unavailable” or “dimmed” – it cannot be pressed while it saves; the focus stays.'],
+            ['In the Playground, set Icon to “start”, then go back to the button.', 'Still “Button, button” – the icon is not read.'],
+            ['Set Icon to “none” and turn on Disabled (`isDisabled`). Go back to the button with the next element (not Tab).', '“Button, button” with “unavailable”, “dimmed” or “disabled”. Tab skips it – that is right.'],
+            ['Turn off Disabled and turn on Pending (`isPending`). Go back to the button and activate it.', '“Button, button” with “unavailable” or “dimmed”. Nothing happens and the focus stays on the button.'],
           ],
           tested: [
             { reader: 'nvda', versions: 'NVDA 2026.3 · Chrome 156 · Windows 11', date: '2026-11-07', result: 'passed', issue: 17 },
@@ -90,7 +98,24 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Playground: Story = {};
+/** Playground only: which prop gets an icon. Storybook maps the option to the prop name. */
+type PlaygroundArgs = React.ComponentProps<typeof Button> & { icon?: 'startIcon' | 'endIcon' };
+
+export const Playground: StoryObj<PlaygroundArgs> = {
+  args: { icon: 'none' as never },
+  argTypes: {
+    icon: {
+      control: 'inline-radio',
+      options: ['none', 'start', 'end'],
+      mapping: { none: undefined, start: 'startIcon', end: 'endIcon' },
+      description: 'An icon before the label (`startIcon`) or after it (`endIcon`).',
+      table: { category: 'Playground' },
+    },
+  },
+  render: ({ icon, ...args }) => (
+    <Button {...args} {...(icon === 'startIcon' ? { startIcon: <Plus /> } : icon === 'endIcon' ? { endIcon: <ArrowRight /> } : {})} />
+  ),
+};
 
 const row = { display: 'flex', gap: 'var(--medo-layout-gap-inline)', alignItems: 'center', flexWrap: 'wrap' } as const;
 const col = { display: 'grid', gap: 'var(--medo-layout-gap-group)' } as const;

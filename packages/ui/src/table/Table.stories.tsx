@@ -111,6 +111,7 @@ const meta = {
   tags: ['autodocs', 'status:beta'],
   parameters: {
     medo: {
+      figma: '347:26',
       subtitle: 'Shows records in rows and columns to compare, sort and act on them.',
       usage: {
         when: ['Records to compare, sort and act on.', 'Simple data in content (`StaticTable`).'],
