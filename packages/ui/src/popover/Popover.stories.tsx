@@ -183,17 +183,8 @@ export const Sizes: Story = {
   ),
 };
 
-export const Fit: Story = {
-  name: 'Size fit',
-  parameters: {
-    docs: {
-      description: {
-        story:
-          '`size="fit"` is as wide as its content, with the padding of the other sizes, and never wider than lg (400). For a short list of links such as a resources menu – sm would leave empty space.',
-      },
-    },
-  },
-  render: () => (
+function ResourcesPopover() {
+  return (
     <PopoverTrigger>
       <IconButton variant="ghost" icon={<Grip />} aria-label="Resources" />
       <Popover size="fit" title="Resources" placement="bottom start">
@@ -206,7 +197,27 @@ export const Fit: Story = {
         </Stack>
       </Popover>
     </PopoverTrigger>
-  ),
+  );
+}
+
+export const Fit: Story = {
+  name: 'Size fit',
+  parameters: {
+    docs: {
+      description: {
+        story:
+          '`size="fit"` is as wide as its content, with the padding of the other sizes, and never wider than lg (400). For a short list of links such as a resources menu – sm would leave empty space.',
+      },
+    },
+  },
+  render: () => <ResourcesPopover />,
+};
+
+export const FitTest: Story = {
+  ...interactionTest,
+  tags: ['!autodocs'],
+  name: 'Interaction test: size fit',
+  render: () => <ResourcesPopover />,
   play: async ({ canvas, userEvent }) => {
     await userEvent.click(canvas.getByRole('button', { name: 'Resources' }));
     const dialog = await within(document.body).findByRole('dialog', { name: 'Resources' });
