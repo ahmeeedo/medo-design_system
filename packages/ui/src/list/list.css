@@ -10,7 +10,9 @@
  * Marker column 24 (numbers 28), aligned to the first line. Item spacing space/2. Level 2: ring, “a.”.
  */
 
-.medo-list {
+/* Plain lists in .medo-prose (no class) take the same look as List: bullets and numbers. */
+.medo-list,
+.medo-prose :is(ul, ol):not([class]) {
   --_col: var(--medo-space-6);
   --_icon: max(var(--medo-size-icon-sm), 1em);
 
@@ -33,18 +35,21 @@
   font: var(--medo-typography-body-lg);
 }
 
-.medo-list--number {
+.medo-list--number,
+.medo-prose ol:not([class]) {
   --_col: calc(var(--medo-space-6) + var(--medo-space-1));
   counter-reset: medo-list;
 }
 
-.medo-list__item {
+.medo-list__item,
+.medo-prose :is(ul, ol):not([class]) > li {
   position: relative;
   padding-inline-start: var(--_col);
 }
 
 /* Level 2 sits in the text column of its parent item: 24 px further in. */
-.medo-list__item > .medo-list {
+.medo-list__item > .medo-list,
+.medo-prose li > :is(ul, ol):not([class]) {
   margin-block-start: var(--medo-space-2);
 }
 
@@ -52,6 +57,7 @@
 
 .medo-list--bullet > .medo-list__item::before,
 .medo-list--number > .medo-list__item::before,
+.medo-prose :is(ul, ol):not([class]) > li::before,
 .medo-list__icon {
   position: absolute;
   inset-block-start: 0;
@@ -63,7 +69,8 @@
 }
 
 /* Bullet: dot 6 (sm 5), centred in a box as tall as the first line. */
-.medo-list--bullet > .medo-list__item::before {
+.medo-list--bullet > .medo-list__item::before,
+.medo-prose ul:not([class]) > li::before {
   content: '';
   inset-block-start: calc(0.5lh - 0.1875em);
   block-size: 0.375em;
@@ -73,25 +80,29 @@
 }
 
 /* Level 2: ring. */
-.medo-list__item .medo-list--bullet > .medo-list__item::before {
+.medo-list__item .medo-list--bullet > .medo-list__item::before,
+.medo-prose li ul:not([class]) > li::before {
   box-sizing: border-box;
   border: var(--medo-border-width-thin) solid currentColor;
   background-color: transparent;
 }
 
 /* Number: same style as the text, tabular figures, right aligned so “9.” and “10.” line up. */
-.medo-list--number > .medo-list__item {
+.medo-list--number > .medo-list__item,
+.medo-prose ol:not([class]) > li {
   counter-increment: medo-list;
 }
 
-.medo-list--number > .medo-list__item::before {
+.medo-list--number > .medo-list__item::before,
+.medo-prose ol:not([class]) > li::before {
   content: counter(medo-list) '.';
   justify-content: flex-end;
   inline-size: calc(var(--_col) - 0.375em);
   font-variant-numeric: tabular-nums;
 }
 
-.medo-list__item .medo-list--number > .medo-list__item::before {
+.medo-list__item .medo-list--number > .medo-list__item::before,
+.medo-prose li ol:not([class]) > li::before {
   content: counter(medo-list, lower-alpha) '.';
 }
 
@@ -162,10 +173,12 @@
 }
 
 @media (forced-colors: active) {
-  .medo-list--bullet > .medo-list__item::before {
+  .medo-list--bullet > .medo-list__item::before,
+  .medo-prose ul:not([class]) > li::before {
     background-color: CanvasText;
   }
-  .medo-list__item .medo-list--bullet > .medo-list__item::before {
+  .medo-list__item .medo-list--bullet > .medo-list__item::before,
+  .medo-prose li ul:not([class]) > li::before {
     background-color: transparent;
     border-color: CanvasText;
   }

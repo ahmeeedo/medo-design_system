@@ -16,7 +16,7 @@ import { DocPage, DocHeader, DocSection, DocFooter, SpecTable, Notes, Tok, Sourc
       zoom.
     </p>
   }
-  nav={['Principles', 'Where components cut', 'Long words', 'Tables', 'Long forms', 'Testing']}
+  nav={['Principles', 'Where components cut', 'Long words', 'Tables', 'Long forms', 'Long text', 'Testing']}
 />
 
 <DocSection n={1} title="Principles">
@@ -137,7 +137,49 @@ import { DocPage, DocHeader, DocSection, DocFooter, SpecTable, Notes, Tok, Sourc
 
 </DocSection>
 
-<DocSection n={6} title="Testing">
+<DocSection n={6} title="Long text" description="Docs pages, legal texts and help articles: one class on the container, the elements inside need none.">
+
+<div className="medo-prose" style={{ maxInlineSize: 'var(--medo-size-width-6xl)' }}>
+  <h2>Delete your account</h2>
+  <p>Deleting your account removes your projects and files after <strong>30 days</strong>. Until then you can restore it in <a href="#settings">Settings</a>.</p>
+  <h3>Before you delete</h3>
+  <ul>
+    <li>Download the files you want to keep.</li>
+    <li>Hand over shared projects to a teammate.</li>
+  </ul>
+  <h2>What happens next</h2>
+  <ol>
+    <li>We send a confirmation to your email address.</li>
+    <li>After 30 days the data is gone, also in backups. The setting <code>retention_days</code> cannot change this.</li>
+  </ol>
+</div>
+
+```html
+<article class="medo-prose">
+  <h2>…</h2> <p>…</p> <ul><li>…</li></ul> <a href="…">…</a> <code>…</code>
+</article>
+```
+
+<SpecTable
+  head={['Element', 'Look']}
+  rows={[
+    ['h2 · h3 · h4', <><Tok>heading/lg</Tok> · <Tok>heading/sm</Tok> · <Tok>label/lg-strong</Tok></>],
+    ['p, lists', <><Tok>body/md</Tok>, <Tok>text/primary</Tok></>],
+    ['ul · ol', 'Like List: bullets, numbers, a ring and “a.” on level 2'],
+    ['a', 'Like an inline Link'],
+    ['code', 'Like Code (inline code)'],
+    ['Spacing', <>Rule <Tok>content</Tok> between elements; a new section (h2) starts one <Tok>group</Tok> further down</>],
+  ]}
+/>
+
+<Notes>
+  <p>Elements with a class keep their own look, so components (CodeBlock, Table, Alert) sit in prose as they are.</p>
+  <p>Headings leave room for a sticky header when a link jumps to them.</p>
+</Notes>
+
+</DocSection>
+
+<DocSection n={7} title="Testing">
 
 <SpecTable
   head={['Case', 'Example']}
