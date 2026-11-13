@@ -1,5 +1,11 @@
 # @med-o/design-tokens
 
+## 0.16.0
+
+_Released 2026-11-13_
+
+No changes in this release.
+
 ## 0.15.0
 
 _Released 2026-11-11_
