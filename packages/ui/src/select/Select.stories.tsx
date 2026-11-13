@@ -69,6 +69,7 @@ const meta = {
   },
   parameters: {
     medo: {
+      figma: '112:324',
       subtitle: 'Choose one or several values from a list.',
       usage: {
         when: ['Choose one value from about 5–10 options.', 'Choose several values in a compact field (`selectionMode="multiple"`).'],

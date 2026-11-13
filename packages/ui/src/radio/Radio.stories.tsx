@@ -31,6 +31,7 @@ const meta = {
   },
   parameters: {
     medo: {
+      figma: '142:26',
       subtitle: 'Pick exactly one of 2–4 visible options. From 5 options use Select.',
       usage: {
         when: ['Pick exactly one of 2–4 options that should all be visible.', 'The difference between the options needs a short description.'],

@@ -38,6 +38,7 @@ const meta = {
   },
   parameters: {
     medo: {
+      figma: '670:1120',
       subtitle: 'Links to the sections of a long page and shows where you are.',
       usage: {
         when: ['Long pages with 3 or more sections: docs, guides, policies.'],

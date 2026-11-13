@@ -5,8 +5,8 @@
 #            images (Summary → Artifacts); if the change is intended, run “Update screenshots” on the branch.
 #   webkit, firefox   every story in Safari's and Firefox's engine. One retry; a story that passes only then is listed
 #            as flaky in the summary.
-#   build    the npm packages build (types included), stay within their size limits and work in a fresh Vite and
-#            Next.js app.
+#   build    the npm packages build (types and the component manifest included), stay within their size limits and
+#            work in a fresh Vite and Next.js app.
 #   docs     the documentation builds as for the deploy, and every prop on the component pages has a description.
 # “Release” starts only when all of them passed for a push to main.
 name: Storybook tests
@@ -96,8 +96,9 @@ jobs:
       - run: npm run test:${{ matrix.browser }}
 
   build:
-    # What people install from npm: the packages build (types included), stay within their size limits and work in a
-    # fresh Vite and a fresh Next.js app with the code of “Your first page”.
+    # What people install from npm: the packages build (types and manifest.json included; the manifest build fails on a
+    # prop without a description), stay within their size limits and work in a fresh Vite and a fresh Next.js app with
+    # the code of “Your first page”.
     runs-on: ubuntu-24.04
     timeout-minutes: 15
     steps:

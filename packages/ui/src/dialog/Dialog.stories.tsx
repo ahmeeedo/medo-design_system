@@ -87,6 +87,7 @@ const meta = {
   },
   parameters: {
     medo: {
+      figma: '201:26',
       subtitle: 'A modal window for a focused task. The page behind is blocked until it closes.',
       usage: {
         when: ['A short task that needs full attention: a small form, settings for one item.', 'Details the user must check before an action.'],

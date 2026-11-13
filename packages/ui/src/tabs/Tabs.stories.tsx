@@ -63,6 +63,7 @@ const meta = {
   },
   parameters: {
     medo: {
+      figma: '216:284',
       subtitle: 'Switch between views of the same context – one panel visible at a time.',
       usage: {
         when: ['2–6 views of the same context: overview, activity, settings.', 'Content that users switch between, not compare.'],

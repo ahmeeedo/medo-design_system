@@ -18,6 +18,7 @@ const meta = {
   },
   parameters: {
     medo: {
+      figma: '154:29',
       subtitle: 'A short text label on hover or keyboard focus. Mainly names icon-only buttons.',
       usage: {
         when: ['Name an icon-only button (automatic for Icon Buttons).', 'Show a keyboard shortcut.', 'Show the full text of a truncated label.'],

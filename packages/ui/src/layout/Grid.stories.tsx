@@ -44,6 +44,7 @@ const meta = {
   ),
   parameters: {
     medo: {
+      figma: '169:40',
       subtitle: 'Cards, tiles and page areas in columns – with the spacing rule items between them.',
       usage: {
         when: ['Cards or tiles of equal weight (the default: as many columns as fit).', 'Page areas on the layout grid, e.g. content and sidebar (`columns="layout"`).'],

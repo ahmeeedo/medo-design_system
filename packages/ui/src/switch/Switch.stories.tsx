@@ -19,6 +19,7 @@ const meta = {
   },
   parameters: {
     medo: {
+      figma: '146:26',
       subtitle: 'Turns a single setting on or off. The change takes effect immediately.',
       usage: {
         when: ['A single setting that takes effect immediately: notifications, dark mode, auto-save.', 'Settings lists.'],

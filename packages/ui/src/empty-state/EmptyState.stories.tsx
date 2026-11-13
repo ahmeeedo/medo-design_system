@@ -91,6 +91,7 @@ const meta = {
   },
   parameters: {
     medo: {
+      figma: '339:26',
       subtitle: 'What users see when there is nothing to show – and what they can do next.',
       usage: {
         when: ['A list, table or view without content: first use, no results, error, no access, all done.'],

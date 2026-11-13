@@ -27,6 +27,7 @@ const meta = {
   },
   parameters: {
     medo: {
+      figma: '182:26',
       subtitle: 'A short, non-interactive status label. Plus count and dot indicators.',
       usage: {
         when: [

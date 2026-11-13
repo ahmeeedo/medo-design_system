@@ -78,6 +78,7 @@ const meta = {
   },
   parameters: {
     medo: {
+      figma: '193:97',
       subtitle: 'A list of actions that opens from a trigger. Popover on desktop, bottom sheet on mobile.',
       usage: {
         when: ['Several actions for one object behind a “…” or a button.', 'Actions that are needed now and then, not all the time.'],

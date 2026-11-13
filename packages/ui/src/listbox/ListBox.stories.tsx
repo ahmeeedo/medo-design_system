@@ -27,6 +27,7 @@ const meta = {
   },
   parameters: {
     medo: {
+      figma: '113:426',
       subtitle: 'The list behind Select, Combobox and the Bottom Sheet. Option is one row, Listbox the container.',
       usage: {
         when: ['A list of options inside Select, Combobox or a Bottom Sheet.', 'A visible list to pick from, e.g. in a side panel.'],

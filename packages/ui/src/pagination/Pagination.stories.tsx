@@ -35,6 +35,7 @@ const meta = {
   },
   parameters: {
     medo: {
+      figma: '338:26',
       subtitle: 'Move through long lists page by page – or load more with a simple button.',
       usage: {
         when: ['Long lists and tables where users need a place to come back to.', 'Search results on websites (real links with `getPageHref`).'],

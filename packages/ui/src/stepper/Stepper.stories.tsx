@@ -40,6 +40,7 @@ const meta = {
   ),
   parameters: {
     medo: {
+      figma: '557:30',
       subtitle: 'Shows where someone is in a task of several steps and leads back to the steps already done.',
       usage: {
         when: ['A task in 3–5 steps that build on each other: checkout, sign-up, an application.', 'People should see how much is left.'],

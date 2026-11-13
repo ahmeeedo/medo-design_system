@@ -21,6 +21,7 @@ const meta = {
   },
   parameters: {
     medo: {
+      figma: '472:30',
       subtitle: 'Navigates to a page, a place on the page or a file. Actions are buttons.',
       usage: {
         when: ['Go to another page, a place on the page or a file.', 'References inside running text.'],

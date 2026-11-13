@@ -21,6 +21,7 @@ const meta = {
   },
   parameters: {
     medo: {
+      figma: '67:2',
       subtitle: 'A square button with an icon instead of a label.',
       usage: {
         when: ['An action that is clear from its icon alone: close, more, edit, copy.', 'Toolbars, table rows and headers with little space.'],

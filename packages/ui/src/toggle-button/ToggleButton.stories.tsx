@@ -60,6 +60,7 @@ const meta = {
   },
   parameters: {
     medo: {
+      figma: '159:29',
       subtitle: 'A button that stays pressed. Alone for one on/off action, in groups for views or formatting.',
       usage: {
         when: [

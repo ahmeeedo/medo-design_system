@@ -34,6 +34,7 @@ const meta = {
   },
   parameters: {
     medo: {
+      figma: '431:30',
       subtitle: 'Shows where a page sits in the hierarchy and links to the levels above.',
       usage: {
         when: ['Deep hierarchies with 3 or more levels: docs, shops, file trees.', 'Users arrive from search and need to see where they are.'],

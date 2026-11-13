@@ -126,6 +126,7 @@ const meta = {
   },
   parameters: {
     medo: {
+      figma: '422:30',
       subtitle: 'Find content fast: search field, results, search page and quick search.',
       usage: {
         when: ['Find content on a site or in an app.', 'A search page with results, filters and sort.', 'Quick search (Cmd / Ctrl + K) for pages and objects.'],

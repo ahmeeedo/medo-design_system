@@ -54,6 +54,7 @@ const meta = {
   },
   parameters: {
     medo: {
+      figma: '279:29',
       subtitle: 'Images, figures and third-party embeds – with reserved space, calm loading states and consent before anything loads.',
       usage: {
         when: ['Images in content and cards (`Image`).', 'An image with caption and credit (`Figure`).', 'Videos and maps from other providers (`EmbedConsent`).'],

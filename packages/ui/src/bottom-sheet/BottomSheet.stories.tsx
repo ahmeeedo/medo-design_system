@@ -32,6 +32,7 @@ const meta = {
   },
   parameters: {
     medo: {
+      figma: '133:27',
       subtitle: 'A modal layer that slides up from the bottom on small screens.',
       usage: {
         when: ['Short choices or actions on phones: options of a Select, a Menu, filters.', 'A mobile replacement for a Popover or a small Dialog.'],

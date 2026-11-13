@@ -61,6 +61,7 @@ const meta = {
   },
   parameters: {
     medo: {
+      figma: '209:46',
       subtitle: 'A persistent message inside the page. Stays until the cause is gone or it is dismissed.',
       usage: {
         when: [

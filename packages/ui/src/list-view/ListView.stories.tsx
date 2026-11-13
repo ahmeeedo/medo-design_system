@@ -56,6 +56,7 @@ const meta = {
   },
   parameters: {
     medo: {
+      figma: '264:26',
       subtitle: 'Interactive lists of objects in apps: inbox, people, files, notifications, settings.',
       usage: {
         when: ['Interactive lists of objects in apps: inbox, people, files, settings.', 'The mobile form of a Table (`variant="cards"`).'],

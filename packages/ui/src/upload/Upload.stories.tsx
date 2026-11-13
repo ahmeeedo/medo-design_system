@@ -122,6 +122,7 @@ const meta = {
   },
   parameters: {
     medo: {
+      figma: '303:26',
       subtitle: 'Add files by drag and drop or by choosing them – with clear limits, progress and fixable errors.',
       usage: {
         when: ['Attach documents or images to a form or a record.', 'Upload several files with progress.'],

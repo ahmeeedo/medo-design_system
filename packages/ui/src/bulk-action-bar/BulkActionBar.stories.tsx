@@ -41,6 +41,7 @@ const meta = {
   },
   parameters: {
     medo: {
+      figma: '350:890',
       subtitle: 'Actions for the selected rows of a Table or List view.',
       usage: {
         when: ['Actions for several selected rows of a Table or List view: export, archive, delete.'],

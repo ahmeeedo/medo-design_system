@@ -63,6 +63,7 @@ const meta = {
   decorators: [(Story, { parameters }) => <div style={{ maxInlineSize: parameters.width ?? 'var(--medo-size-width-xl)' }}>{Story()}</div>],
   parameters: {
     medo: {
+      figma: '177:26',
       subtitle: 'A container for one topic: title, optional media, content and actions.',
       usage: {
         when: ['One topic with a title, optional media, content and actions.', 'Teasers that link to a detail page.'],

@@ -30,6 +30,7 @@ const meta = {
   parameters: {
     layout: 'fullscreen',
     medo: {
+      figma: '169:40',
       subtitle: 'Centres the content, limits its width and adds the page margin.',
       usage: {
         when: ['The content area of every page (`xl`, the default).', 'Running text: articles, help pages, legal texts (`prose`, about 70 characters per line).'],
