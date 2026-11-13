@@ -1,5 +1,34 @@
 # @med-o/ui
 
+## 0.17.0
+
+_Released 2026-11-13_
+
+### Minor Changes
+
+- 76e67c4: New: a label beside the Select, a Popover that fits its content, and a Drawer without a visible header.
+
+  - `Select` takes `labelPosition="start"`: the label sits in a 64 px column next to the field, for compact settings such as a theme select. Helper and error text stay below the field. The layout class `medo-field--label-start` works on the other fields later too.
+  - `Popover` takes `size="fit"`: as wide as its content, with the padding of the other sizes, at most 400 px – for a short list of links.
+  - `Drawer` takes `hideHeader`: the content starts at the top, as in a navigation drawer. The title stays the dialog's name; Esc, a tap on the scrim and a swipe close it. Keep the header when the drawer holds a form.
+
+- c8693cd: New: a status badge for nav items and a filter field for long navigation trees.
+
+  - `NavItem` takes `badge`: a Badge (size sm) after the label in the sidebar and the sheet, for example the status of a page that is not Stable. It is part of the link's name ("Slider, Beta") and hidden in the rail and the header.
+  - `NavList` and `SideNav` take `filter`: a field above the tree ("Filter this menu"). Typing hides items that do not match – case and accents do not count –, opens groups with a match and shows a whole group when its own label matches. When nothing matches, a status says "No pages match". Esc or × clears the field.
+  - `SearchField` takes `icon` for another icon than the magnifier, such as the funnel of a filter.
+  - New messages `navigation.filter` and `navigation.noMatch` (en, de).
+
+- 949bb49: New: text color classes and `medo-prose` for long text.
+
+  - `@med-o/design-tokens`: one class per `text/*` color token in `css/typography.css`, such as `medo-text-secondary` or `medo-text-brand`. Combine it with a text style: `class="medo-text-body-sm medo-text-secondary"`. Hover and pressed tones get no class.
+  - `@med-o/ui`: `medo-prose` styles long text from plain HTML or MDX – docs pages, legal texts, help articles. Headings, paragraphs and lists get their text styles and the spacing rules; plain lists, links and inline code look like List, Link and Code. Elements with a class keep their own look.
+
+### Patch Changes
+
+- Updated dependencies [949bb49]
+  - @med-o/design-tokens@0.17.0
+
 ## 0.16.0
 
 _Released 2026-11-13_
