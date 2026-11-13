@@ -105,6 +105,8 @@ export const en: Messages = {
     menu: 'Menu',
     collapse: 'Collapse navigation',
     expand: 'Expand navigation',
+    filter: 'Filter this menu',
+    noMatch: 'No pages match',
   },
   onThisPage: { label: 'On this page' },
   pagination: {

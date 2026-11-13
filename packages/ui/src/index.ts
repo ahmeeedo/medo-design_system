@@ -50,6 +50,7 @@ export type {
   NavGroupProps,
   NavSectionProps,
   NavListProps,
+  NavFilterOptions,
   NavVariant,
   NavAction,
   SkipLinkProps,

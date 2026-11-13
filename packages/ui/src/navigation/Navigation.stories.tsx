@@ -5,6 +5,7 @@ import { expect, waitFor, within } from 'storybook/test';
 import { Bell, BookOpen, Calendar, ExternalLink, FolderClosed, Grip, House, LayoutDashboard, ListChecks, MessageSquare, Search, Settings, Users } from 'lucide-react';
 import { AppHeader, BottomTabBar, NavGroup, NavItem, NavList, NavSection, SideNav, SiteHeader, SkipLink, TabBarItem, TabBarMore, type NavAction } from './Navigation';
 import { Avatar } from '../avatar/Avatar';
+import { Badge } from '../badge/Badge';
 import { Button } from '../button/Button';
 import { IconButton } from '../icon-button/IconButton';
 import { TextField } from '../text-field/TextField';
@@ -184,6 +185,8 @@ const meta = {
           ['medo-site-header__wide, __narrow', 'Parts for 768 px and up, and below (switched in CSS).'],
           ['medo-nav-fullscreen__content', 'Extra sections in the fullscreen menu (`menuContent`).'],
           ['medo-nav-item__end-icon', 'Icon after the label (`endIcon`).'],
+          ['medo-nav-item__badge', 'Badge after the label (`badge`), sidebar and sheet.'],
+          ['medo-nav-filter, __status', 'Filter field above the tree (`filter`) and the “No pages match” status.'],
           ['medo-sidenav, --collapsed', 'Side navigation and rail.'],
           ['medo-app-header', 'App header.'],
           ['medo-tab-bar, medo-tab-bar-item', 'Bottom tab bar.'],
@@ -364,6 +367,85 @@ export const NavItems: Story = {
       ))}
     </Examples>
   ),
+};
+
+function DocsTree() {
+  return (
+    <div style={{ maxInlineSize: 'var(--medo-size-width-xl)' }}>
+      <NavList aria-label="Docs" filter>
+        <NavItem href="#introduction">Introduction</NavItem>
+        <NavGroup label="Foundations">
+          <NavItem href="#colors">Colors</NavItem>
+          <NavItem href="#typography">Typography</NavItem>
+        </NavGroup>
+        <NavGroup label="Components">
+          <NavGroup label="Actions">
+            <NavItem href="#button" isCurrent>
+              Button
+            </NavItem>
+            <NavItem href="#icon-button" badge={<Badge tone="info" size="sm">Beta</Badge>}>
+              Icon Button
+            </NavItem>
+          </NavGroup>
+          <NavGroup label="Forms">
+            <NavItem href="#date-time" badge={<Badge tone="info" size="sm">Beta</Badge>}>
+              Date & Time
+            </NavItem>
+            <NavItem href="#slider" badge={<Badge tone="info" size="sm">Beta</Badge>}>
+              Slider
+            </NavItem>
+            <NavItem href="#stepper" badge={<Badge tone="warning" size="sm">Experimental</Badge>}>
+              Stepper
+            </NavItem>
+          </NavGroup>
+        </NavGroup>
+      </NavList>
+    </div>
+  );
+}
+
+export const FilterAndBadges: Story = {
+  name: 'Filter and status badges',
+  parameters: {
+    layout: 'padded',
+    docs: {
+      description: {
+        story:
+          'Long trees, such as docs: `filter` puts a field above the tree. Typing hides items that do not match – case and accents do not count –, opens groups with a match and shows the whole group when its own label matches. Nothing left: “No pages match”. `badge` marks pages that are not Stable, after the label (sidebar and sheet).',
+      },
+    },
+  },
+  render: () => <DocsTree />,
+};
+
+export const FilterTest: Story = {
+  ...interactionTest,
+  tags: ['!autodocs'],
+  name: 'Interaction test: filter',
+  parameters: { layout: 'padded' },
+  render: () => <DocsTree />,
+  play: async ({ canvas, userEvent }) => {
+    const field = canvas.getByRole('searchbox', { name: 'Filter this menu' });
+    await userEvent.type(field, 'SLID');
+    // Only the match stays; its closed group opens. The badge is part of the link's name.
+    // (Spacing around the comma depends on how the name is computed; screen readers read “Slider, Beta”.)
+    await expect(canvas.getByRole('link', { name: /^Slider\s*,\s*Beta$/ })).toBeInTheDocument();
+    await expect(canvas.queryByRole('link', { name: 'Colors' })).toBeNull();
+    await expect(canvas.queryByRole('button', { name: 'Foundations' })).toBeNull();
+    await expect(canvas.getByRole('button', { name: 'Forms' })).toHaveAttribute('aria-expanded', 'true');
+    // A matching group label shows the whole group.
+    await userEvent.clear(field);
+    await userEvent.type(field, 'foundations');
+    await expect(canvas.getByRole('link', { name: 'Typography' })).toBeInTheDocument();
+    // Nothing matches: the status says so.
+    await userEvent.clear(field);
+    await userEvent.type(field, 'zzz');
+    await expect(canvas.getByRole('status')).toHaveTextContent('No pages match');
+    // Esc clears and everything is back.
+    await userEvent.keyboard('{Escape}');
+    await waitFor(() => expect(canvas.getByRole('link', { name: 'Introduction' })).toBeInTheDocument());
+    await expect(canvas.getByRole('status')).toHaveTextContent('');
+  },
 };
 
 export const NestedGroups: Story = {

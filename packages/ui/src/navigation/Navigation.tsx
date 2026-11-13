@@ -10,7 +10,7 @@ import {
   type LinkProps as AriaLinkProps,
   type PressEvent,
 } from 'react-aria-components';
-import { ChevronDown, Ellipsis, Menu as MenuIcon, PanelLeft, X } from 'lucide-react';
+import { ChevronDown, Ellipsis, Funnel, Menu as MenuIcon, PanelLeft, X } from 'lucide-react';
 import { Avatar } from '../avatar/Avatar';
 import { BadgeCount, BadgeDot } from '../badge/Badge';
 import { BottomSheet } from '../bottom-sheet/BottomSheet';
@@ -19,6 +19,7 @@ import { Tooltip, TooltipLink, TooltipTrigger } from '../tooltip/Tooltip';
 import { cx } from '../utils/cx';
 import { useMediaQuery } from '../utils/useMediaQuery';
 import { Drawer } from '../drawer/Drawer';
+import { SearchField } from '../search/SearchField';
 import { useMessages } from '../i18n/I18n';
 
 /*
@@ -35,6 +36,57 @@ const SideNavContext = createContext<{ expand: (group?: string) => void; openGro
 
 /** An overlay that holds nav links (the fullscreen menu): closes when one of them is chosen, also with client-side routing. */
 const NavCloseContext = createContext<(() => void) | null>(null);
+
+/** The filter of a NavList or SideNav: the normalised term (empty: no filter); showAll inside a group or section whose own label matches. */
+const NavFilterContext = createContext<{ query: string; showAll: boolean }>({ query: '', showAll: false });
+
+/** Case and accents do not count: “Über” matches “uber”. */
+const normalise = (text: string) => text.normalize('NFD').replace(/\p{Diacritic}/gu, '').toLowerCase();
+
+/** True when an item, a group or a section in `children` – or its label – matches the normalised query. */
+function containsMatch(children: ReactNode, query: string): boolean {
+  return Children.toArray(children).some((c) => {
+    if (!isValidElement(c)) return false;
+    const props = c.props as Partial<NavItemProps & NavGroupProps & NavSectionProps>;
+    if (c.type === NavItem) return typeof props.children === 'string' && normalise(props.children).includes(query);
+    if (c.type === NavGroup) return normalise(props.label ?? '').includes(query) || containsMatch(props.children, query);
+    if (c.type === NavSection) return normalise(props.title ?? '').includes(query) || containsMatch(props.children, query);
+    return false;
+  });
+}
+
+/** Options of the filter field above a NavList or SideNav. */
+export interface NavFilterOptions {
+  /** Name of the field. Default: built-in text (“Filter this menu”). */
+  label?: string;
+  /** Placeholder. Default: the label. */
+  placeholder?: string;
+}
+
+/**
+ * Filter field and state for a navigation tree. Returns the field, the term for NavFilterContext and whether
+ * anything matches; the caller places the field above its list and the status below it.
+ */
+function useNavFilter(filter: boolean | NavFilterOptions | undefined, children: ReactNode) {
+  const m = useMessages();
+  const [term, setTerm] = useState('');
+  const query = filter ? normalise(term.trim()) : '';
+  const options = typeof filter === 'object' ? filter : {};
+  const label = options.label ?? m.navigation.filter;
+  const field = filter ? (
+    <div className="medo-nav-filter">
+      <SearchField aria-label={label} placeholder={options.placeholder ?? label} icon={<Funnel />} value={term} onChange={setTerm} />
+    </div>
+  ) : null;
+  const none = Boolean(query) && !containsMatch(children, query);
+  const status = filter ? (
+    // Always in the DOM, so screen readers hear the message when it appears.
+    <p role="status" className="medo-nav-filter__status">
+      {none ? m.navigation.noMatch : ''}
+    </p>
+  ) : null;
+  return { field, status, context: { query, showAll: false } };
+}
 
 /** How deep a NavGroup sits (0 at the top) and whether it is inside a header dropdown. Sidebar and sheet allow two levels. */
 const NavGroupDepthContext = createContext<{ depth: number; inHeader: boolean }>({ depth: 0, inHeader: false });
@@ -53,6 +105,8 @@ export interface NavItemProps extends Omit<AriaLinkProps, 'children' | 'classNam
   icon?: ReactNode;
   /** Icon after the label (decorative), e.g. ExternalLink for a page on another site. Hidden in the rail. */
   endIcon?: ReactNode;
+  /** Sidebar and sheet: a Badge (size sm) after the label, e.g. the status of a page that is not Stable. Part of the link's name. Hidden in the rail and the header. */
+  badge?: ReactNode;
   /** target="_blank" adds rel="noopener noreferrer" and this hidden text. Default: built-in text (“(opens in a new tab)”). */
   newTabLabel?: string;
   /** The current page (exactly one). Marked with aria-current="page" and action/selected. */
@@ -69,13 +123,17 @@ export interface NavItemProps extends Omit<AriaLinkProps, 'children' | 'classNam
  * One navigation link. Built on React Aria Link, so client-side routing works
  * with any router through RouterProvider. The container decides the form (header, sidebar, rail, sheet).
  */
-export function NavItem({ children, icon, endIcon, newTabLabel, isCurrent, count, countLabel, unread, ...props }: NavItemProps) {
+export function NavItem({ children, icon, endIcon, badge, newTabLabel, isCurrent, count, countLabel, unread, ...props }: NavItemProps) {
   const m = useMessages();
   const variant = useContext(NavVariantContext);
   const newTab = props.target === '_blank';
   const sideNav = useContext(SideNavContext);
   const closeOverlay = useContext(NavCloseContext);
+  const filter = useContext(NavFilterContext);
   const rail = variant === 'rail';
+  const showBadge = Boolean(badge) && (variant === 'sidebar' || variant === 'sheet');
+  // Filtered out: not rendered (the filter only runs in the sidebar and the sheet).
+  if (filter.query && !filter.showAll && !normalise(children).includes(filter.query)) return null;
   const content = (
     <>
       {icon && variant !== 'header' && (
@@ -86,7 +144,10 @@ export function NavItem({ children, icon, endIcon, newTabLabel, isCurrent, count
       <span className={rail ? 'medo-visually-hidden' : 'medo-nav-item__label'}>
         {children}
         {newTab && <span className="medo-visually-hidden"> {newTabLabel ?? m.common.newTab}</span>}
+        {/* A pause before the badge, so the name reads “Slider, Beta”. */}
+        {showBadge && <span className="medo-visually-hidden">,</span>}
       </span>
+      {showBadge && <span className="medo-nav-item__badge">{badge}</span>}
       {endIcon && !rail && (
         <span className="medo-nav-item__icon medo-nav-item__end-icon" aria-hidden="true">
           {endIcon}
@@ -157,6 +218,7 @@ function containsCurrent(children: ReactNode): boolean {
 export function NavGroup({ label, icon, children, defaultOpen }: NavGroupProps) {
   const variant = useContext(NavVariantContext);
   const sideNav = useContext(SideNavContext);
+  const filter = useContext(NavFilterContext);
   const { depth, inHeader } = useContext(NavGroupDepthContext);
   const tooDeep = depth > 1 || (depth > 0 && inHeader);
   useEffect(() => {
@@ -191,6 +253,11 @@ export function NavGroup({ label, icon, children, defaultOpen }: NavGroupProps) 
     };
   }, [floating, open]);
 
+  // Filter: a group without a match disappears; one with a match stays open; a matching label shows all its items.
+  const labelMatch = Boolean(filter.query) && normalise(label).includes(filter.query);
+  if (filter.query && !filter.showAll && !labelMatch && !containsMatch(children, filter.query)) return null;
+  const isOpen = (Boolean(filter.query) && !floating) || open;
+
   // Rail: the group cannot open in 64 px – pressing it expands the sidebar with the group open.
   if (variant === 'rail') {
     return (
@@ -219,9 +286,9 @@ export function NavGroup({ label, icon, children, defaultOpen }: NavGroupProps) 
     <li ref={itemRef} className={cx('medo-nav__entry', 'medo-nav-group', floating && 'medo-nav-group--floating')}>
       <AriaButton
         ref={buttonRef}
-        aria-expanded={open}
+        aria-expanded={isOpen}
         aria-controls={panelId}
-        data-current={(hasCurrent && !open) || undefined}
+        data-current={(hasCurrent && !isOpen) || undefined}
         onPress={() => setOpen((o) => !o)}
         className={cx('medo-nav-item', `medo-nav-item--${variant}`, 'medo-nav-group__button')}
       >
@@ -235,8 +302,8 @@ export function NavGroup({ label, icon, children, defaultOpen }: NavGroupProps) 
       </AriaButton>
       <NavVariantContext.Provider value={floating ? 'sidebar' : variant}>
         <NavGroupDepthContext.Provider value={{ depth: depth + 1, inHeader: inHeader || floating }}>
-          <ul id={panelId} hidden={!open} className={cx('medo-nav__list', floating ? 'medo-nav-group__panel' : 'medo-nav-group__list')}>
-            {children}
+          <ul id={panelId} hidden={!isOpen} className={cx('medo-nav__list', floating ? 'medo-nav-group__panel' : 'medo-nav-group__list')}>
+            <NavFilterContext.Provider value={{ query: filter.query, showAll: filter.showAll || labelMatch }}>{children}</NavFilterContext.Provider>
           </ul>
         </NavGroupDepthContext.Provider>
       </NavVariantContext.Provider>
@@ -252,16 +319,26 @@ export interface NavListProps {
   /** Name of the navigation region (“Footer”, “Account”). */
   'aria-label': string;
   children: ReactNode;
+  /**
+   * Sidebar and sheet: a filter field above the tree (“Filter this menu”). Typing hides items that do not match,
+   * opens groups with a match and says “No pages match” when nothing does. For long trees, such as docs.
+   */
+  filter?: boolean | NavFilterOptions;
   className?: string;
 }
 
 /** A named navigation region with items of one form – for navigation outside the ready-made headers and bars. */
-export function NavList({ variant = 'sidebar', 'aria-label': label, children, className }: NavListProps) {
+export function NavList({ variant = 'sidebar', 'aria-label': label, children, filter, className }: NavListProps) {
+  const filtered = useNavFilter((variant === 'sidebar' || variant === 'sheet') && filter, children);
   return (
     <nav aria-label={label} className={className}>
+      {filtered.field}
       <NavVariantContext.Provider value={variant}>
-        <ul className={cx('medo-nav__list', variant === 'header' && 'medo-nav__list--row', variant === 'rail' && 'medo-nav__list--rail')}>{children}</ul>
+        <NavFilterContext.Provider value={filtered.context}>
+          <ul className={cx('medo-nav__list', variant === 'header' && 'medo-nav__list--row', variant === 'rail' && 'medo-nav__list--rail')}>{children}</ul>
+        </NavFilterContext.Provider>
       </NavVariantContext.Provider>
+      {filtered.status}
     </nav>
   );
 }
@@ -277,7 +354,10 @@ export interface NavSectionProps {
 /** A titled section of the side navigation. */
 export function NavSection({ title, children }: NavSectionProps) {
   const variant = useContext(NavVariantContext);
+  const filter = useContext(NavFilterContext);
   const id = useId();
+  const titleMatch = Boolean(filter.query) && normalise(title).includes(filter.query);
+  if (filter.query && !filter.showAll && !titleMatch && !containsMatch(children, filter.query)) return null;
   return (
     <li className="medo-nav__entry medo-nav-section">
       {variant === 'rail' ? (
@@ -288,7 +368,7 @@ export function NavSection({ title, children }: NavSectionProps) {
         </span>
       )}
       <ul className="medo-nav__list" aria-labelledby={variant === 'rail' ? undefined : id} aria-label={variant === 'rail' ? title : undefined}>
-        {children}
+        <NavFilterContext.Provider value={{ query: filter.query, showAll: filter.showAll || titleMatch }}>{children}</NavFilterContext.Provider>
       </ul>
     </li>
   );
@@ -548,6 +628,8 @@ export interface SideNavProps {
   expandLabel?: string;
   /** Close button of the tablet drawer. */
   closeLabel?: string;
+  /** A filter field above the tree when expanded and in the tablet drawer (see NavList). */
+  filter?: boolean | NavFilterOptions;
 }
 
 /**
@@ -567,6 +649,7 @@ export function SideNav({
   collapseLabel: collapseLabelProp,
   expandLabel: expandLabelProp,
   closeLabel: closeLabelProp,
+  filter,
 }: SideNavProps) {
   const m = useMessages();
   const label = labelProp ?? m.navigation.app;
@@ -578,6 +661,8 @@ export function SideNav({
   const [drawer, setDrawer] = useState(false);
   const [openGroup, setOpenGroup] = useState<string>();
   const collapsed = tablet || (isCollapsed ?? ownCollapsed);
+  // The rail has no room for a filter; the tablet drawer shows it.
+  const filtered = useNavFilter(filter, children);
 
   const expand = (group?: string) => {
     setOpenGroup(group);
@@ -612,11 +697,15 @@ export function SideNav({
           {!collapsed && toggle}
         </div>
         <nav aria-label={label} className="medo-sidenav__nav">
+          {!collapsed && filtered.field}
           <SideNavContext.Provider value={{ expand, openGroup }}>
             <NavVariantContext.Provider value={collapsed ? 'rail' : 'sidebar'}>
-              <ul className="medo-nav__list">{children}</ul>
+              <NavFilterContext.Provider value={collapsed ? { query: '', showAll: false } : filtered.context}>
+                <ul className="medo-nav__list">{children}</ul>
+              </NavFilterContext.Provider>
             </NavVariantContext.Provider>
           </SideNavContext.Provider>
+          {!collapsed && filtered.status}
         </nav>
         <div className="medo-sidenav__bottom">
           {collapsed && toggle}
@@ -637,11 +726,15 @@ export function SideNav({
         // Tablet: the full navigation as a Drawer on the left. Choosing a page closes it.
         <Drawer side="left" size="sm" title={logo} aria-label={label} closeLabel={closeLabel} isOpen={drawer} onOpenChange={setDrawer}>
           <nav aria-label={label}>
+            {filtered.field}
             <SideNavContext.Provider value={{ expand, openGroup, onNavigate: () => setDrawer(false) }}>
               <NavVariantContext.Provider value="sidebar">
-                <ul className="medo-nav__list">{children}</ul>
+                <NavFilterContext.Provider value={filtered.context}>
+                  <ul className="medo-nav__list">{children}</ul>
+                </NavFilterContext.Provider>
               </NavVariantContext.Provider>
             </SideNavContext.Provider>
+            {filtered.status}
           </nav>
         </Drawer>
       )}

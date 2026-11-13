@@ -131,6 +131,12 @@
   white-space: nowrap;
 }
 
+/* Badge after the label (sidebar, sheet): the status of a page. */
+.medo-nav-item__badge {
+  display: inline-flex;
+  flex: none;
+}
+
 .medo-nav-item__dot {
   position: absolute;
   inset-block-start: var(--medo-space-2);
@@ -685,4 +691,23 @@
     transition: none;
     translate: none !important;
   }
+}
+
+/* ---------- Filter (NavList, SideNav) ---------- */
+
+/* The field above the tree; the status below it says when nothing matches. */
+.medo-nav-filter {
+  padding-block-end: var(--medo-space-2);
+}
+
+.medo-nav-filter__status {
+  margin: 0;
+  padding: var(--medo-space-2) var(--medo-space-3);
+  font: var(--medo-typography-body-sm);
+  color: var(--medo-color-text-secondary);
+}
+
+/* Empty but present: a live region already in the DOM announces the message when it appears. */
+.medo-nav-filter__status:empty {
+  padding: 0;
 }

@@ -106,6 +106,8 @@ export interface Messages {
     menu: string;
     collapse: string;
     expand: string;
+    filter: string;
+    noMatch: string;
   };
   onThisPage: { label: string };
   pagination: {

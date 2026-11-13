@@ -17,6 +17,8 @@ export interface SearchFieldProps extends Omit<AriaSearchFieldProps, 'children' 
   size?: InputSize;
   /** Accessible name of the clear button. */
   clearLabel?: string;
+  /** Icon before the input. Default: the search icon. A filter of a list on the page takes the funnel. */
+  icon?: ReactNode;
   className?: string;
 }
 
@@ -25,14 +27,14 @@ export interface SearchFieldProps extends Omit<AriaSearchFieldProps, 'children' 
  * SearchField: Enter submits (`onSubmit`), Esc or × clears. Put it in a `<search>` element (search landmark);
  * keep the term in the field after searching.
  */
-export function SearchField({ label, description, placeholder, size = 'md', clearLabel, className, ...props }: SearchFieldProps) {
+export function SearchField({ label, description, placeholder, size = 'md', clearLabel, icon, className, ...props }: SearchFieldProps) {
   const m = useMessages();
   return (
     <AriaSearchField {...props} className={cx('medo-field', 'medo-search-field', className)}>
       {label && <FieldLabel isRequired={props.isRequired}>{label}</FieldLabel>}
       <div className={cx('medo-input', `medo-input--${size}`)}>
         <span className="medo-input__icon" aria-hidden="true">
-          <Search />
+          {icon ?? <Search />}
         </span>
         <AriaInput className="medo-input__control" placeholder={placeholder} />
         {/* React Aria keeps it out of the tab order – Esc clears from the field. */}
