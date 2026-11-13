@@ -147,6 +147,7 @@ const meta = {
           'Focus returns to the trigger when it closes.',
           'Below 640 px it is the viewport − 56 px wide; a swipe towards the edge closes it.',
           'Only the body scrolls; header and footer stay visible.',
+          'Without a visible header (`hideHeader`) the title stays the name of the dialog; there is no close button, so Esc, a tap on the scrim and a swipe close it. Keep the header when the drawer holds a form.',
         ],
       },
       styling: {
@@ -187,7 +188,7 @@ export const UseCases: Story = {
     docs: {
       description: {
         story:
-          'Account: right sm, no footer. Filters: right md, footer Reset · Apply (Reset does not close). Details: right lg, the list stays visible. Navigation: left sm.',
+          'Account: right sm, no footer. Filters: right md, footer Reset · Apply (Reset does not close). Details: right lg, the list stays visible. Navigation: left sm with `hideHeader` – the tree starts at the top; Esc, the scrim and a swipe close it.',
       },
     },
   },
@@ -217,7 +218,7 @@ export const UseCases: Story = {
       </DialogTrigger>
       <DialogTrigger>
         <Button variant="secondary">Navigation</Button>
-        <Drawer title="med.o" aria-label="App" side="left">
+        <Drawer title="Navigation" side="left" hideHeader>
           <NavList variant="sidebar" aria-label="App">
             <NavItem href="#dashboard" icon={<LayoutDashboard />} isCurrent>
               Dashboard
@@ -307,5 +308,32 @@ export const InteractionTest: Story = {
     await waitFor(() => expect(body.queryByRole('dialog')).toBeNull());
     // React Aria returns the focus one frame after the overlay is gone: wait for it.
     await waitFor(() => expect(trigger).toHaveFocus());
+  },
+};
+
+export const HiddenHeaderTest: Story = {
+  ...interactionTest,
+  tags: ['!autodocs'],
+  name: 'Interaction test: hidden header',
+  render: () => (
+    <DialogTrigger>
+      <Button variant="secondary">Navigation</Button>
+      <Drawer title="Navigation" side="left" hideHeader>
+        <NavList variant="sidebar" aria-label="App">
+          <NavItem href="#dashboard" isCurrent>
+            Dashboard
+          </NavItem>
+        </NavList>
+      </Drawer>
+    </DialogTrigger>
+  ),
+  play: async ({ canvas, userEvent }) => {
+    await userEvent.click(canvas.getByRole('button', { name: 'Navigation' }));
+    // The title still names the dialog; no visible header and no close button.
+    const dialog = await within(document.body).findByRole('dialog', { name: 'Navigation' });
+    await expect(dialog.querySelector('.medo-drawer__header')).toBeNull();
+    await expect(within(dialog).queryByRole('button', { name: 'Close' })).toBeNull();
+    await userEvent.keyboard('{Escape}');
+    await waitFor(() => expect(within(document.body).queryByRole('dialog')).toBeNull());
   },
 };

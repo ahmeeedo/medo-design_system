@@ -24,6 +24,11 @@ export interface DrawerProps extends DirtyGuardProps {
   size?: 'sm' | 'md' | 'lg';
   /** Accessible name of the close button. */
   closeLabel?: string;
+  /**
+   * No visible header: the content starts at the top (a navigation drawer). The title stays the dialog's name for
+   * screen readers; Esc, a tap on the scrim and a swipe close it. Keep the header when the drawer holds a form.
+   */
+  hideHeader?: boolean;
   className?: string;
 }
 
@@ -41,6 +46,7 @@ export function Drawer({
   side = 'right',
   size = 'sm',
   closeLabel,
+  hideHeader = false,
   isDirty = false,
   discardText,
   className,
@@ -54,16 +60,25 @@ export function Drawer({
         <DrawerDialog aria-label={ariaLabel} side={side}>
           {(close) => (
             <>
-              <div className="medo-drawer__header">
-                {ariaLabel ? (
-                  <div className="medo-drawer__title">{title}</div>
-                ) : (
-                  <Heading slot="title" className="medo-drawer__title">
+              {hideHeader ? (
+                // The name only, visually hidden: no close button that nobody can see.
+                !ariaLabel && (
+                  <Heading slot="title" className="medo-visually-hidden">
                     {title}
                   </Heading>
-                )}
-                <IconButton variant="ghost" size="md" icon={<X />} aria-label={closeLabel ?? m.common.close} tooltip={false} onPress={close} />
-              </div>
+                )
+              ) : (
+                <div className="medo-drawer__header">
+                  {ariaLabel ? (
+                    <div className="medo-drawer__title">{title}</div>
+                  ) : (
+                    <Heading slot="title" className="medo-drawer__title">
+                      {title}
+                    </Heading>
+                  )}
+                  <IconButton variant="ghost" size="md" icon={<X />} aria-label={closeLabel ?? m.common.close} tooltip={false} onPress={close} />
+                </div>
+              )}
               <div className="medo-drawer__body">{typeof children === 'function' ? children(forceClose) : children}</div>
               {footer && <div className="medo-drawer__footer">{typeof footer === 'function' ? footer(forceClose, close) : footer}</div>}
               {confirmDiscard}

@@ -28,6 +28,8 @@ export type SelectOverlay = 'auto' | 'popover' | 'sheet' | 'native';
 export interface SelectProps<T extends object, M extends SelectMode = 'single'> extends Omit<AriaSelectProps<T, M>, 'children' | 'className' | 'style' | 'placeholder'> {
   /** Visible label. Without it set `aria-label` – only where the context names the field (filter bars, toolbars). */
   label?: ReactNode;
+  /** top: label above the field (default) · start: label in a 64 px column next to it, for compact settings in sizes sm and md (a theme select). */
+  labelPosition?: 'top' | 'start';
   /** Helper text below the field. Replaced by the error message when invalid. */
   description?: ReactNode;
   /** Error text shown when the field is invalid. Validate on submit or blur, not while open. */
@@ -67,6 +69,7 @@ export interface SelectProps<T extends object, M extends SelectMode = 'single'> 
  */
 export function Select<T extends object, M extends SelectMode = 'single'>({
   label,
+  labelPosition = 'top',
   description,
   errorMessage,
   placeholder: placeholderProp,
@@ -103,6 +106,7 @@ export function Select<T extends object, M extends SelectMode = 'single'>({
       data-readonly={isReadOnly || undefined}
       className={cx(
         'medo-field',
+        labelPosition === 'start' && Boolean(label) && 'medo-field--label-start',
         'medo-select',
         multiple && hasValue && 'medo-select--tags',
         (multiple || clearable) && hasValue && !isReadOnly && !props.isDisabled && 'medo-select--clearable',

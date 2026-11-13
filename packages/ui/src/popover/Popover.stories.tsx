@@ -1,9 +1,12 @@
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, waitFor, within } from 'storybook/test';
-import { ChevronDown, Filter } from 'lucide-react';
+import { ChevronDown, Filter, Grip } from 'lucide-react';
 import { Popover, PopoverTrigger, Toggletip } from './Popover';
 import { Button } from '../button/Button';
+import { IconButton } from '../icon-button/IconButton';
+import { Link } from '../link/Link';
+import { Stack } from '../layout/Layout';
 import { Checkbox, CheckboxGroup } from '../checkbox/Checkbox';
 import { TextField } from '../text-field/TextField';
 import { interactionTest, row, semantic, slot } from '../story-helpers';
@@ -48,7 +51,7 @@ const meta = {
   args: { title: 'Filter', size: 'md', overlay: 'popover', primaryAction: 'none' as never, children: null, 'aria-label': 'Filter' },
   argTypes: {
     title: { control: 'text' },
-    size: { control: 'inline-radio', options: ['sm', 'md', 'lg', 'auto'] },
+    size: { control: 'inline-radio', options: ['sm', 'md', 'lg', 'fit', 'auto'] },
     overlay: { control: 'inline-radio', options: ['auto', 'popover', 'sheet'], description: 'auto: popover on desktop, Bottom Sheet below 640 px.' },
     primaryAction: slot({ none: undefined, Apply: { label: 'Apply' } }),
     placement: { control: 'select', options: ['bottom start', 'bottom end', 'top start', 'top end', 'end', 'start'] },
@@ -178,6 +181,49 @@ export const Sizes: Story = {
       ))}
     </div>
   ),
+};
+
+function ResourcesPopover() {
+  return (
+    <PopoverTrigger>
+      <IconButton variant="ghost" icon={<Grip />} aria-label="Resources" />
+      <Popover size="fit" title="Resources" placement="bottom start">
+        <Stack gap="content" align="start">
+          {['Storybook', 'Figma library', 'GitHub', 'npm'].map((label) => (
+            <Link key={label} href={`#${label}`} variant="standalone" external target="_blank">
+              {label}
+            </Link>
+          ))}
+        </Stack>
+      </Popover>
+    </PopoverTrigger>
+  );
+}
+
+export const Fit: Story = {
+  name: 'Size fit',
+  parameters: {
+    docs: {
+      description: {
+        story:
+          '`size="fit"` is as wide as its content, with the padding of the other sizes, and never wider than lg (400). For a short list of links such as a resources menu – sm would leave empty space.',
+      },
+    },
+  },
+  render: () => <ResourcesPopover />,
+};
+
+export const FitTest: Story = {
+  ...interactionTest,
+  tags: ['!autodocs'],
+  name: 'Interaction test: size fit',
+  render: () => <ResourcesPopover />,
+  play: async ({ canvas, userEvent }) => {
+    await userEvent.click(canvas.getByRole('button', { name: 'Resources' }));
+    const dialog = await within(document.body).findByRole('dialog', { name: 'Resources' });
+    // Narrower than sm (240), as wide as the longest link plus padding.
+    await waitFor(() => expect(dialog.closest('.medo-popover')!.getBoundingClientRect().width).toBeLessThan(240));
+  },
 };
 
 export const ToggletipStory: Story = {

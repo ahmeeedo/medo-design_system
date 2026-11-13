@@ -17,6 +17,28 @@
   gap: var(--medo-space-2);
 }
 
+/*
+ * Label at the start: a 64 px column next to the control, centred on its first row; helper and error text below
+ * the control. For compact settings (a theme select). Everything but the label sits in the second column.
+ */
+.medo-field--label-start {
+  display: grid;
+  grid-template-columns: var(--medo-space-16) minmax(0, 1fr);
+  column-gap: var(--medo-space-3);
+  row-gap: var(--medo-space-1);
+  align-items: center;
+}
+
+.medo-field--label-start > .medo-field__label {
+  grid-column: 1;
+  grid-row: 1;
+  padding-inline-start: 0;
+}
+
+.medo-field--label-start > :not(.medo-field__label) {
+  grid-column: 2;
+}
+
 .medo-field__label {
   display: inline-flex;
   overflow-wrap: anywhere;
