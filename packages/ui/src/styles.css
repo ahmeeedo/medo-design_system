@@ -46,6 +46,7 @@
 @import './tabs/tabs.css' layer(components);
 @import './popover/popover.css' layer(components);
 @import './navigation/navigation.css' layer(components);
+@import './carousel/carousel.css' layer(components);
 @import './on-this-page/on-this-page.css' layer(components);
 @import './card/card.css' layer(components);
 @import './table/table.css' layer(components);

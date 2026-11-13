@@ -114,7 +114,7 @@ const meta = {
       figma: '347:26',
       subtitle: 'Shows records in rows and columns to compare, sort and act on them.',
       usage: {
-        when: ['Records to compare, sort and act on.', 'Simple data in content (`StaticTable`).'],
+        when: ['Records to compare, sort and act on.', 'Simple data in content (`StaticTable`).', 'Tables in documentation and running text (`StaticTable variant="content"`).'],
         whenNot: ['Lists of objects with one main line: use a List view.', 'Layout: use the grid.', 'On phones: show records as List view cards.'],
         do: [
           'Align text left and numbers right.',
@@ -139,10 +139,11 @@ const meta = {
       styling: {
         classes: [
           ['medo-table-container', 'Frame with scrolling.'],
-          ['medo-table', 'The table; `--compact`, `--striped`.'],
+          ['medo-table', 'The table; `--compact`, `--striped`, `--content` (documentation look).'],
           ['medo-table__column, __row, __cell', 'Header, row, cell.'],
           ['medo-table__cell--number', 'Numbers, right aligned.'],
           ['medo-table__cell--nowrap', 'IDs, dates, codes on one line (Cell `wrap={false}`).'],
+          ['medo-table__cell--code', 'Token names, IDs and keys in code type, on one line.'],
           ['medo-table__toolbar, __footer', 'Toolbar and footer.'],
         ],
         states: ['data-hovered', 'data-pressed', 'data-selected', 'data-focus-visible', 'data-disabled', 'data-allows-sorting', 'aria-sort'],
@@ -218,6 +219,65 @@ export const Static: Story = {
     },
   },
   render: () => <PlansTable />,
+};
+
+export const Content: Story = {
+  name: 'Content table',
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'For tables in documentation and running text: `variant="content"` drops the frame and the header fill, puts a line below each row and keeps the table flush with the text. Rows are as high as their content. ' +
+          'Token names, IDs and keys: `className="medo-table__cell--code"`; quieter columns: `medo-text-secondary`. Without a header row, leave out `<thead>`.',
+      },
+    },
+  },
+  render: () => (
+    <div style={{ display: 'grid', gap: 'var(--medo-layout-gap-group)' }}>
+      <StaticTable variant="content" caption="Button colors" captionHidden>
+        <thead>
+          <tr>
+            <th scope="col">Element</th>
+            <th scope="col">Property</th>
+            <th scope="col">Token</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Container</td>
+            <td className="medo-text-secondary">Background</td>
+            <td className="medo-table__cell--code">action-primary</td>
+          </tr>
+          <tr>
+            <td>Container: hover</td>
+            <td className="medo-text-secondary">Background</td>
+            <td className="medo-table__cell--code">action-primary-hover</td>
+          </tr>
+          <tr>
+            <td>Label, icon</td>
+            <td className="medo-text-secondary">Text color</td>
+            <td className="medo-table__cell--code">text-on-action</td>
+          </tr>
+        </tbody>
+      </StaticTable>
+      <StaticTable variant="content" caption="Package facts" captionHidden>
+        <tbody>
+          <tr>
+            <th scope="row">Package</th>
+            <td className="medo-table__cell--code">@med-o/ui</td>
+          </tr>
+          <tr>
+            <th scope="row">Needs</th>
+            <td>React 19, ESM</td>
+          </tr>
+          <tr>
+            <th scope="row">Styles</th>
+            <td>Plain CSS on the design tokens; any framework can use the classes.</td>
+          </tr>
+        </tbody>
+      </StaticTable>
+    </div>
+  ),
 };
 
 export const Sortable: Story = {
