@@ -114,6 +114,8 @@ export const de: Messages = {
     menu: 'Menü',
     collapse: 'Navigation einklappen',
     expand: 'Navigation ausklappen',
+    filter: 'Menü filtern',
+    noMatch: 'Keine passenden Seiten',
   },
   onThisPage: { label: 'Auf dieser Seite' },
   pagination: {
