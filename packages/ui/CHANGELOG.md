@@ -1,5 +1,36 @@
 # @med-o/ui
 
+## 0.19.0
+
+_Released 2026-11-14_
+
+### Minor Changes
+
+- d053fb0: New: `Carousel` (experimental), the code side of the Figma Carousel.
+
+  - `layout="single"` shows one slide at a time (media), `layout="row"` a row of items with the next one peeking in (cards, editorial, portrait). `variant` base or aesthetic, `itemSize` sm, md, lg, an optional title and “View all” link.
+  - W3C carousel pattern on native scroll snapping: Previous and Next disabled at the ends (no loop), dots up to 7 slides and a counter above, items out of view are inert, changes by the user are announced.
+  - `autoplay` only for heroes: at least 5 s per slide, with Pause; it pauses on hover, focus and in a hidden tab, stops on the last slide and stays off with reduced motion.
+  - Touch screens get no arrows: swipe; dots keep a 24 px hit area.
+  - New messages `carousel.*` (en, de).
+  - The style budget grows from 23 to 24 kB (Carousel and the content table).
+
+- d053fb0: New: tables for documentation and running text, and a code cell.
+
+  - `StaticTable` takes `variant="content"`: no frame and no header fill, a line below each row, flush with the text, rows as high as their content. The header row is optional.
+  - Class `medo-table__cell--code` for token names, IDs and keys: code type, one line. Works in both tables.
+
+- 8a9bab1: Smaller bundles and server rendering: the package ships one module per component instead of one file.
+
+  - `"use client"` sits only on the modules that need the browser. `Stack`, `Grid`, `GridItem`, `Container`, `Badge` and `Code` render in React Server Components and add no JavaScript there.
+  - Bundlers keep less unused code: on design.med-o.de a page loads 16 kB (gzip) less JavaScript.
+  - Nothing changes for imports: `import { Button } from '@med-o/ui'` stays the same.
+  - New size checks for a server layout (`Stack`, `Container`) and a typical client set (`Button`, `Select`, `QuickSearch`).
+
+### Patch Changes
+
+- @med-o/design-tokens@0.19.0
+
 ## 0.18.0
 
 _Released 2026-11-13_
