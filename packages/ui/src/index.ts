@@ -62,6 +62,8 @@ export type {
   TabBarItemProps,
   TabBarMoreProps,
 } from './navigation/Navigation';
+export { Carousel } from './carousel/Carousel';
+export type { CarouselProps } from './carousel/Carousel';
 export { OnThisPage } from './on-this-page/OnThisPage';
 export type { OnThisPageProps, OnThisPageItem } from './on-this-page/OnThisPage';
 export { Drawer } from './drawer/Drawer';

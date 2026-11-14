@@ -7,8 +7,11 @@
  *   Interactive (sort, select): React Aria Table (role grid) with the same classes.
  *
  * Text left, numbers right with tabular figures (class medo-table__cell--number or align="end").
- * IDs, dates and codes on one line: class medo-table__cell--nowrap or Cell wrap={false}.
+ * IDs, dates and codes on one line: class medo-table__cell--nowrap or Cell wrap={false}; token names and keys in code
+ * type: class medo-table__cell--code.
  * Density: standard (rows 48, header 40) · compact (rows 40, header 36).
+ * Content (StaticTable variant="content", class medo-table--content): a table in documentation – no frame, no header
+ * fill, rows as high as their content.
  *
  * State contract (interactive rows): [data-hovered] [data-pressed] [data-selected] [data-focus-visible] [data-disabled]
  * Sortable header: [data-allows-sorting] [data-sort-direction] (aria-sort is set too).
@@ -175,6 +178,12 @@
   margin-inline-start: auto;
 }
 
+/* Token names, IDs, keys: code type, one line. */
+.medo-table :is(td, th, .medo-table__cell).medo-table__cell--code {
+  font: var(--medo-typography-code-sm);
+  white-space: nowrap;
+}
+
 /* Utility columns (checkbox, actions, chevron) */
 .medo-table :is(.medo-table__cell--utility, .medo-table__column--utility) {
   inline-size: var(--medo-space-12);
@@ -238,6 +247,42 @@
   padding: var(--medo-space-12) var(--_pad);
   text-align: center;
   color: var(--medo-color-text-secondary);
+}
+
+/* ---------- Content: a table in documentation and running text (StaticTable variant="content") ---------- */
+/* No frame, no header fill; a line below each row, the last one included; flush with the text around it. */
+
+.medo-table--content {
+  --_pad: 0;
+}
+
+.medo-table--content :is(thead, tbody) :is(th, td) {
+  position: static;
+  block-size: auto;
+  padding: var(--medo-space-3) var(--medo-space-4) var(--medo-space-3) 0;
+  border-block-end: var(--medo-border-width-thin) solid var(--medo-color-border-default);
+  background-color: transparent;
+}
+
+.medo-table--content tbody tr:last-child > * {
+  border-block-end: var(--medo-border-width-thin) solid var(--medo-color-border-default);
+}
+
+.medo-table--content :is(thead, tbody) :is(th, td):last-child {
+  padding-inline-end: 0;
+}
+
+.medo-table--content thead th {
+  font: var(--medo-typography-label-md-strong);
+  white-space: normal;
+}
+
+.medo-table--content tbody :is(th, td) {
+  vertical-align: top;
+}
+
+.medo-table--content tbody th {
+  font-weight: inherit;
 }
 
 @media (forced-colors: active) {

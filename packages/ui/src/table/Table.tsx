@@ -34,8 +34,14 @@ export interface StaticTableProps {
   density?: Density;
   /** Every second row tinted – helps reading wide rows across. */
   striped?: boolean;
-  /** Without the border and radius, e.g. inside a card or documentation. */
+  /** Without the border and radius, e.g. inside a card. */
   plain?: boolean;
+  /**
+   * data: the Table look (header on surface/subtle, fixed row heights) · content: a table in documentation and running
+   * text – no frame and no header fill, a line below each row, flush with the text, rows as high as their content.
+   * A content table may leave out the header row. Density, striped and plain do not apply to content.
+   */
+  variant?: 'data' | 'content';
   className?: string;
   style?: CSSProperties;
 }
@@ -61,12 +67,14 @@ function useScrollsSideways<T extends HTMLElement>() {
 }
 
 /**
- * Static table – a native, non-interactive table with the Table look.
- * For content and simple data. Numbers: add className="medo-table__cell--number".
+ * Static table – a native, non-interactive table with the Table look, or with variant="content" the look of a table in
+ * documentation. For content and simple data. Numbers: className="medo-table__cell--number"; token names, IDs and
+ * keys: className="medo-table__cell--code".
  * When it is wider than its container it scrolls sideways; the container then takes the keyboard focus
  * (arrow keys scroll) and is announced as a region named by the caption.
  */
-export function StaticTable({ children, caption, captionHidden, density = 'standard', striped, plain, className, style }: StaticTableProps) {
+export function StaticTable({ children, caption, captionHidden, density = 'standard', striped, plain, variant = 'data', className, style }: StaticTableProps) {
+  const content = variant === 'content';
   const [ref, scrolls] = useScrollsSideways<HTMLDivElement>();
   const captionId = useId();
   const m = useMessages();
@@ -76,8 +84,15 @@ export function StaticTable({ children, caption, captionHidden, density = 'stand
       : { role: 'region', tabIndex: 0, 'aria-label': m.table.scrollRegion }
     : {};
   return (
-    <div ref={ref} {...region} className={cx('medo-table-container', plain && 'medo-table-container--plain', className)} style={style}>
-      <table className={cx('medo-table', density === 'compact' && 'medo-table--compact', striped && 'medo-table--striped')}>
+    <div ref={ref} {...region} className={cx('medo-table-container', (plain || content) && 'medo-table-container--plain', className)} style={style}>
+      <table
+        className={cx(
+          'medo-table',
+          content && 'medo-table--content',
+          !content && density === 'compact' && 'medo-table--compact',
+          !content && striped && 'medo-table--striped',
+        )}
+      >
         {caption && (
           <caption id={captionId} className={captionHidden ? 'medo-visually-hidden' : undefined}>
             {caption}

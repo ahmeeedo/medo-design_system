@@ -46,6 +46,18 @@ export interface Messages {
   };
   breadcrumbs: { label: string; more: (count: number) => string };
   /** Copy button and, for code wider than the block, the name of its scroll area. */
+  carousel: {
+    carousel: string;
+    slide: string;
+    slideLabel: (index: number, total: number) => string;
+    slides: string;
+    dot: (index: number, total: number) => string;
+    previous: string;
+    next: string;
+    pause: string;
+    play: string;
+    viewAll: string;
+  };
   codeBlock: { copy: string; copied: string; copyFailed: string; label: string };
   form: {
     /** Screen readers only, after a submit with errors: “2 fields need attention”. */

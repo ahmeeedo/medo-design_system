@@ -1,0 +1,276 @@
+/**
+ * Carousel – med.o Design System (W3C carousel pattern, native scroll snapping)
+ *
+ * <section class="medo-carousel medo-carousel--{base|aesthetic} medo-carousel--{single|row} medo-carousel--{sm|md|lg}"
+ *          aria-roledescription="carousel" aria-labelledby="…">
+ *   <div class="medo-carousel__header"> h2.medo-carousel__title · View all · .medo-carousel__controls </div>
+ *   <div class="medo-carousel__viewport">
+ *     <div class="medo-carousel__item" role="group" aria-roledescription="slide" aria-label="1 of 5">…</div>
+ *   </div>
+ *   <div class="medo-carousel__footer"> .medo-carousel__indicator (dots or counter) · .medo-carousel__controls </div>
+ * </section>
+ *
+ * Sizes (Figma Carousel): row items sm 280 · md 320 · lg 400, below 640 px 240 · 280 · 300; single slides full
+ * width, the next one peeks in 32 px below 640 px. Gap base space/4, aesthetic space/5 (mobile space/2 single,
+ * space/3 / space/4 row). Content → controls base space/4, aesthetic space/6. Radius: single base radius/lg,
+ * aesthetic radius/xl (cards too). Controls: Icon Button secondary, base sm, aesthetic md; none on touch screens.
+ * Dot: visual 8 × 8, active 24 × 8, hit area 24 × 24 (active 32 × 24).
+ */
+
+.medo-carousel {
+  --_gap: var(--medo-space-4);
+  --_item: var(--medo-size-width-xl);
+  --_radius: var(--medo-radius-lg);
+
+  display: grid;
+  gap: var(--medo-space-4);
+  min-inline-size: 0;
+}
+
+.medo-carousel--aesthetic {
+  --_gap: var(--medo-space-5);
+  --_radius: var(--medo-radius-xl);
+
+  gap: var(--medo-space-6);
+}
+
+.medo-carousel--sm {
+  --_item: var(--medo-size-width-lg);
+}
+
+.medo-carousel--lg {
+  --_item: var(--medo-size-width-2xl);
+}
+
+/* ---------- Header ---------- */
+
+.medo-carousel__header {
+  display: flex;
+  align-items: center;
+  gap: var(--medo-space-2);
+}
+
+.medo-carousel__title {
+  flex: 1;
+  min-inline-size: 0;
+  margin: 0;
+  font: var(--medo-typography-heading-md);
+  color: var(--medo-color-text-primary);
+}
+
+.medo-carousel--aesthetic .medo-carousel__title {
+  font: var(--medo-typography-heading-xl);
+}
+
+/* ---------- Viewport and items ---------- */
+
+.medo-carousel__viewport {
+  display: flex;
+  gap: var(--_gap);
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  outline: none;
+}
+
+.medo-carousel--single .medo-carousel__viewport {
+  border-radius: var(--_radius);
+}
+
+.medo-carousel__viewport::-webkit-scrollbar {
+  display: none;
+}
+
+.medo-carousel__viewport:focus-visible {
+  box-shadow: var(--medo-shadow-focus-ring);
+}
+
+.medo-carousel__item {
+  flex: none;
+  inline-size: var(--_item);
+  scroll-snap-align: start;
+  /* The viewport takes the height of the tallest item: the content stretches to it. */
+  display: grid;
+}
+
+.medo-carousel--single .medo-carousel__item {
+  inline-size: 100%;
+  overflow: hidden;
+  border-radius: var(--_radius);
+}
+
+/* Images as items (media slides, portrait tiles) take the radius of the carousel. */
+.medo-carousel__item > .medo-image {
+  border-radius: var(--_radius);
+}
+
+/* Cards in an aesthetic carousel take its radius; a plain card (editorial) gives it to its image. */
+.medo-carousel--aesthetic .medo-carousel__item > .medo-card,
+.medo-carousel--aesthetic .medo-carousel__item > .medo-card--plain .medo-card__media {
+  border-radius: var(--_radius);
+}
+
+/* ---------- Footer, controls and indicator ---------- */
+
+.medo-carousel__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--medo-space-3);
+}
+
+.medo-carousel--aesthetic .medo-carousel__footer {
+  justify-content: flex-end;
+}
+
+.medo-carousel__footer--center,
+.medo-carousel--aesthetic .medo-carousel__footer--center {
+  justify-content: center;
+}
+
+.medo-carousel__controls {
+  display: flex;
+  align-items: center;
+  gap: var(--medo-space-2);
+  margin-inline-start: auto;
+}
+
+.medo-carousel--aesthetic .medo-carousel__controls {
+  gap: var(--medo-space-3);
+}
+
+.medo-carousel__indicator {
+  display: flex;
+  align-items: center;
+}
+
+.medo-carousel--aesthetic .medo-carousel__indicator {
+  block-size: var(--medo-size-control-md);
+  padding-inline: var(--medo-space-2);
+  border-radius: var(--medo-radius-full);
+  background-color: var(--medo-color-surface-subtle);
+}
+
+.medo-carousel__dots {
+  display: flex;
+  align-items: center;
+}
+
+/* Hit area 24 × 24 (active 32 × 24) around an 8 × 8 dot (active 24 × 8). */
+.medo-carousel__dot {
+  display: grid;
+  place-items: center;
+  inline-size: var(--medo-space-6);
+  block-size: var(--medo-space-6);
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: var(--medo-radius-full);
+  background: none;
+  cursor: pointer;
+  outline: none;
+  transition: inline-size var(--medo-motion-duration-fast) var(--medo-motion-easing-standard);
+}
+
+.medo-carousel__dot::before {
+  content: '';
+  inline-size: var(--medo-space-2);
+  block-size: var(--medo-space-2);
+  border-radius: var(--medo-radius-full);
+  background-color: var(--medo-color-border-strong);
+  transition:
+    inline-size var(--medo-motion-duration-fast) var(--medo-motion-easing-standard),
+    background-color var(--medo-motion-duration-fast) var(--medo-motion-easing-standard);
+}
+
+.medo-carousel__dot:hover::before {
+  background-color: var(--medo-color-border-strong-hover);
+}
+
+.medo-carousel__dot:active::before {
+  background-color: var(--medo-color-text-secondary);
+}
+
+.medo-carousel__dot[aria-current='true'] {
+  inline-size: var(--medo-space-8);
+}
+
+.medo-carousel__dot[aria-current='true']::before {
+  inline-size: var(--medo-space-6);
+  background-color: var(--medo-color-text-primary);
+}
+
+.medo-carousel__dot:focus-visible {
+  box-shadow: var(--medo-shadow-focus-ring-inset);
+}
+
+.medo-carousel__counter {
+  font: var(--medo-typography-label-sm);
+  color: var(--medo-color-text-secondary);
+  font-variant-numeric: tabular-nums;
+}
+
+.medo-carousel--aesthetic .medo-carousel__counter {
+  padding-inline: var(--medo-space-2);
+  font: var(--medo-typography-label-md);
+  color: var(--medo-color-text-primary);
+}
+
+/* ---------- Mobile and touch ---------- */
+
+@media (max-width: 639.98px) {
+  .medo-carousel {
+    --_gap: var(--medo-space-3);
+    --_item: var(--medo-size-width-lg);
+  }
+
+  .medo-carousel--aesthetic {
+    --_gap: var(--medo-space-4);
+  }
+
+  .medo-carousel--sm {
+    --_item: var(--medo-size-width-md);
+  }
+
+  .medo-carousel--lg {
+    --_item: calc(var(--medo-size-width-lg) + var(--medo-space-5)); /* 300 */
+  }
+
+  /* One slide with the next one peeking in 32 px. */
+  .medo-carousel--single {
+    --_gap: var(--medo-space-2);
+  }
+
+  .medo-carousel--single .medo-carousel__item {
+    inline-size: calc(100% - var(--medo-space-8) - var(--_gap));
+  }
+}
+
+/* Touch: swipe, no arrows. Dots and Pause stay. */
+@media (hover: none) and (pointer: coarse) {
+  .medo-carousel__arrow {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .medo-carousel__viewport {
+    scroll-behavior: auto;
+  }
+
+  .medo-carousel__dot,
+  .medo-carousel__dot::before {
+    transition: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .medo-carousel__dot::before {
+    background-color: ButtonText;
+  }
+
+  .medo-carousel__dot[aria-current='true']::before {
+    background-color: Highlight;
+  }
+}
