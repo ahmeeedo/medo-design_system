@@ -1,3 +1,5 @@
+'use client';
+
 import { useEffect, useId, useState, type MouseEvent } from 'react';
 import { Button as AriaButton, Disclosure, DisclosurePanel } from 'react-aria-components';
 import { ChevronDown } from 'lucide-react';

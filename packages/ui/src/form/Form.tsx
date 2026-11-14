@@ -1,3 +1,5 @@
+'use client';
+
 import { useContext, useEffect, useMemo, useRef, useState, type FormEvent, type ReactNode } from 'react';
 import { Form as AriaForm, FormValidationContext, type FormProps as AriaFormProps } from 'react-aria-components';
 import { Alert } from '../alert/Alert';

@@ -1,3 +1,5 @@
+'use client';
+
 import { useId, useRef, useState, type ReactNode } from 'react';
 import { Button as AriaButton, Link as AriaLink } from 'react-aria-components';
 import { ChevronLeft, ChevronRight } from 'lucide-react';

@@ -1,3 +1,5 @@
+'use client';
+
 import { createContext, useContext, type ReactNode } from 'react';
 import { useLocale } from 'react-aria-components';
 import { de } from './de';

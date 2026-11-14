@@ -1,3 +1,5 @@
+'use client';
+
 import { useEffect, useLayoutEffect, useState, type ReactNode } from 'react';
 import { Autocomplete, Button as AriaButton, Dialog, Modal, ModalOverlay, useFilter } from 'react-aria-components';
 import { Search } from 'lucide-react';

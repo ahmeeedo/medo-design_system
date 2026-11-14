@@ -81,41 +81,14 @@
   "publishConfig": {
     "access": "public"
   },
-  "tsup": [
-    {
-      "entry": [
-        "src/index.ts"
-      ],
-      "format": [
-        "esm"
-      ],
-      "target": "es2022",
-      "dts": true,
-      "sourcemap": true,
-      "banner": {
-        "js": "\"use client\";"
-      },
-      "clean": [
-        "!highlight.*"
-      ]
-    },
-    {
-      "entry": {
-        "highlight": "src/code-block/highlight.ts"
-      },
-      "format": [
-        "esm"
-      ],
-      "target": "es2022",
-      "dts": true,
-      "sourcemap": true,
-      "clean": false,
-      "external": [
-        "shiki"
-      ]
-    }
-  ],
   "size-limit": [
+    {
+      "name": "Server layout: Stack, Container",
+      "path": "dist/index.js",
+      "import": "{ Stack, Container }",
+      "gzip": true,
+      "limit": "1 kB"
+    },
     {
       "name": "Button",
       "path": "dist/index.js",
@@ -129,6 +102,13 @@
       "import": "{ QuickSearch }",
       "gzip": true,
       "limit": "61 kB"
+    },
+    {
+      "name": "Client set: Button, Select, QuickSearch",
+      "path": "dist/index.js",
+      "import": "{ Button, Select, QuickSearch }",
+      "gzip": true,
+      "limit": "78 kB"
     },
     {
       "name": "All components",

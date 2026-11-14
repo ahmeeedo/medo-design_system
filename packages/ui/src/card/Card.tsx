@@ -1,3 +1,5 @@
+'use client';
+
 import type { CSSProperties, ElementType, ReactNode } from 'react';
 import { Link as AriaLink, type LinkProps as AriaLinkProps } from 'react-aria-components';
 import { cx } from '../utils/cx';

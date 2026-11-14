@@ -1,3 +1,5 @@
+'use client';
+
 import { Children, createContext, isValidElement, useContext, useEffect, useId, useRef, useState, type ReactElement, type ReactNode } from 'react';
 import {
   Button as AriaButton,

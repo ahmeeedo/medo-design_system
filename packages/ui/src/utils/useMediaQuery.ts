@@ -1,3 +1,5 @@
+'use client';
+
 import { useSyncExternalStore } from 'react';
 
 /** Below breakpoint/sm (640 px): mobile behaviour for Select, Combobox and Bottom Sheet. */

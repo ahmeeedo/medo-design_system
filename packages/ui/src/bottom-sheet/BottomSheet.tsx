@@ -1,3 +1,5 @@
+'use client';
+
 import { useContext, useId, useRef, type PointerEvent, type ReactNode } from 'react';
 import { Dialog, Heading, Modal, ModalOverlay, OverlayTriggerStateContext, Popover, type ModalOverlayProps } from 'react-aria-components';
 import { ChevronLeft, X } from 'lucide-react';

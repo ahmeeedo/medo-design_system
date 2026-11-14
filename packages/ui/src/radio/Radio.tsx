@@ -1,3 +1,5 @@
+'use client';
+
 import { useContext, type ReactNode } from 'react';
 import { RadioButton, RadioField, RadioGroup as AriaRadioGroup, Text, type RadioFieldProps, type RadioGroupProps as AriaRadioGroupProps } from 'react-aria-components';
 import { FieldFooter, FieldLabel } from '../field/Field';

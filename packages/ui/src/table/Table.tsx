@@ -1,3 +1,5 @@
+'use client';
+
 import { useEffect, useId, useRef, useState, type CSSProperties, type ReactNode } from 'react';
 import {
   Cell as AriaCell,

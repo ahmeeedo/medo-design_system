@@ -32,7 +32,7 @@ import { Button, TextField } from '@med-o/ui';
 
 React Aria naming: `onPress` instead of `onClick`, `isDisabled` instead of `disabled`, `isInvalid`, `isRequired`, `isReadOnly`.
 
-The package is ESM only and marked `"use client"`, so it works in the Next.js App Router as a client component.
+The package is ESM only, one module per component. Modules that need the browser are marked `"use client"`; `Stack`, `Grid`, `Container`, `Badge` and `Code` render in React Server Components, so they add no JavaScript there.
 
 ## Layout
 

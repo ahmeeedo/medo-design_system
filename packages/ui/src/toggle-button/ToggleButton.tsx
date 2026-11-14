@@ -1,3 +1,5 @@
+'use client';
+
 import { createContext, useContext, useEffect, useRef, type CSSProperties, type ReactNode, type Ref } from 'react';
 import {
   SelectionIndicator,

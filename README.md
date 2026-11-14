@@ -83,7 +83,7 @@ import { Button, TextField } from '@med-o/ui';
 ```
 
 - React Aria naming: `onPress` instead of `onClick`, `isDisabled` instead of `disabled`, `isInvalid`, `isRequired`, `isReadOnly`.
-- ESM only, marked `"use client"`: works in Vite, Next.js (App Router) and other modern bundlers.
+- ESM only, one module per component, `"use client"` where a component needs the browser: works in Vite, Next.js (App Router) and other modern bundlers.
 - Dates use [`@internationalized/date`](https://react-spectrum.adobe.com/internationalized/date/). Its helpers (`parseDate`, `today` …) are re-exported from `@med-o/ui`.
 
 #### Language

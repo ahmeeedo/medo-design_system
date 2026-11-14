@@ -1,3 +1,5 @@
+'use client';
+
 import type { CSSProperties, ReactNode, Ref } from 'react';
 import { Button as AriaButton, type ButtonProps as AriaButtonProps } from 'react-aria-components';
 import { Spinner } from '../progress/Progress';

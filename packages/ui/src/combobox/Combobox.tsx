@@ -1,3 +1,5 @@
+'use client';
+
 import { useContext, useEffect, useId, useRef, useState, type KeyboardEvent, type MouseEvent, type ReactNode } from 'react';
 import {
   Autocomplete,

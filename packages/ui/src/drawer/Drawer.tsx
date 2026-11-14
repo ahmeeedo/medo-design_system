@@ -1,3 +1,5 @@
+'use client';
+
 import { useEffect, useRef, type ReactNode } from 'react';
 import { Dialog as AriaDialog, Heading, Modal, ModalOverlay } from 'react-aria-components';
 import { X } from 'lucide-react';

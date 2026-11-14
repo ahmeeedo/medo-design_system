@@ -1,3 +1,5 @@
+'use client';
+
 import { createContext, useContext, useEffect, useId, useLayoutEffect, useRef, useState, type ReactNode } from 'react';
 import { Dialog as AriaDialog, DialogContext, FormValidationContext, Heading, Modal, ModalOverlay, OverlayTriggerStateContext, Provider } from 'react-aria-components';
 import { CircleAlert, Info, TriangleAlert, X } from 'lucide-react';

@@ -1,3 +1,5 @@
+'use client';
+
 import { Children, createContext, isValidElement, useContext, useEffect, useId, useState, type ReactElement, type ReactNode } from 'react';
 import { Button as AriaButton, Disclosure, DisclosureGroup, DisclosurePanel, Heading, type DisclosureGroupProps, type Key } from 'react-aria-components';
 import { ChevronDown } from 'lucide-react';
