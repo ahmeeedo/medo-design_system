@@ -1,3 +1,5 @@
+'use client';
+
 import type { CSSProperties, Ref } from 'react';
 import { Button as AriaButton, type ButtonProps as AriaButtonProps } from 'react-aria-components';
 import { Search } from 'lucide-react';

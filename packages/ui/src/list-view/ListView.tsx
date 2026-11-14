@@ -1,3 +1,5 @@
+'use client';
+
 import { useEffect, useRef, useState, type PointerEvent as ReactPointerEvent, type ReactNode } from 'react';
 import { GridList, GridListItem, useLocale, type GridListItemProps, type GridListProps } from 'react-aria-components';
 import { ChevronRight } from 'lucide-react';

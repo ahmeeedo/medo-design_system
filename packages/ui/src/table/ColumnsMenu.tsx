@@ -1,3 +1,5 @@
+'use client';
+
 import { Columns3 } from 'lucide-react';
 import { Button } from '../button/Button';
 import { Checkbox, CheckboxGroup } from '../checkbox/Checkbox';

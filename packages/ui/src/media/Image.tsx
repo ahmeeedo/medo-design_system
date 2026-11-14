@@ -1,3 +1,5 @@
+'use client';
+
 import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties, type ImgHTMLAttributes, type ReactNode } from 'react';
 import { ImageOff, Play } from 'lucide-react';
 import { Skeleton } from '../progress/Progress';

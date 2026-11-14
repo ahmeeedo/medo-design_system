@@ -1,3 +1,5 @@
+'use client';
+
 import { useLayoutEffect, useRef, useState } from 'react';
 import { Breadcrumb, Breadcrumbs as AriaBreadcrumbs, Button as AriaButton, Link as AriaLink } from 'react-aria-components';
 import { ChevronLeft, ChevronRight, Ellipsis, Folder, House } from 'lucide-react';

@@ -1,3 +1,5 @@
+'use client';
+
 import { useContext, useMemo, type ReactNode } from 'react';
 import {
   DateInput,

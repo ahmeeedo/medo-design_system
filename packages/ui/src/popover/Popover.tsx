@@ -1,3 +1,5 @@
+'use client';
+
 import { useContext, useRef, type ReactNode } from 'react';
 import {
   Dialog as AriaDialog,

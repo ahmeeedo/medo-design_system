@@ -1,3 +1,5 @@
+'use client';
+
 import { useId, type ElementType, type HTMLAttributes, type ReactNode } from 'react';
 import { CircleAlert, CircleCheck, Folder, Lock, Search } from 'lucide-react';
 import { Button } from '../button/Button';

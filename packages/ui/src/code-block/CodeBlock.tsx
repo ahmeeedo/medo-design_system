@@ -1,3 +1,5 @@
+'use client';
+
 import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties, type Key } from 'react';
 import { Check, Copy } from 'lucide-react';
 import { Button } from '../button/Button';

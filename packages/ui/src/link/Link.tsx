@@ -1,3 +1,5 @@
+'use client';
+
 import type { ReactNode } from 'react';
 import { Link as AriaLink, type LinkProps as AriaLinkProps } from 'react-aria-components';
 import { ArrowRight, ExternalLink } from 'lucide-react';

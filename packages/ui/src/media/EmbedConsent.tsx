@@ -1,3 +1,5 @@
+'use client';
+
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { Globe, MapPin, Play } from 'lucide-react';
 import { Button } from '../button/Button';

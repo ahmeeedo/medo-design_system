@@ -1,3 +1,5 @@
+'use client';
+
 import { useId, type CSSProperties, type ReactNode } from 'react';
 import { Label, ProgressBar as AriaProgressBar, type ProgressBarProps as AriaProgressBarProps } from 'react-aria-components';
 import { cx } from '../utils/cx';

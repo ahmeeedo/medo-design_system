@@ -1,3 +1,5 @@
+'use client';
+
 import { createContext, useContext, type HTMLAttributes, type ReactNode } from 'react';
 import { Check, X } from 'lucide-react';
 import { cx } from '../utils/cx';

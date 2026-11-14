@@ -1,3 +1,5 @@
+'use client';
+
 import { useEffect, useRef, type KeyboardEvent, type ReactNode } from 'react';
 import { Button as AriaButton, Toolbar } from 'react-aria-components';
 import { Ellipsis, X } from 'lucide-react';
