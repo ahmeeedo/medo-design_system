@@ -130,6 +130,11 @@
   max-inline-size: none;
 }
 
+/* At the page margin instead of the middle: pages that sit next to a sidebar, or sites that keep every page left. */
+.medo-container--start {
+  margin-inline-start: 0;
+}
+
 /* ---------- Spacing rules as classes (last, so they win over the defaults above) ---------- */
 
 .medo-gap-inline {

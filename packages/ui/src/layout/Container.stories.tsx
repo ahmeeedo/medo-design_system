@@ -21,9 +21,10 @@ const meta = {
   title: 'Components/Layout/Container',
   component: Container,
   tags: ['autodocs', 'status:beta'],
-  args: { size: 'xl' },
+  args: { size: 'xl', align: 'center' },
   argTypes: {
     size: { control: 'inline-radio', options: ['prose', 'md', 'lg', 'xl', 'full'] },
+    align: { control: 'inline-radio', options: ['center', 'start'] },
     as: { control: false, table: { category: 'Semantics (no visual change)' } },
   },
   render: (args) => <Container {...args}>{band(`Content · ${args.size}`)}</Container>,
@@ -31,7 +32,7 @@ const meta = {
     layout: 'fullscreen',
     medo: {
       figma: '169:40',
-      subtitle: 'Centres the content, limits its width and adds the page margin.',
+      subtitle: 'Limits the content width and adds the page margin, in the middle of the page or at its start.',
       usage: {
         when: ['The content area of every page (`xl`, the default).', 'Running text: articles, help pages, legal texts (`prose`, about 70 characters per line).'],
         whenNot: ['Inside cards, dialogs or sidebars – they have their own padding.'],
@@ -45,6 +46,7 @@ const meta = {
         classes: [
           ['medo-container', 'Width xl (1280) plus the page margin.'],
           ['medo-container--{size}', '`prose` 680 · `md` 768 · `lg` 1024 · `full`.'],
+          ['medo-container--start', 'At the page margin instead of the middle.'],
         ],
       },
     },

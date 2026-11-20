@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { Maximize2, Pause, Pencil, Plus, Trash2, Volume2, X } from 'lucide-react';
+import { Maximize2, MessageSquarePlus, Pause, Pencil, Plus, Trash2, Volume2, X } from 'lucide-react';
 import { IconButton } from './IconButton';
 import { expect, fn, waitFor, within } from 'storybook/test';
 import { interactionTest, row, samplePhoto, semantic, slot } from '../story-helpers';
@@ -17,6 +17,10 @@ const meta = {
     shortcut: { control: 'text', description: 'Shown in the tooltip (hover or focus), e.g. “Control+C”.' },
     tooltip: { control: 'text', description: 'Own tooltip text instead of the label. false hides it.' },
     shortcutLabel: semantic,
+    href: { control: false },
+    target: { control: false },
+    rel: { control: false },
+    newTabLabel: { control: false },
     onPress: { control: false },
   },
   parameters: {
@@ -125,6 +129,31 @@ export const OnMedia: Story = {
       </div>
     </div>
   ),
+};
+
+export const AsLink: Story = {
+  name: 'As a link',
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'For navigation in icon button form (a compact “Give feedback” in a header) pass `href`: it renders an `<a>` with the same look and tooltip. With `target="_blank"` it adds `rel="noopener noreferrer"` and “(opens in a new tab)” to its name.',
+      },
+    },
+  },
+  render: () => <IconButton variant="secondary" icon={<MessageSquarePlus />} aria-label="Give feedback" href="#feedback" target="_blank" />,
+};
+
+export const LinkTest: Story = {
+  ...interactionTest,
+  name: 'Link test',
+  tags: ['!autodocs'],
+  render: () => <IconButton variant="secondary" icon={<MessageSquarePlus />} aria-label="Give feedback" href="#feedback" target="_blank" />,
+  play: async ({ canvas }) => {
+    const link = canvas.getByRole('link', { name: 'Give feedback (opens in a new tab)' });
+    await expect(link).toHaveAttribute('rel', 'noopener noreferrer');
+    await expect(link).toHaveAttribute('href', '#feedback');
+  },
 };
 
 export const InteractionTest: Story = {

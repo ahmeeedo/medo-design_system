@@ -128,10 +128,12 @@ export function GridItem({ as: Tag = 'div', span = 1, className, style, ...props
 export interface ContainerProps extends LayoutProps {
   /** Width of the content: prose 680 (running text) · md 768 · lg 1024 · xl 1280 (default) · full. */
   size?: 'prose' | 'md' | 'lg' | 'xl' | 'full';
+  /** center: in the middle of the page (default) · start: at the page margin, like a page with a sidebar. */
+  align?: 'center' | 'start';
 }
 
 /** Container – centres the content, limits its width and adds the page margin of the layout mode. */
-export function Container({ as: Tag = 'div', size = 'xl', className, ...props }: ContainerProps) {
+export function Container({ as: Tag = 'div', size = 'xl', align = 'center', className, ...props }: ContainerProps) {
   const El = Tag as ElementType;
-  return <El {...props} className={cx('medo-container', size !== 'xl' && `medo-container--${size}`, className)} />;
+  return <El {...props} className={cx('medo-container', size !== 'xl' && `medo-container--${size}`, align === 'start' && 'medo-container--start', className)} />;
 }
