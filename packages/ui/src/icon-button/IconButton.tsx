@@ -1,7 +1,7 @@
 'use client';
 
 import type { CSSProperties, ReactNode, Ref } from 'react';
-import { Button as AriaButton, type ButtonProps as AriaButtonProps } from 'react-aria-components';
+import { Button as AriaButton, Link as AriaLink, type ButtonProps as AriaButtonProps, type LinkProps as AriaLinkProps } from 'react-aria-components';
 import { Spinner } from '../progress/Progress';
 import { Tooltip, TooltipTrigger, formatShortcut, resolveShortcut } from '../tooltip/Tooltip';
 import { cx } from '../utils/cx';
@@ -30,26 +30,54 @@ export interface IconButtonProps extends Omit<AriaButtonProps, 'children' | 'cla
   shortcut?: string;
   /** Visible form of the shortcut. Default: “Control+C” → “Ctrl C”, “Meta+C” → “⌘ C”. */
   shortcutLabel?: string;
+  /** Navigates instead of acting: renders a link (`<a href>`) in the icon button look, like Button with `href`. */
+  href?: string;
+  /** With href: “_blank” opens a new tab, adds rel="noopener noreferrer" and the hidden new-tab text to the name. */
+  target?: AriaLinkProps['target'];
+  /** With href: the link relation. Default with target="_blank": “noopener noreferrer”. */
+  rel?: string;
+  /** With target="_blank": hidden text for screen readers. Default: built-in text (“(opens in a new tab)”). */
+  newTabLabel?: string;
   className?: string;
   style?: CSSProperties;
 }
 
 /** Square icon-only action. Shares the Button styles. Shows its label as a tooltip. */
-export function IconButton({ icon, variant = 'ghost', size = 'md', tooltip, shortcut, shortcutLabel, className, ...props }: IconButtonProps) {
+export function IconButton({ icon, variant = 'ghost', size = 'md', tooltip, shortcut, shortcutLabel, href, target, rel, newTabLabel, className, ...props }: IconButtonProps) {
   const m = useMessages();
   // React Aria drops aria-keyshortcuts; the ref sets it on the button.
-  const keyRef = useKeyShortcuts<HTMLButtonElement>(shortcut && resolveShortcut(shortcut), (props as { ref?: Ref<HTMLButtonElement> }).ref);
-  const button = (
-    <AriaButton
-      {...props}
-      ref={keyRef}
-      className={cx('medo-button', 'medo-button--icon-only', `medo-button--${variant}`, `medo-button--${size}`, className)}
-    >
-      <span className="medo-button__icon" aria-hidden="true">
-        {props.isPending ? <Spinner decorative /> : icon}
-      </span>
-    </AriaButton>
-  );
+  const keyRef = useKeyShortcuts<HTMLElement>(shortcut && resolveShortcut(shortcut), (props as { ref?: Ref<HTMLElement> }).ref);
+  const classes = cx('medo-button', 'medo-button--icon-only', `medo-button--${variant}`, `medo-button--${size}`, className);
+  const newTab = target === '_blank';
+  let button: ReactNode;
+  if (href !== undefined) {
+    // A link in the icon button look: navigation keeps link semantics. The name is aria-label, so the new-tab text
+    // joins it there (hidden text inside would not be read).
+    const { isPending: _pending, type: _type, form: _form, 'aria-label': label, ...linkProps } = props as typeof props & { form?: string };
+    button = (
+      <AriaLink
+        {...(linkProps as Omit<AriaLinkProps, 'children'>)}
+        ref={keyRef}
+        href={href}
+        target={target}
+        rel={newTab ? (rel ?? 'noopener noreferrer') : rel}
+        aria-label={newTab ? `${label} ${newTabLabel ?? m.common.newTab}` : label}
+        className={classes}
+      >
+        <span className="medo-button__icon" aria-hidden="true">
+          {icon}
+        </span>
+      </AriaLink>
+    );
+  } else {
+    button = (
+      <AriaButton {...props} ref={keyRef as Ref<HTMLButtonElement>} className={classes}>
+        <span className="medo-button__icon" aria-hidden="true">
+          {props.isPending ? <Spinner decorative /> : icon}
+        </span>
+      </AriaButton>
+    );
+  }
 
   if (tooltip === false) return button;
   return (

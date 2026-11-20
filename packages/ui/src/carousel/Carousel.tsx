@@ -35,6 +35,12 @@ export interface CarouselProps {
   /** A “View all” link next to the title, e.g. to the full list. */
   viewAll?: { href: string; label?: string };
   /**
+   * The row runs to the edge of the screen and the screen cuts the items, not the row. For a carousel in a full-width
+   * area with the page margin as its padding (`Container size="full"`): the row takes the margin back on the end side,
+   * the header keeps the width of the page container.
+   */
+  bleed?: boolean;
+  /**
    * Moves on by itself – only for marketing heroes, never for content to read or act on. true: every 6 s; a number:
    * the interval in ms (at least 5000). Shows a Pause button, pauses on hover and focus, stops on the last slide and
    * stays off with reduced motion.
@@ -47,13 +53,17 @@ export interface CarouselProps {
 /** Up to this many slides the indicator shows dots, above it a counter “3 / 12”. */
 const MAX_DOTS = 7;
 const MIN_INTERVAL = 5000;
+/** A mouse press that moves less than this is a click, not a drag. */
+const DRAG_THRESHOLD = 6;
+/** Inside these the mouse belongs to the control, not to the row. */
+const DRAG_EXEMPT = 'input, textarea, select, [role="slider"], [role="scrollbar"], [contenteditable]';
 const FOCUSABLE = 'a[href], button, input, select, textarea, [tabindex]:not([tabindex="-1"])';
 
 const reducedMotion = () => typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 /**
  * Carousel (W3C carousel pattern) – a row of slides or cards, browsed by swipe, Previous / Next and, for single
- * slides, dots. Native scroll snapping: touch and trackpads scroll as usual. No loop: Previous is disabled on the
+ * slides, dots. Native scroll snapping: touch and trackpads scroll as usual, a mouse drags the row. No loop: Previous is disabled on the
  * first position, Next on the last. Items that are not fully in view are inert, so Tab only reaches what is visible.
  * Controls sit outside the content and disappear when everything fits; on touch screens there are no arrows.
  */
@@ -66,6 +76,7 @@ export function Carousel({
   variant = 'base',
   itemSize,
   viewAll,
+  bleed = false,
   autoplay = false,
   className,
   style,
@@ -154,6 +165,69 @@ export function Carousel({
     return () => window.clearTimeout(timer);
   }, [playing, suspended, index, edges.end, interval, goTo]);
 
+  // Mouse drag: a mouse cannot swipe, so pressing and moving on the viewport scrolls it. Touch and pens scroll natively.
+  // Snapping is off while the pointer is down and settles the position on release; after a real drag the click that
+  // ends it is swallowed, so a card or image link inside does not open.
+  const drag = useRef<{ x: number; left: number; moved: boolean } | null>(null);
+  const swallowClick = useRef(false);
+  const [dragging, setDragging] = useState(false);
+  // Capture phase: React Aria's pressable children (cards, buttons) stop pointer events from bubbling.
+  const onPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (e.pointerType !== 'mouse' || e.button !== 0) return;
+    const el = e.currentTarget;
+    if (el.scrollWidth <= el.clientWidth) return;
+    // Controls that drag or type themselves keep their pointer.
+    if ((e.target as Element).closest(DRAG_EXEMPT)) return;
+    drag.current = { x: e.clientX, left: el.scrollLeft, moved: false };
+    swallowClick.current = false;
+  };
+  const onPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    const d = drag.current;
+    if (!d) return;
+    const dx = e.clientX - d.x;
+    if (!d.moved && Math.abs(dx) < DRAG_THRESHOLD) return;
+    if (!d.moved) {
+      d.moved = true;
+      setDragging(true);
+      // From here the row owns the pointer: moves outside it keep dragging, and the click that ends the drag lands
+      // on the row, not on a card. (Capturing earlier would also take a plain click away from the card.)
+      try {
+        e.currentTarget.setPointerCapture(e.pointerId);
+      } catch {
+        // A synthetic event without an active pointer.
+      }
+    }
+    e.currentTarget.scrollLeft = d.left - dx;
+  };
+  const endDrag = (e: React.PointerEvent<HTMLDivElement>) => {
+    const d = drag.current;
+    if (!d) return;
+    drag.current = null;
+    try {
+      e.currentTarget.releasePointerCapture(e.pointerId);
+    } catch {
+      // Not captured.
+    }
+    if (!d.moved) return;
+    swallowClick.current = true;
+    setDragging(false);
+    // Snapping is back: settle on the nearest item.
+    const el = e.currentTarget;
+    const kids = Array.from(el.children) as HTMLElement[];
+    const nearest = kids.reduce((best, kid, i) => (Math.abs(kid.offsetLeft - el.scrollLeft) < Math.abs(kids[best].offsetLeft - el.scrollLeft) ? i : best), 0);
+    goTo(nearest);
+  };
+  // A link or image under the mouse would start a native drag and cancel the pointer: not while the row drags.
+  const onDragStartCapture = (e: React.DragEvent<HTMLDivElement>) => {
+    if (drag.current) e.preventDefault();
+  };
+  const onClickCapture = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!swallowClick.current) return;
+    swallowClick.current = false;
+    e.preventDefault();
+    e.stopPropagation();
+  };
+
   const scrolls = !(edges.start && edges.end);
   const dots = single && total > 1 && total <= MAX_DOTS;
   const counter = single && total > MAX_DOTS;
@@ -225,7 +299,7 @@ export function Carousel({
       aria-roledescription={m.carousel.carousel}
       aria-labelledby={title ? titleId : undefined}
       aria-label={title ? undefined : ariaLabel}
-      className={cx('medo-carousel', `medo-carousel--${variant}`, `medo-carousel--${layout}`, `medo-carousel--${size}`, className)}
+      className={cx('medo-carousel', `medo-carousel--${variant}`, `medo-carousel--${layout}`, `medo-carousel--${size}`, bleed && 'medo-carousel--bleed', className)}
       style={style}
       onPointerEnter={() => setSuspended(true)}
       onPointerLeave={() => setSuspended(false)}
@@ -258,6 +332,14 @@ export function Carousel({
       <div
         ref={viewport}
         className="medo-carousel__viewport"
+        data-draggable={scrolls || undefined}
+        data-dragging={dragging || undefined}
+        onPointerDownCapture={onPointerDown}
+        onPointerMoveCapture={onPointerMove}
+        onPointerUpCapture={endDrag}
+        onPointerCancelCapture={endDrag}
+        onDragStartCapture={onDragStartCapture}
+        onClickCapture={onClickCapture}
         {...(keyboardScroll && scrolls ? { tabIndex: 0, role: 'group', 'aria-label': m.carousel.slides } : {})}
       >
         {items.map((item, i) => (

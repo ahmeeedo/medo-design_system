@@ -64,6 +64,23 @@
 
 /* ---------- Viewport and items ---------- */
 
+/* A mouse drags the row (pointer events in the component); while it drags, snapping waits and text is not selected. */
+.medo-carousel__viewport[data-draggable] {
+  cursor: grab;
+}
+
+.medo-carousel__viewport[data-dragging] {
+  cursor: grabbing;
+  scroll-snap-type: none;
+  scroll-behavior: auto;
+  user-select: none;
+}
+
+/* Only the row itself drags: links and buttons inside keep their own cursor. */
+.medo-carousel__viewport :is(a, button) {
+  cursor: pointer;
+}
+
 .medo-carousel__viewport {
   display: flex;
   gap: var(--_gap);
@@ -109,6 +126,20 @@
 .medo-carousel--aesthetic .medo-carousel__item > .medo-card,
 .medo-carousel--aesthetic .medo-carousel__item > .medo-card--plain .medo-card__media {
   border-radius: var(--_radius);
+}
+
+/*
+ * Bleed: in a full-width area padded by the page margin, the row takes the margin back on the end side and runs to
+ * the screen edge; the last item still stops one margin before it. Header and footer keep the page container width.
+ */
+.medo-carousel--bleed .medo-carousel__viewport {
+  margin-inline-end: calc(-1 * var(--medo-layout-margin));
+  padding-inline-end: var(--medo-layout-margin);
+  scroll-padding-inline-end: var(--medo-layout-margin);
+}
+
+.medo-carousel--bleed :is(.medo-carousel__header, .medo-carousel__footer) {
+  max-inline-size: var(--medo-container-xl);
 }
 
 /* ---------- Footer, controls and indicator ---------- */

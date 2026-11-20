@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, waitFor, within } from 'storybook/test';
 import { Carousel } from './Carousel';
 import { Card } from '../card/Card';
+import { Container } from '../layout/Layout';
 import { Image } from '../media/Image';
 import { interactionTest, samplePhoto } from '../story-helpers';
 
@@ -45,6 +46,7 @@ const meta = {
     variant: { control: 'inline-radio', options: ['base', 'aesthetic'] },
     itemSize: { control: 'inline-radio', options: ['sm', 'md', 'lg'] },
     autoplay: { control: 'boolean' },
+    bleed: { control: false },
     children: { control: false },
     viewAll: { control: false },
     headingLevel: { control: false },
@@ -78,19 +80,19 @@ const meta = {
           'Previous and Next are buttons, disabled at the ends – there is no loop.',
           'A change by Previous, Next or a dot is announced; slides that move on by themselves are not.',
           'Autoplay pauses on hover, on focus and in a hidden tab, stops on the last slide and is off with reduced motion.',
-          'Touch screens get no arrows: swipe; dots stay with a 24 px hit area.',
+          'Touch screens get no arrows: swipe; dots stay with a 24 px hit area. A mouse drags the row; a drag does not open the card under it.',
         ],
       },
       styling: {
         classes: [
-          ['medo-carousel', 'The region; `--base` or `--aesthetic`, `--single` or `--row`, `--sm`, `--md`, `--lg` (item width).'],
+          ['medo-carousel', 'The region; `--base` or `--aesthetic`, `--single` or `--row`, `--sm`, `--md`, `--lg` (item width), `--bleed`.'],
           ['medo-carousel__header, __title', 'Title, View all and – for base rows – the arrows.'],
           ['medo-carousel__viewport', 'The scrolling row with scroll snapping.'],
           ['medo-carousel__item', 'One slide or card.'],
           ['medo-carousel__footer, __controls', 'Indicator and arrows below the items; `__footer--center` for aesthetic single slides.'],
           ['medo-carousel__dots, __dot, __counter', 'The indicator: dots up to 7, a counter “3 / 12” above.'],
         ],
-        states: ['aria-current (active dot)', 'inert (items out of view)'],
+        states: ['aria-current (active dot)', 'inert (items out of view)', 'data-draggable, data-dragging (the viewport under a mouse)'],
       },
     },
     docs: {
@@ -184,6 +186,24 @@ export const Portrait: Story = {
   },
 };
 
+export const Bleed: Story = {
+  parameters: {
+    layout: 'fullscreen',
+    docs: {
+      description: {
+        story:
+          'On a page, the row can run to the edge of the screen: `bleed` in a full-width area with the page margin as its padding (`Container size="full"`). The screen cuts the cards, the header keeps the page container width.',
+      },
+    },
+  },
+  args: { bleed: true, viewAll: { href: '#all' } },
+  render: (args) => (
+    <Container size="full" style={{ paddingBlock: 'var(--medo-space-8)' }}>
+      <Carousel {...args} />
+    </Container>
+  ),
+};
+
 export const Autoplay: Story = {
   // Moves on by itself: no screenshot.
   tags: ['!visual'],
@@ -218,5 +238,16 @@ export const InteractionTest: Story = {
     await userEvent.click(canvas.getByRole('button', { name: 'Slide 4 of 4' }));
     await waitFor(() => expect(next).toBeDisabled());
     await expect(slidesInView().map((s) => s.getAttribute('aria-label'))).toEqual(['4 of 4']);
+    // A mouse drags the row: from the last slide a drag to the right lands on the one before it.
+    const viewport = region.querySelector('.medo-carousel__viewport') as HTMLElement;
+    const box = viewport.getBoundingClientRect();
+    const at = (x: number) => ({ clientX: box.left + x, clientY: box.top + box.height / 2, pointerId: 1, pointerType: 'mouse', button: 0, bubbles: true });
+    viewport.dispatchEvent(new PointerEvent('pointerdown', at(100)));
+    viewport.dispatchEvent(new PointerEvent('pointermove', at(200)));
+    viewport.dispatchEvent(new PointerEvent('pointermove', at(100 + box.width * 0.6)));
+    await waitFor(() => expect(viewport).toHaveAttribute('data-dragging', 'true'));
+    viewport.dispatchEvent(new PointerEvent('pointerup', at(100 + box.width * 0.6)));
+    await waitFor(() => expect(canvas.getByRole('button', { name: 'Slide 3 of 4' })).toHaveAttribute('aria-current', 'true'));
+    await expect(viewport).not.toHaveAttribute('data-dragging');
   },
 };
