@@ -451,6 +451,8 @@ export interface SiteHeaderProps {
   closeLabel?: string;
   /** auto: menu button below 768 px (CSS, so static pages do not jump) · desktop · mobile (forced, e.g. for previews). */
   layout?: 'auto' | 'desktop' | 'mobile';
+  /** No background at the top of the page, so a backdrop (`gradient/aurora`) or a hero image runs through the header; once the page scrolls, the surface at 80 % with a blur. */
+  translucent?: boolean;
 }
 
 /**
@@ -471,6 +473,7 @@ export function SiteHeader({
   menuLabel: menuLabelProp,
   closeLabel: closeLabelProp,
   layout = 'auto',
+  translucent = false,
 }: SiteHeaderProps) {
   const m = useMessages();
   const label = labelProp ?? m.navigation.main;
@@ -489,7 +492,12 @@ export function SiteHeader({
   const narrowActions = compactActions ?? (primary ? <ActionLink action={primary} size="sm" /> : null);
   return (
     <header
-      className={cx('medo-site-header', `medo-site-header--${align}`, layout !== 'auto' && `medo-site-header--${layout === 'mobile' ? 'compact' : 'wide'}`)}
+      className={cx(
+        'medo-site-header',
+        `medo-site-header--${align}`,
+        layout !== 'auto' && `medo-site-header--${layout === 'mobile' ? 'compact' : 'wide'}`,
+        translucent && 'medo-site-header--translucent',
+      )}
       data-scrolled={scrolled || undefined}
     >
       <div className="medo-site-header__logo">{logo}</div>
