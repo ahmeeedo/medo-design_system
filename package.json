@@ -26,7 +26,7 @@
     "check:docs": "npm run build-storybook && node scripts/check-docs.mjs",
     "lint": "npm run build:tokens && stylelint \"packages/ui/src/**/*.css\" \"packages/tokens/src/**/*.css\" \"apps/storybook/.storybook/*.css\" && node scripts/lint-tokens.mjs && node scripts/lint-directives.mjs",
     "changeset": "changeset",
-    "version-packages": "changeset version && node scripts/changelog-dates.mjs",
+    "version-packages": "changeset version && npm install --package-lock-only --ignore-scripts --no-audit --no-fund && node scripts/changelog-dates.mjs",
     "release": "changeset publish"
   },
   "devDependencies": {
