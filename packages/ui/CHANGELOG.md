@@ -1,5 +1,14 @@
 # @med-o/ui
 
+## 0.21.1
+
+_Released 2026-11-21_
+
+### Patch Changes
+
+- dfe5542: Fixed: an `Image` in a `Card`'s media keeps no radius of its own. The card rounds the outer corners, and the edge towards the content stays square, whatever the image's `radius` prop says – before, the default radius/md rounded the image's bottom corners above the title.
+- @med-o/design-tokens@0.21.1
+
 ## 0.21.0
 
 _Released 2026-11-21_
