@@ -88,7 +88,7 @@ const meta = {
           ['medo-card', 'The card; outlined by default.'],
           ['medo-card--{variant}', '`elevated`, `filled`, `brand`, `plain`.'],
           ['medo-card--compact, --horizontal', 'Density and layout.'],
-          ['medo-card__media, __header, __title, __subtitle', 'Media and header.'],
+          ['medo-card__media, __header, __title, __subtitle', 'Media and header. An image in the media has no radius of its own: the card rounds the outer corners, the edge towards the content stays square.'],
           ['medo-card__body, __footer', 'Content and actions.'],
           ['medo-card__link', 'Stretched title link.'],
         ],
