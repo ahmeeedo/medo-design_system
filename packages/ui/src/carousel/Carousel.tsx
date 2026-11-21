@@ -58,8 +58,23 @@ const DRAG_THRESHOLD = 6;
 /** Inside these the mouse belongs to the control, not to the row. */
 const DRAG_EXEMPT = 'input, textarea, select, [role="slider"], [role="scrollbar"], [contenteditable]';
 const FOCUSABLE = 'a[href], button, input, select, textarea, [tabindex]:not([tabindex="-1"])';
+/** Pointer samples older than this do not count for the release velocity: a pause before letting go means no throw. */
+const VELOCITY_WINDOW = 100;
+/** How far a throw carries, in ms of the release velocity; capped at one viewport width. */
+const THROW = 180;
+/** A programmatic move takes 300 to 600 ms, longer for a longer way. */
+const DURATION_MIN = 300;
+const DURATION_MAX = 600;
 
 const reducedMotion = () => typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const easeOut = (t: number) => 1 - (1 - t) ** 3;
+const clamp = (value: number, min: number, max: number) => Math.max(min, Math.min(value, max));
+
+/** The index of the item whose start is nearest to a scroll position. */
+const nearestTo = (el: HTMLElement, left: number) => {
+  const kids = Array.from(el.children) as HTMLElement[];
+  return kids.reduce((best, kid, i) => (Math.abs(kid.offsetLeft - left) < Math.abs(kids[best].offsetLeft - left) ? i : best), 0);
+};
 
 /**
  * Carousel (W3C carousel pattern) – a row of slides or cards, browsed by swipe, Previous / Next and, for single
@@ -106,8 +121,7 @@ export function Carousel({
     const kids = Array.from(el.children) as HTMLElement[];
     const left = el.scrollLeft;
     const right = left + el.clientWidth;
-    const nearest = kids.reduce((best, kid, i) => (Math.abs(kid.offsetLeft - left) < Math.abs(kids[best].offsetLeft - left) ? i : best), 0);
-    setIndex(nearest);
+    setIndex(nearestTo(el, left));
     setVisible(kids.map((kid) => kid.offsetLeft >= left - 1 && kid.offsetLeft + kid.offsetWidth <= right + 1));
     setEdges({ start: left <= 1, end: right >= el.scrollWidth - 1 });
   }, []);
@@ -133,16 +147,52 @@ export function Carousel({
     };
   }, [measure, total]);
 
+  // Programmatic moves (arrows, dots, autoplay, the end of a drag) animate scrollLeft themselves: an ease-out over
+  // 300 to 600 ms, longer for a longer way. The browser's smooth scrolling is linear-ish and fights the mandatory
+  // snapping on the way, so snapping waits (data-animating) until the move has landed on the item's start, which is a
+  // snap position. A wheel or a press on the row stops the move where it is.
+  const animation = useRef(0);
+  const stopAnimation = useCallback(() => {
+    cancelAnimationFrame(animation.current);
+    delete viewport.current?.dataset.animating;
+  }, []);
+  const animateTo = useCallback(
+    (left: number) => {
+      const el = viewport.current;
+      if (!el) return;
+      stopAnimation();
+      const from = el.scrollLeft;
+      const to = clamp(left, 0, el.scrollWidth - el.clientWidth);
+      const distance = to - from;
+      if (reducedMotion() || Math.abs(distance) < 1) {
+        el.scrollLeft = to;
+        return;
+      }
+      const duration = clamp(DURATION_MIN + Math.abs(distance) * 0.3, DURATION_MIN, DURATION_MAX);
+      const start = performance.now();
+      el.dataset.animating = 'true';
+      const step = (now: number) => {
+        const t = Math.min(1, (now - start) / duration);
+        el.scrollLeft = from + distance * easeOut(t);
+        if (t < 1) animation.current = requestAnimationFrame(step);
+        else delete el.dataset.animating;
+      };
+      animation.current = requestAnimationFrame(step);
+    },
+    [stopAnimation],
+  );
+  useEffect(() => stopAnimation, [stopAnimation]);
+
   const goTo = useCallback(
     (target: number, byUser = true) => {
       const el = viewport.current;
-      const kid = el?.children[Math.max(0, Math.min(target, total - 1))] as HTMLElement | undefined;
+      const kid = el?.children[clamp(target, 0, total - 1)] as HTMLElement | undefined;
       if (!el || !kid) return;
-      el.scrollTo({ left: kid.offsetLeft, behavior: reducedMotion() ? 'auto' : 'smooth' });
+      animateTo(kid.offsetLeft);
       // Changes the user makes are announced; slides that move on by themselves are not.
-      if (byUser) setAnnounce(m.carousel.slideLabel(Math.max(0, Math.min(target, total - 1)) + 1, total));
+      if (byUser) setAnnounce(m.carousel.slideLabel(clamp(target, 0, total - 1) + 1, total));
     },
-    [total, m],
+    [total, m, animateTo],
   );
 
   // Autoplay: off with reduced motion, paused by the user, suspended on hover, focus and a hidden tab.
@@ -166,19 +216,22 @@ export function Carousel({
   }, [playing, suspended, index, edges.end, interval, goTo]);
 
   // Mouse drag: a mouse cannot swipe, so pressing and moving on the viewport scrolls it. Touch and pens scroll natively.
-  // Snapping is off while the pointer is down and settles the position on release; after a real drag the click that
-  // ends it is swallowed, so a card or image link inside does not open.
-  const drag = useRef<{ x: number; left: number; moved: boolean } | null>(null);
+  // Snapping is off while the pointer is down; on release the row is thrown with the velocity of the last moves and
+  // lands on the item nearest to where the throw ends (at most one viewport width away), with the same ease-out as
+  // the arrows. After a real drag the click that ends it is swallowed, so a card or image link inside does not open.
+  const drag = useRef<{ x: number; left: number; moved: boolean; samples: { t: number; x: number }[] } | null>(null);
   const swallowClick = useRef(false);
   const [dragging, setDragging] = useState(false);
   // Capture phase: React Aria's pressable children (cards, buttons) stop pointer events from bubbling.
   const onPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    // Any press or touch takes over from a running move.
+    stopAnimation();
     if (e.pointerType !== 'mouse' || e.button !== 0) return;
     const el = e.currentTarget;
     if (el.scrollWidth <= el.clientWidth) return;
     // Controls that drag or type themselves keep their pointer.
     if ((e.target as Element).closest(DRAG_EXEMPT)) return;
-    drag.current = { x: e.clientX, left: el.scrollLeft, moved: false };
+    drag.current = { x: e.clientX, left: el.scrollLeft, moved: false, samples: [{ t: performance.now(), x: e.clientX }] };
     swallowClick.current = false;
   };
   const onPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
@@ -197,6 +250,8 @@ export function Carousel({
         // A synthetic event without an active pointer.
       }
     }
+    const now = performance.now();
+    d.samples = [...d.samples.filter((s) => now - s.t <= VELOCITY_WINDOW), { t: now, x: e.clientX }];
     e.currentTarget.scrollLeft = d.left - dx;
   };
   const endDrag = (e: React.PointerEvent<HTMLDivElement>) => {
@@ -211,11 +266,15 @@ export function Carousel({
     if (!d.moved) return;
     swallowClick.current = true;
     setDragging(false);
-    // Snapping is back: settle on the nearest item.
+    // The throw: pixels per ms over the last moves, zero after a pause; it moves the row the other way than the mouse.
     const el = e.currentTarget;
-    const kids = Array.from(el.children) as HTMLElement[];
-    const nearest = kids.reduce((best, kid, i) => (Math.abs(kid.offsetLeft - el.scrollLeft) < Math.abs(kids[best].offsetLeft - el.scrollLeft) ? i : best), 0);
-    goTo(nearest);
+    const now = performance.now();
+    const recent = d.samples.filter((s) => now - s.t <= VELOCITY_WINDOW);
+    const first = recent[0];
+    const last = recent[recent.length - 1];
+    const velocity = first && last && last.t > first.t ? (last.x - first.x) / (last.t - first.t) : 0;
+    const projected = el.scrollLeft - clamp(velocity * THROW, -el.clientWidth, el.clientWidth);
+    goTo(nearestTo(el, projected));
   };
   // A link or image under the mouse would start a native drag and cancel the pointer: not while the row drags.
   const onDragStartCapture = (e: React.DragEvent<HTMLDivElement>) => {
@@ -338,6 +397,7 @@ export function Carousel({
         onPointerMoveCapture={onPointerMove}
         onPointerUpCapture={endDrag}
         onPointerCancelCapture={endDrag}
+        onWheelCapture={stopAnimation}
         onDragStartCapture={onDragStartCapture}
         onClickCapture={onClickCapture}
         {...(keyboardScroll && scrolls ? { tabIndex: 0, role: 'group', 'aria-label': m.carousel.slides } : {})}

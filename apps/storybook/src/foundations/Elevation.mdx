@@ -1,5 +1,5 @@
 import { Meta } from '@storybook/addon-docs/blocks';
-import { Elevation, Motion, SimpleTable } from './components/TokenDocs';
+import { Backdrop, Elevation, Motion, SimpleTable } from './components/TokenDocs';
 import { DocPage, DocHeader, DocSection, DocFooter, Notes, Tok, SourceLink } from '../docs-blocks/DocBlocks';
 
 <Meta title="Foundations/Elevation & motion" />
@@ -9,10 +9,10 @@ import { DocPage, DocHeader, DocSection, DocFooter, Notes, Tok, SourceLink } fro
 <DocHeader
   kind="Foundations"
   title="Elevation & motion"
-  meta="Elevation · Blur · Motion · Opacity"
+  meta="Elevation · Blur · Backdrop · Motion · Opacity"
   subtitle="How elements float, stack, fade and move."
   description={<p>Shadows reference theme colors, so they adapt to Dark. Focus rings are shadows too (<Tok>focus/ring</Tok>, <Tok>focus/ring-inset</Tok>).</p>}
-  nav={['Elevation', 'Blur', 'Motion', 'Opacity']}
+  nav={['Elevation', 'Blur', 'Backdrop', 'Motion', 'Opacity']}
 />
 
 <DocSection n={1} title="Elevation" description="Only for elements that float above the page. Dropdowns elevation/2, dialogs elevation/3.">
@@ -23,7 +23,14 @@ import { DocPage, DocHeader, DocSection, DocFooter, Notes, Tok, SourceLink } fro
   <SimpleTable path={['blur']} />
 </DocSection>
 
-<DocSection n={3} title="Motion" description="Short, purposeful and physical. Feedback within 100 ms, things that move use springs, exits are shorter than entries.">
+<DocSection n={3} title="Backdrop" description="A decorative wash behind a hero or a page head – never behind running text or inside components.">
+  <Backdrop />
+  <Notes>
+    <p><Tok>gradient/aurora</Tok>: four soft radial washes from the palette (primary, sky, violet, pink), as a tint on Light and a glow on Dark. Lay it over a surface: <Tok>background: var(--medo-gradient-aurora), var(--medo-color-surface-default)</Tok>; in Tailwind <Tok>bg-aurora</Tok>. It is built from the palette steps and follows a brand override; the strength is fixed per theme, so text on top keeps its contrast.</p>
+  </Notes>
+</DocSection>
+
+<DocSection n={4} title="Motion" description="Short, purposeful and physical. Feedback within 100 ms, things that move use springs, exits are shorter than entries.">
   <Motion />
   <Notes>
     <p><strong>Feedback</strong> (hover, pressed, focus): color and opacity with <Tok>motion/duration/fast</Tok> + <Tok>motion/easing/standard</Tok>. Pressed shows at once and fades out on release, so a tap feels immediate.</p>
@@ -33,7 +40,7 @@ import { DocPage, DocHeader, DocSection, DocFooter, Notes, Tok, SourceLink } fro
   </Notes>
 </DocSection>
 
-<DocSection n={4} title="Opacity" description="Opacity is not a disabled state. Disabled uses dedicated colors with known contrast.">
+<DocSection n={5} title="Opacity" description="Opacity is not a disabled state. Disabled uses dedicated colors with known contrast.">
   <SimpleTable path={['opacity']} />
 </DocSection>
 

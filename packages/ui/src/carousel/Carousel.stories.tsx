@@ -80,7 +80,8 @@ const meta = {
           'Previous and Next are buttons, disabled at the ends – there is no loop.',
           'A change by Previous, Next or a dot is announced; slides that move on by themselves are not.',
           'Autoplay pauses on hover, on focus and in a hidden tab, stops on the last slide and is off with reduced motion.',
-          'Touch screens get no arrows: swipe; dots stay with a 24 px hit area. A mouse drags the row; a drag does not open the card under it.',
+          'Touch screens get no arrows: swipe; dots stay with a 24 px hit area. A mouse drags and throws the row; a drag does not open the card under it.',
+          'Arrows, dots and a thrown row move with an ease-out of 300 to 600 ms; with reduced motion they jump.',
         ],
       },
       styling: {
@@ -92,7 +93,7 @@ const meta = {
           ['medo-carousel__footer, __controls', 'Indicator and arrows below the items; `__footer--center` for aesthetic single slides.'],
           ['medo-carousel__dots, __dot, __counter', 'The indicator: dots up to 7, a counter “3 / 12” above.'],
         ],
-        states: ['aria-current (active dot)', 'inert (items out of view)', 'data-draggable, data-dragging (the viewport under a mouse)'],
+        states: ['aria-current (active dot)', 'inert (items out of view)', 'data-draggable, data-dragging (the viewport under a mouse)', 'data-animating (the viewport on its way to an item)'],
       },
     },
     docs: {
@@ -246,6 +247,8 @@ export const InteractionTest: Story = {
     viewport.dispatchEvent(new PointerEvent('pointermove', at(200)));
     viewport.dispatchEvent(new PointerEvent('pointermove', at(100 + box.width * 0.6)));
     await waitFor(() => expect(viewport).toHaveAttribute('data-dragging', 'true'));
+    // A pause before letting go: no throw, the row settles on the nearest item.
+    await new Promise((resolve) => setTimeout(resolve, 150));
     viewport.dispatchEvent(new PointerEvent('pointerup', at(100 + box.width * 0.6)));
     await waitFor(() => expect(canvas.getByRole('button', { name: 'Slide 3 of 4' })).toHaveAttribute('aria-current', 'true'));
     await expect(viewport).not.toHaveAttribute('data-dragging');

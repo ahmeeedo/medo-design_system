@@ -139,6 +139,7 @@ const meta = {
   args: { layout: 'auto', actions: 'Log in + Get started' as never, logo: null, children: null },
   argTypes: {
     layout: { control: 'inline-radio', options: ['auto', 'desktop', 'mobile'], description: 'auto: menu button below 768 px (CSS).' },
+    translucent: { control: 'boolean' },
     align: { control: 'inline-radio', options: ['start', 'center'], description: 'start: links after the logo · center: links in the middle.' },
     compactActions: { control: false },
     menuContent: { control: false },
@@ -182,7 +183,7 @@ const meta = {
         classes: [
           ['medo-nav-item--{form}', 'One item: `header`, `sidebar`, `rail`, `sheet`.'],
           ['medo-nav-group, medo-nav-section', 'Disclosure group and titled section.'],
-          ['medo-site-header, --start, --center', 'Website header and the position of its links.'],
+          ['medo-site-header, --start, --center, --translucent', 'Website header, the position of its links, and the header a backdrop runs through.'],
           ['medo-site-header__wide, __narrow', 'Parts for 768 px and up, and below (switched in CSS).'],
           ['medo-nav-fullscreen__content', 'Extra sections in the fullscreen menu (`menuContent`).'],
           ['medo-nav-item__end-icon', 'Icon after the label (`endIcon`).'],
@@ -274,6 +275,28 @@ function DocsHeader({ layout }: { layout: 'auto' | 'desktop' | 'mobile' }) {
     </SiteHeader>
   );
 }
+
+export const Translucent: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story:
+          '`translucent`: no background at the top of the page, so a backdrop (`gradient/aurora`) or a hero image runs through the header; once the page scrolls, the surface at 80 % with a blur and the divider.',
+      },
+    },
+  },
+  render: () => (
+    <div style={{ background: 'var(--medo-gradient-aurora), var(--medo-color-surface-default)', minBlockSize: 'var(--medo-size-width-sm)' }}>
+      <SiteHeader logo={<Logo />} actions={siteActions} translucent layout="desktop">
+        <NavItem href="#products">Products</NavItem>
+        <NavItem href="#pricing" isCurrent>
+          Pricing
+        </NavItem>
+        <NavItem href="#docs">Docs</NavItem>
+      </SiteHeader>
+    </div>
+  ),
+};
 
 export const Centered: Story = {
   name: 'Centered with free actions',

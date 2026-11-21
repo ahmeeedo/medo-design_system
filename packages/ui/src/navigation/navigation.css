@@ -273,6 +273,20 @@
   border-block-end-color: var(--medo-color-border-default);
 }
 
+/*
+ * Translucent: at the top of the page the header has no background, so a backdrop or a hero image runs through it;
+ * once the page scrolls, the surface at 80 % with a blur keeps the links readable over the content.
+ */
+.medo-site-header--translucent {
+  background-color: transparent;
+}
+
+.medo-site-header--translucent[data-scrolled] {
+  background-color: color-mix(in oklab, var(--medo-color-surface-default) 80%, transparent);
+  -webkit-backdrop-filter: blur(var(--medo-blur-media));
+  backdrop-filter: blur(var(--medo-blur-media));
+}
+
 .medo-site-header__logo,
 .medo-app-header__logo {
   display: flex;

@@ -64,16 +64,23 @@
 
 /* ---------- Viewport and items ---------- */
 
-/* A mouse drags the row (pointer events in the component); while it drags, snapping waits and text is not selected. */
+/*
+ * A mouse drags the row (pointer events in the component); while it drags, snapping waits and text is not selected.
+ * Arrows, dots and the end of a drag move the row with their own eased animation (data-animating): snapping waits
+ * for it too, or it would pull against the move halfway.
+ */
 .medo-carousel__viewport[data-draggable] {
   cursor: grab;
 }
 
 .medo-carousel__viewport[data-dragging] {
   cursor: grabbing;
+  user-select: none;
+}
+
+.medo-carousel__viewport:is([data-dragging], [data-animating]) {
   scroll-snap-type: none;
   scroll-behavior: auto;
-  user-select: none;
 }
 
 /* Only the row itself drags: links and buttons inside keep their own cursor. */
@@ -82,6 +89,8 @@
 }
 
 .medo-carousel__viewport {
+  /* Positioned, so the items' offsetLeft counts from the row (the component reads and sets positions with it). */
+  position: relative;
   display: flex;
   gap: var(--_gap);
   overflow-x: auto;

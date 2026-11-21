@@ -504,6 +504,25 @@ export function Elevation() {
   );
 }
 
+/** The backdrop gradient on a page surface, in both themes: a tint on Light, a glow on Dark. */
+export function Backdrop() {
+  return (
+    <div className="doc-stages" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(var(--medo-size-width-xl), 1fr))' }}>
+      {(['light', 'dark'] as const).map((theme) => (
+        <div
+          key={theme}
+          data-theme={theme}
+          className="doc-stage"
+          style={{ minBlockSize: 'var(--medo-size-width-xs)', background: 'var(--medo-gradient-aurora), var(--medo-color-surface-default)', color: 'var(--medo-color-text-primary)' }}
+        >
+          <span className="doc-stage-label medo-text-label-sm">{theme}</span>
+          <div style={{ fontFamily: 'var(--medo-font-family-mono)', fontSize: 'var(--medo-font-size-2xs)', color: 'var(--medo-color-text-secondary)' }}>gradient-aurora</div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 /** Springs: the linear() curve is long – show its size, the CSS variable holds the full curve. */
 const springValue = (t: Token) => (String(t.value).startsWith('linear(') ? `linear() · ${String(t.value).split(',').length} points` : String(t.value));
 

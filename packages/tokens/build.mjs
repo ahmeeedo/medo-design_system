@@ -16,6 +16,8 @@ import StyleDictionary from 'style-dictionary';
 import { copyFileSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 
 const PREFIX = 'medo';
+/** The backdrop gradients (defined with the theme blocks below), for the Tailwind theme. */
+const GRADIENT_NAMES = ['aurora'];
 const BASE = [
   'src/color/primitive.json',
   'src/color/alias.json',
@@ -184,6 +186,9 @@ StyleDictionary.registerFormat({
     out.push('', '  /* Shadows (elevation and focus ring) */', line('shadow-*', 'initial'), line('inset-shadow-*', 'initial'));
     for (const t of by((t) => t.path[0] === 'shadow')) out.push(line(`shadow-${t.path.slice(1).join('-')}`, `var(${cssVar(t.path)})`));
 
+    out.push('', '  /* Backdrop gradients (bg-aurora) */');
+    for (const name of GRADIENT_NAMES) out.push(line(`background-image-${name}`, `var(--${PREFIX}-gradient-${name})`));
+
     out.push('', '  /* Blur */', line('blur-*', 'initial'));
     for (const t of by((t) => t.path[0] === 'blur')) out.push(line(`blur-${t.path[1]}`, `var(${cssVar(t.path)})`));
 
@@ -343,8 +348,26 @@ const themed = read('light')
   .split('\n')
   .filter((l) => l.startsWith(`  --${PREFIX}-shadow-`))
   .join('\n');
-const darkBlock = `${read('dark')}\n${themed}`;
-const lightBlock = `${read('light-colors')}\n${themed}`;
+// Backdrop gradients: a decorative wash behind a hero or a page head (the brand's "aurora"). Figma variables cannot
+// hold a gradient, so these are defined here, from the palette steps; each theme gets its own strength, so they stay
+// a tint on Light and a glow on Dark. Declared per theme block like the shadows.
+const gradient = (steps) =>
+  [
+    `radial-gradient(60rem 40rem at 10% 6%, color-mix(in oklab, var(--${PREFIX}-color-primary-${steps.step}) ${steps.primary}%, transparent), transparent 70%)`,
+    `radial-gradient(48rem 34rem at 86% 18%, color-mix(in oklab, var(--${PREFIX}-color-sky-${steps.step}) ${steps.sky}%, transparent), transparent 70%)`,
+    `radial-gradient(44rem 30rem at 55% 96%, color-mix(in oklab, var(--${PREFIX}-color-violet-${steps.step}) ${steps.violet}%, transparent), transparent 70%)`,
+    `radial-gradient(36rem 26rem at 32% 68%, color-mix(in oklab, var(--${PREFIX}-color-pink-${steps.step}) ${steps.pink}%, transparent), transparent 70%)`,
+  ].join(',\n    ');
+const GRADIENTS = {
+  light: { aurora: gradient({ step: 400, primary: 34, sky: 24, violet: 18, pink: 10 }) },
+  dark: { aurora: gradient({ step: 500, primary: 36, sky: 26, violet: 24, pink: 14 }) },
+};
+const gradients = (theme) =>
+  Object.entries(GRADIENTS[theme])
+    .map(([name, value]) => `  --${PREFIX}-gradient-${name}: ${value};`)
+    .join('\n');
+const darkBlock = `${read('dark')}\n${themed}\n${gradients('dark')}`;
+const lightBlock = `${read('light-colors')}\n${themed}\n${gradients('light')}`;
 // Higher contrast (prefers-contrast: more): steps of the same palette, no new colours.
 // text/secondary and border/default get stronger on content surfaces; the contrast check below covers this mode too.
 const v = (name) => `var(--${PREFIX}-color-${name})`;
@@ -387,6 +410,7 @@ const css = `/**
 :root {
   color-scheme: light;
 ${read('light')}
+${gradients('light')}
 }
 
 [data-theme="light"] {
