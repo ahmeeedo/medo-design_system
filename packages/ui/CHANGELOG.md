@@ -1,5 +1,19 @@
 # @med-o/ui
 
+## 0.21.0
+
+_Released 2026-11-21_
+
+### Minor Changes
+
+- ac3b787: New: `SiteHeader` takes `translucent` – no background at the top of the page, so a backdrop (`gradient/aurora`) or a hero image runs through the header; once the page scrolls, the surface at 80 % with a blur.
+
+### Patch Changes
+
+- ac3b787: Fixed: `Carousel` moves smoothly. Arrows, dots and the end of a mouse drag animate the row themselves, with an ease-out of 300 to 600 ms; the browser's smooth scrolling fought the snapping on the way and jumped at the end. A drag is thrown with the speed of the last moves and lands on the item nearest to where the throw ends, at most one viewport width away. Positions are read from the row itself, so a carousel further down a page no longer lands beside its items.
+- Updated dependencies [ac3b787]
+  - @med-o/design-tokens@0.21.0
+
 ## 0.20.0
 
 _Released 2026-11-20_
