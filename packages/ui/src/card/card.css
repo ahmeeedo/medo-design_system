@@ -72,6 +72,14 @@
   object-fit: cover;
 }
 
+/*
+ * The media takes the card's shape: the card (or, for plain, the media frame) rounds the outer corners, the edge
+ * towards the content stays square. An Image keeps no radius of its own here, whatever its radius prop says.
+ */
+.medo-card__media > :is(img, video, picture, .medo-image) {
+  border-radius: 0;
+}
+
 .medo-card--plain .medo-card__media {
   border-radius: var(--medo-radius-lg);
   margin-block-end: var(--medo-space-4);
