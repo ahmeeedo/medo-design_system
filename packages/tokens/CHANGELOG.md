@@ -1,5 +1,13 @@
 # @med-o/design-tokens
 
+## 0.21.0
+
+_Released 2026-11-21_
+
+### Minor Changes
+
+- ac3b787: New: `gradient/aurora` – a backdrop for a hero or a page head: four soft radial washes from the palette (primary, sky, violet, pink), a tint on Light and a glow on Dark. `background: var(--medo-gradient-aurora), var(--medo-color-surface-default)`; in Tailwind `bg-aurora`. Documented under Foundations → Elevation & motion → Backdrop.
+
 ## 0.20.0
 
 _Released 2026-11-20_
